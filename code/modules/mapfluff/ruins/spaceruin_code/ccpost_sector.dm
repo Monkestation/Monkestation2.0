@@ -2410,6 +2410,19 @@
 	var/title
 	var/body
 	var/issued_at
+	/// Central sector dispatcher owns pending messages by Liaison mind.
+	var/datum/mind/assigned_mind
+	var/assigned_name
+	var/assigned_at = 0
+	/// Opening a review protects in-progress correspondence from automatic rebalancing.
+	var/review_started_at = 0
+	/// Round-local administrative findings, never a fabricated assurance of request validity.
+	var/review_verified = FALSE
+	var/review_verification_summary = ""
+	/// Optional one-time clarification request, fulfilled after a simulated network response.
+	var/review_clarification_pending = FALSE
+	var/review_clarification_received = FALSE
+	var/review_clarification_reply = ""
 
 	/// PENDING, ACKNOWLEDGED, AUTHORIZED, DENIED, or EXPIRED.
 	var/resolution_status = CCPOST_MESSAGE_PENDING
@@ -2485,6 +2498,10 @@
 	var/title
 	var/body
 	var/issued_at
+	var/datum/mind/assigned_mind
+	var/assigned_name
+	var/assigned_at = 0
+	var/initial_copy_printed = FALSE
 
 	/// AWAITING LIAISON REVIEW or TRANSMITTED - AWAITING RECEIPT.
 	var/status = CCPOST_PAPERWORK_AWAITING_REVIEW
@@ -2608,6 +2625,19 @@
 
 	/// Sector Communications Terminals connected to this network.
 	var/list/registered_comms_terminals = list()
+	/// Fair correspondence counts and recency are shared by all sector desks.
+	var/list/comms_dispatch_counts = list()
+	/// Rolling fairness history: routine correspondence and paperwork rotate separately.
+	var/list/recent_comms_assignments = list()
+	var/list/recent_paperwork_assignments = list()
+	var/list/comms_last_active_at = list()
+	/// Actual time of first detected unavailability. Do not count time spent online.
+	var/list/comms_unavailable_since = list()
+	/// Lightweight recovery check only while assigned correspondence is outstanding.
+	var/comms_recovery_timer
+	/// Administrative correspondence is paused when the physical Tasking Server is unavailable.
+	var/administrative_paused_at = 0
+	var/last_comms_recipient_key
 
 	/// Timer controlling installation-originated messages.
 	var/sector_message_timer
@@ -2733,6 +2763,50 @@
 
 GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
+/// Unlike remote installation notices, local personnel correspondence depends
+/// on the real, shared Tasking Distribution Server.
+/datum/ccpost_sector_network/proc/administrative_server_online()
+	return GLOB.ccpost_tasking_network?.server_online()
+
+/datum/ccpost_sector_network/proc/pause_administrative_network()
+	if(administrative_paused_at || GLOB.ccpost_outpost_signal_lost)
+		// Permanent loss is still a pause. Keep a nonzero marker for round-start edge cases.
+		if(administrative_paused_at)
+			return
+	administrative_paused_at = max(world.time, 1)
+	if(sector_message_timer)
+		deltimer(sector_message_timer)
+		sector_message_timer = null
+	if(sector_paperwork_timer)
+		deltimer(sector_paperwork_timer)
+		sector_paperwork_timer = null
+	if(comms_recovery_timer)
+		deltimer(comms_recovery_timer)
+		comms_recovery_timer = null
+	refresh_comms_terminals()
+
+/datum/ccpost_sector_network/proc/resume_administrative_network()
+	if(!administrative_server_online())
+		return
+	if(administrative_paused_at)
+		var/duration = max(0, world.time - administrative_paused_at)
+		for(var/datum/ccpost_sector_message/message as anything in sector_messages)
+			if(message.resolution_status == CCPOST_MESSAGE_PENDING && message.assigned_at)
+				message.assigned_at += duration
+			if(message.review_started_at)
+				message.review_started_at += duration
+		if(active_sector_paperwork?.assigned_at)
+			active_sector_paperwork.assigned_at += duration
+		for(var/owner_key in comms_unavailable_since)
+			comms_unavailable_since[owner_key] += duration
+		administrative_paused_at = 0
+	if(started)
+		if(!sector_message_timer)
+			schedule_next_sector_message(1 MINUTES, 2 MINUTES)
+		if(!sector_paperwork_timer && !active_sector_paperwork)
+			schedule_next_sector_paperwork(2 MINUTES, 4 MINUTES)
+		dispatch_sector_work()
+	refresh_comms_terminals()
 
 /datum/ccpost_sector_network/proc/register_display(obj/machinery/status_display/ccpost_remote_status/display)
 	if(!display)
@@ -2851,6 +2925,208 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 
+/// Personal Sector Communications sessions are separate from Tasking sessions.
+/// A user may sign in on one desk of each type, but owns one sector inbox.
+/datum/ccpost_sector_network/proc/active_sector_terminal(datum/mind/owner)
+	if(!owner)
+		return null
+	for(var/obj/machinery/computer/ccpost_sector_comms/terminal as anything in registered_comms_terminals)
+		if(QDELETED(terminal) || terminal.sector_session_mind != owner || (terminal.machine_stat & (BROKEN | NOPOWER)))
+			continue
+		var/mob/living/carbon/human/person = owner.current
+		if(person?.client && terminal.sector_session_valid_for(person))
+			return terminal
+	return null
+
+/// Preserve disconnected personnel's work for ten minutes before recovery.
+/datum/ccpost_sector_network/proc/may_reassign_sector_work(datum/mind/owner, assigned_at)
+	if(!owner)
+		return TRUE
+	var/key = REF(owner)
+	if(active_sector_terminal(owner))
+		comms_unavailable_since -= key
+		return FALSE
+	if(!comms_unavailable_since[key])
+		comms_unavailable_since[key] = world.time
+	// The ten-minute recovery grace begins when absence is first observed,
+	// not at the owner's last message action while they were still online.
+	var/last_seen_at = max(assigned_at, comms_last_active_at[key] || 0, comms_unavailable_since[key])
+	return world.time >= last_seen_at + 10 MINUTES
+
+/// Review only assigned unresolved correspondence, once per minute at most.
+/// A one-shot timer stops automatically once no owned work remains.
+/datum/ccpost_sector_network/proc/schedule_comms_recovery_check()
+	if(!administrative_server_online())
+		return
+	if(comms_recovery_timer)
+		return
+	var/has_assigned_work = FALSE
+	for(var/datum/ccpost_sector_message/message as anything in sector_messages)
+		if(message.resolution_status == CCPOST_MESSAGE_PENDING && message.assigned_mind)
+			has_assigned_work = TRUE
+			break
+	if(active_sector_paperwork?.status == CCPOST_PAPERWORK_AWAITING_REVIEW && active_sector_paperwork.assigned_mind)
+		has_assigned_work = TRUE
+	if(has_assigned_work)
+		comms_recovery_timer = addtimer(CALLBACK(src, PROC_REF(check_comms_recovery)), 1 MINUTES, TIMER_STOPPABLE)
+
+/datum/ccpost_sector_network/proc/check_comms_recovery()
+	comms_recovery_timer = null
+	if(!administrative_server_online())
+		return
+	// Reuses the ordinary dispatcher and its allocation/paperwork safeguards.
+	dispatch_sector_work()
+
+/// Only unresolved, unprocessed messages are redistributed on a new login.
+/// Physical paperwork being handled by a Liaison is never silently moved.
+/// Rolling assignment histories expire after 20 minutes, unlike lifetime counts.
+/datum/ccpost_sector_network/proc/recent_sector_assignments(owner_key, paperwork_only = FALSE)
+	var/list/history = paperwork_only ? recent_paperwork_assignments : recent_comms_assignments
+	var/total = 0
+	for(var/list/entry as anything in history.Copy())
+		if(world.time - entry["at"] >= 20 MINUTES)
+			history -= list(entry)
+			continue
+		if(entry["key"] == owner_key)
+			total++
+	return total
+
+/datum/ccpost_sector_network/proc/record_sector_assignment(datum/mind/owner, paperwork = FALSE)
+	if(!owner)
+		return
+	var/key = REF(owner)
+	var/list/history = paperwork ? recent_paperwork_assignments : recent_comms_assignments
+	history += list(list("key" = key, "at" = world.time))
+	comms_dispatch_counts[key] = (comms_dispatch_counts[key] || 0) + 1
+	last_comms_recipient_key = key
+
+/// Exact weights shared with the Tasking network: notice 1, request 2,
+/// administrative paperwork 3, active investigation 2, standby 1,
+/// and +2 for a Priority/Critical investigation.
+/datum/ccpost_sector_network/proc/sector_workload_points(datum/mind/owner)
+	if(!owner)
+		return 0
+	var/score = 0
+	for(var/datum/ccpost_sector_message/message as anything in sector_messages)
+		if(message.resolution_status == CCPOST_MESSAGE_PENDING && message.assigned_mind == owner)
+			score += message.message_type == CCPOST_MESSAGE_REQUEST ? 2 : 1
+	if(active_sector_paperwork?.assigned_mind == owner && active_sector_paperwork.status == CCPOST_PAPERWORK_AWAITING_REVIEW)
+		score += 3
+	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = GLOB.ccpost_tasking_network?.get_inbox(owner)
+	if(inbox?.current_order)
+		score += 2
+		if(inbox.current_order.priority == "Priority" || inbox.current_order.priority == "Critical")
+			score += 2
+	if(inbox?.standby_order)
+		score++
+	return score
+
+/// Unopened correspondence may be rebalanced after login; opened requests
+/// are protected until resolution or ten-minute abandonment recovery.
+/datum/ccpost_sector_network/proc/rebalance_sector_correspondence()
+	if(!administrative_server_online())
+		return
+	var/moved = FALSE
+	for(var/datum/ccpost_sector_message/message as anything in sector_messages)
+		if(message.resolution_status != CCPOST_MESSAGE_PENDING || !message.assigned_mind || message.review_started_at)
+			continue
+		if(!active_sector_terminal(message.assigned_mind))
+			continue
+		var/obj/machinery/computer/ccpost_sector_comms/new_terminal = select_sector_recipient()
+		if(!new_terminal || new_terminal.sector_session_mind == message.assigned_mind)
+			continue
+		if(sector_workload_points(message.assigned_mind) - sector_workload_points(new_terminal.sector_session_mind) < 2)
+			continue
+		message.assigned_mind = new_terminal.sector_session_mind
+		message.assigned_name = new_terminal.sector_session_name
+		message.assigned_at = world.time
+		record_sector_assignment(message.assigned_mind)
+		moved = TRUE
+	if(moved)
+		refresh_comms_terminals()
+
+/datum/ccpost_sector_network/proc/select_sector_recipient(paperwork = FALSE)
+	var/obj/machinery/computer/ccpost_sector_comms/best
+	var/best_score = INFINITY
+	for(var/obj/machinery/computer/ccpost_sector_comms/terminal as anything in registered_comms_terminals)
+		if(QDELETED(terminal) || (terminal.machine_stat & (BROKEN | NOPOWER)) || !terminal.sector_session_mind)
+			continue
+		var/mob/living/carbon/human/person = terminal.sector_session_mind.current
+		if(!person?.client || !terminal.sector_session_valid_for(person))
+			continue
+		var/key = REF(terminal.sector_session_mind)
+		var/load = sector_workload_points(terminal.sector_session_mind)
+		var/recent = recent_sector_assignments(key, paperwork)
+		var/score = load * 100 + recent * 20
+		if(last_comms_recipient_key == key)
+			score += 15
+		if(score < best_score)
+			best_score = score
+			best = terminal
+	return best
+
+/datum/ccpost_sector_network/proc/dispatch_sector_work()
+	if(!administrative_server_online())
+		return
+	// Prioritize installation emergencies before ordinary traffic.
+	var/list/pending = list()
+	for(var/datum/ccpost_sector_message/message as anything in sector_messages)
+		if(message.resolution_status != CCPOST_MESSAGE_PENDING)
+			continue
+		if(message.assigned_mind && may_reassign_sector_work(message.assigned_mind, message.assigned_at))
+			message.assigned_mind = null
+			message.assigned_name = null
+			message.review_started_at = 0
+		if(!message.assigned_mind)
+			if(message.priority == CCPOST_PRIORITY_PRIORITY || message.priority == CCPOST_PRIORITY_IMPORTANT)
+				pending.Insert(1, message)
+			else
+				pending += message
+	var/list/notified_terminals = list()
+	for(var/datum/ccpost_sector_message/message as anything in pending)
+		var/obj/machinery/computer/ccpost_sector_comms/terminal = select_sector_recipient()
+		if(!terminal)
+			break
+		message.assigned_mind = terminal.sector_session_mind
+		message.assigned_name = terminal.sector_session_name
+		message.assigned_at = world.time
+		record_sector_assignment(terminal.sector_session_mind)
+		message.review_started_at = 0
+		if(!(terminal in notified_terminals))
+			notified_terminals += terminal
+			playsound(terminal, 'sound/machines/terminal/terminal_alert.ogg', vol = 30, vary = TRUE)
+			terminal.say("Incoming sector correspondence assigned to [terminal.sector_session_name].")
+	if(active_sector_paperwork && active_sector_paperwork.status == CCPOST_PAPERWORK_AWAITING_REVIEW)
+		var/datum/ccpost_sector_paperwork_request/paperwork = active_sector_paperwork
+		if(paperwork.assigned_mind && may_reassign_sector_work(paperwork.assigned_mind, paperwork.assigned_at))
+			// A physical document already inserted for review must never be
+			// silently reassigned to another workstation after SSD.
+			var/has_inserted_paperwork = FALSE
+			for(var/obj/machinery/computer/ccpost_sector_comms/old_terminal as anything in registered_comms_terminals)
+				if(old_terminal.submitted_paperwork?.paperwork_code == paperwork.paperwork_code)
+					has_inserted_paperwork = TRUE
+					break
+			if(!has_inserted_paperwork)
+				// Invalidate all old physical copies before a replacement assignee prints.
+				paperwork.invalidate_physical_copies("Document reassigned to another Liaison.")
+				paperwork.assigned_mind = null
+				paperwork.assigned_name = null
+				paperwork.initial_copy_printed = FALSE
+		if(!paperwork.assigned_mind)
+			var/obj/machinery/computer/ccpost_sector_comms/new_owner_terminal = select_sector_recipient(TRUE)
+			if(new_owner_terminal)
+				paperwork.assigned_mind = new_owner_terminal.sector_session_mind
+				paperwork.assigned_name = new_owner_terminal.sector_session_name
+				paperwork.assigned_at = world.time
+				record_sector_assignment(new_owner_terminal.sector_session_mind, TRUE)
+		if(paperwork.assigned_mind && !paperwork.initial_copy_printed)
+			var/obj/machinery/computer/ccpost_sector_comms/recipient_terminal = active_sector_terminal(paperwork.assigned_mind)
+			if(recipient_terminal && recipient_terminal.print_sector_paperwork(paperwork))
+				paperwork.initial_copy_printed = TRUE
+				recipient_terminal.say("Incoming administrative paperwork assigned to [paperwork.assigned_name].")
+	schedule_comms_recovery_check()
+	refresh_comms_terminals()
+
 /datum/ccpost_sector_network/proc/schedule_next_sector_message(
 	minimum_delay = 3 MINUTES,
 	maximum_delay = 6 MINUTES
@@ -2951,6 +3227,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /datum/ccpost_sector_network/proc/issue_sector_paperwork()
 	sector_paperwork_timer = null
+	if(!administrative_server_online())
+		return
 
 	// One physical document slot means one active paperwork request at a time.
 	if(active_sector_paperwork)
@@ -3007,18 +3285,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	record_installation_contact(source_installation)
 	last_sector_paperwork_template_id = chosen_template.template_id
 
-	// The first available Sector Communications Terminal physically prints the
-	// incoming form. Other terminals can still display or reprint the same request.
-	for(var/obj/machinery/computer/ccpost_sector_comms/terminal as anything in registered_comms_terminals)
-		if(QDELETED(terminal) || terminal.machine_stat & (NOPOWER | BROKEN))
-			continue
-
-		if(terminal.print_sector_paperwork(active_sector_paperwork))
-			terminal.say("Incoming administrative document from [source_installation.installation_name]. Sender: [source_installation.contact_role] [source_installation.contact_name].")
-			break
-
-	// The request remains available in TGUI even if no terminal could print it.
-	refresh_comms_terminals()
+	// Work belongs to an authenticated Liaison, never the first mapped desk.
+	// When nobody is signed in, retain the document centrally without printing.
+	dispatch_sector_work()
 
 
 /datum/ccpost_sector_network/proc/get_paperwork_receipt_body(
@@ -3847,6 +4116,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(installation.status != CCPOST_INSTALLATION_NO_CONTACT && installation.status != CCPOST_INSTALLATION_OFFLINE)
 		record_installation_contact(installation)
 
+	dispatch_sector_work()
 	return new_message
 
 
@@ -3879,6 +4149,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /datum/ccpost_sector_network/proc/issue_sector_message()
 	sector_message_timer = null
+	if(!administrative_server_online())
+		return
 
 	var/list/eligible_templates = get_eligible_sector_message_templates()
 
@@ -3993,6 +4265,28 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			return message
 
 	return null
+
+
+/// Complete one previously requested clarification. Timers defer while the local
+/// administrative server is unavailable, preserving the case and its assignment.
+/datum/ccpost_sector_network/proc/complete_review_clarification(message_code)
+	var/datum/ccpost_sector_message/message = find_sector_message(message_code)
+	if(!message || QDELETED(message) || !message.review_clarification_pending || message.review_clarification_received)
+		return
+	if(message.resolution_status != CCPOST_MESSAGE_PENDING || GLOB.ccpost_outpost_signal_lost)
+		message.review_clarification_pending = FALSE
+		return
+	if(!administrative_server_online())
+		addtimer(CALLBACK(src, PROC_REF(complete_review_clarification), message_code), 15 SECONDS)
+		return
+	var/datum/ccpost_sector_installation/installation = get_installation_by_code(message.installation_code)
+	if(!installation || installation.destroyed)
+		message.review_clarification_reply = "Unable to establish further contact. The installation's operating status is unavailable."
+	else
+		message.review_clarification_reply = "[message.sender_role] [message.sender_name] confirms receipt of Central Command's inquiry. Current reported status: [installation.status]. [installation.condition_details] Requested allocation: [message.allocation_cost] CU. No additional documentary evidence has been transmitted."
+	message.review_clarification_pending = FALSE
+	message.review_clarification_received = TRUE
+	refresh_comms_terminals()
 
 
 /datum/ccpost_sector_network/proc/sector_message_still_valid(
@@ -4189,11 +4483,52 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	circuit = /obj/item/circuitboard/computer/ccpost_sector_comms
 
+	/// Personnel login is independent of Tasking and follows a mind, not the desk.
+	var/datum/mind/sector_session_mind
+	var/sector_session_name
+
 	/// Single physical slot used for the one active administrative document.
 	var/obj/item/paper/ccpost_sector_paperwork/submitted_paperwork
 
 	COOLDOWN_DECLARE(paperwork_print_cooldown)
 
+
+/obj/machinery/computer/ccpost_sector_comms/proc/sector_session_valid_for(mob/user)
+	if(!sector_session_mind || !user?.mind || user.mind != sector_session_mind)
+		return FALSE
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	return employee && employee.employee_role == "Central Command Liaison" && employee.employee_mind == sector_session_mind
+
+/obj/machinery/computer/ccpost_sector_comms/proc/logout_sector_session()
+	if(!sector_session_mind)
+		return
+	GLOB.ccpost_sector_network.comms_last_active_at[REF(sector_session_mind)] = world.time
+	GLOB.ccpost_sector_network.comms_unavailable_since[REF(sector_session_mind)] = world.time
+	GLOB.ccpost_sector_network.schedule_comms_recovery_check()
+	if(submitted_paperwork)
+		eject_sector_paperwork()
+	sector_session_mind = null
+	sector_session_name = null
+	SStgui.update_uis(src)
+
+/obj/machinery/computer/ccpost_sector_comms/proc/login_sector_session(mob/user)
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	if(!employee || employee.employee_role != "Central Command Liaison")
+		return FALSE
+	if(sector_session_mind && sector_session_mind != employee.employee_mind)
+		logout_sector_session()
+	var/datum/ccpost_sector_network/network = GLOB.ccpost_sector_network
+	for(var/obj/machinery/computer/ccpost_sector_comms/other as anything in network.registered_comms_terminals)
+		if(other != src && other.sector_session_mind == employee.employee_mind)
+			other.logout_sector_session()
+	sector_session_mind = employee.employee_mind
+	sector_session_name = employee.employee_name
+	network.comms_last_active_at[REF(sector_session_mind)] = world.time
+	network.comms_unavailable_since -= REF(sector_session_mind)
+	network.dispatch_sector_work()
+	network.rebalance_sector_correspondence()
+	SStgui.update_uis(src)
+	return TRUE
 
 /obj/machinery/computer/ccpost_sector_comms/Initialize(mapload)
 	. = ..()
@@ -4202,6 +4537,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /obj/machinery/computer/ccpost_sector_comms/Destroy()
+	logout_sector_session()
 	if(submitted_paperwork)
 		submitted_paperwork.forceMove(drop_location())
 		submitted_paperwork = null
@@ -4212,30 +4548,6 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 
-/obj/machinery/computer/ccpost_sector_comms/examine(mob/user)
-	. = ..()
-	if(!ccpost_has_centcom_id(user))
-		return
-
-	var/datum/ccpost_sector_network/network = GLOB.ccpost_sector_network
-
-	if(!network)
-		return
-
-	network.ensure_started()
-
-	var/pending_messages = network.get_pending_sector_message_count()
-	var/paperwork_pending = network.validate_active_sector_paperwork(FALSE) ? 1 : 0
-	var/unresolved_work = pending_messages + paperwork_pending
-	var/communication_label = pending_messages == 1 ? "communication" : "communications"
-	var/paperwork_label = paperwork_pending ? "one active administrative document" : "no active administrative paperwork"
-
-	if(unresolved_work)
-		. += span_notice("Unresolved sector work: [pending_messages] pending [communication_label] and [paperwork_label].")
-	else
-		. += span_notice("No unresolved Sector Communications work is currently recorded.")
-
-
 /obj/machinery/computer/ccpost_sector_comms/item_interaction(
 	mob/living/user,
 	obj/item/tool,
@@ -4243,8 +4555,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 )
 	if(!istype(tool, /obj/item/paper/ccpost_sector_paperwork))
 		return NONE
-	if(!ccpost_has_centcom_id(user))
-		balloon_alert(user, "central command ID required")
+	if(!sector_session_valid_for(user))
+		balloon_alert(user, "sector sign-in required")
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/paper/ccpost_sector_paperwork/paperwork = tool
@@ -4259,8 +4571,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	var/datum/ccpost_sector_paperwork_request/request = GLOB.ccpost_sector_network.active_sector_paperwork
 
-	if(!request || request.status != CCPOST_PAPERWORK_AWAITING_REVIEW)
-		balloon_alert(user, "document no longer accepted")
+	if(!request || request.status != CCPOST_PAPERWORK_AWAITING_REVIEW || request.assigned_mind != sector_session_mind)
+		balloon_alert(user, "document not assigned to you")
 		return ITEM_INTERACT_BLOCKING
 
 	if(paperwork.paperwork_code != request.paperwork_code)
@@ -4328,9 +4640,11 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	print_text += ccpost_paper_value_field("Category", "Sector Administration")
 	print_text += ccpost_paper_value_field("Subject", request.title)
 	print_text += ccpost_paper_value_field("Issued", request.issued_at)
-	print_text += ccpost_paper_section("Issuing Installation")
-	print_text += ccpost_paper_value_field("Installation", "[request.installation_name] ([request.installation_code])")
-	print_text += ccpost_paper_value_field("Sender", "[request.sender_role] [request.sender_name]")
+	print_text += ccpost_paper_section("Correspondence Details")
+	print_text += ccpost_paper_value_field("Assigned Liaison", request.assigned_name || "Unassigned")
+	print_text += ccpost_paper_value_field("Issuing Installation", "[request.installation_name] ([request.installation_code])")
+	print_text += ccpost_paper_value_field("Installation Contact", request.sender_name)
+	print_text += ccpost_paper_value_field("Contact Position", request.sender_role)
 	print_text += ccpost_paper_section("Administrative Directive")
 	print_text += "[ccpost_paper_paragraph(request.body)]<br>"
 	print_text += ccpost_paper_section("Required Authorization")
@@ -4389,6 +4703,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		"body" = request.body,
 		"issued_at" = request.issued_at,
 		"status" = request.status,
+		"assigned_to" = request.assigned_name || "Unassigned",
 		"submitted_by" = request.submitted_by,
 		"submitted_at" = request.submitted_at,
 		"allocation_reward" = request.allocation_reward,
@@ -4448,8 +4763,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	print_text += ccpost_paper_value_field("Priority", message.priority)
 	print_text += ccpost_paper_value_field("Subject", message.title)
 	print_text += ccpost_paper_value_field("Issued", message.issued_at)
+	print_text += ccpost_paper_value_field("Assigned Liaison", message.assigned_name || "Unassigned")
 	print_text += ccpost_paper_value_field("Installation", "[message.installation_name] ([message.installation_code])")
-	print_text += ccpost_paper_value_field("Sender", "[message.sender_role] [message.sender_name]")
+	print_text += ccpost_paper_value_field("Installation Contact", message.sender_name)
+	print_text += ccpost_paper_value_field("Contact Position", message.sender_role)
 	print_text += ccpost_paper_value_field("Type", message.message_type)
 	print_text += ccpost_paper_value_field("Resolution", message.resolution_status)
 	print_text += ccpost_paper_value_field("Responded By", responded_by)
@@ -4579,6 +4896,14 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		"issued_at" = message.issued_at,
 
 		"resolution_status" = message.resolution_status,
+		"review_started" = !!message.review_started_at,
+		"review_verified" = message.review_verified,
+		"review_verification_summary" = message.review_verification_summary,
+		"review_clarification_pending" = message.review_clarification_pending,
+		"review_clarification_received" = message.review_clarification_received,
+		"review_clarification_reply" = message.review_clarification_reply,
+		"review_expeditable" = message.priority == CCPOST_PRIORITY_PRIORITY,
+		"assigned_to" = message.assigned_name || "Unassigned",
 
 		"responded_by" = message.responded_by,
 		"responded_at" = message.responded_at,
@@ -4597,6 +4922,15 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	var/list/data = list()
 	data["read_only"] = isobserver(user)
+	data["authenticated"] = isobserver(user) || !!sector_session_valid_for(user)
+	data["session_owner"] = isobserver(user) ? "Observer" : (sector_session_name || "")
+	var/datum/ccpost_hr_employee/login_employee = GLOB.ccpost_hr_service?.employee_for(user)
+	data["identity_detected"] = !!(login_employee && login_employee.employee_role == "Central Command Liaison")
+	data["identity_portrait"] = login_employee?.portrait_base64
+	data["admin_server_online"] = GLOB.ccpost_tasking_network.server_online() && !(machine_stat & (BROKEN | NOPOWER))
+	data["admin_server_status"] = GLOB.ccpost_tasking_network.server_status()
+	if(!data["authenticated"])
+		return data
 
 	var/datum/ccpost_logistics_network/logistics_network = GLOB.ccpost_logistics_network
 
@@ -4611,7 +4945,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		data["max_allocation"] = 0
 
 	var/list/inbox_data = list()
+	var/list/network_queue_data = list()
 	var/list/archive_data = list()
+	var/global_pending_count = 0
+	var/is_observer = isobserver(user)
 
 	for(var/datum/ccpost_sector_message/message as anything in GLOB.ccpost_sector_network.sector_messages)
 		if(QDELETED(message))
@@ -4620,22 +4957,41 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		var/list/message_data = message_to_ui_data(message)
 
 		if(message.resolution_status == CCPOST_MESSAGE_PENDING)
-			inbox_data += list(message_data)
-
+			global_pending_count++
+			if(is_observer || message.assigned_mind == sector_session_mind)
+				inbox_data += list(message_data)
+			else if(!message.assigned_mind)
+				network_queue_data += list(message_data)
 		else
 			archive_data += list(message_data)
 
 	var/list/paperwork_data = paperwork_to_ui_data()
+	if(!is_observer && GLOB.ccpost_sector_network.active_sector_paperwork?.assigned_mind != sector_session_mind)
+		paperwork_data = null
+	var/paperwork_pending = !!paperwork_data
 	var/pending_count = length(inbox_data)
-	var/paperwork_pending = paperwork_data ? TRUE : FALSE
 
 	data["inbox"] = inbox_data
+	data["network_queue"] = network_queue_data
+	data["network_pending_count"] = global_pending_count
 	data["archive"] = archive_data
 	data["archive_count"] = length(archive_data)
 	data["paperwork"] = paperwork_data
 	data["pending_count"] = pending_count
 	data["paperwork_pending"] = paperwork_pending
-	data["unresolved_work_count"] = pending_count + (paperwork_pending ? 1 : 0)
+	data["workload_overview"] = list()
+	var/list/seen_liaisons = list()
+	for(var/obj/machinery/computer/ccpost_sector_comms/liaison_terminal as anything in GLOB.ccpost_sector_network.registered_comms_terminals)
+		if(QDELETED(liaison_terminal) || !liaison_terminal.sector_session_mind)
+			continue
+		var/mob/living/carbon/human/person = liaison_terminal.sector_session_mind.current
+		if(!person?.client || (liaison_terminal.machine_stat & (BROKEN | NOPOWER)) || !liaison_terminal.sector_session_valid_for(person))
+			continue
+		var/key = REF(liaison_terminal.sector_session_mind)
+		if(key in seen_liaisons)
+			continue
+		seen_liaisons += key
+		data["workload_overview"] += list(list("name" = liaison_terminal.sector_session_name, "load" = GLOB.ccpost_sector_network.sector_workload_points(liaison_terminal.sector_session_mind)))
 	data["broadcast_cost"] = GLOB.ccpost_sector_network.station_broadcast_cost
 	data["broadcast_cooldown_seconds"] = round(COOLDOWN_TIMELEFT(GLOB.ccpost_sector_network, station_broadcast_cooldown) / (1 SECONDS))
 
@@ -4656,6 +5012,23 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		return
 
 	var/mob/user = ui.user
+	if(action == "login")
+		if(!GLOB.ccpost_tasking_network.server_online())
+			balloon_alert(user, "local administrative server unavailable")
+			return TRUE
+		if(!login_sector_session(user))
+			balloon_alert(user, "registered liaison ID required")
+		return TRUE
+	if(action == "logout")
+		if(sector_session_valid_for(user))
+			logout_sector_session()
+		return TRUE
+	if(!sector_session_valid_for(user))
+		return TRUE
+	if(!GLOB.ccpost_tasking_network.server_online())
+		balloon_alert(user, "local administrative server unavailable")
+		return TRUE
+	GLOB.ccpost_sector_network.comms_last_active_at[REF(sector_session_mind)] = world.time
 
 	// Archive-wide controls do not target an individual transmission.
 	switch(action)
@@ -4683,7 +5056,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			if(!length(announcement_text) || length_char(announcement_text) > 250)
 				balloon_alert(user, "invalid broadcast length")
 				return TRUE
-			if(!user.can_perform_action(src) || (machine_stat & (NOPOWER | BROKEN)))
+			if(!user.can_perform_action(src) || (machine_stat & (NOPOWER | BROKEN)) || !sector_session_valid_for(user))
+				return TRUE
+			if(!GLOB.ccpost_tasking_network.server_online())
+				balloon_alert(user, "local administrative server unavailable")
 				return TRUE
 			user_id = living_user.get_idcard(TRUE)
 			user_access = user_id?.GetAccess()
@@ -4718,6 +5094,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			return TRUE
 
 		if("reprint_paperwork")
+			if(GLOB.ccpost_sector_network.active_sector_paperwork?.assigned_mind != sector_session_mind)
+				balloon_alert(user, "paperwork assigned to another liaison")
+				return TRUE
 			if(!GLOB.ccpost_sector_network.validate_active_sector_paperwork())
 				balloon_alert(user, "no active paperwork request")
 				return TRUE
@@ -4746,6 +5125,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			return TRUE
 
 		if("eject_paperwork")
+			if(GLOB.ccpost_sector_network.active_sector_paperwork?.assigned_mind != sector_session_mind)
+				return TRUE
 			if(!eject_sector_paperwork(user))
 				balloon_alert(user, "document slot empty")
 			else
@@ -4754,6 +5135,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			return TRUE
 
 		if("transmit_paperwork")
+			if(GLOB.ccpost_sector_network.active_sector_paperwork?.assigned_mind != sector_session_mind)
+				balloon_alert(user, "paperwork assigned to another liaison")
+				return TRUE
 			if(!GLOB.ccpost_sector_network.validate_active_sector_paperwork())
 				balloon_alert(user, "paperwork request no longer valid")
 				return TRUE
@@ -4816,8 +5200,44 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(message.resolution_status != CCPOST_MESSAGE_PENDING)
 		balloon_alert(user, "transmission already resolved")
 		return TRUE
+	if(message.assigned_mind != sector_session_mind)
+		balloon_alert(user, "transmission assigned to another liaison")
+		return TRUE
 
 	switch(action)
+		if("begin_review")
+			if(!message.review_started_at)
+				message.review_started_at = world.time
+				GLOB.ccpost_sector_network.refresh_comms_terminals()
+				balloon_alert(user, "case review opened")
+			return TRUE
+
+		if("verify_review")
+			if(!message.review_started_at || message.message_type != CCPOST_MESSAGE_REQUEST)
+				return TRUE
+			// Report what is actually in the regional registry. This is a snapshot;
+			// authorization checks the current installation status again.
+			var/datum/ccpost_sector_installation/review_installation = GLOB.ccpost_sector_network.get_installation_by_code(message.installation_code)
+			var/valid_request = GLOB.ccpost_sector_network.sector_message_still_valid(message)
+			var/available_cu = GLOB.ccpost_logistics_network.get_available_allocation()
+			var/current_status = review_installation?.status || "NO TELEMETRY"
+			var/current_trust = review_installation ? GLOB.ccpost_sector_network.get_installation_trust_label(review_installation) : "UNKNOWN"
+			var/verification_result = valid_request ? "Request conditions currently match the recorded installation status" : "Request conditions have changed or the installation is unavailable"
+			message.review_verified = TRUE
+			message.review_verification_summary = "NETWORK RECORDS CHECK: [verification_result]. Current status: [current_status]. Relationship: [current_trust]. Requested: [message.allocation_cost] CU; currently available: [available_cu] CU. This check does not independently verify the sender's claims."
+			GLOB.ccpost_sector_network.refresh_comms_terminals()
+			balloon_alert(user, "network records checked")
+			return TRUE
+
+		if("request_clarification")
+			if(!message.review_started_at || message.message_type != CCPOST_MESSAGE_REQUEST || message.review_clarification_pending || message.review_clarification_received)
+				return TRUE
+			message.review_clarification_pending = TRUE
+			addtimer(CALLBACK(GLOB.ccpost_sector_network, TYPE_PROC_REF(/datum/ccpost_sector_network, complete_review_clarification), message.message_code), rand(35 SECONDS, 60 SECONDS))
+			GLOB.ccpost_sector_network.refresh_comms_terminals()
+			balloon_alert(user, "clarification requested")
+			return TRUE
+
 		if("acknowledge")
 			if(message.message_type != CCPOST_MESSAGE_UPDATE)
 				return TRUE
@@ -4879,6 +5299,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 		if("authorize")
 			if(message.message_type != CCPOST_MESSAGE_REQUEST)
+				return TRUE
+			// Critical regional emergencies retain an expedited decision path.
+			if(message.priority != CCPOST_PRIORITY_PRIORITY && (!message.review_started_at || !message.review_verified))
+				balloon_alert(user, "complete the network records review first")
 				return TRUE
 
 			if(!GLOB.ccpost_sector_network.sector_message_still_valid(message))
@@ -5881,27 +6305,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(!message)
 		return
 
-	for(var/obj/machinery/computer/ccpost_sector_comms/terminal as anything in registered_comms_terminals)
-		if(QDELETED(terminal))
-			continue
-
-		SStgui.update_uis(terminal)
-
-		if(terminal.machine_stat & (NOPOWER | BROKEN))
-			continue
-
-		var/urgent = message.priority == CCPOST_PRIORITY_PRIORITY || message.priority == CCPOST_PRIORITY_IMPORTANT
-
-		playsound(
-			terminal,
-			'sound/machines/terminal/terminal_alert.ogg',
-			vol = urgent ? 45 : 30,
-			vary = !urgent
-		)
-
-		terminal.say(
-			"Incoming authenticated transmission from [message.installation_name]. Sender: [message.sender_role] [message.sender_name]."
-		)
+	// The dispatcher has already notified the personal recipient. Avoid
+	// replaying the same announcement on every mapped sector terminal.
+	refresh_comms_terminals()
 
 
 /obj/machinery/status_display/ccpost_remote_status
@@ -6144,6 +6550,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	datum/tgui/ui,
 	datum/ui_state/state
 )
+	if(GLOB.ccpost_outpost_signal_lost)
+		return TRUE
 	// Enforce authorization server-side, including on stale/open TGUI sessions.
 	if(!ccpost_has_centcom_id(ui?.user))
 		return TRUE
@@ -6198,6 +6606,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	var/list/data = list()
 	data["read_only"] = isobserver(user)
+	data["outpost_offline"] = GLOB.ccpost_outpost_signal_lost
 
 	data["station_name"] = station_name()
 	data["alert_level"] = SSsecurity_level.get_current_level_as_text()

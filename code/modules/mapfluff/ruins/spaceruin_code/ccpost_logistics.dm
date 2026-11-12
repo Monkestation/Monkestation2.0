@@ -349,6 +349,14 @@
 
 	/// TRUE while a freight container is physically travelling along the outbound return lane.
 	var/outbound_lane_busy = FALSE
+	var/datum/weakref/active_inspection
+	var/inspection_timer_pending = FALSE
+	var/inspection_number = 0
+	var/inspection_due_at = 0
+	var/inspection_inbound = FALSE
+	var/inspection_outbound = FALSE
+	var/inspection_lane_deadline = 0
+	var/list/inspection_history = list()
 
 
 /datum/ccpost_logistics_network/Destroy()
@@ -541,6 +549,14 @@
 	if(!package)
 		return "invalid requisition"
 
+	if(package.round_limit)
+		var/ordered = 0
+		for(var/datum/ccpost_shipment/shipment as anything in shipments)
+			if(shipment.package == package && shipment.status != CCPOST_SHIPMENT_FAILED)
+				ordered++
+		if(ordered >= package.round_limit)
+			return "round requisition limit reached"
+
 	if(package.contraband && !allow_restricted)
 		return "requisition authorization denied"
 
@@ -713,6 +729,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	. = ..()
 
 	GLOB.ccpost_logistics_network.inbound_spawns |= src
+	GLOB.ccpost_logistics_network.schedule_inspection()
 
 
 /obj/effect/ccpost_freight_point/inbound_spawn/Destroy()
@@ -753,9 +770,18 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	var/obj/structure/closet/crate/ccpost_freight/freight_crate = entering_atom
 
-	set_ccpost_conveyor_state(CCPOST_FREIGHT_INBOUND_ID, FALSE)
-
-	GLOB.ccpost_logistics_network.mark_shipment_delivered(freight_crate.shipment_code)
+	var/datum/ccpost_logistics_network/network = GLOB.ccpost_logistics_network
+	if(istype(freight_crate, /obj/structure/closet/crate/ccpost_freight/inspection))
+		if(network.active_inspection?.resolve() != freight_crate || !network.inspection_inbound)
+			return
+		set_ccpost_conveyor_state(CCPOST_FREIGHT_INBOUND_ID, FALSE)
+		network.inspection_arrived(freight_crate)
+	else
+		var/datum/ccpost_shipment/shipment = network.find_shipment(freight_crate.shipment_code)
+		if(network.inspection_inbound || shipment?.status != CCPOST_SHIPMENT_IN_TRANSIT)
+			return
+		set_ccpost_conveyor_state(CCPOST_FREIGHT_INBOUND_ID, FALSE)
+		network.mark_shipment_delivered(freight_crate.shipment_code)
 
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 25, vary = TRUE)
 
@@ -823,8 +849,13 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 		return
 
-	// Containers must be completely empty before Sector Logistics will accept them.
-	if(length(freight_crate.contents))
+	var/obj/structure/closet/crate/ccpost_freight/inspection/inspection = freight_crate
+	if(istype(inspection))
+		if(GLOB.ccpost_outpost_signal_lost || network.active_inspection?.resolve() != inspection || !inspection.ready_for_return())
+			freight_crate.visible_message(span_warning("Inspection freight rejected: return the exact declared goods and original stamped manifest, then certify at the Logistics Terminal."))
+			return
+	// Ordinary reusable freight must be empty; registered inspection freight is distinct.
+	else if(length(freight_crate.contents))
 		playsound(src, SFX_BUTTON_FAIL, vol = 25, vary = TRUE)
 
 		freight_crate.visible_message(
@@ -834,10 +865,14 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		return
 
 	network.outbound_lane_busy = TRUE
+	if(istype(inspection))
+		network.inspection_outbound = TRUE
+		network.inspection_lane_deadline = world.time + 2 MINUTES
 
 	if(!set_ccpost_conveyor_state(CCPOST_FREIGHT_OUTBOUND_ID, TRUE))
 		network.outbound_lane_busy = FALSE
-
+		network.inspection_outbound = FALSE
+		network.inspection_lane_deadline = 0
 		playsound(src, SFX_BUTTON_FAIL, vol = 25, vary = TRUE)
 
 		freight_crate.visible_message(
@@ -896,10 +931,19 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	if(!network)
 		return
 
+	if(istype(freight_crate, /obj/structure/closet/crate/ccpost_freight/inspection) && (!network.inspection_outbound || network.active_inspection?.resolve() != freight_crate))
+		return
+
 	// Something has reached the end of the outbound lane, so stop it
 	// and release the lane regardless of whether processing succeeds.
 	set_ccpost_conveyor_state(CCPOST_FREIGHT_OUTBOUND_ID, FALSE)
 	network.outbound_lane_busy = FALSE
+
+	if(istype(freight_crate, /obj/structure/closet/crate/ccpost_freight/inspection))
+		network.inspection_outbound = FALSE
+		network.inspection_lane_deadline = 0
+		network.finish_inspection(freight_crate)
+		return
 
 	// Safety validation. Normally these checks are already performed
 	// by the outbound loading point.
@@ -942,6 +986,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	/// Prevents audit printing from being spammed.
 	COOLDOWN_DECLARE(audit_print_cooldown)
+
 
 /obj/machinery/computer/ccpost_logistics/examine(mob/user)
 	. = ..()
@@ -1012,10 +1057,39 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		ui.open()
 
 
+/// Regional freight clearance is authorized at the Logistics Terminal, not at the crate.
+/obj/machinery/computer/ccpost_logistics/proc/inspection_security_record(mob/user)
+	var/mob/living/carbon/human/officer = user
+	if(!istype(officer) || !officer.client || officer.stat != CONSCIOUS || !officer.mind || !istype(get_area(officer), /area/ruin/space/has_grav/ccpost))
+		return null
+	var/datum/ccpost_hr_employee/record = GLOB.ccpost_hr_service?.employee_for(officer)
+	if(record?.employee_role != "Outpost Security Officer")
+		return null
+	return record
+
+/obj/machinery/computer/ccpost_logistics/proc/certify_inspection(mob/user, reference)
+	var/datum/ccpost_logistics_network/network = GLOB.ccpost_logistics_network
+	var/obj/structure/closet/crate/ccpost_freight/inspection/crate = network?.active_inspection?.resolve()
+	if(!inspection_security_record(user) || !Adjacent(user) || (machine_stat & (NOPOWER | BROKEN)) || GLOB.ccpost_outpost_signal_lost)
+		balloon_alert(user, "security authorization required")
+		return FALSE
+	if(!crate || QDELETED(crate) || !crate.returnable || world.time >= network.inspection_due_at || crate.shipment_code != reference || !crate.inspection_arrived || network.inspection_inbound || network.inspection_outbound || !isturf(crate.loc) || !istype(get_area(crate), /area/ruin/space/has_grav/ccpost))
+		balloon_alert(user, "consignment unavailable")
+		return FALSE
+	if(crate.opened || !crate.manifest_valid())
+		balloon_alert(user, "manifest or contents invalid")
+		return FALSE
+	crate.certifying_mind = WEAKREF(user.mind)
+	balloon_alert(user, "consignment certified")
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 30, FALSE)
+	network.refresh_registered_terminals()
+	return TRUE
+
 /obj/machinery/computer/ccpost_logistics/ui_data(mob/user)
 	if(!ccpost_can_view_terminal(user))
 		return list()
 	var/list/data = list()
+	data["outpost_offline"] = GLOB.ccpost_outpost_signal_lost
 	data["read_only"] = isobserver(user)
 
 	var/datum/ccpost_logistics_network/network = GLOB.ccpost_logistics_network
@@ -1031,6 +1105,12 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	data["active_shipments"] = network.get_active_shipment_count()
 	data["max_active_shipments"] = network.max_active_shipments
+	var/obj/structure/closet/crate/ccpost_freight/inspection/inspection = network.active_inspection?.resolve()
+	data["inspection_reference"] = inspection?.shipment_code
+	data["inspection_history"] = network.inspection_history.Copy()
+	data["inspection_status"] = !inspection ? "STANDBY" : network.inspection_inbound ? "INBOUND" : network.inspection_outbound ? "OUTBOUND" : inspection.ready_for_return() ? "CERTIFIED" : "AWAITING CLEARANCE"
+	data["inspection_can_certify"] = !!inspection_security_record(user) && inspection?.inspection_arrived && inspection.returnable && world.time < network.inspection_due_at && !network.inspection_inbound && !network.inspection_outbound
+	data["inspection_seconds"] = inspection ? max(0, round((network.inspection_due_at - world.time) / (1 SECONDS))) : 0
 
 	var/datum/ccpost_freight_conditions/current_conditions = network.get_current_freight_conditions()
 
@@ -1096,6 +1176,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 			"description" = package.desc,
 			"category" = package.category,
 			"cost" = package.cost,
+			"round_limit" = package.round_limit,
 			"contents" = package.get_content_entries(),
 			"recall_locked" = recall_locked,
 			"can_order" = can_order_package,
@@ -1166,6 +1247,8 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 
 /obj/machinery/computer/ccpost_logistics/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(GLOB.ccpost_outpost_signal_lost)
+		return TRUE
 	if(!ccpost_has_centcom_id(ui?.user))
 		return TRUE
 	. = ..()
@@ -1180,6 +1263,9 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		return FALSE
 
 	switch(action)
+		if("certify_inspection")
+			certify_inspection(user, params["reference"])
+			return TRUE
 		if("print_package_manifest")
 			var/package_id = params["package_id"]
 			var/datum/ccpost_supply_package/package = network.get_supply_package(package_id)
@@ -1553,6 +1639,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	/// Internal Compliance risk weighting used when restricted procurement is audited.
 	/// Harmless novelty contraband is low-risk; tactical or hostile equipment is higher-risk.
 	var/audit_risk = 0
+	var/round_limit = 0
 
 	var/list/contains = list()
 
@@ -1790,7 +1877,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/engineering
 	id = "engineering"
 	name = "Engineering Maintenance Package"
-	desc = "A comprehensive supply of tools, construction materials, replacement lighting, and electrical protection for routine installation maintenance."
+	desc = "A comprehensive supply of tools, construction materials, replacement lighting, basic replacement components, and electrical protection for routine installation maintenance."
 	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
 	cost = 9
 
@@ -1801,7 +1888,9 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		/obj/item/storage/box/lights/tubes = 1,
 		/obj/item/storage/box/lights/bulbs = 1,
 		/obj/item/storage/belt/utility/full = 1,
-		/obj/item/clothing/gloves/color/yellow = 1
+		/obj/item/clothing/gloves/color/yellow = 1,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/subspace/filter = 3
 	)
 
 /datum/ccpost_supply_package/engineering/toolboxes
@@ -1830,12 +1919,59 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/engineering/atmos
 	id = "engineering_atmos"
 	name = "Atmospheric Recovery Package"
-	desc = "Portable atmospheric equipment for recovering air, clearing contaminants, and repairing avoidable ventilation mistakes."
-	cost = 9
+	desc = "Portable atmospheric equipment for recovering air and clearing contaminants."
+	cost = 6
 
 	contains = list(
 		/obj/machinery/portable_atmospherics/pump = 1,
 		/obj/machinery/portable_atmospherics/scrubber = 1
+	)
+
+/datum/ccpost_supply_package/engineering/atmos_air
+	id = "engineering_atmos_air"
+	name = "Emergency Air Supply"
+	desc = "Two canisters of breathable air for repressurization."
+	cost = 4
+	contains = list(
+		/obj/machinery/portable_atmospherics/canister/air = 2
+	)
+
+/datum/ccpost_supply_package/engineering/atmos_oxygen
+	id = "engineering_atmos_oxygen"
+	name = "Oxygen Resupply"
+	desc = "Two standard oxygen canisters for atmospheric maintenance."
+	cost = 5
+	contains = list(
+		/obj/machinery/portable_atmospherics/canister/oxygen = 2
+	)
+
+/datum/ccpost_supply_package/engineering/atmos_nitrogen
+	id = "engineering_atmos_nitrogen"
+	name = "Nitrogen Resupply"
+	desc = "Two standard nitrogen canisters for atmospheric maintenance."
+	cost = 4
+	contains = list(
+		/obj/machinery/portable_atmospherics/canister/nitrogen = 2
+	)
+
+/datum/ccpost_supply_package/engineering/atmos_maintenance
+	id = "engineering_atmos_maintenance"
+	name = "Atmospheric Maintenance"
+	desc = "Portable pipe dispenser, gas analyzer and atmospheric holofan projector."
+	cost = 6
+	contains = list(
+		/obj/item/pipe_dispenser = 1,
+		/obj/item/analyzer = 1,
+		/obj/item/holosign_creator/atmos = 1
+	)
+
+/datum/ccpost_supply_package/engineering/atmos_empty
+	id = "engineering_atmos_empty"
+	name = "Empty Canister Package"
+	desc = "Two empty gas canisters for storage and recovery."
+	cost = 2
+	contains = list(
+		/obj/machinery/portable_atmospherics/canister = 2
 	)
 
 /datum/ccpost_supply_package/engineering/breach
@@ -1935,17 +2071,17 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/technical/advanced_parts
 	id = "technical_parts"
 	name = "Advanced Parts Package"
-	desc = "Contains a rapid part exchanger and supporting equipment for maintaining damaged machinery."
+	desc = "A rapid part exchanger and a limited reserve of high-grade parts for authorized machinery repairs."
 	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
-	cost = 14
+	cost = 12
 
 	contains = list(
 		/obj/item/storage/part_replacer = 1,
 		/obj/item/stock_parts/power_store/cell/high = 5,
-		/obj/item/stock_parts/matter_bin/super = 10,
-		/obj/item/stock_parts/micro_laser/quadultra = 10,
-		/obj/item/stock_parts/manipulator/nano = 10,
-		/obj/item/stock_parts/capacitor/quadratic = 10
+		/obj/item/stock_parts/matter_bin/super = 3,
+		/obj/item/stock_parts/micro_laser/quadultra = 3,
+		/obj/item/stock_parts/manipulator/nano = 3,
+		/obj/item/stock_parts/capacitor/quadratic = 3
 	)
 
 /datum/ccpost_supply_package/technical/robotics
@@ -2046,13 +2182,11 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	id = "emergency_internals"
 	name = "Emergency Internals Package"
 	desc = "Breathing masks and portable oxygen supplies for atmospheric emergencies and evacuation."
-	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
-	cost = 6
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	cost = 3
 
 	contains = list(
-		/obj/item/clothing/mask/gas = 3,
 		/obj/item/clothing/mask/breath = 3,
-		/obj/item/tank/internals/emergency_oxygen = 3,
 		/obj/item/tank/internals/oxygen = 3
 	)
 
@@ -2078,23 +2212,25 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security
 	id = "security"
+	round_limit = 1
 	name = "Security Support Package"
 	desc = "Limited defensive equipment intended for protection of Central Command personnel and property."
 	category = CCPOST_SUPPLY_CATEGORY_SECURITY
-	cost = 15
+	cost = 12
 
 	contains = list(
 		/obj/item/clothing/suit/armor/vest/alt/sec/private = 2,
 		/obj/item/clothing/head/helmet/swat/nanotrasen = 2,
-		/obj/item/gun/energy/e_gun/mini = 2,
+		/obj/item/gun/energy/e_gun/mini = 1,
 		/obj/item/clothing/gloves/combat = 2
 	)
 
 /datum/ccpost_supply_package/security/base_defense
+	round_limit = 0
 	id = "security_base_defense"
 	name = "Base Defense Supplies Crate"
 	desc = "Deployable fortifications for Central Command perimeter and corridor defense: filled sandbags, barrier grenades, pneumatic airlock seals, and a security holobarrier projector."
-	cost = 12
+	cost = 10
 
 	contains = list(
 		/obj/item/stack/sheet/mineral/sandbags = 8,
@@ -2104,16 +2240,18 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 /datum/ccpost_supply_package/security/wt550_ammo
+	round_limit = 0
 	id = "security_wt550_ammo"
 	name = "WT-550 Ammunition Resupply"
 	desc = "Three replacement WT-550 magazines for the outpost armory."
-	cost = 5
+	cost = 4
 	contains = list(
 		/obj/item/ammo_box/magazine/wt550m9 = 3
 	)
 
 /datum/ccpost_supply_package/security/wt550_replacement
 	id = "security_wt550_replacement"
+	round_limit = 1
 	name = "WT-550 Replacement Weapon"
 	desc = "A replacement WT-550 autorifle and one spare magazine for an authorized outpost officer."
 	cost = 19
@@ -2123,10 +2261,11 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 /datum/ccpost_supply_package/security/forensics
+	round_limit = 0
 	id = "security_forensics"
 	name = "Forensic Investigation Package"
 	desc = "Investigation and evidence-processing equipment intended for examining security incidents, suspicious deliveries, and possible theft of corporate property."
-	cost = 7
+	cost = 5
 
 	contains = list(
 		/obj/item/detective_scanner = 1,
@@ -2139,6 +2278,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/nonlethal
 	id = "security_nonlethal"
+	round_limit = 2
 	name = "Non-Lethal Response Package"
 	desc = "An expanded set of incapacitation, restraint, and temporary containment equipment for installation security personnel."
 	cost = 11
@@ -2152,10 +2292,11 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 /datum/ccpost_supply_package/security/protective
+	round_limit = 0
 	id = "security_protective"
 	name = "Protective Equipment Package"
 	desc = "Three complete sets of standard security armor and protective accessories for reinforcing installation personnel."
-	cost = 11
+	cost = 8
 
 	contains = list(
 		/obj/item/clothing/suit/armor/vest = 3,
@@ -2164,6 +2305,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 /datum/ccpost_supply_package/security/riot_control
+	round_limit = 0
 	id = "security_riot_control"
 	name = "Riot Control Equipment Package"
 	desc = "Two complete riot protection sets, including reinforced armor, helmets, shields, and deployable barriers for defending installation access points."
@@ -2177,6 +2319,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	)
 
 /datum/ccpost_supply_package/security/containment
+	round_limit = 0
 	id = "security_containment"
 	name = "Biological Containment Package"
 	desc = "Protective suits, pathology equipment, and portable barriers for isolating suspected biological hazards."
@@ -2193,35 +2336,37 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/armory_energy
 	id = "security_armory_energy"
+	round_limit = 1
 	name = "Armory Energy Weapons Package"
-	desc = "A compact emergency armory containing energy, laser, ion and disabler weapons for serious threats."
-	cost = 24
+	desc = "Replacement energy, laser and disabler weapons for serious threats. Limited to one requisition per shift."
+	cost = 20
 
 	contains = list(
 		/obj/item/gun/energy/e_gun = 1,
 		/obj/item/gun/energy/laser = 1,
-		/obj/item/gun/energy/ionrifle = 1,
 		/obj/item/gun/energy/disabler = 1
 	)
 
 /datum/ccpost_supply_package/security/armory_ballistic
 	id = "security_armory_ballistic"
+	round_limit = 1
 	name = "Armory Ballistic Weapons Package"
-	desc = "Two standard riot shotguns with bandoliers and non-lethal ammunition for situations requiring armed defensive intervention."
-	cost = 22
+	desc = "A standard riot shotgun with a bandolier and non-lethal ammunition for situations requiring armed defensive intervention."
+	cost = 17
 
 	contains = list(
-		/obj/item/gun/ballistic/shotgun/riot = 2,
-		/obj/item/storage/belt/bandolier = 2,
+		/obj/item/gun/ballistic/shotgun/riot = 1,
+		/obj/item/storage/belt/bandolier = 1,
 		/obj/item/storage/box/rubbershot = 2,
 		/obj/item/storage/box/beanbag = 1
 	)
 
 /datum/ccpost_supply_package/security/armory_ammunition
+	round_limit = 0
 	id = "security_armory_ammunition"
 	name = "Armory Ammunition Resupply"
 	desc = "A reserve of standard shotgun ammunition, including rubber shot, beanbag rounds, and lethal shells. Intended for replenishing authorized defensive weapons."
-	cost = 7
+	cost = 5
 
 	contains = list(
 		/obj/item/storage/box/rubbershot = 2,
@@ -2231,20 +2376,21 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/crowd_control
 	id = "security_crowd_control"
+	round_limit = 2
 	name = "Crowd Control Supplies Package"
-	desc = "Flashbangs, tear gas, temporary barriers, portable barricades, and one Krav Maga close-quarters training implant for authorized outpost defensive duties."
-	cost = 16
+	desc = "Flashbangs, tear gas, temporary barriers, and portable barricades for authorized outpost defensive duties."
+	cost = 10
 
 	contains = list(
 		/obj/item/storage/box/flashbangs = 1,
 		/obj/item/storage/box/teargas = 1,
 		/obj/item/grenade/ccpost_barrier = 2,
-		/obj/item/holosign_creator/security = 1,
-		/obj/item/implanter/krav_maga = 1
+		/obj/item/holosign_creator/security = 1
 	)
 
 /datum/ccpost_supply_package/security/corporate_modsuit
 	id = "security_corporate_modsuit"
+	round_limit = 1
 	name = "Corporate Security MODsuit"
 	desc = "A Corporate-pattern MODsuit authorized for Central Command installation security personnel. Features reinforced corporate protective plating, integrated utility systems, and a rechargeable power core. Intended for replacement equipment or additional authorized security personnel."
 	cost = 40
@@ -2320,13 +2466,12 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/entertainment/morale_implants
 	id = "entertainment_morale_implants"
 	name = "Corporate Morale Implant Kit"
-	desc = "Three voluntary employee-augmentation implants: sponsorship, concealed storage, and an automated sad trombone. Corporate morale, now permanently installed."
+	desc = "Two voluntary employee-augmentation implants: sponsorship and an automated sad trombone. Corporate morale, now permanently installed."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
 	cost = 12
 
 	contains = list(
 		/obj/item/implanter/sponsorship = 1,
-		/obj/item/implanter/storage = 1,
 		/obj/item/implanter/sad_trombone = 1
 	)
 
@@ -2729,7 +2874,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_logistics, 32)
 /datum/ccpost_logistics_network/proc/create_shipment(package_id, requester_name, allow_contraband = FALSE)
 	var/datum/ccpost_supply_package/package = get_supply_package(package_id)
 
-	if(!package)
+	if(!package || get_requisition_failure(package, allow_contraband))
 		return null
 
 	if(package.contraband && !allow_contraband)
@@ -2922,6 +3067,255 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_logistics, 32)
 	refresh_logistics_outputs()
 
 	return TRUE
+
+
+/datum/ccpost_supply_package/entertainment/fishing_starter
+	id = "entertainment_fishing_starter"
+	name = "Recreational Fishing Starter Package"
+	desc = "A complete fishing and aquarium construction set. Includes portal components, construction materials and fish care supplies."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	cost = 6
+	contains = list(
+		/obj/item/fishing_rod = 1,
+		/obj/item/bait_can/worm = 1,
+		/obj/item/aquarium_kit = 1,
+		/obj/item/circuitboard/machine/fishing_portal_generator = 1,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/sheet/iron/ten = 3,
+		/obj/item/stack/sheet/glass = 10,
+		/obj/item/fish_feed = 1,
+		/obj/item/storage/fish_case = 1
+	)
+
+/datum/ccpost_supply_package/entertainment/fishing_deluxe
+	id = "entertainment_fishing_deluxe"
+	name = "Deluxe Fishing & Aquatics Package"
+	desc = "Advanced rod with renewable synthetic bait, fish analysis equipment, reference material and aquarium accessories."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	cost = 8
+	contains = list(
+		/obj/item/fishing_rod/tech = 1,
+		/obj/item/bait_can/worm/premium = 1,
+		/obj/item/fish_analyzer = 1,
+		/obj/item/book/manual/fish_catalog = 1,
+		/obj/item/storage/box/aquarium_props = 1,
+		/obj/item/fish_feed = 1,
+		/obj/item/storage/fish_case = 2
+	)
+
+// Regional inspection consignments use only ordinary, noncombat goods.
+// The declared type/quantity counts and original stamped manifest remain authoritative.
+/obj/structure/closet/crate/ccpost_freight/inspection
+	name = "Regional freight inspection consignment"
+	desc = "A consignment awaiting installation Security clearance. Return the declared goods and stamped original manifest, then certify it with your registered Security ID at the Logistics Terminal."
+	var/declared_total = 0
+	var/list/declared_counts = list()
+	var/datum/weakref/manifest_ref
+	var/datum/weakref/certifying_mind
+	var/has_discrepancy = FALSE
+	var/inspection_arrived = FALSE
+
+/obj/structure/closet/crate/ccpost_freight/inspection/after_open(mob/living/user, force)
+	. = ..()
+	certifying_mind = null
+
+/obj/structure/closet/crate/ccpost_freight/inspection/proc/manifest_valid()
+	var/obj/item/paper/manifest = manifest_ref?.resolve()
+	if(!manifest || QDELETED(manifest) || manifest.loc != src || length(contents) != declared_total + 1 || (src.manifest && src.manifest != manifest))
+		return FALSE
+	var/list/actual_counts = list()
+	for(var/atom/movable/item as anything in contents)
+		if(item == manifest)
+			continue
+		if(!isitem(item) || length(item.contents) || !declared_counts[item.type])
+			return FALSE
+		actual_counts[item.type] = (actual_counts[item.type] || 0) + 1
+	for(var/item_type in declared_counts)
+		if(actual_counts[item_type] != declared_counts[item_type])
+			return FALSE
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+	if(!sheet || !islist(manifest.raw_stamp_data))
+		return FALSE
+	var/stamp_class = sheet.icon_class_name("stamp-centcom")
+	for(var/datum/paper_stamp/stamp as anything in manifest.raw_stamp_data)
+		if(istype(stamp) && stamp.class == stamp_class)
+			return TRUE
+	return FALSE
+
+/obj/structure/closet/crate/ccpost_freight/inspection/proc/ready_for_return()
+	return inspection_arrived && !opened && certifying_mind?.resolve() && manifest_valid()
+
+/datum/ccpost_logistics_network/proc/active_inspection_officer()
+	for(var/mob/living/carbon/human/person as anything in GLOB.mob_living_list)
+		if(!ishuman(person) || !person.client || person.stat == DEAD || !istype(get_area(person), /area/ruin/space/has_grav/ccpost))
+			continue
+		var/datum/ccpost_hr_employee/record = GLOB.ccpost_hr_service?.employee_for(person)
+		if(record?.employee_role == "Outpost Security Officer")
+			return person
+	return null
+
+/datum/ccpost_logistics_network/proc/schedule_inspection()
+	if(inspection_timer_pending || GLOB.ccpost_outpost_signal_lost)
+		return
+	inspection_timer_pending = TRUE
+	addtimer(CALLBACK(src, PROC_REF(inspection_tick)), 30 SECONDS)
+
+/datum/ccpost_logistics_network/proc/inspection_tick()
+	inspection_timer_pending = FALSE
+	if(GLOB.ccpost_outpost_signal_lost || !length(inbound_spawns))
+		return
+	var/obj/structure/closet/crate/ccpost_freight/inspection/current = active_inspection?.resolve()
+	if(!current && active_inspection)
+		clear_inspection("Consignment lost")
+	else if(current && world.time >= inspection_due_at)
+		var/was_in_transit = inspection_inbound || inspection_outbound
+		current.returnable = FALSE
+		clear_inspection("Consignment clearance expired")
+		if(was_in_transit && length(unload_points))
+			var/obj/effect/ccpost_freight_point/inbound_unload/point = pick(unload_points)
+			if(get_turf(point))
+				current.forceMove(get_turf(point))
+	else if(current && inspection_lane_deadline && world.time >= inspection_lane_deadline)
+		// A stalled lane must not lock all freight operations for the rest of the shift.
+		var/obj/effect/ccpost_freight_point/inbound_unload/point = length(unload_points) ? pick(unload_points) : null
+		if(inspection_inbound)
+			set_ccpost_conveyor_state(CCPOST_FREIGHT_INBOUND_ID, FALSE)
+			inspection_inbound = FALSE
+			inbound_lane_busy = FALSE
+		else if(inspection_outbound)
+			set_ccpost_conveyor_state(CCPOST_FREIGHT_OUTBOUND_ID, FALSE)
+			inspection_outbound = FALSE
+			outbound_lane_busy = FALSE
+		inspection_lane_deadline = 0
+		// A failed transit is not a successful delivery. Retain accessible goods without paying rewards.
+		current.returnable = FALSE
+		clear_inspection("Freight transit interrupted")
+		if(point && get_turf(point))
+			current.forceMove(get_turf(point))
+	var/mob/living/carbon/human/officer = active_inspection_officer()
+	if(!active_inspection)
+		if(!officer)
+			inspection_due_at = 0
+		else if(!inspection_due_at)
+			inspection_due_at = world.time + rand(5 MINUTES, 8 MINUTES)
+		else if(world.time >= inspection_due_at && !inbound_lane_busy)
+			spawn_inspection(officer)
+	schedule_inspection()
+
+/datum/ccpost_logistics_network/proc/spawn_inspection(mob/living/carbon/human/officer)
+	if(GLOB.ccpost_outpost_signal_lost || !officer || active_inspection || inbound_lane_busy || !length(unload_points) || !length(outbound_load_points) || !length(return_receivers))
+		return FALSE
+	var/obj/effect/ccpost_freight_point/inbound_spawn/point = pick(inbound_spawns)
+	var/turf/landing = get_turf(point)
+	var/obj/effect/ccpost_freight_point/inbound_unload/unload = pick(unload_points)
+	var/turf/unload_turf = get_turf(unload)
+	if(!unload_turf || (locate(/obj/structure/closet/crate) in unload_turf))
+		return FALSE
+	if(!landing || (locate(/obj/structure/closet/crate) in landing))
+		return FALSE
+	// Flat, ordinary items only. No weapons, ammunition, implants, explosives, Syndicate or advanced equipment.
+	var/static/list/civilian_profiles = list(
+		"Office supplies" = list(/obj/item/pen, /obj/item/paper, /obj/item/reagent_containers/cup/glass/mug),
+		"Maintenance supplies" = list(/obj/item/wrench, /obj/item/screwdriver, /obj/item/crowbar),
+		"Personnel supplies" = list(/obj/item/clothing/shoes/laceup, /obj/item/binoculars, /obj/item/reagent_containers/cup/glass/mug)
+	)
+	var/static/list/civilian_goods = list(/obj/item/pen, /obj/item/paper, /obj/item/reagent_containers/cup/glass/mug, /obj/item/wrench, /obj/item/screwdriver, /obj/item/crowbar, /obj/item/binoculars, /obj/item/clothing/shoes/laceup)
+	var/profile = pick(civilian_profiles)
+	var/list/profile_goods = civilian_profiles[profile]
+	var/obj/structure/closet/crate/ccpost_freight/inspection/crate = new(landing)
+	inspection_number++
+	crate.shipment_code = "FI-[inspection_number]"
+	crate.name = "Regional inspection consignment ([crate.shipment_code])"
+	var/list/manifest_counts = list()
+	for(var/i in 1 to rand(3, 6))
+		var/item_type = pick(profile_goods)
+		new item_type(crate)
+		crate.declared_total++
+		manifest_counts[item_type] = (manifest_counts[item_type] || 0) + 1
+	crate.declared_counts = manifest_counts.Copy()
+	if(prob(35))
+		crate.has_discrepancy = TRUE
+		var/extra_type = pick(civilian_goods)
+		new extra_type(crate)
+	var/obj/item/paper/manifest = new(crate)
+	crate.manifest_ref = WEAKREF(manifest)
+	manifest.name = "Regional Freight Manifest - [crate.shipment_code]"
+	var/report = ccpost_paper_header() + ccpost_paper_document_heading("Regional Freight Inspection", crate.shipment_code, "Security Clearance")
+	report += ccpost_paper_value_field("Origin", "Regional Logistics Hub")
+	report += ccpost_paper_value_field("Cargo profile", profile)
+	report += ccpost_paper_section("Declared Contents") + ccpost_paper_table_open()
+	report += ccpost_paper_table_row(list("Quantity", "Item"), TRUE)
+	for(var/item_type in manifest_counts)
+		report += ccpost_paper_table_row(list("[manifest_counts[item_type]]", initial(item_type:name)))
+	report += "</table>" + ccpost_paper_paragraph("Compare physical contents with the manifest. Remove undeclared goods and secure them as evidence. Stamp this original, return it inside the crate, close the crate, then open Regional Freight Inspections at the Logistics Terminal and select Swipe Security ID to certify it. Return the consignment via the outbound lane.") + ccpost_paper_stamp_area()
+	manifest.add_raw_text(report)
+	manifest.update_appearance()
+	active_inspection = WEAKREF(crate)
+	inspection_due_at = world.time + 20 MINUTES
+	inbound_lane_busy = TRUE
+	inspection_inbound = TRUE
+	inspection_lane_deadline = world.time + 2 MINUTES
+	if(!set_ccpost_conveyor_state(CCPOST_FREIGHT_INBOUND_ID, TRUE))
+		clear_inspection("Dispatch unavailable")
+		qdel(crate)
+		return FALSE
+	announce_freight_status("Regional inspection consignment [crate.shipment_code] dispatched for Security clearance.")
+	refresh_logistics_outputs()
+	return TRUE
+
+/datum/ccpost_logistics_network/proc/inspection_arrived(obj/structure/closet/crate/ccpost_freight/inspection/crate)
+	if(active_inspection?.resolve() != crate)
+		return
+	inspection_inbound = FALSE
+	inspection_lane_deadline = 0
+	inbound_lane_busy = FALSE
+	crate.inspection_arrived = TRUE
+	inspection_due_at = world.time + 20 MINUTES
+	announce_freight_status("Inspection consignment [crate.shipment_code] has arrived. Security clearance required.")
+	refresh_logistics_outputs()
+
+/datum/ccpost_logistics_network/proc/clear_inspection(result)
+	var/obj/structure/closet/crate/ccpost_freight/inspection/crate = active_inspection?.resolve()
+	var/reference = crate?.shipment_code || "FI-[inspection_number]"
+	inspection_history.Insert(1, "[reference]: [result] ([station_time_timestamp()])")
+	if(length(inspection_history) > 20)
+		inspection_history.Cut(21)
+	active_inspection = null
+	inspection_lane_deadline = 0
+	if(inspection_inbound)
+		set_ccpost_conveyor_state(CCPOST_FREIGHT_INBOUND_ID, FALSE)
+		inbound_lane_busy = FALSE
+		inspection_inbound = FALSE
+	if(inspection_outbound)
+		set_ccpost_conveyor_state(CCPOST_FREIGHT_OUTBOUND_ID, FALSE)
+		outbound_lane_busy = FALSE
+		inspection_outbound = FALSE
+	inspection_due_at = world.time + rand(8 MINUTES, 12 MINUTES)
+	refresh_logistics_outputs()
+
+/datum/ccpost_logistics_network/proc/finish_inspection(obj/structure/closet/crate/ccpost_freight/inspection/crate)
+	if(GLOB.ccpost_outpost_signal_lost || active_inspection?.resolve() != crate || !crate.ready_for_return())
+		// Return invalid freight to the accessible bay rather than strand it in the hidden receiver.
+		crate.certifying_mind = null
+		var/obj/effect/ccpost_freight_point/inbound_unload/point = length(unload_points) ? pick(unload_points) : null
+		if(point && get_turf(point))
+			crate.forceMove(get_turf(point))
+		announce_freight_status("Inspection freight rejected. Correct the contents and certification before returning it.")
+		return
+	var/datum/mind/inspector = crate.certifying_mind.resolve()
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.roster[REF(inspector)]
+	if(employee?.employee_role == "Outpost Security Officer")
+		employee.freight_inspections++
+		if(crate.has_discrepancy)
+			employee.freight_discrepancies++
+	var/reward = crate.has_discrepancy ? 4 : 3
+	credit_allocation(reward, "Regional freight clearance [crate.shipment_code]", employee?.employee_name || "INSTALLATION SECURITY")
+	announce_freight_status("Inspection consignment [crate.shipment_code] cleared and returned to Sector Logistics.")
+	clear_inspection("Cleared")
+	for(var/atom/movable/item as anything in crate.contents.Copy())
+		qdel(item)
+	qdel(crate)
 
 #undef CCPOST_FREIGHT_INBOUND_ID
 #undef CCPOST_FREIGHT_OUTBOUND_ID

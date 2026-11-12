@@ -1,3 +1,4 @@
+import './CCPostTheme.scss';
 import { Box, Button, Flex, Section, TextArea } from 'tgui-core/components';
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
@@ -228,14 +229,9 @@ export function CCPostHRPaper() {
   const { paper_color, paper_name, held_item_details, hr_revision } = data;
   const writeMode = canEdit(held_item_details);
 
-  if (!writeMode) {
-    const [inputFieldData, setInputFieldData] = useLocalState(
-      'inputFieldData',
-      {},
-    );
-    if (Object.keys(inputFieldData).length) {
-      setInputFieldData({});
-    }
+  const [inputFieldData, setInputFieldData] = useLocalState('inputFieldData', {});
+  if (!writeMode && Object.keys(inputFieldData).length) {
+    setInputFieldData({});
   }
 
   return (
@@ -245,7 +241,7 @@ export function CCPostHRPaper() {
       width={420}
       height={500 + (writeMode ? TEXTAREA_INPUT_HEIGHT : 0)}
     >
-      <Window.Content backgroundColor={paper_color}>
+      <Window.Content className="ccpost-hr-paper-polish" backgroundColor={paper_color}>
         <HRPaperPrimaryView key={hr_revision} />
       </Window.Content>
     </Window>

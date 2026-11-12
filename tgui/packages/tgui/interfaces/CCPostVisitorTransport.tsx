@@ -1,30 +1,17 @@
+/** Shared visitor departure and camera-consent retrieval interface. The backend enforces every authorization. */
+import { CCPostHeader } from './CCPostTheme';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Button,
-  Input,
-  LabeledList,
-  NoticeBox,
-  Section,
-  Stack,
-  Tabs,
-} from '../components';
-import { Window } from '../layouts';
+import { Box, Button, Input, LabeledList, NoticeBox, Section } from '../components';
+import { Layout, Window } from '../layouts';
 
-type TransportBeacon = {
-  ref: string;
-  name: string;
-  area: string;
-  coordinates: string;
-  availability?: string;
-};
-
+type Beacon = { ref: string; name: string; area: string; coordinates: string; availability?: string };
 type Data = {
+  retrieval_mode?: boolean | number;
+  outpost_offline?: boolean | number;
   read_only?: boolean | number;
   pad_linked?: boolean | number;
-  charging?: boolean | number;
   pad_busy?: boolean | number;
-  retrieval_mode?: boolean | number;
+  charging?: boolean | number;
   request_pending?: boolean | number;
   camera_active?: boolean | number;
   selected_target_name?: string;
@@ -43,432 +30,125 @@ type Data = {
   destination_state?: string;
   destination_status_text?: string;
   destination_ref?: string | null;
-  beacons?: TransportBeacon[];
+  beacons?: Beacon[];
 };
 
 export const CCPostVisitorTransport = () => {
   const { act, data } = useBackend<Data>();
-  const [tab, setTab] = useLocalState('ccpostVisitorTransportTab', 'transport');
-  const [manualOpen, setManualOpen] = useLocalState('ccpostVisitorTransportManual', false);
-  const [beaconFilter, setBeaconFilter] = useLocalState('ccpostVisitorBeaconFilter', '');
-
-  const {
-    retrieval_mode = false,
-    pad_busy = false,
-    request_pending = false,
-    camera_active = false,
-    selected_target_name = 'No visitor selected',
-    selected_target_area = '',
-    selected_target_valid = false,
-    invitation_cooldown_seconds = 0,
-    read_only = false,
-    pad_linked = false,
-    charging = false,
-    console_operational = true,
-    cooldown_seconds = 0,
-    status_message = '',
-    passenger_available = false,
-    passenger_name = 'No eligible passenger detected on the pad.',
-    destination_name = 'No destination selected',
-    destination_area = '',
-    destination_coordinates = '',
-    destination_valid = false,
-    destination_state = "missing",
-    destination_status_text = "",
-    destination_ref = null,
-    beacons = [],
-  } = data;
-
-  const observer = Boolean(read_only);
-  const padReady = Boolean(pad_linked);
-  const powered = Boolean(console_operational);
-  const isCharging = Boolean(charging);
-  const passengerReady = Boolean(passenger_available);
-  const beaconReady = Boolean(destination_valid);
-  const coolingDown = cooldown_seconds > 0;
-  const canOperate = !observer && powered && padReady && !Boolean(pad_busy);
-  const canTransport =
-    canOperate && !isCharging && !coolingDown && passengerReady && beaconReady;
-
-  const searchTerm = beaconFilter.trim().toLowerCase();
-  const filteredBeacons = beacons
-    .filter((beacon) =>
-      !searchTerm ||
-      `${beacon.name} ${beacon.area} ${beacon.coordinates}`
-        .toLowerCase()
-        .includes(searchTerm),
-    )
-    .slice()
-    .sort((a, b) => a.area.localeCompare(b.area) || a.name.localeCompare(b.name));
-
-  const systemStatus = !powered
-    ? 'OFFLINE'
-    : !padReady
-      ? 'PAD NOT LINKED'
-      : isCharging
-        ? 'CHARGING'
-        : coolingDown
-          ? 'COOLDOWN'
-          : canTransport
-            ? 'READY'
-            : 'STANDBY';
-
-  const systemStatusColor = !powered || !padReady
-    ? 'bad'
-    : isCharging || coolingDown
-      ? 'average'
-      : canTransport
-        ? 'good'
-        : 'label';
-
-  if (Boolean(retrieval_mode)) {
-    const canRequest = canOperate && !isCharging && !request_pending &&
-      !coolingDown && invitation_cooldown_seconds <= 0 && Boolean(selected_target_valid);
-    return (
-      <Window title="Central Command Visitor Retrieval" width={650} height={535} theme="ntos">
-        <Window.Content scrollable>
-          <Stack vertical>
-            {observer && <Stack.Item><NoticeBox>
-              OBSERVER MODE: Read-only. Visitor retrieval requires authorized outpost personnel.
-            </NoticeBox></Stack.Item>}
-            <Stack.Item>
-              <Section title="Visitor Retrieval Network">
-                Supervised, voluntary transfer from a camera-visible station location to
-                the outpost visitor reception pad. No station teleporter required.
-              </Section>
-            </Stack.Item>
-            <Stack.Item>
-              <Section title="System Status">
-                <LabeledList>
-                  <LabeledList.Item label="Telepad">
-                    <Box color={!padReady || pad_busy ? 'bad' : 'good'}>
-                      {!padReady ? 'NOT LINKED' : pad_busy ? 'IN USE' : 'AVAILABLE'}
-                    </Box>
-                  </LabeledList.Item>
-                  <LabeledList.Item label="System">
-                    {!powered ? 'OFFLINE' : isCharging ? 'CHARGING (5 SECONDS)' :
-                      request_pending ? 'AWAITING CONSENT (UP TO 20 SECONDS)' :
-                        coolingDown ? `COOLDOWN (${cooldown_seconds}s)` : 'STANDBY'}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Camera View">
-                    {camera_active ? 'ACTIVE' : 'INACTIVE'}
-                  </LabeledList.Item>
-                  {invitation_cooldown_seconds > 0 && (
-                    <LabeledList.Item label="Visitor Invitation Cooldown">
-                      {invitation_cooldown_seconds}s remaining
-                    </LabeledList.Item>
-                  )}
-                </LabeledList>
-              </Section>
-            </Stack.Item>
-            <Stack.Item>
-              <Section title="Selected Visitor" buttons={
-                <Button icon="times" disabled={observer || isCharging || request_pending ||
-                  !Boolean(selected_target_name && selected_target_name !== 'No visitor selected')}
-                  onClick={() => act('clear_target')}>Clear Selection</Button>
-              }>
-                <LabeledList>
-                  <LabeledList.Item label="Name">{selected_target_name}</LabeledList.Item>
-                  <LabeledList.Item label="Station Area">
-                    {selected_target_area || 'Not selected'}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Eligibility">
-                    <Box color={selected_target_valid ? 'good' : 'label'}>
-                      {selected_target_valid ? 'CAMERA VISIBLE / ELIGIBLE' : 'NO ELIGIBLE VISITOR'}
-                    </Box>
-                  </LabeledList.Item>
-                </LabeledList>
-              </Section>
-            </Stack.Item>
-            <Stack.Item>
-              <Section title="Retrieval Authorization">
-                <Stack>
-                  <Stack.Item grow>
-                    <Button fluid icon="video" disabled={!canOperate || isCharging || request_pending}
-                      onClick={() => act('open_camera')}>
-                      Open Station Camera View
-                    </Button>
-                  </Stack.Item>
-                  <Stack.Item grow>
-                    <Button fluid icon="user-check" color="good" disabled={!canRequest}
-                      onClick={() => act('request_retrieval')}>
-                      Request Visitor Retrieval
-                    </Button>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button icon="times" color="average" disabled={observer || !isCharging}
-                      onClick={() => act('cancel_retrieval')}>
-                      Cancel
-                    </Button>
-                  </Stack.Item>
-                </Stack>
-                <Box color="label" mt={1}>
-                  In camera view, use the <Box inline bold>Select Visitor</Box> action to pick
-                  an eligible person, then return here to send the invitation. Declines, timeouts, and completed retrievals trigger a shared
-                  25-second recalibration cooldown across all retrieval consoles.
-                </Box>
-                {!!status_message && <Box mt={1} color="label">{status_message}</Box>}
-              </Section>
-            </Stack.Item>
-          </Stack>
-        </Window.Content>
-      </Window>
-    );
-  }
+  const [search, setSearch] = useLocalState('ccpostVisitorBeaconFilter', '');
+  const [manualOpen, setManualOpen] = useLocalState('ccpostVisitorManual', false);
+  const retrieval = Boolean(data.retrieval_mode);
+  const offline = Boolean(data.outpost_offline);
+  const observer = Boolean(data.read_only);
+  const connected = Boolean(data.pad_linked);
+  const busy = Boolean(data.pad_busy);
+  const charging = Boolean(data.charging);
+  const powered = Boolean(data.console_operational) && !offline;
+  const cooling = (data.cooldown_seconds || 0) > 0;
+  const pending = Boolean(data.request_pending);
+  const selectedVisitor = Boolean(data.selected_target_valid);
+  const canOperate = !observer && powered && connected && !busy;
+  const canRetrieval = canOperate && !charging && !pending && !cooling && selectedVisitor && !(data.invitation_cooldown_seconds || 0);
+  const canDeparture = canOperate && !charging && !cooling && Boolean(data.passenger_available) && Boolean(data.destination_valid);
+  const beacons = (data.beacons || []).filter((beacon) =>
+    `${beacon.name} ${beacon.area} ${beacon.coordinates}`.toLowerCase().includes(search.trim().toLowerCase()),
+  ).sort((a, b) => a.area.localeCompare(b.area) || a.name.localeCompare(b.name));
 
   return (
-    <Window
-      title="Central Command Visitor Transport"
-      width={690}
-      height={650}
-      theme="ntos"
-    >
-      <Window.Content scrollable>
-        <Stack vertical>
-          {observer && (
-            <Stack.Item>
-              <NoticeBox>
-                OBSERVER MODE: Read-only. Transport controls remain restricted to
-                authorized Central Command personnel.
-              </NoticeBox>
-            </Stack.Item>
-          )}
-
-          <Stack.Item>
-            <Section
-              title="Visitor Transport Control"
-              buttons={
-                <Button
-                  icon="question-circle"
-                  onClick={() => setManualOpen(!manualOpen)}
-                >
-                  {manualOpen ? 'Close Manual' : 'Operating Manual'}
-                </Button>
-              }
-            >
-              <Box>
-                Supervised visitor departure via registered station tracking
-                beacons. Outpost personnel are not eligible for transport.
-              </Box>
-              {manualOpen && (
-                <Box mt={1}>
-                  <Box bold>VISITOR TRANSPORT PROCEDURE</Box>
-                  <Box mt={0.5}>
-                    Select an available station tracking beacon, direct one
-                    visitor onto the linked pad, then initiate transport. The
-                    five-second charging sequence is cancelled if the passenger
-                    leaves or the selected destination becomes unavailable.
-                  </Box>
-                  <Box mt={0.5} color="label">
-                    Destination selection and transport activation require an
-                    authorized Central Command outpost ID.
-                  </Box>
-                </Box>
+    <Window title={`Central Command Visitor ${retrieval ? 'Retrieval' : 'Transport'}`} theme="ntos" width={800} height={665}>
+      <Window.Content className="ccpost-theme ccpost-theme--security ccpost-admin-v2 CCPostVisitorWorkspace">
+        <CCPostHeader title={retrieval ? 'Visitor Retrieval' : 'Visitor Transport'} division="CENTRAL COMMAND" status="AUTHORIZED TRANSPORT NETWORK" />
+          <Layout.Content scrollable className="CCPostAdminBody">
+        {(observer || offline) && <NoticeBox danger={offline}>
+          {offline ? 'INSTALLATION OFFLINE. Visitor operations are unavailable.' : 'OBSERVER MODE. Controls require an authorized outpost ID.'}
+        </NoticeBox>}
+        <div className="CCPostMetricRow">
+          <div className="CCPostMetric"><div className="CCPostMetric__value">{!powered ? 'OFFLINE' : connected ? busy ? 'OCCUPIED' : 'LINKED' : 'UNLINKED'}</div><div className="CCPostMetric__label">RECEPTION PAD</div></div>
+          <div className="CCPostMetric"><div className="CCPostMetric__value">{charging ? 'CHARGING' : pending ? 'CONSENT' : cooling ? 'COOLDOWN' : 'STANDBY'}</div><div className="CCPostMetric__label">TRANSFER STATE</div></div>
+          <div className="CCPostMetric"><div className="CCPostMetric__value">{data.cooldown_seconds || 0}s</div><div className="CCPostMetric__label">RECALIBRATION</div></div>
+        </div>
+        <div className="CCPostWorkspaceToolbar">
+          <div><strong>{retrieval ? 'Camera-Supervised Visitor Retrieval' : 'Beacon-Guided Visitor Departure'}</strong><span>SELECT / VERIFY / AUTHORIZE</span></div>
+          <Button icon="question-circle" onClick={() => setManualOpen(!manualOpen)}>{manualOpen ? 'Hide Procedure' : 'Operating Procedure'}</Button>
+        </div>
+        {manualOpen && <Section title="Transfer Protocol">
+          {retrieval
+            ? 'Select a person using the action in the station camera view. Retrieval requires that person to be client-controlled, eligible, and to explicitly consent before a five-second transfer can begin. Respect declined invitations and do not repeatedly solicit a visitor. Security may screen arriving visitors and restrict access.'
+            : 'Select an enabled station tracking beacon, verify one eligible visitor is standing on the reception pad, and authorize transport. Destinations are validated again during the five-second charging sequence.'}
+        </Section>}
+        <div className="CCPostVisitorWorkspace__columns">
+          <div>
+            <Section title={retrieval ? '01 / SELECT VISITOR' : '01 / SELECT DESTINATION'}>
+              {retrieval ? (
+                <>
+                  <Button icon="video" fluid disabled={!canOperate || charging || pending} onClick={() => act('open_camera')}>
+                    {data.camera_active ? 'Return to Station Camera' : 'Open Station Camera'}
+                  </Button>
+                  <Box mt={1} color="label">Use the camera's Select Visitor action. Global crew selection is not available.</Box>
+                  <LabeledList>
+                    <LabeledList.Item label="Selected Person">{data.selected_target_name || 'No visitor selected'}</LabeledList.Item>
+                    <LabeledList.Item label="Station Location">{data.selected_target_area || 'Unassigned'}</LabeledList.Item>
+                  </LabeledList>
+                  <Button icon="times" disabled={observer || pending || charging || !data.selected_target_name || data.selected_target_name === 'No visitor selected'} onClick={() => act('clear_target')}>Clear Selection</Button>
+                </>
+              ) : (
+                <>
+                  <Input fluid placeholder="Find a station beacon" value={search} onChange={setSearch} />
+                  <div className="CCPostVisitorWorkspace__beacons">
+                    {beacons.length ? beacons.map((beacon) => (
+                      <button type="button" className={`CCPostVisitorWorkspace__beacon ${data.destination_ref === beacon.ref ? 'CCPostVisitorWorkspace__beacon--active' : ''}`}
+                        key={beacon.ref} disabled={!canOperate || charging} onClick={() => act('select_beacon', { beacon_ref: beacon.ref })}>
+                        <strong>{beacon.name && beacon.name.toLowerCase() !== "tracking beacon" ? beacon.name : beacon.area || "Tracking beacon"}</strong>
+                        <span>{beacon.name && beacon.name.toLowerCase() !== "tracking beacon" ? beacon.area : beacon.name || "Tracking beacon"} · {beacon.availability || 'unknown'}</span>
+                        <small>{beacon.coordinates}</small>
+                      </button>
+                    )) : <Box color="label">No tracking beacons match the search.</Box>}
+                  </div>
+                  <Button icon="times" disabled={!data.destination_ref || !canOperate || charging} onClick={() => act('clear_beacon')}>Clear Destination</Button>
+                </>
               )}
             </Section>
-          </Stack.Item>
-
-          <Stack.Item>
-            <Tabs fluid>
-              <Tabs.Tab
-                icon="exchange-alt"
-                selected={tab === 'transport'}
-                onClick={() => setTab('transport')}
-              >
-                Transport Control
-              </Tabs.Tab>
-              <Tabs.Tab
-                icon="map-marker-alt"
-                selected={tab === 'beacons'}
-                onClick={() => setTab('beacons')}
-              >
-                Tracking Beacons ({beacons.length})
-              </Tabs.Tab>
-            </Tabs>
-          </Stack.Item>
-
-          {tab === 'transport' && (
-            <>
-              <Stack.Item>
-                <Section title="System Status">
-                  <LabeledList>
-                    <LabeledList.Item label="Transport Status">
-                      <Box bold color={systemStatusColor}>
-                        {systemStatus}
-                      </Box>
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Linked Telepad">
-                      <Box color={padReady ? 'good' : 'bad'}>
-                        {padReady ? 'CONNECTED' : 'NOT DETECTED'}
-                      </Box>
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Passenger">
-                      <Box color={passengerReady ? 'good' : 'label'}>
-                        {passenger_name}
-                      </Box>
-                    </LabeledList.Item>
-                    {isCharging && (
-                      <LabeledList.Item label="Charging">
-                        <Box bold color="average">
-                          Transport sequence in progress (5 seconds)
-                        </Box>
-                      </LabeledList.Item>
-                    )}
-                    {coolingDown && !isCharging && (
-                      <LabeledList.Item label="Cooldown">
-                        {cooldown_seconds}s remaining
-                      </LabeledList.Item>
-                    )}
-                  </LabeledList>
-                </Section>
-              </Stack.Item>
-
-              <Stack.Item>
-                <Section
-                  title="Selected Destination"
-                  buttons={
-                    <>
-                      <Button
-                        icon="times"
-                        disabled={!destination_ref || !canOperate || isCharging}
-                        onClick={() => act('clear_beacon')}
-                      >
-                        Deselect Beacon
-                      </Button>
-                      <Button
-                        icon="map-marker-alt"
-                        onClick={() => setTab('beacons')}
-                      >
-                        {destination_ref ? 'Change Beacon' : 'Select Beacon'}
-                      </Button>
-                    </>
-                  }
-                >
-                  <LabeledList>
-                    <LabeledList.Item label="Tracking Beacon">
-                      <Box bold>{destination_name}</Box>
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Station Area">
-                      {destination_area || 'Not selected'}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Coordinates">
-                      {destination_coordinates || 'Not selected'}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Lock Status">
-                      <Box color={beaconReady ? 'good' : 'bad'}>
-                        {beaconReady
-                          ? destination_state === 'adjacent'
-                            ? 'ADJACENT LANDING AVAILABLE'
-                            : 'VALID STATION DESTINATION'
-                          : destination_state === 'occupied'
-                            ? 'TEMPORARILY OCCUPIED'
-                            : 'NO VALID DESTINATION'}
-                      </Box>
-                    </LabeledList.Item>
-                  </LabeledList>
-                  {destination_ref && !beaconReady && (
-                    <NoticeBox danger mt={1}>
-                      {destination_status_text}
-                    </NoticeBox>
-                  )}
-                </Section>
-              </Stack.Item>
-
-              <Stack.Item>
-                <Section title="Transport Authorization">
-                  <Stack>
-                    <Stack.Item grow>
-                      <Button
-                        fluid
-                        icon="exchange-alt"
-                        color="good"
-                        disabled={!canTransport}
-                        onClick={() => act('begin_transport')}
-                      >
-                        Initiate Visitor Transport
-                      </Button>
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Button
-                        icon="times"
-                        color="average"
-                        disabled={!canOperate || !isCharging}
-                        onClick={() => act('cancel_transport')}
-                      >
-                        Cancel Transport
-                      </Button>
-                    </Stack.Item>
-                  </Stack>
-                  {status_message && (
-                    <Box mt={1} color="label">
-                      Last system message: {status_message}
-                    </Box>
-                  )}
-                </Section>
-              </Stack.Item>
-            </>
-          )}
-
-          {tab === 'beacons' && (
-            <Stack.Item>
-              <Section title="Registered Station Tracking Beacons">
-                <Box mb={1} color="label">
-                  Enabled station tracking beacons are listed, including temporarily
-                  occupied destinations. The landing tile is checked again
-                  before transport.
-                </Box>
-                <Box mb={1}>
-                  <Input
-                    fluid
-                    placeholder="Search beacon name, area or coordinates"
-                    value={beaconFilter}
-                    onChange={setBeaconFilter}
-                  />
-                </Box>
-                {!beacons.length ? (
-                  <NoticeBox danger>
-                    No safe station tracking beacons are currently available.
-                  </NoticeBox>
-                ) : !filteredBeacons.length ? (
-                  <NoticeBox>No tracking beacons match this search.</NoticeBox>
+          </div>
+          <div>
+            <Section title="02 / VERIFY TRANSFER">
+              <LabeledList>
+                <LabeledList.Item label="Receiver Pad">{!connected ? 'NOT LINKED' : busy ? 'BUSY' : 'AVAILABLE'}</LabeledList.Item>
+                {retrieval ? (
+                  <>
+                    <LabeledList.Item label="Visitor Eligibility"><Box color={selectedVisitor ? 'good' : 'bad'}>{selectedVisitor ? 'ELIGIBLE' : 'NOT VERIFIED'}</Box></LabeledList.Item>
+                    <LabeledList.Item label="Consent State">{pending ? 'INVITATION PENDING' : charging ? 'ACCEPTED / TRANSFERRING' : 'NOT REQUESTED'}</LabeledList.Item>
+                    <LabeledList.Item label="Invitation Lockout">{data.invitation_cooldown_seconds || 0}s</LabeledList.Item>
+                  </>
                 ) : (
-                  <Stack vertical>
-                    {filteredBeacons.map((beacon) => {
-                      const selected = destination_ref === beacon.ref;
-                      return (
-                        <Stack.Item key={beacon.ref}>
-                          <Section
-                            title={`${beacon.name} | ${beacon.area}`}
-                            buttons={
-                              <Button
-                                icon={selected ? 'check' : 'location-arrow'}
-                                color={selected ? 'good' : undefined}
-                                disabled={observer || !powered || !padReady || isCharging}
-                                onClick={() => {
-                                  act('select_beacon', { beacon_ref: beacon.ref });
-                                  setTab('transport');
-                                }}
-                              >
-                                {selected ? 'Selected' : 'Select Beacon'}
-                              </Button>
-                            }
-                          >
-                            <Box color="label">
-                              Coordinates: {beacon.coordinates}
-                              {beacon.availability === 'occupied' && ' | Temporarily occupied'}
-                              {beacon.availability === 'adjacent' && ' | Adjacent landing available'}
-                            </Box>
-                          </Section>
-                        </Stack.Item>
-                      );
-                    })}
-                  </Stack>
+                  <>
+                    <LabeledList.Item label="Passenger"><Box color={data.passenger_available ? 'good' : 'bad'}>{data.passenger_name || 'NONE'}</Box></LabeledList.Item>
+                    <LabeledList.Item label="Destination">{data.destination_name || 'NONE'}</LabeledList.Item>
+                    <LabeledList.Item label="Location">{data.destination_area || 'UNASSIGNED'}</LabeledList.Item>
+                    <LabeledList.Item label="Landing Site"><Box color={data.destination_valid ? 'good' : 'bad'}>{data.destination_valid ? 'VALID' : data.destination_status_text || 'UNAVAILABLE'}</Box></LabeledList.Item>
+                  </>
                 )}
-              </Section>
-            </Stack.Item>
-          )}
-        </Stack>
-      </Window.Content>
+              </LabeledList>
+            </Section>
+            <Section title="03 / AUTHORIZE TRANSFER">
+              {retrieval ? (
+                <>
+                  <Button icon="user-check" fluid color="good" disabled={!canRetrieval} onClick={() => act('request_retrieval')}>Request Voluntary Retrieval</Button>
+                  <Box mt={1} color="label">The selected visitor must accept the invitation before a transfer can occur.</Box>
+                  <Button mt={1} icon="times" color="average" disabled={observer || !charging} onClick={() => act('cancel_retrieval')}>Cancel Active Retrieval</Button>
+                </>
+              ) : (
+                <>
+                  <Button icon="exchange-alt" color="good" fluid disabled={!canDeparture} onClick={() => act('begin_transport')}>Initiate Visitor Transport</Button>
+                  <Button mt={1} icon="times" color="average" disabled={!canOperate || !charging} onClick={() => act('cancel_transport')}>Cancel Transport</Button>
+                </>
+              )}
+              <Box mt={2} color="label">{data.status_message || 'Awaiting authenticated transfer authorization.'}</Box>
+            </Section>
+          </div>
+        </div>
+      
+          </Layout.Content>
+        </Window.Content>
     </Window>
   );
 };

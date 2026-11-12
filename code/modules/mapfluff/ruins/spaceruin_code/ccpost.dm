@@ -31,13 +31,13 @@
 	<br>
 	<br>Liaisons are expected to monitor relevant station activity, maintain professional contact with station Command, review incoming sector requests, verify information and submit accurate findings.
 	<br>
-	<br>This posting grants oversight responsibilities. It does not authorize Liaisons to assume operational command of station departments or interfere unnecessarily with station affairs.
+	<br>This posting grants oversight responsibilities. It does not authorize Liaisons to assume operational command of station departments or interfere unnecessarily with station affairs. Consult existing records before requesting information. A request is not an order. Do not duplicate inquiries or interrupt essential operations; document unavailable cooperation and defer nonessential requests.
 	<br>
 	<br><b>3. SECURITY RESPONSIBILITIES</b>
 	<br>
 	<br>The assigned Central Command Security Officer is responsible for maintaining the security of this installation, its personnel, restricted facilities and corporate property.
 	<br>
-	<br>The officer is authorized to establish reasonable access controls, screen visitors, inspect suspicious freight, investigate incidents and respond to threats occurring aboard the outpost.
+	<br>The officer is authorized to establish reasonable access controls, screen visitors, inspect regional freight and suspicious deliveries, investigate incidents and respond to threats occurring aboard the outpost.
 	<br>
 	<br>These responsibilities extend to all visitors, including station personnel and members of Station Command. Visitors must comply with legitimate installation security instructions regardless of their station rank.
 	<br>
@@ -49,7 +49,7 @@
 	<br>
 	<br>The Liaison oversees the outpost's administrative operations and coordinates its official activities. The Security Officer exercises operational responsibility for installation security.
 	<br>
-	<br>Both positions are expected to cooperate, communicate significant incidents and respect their respective responsibilities. Disagreements requiring higher authorization are to be referred to Central Command.
+	<br>Both positions are expected to cooperate, communicate significant incidents and respect their respective responsibilities. Emergency armory equipment is reserved for legitimate defense and should be returned when no longer required. Disagreements requiring higher authorization are to be referred to Central Command.
 	<br>
 	<br><b>5. VISITORS AND CORPORATE PROPERTY</b>
 	<br>
@@ -57,7 +57,16 @@
 	<br>
 	<br>Legitimate directives from appropriately authorized Central Command personnel remain binding. All staff must comply with applicable corporate regulations.
 	<br>
-	<br><b>6. GENERAL CONDUCT</b>
+	<br>Visitor retrieval is voluntary. Respect declined invitations and do not repeatedly solicit the same individual. Protect confidential credentials and records.
+	<br>
+	<br><b>6. REGIONAL FREIGHT INSPECTION</b>
+	<br>Security shall compare incoming inspection consignments against the official manifest. Remove undeclared goods and secure them as evidence; do not appropriate them. Stamp the original manifest, return it inside the crate with the declared goods, and certify the consignment with your registered Security identification before dispatching it through the outbound freight lane. These consignments are not discretionary supplies.
+	<br>
+	<br><b>7. CLASSIFIED ASSET DENIAL CONTINGENCY</b>
+	<br>The NT-ADP-7 Asset Denial Device is a classified emergency contingency intended to prevent unauthorized acquisition of sensitive corporate assets. The authentication disk must remain secured at all times in the personal custody of authorized personnel. Do not leave it unattended. Keep associated authorization information separately secured and report suspected loss, theft or compromise immediately.
+	<br>Asset denial is a measure of last resort. Activation is prohibited during ordinary security incidents, administrative disputes or routine evacuation. If the device is activated without authorization, prioritize preventing detonation where safely practicable, notify Central Command and prepare for emergency evacuation.
+	<br>
+	<br><b>8. GENERAL CONDUCT</b>
 	<br>
 	<br>Remain aboard the installation unless official duties or an emergency reasonably require otherwise. Protect confidential information, preserve relevant records and avoid unnecessary interference with station operations.
 	<br>
@@ -69,6 +78,35 @@
 	<br>CENTRAL COMMAND
 	<br>SECTOR OVERSIGHT DEPARTMENT
 	"}
+
+// Recovered lower-deck data printout from the destroyed Syndicate vessel.
+// Place /obj/item/paper/fluff/ruins/ccpost/syndicate_wreck_log on a turf
+// beside the damaged terminal in the surviving lower half of the wreck.
+/obj/item/paper/fluff/ruins/ccpost/syndicate_wreck_log
+	name = "recovered SSV EAVESDROPPER mission log"
+	desc = "A damaged Syndicate operations printout recovered from a wrecked vessel. The bottom of the record is scorched and abruptly cut off."
+
+/obj/item/paper/fluff/ruins/ccpost/syndicate_wreck_log/Initialize(mapload)
+	. = ..()
+	add_raw_text({"<center><b>SYNDICATE OPERATIONS DIVISION</b><br><b>RECOVERED MISSION LOG: SSV EAVESDROPPER</b></center><hr>
+	<b>Operation:</b> SILENT EMBER<br>
+	<b>Target:</b> NanoTrasen Central Command Liaison Outpost<br>
+	<b>Objective:</b> Infiltrate installation, recover classified intelligence, and deploy nuclear payload.<br><br>
+	<b>Assigned Operatives:</b><br>
+	Agent Crimson, Team Leader<br>
+	Agent Crowbar, Demolitions Specialist<br>
+	Agent Cobalt, Infiltration Specialist<br>
+	Agent Dagger, Weapons Specialist<br>
+	Agent Wrench, Pilot and Engineer<br><hr>
+	<b>23:43 | Agent Wrench:</b> Approach vector confirmed. Outpost looks lightly staffed. Awaiting final order to breach.<br>
+	<b>23:45 | Agent Crimson:</b> No open broadcasts. We take the records first, then plant the charge. Maintain radio discipline.<br>
+	<b>23:47 | Agent Cobalt:</b> Automated perimeter defenses just acquired us. Multiple turret contacts. This is NOT a passive installation.<br>
+	<b>23:48 | Agent Wrench:</b> First impacts across upper gun deck. Returning fire. Control link still responding.<br>
+	<b>23:49 | Agent Dagger:</b> They're tracking our course correction. Crowbar, Cobalt, answer your damn radios.<br>
+	<b>23:50 | Agent Crimson:</b> Upper hull is gone. Crowbar and Cobalt are unresponsive. Abort the boarding plan. Wrench, get us out.<br>
+	<b>23:51 | Agent Wrench:</b> ANOTHER SALVO INCOMING! BRACE FOR IMPA :::<br><hr>
+	<small>DATA EXTRACTION INCOMPLETE. ORIGINAL SOURCE MEDIUM LOST.</small>"})
+	update_appearance()
 
 // Visitor pamphlet
 /obj/item/paper/pamphlet/ccpost_visitor
@@ -89,7 +127,7 @@ This installation serves as a regional Central Command liaison, communications, 
 <b>IMPORTANT: AUTOMATED DEFENSES</b><br>
 Exterior perimeter turrets may engage unidentified lifeforms and personnel without mindshield protection. Do not approach the perimeter without prior clearance. Visitors should request that Outpost Security disable defenses or arrange safe passage before arrival.<br><br>
 <b>ABOUT LIAISON AUTHORITY</b><br>
-Liaisons conduct administrative oversight and report findings to Central Command. They do not command station personnel, station security, or station leadership. Outpost Security authority applies to this installation and its immediate premises only.<br><br>
+Visitor retrieval is voluntary. Declining an invitation does not affect your standing. Security may inspect declared equipment and require an escort. Liaisons conduct administrative oversight and report findings to Central Command. They do not command station personnel, station security, or station leadership. Outpost Security authority applies to this installation and its immediate premises only.<br><br>
 <b>IN AN EMERGENCY</b><br>
 Follow Outpost Security instructions and keep clear of restricted compartments and exterior defenses. Contact the Liaison or Security Office for assistance.<br><br>
 <center><i>NanoTrasen appreciates your cooperation. Unauthorized visits may be rescheduled indefinitely.</i></center>
@@ -213,6 +251,11 @@ Follow Outpost Security instructions and keep clear of restricted compartments a
 /obj/structure/closet/secure_closet/centcom_security/PopulateContents()
 	..()
 	new /obj/item/storage/box/handcuffs(src)
+	new /obj/item/detective_scanner(src)
+	new /obj/item/storage/box/evidence(src)
+	new /obj/item/clipboard(src)
+	new /obj/item/stamp/centcom(src)
+	new /obj/item/flashlight/seclite(src)
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/box/teargas(src)
 	new /obj/item/storage/lockbox/loyalty/ccpost(src)
@@ -395,7 +438,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_beacon_status, 
 		"The Tasking Terminal does not accept good intentions as supporting documentation. It accepts written reports bearing a Central Command stamp.",
 		"The Sector Communications Terminal carries requests and operational updates from nearby installations. Read the transmission before authorizing expenditure.",
 		"Authorizing sector assistance may cost Operational Allocation. Denying assistance may cost considerably more, although Finance prefers not to phrase it that way.",
-		"Liaison, don't forget to regularly check the tasking terminal for new assignments."
+		"Liaison, don't forget to regularly check the tasking terminal for new assignments.",
+		"Oversight is not command. Requests for cooperation do not constitute orders.",
+		"Review existing records before requesting paperwork. An engineer's time during a reactor emergency is not inexpensive.",
+		"A department preventing a catastrophe may be excused from explaining the catastrophe in writing.",
+		"A report explaining why information could not be obtained remains a report. Inventing it is a disciplinary matter.",
+		"Do not penalize unavailable departments for attending to essential duties.",
+		"A concise inquiry is usually preferable to three separate inquiries on the same subject.",
+		"Regional records and correspondence are also legitimate administrative work.",
+		"Installation Security is responsible for this facility. Station Security remains responsible for the station.",
+		"Visiting personnel are entitled to professional treatment, not the contents of our armory.",
+		"The emergency armory exists for emergencies. A disagreement over paperwork does not qualify.",
+		"Compare inspection consignments with their manifest before returning them to Sector Logistics.",
+		"Undeclared equipment belongs in evidence storage, not your personal collection.",
+		"A clean freight inspection is a successful inspection. Please do not invent discrepancies.",
+		"The original inspection manifest must accompany its declared contents upon return.",
+		"A stamped manifest and Security certification are required for onward dispatch.",
+		"The NT-ADP-7 authentication disk must remain in the personal custody of authorized personnel.",
+		"An unattended authentication disk is not adequately secured, even inside a locker.",
+		"Asset denial is a contingency of last resort. It is not an approved method of resolving complaints.",
+		"Report missing restricted authentication material immediately.",
+		"Keep the authentication disk and authorization information separate. One mistake should not become two.",
+		"Should asset denial commence without authorization, prioritize personnel safety and notify Central Command.",
+		"Respect a declined visitor invitation. Consent is not an administrative obstacle to be overcome.",
+		"Restore power before attempting to recalibrate an unpowered administrative server.",
+		"Human Resources records are private. Curiosity does not constitute authorization.",
+		"Central Command approves recreational fishing, provided installation readiness is maintained.",
+		"The fish have not received security clearance. Their access should remain limited to the aquarium.",
+		"Fishing equipment is recreational equipment. A colleague's belongings are not a fishing destination.",
+		"Before committing allocation to a requisition, review the installation's actual needs."
 	)
 
 /obj/item/disk/holodisk/ruin/space/ccpost/advisor/proc/select_random_tip()
@@ -648,6 +719,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_beacon_status, 
 	new /obj/item/grenade/ccpost_barrier(src)
 	new /obj/item/grenade/ccpost_barrier(src)
 	new /obj/item/stack/sheet/mineral/sandbags(src, 3)
+	new /obj/item/gun/energy/e_gun(src)
+	new /obj/item/gun/energy/disabler(src)
+	new /obj/item/gun/energy/ionrifle(src)
+	new /obj/item/ammo_box/magazine/wt550m9(src)
+	new /obj/item/ammo_box/magazine/wt550m9(src)
+	new /obj/item/storage/box/beanbag(src)
+	new /obj/item/storage/box/rubbershot(src)
+	new /obj/item/shield/riot(src)
+	new /obj/item/shield/riot(src)
+	new /obj/item/door_seal(src)
+	new /obj/item/door_seal(src)
+	new /obj/item/grenade/ccpost_barrier(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/armor/vest(src)
+		new /obj/item/clothing/head/helmet/sec(src)
+		new /obj/item/clothing/gloves/combat(src)
 
 #define CCPOST_TURRET_SHOOT_ANOMALOUS (1<<4)
 #define CCPOST_TURRET_SHOOT_UNSHIELDED (1<<5)
@@ -760,7 +847,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_beacon_status, 
 #undef CCPOST_TURRET_SHOOT_ANOMALOUS
 #undef CCPOST_TURRET_SHOOT_UNSHIELDED
 
+/obj/machinery/porta_turret/ccpost/perimeter/vault
+	name = "Central Command vault defense turret"
+	desc = "An automated pulse defense turret assigned to protect classified Central Command assets and records."
+	system_id = "ccpost_vault"
+	scan_range = 6
+	max_integrity = 250
 
+// Dedicated vault turret controller.
+// Inherits the existing outpost's restricted ID authentication.
+
+/obj/machinery/turretid/ccpost/perimeter/vault
+	name = "Central Command vault defense controller"
+	desc = "Controls the automated security turrets protecting classified Central Command assets."
+	system_id = "ccpost_vault"
+	enabled = TRUE
+	lethal = TRUE
+	ailock = TRUE
 
 // CENTRAL COMMAND VISITOR RETURN TRANSPORT
 // Map one shared visitor pad and the separate departure and retrieval consoles.
@@ -959,6 +1062,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_beacon_status, 
 	link_visitor_pad()
 	var/list/data = list()
 	data["read_only"] = isobserver(user)
+	data["outpost_offline"] = GLOB.ccpost_outpost_signal_lost
 	data["pad_linked"] = !!linked_pad
 	data["charging"] = charging
 	data["pad_busy"] = !!linked_pad?.reserved_by && linked_pad.reserved_by != src
@@ -999,6 +1103,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_beacon_status, 
 	return data
 
 /obj/machinery/computer/ccpost_visitor_transport/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(GLOB.ccpost_outpost_signal_lost)
+		return TRUE
 	// Enforce permissions at the server, including stale windows and crafted TGUI actions.
 	var/mob/user = ui?.user
 	if(isobserver(user) || !ccpost_visitor_transport_authorized(user) || !user.can_perform_action(src))
@@ -1167,8 +1273,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_beacon_status, 
 // Separate physical camera console, using the same Visitor Transport TGUI and telepad.
 // Does not depend on the station's teleporter, its hub, or a station tracking beacon.
 #define CCPOST_RETRIEVAL_INVITATION_TIMEOUT 20 SECONDS
-#define CCPOST_RETRIEVAL_DECLINE_COOLDOWN 25 SECONDS
-#define CCPOST_RETRIEVAL_SHARED_COOLDOWN 25 SECONDS
+#define CCPOST_RETRIEVAL_DECLINE_COOLDOWN 3 MINUTES
+#define CCPOST_RETRIEVAL_TIMEOUT_COOLDOWN 2 MINUTES
+#define CCPOST_RETRIEVAL_SHARED_COOLDOWN 30 SECONDS
 
 /// Round-local per-person invitation state shared across every retrieval console.
 /// Reference-string keys prevent different consoles from bypassing the same-person cooldown.
@@ -1277,6 +1384,7 @@ GLOBAL_VAR_INIT(ccpost_visitor_retrieval_next_allowed, 0)
 	var/mob/living/carbon/human/person = selected_visitor?.resolve()
 	var/list/data = list(
 		"retrieval_mode" = TRUE,
+		"outpost_offline" = GLOB.ccpost_outpost_signal_lost,
 		"read_only" = isobserver(user),
 		"console_operational" = !(machine_stat & (BROKEN | NOPOWER)),
 		"pad_linked" = !!linked_pad,
@@ -1294,6 +1402,8 @@ GLOBAL_VAR_INIT(ccpost_visitor_retrieval_next_allowed, 0)
 	return data
 
 /obj/machinery/computer/camera_advanced/ccpost_visitor_retrieval/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(GLOB.ccpost_outpost_signal_lost)
+		return TRUE
 	var/mob/user = ui?.user
 	if(isobserver(user) || !ccpost_visitor_transport_authorized(user) || !user.can_perform_action(src))
 		return TRUE
@@ -1414,9 +1524,9 @@ GLOBAL_VAR_INIT(ccpost_visitor_retrieval_next_allowed, 0)
 		return
 	awaiting_consent = FALSE
 	if(choice != "Accept Transport")
-		GLOB.ccpost_visitor_retrieval_cooldowns[person_key] = world.time + CCPOST_RETRIEVAL_DECLINE_COOLDOWN
+		GLOB.ccpost_visitor_retrieval_cooldowns[person_key] = world.time + (choice == "Decline" ? CCPOST_RETRIEVAL_DECLINE_COOLDOWN : CCPOST_RETRIEVAL_TIMEOUT_COOLDOWN)
 		GLOB.ccpost_visitor_retrieval_next_allowed = world.time + CCPOST_RETRIEVAL_SHARED_COOLDOWN
-		status_message = "Invitation declined or expired. Retrieval systems recalibrating for 25 seconds."
+		status_message = "Invitation declined or expired. Respect the visitor's decision; another invitation is temporarily unavailable."
 		log_game("CCPost visitor retrieval invitation declined or expired for [key_name(person)].")
 		SStgui.update_uis(src)
 		return
@@ -1513,3 +1623,444 @@ GLOBAL_VAR_INIT(ccpost_visitor_retrieval_next_allowed, 0)
 
 #undef CCPOST_VISITOR_CHARGE
 #undef CCPOST_VISITOR_COOLDOWN
+
+
+/// CENTRAL COMMAND OUTPOST ASSET DENIAL DEVICE
+/// Reuses the station self-destruct terminal sprites and interface.
+/// This device is independent of the station's nuclear systems.
+
+GLOBAL_VAR_INIT(ccpost_adp7_authorization_code, null)
+/// Central Command loses contact with the Liaison Outpost only after confirmed ADP-7 detonation.
+/// Round-local flag also prevents duplicate station announcements if an admin spawns multiple devices.
+GLOBAL_VAR_INIT(ccpost_outpost_signal_lost, FALSE)
+
+/proc/ccpost_adp7_get_authorization_code()
+	if(!GLOB.ccpost_adp7_authorization_code)
+		GLOB.ccpost_adp7_authorization_code = random_nukecode()
+	return GLOB.ccpost_adp7_authorization_code
+
+
+// MAP-PLACEABLE ASSET DENIAL BLAST ORIGINS
+// Marker placement is intentionally left to the mapper. Register on creation
+// so successful detonation never needs to iterate over every world atom.
+GLOBAL_LIST_EMPTY(ccpost_primary_blast_markers)
+GLOBAL_LIST_EMPTY(ccpost_secondary_blast_markers)
+GLOBAL_VAR_INIT(ccpost_adp7_station_update_sent, FALSE)
+
+/obj/effect/landmark/ccpost_blast_center
+	name = "NT-ADP-7 primary blast center (map marker)"
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/effect/landmark/ccpost_blast_center/Initialize(mapload)
+	. = ..()
+	GLOB.ccpost_primary_blast_markers |= src
+
+/obj/effect/landmark/ccpost_blast_center/Destroy()
+	GLOB.ccpost_primary_blast_markers -= src
+	return ..()
+
+/obj/effect/landmark/ccpost_blast_secondary
+	name = "NT-ADP-7 secondary blast (map marker)"
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/effect/landmark/ccpost_blast_secondary/Initialize(mapload)
+	. = ..()
+	GLOB.ccpost_secondary_blast_markers |= src
+
+/obj/effect/landmark/ccpost_blast_secondary/Destroy()
+	GLOB.ccpost_secondary_blast_markers -= src
+	return ..()
+
+/// Non-visible, localized radiation source, with two step-downs and cleanup.
+/// Native radioactive_emitter handles shielding, radiation scanners and pulses.
+/obj/effect/ccpost_fallout_hotspot
+	name = "residual nuclear fallout"
+	desc = "Invisible residual contamination from the NT-ADP-7 detonation."
+	invisibility = INVISIBILITY_ABSTRACT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	var/primary_source = FALSE
+	var/fallout_stage = 0
+
+/obj/effect/ccpost_fallout_hotspot/proc/activate(primary = FALSE)
+	primary_source = primary
+	fallout_stage = 0
+	update_fallout()
+	addtimer(CALLBACK(src, PROC_REF(decay_fallout)), 5 MINUTES)
+
+/obj/effect/ccpost_fallout_hotspot/proc/update_fallout()
+	var/range = primary_source ? 8 : 6
+	if(fallout_stage == 1)
+		range = primary_source ? 6 : 4
+	else if(fallout_stage >= 2)
+		range = primary_source ? 4 : 2
+	// The existing component updates its arguments via UNIQUE_PASSARGS.
+	var/pulse_delay = (primary_source ? (6 + fallout_stage * 3) : (10 + fallout_stage * 4)) * (1 SECONDS)
+	AddComponent(/datum/component/radioactive_emitter, pulse_delay, range, RAD_LIGHT_INSULATION, "A radiation counter reports residual nuclear fallout nearby.")
+
+/obj/effect/ccpost_fallout_hotspot/proc/decay_fallout()
+	fallout_stage++
+	if(fallout_stage >= 3)
+		qdel(src)
+		return
+	update_fallout()
+	addtimer(CALLBACK(src, PROC_REF(decay_fallout)), 5 MINUTES)
+
+/// One controller per successful nuke activation. Coordinates are snapshotted
+/// before any turf changes, so secondary blasts still work after the primary.
+/datum/ccpost_detonation_sequence
+	var/list/primary_position
+	var/list/secondary_positions = list()
+	var/announced = FALSE
+
+/datum/ccpost_detonation_sequence/proc/position_for(turf/location)
+	return list("x" = location.x, "y" = location.y, "z" = location.z)
+
+/datum/ccpost_detonation_sequence/proc/turf_for(list/position)
+	if(!position)
+		return null
+	return locate(position["x"], position["y"], position["z"])
+
+/datum/ccpost_detonation_sequence/proc/begin(turf/device_turf)
+	if(!device_turf)
+		qdel(src)
+		return
+	var/turf/primary_turf = device_turf
+	for(var/obj/effect/landmark/ccpost_blast_center/marker as anything in GLOB.ccpost_primary_blast_markers)
+		if(QDELETED(marker))
+			continue
+		var/turf/candidate = get_turf(marker)
+		if(candidate?.z != device_turf.z || get_dist(candidate, device_turf) > 70)
+			continue
+		primary_turf = candidate
+		break
+	primary_position = position_for(primary_turf)
+	for(var/obj/effect/landmark/ccpost_blast_secondary/marker as anything in GLOB.ccpost_secondary_blast_markers)
+		if(length(secondary_positions) >= 4)
+			break
+		if(QDELETED(marker))
+			continue
+		var/turf/candidate = get_turf(marker)
+		if(candidate?.z != primary_turf.z || get_dist(candidate, primary_turf) > 55)
+			continue
+		secondary_positions += list(position_for(candidate))
+	log_game("NT-ADP-7 blast sequence: primary [primary_turf.x],[primary_turf.y],[primary_turf.z], secondary markers [length(secondary_positions)].")
+	// Lock the administrative installation before the blast. The station-wide
+	// announcement is intentionally delayed until after the last explosion.
+	GLOB.ccpost_outpost_signal_lost = TRUE
+	GLOB.ccpost_tasking_network?.note_admin_server_state()
+	explosion(primary_turf, devastation_range = 15, heavy_impact_range = 27, light_impact_range = 42, flame_range = 30, flash_range = 46, adminlog = TRUE, ignorecap = TRUE)
+	if(length(secondary_positions))
+		for(var/index in 1 to length(secondary_positions))
+			addtimer(CALLBACK(src, PROC_REF(detonate_secondary), index), index * 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(complete_sequence)), (length(secondary_positions) + 1) * 2 SECONDS)
+
+/datum/ccpost_detonation_sequence/proc/detonate_secondary(index)
+	if(index < 1 || index > length(secondary_positions))
+		return
+	var/turf/location = turf_for(secondary_positions[index])
+	if(!location)
+		return
+	explosion(location, devastation_range = 7, heavy_impact_range = 13, light_impact_range = 20, flame_range = 15, flash_range = 24, adminlog = TRUE, ignorecap = TRUE)
+
+/datum/ccpost_detonation_sequence/proc/complete_sequence()
+	var/turf/primary_turf = turf_for(primary_position)
+	if(primary_turf)
+		var/obj/effect/ccpost_fallout_hotspot/primary_hotspot = new(primary_turf)
+		primary_hotspot.activate(TRUE)
+	for(var/list/position as anything in secondary_positions)
+		var/turf/location = turf_for(position)
+		if(!location)
+			continue
+		var/obj/effect/ccpost_fallout_hotspot/secondary_hotspot = new(location)
+		secondary_hotspot.activate(FALSE)
+	if(!announced && !GLOB.ccpost_adp7_station_update_sent)
+		announced = TRUE
+		GLOB.ccpost_adp7_station_update_sent = TRUE
+		priority_announce(
+			"Central Command has lost all communications and telemetry from the Central Command Liaison Outpost following a major energy event. The installation is now considered OFFLINE. Further information will be provided once the situation has been verified.",
+			"Liaison Outpost Communications Lost",
+			sender_override = "Central Command Update",
+			has_important_message = TRUE,
+			color_override = "blue"
+		)
+		log_game("NT-ADP-7: Primary and [length(secondary_positions)] secondary blasts completed. Outpost offline; station notification sent.")
+	qdel(src)
+
+// NT-ADP-7 AUTHENTICATION DISK AND TRACKING SYSTEM
+
+
+// Dedicated registry for ADP-7 authentication disks.
+// Separate from the station's nuclear disk tracking.
+GLOBAL_LIST_EMPTY(ccpost_adp7_disks)
+
+
+// NT-ADP-7 AUTHENTICATION DISK
+
+/obj/item/disk/nuclear/ccpost_nuke
+	name = "NT-ADP-7 authentication disk"
+	desc = "A classified Central Command authentication disk intended exclusively for the NT-ADP-7 Asset Denial Device."
+	icon_state = "nucleardisk"
+
+	// Prevent normal nuclear disk operative-related behavior.
+	fake = TRUE
+
+
+/obj/item/disk/nuclear/ccpost_nuke/Initialize(mapload)
+	// Preserve the mapped location before parent initialization.
+	var/atom/original_location = loc
+
+	. = ..()
+
+	// Nuclear disks receive stationloving even with fake = TRUE.
+	// Remove it so this disk can exist on the outpost z-level.
+	var/datum/component/stationloving/location_restriction = GetComponent(/datum/component/stationloving)
+
+	if(location_restriction)
+		qdel(location_restriction)
+
+	// Restore its original location if parent initialization
+	// relocated the disk to the station.
+	if(original_location && loc != original_location)
+		forceMove(original_location)
+
+	// Register the disk exclusively with ADP-7 trackers.
+	GLOB.ccpost_adp7_disks += src
+
+
+/obj/item/disk/nuclear/ccpost_nuke/Destroy()
+	// Prevent trackers from retaining deleted disk references.
+	GLOB.ccpost_adp7_disks -= src
+
+	return ..()
+
+/obj/item/pinpointer/ccpost_adp7
+	name = "NT-ADP-7 authentication pinpointer"
+	desc = "A classified NanoTrasen tracking device calibrated exclusively to NT-ADP-7 authentication disks."
+	icon_state = "pinpointer"
+	worn_icon_state = "pinpointer"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+	// Continuously updates its target while activated.
+	process_scan = TRUE
+
+
+/obj/item/pinpointer/ccpost_adp7/scan_for_target()
+	target = null
+
+	var/turf/scanner_turf = get_turf(src)
+	if(!scanner_turf)
+		return
+
+	var/closest_distance = INFINITY
+
+	// Only search the dedicated ADP-7 disk registry.
+	// Never consult the station's nuclear disk registry.
+	for(var/obj/item/disk/nuclear/ccpost_nuke/disk as anything in GLOB.ccpost_adp7_disks)
+		if(QDELETED(disk))
+			continue
+
+		var/turf/disk_turf = get_turf(disk)
+		if(!disk_turf)
+			continue
+
+		// Native pinpointers track within the same z-level.
+		if(scanner_turf.z != disk_turf.z)
+			continue
+
+		var/distance = get_dist(scanner_turf, disk_turf)
+
+		if(distance < closest_distance)
+			closest_distance = distance
+			target = disk
+
+
+/obj/item/pinpointer/ccpost_adp7/examine(mob/user)
+	. = ..()
+
+	. += span_notice("Tracking frequency: NT-ADP-7 classified authentication signal.")
+
+	if(!active)
+		. += span_notice("The tracker is currently inactive.")
+	else if(target)
+		. += span_notice("An NT-ADP-7 authentication signal has been acquired.")
+	else
+		. += span_warning("No NT-ADP-7 authentication signal detected on this level.")
+
+/obj/item/pinpointer/ccpost_adp7/syndicate
+	name = "Syndicate asset-denial pinpointer"
+	desc = "A modified Syndicate tracking device calibrated to intercept the authentication signature of NanoTrasen's NT-ADP-7 Asset Denial Device."
+	icon_state = "pinpointer_syndicate"
+	worn_icon_state = "pinpointer_black"
+
+/obj/item/pinpointer/ccpost_adp7/syndicate/examine(mob/user)
+	. = ..()
+	. += span_warning("Its tracking hardware bears unauthorized Syndicate modifications.")
+
+// Classified authorization paper.
+// Place this separately from the authentication disk.
+
+/obj/item/paper/fluff/ruins/ccpost/adp7_authorization
+	name = "NT-ADP-7 authorization directive"
+	desc = "A classified NanoTrasen document containing asset-denial authorization procedures."
+
+/obj/item/paper/fluff/ruins/ccpost/adp7_authorization/Initialize(mapload)
+	default_raw_text = {"<center><b>NANOTRASEN CENTRAL COMMAND</b><br><b>CLASSIFIED: ASSET DENIAL CONTINGENCY</b></center><hr>
+	<br><b>Device:</b> NT-ADP-7 Asset Denial Device
+	<br><b>Installation:</b> Central Command Liaison Outpost
+	<br><b>Authorization Code:</b> [ccpost_adp7_get_authorization_code()]
+	<br><br>Both the authentication disk and authorization code are required before activation.
+	<br><br><b>WARNING:</b> Activation initiates destruction of the installation.
+	<br><br><i>Corporate confidentiality takes precedence over corporate property.</i>"}
+	return ..()
+
+
+// Asset Denial Terminal.
+// This is deliberately NOT a /selfdestruct subtype.
+// Station nuclear code requests therefore cannot overwrite
+// its separate authorization code.
+
+/obj/machinery/nuclearbomb/ccpost_nuke
+	name = "NT-ADP-7 Asset Denial Device"
+	desc = "A classified NanoTrasen contingency device designed to prevent sensitive corporate intelligence from falling into unauthorized hands. Do not taunt."
+	icon = 'icons/obj/machines/nuke_terminal.dmi'
+	icon_state = "nuclearbomb_base"
+	anchored = TRUE
+	timer_set = 180
+	minimum_timer_set = 90
+	maximum_timer_set = 600
+	/// Dedicated NT-ADP-7 CentCom transmitter; never interacts with station nuclear alerts.
+	var/obj/item/radio/ccpost_warning_radio
+	/// Prevent duplicate transmissions from repeated arming calls.
+	var/ccpost_arm_announcement_sent = FALSE
+
+/obj/machinery/nuclearbomb/ccpost_nuke/Initialize(mapload)
+	. = ..()
+	r_code = ccpost_adp7_get_authorization_code()
+	ccpost_warning_radio = new(src)
+	ccpost_warning_radio.set_frequency(FREQ_CENTCOM)
+	ccpost_warning_radio.independent = TRUE
+	ccpost_warning_radio.ignores_radio_jammers = TRUE
+	ccpost_warning_radio.canhear_range = 0
+	ccpost_warning_radio.set_listening(FALSE)
+	ccpost_warning_radio.command = TRUE
+	ccpost_warning_radio.use_command = TRUE
+
+
+// Only the dedicated ADP-7 disk is accepted.
+
+/obj/machinery/nuclearbomb/ccpost_nuke/disk_check(obj/item/disk/nuclear/inserted_disk)
+	if(!istype(inserted_disk, /obj/item/disk/nuclear/ccpost_nuke))
+		say("Authentication failure: NT-ADP-7 disk required.")
+		return FALSE
+
+	auth = inserted_disk
+	return TRUE
+
+
+// The device cannot be moved.
+
+/obj/machinery/nuclearbomb/ccpost_nuke/set_anchor(mob/anchorer)
+	return
+
+
+// Use the original keypad, countdown, and safety controls.
+// Do not trigger the station's nuclear alert or round-end systems.
+
+/obj/machinery/nuclearbomb/ccpost_nuke/arm_nuke(mob/armer)
+	if(!istype(auth, /obj/item/disk/nuclear/ccpost_nuke) || !yes_code || safety || !timing)
+		timing = FALSE
+		return
+
+	// Independent Gorlex contract tracking; the main station's nuclear state is untouched.
+	var/obj/effect/landmark/ccpost_gorlex_director/gorlex_director = GLOB.ccpost_gorlex_director
+	if(gorlex_director)
+		gorlex_director.note_arming(armer)
+	detonation_timer = world.time + (timer_set * 10)
+	countdown.start()
+	update_appearance()
+
+	var/turf/device_turf = get_turf(src)
+
+	message_admins("[src] armed by [armer ? ADMIN_LOOKUPFLW(armer) : "unknown"] at [ADMIN_VERBOSEJMP(device_turf)].")
+	log_game("NT-ADP-7 armed by [armer ? key_name(armer) : "unknown"] at [loc_name(device_turf)].")
+
+	visible_message(span_bolddanger("[src] begins its asset-denial countdown!"))
+
+	playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 65, FALSE)
+
+	// High-volume radio warning on CentCom frequency. Other departments do not receive it.
+	// We use the same wording as the existing local warning for consistency.
+	if(!ccpost_arm_announcement_sent && ccpost_warning_radio)
+		ccpost_arm_announcement_sent = TRUE
+		ccpost_warning_radio.talk_into(src, "CENTRAL COMMAND ALERT: NT-ADP-7 ASSET DENIAL ACTIVE. EVACUATE THE OUTPOST. DETONATION IN [timer_set] SECONDS.", RADIO_CHANNEL_CENTCOM)
+
+	for(var/mob/living/person as anything in GLOB.mob_living_list)
+		var/turf/person_turf = get_turf(person)
+		if(person_turf && istype(get_area(person_turf), /area/ruin/space/has_grav/ccpost))
+			to_chat(person, span_boldannounce("CENTRAL COMMAND ALERT: NT-ADP-7 ASSET DENIAL ACTIVE. EVACUATE THE OUTPOST. DETONATION IN [timer_set] SECONDS."))
+
+
+// Disarming remains possible through the normal interface.
+
+/obj/machinery/nuclearbomb/ccpost_nuke/disarm_nuke(mob/disarmer, change_level_back = TRUE)
+	var/obj/effect/landmark/ccpost_gorlex_director/gorlex_director = GLOB.ccpost_gorlex_director
+	if(gorlex_director)
+		gorlex_director.armed_by_gorlex = FALSE
+	ccpost_arm_announcement_sent = FALSE
+	detonation_timer = null
+	countdown.stop()
+	update_appearance()
+
+	if(disarmer)
+		message_admins("[src] disarmed by [ADMIN_LOOKUPFLW(disarmer)].")
+		log_game("NT-ADP-7 disarmed by [key_name(disarmer)].")
+
+	visible_message(span_notice("[src] aborts its asset-denial countdown."))
+
+
+// Local explosion only.
+// Prevent station nuclear cinematics, round-ending effects,
+// and modifications to global station nuclear state.
+
+/obj/machinery/nuclearbomb/ccpost_nuke/explode()
+	if(exploded || !timing || safety)
+		return FALSE
+
+	if(!core)
+		timing = FALSE
+		safety = TRUE
+		yes_code = FALSE
+		detonation_timer = null
+		countdown.stop()
+		update_ui_mode()
+		update_appearance()
+		visible_message(span_warning("[src] aborts detonation: the fissile core is missing."))
+		return FALSE
+
+	exploding = TRUE
+	exploded = TRUE
+	timing = FALSE
+	safety = TRUE
+	yes_code = FALSE
+	detonation_timer = null
+
+	countdown.stop()
+	update_appearance()
+
+	var/turf/device_turf = get_turf(src)
+	if(!device_turf)
+		qdel(src)
+		return TRUE
+
+	message_admins("[src] DETONATED at [ADMIN_VERBOSEJMP(device_turf)]. Local outpost blast only.")
+	log_game("NT-ADP-7 detonated at [loc_name(device_turf)].")
+
+	var/obj/effect/landmark/ccpost_gorlex_director/gorlex_director = GLOB.ccpost_gorlex_director
+	if(gorlex_director)
+		gorlex_director.note_detonation()
+	var/datum/ccpost_detonation_sequence/sequence = new
+	sequence.begin(device_turf)
+	// The controller owns secondary blasts, fallout and the delayed station notice.
+	qdel(src)
+	return TRUE

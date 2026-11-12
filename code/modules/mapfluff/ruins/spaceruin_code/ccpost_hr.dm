@@ -25,8 +25,12 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 	var/employee_name
 	var/employee_role
 	var/employee_account_id
+	/// Cached round-local ID headshot, never recomputed on UI polling.
+	var/portrait_base64
 	var/list/credited_orders = list()
 	var/qualifying_orders = 0
+	var/freight_inspections = 0
+	var/freight_discrepancies = 0
 	var/promotion_tier = 0
 	var/list/claimed_hr_outcomes = list()
 	/// Personnel history survives fax replacement and is scoped to the registered mind.
@@ -114,7 +118,7 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 		var/datum/ccpost_hr_employee/coworker = roster[other_key]
 		if(coworker.employee_role == role)
 			role_count++
-	if((role == "Central Command Liaison" && role_count >= 2) || (role == "Outpost Security Officer" && role_count >= 1))
+	if((role == "Central Command Liaison" && role_count >= 3) || (role == "Outpost Security Officer" && role_count >= 1))
 		return null
 	var/datum/ccpost_hr_employee/record = new
 	record.employee_mind = user.mind
@@ -122,6 +126,16 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 	record.employee_role = role
 	record.employee_account_id = user.account_id
 	record.original_body = WEAKREF(user)
+	// Snapshot the official identity at registration, facing south regardless
+	// of the character's direction when the ID was first equipped.
+	var/mutable_appearance/id_appearance = new(user.appearance)
+	id_appearance.setDir(SOUTH)
+	var/icon/portrait_icon = getFlatIcon(id_appearance)
+	if(portrait_icon)
+		// Typical 32px humanoid sprites: the upper central region contains the head.
+		if(portrait_icon.Width() >= 32 && portrait_icon.Height() >= 32)
+			portrait_icon.Crop(5, 14, 28, 32)
+		record.portrait_base64 = icon2base64(portrait_icon)
 	roster[key] = record
 	return record
 
@@ -383,9 +397,12 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 	return list(
 		"name" = employee.employee_name,
 		"role" = employee.employee_role,
+		"portrait" = employee.portrait_base64,
 		"paycheck" = paycheck,
 		"promotion_tier" = employee.promotion_tier,
 		"qualifying_assignments" = employee.qualifying_orders,
+		"freight_inspections" = employee.freight_inspections,
+		"freight_discrepancies" = employee.freight_discrepancies,
 		"next_pay_target" = next_pay_target,
 		"awards" = awards,
 		"history" = employee.case_history.Copy(),
@@ -991,7 +1008,7 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 		GLOB.ccpost_hr_service = new /datum/ccpost_hr_service
 
 /obj/machinery/fax/ccpost_hr/proc/hr_ready()
-	return !QDELETED(src) && !(machine_stat & (NOPOWER | BROKEN)) && !jammed
+	return !GLOB.ccpost_outpost_signal_lost && !QDELETED(src) && !(machine_stat & (NOPOWER | BROKEN)) && !jammed
 
 /// Open the dedicated outpost interface. The normal fax subtype continues to use "Fax".
 /obj/machinery/fax/ccpost_hr/ui_interact(mob/user, datum/tgui/ui)
@@ -1002,11 +1019,14 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 
 /obj/machinery/fax/ccpost_hr/ui_data(mob/user)
 	var/list/data = ..()
+	data["hr_outpost_offline"] = GLOB.ccpost_outpost_signal_lost
 	data["hr_has_case"] = !!GLOB.ccpost_hr_service?.active_case_for(user)
 	data["hr_personnel_record"] = GLOB.ccpost_hr_service?.personnel_record_data(user)
 	return data
 
 /obj/machinery/fax/ccpost_hr/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(GLOB.ccpost_outpost_signal_lost && action != "remove")
+		return TRUE
 	if(action == "hr_replace_form")
 		var/replacement_result = GLOB.ccpost_hr_service?.reprint_awaiting_form(usr, src)
 		balloon_alert(usr, replacement_result || "HR service unavailable")

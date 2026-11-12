@@ -1,14 +1,15 @@
+import { CCPostHeader } from './CCPostTheme';
 import { useBackend, useLocalState, useSharedState } from '../backend';
 import {
   Box,
   Button,
+  Input,
   LabeledList,
   NoticeBox,
   Section,
-  Stack,
   Tabs,
 } from '../components';
-import { Window } from '../layouts';
+import { Layout, Window } from '../layouts';
 
 type CommandEntry = {
   role: string;
@@ -68,6 +69,7 @@ type SectorInstallation = {
 };
 
 type Data = {
+  outpost_offline?: boolean | number;
   read_only?: boolean | number;
   station_name: string;
   alert_level: string;
@@ -307,10 +309,7 @@ export const CCPostRemoteStatus = () => {
     (installation) => installation.status === 'CRITICAL',
   ).length;
 
-  const destroyedInstallations = sector_installations.filter(
-    (installation) => installation.destroyed,
-  ).length;
-
+  const [recordSearch, setRecordSearch] = useLocalState('ccpostRecordSearch', '');
   const [selectedRecordInstallation, setSelectedRecordInstallation] =
     useLocalState('recordInstallation', sector_installations[0]?.code || '');
   const activeRecordInstallation =
@@ -318,6 +317,7 @@ export const CCPostRemoteStatus = () => {
       (installation) => installation.code === selectedRecordInstallation,
     ) || sector_installations[0];
   const activeRecordCode = activeRecordInstallation?.code || '';
+  const filteredRecordInstallations = sector_installations.filter((item) => `${item.name} ${item.code} ${item.function}`.toLowerCase().includes(recordSearch.trim().toLowerCase()));
 
   const [noticeCategoryFilter, setNoticeCategoryFilter] = useLocalState(
     'noticeCategoryFilter',
@@ -339,6 +339,11 @@ export const CCPostRemoteStatus = () => {
     'installationView',
     'ALL',
   );
+  const [noticeSearch, setNoticeSearch] = useLocalState('ccpostNoticeSearch', '');
+  const [installationSearch, setInstallationSearch] = useLocalState('ccpostInstallationSearch', '');
+  const [selectedNoticeCode, setSelectedNoticeCode] = useLocalState('ccpostSelectedNotice', '');
+  const [selectedFacilityCode, setSelectedFacilityCode] = useLocalState('ccpostSelectedFacility', '');
+  const [extraNoticeFilters, setExtraNoticeFilters] = useLocalState('ccpostExtraNoticeFilters', false);
 
   const noticeCategories = Array.from(
     new Set(sector_notices.map((notice) => notice.category)),
@@ -346,9 +351,12 @@ export const CCPostRemoteStatus = () => {
   const noticeSources = Array.from(
     new Set(sector_notices.map((notice) => notice.source)),
   ).sort();
-  const noticePriorities = ['Routine', 'Advisory', 'Important', 'Priority'];
 
   const filteredNotices = sector_notices.filter((notice) => {
+    const query = noticeSearch.trim().toLowerCase();
+    if (query && !`${notice.title} ${notice.source} ${notice.notice_code} ${notice.body}`.toLowerCase().includes(query)) {
+      return false;
+    }
     if (noticeCategoryFilter !== 'ALL' && notice.category !== noticeCategoryFilter) {
       return false;
     }
@@ -374,6 +382,7 @@ export const CCPostRemoteStatus = () => {
   });
 
   const noticeFiltersActive =
+    Boolean(noticeSearch.trim()) ||
     noticeCategoryFilter !== 'ALL' ||
     noticePriorityFilter !== 'ALL' ||
     noticeSourceFilter !== 'ALL' ||
@@ -381,6 +390,8 @@ export const CCPostRemoteStatus = () => {
 
   const filteredInstallations = sector_installations
     .filter((installation) => {
+      const query = installationSearch.trim().toLowerCase();
+      if (query && !`${installation.name} ${installation.code} ${installation.function}`.toLowerCase().includes(query)) return false;
       if (installationView === 'OPERATIONAL') {
         return (
           !installation.destroyed &&
@@ -406,77 +417,31 @@ export const CCPostRemoteStatus = () => {
       return rankDifference || a.name.localeCompare(b.name);
     });
 
+  const activeNotice = filteredNotices.find((notice) => notice.notice_code === selectedNoticeCode) || filteredNotices[0];
+  const activeFacility = filteredInstallations.find((installation) => installation.code === selectedFacilityCode) || filteredInstallations[0];
+
   return (
     <Window
       theme="ntos"
       title="Central Command Remote Oversight Network"
-      width={660}
-      height={700}
+      width={820}
+      height={740}
     >
-      <Window.Content scrollable>
-        {Boolean(read_only) && (
-          <NoticeBox>
-            OBSERVER MODE: Read-only. Network controls and administrative actions
-            remain restricted to authorized Central Command personnel.
-          </NoticeBox>
-        )}
-        <Section
-          title="Remote Oversight Network"
-          buttons={
-            <Button icon="question-circle" onClick={() => setHelpOpen(!helpOpen)}>
-              {helpOpen ? 'Close Manual' : 'Operating Manual'}
-            </Button>
-          }
-        >
-          <Box>
-            Authorized regional operational telemetry, installation records,
-            and Sector Notices are available for Central Command review.
-          </Box>
-          {helpOpen && (
-            <Box mt={1}>
-              <Box bold>CENTRAL COMMAND REMOTE OVERSIGHT NETWORK</Box>
-              <Box mt={1}>
-                The NanoTrasen Regional Oversight Network consolidates
-                operational telemetry, incident notifications, and administrative
-                records from registered installations across the sector.
-              </Box>
-              <Box bold mt={1}>Network Operating Procedures</Box>
-              <Box mt={1}>
-                Sector Notices contain received reports of maintenance,
-                infrastructure failures, communications disruptions and other
-                incidents. Sector Installations provides the latest reported
-                condition, available telemetry, designated contacts and
-                inter-installation coordination data.
-              </Box>
-              <Box mt={1}>
-                Installation Records maintains historical status changes and
-                administrative correspondence. Relevant records may be printed
-                for formal review, authentication, or Central Command tasking.
-              </Box>
-              <Box bold mt={1}>Administrative Directives</Box>
-              <Box mt={1}>
-                This terminal authorizes monitoring and documentation only;
-                direct operational control of regional installations is not
-                delegated to Liaison personnel. Use Sector Communications for
-                correspondence and return of stamped documents. Review the
-                relevant installation record before authorizing Operational
-                Allocations. Consult the Tasking Terminal for outstanding orders.
-              </Box>
-              <Box mt={1} color="label">
-                RESTRICTED CORPORATE TELEMETRY. Records may be delayed or
-                incomplete during communications disruption. Verify material
-                facts before official submission.
-              </Box>
-            </Box>
-          )}
-        </Section>
-        <Tabs>
+      <Window.Content className="ccpost-theme ccpost-theme--oversight ccpost-admin-v2">
+          <CCPostHeader title="Remote Oversight Network" division="CENTRAL COMMAND" />
+          <div className="CCPostAdminFixedMetrics"><div className="CCPostMetricRow">
+          <div className="CCPostMetric"><div className="CCPostMetric__value">{sector_installations.length}</div><div className="CCPostMetric__label">REGISTERED FACILITIES</div></div>
+          <div className="CCPostMetric"><div className="CCPostMetric__value">{operationalInstallations}</div><div className="CCPostMetric__label">OPERATIONAL</div></div>
+          <div className="CCPostMetric"><div className="CCPostMetric__value">{criticalInstallations}</div><div className="CCPostMetric__label">CRITICAL</div></div>
+        </div>
+        </div>
+          <div className="CCPostAdminNav"><Tabs>
           <Tabs.Tab
             icon="satellite-dish"
             selected={tab === 'station'}
             onClick={() => setTab('station')}
           >
-            Station Status
+            Station
           </Tabs.Tab>
 
           <Tabs.Tab
@@ -484,7 +449,7 @@ export const CCPostRemoteStatus = () => {
             selected={tab === 'notices'}
             onClick={() => setTab('notices')}
           >
-            Sector Notices ({filteredNotices.length}/{sector_notices.length})
+            Notices ({filteredNotices.length})
           </Tabs.Tab>
 
           <Tabs.Tab
@@ -492,7 +457,7 @@ export const CCPostRemoteStatus = () => {
             selected={tab === 'installations'}
             onClick={() => setTab('installations')}
           >
-            Sector Installations
+            Facilities
           </Tabs.Tab>
 
           <Tabs.Tab
@@ -500,436 +465,201 @@ export const CCPostRemoteStatus = () => {
             selected={tab === 'records'}
             onClick={() => setTab('records')}
           >
-            Installation Records
+            Records
           </Tabs.Tab>
-        </Tabs>
+        </Tabs><Button icon="question-circle" onClick={() => setHelpOpen(!helpOpen)}>{helpOpen ? 'Hide Manual' : 'Operating Manual'}</Button></div>
+          <Layout.Content scrollable className="CCPostAdminBody">
+          {Boolean(data.outpost_offline) && <NoticeBox danger>INSTALLATION OFFLINE. Remote Oversight telemetry is no longer reliable and administrative operations have been suspended.</NoticeBox>}
+        {Boolean(read_only) && (
+          <NoticeBox>
+            OBSERVER MODE: Read-only. Network controls and administrative actions
+            remain restricted to authorized Central Command personnel.
+          </NoticeBox>
+        )}
+        <div className="CCPostTelemetryMeta">REGIONAL MONITORING <span>Read-only telemetry · {last_update || 'Awaiting transmission'}</span></div>
+        {helpOpen && (
+          <Section title="Regional Oversight Procedures">
+            <Box>Monitor station conditions, review sector notices and examine installation records. This network does not grant direct operational control of any facility.</Box>
+            <Box mt={1}>Verify relevant telemetry and printed records before reporting findings. Existing records should be consulted before contacting station personnel; respect local operational authority. Sector Communications handles correspondence and Tasking records formal investigations.</Box>
+            <Box mt={1} color="label">RESTRICTED CORPORATE TELEMETRY. Reports may be incomplete while regional communications are impaired.</Box>
+          </Section>
+        )}
+        
 
         {tab === 'station' && (
           <>
-            <NoticeBox>
-              READ-ONLY TELEMETRY LINK - INFORMATION SHOULD BE VERIFIED BEFORE
-              FORMAL REPORTING
-            </NoticeBox>
-
-            <Section title="Station Status">
-              <LabeledList>
-                <LabeledList.Item label="Installation">
-                  {station_name}
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Central Command Link">
-                  <Box color="good">ONLINE</Box>
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Alert Condition">
-                  <Box color={getAlertColor(alert_level)}>
-                    {alert_level.toUpperCase()}
-                  </Box>
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Registered Personnel">
-                  {registered_crew}
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Last Update">
-                  {last_update}
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
-
-            <Section title="Registered Command Personnel">
-              <LabeledList>
-                {command_roster.map((entry) => (
-                  <LabeledList.Item key={entry.role} label={entry.role}>
-                    <Box
-                      color={entry.name === 'UNSTAFFED' ? 'bad' : undefined}
-                    >
-                      {entry.name}
-                    </Box>
-                  </LabeledList.Item>
-                ))}
-              </LabeledList>
-            </Section>
-
-            <Section title="Emergency Evacuation">
-              <LabeledList>
-                <LabeledList.Item label="Emergency Shuttle">
-                  {shuttle.status}
-                </LabeledList.Item>
-
-                {!!shuttle.timer && (
-                  <LabeledList.Item label="Timer">
-                    {formatTimer(shuttle.timer)}
-                  </LabeledList.Item>
-                )}
-              </LabeledList>
-            </Section>
+            
+            <div className="CCPostOversightColumns">
+              <div>
+                <Section title="Station Link" className="CCPostStationLinkCard">
+                  <LabeledList>
+                    <LabeledList.Item label="Station">{station_name}</LabeledList.Item>
+                    <LabeledList.Item label="Link"><span className={`CCPostStatusTag ${data.outpost_offline ? 'CCPostStatusTag--bad' : 'CCPostStatusTag--good'}`}>{data.outpost_offline ? "OFFLINE" : "ONLINE"}</span></LabeledList.Item>
+                    <LabeledList.Item label="Alert"><span className={`CCPostStatusTag CCPostStatusTag--${getAlertColor(alert_level)}`}>{alert_level.toUpperCase()}</span></LabeledList.Item>
+                    <LabeledList.Item label="Personnel">{registered_crew}</LabeledList.Item>
+                    <LabeledList.Item label="Updated">{last_update}</LabeledList.Item>
+                  </LabeledList>
+                </Section>
+                <Section title="Evacuation" className="CCPostEvacuationCard">
+                  <LabeledList>
+                    <LabeledList.Item label="Shuttle"><span className="CCPostStatusTag">{shuttle.status}</span></LabeledList.Item>
+                    {!!shuttle.timer && <LabeledList.Item label="Timer">{formatTimer(shuttle.timer)}</LabeledList.Item>}
+                  </LabeledList>
+                </Section>
+              </div>
+              <div>
+                <Section title="Station Command Registry" className="CCPostCommandRegistry">
+                  {!command_roster.length ? <Box color="label">No command records available.</Box> : (
+                    <LabeledList>
+                      {command_roster.map((entry) => (
+                        <LabeledList.Item key={entry.role} label={entry.role}>
+                          <Box color={entry.name === 'UNSTAFFED' ? 'label' : undefined}>{entry.name === 'UNSTAFFED' ? 'Unstaffed' : entry.name}</Box>
+                        </LabeledList.Item>
+                      ))}
+                    </LabeledList>
+                  )}
+                </Section>
+              </div>
+            </div>
+            <div className="CCPostOverviewInfo">Live station telemetry is read-only. Verify significant reports before issuing formal correspondence.</div>
           </>
         )}
 
         {tab === 'notices' && (
           <>
-            <NoticeBox>
-              CENTRAL COMMAND SECTOR INFORMATION NETWORK - NOTICES MAY NOT
-              REQUIRE LOCAL ACTION
-            </NoticeBox>
-
-            <Section
-              title={`Notice Filters (${filteredNotices.length}/${sector_notices.length})`}
-              buttons={
-                noticeFiltersActive ? (
-                  <Button
-                    icon="rotate-left"
-                    onClick={() => {
-                      setNoticeCategoryFilter('ALL');
-                      setNoticePriorityFilter('ALL');
-                      setNoticeSourceFilter('ALL');
-                      setNoticeImpactFilter('ALL');
-                    }}
-                  >
-                    Reset Filters
-                  </Button>
-                ) : undefined
-              }
-            >
-              <Box bold mb={0.5}>
-                Category
-              </Box>
-              <Box mb={1}>
-                <Button
-                  color={noticeCategoryFilter === 'ALL' ? 'good' : undefined}
-                  onClick={() => setNoticeCategoryFilter('ALL')}
-                >
-                  All
-                </Button>
-                {noticeCategories.map((category) => (
-                  <Button
-                    key={`notice-category-${category}`}
-                    color={noticeCategoryFilter === category ? 'good' : undefined}
-                    onClick={() => setNoticeCategoryFilter(category)}
-                  >
-                    {category}
-                  </Button>
-                ))}
-              </Box>
-
-              <Box bold mb={0.5}>
-                Priority
-              </Box>
-              <Box mb={1}>
-                <Button
-                  color={noticePriorityFilter === 'ALL' ? 'good' : undefined}
-                  onClick={() => setNoticePriorityFilter('ALL')}
-                >
-                  All
-                </Button>
-                {noticePriorities.map((priority) => (
-                  <Button
-                    key={`notice-priority-${priority}`}
-                    color={noticePriorityFilter === priority ? 'good' : undefined}
-                    onClick={() => setNoticePriorityFilter(priority)}
-                  >
-                    {priority}
-                  </Button>
-                ))}
-              </Box>
-
-              <Box bold mb={0.5}>
-                Source
-              </Box>
-              <Box mb={1}>
-                <Button
-                  color={noticeSourceFilter === 'ALL' ? 'good' : undefined}
-                  onClick={() => setNoticeSourceFilter('ALL')}
-                >
-                  All
-                </Button>
-                {noticeSources.map((source) => (
-                  <Button
-                    key={`notice-source-${source}`}
-                    color={noticeSourceFilter === source ? 'good' : undefined}
-                    onClick={() => setNoticeSourceFilter(source)}
-                  >
-                    {source}
-                  </Button>
-                ))}
-              </Box>
-
-              <Box bold mb={0.5}>
-                Operational Impact
-              </Box>
-              <Box>
-                {[
-                  ['ALL', 'All'],
-                  ['ACTIVE', 'Active Effect'],
-                  ['EXPIRED', 'Expired Effect'],
-                  ['INFORMATIONAL', 'Informational Only'],
-                ].map(([value, label]) => (
-                  <Button
-                    key={`notice-impact-${value}`}
-                    color={noticeImpactFilter === value ? 'good' : undefined}
-                    onClick={() => setNoticeImpactFilter(value)}
-                  >
-                    {label}
-                  </Button>
-                ))}
-              </Box>
-            </Section>
-
-            {sector_notices.length === 0 ? (
-              <Section>
-                <Box color="label">No sector notices currently available.</Box>
+            <div className="CCPostOverviewInfo">Sector notices are informational unless an active operational effect is recorded.</div>
+            <div className="CCPostOversightFilters">
+              <Input placeholder="Search notices" value={noticeSearch} onChange={setNoticeSearch} width="210px" />
+              {['ALL', 'Important', 'Priority'].map((priority) => (
+                <Button key={priority} selected={noticePriorityFilter === priority} onClick={() => setNoticePriorityFilter(priority)}>{priority === 'ALL' ? 'All priorities' : priority}</Button>
+              ))}
+              <Button icon="filter" selected={extraNoticeFilters} onClick={() => setExtraNoticeFilters(!extraNoticeFilters)}>{extraNoticeFilters ? 'Hide Filters' : 'More Filters'}</Button>
+              {noticeFiltersActive && <Button icon="rotate-left" onClick={() => { setNoticeCategoryFilter('ALL'); setNoticePriorityFilter('ALL'); setNoticeSourceFilter('ALL'); setNoticeImpactFilter('ALL'); setNoticeSearch(''); }}>Reset</Button>}
+            </div>
+            {extraNoticeFilters && (
+              <Section title="Additional Notice Filters">
+                <Box bold>Category</Box>
+                <div className="CCPostOversightFilters">{['ALL', ...noticeCategories].map((category) => <Button key={category} selected={noticeCategoryFilter === category} onClick={() => setNoticeCategoryFilter(category)}>{category === 'ALL' ? 'All categories' : category}</Button>)}</div>
+                <Box bold>Source</Box>
+                <div className="CCPostOversightFilters">{['ALL', ...noticeSources].map((source) => <Button key={source} selected={noticeSourceFilter === source} onClick={() => setNoticeSourceFilter(source)}>{source === 'ALL' ? 'All sources' : source}</Button>)}</div>
+                <Box bold>Impact</Box>
+                <div className="CCPostOversightFilters">{[['ALL','All'],['ACTIVE','Active'],['EXPIRED','Expired'],['INFORMATIONAL','Informational']].map(([key,label]) => <Button key={key} selected={noticeImpactFilter === key} onClick={() => setNoticeImpactFilter(key)}>{label}</Button>)}</div>
               </Section>
-            ) : !filteredNotices.length ? (
-              <NoticeBox>No sector notices match the active filters.</NoticeBox>
-            ) : (
-              filteredNotices.map((notice) => (
-                <Section
-                  key={notice.notice_code}
-                  title={`${notice.notice_code} // ${notice.title}`}
-                >
-                  <LabeledList>
-                    <LabeledList.Item label="Issued">
-                      {notice.issued_at}
-                    </LabeledList.Item>
-
-                    <LabeledList.Item label="Source">
-                      {notice.source}
-                    </LabeledList.Item>
-
-                    <LabeledList.Item label="Category">
-                      {notice.category}
-                    </LabeledList.Item>
-
-                    <LabeledList.Item label="Priority">
-                      <Box color={getNoticeColor(notice.priority)}>
-                        {notice.priority.toUpperCase()}
-                      </Box>
-                    </LabeledList.Item>
-
-                    {Boolean(notice.has_operational_effect) && (
-                      <LabeledList.Item label="Operational Impact">
-                        <Box
-                          bold
-                          color={notice.operational_effect_active ? 'average' : 'label'}
-                        >
-                          {notice.operational_effect_active
-                            ? `ACTIVE EFFECT - ${formatNoticeDuration(
-                                notice.operational_effect_seconds,
-                              )} remaining`
-                            : 'EFFECT EXPIRED'}
-                        </Box>
-                      </LabeledList.Item>
-                    )}
-                  </LabeledList>
-
-                  <Box mt={2}>{notice.body}</Box>
-
-                  {Boolean(notice.has_operational_effect) &&
-                    notice.operational_effect_summary && (
-                      <Box
-                        mt={1.5}
-                        p={1}
-                        backgroundColor="rgba(255, 255, 255, 0.04)"
-                      >
-                        <Box bold mb={0.5}>
-                          Sector Effect
-                        </Box>
-                        {notice.operational_effect_summary}
-                      </Box>
-                    )}
-                </Section>
-              ))
             )}
+            <div className="CCPostOversightColumns">
+              <div>
+                <Section title={`Received Notices (${filteredNotices.length})`}>
+                  {!filteredNotices.length ? <Box color="label">No matching notices.</Box> : filteredNotices.map((notice) => (
+                    <button key={notice.notice_code} className={`CCPostOversightRow ${activeNotice?.notice_code === notice.notice_code ? 'CCPostOversightRow--active' : ''}`} onClick={() => setSelectedNoticeCode(notice.notice_code)}>
+                      <strong>{notice.title}</strong>
+                      <small>{notice.notice_code} · {notice.priority} · {notice.issued_at}</small>
+                      {Boolean(notice.operational_effect_active) && <small>ACTIVE SECTOR EFFECT</small>}
+                    </button>
+                  ))}
+                </Section>
+              </div>
+              <div>
+                {activeNotice ? (
+                  <Section title={activeNotice.title}>
+                    <LabeledList>
+                      <LabeledList.Item label="Reference">{activeNotice.notice_code}</LabeledList.Item>
+                      <LabeledList.Item label="Issued">{activeNotice.issued_at}</LabeledList.Item>
+                      <LabeledList.Item label="Source">{activeNotice.source}</LabeledList.Item>
+                      <LabeledList.Item label="Category">{activeNotice.category}</LabeledList.Item>
+                      <LabeledList.Item label="Priority"><Box color={getNoticeColor(activeNotice.priority)}>{activeNotice.priority}</Box></LabeledList.Item>
+                      {Boolean(activeNotice.has_operational_effect) && <LabeledList.Item label="Effect"><Box color={activeNotice.operational_effect_active ? 'average' : 'label'}>{activeNotice.operational_effect_active ? `${formatNoticeDuration(activeNotice.operational_effect_seconds)} remaining` : 'EXPIRED'}</Box></LabeledList.Item>}
+                    </LabeledList>
+                    <Box mt={2} className="CCPostDocumentCard">{activeNotice.body}</Box>
+                    {Boolean(activeNotice.has_operational_effect) && !!activeNotice.operational_effect_summary && <Box mt={1} className="CCPostReviewFinding"><Box bold>Operational Impact</Box>{activeNotice.operational_effect_summary}</Box>}
+                  </Section>
+                ) : <Section title="Notice Details"><Box color="label">Select a notice to view its details.</Box></Section>}
+              </div>
+            </div>
           </>
         )}
 
         {tab === 'installations' && (
           <>
-            <NoticeBox>
-              CENTRAL COMMAND SECTOR INSTALLATION NETWORK - REMOTE TELEMETRY
-              ONLY
-            </NoticeBox>
-
-            <Section title="Installation View">
-              <Box>
-                {[
-                  ['ALL', 'All'],
-                  ['ATTENTION', 'Needs Attention'],
-                  ['OPERATIONAL', 'Operational'],
-                  ['DESTROYED', 'Destroyed'],
-                ].map(([value, label]) => (
-                  <Button
-                    key={`installation-view-${value}`}
-                    color={installationView === value ? 'good' : undefined}
-                    onClick={() => setInstallationView(value)}
-                  >
-                    {label}
-                  </Button>
-                ))}
-              </Box>
-              <Box mt={1} color="label">
-                Showing {filteredInstallations.length} of {sector_installations.length}{' '}
-                registered installations. Attention sorting places confirmed losses
-                and active operational problems first.
-              </Box>
-            </Section>
-
-            <Section title="Network Summary">
-              <LabeledList>
-                <LabeledList.Item label="Registered Installations">
-                  {sector_installations.length}
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Routine Operations">
-                  <Box color="good">{operationalInstallations}</Box>
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Critical Incidents">
-                  <Box color={criticalInstallations > 0 ? 'bad' : 'good'}>
-                    {criticalInstallations}
-                  </Box>
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Confirmed Losses">
-                  <Box color={destroyedInstallations > 0 ? 'bad' : 'good'}>
-                    {destroyedInstallations}
-                  </Box>
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
-
-            {filteredInstallations.map((installation) => (
-              <Section
-                key={installation.code}
-                title={`${installation.code} // ${installation.name}`}
-              >
-                {installation.status === 'CRITICAL' && (
-                  <NoticeBox danger>
-                    CRITICAL OPERATIONAL EVENT - CENTRAL EMERGENCY MANAGEMENT
-                    NOTIFIED
-                  </NoticeBox>
-                )}
-
-                {!!installation.destroyed && (
-                  <NoticeBox danger>
-                    CONFIRMED INSTALLATION LOSS - REMOTE TELEMETRY TERMINATED
-                  </NoticeBox>
-                )}
-
-                <LabeledList>
-                  <LabeledList.Item label="Function">
-                    {installation.function}
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Regional Dependency">
-                    {installation.regional_dependency}
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Operational Status">
-                    <Box color={getInstallationColor(installation.status)}>
-                      {installation.status}
-                    </Box>
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Relationship Assessment">
-                    <Box color={getRelationshipColor(installation.trust_label)} bold>
-                      {installation.trust_label}
-                    </Box>
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Condition">
-                    <Box color={getConditionColor(installation.condition)}>
-                      {installation.condition}
-                    </Box>
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Telemetry">
-                    <Box color={getTelemetryColor(installation.telemetry)}>
-                      {installation.telemetry}
-                    </Box>
-                  </LabeledList.Item>
-
-                  <LabeledList.Item label="Last Authenticated Contact">
-                    {installation.last_authenticated_contact}{' '}
-                    <Box inline color="label">
-                      ({formatRelativeContact(installation.last_contact_seconds_ago)})
-                    </Box>
-                  </LabeledList.Item>
-
-                  {installation.response_status !== 'NONE' && (
-                    <LabeledList.Item label="Central Response">
-                      <Box
-                        color={getResponseColor(
-                          installation.response_status,
-                        )}
-                      >
-                        {installation.response_status}
-                      </Box>
-                    </LabeledList.Item>
-                  )}
-
-                  {installation.incident_summary !== 'No active incident.' && (
-                    <LabeledList.Item label="Incident">
-                      {installation.incident_summary}
-                    </LabeledList.Item>
-                  )}
-
-                  <LabeledList.Item label="Remarks">
-                    {installation.condition_details}
-                  </LabeledList.Item>
-
-                  {!!installation.destroyed && !!installation.loss_consequence && (
-                    <LabeledList.Item label="Permanent Sector Consequence">
-                      <Box color="bad">{installation.loss_consequence}</Box>
-                    </LabeledList.Item>
-                  )}
-
-                  <LabeledList.Item label="Last Status Change">
-                    {installation.status_since}
-                  </LabeledList.Item>
-                </LabeledList>
-              </Section>
-            ))}
+            <div className="CCPostOverviewInfo">Monitor installation conditions and relationship assessments. Local operations remain under the authority of each installation.</div>
+            <div className="CCPostOversightFilters">
+              <Input placeholder="Search installations" value={installationSearch} onChange={setInstallationSearch} width="215px" />
+              {[['ALL','All'],['ATTENTION','Needs Attention'],['OPERATIONAL','Operational'],['DESTROYED','Destroyed']].map(([key,label]) => (
+                <Button key={key} selected={installationView === key} onClick={() => setInstallationView(key)}>{label}</Button>
+              ))}
+            </div>
+            <div className="CCPostOversightColumns">
+              <div>
+                <Section title={`Facilities (${filteredInstallations.length})`}>
+                  {!filteredInstallations.length ? <Box color="label">No installations match these filters.</Box> : filteredInstallations.map((installation) => (
+                    <button key={installation.code} className={`CCPostOversightRow ${activeFacility?.code === installation.code ? 'CCPostOversightRow--active' : ''}`} onClick={() => setSelectedFacilityCode(installation.code)}>
+                      <strong>{installation.name}</strong>
+                      <small>{installation.code} · {installation.status}</small>
+                      <small>Last contact {formatRelativeContact(installation.last_contact_seconds_ago)}</small>
+                    </button>
+                  ))}
+                </Section>
+              </div>
+              <div>
+                {activeFacility ? (
+                  <Section title={`${activeFacility.code} / ${activeFacility.name}`} buttons={<Button icon="folder-open" onClick={() => { setSelectedRecordInstallation(activeFacility.code); setTab('records'); }}>View Record</Button>}>
+                    {activeFacility.status === 'CRITICAL' && <NoticeBox danger>CRITICAL OPERATIONAL EVENT</NoticeBox>}
+                    {Boolean(activeFacility.destroyed) && <NoticeBox danger>INSTALLATION LOSS CONFIRMED</NoticeBox>}
+                    <LabeledList>
+                      <LabeledList.Item label="Function">{activeFacility.function}</LabeledList.Item>
+                      <LabeledList.Item label="Status"><Box color={getInstallationColor(activeFacility.status)}>{activeFacility.status}</Box></LabeledList.Item>
+                      <LabeledList.Item label="Condition"><Box color={getConditionColor(activeFacility.condition)}>{activeFacility.condition}</Box></LabeledList.Item>
+                      <LabeledList.Item label="Telemetry"><Box color={getTelemetryColor(activeFacility.telemetry)}>{activeFacility.telemetry}</Box></LabeledList.Item>
+                      <LabeledList.Item label="Relationship"><Box color={getRelationshipColor(activeFacility.trust_label)}>{activeFacility.trust_label}</Box></LabeledList.Item>
+                      <LabeledList.Item label="Last Contact">{activeFacility.last_authenticated_contact}</LabeledList.Item>
+                      <LabeledList.Item label="Regional Dependency">{activeFacility.regional_dependency}</LabeledList.Item>
+                      {activeFacility.response_status !== 'NONE' && <LabeledList.Item label="Central Response"><Box color={getResponseColor(activeFacility.response_status)}>{activeFacility.response_status}</Box></LabeledList.Item>}
+                    </LabeledList>
+                    <Box mt={1} className="CCPostReviewFinding"><Box bold>Operational Remarks</Box>{activeFacility.condition_details}</Box>
+                    {activeFacility.incident_summary !== 'No active incident.' && <Box mt={1}><Box bold>Incident</Box>{activeFacility.incident_summary}</Box>}
+                    {!!activeFacility.loss_consequence && Boolean(activeFacility.destroyed) && <NoticeBox danger mt={1}>{activeFacility.loss_consequence}</NoticeBox>}
+                  </Section>
+                ) : <Section title="Facility Details"><Box color="label">Select an installation to inspect its telemetry.</Box></Section>}
+              </div>
+            </div>
           </>
         )}
 
         {tab === 'records' && (
           <>
-            <NoticeBox>
-              SHIFT ADMINISTRATIVE RECORDS — RELATIONSHIP ASSESSMENTS ARE
-              QUALITATIVE AND REFLECT LIAISON INTERACTIONS, NOT CORPORATE LOYALTY
-              OR LEGAL AUTHORITY
-            </NoticeBox>
+            <div className="CCPostOverviewInfo">Shift administrative records. Relationship assessments reflect Liaison interactions, not corporate loyalty or legal authority.</div>
+            <div className="CCPostOversightFilters">
+              <Input placeholder="Search records" value={recordSearch} onChange={setRecordSearch} width="215px" />
+              <Box color="label">{filteredRecordInstallations.length} registered records</Box>
+            </div>
 
             {!sector_installations.length ? (
               <Section>
                 <Box color="label">No installation records are available.</Box>
               </Section>
             ) : (
-              <Stack>
-                <Stack.Item minWidth="185px" shrink={0} basis={0}>
-                  <Tabs vertical>
-                    {sector_installations.map((installation) => (
-                      <Tabs.Tab
+              <div className="CCPostOversightColumns">
+                <div>
+                  <Section title={`Facilities (${filteredRecordInstallations.length})`}>
+                    {!filteredRecordInstallations.length ? <Box color="label">No matching installation records.</Box> : filteredRecordInstallations.map((installation) => (
+                      <button
+                        type="button"
                         key={`record-tab-${installation.code}`}
-                        selected={activeRecordCode === installation.code}
-                        onClick={() =>
-                          setSelectedRecordInstallation(installation.code)
-                        }
+                        className={`CCPostOversightRow ${activeRecordCode === installation.code ? 'CCPostOversightRow--active' : ''}`}
+                        onClick={() => setSelectedRecordInstallation(installation.code)}
                       >
-                        {installation.name}
-                      </Tabs.Tab>
+                        <strong>{installation.name}</strong>
+                        <small>{installation.code} · {installation.status}</small>
+                        <small>Last contact {formatRelativeContact(installation.last_contact_seconds_ago)}</small>
+                      </button>
                     ))}
-                  </Tabs>
-                </Stack.Item>
-
-                <Stack.Item grow>
+                  </Section>
+                </div>
+                <div>
                   {!!activeRecordInstallation && (
                     <Section
                       title={`${activeRecordInstallation.code} // ${activeRecordInstallation.name}`}
                       buttons={
-                        <>
+                        <div className="CCPostRecordActions">
                           <Button
                             icon="print"
                             disabled={Boolean(read_only)}
@@ -954,7 +684,7 @@ export const CCPostRemoteStatus = () => {
                           >
                             Clear History
                           </Button.Confirm>
-                        </>
+                        </div>
                       }
                     >
                       <LabeledList>
@@ -1086,12 +816,14 @@ export const CCPostRemoteStatus = () => {
                       )}
                     </Section>
                   )}
-                </Stack.Item>
-              </Stack>
+                </div>
+              </div>
             )}
           </>
         )}
-      </Window.Content>
+      
+          </Layout.Content>
+        </Window.Content>
     </Window>
   );
 };

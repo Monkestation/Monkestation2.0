@@ -1,15 +1,17 @@
+import { CCPostHeader } from './CCPostTheme';
 
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
+  Input,
   LabeledList,
   NoticeBox,
   Section,
   Stack,
   Tabs,
 } from '../components';
-import { Window } from '../layouts';
+import { Layout, Window } from '../layouts';
 
 type SupplyPackageContent = {
   name: string;
@@ -22,6 +24,7 @@ type SupplyPackage = {
   description: string;
   category: string;
   cost: number;
+  round_limit?: number;
   contents: SupplyPackageContent[];
   can_order: boolean;
   recall_locked: boolean;
@@ -60,6 +63,7 @@ type LedgerEntry = {
 };
 
 type Data = {
+  outpost_offline?: boolean | number;
   read_only?: boolean;
   allocation: number;
   reserved_allocation: number;
@@ -78,6 +82,11 @@ type Data = {
   restricted_procurement_suspended: boolean;
   restricted_procurement_seconds: number;
 
+  inspection_reference?: string | null;
+  inspection_history?: string[];
+  inspection_status?: string;
+  inspection_can_certify?: boolean | number;
+  inspection_seconds?: number;
   catalog: SupplyPackage[];
   shipments: Shipment[];
   ledger: LedgerEntry[];
@@ -87,6 +96,7 @@ enum LogisticsTab {
   Requisitions,
   Shipments,
   Ledger,
+  Inspections,
 }
 
 const formatFreightDuration = (totalSeconds: number) => {
@@ -109,6 +119,8 @@ const formatRequisitionFailure = (failure?: string) => {
       return 'Restricted procurement is suspended by Internal Compliance.';
     case 'medical supply recall active':
       return 'Medical requisitions are suspended during the active supply recall.';
+    case 'round requisition limit reached':
+      return 'This package has reached its shift requisition limit.';
     case 'shipment queue full':
       return 'Maximum active requisition capacity has been reached.';
     case 'insufficient allocation':
@@ -121,9 +133,10 @@ const formatRequisitionFailure = (failure?: string) => {
 };
 
 export const CCPostLogistics = () => {
-  const { data } = useBackend<Data>();
+  const { data, act } = useBackend<Data>();
 
   const {
+    outpost_offline = false,
     read_only = false,
     allocation,
     reserved_allocation,
@@ -150,6 +163,21 @@ export const CCPostLogistics = () => {
   );
 
   const [manualOpen, setManualOpen] = useLocalState('ccpostLogisticsManual', false);
+  const [freightExpanded, setFreightExpanded] = useLocalState('ccpostFreightExpanded', false);
+
+  if (Boolean(outpost_offline)) {
+    return (
+      <Window title="Central Command Logistics" width={720} height={270} theme="ntos">
+        <Window.Content className="ccpost-theme ccpost-theme--sage ccpost-admin-v2">
+          <CCPostHeader title="Regional Logistics" division="CENTRAL COMMAND" />
+          <Layout.Content scrollable className="CCPostAdminBody">
+          <NoticeBox danger>INSTALLATION OFFLINE. Central procurement routing and allocation services are unavailable following loss of the Liaison Outpost.</NoticeBox>
+        
+          </Layout.Content>
+        </Window.Content>
+      </Window>
+    );
+  }
 
   return (
     <Window
@@ -158,134 +186,9 @@ export const CCPostLogistics = () => {
       height={720}
       theme="ntos"
     >
-      <Window.Content scrollable>
-        {Boolean(read_only) && (<NoticeBox>OBSERVER MODE: Read-only. Requisitions and printing remain restricted to Central Command personnel.</NoticeBox>)}
-        <Stack vertical>
-          <Stack.Item>
-            <Section
-              title="Regional Logistics"
-              buttons={
-                <Button icon="question-circle" onClick={() => setManualOpen(!manualOpen)}>
-                  {manualOpen ? 'Close Manual' : 'Operating Manual'}
-                </Button>
-              }
-            >
-              <Box>
-                Central Command allocation, sector requisition routing,
-                and freight records are administered through this terminal.
-              </Box>
-              {manualOpen && (
-                <Box mt={1}>
-                  <Box bold>REQUISITIONS & ALLOCATION PROCEDURE</Box>
-                  <Box mt={1}>
-                    Confirm available Operational Allocation and review the
-                    declared contents and routing status of each supply package
-                    before approving a requisition. Reserved allocation is
-                    committed to outstanding freight until its disposition is
-                    recorded in the shipment ledger.
-                  </Box>
-                  <Box mt={1}>
-                    Supply recalls, restricted procurement holds and sector
-                    freight disruptions may limit what can be dispatched.
-                    Consult Sector Communications and the Remote Oversight
-                    Network before making significant allocations.
-                  </Box>
-                  <Box mt={1} color="label">
-                    ALL REQUISITIONS AND ALLOCATION ADJUSTMENTS ARE RECORDED
-                    FOR CENTRAL COMMAND AUDIT.
-                  </Box>
-                </Box>
-              )}
-            </Section>
-          </Stack.Item>
-          <Stack.Item>
-            <Section title="Operational Allocation">
-              <LabeledList>
-                <LabeledList.Item label="Total Allocation">
-                  <Box
-                    inline
-                    bold
-                    color={allocation > 0 ? 'good' : 'bad'}
-                  >
-                    {allocation} CU
-                  </Box>
-                  {' / '}
-                  {max_allocation} CU
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Reserved Allocation">
-                  {reserved_allocation} CU
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Available to Spend">
-                  <Box
-                    inline
-                    bold
-                    color={available_allocation > 0 ? 'good' : 'bad'}
-                  >
-                    {available_allocation} CU
-                  </Box>
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Active Requisitions">
-                  <Box
-                    inline
-                    bold
-                    color={
-                      active_shipments >= max_active_shipments
-                        ? 'bad'
-                        : 'good'
-                    }
-                  >
-                    {active_shipments} / {max_active_shipments}
-                  </Box>
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
-          </Stack.Item>
-
-          <Stack.Item>
-            <Section title="Sector Freight Conditions">
-              <LabeledList>
-                <LabeledList.Item label="Routing Status">
-                  <FreightConditionStatus status={freight_status} />
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Authorization">
-                  {authorization_delay} seconds
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Dispatch">
-                  {dispatch_delay} seconds
-                </LabeledList.Item>
-
-                <LabeledList.Item label="Transit">
-                  {transit_delay} seconds
-                </LabeledList.Item>
-              </LabeledList>
-
-              {!!freight_reasons.length && (
-                <Box mt={1}>
-                  <Box bold mb={0.5}>
-                    Active Sector Factors
-                  </Box>
-                  {freight_reasons.map((reason, index) => (
-                    <Box key={index}>• {reason}</Box>
-                  ))}
-                </Box>
-              )}
-
-              {!freight_reasons.length && (
-                <Box mt={1} color="average">
-                  No exceptional sector routing conditions are currently
-                  affecting freight operations.
-                </Box>
-              )}
-            </Section>
-          </Stack.Item>
-
-          <Stack.Item>
-            <Tabs fluid>
+      <Window.Content className="ccpost-theme ccpost-theme--sage ccpost-admin-v2">
+          <CCPostHeader title="Regional Logistics" division="CENTRAL COMMAND" />
+          <div className="CCPostAdminNav"><Tabs fluid>
               <Tabs.Tab
                 icon="boxes-stacked"
                 selected={tab === LogisticsTab.Requisitions}
@@ -307,10 +210,52 @@ export const CCPostLogistics = () => {
                 selected={tab === LogisticsTab.Ledger}
                 onClick={() => setTab(LogisticsTab.Ledger)}
               >
-                Allocation Ledger
+                Allocation
               </Tabs.Tab>
-            </Tabs>
+              <Tabs.Tab icon="clipboard-check" selected={tab === LogisticsTab.Inspections} onClick={() => setTab(LogisticsTab.Inspections)}>Inspections{data.inspection_reference ? ' (1)' : ''}</Tabs.Tab>
+            </Tabs></div>
+          <Layout.Content scrollable className="CCPostAdminBody">
+        {Boolean(read_only) && (<NoticeBox>OBSERVER MODE: Read-only. Requisitions and printing remain restricted to Central Command personnel.</NoticeBox>)}
+        <Stack vertical>
+          <Stack.Item>
+            <div className="CCPostWorkspaceToolbar">
+              <div><strong>Procurement Operations</strong><span>Requisitions · Allocation · Freight</span></div>
+              <Button icon="question-circle" onClick={() => setManualOpen(!manualOpen)}>{manualOpen ? 'Hide Manual' : 'Operating Manual'}</Button>
+            </div>
+            {manualOpen && (
+              <Section title="Requisitions & Allocation Procedures">
+                <Box>Confirm allocation, package contents and current routing before placing a requisition. Inspection consignments are not discretionary supplies. Security must compare contents, remove undeclared goods, stamp the original manifest, return it inside the closed crate, select Swipe Security ID under Regional Freight Inspections, then dispatch via the outbound lane. Reserved CU remains committed until the freight request is resolved.</Box>
+                <Box mt={1}>Medical recalls, restricted procurement holds and sector transit conditions may limit dispatch. All actions are recorded for Central Command audit.</Box>
+              </Section>
+            )}
           </Stack.Item>
+          <Stack.Item>
+            <div className="CCPostMetricRow">
+              <div className="CCPostMetric"><div className="CCPostMetric__value">{allocation} / {max_allocation}</div><div className="CCPostMetric__label">TOTAL ALLOCATION (CU)</div></div>
+              <div className="CCPostMetric"><div className="CCPostMetric__value">{available_allocation} CU</div><div className="CCPostMetric__label">AVAILABLE</div></div>
+              <div className="CCPostMetric"><div className="CCPostMetric__value">{reserved_allocation} CU</div><div className="CCPostMetric__label">RESERVED</div></div>
+              <div className="CCPostMetric"><div className="CCPostMetric__value">{active_shipments} / {max_active_shipments}</div><div className="CCPostMetric__label">ACTIVE FREIGHT</div></div>
+            </div>
+          </Stack.Item>
+
+          <Stack.Item>
+            <div className="CCPostFreightStrip">
+              <div className="CCPostFreightStrip__stat"><span>ROUTING</span><FreightConditionStatus status={freight_status} /></div>
+              <div className="CCPostFreightStrip__stat"><span>Authorization</span><strong>{formatFreightDuration(authorization_delay)}</strong></div>
+              <div className="CCPostFreightStrip__stat"><span>Dispatch</span><strong>{formatFreightDuration(dispatch_delay)}</strong></div>
+              <div className="CCPostFreightStrip__stat"><span>Transit</span><strong>{formatFreightDuration(transit_delay)}</strong></div>
+              <Button icon={freightExpanded ? 'chevron-up' : 'chevron-down'} onClick={() => setFreightExpanded(!freightExpanded)}>
+                {freightExpanded ? 'Hide Advisories' : `Sector Factors (${freight_reasons.length})`}
+              </Button>
+              {freightExpanded && (
+                <div className="CCPostFreightStrip__detail">
+                  {!freight_reasons.length ? <Box color="label">No exceptional routing conditions currently reported.</Box> : freight_reasons.map((reason, index) => <Box key={index}>• {reason}</Box>)}
+                </div>
+              )}
+            </div>
+          </Stack.Item>
+
+          
 
           <Stack.Item grow>
             {tab === LogisticsTab.Requisitions && (
@@ -333,12 +278,28 @@ export const CCPostLogistics = () => {
               <ShipmentsTab shipments={shipments} />
             )}
 
+            {tab === LogisticsTab.Inspections && (
+              <>
+                <Section title="Regional Freight Inspections">
+                  <div className="CCPostInspectionHeading"><div><small>ACTIVE CONSIGNMENT</small><strong>{data.inspection_reference || 'No active consignment'}</strong></div><span className="CCPostStatusTag">{data.inspection_status || 'STANDBY'}</span></div>
+                  {data.inspection_reference ? <>
+                    <Box color="label" mt={1}>Clearance window: {formatFreightDuration(data.inspection_seconds || 0)}</Box>
+                    <div className="CCPostInspectionSteps"><div><b>01</b> Check the physical manifest and remove discrepancies.</div><div><b>02</b> Stamp the original, return it inside the crate and close the lid.</div><div><b>03</b> Swipe your registered Security ID here, then return the consignment via the outbound lane.</div></div>
+                    <Button fluid icon="id-card" color="good" disabled={Boolean(read_only) || !Boolean(data.inspection_can_certify) || data.inspection_status === 'CERTIFIED'} onClick={() => act('certify_inspection', { reference: data.inspection_reference })}>{data.inspection_status === 'CERTIFIED' ? 'Consignment Certified' : 'Swipe Security ID'}</Button>
+                    {!data.inspection_can_certify && <Box color="label" mt={1}>Certification requires the assigned Security Officer wearing their registered ID, and an arrived consignment.</Box>}
+                  </> : <Box color="label" mt={1}>Awaiting a regional consignment for Security clearance.</Box>}
+                </Section>
+                <Section title="Clearance History">{(data.inspection_history || []).length ? (data.inspection_history || []).map((entry, index) => <div className="CCPostInspectionHistory" key={index}>{entry}</div>) : <Box color="label">No inspection outcomes recorded.</Box>}</Section>
+              </>
+            )}
             {tab === LogisticsTab.Ledger && (
               <LedgerTab ledger={ledger} />
             )}
           </Stack.Item>
         </Stack>
-      </Window.Content>
+      
+          </Layout.Content>
+        </Window.Content>
     </Window>
   );
 };
@@ -387,6 +348,8 @@ const RequisitionsTab = (props: {
     'Administration',
   );
 
+  const [priceAscending, setPriceAscending] = useLocalState('ccpostPriceAscending', true);
+  const [packageSearch, setPackageSearch] = useLocalState('ccpostPackageSearch', '');
   const [expandedPackageId, setExpandedPackageId] = useLocalState(
     'expandedPackageId',
     '',
@@ -445,8 +408,8 @@ const RequisitionsTab = (props: {
     : categories[0];
 
   const activeCategoryPackages = catalog.filter(
-    (pack) => pack.category === activeCategory,
-  );
+    (pack) => pack.category === activeCategory && (!packageSearch.trim() || `${pack.name} ${pack.description}`.toLowerCase().includes(packageSearch.trim().toLowerCase())),
+  ).sort((a, b) => (priceAscending ? a.cost - b.cost : b.cost - a.cost) || a.name.localeCompare(b.name));
 
   const activeCategoryRecallLocked =
     activeCategory === 'Medical' && Boolean(medicalRecallActive);
@@ -462,7 +425,8 @@ const RequisitionsTab = (props: {
 
   return (
     <Section
-      title={`Central Command Requisitions - ${availableAllocation} CU Available`}
+      title={`Requisitions | ${availableAllocation} CU available`}
+      buttons={<Button icon={priceAscending ? "sort-amount-down-alt" : "sort-amount-down"} onClick={() => setPriceAscending(!priceAscending)}>{priceAscending ? "Price: Low to High" : "Price: High to Low"}</Button>}
     >
       {activeShipments >= maxActiveShipments && (
         <NoticeBox danger>
@@ -488,7 +452,8 @@ const RequisitionsTab = (props: {
         </NoticeBox>
       )}
 
-      <Stack>
+      <div className="CCPostCatalogueSearch"><Input fluid placeholder="Search packages in this category" value={packageSearch} onChange={setPackageSearch} /></div>
+      <Stack className="CCPostCatalogueLayout">
         <Stack.Item minWidth="150px" shrink={0} basis={0}>
           <Tabs vertical>
             {categories.map((category) => {
@@ -526,7 +491,7 @@ const RequisitionsTab = (props: {
 
         <Stack.Item grow>
           <Section
-            title={activeCategory}
+            title={`Available Packages | ${activeCategory}`}
             buttons={
               activeCategoryRecallLocked ? (
                 <Box bold color="bad">
@@ -540,6 +505,7 @@ const RequisitionsTab = (props: {
             }
           >
             <Stack vertical>
+              {!activeCategoryPackages.length && <Box color="label">No packages match this search.</Box>}
               {activeCategoryPackages.map((pack) => {
                 const recallLocked = Boolean(pack.recall_locked);
 
@@ -559,7 +525,8 @@ const RequisitionsTab = (props: {
                 return (
                   <Stack.Item key={pack.id}>
                     <Section
-                      title={`${pack.name} - ${pack.cost} CU`}
+                      title={pack.name}
+                      className="CCPostPackageCard"
                       buttons={
                         <>
                           <Button
@@ -599,9 +566,7 @@ const RequisitionsTab = (props: {
                       }
                     >
                       <LabeledList>
-                        <LabeledList.Item label="Description">
-                          {pack.description}
-                        </LabeledList.Item>
+                        <LabeledList.Item label="Description">{pack.description}{!!pack.round_limit && <Box color="label">Shift limit: {pack.round_limit} requisition(s).</Box>}</LabeledList.Item>
 
                         <LabeledList.Item label="Allocation Cost">
                           <Box

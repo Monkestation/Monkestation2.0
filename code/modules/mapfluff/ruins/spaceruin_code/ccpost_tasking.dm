@@ -21,8 +21,8 @@
 #define CCPOST_TASK_SUBMISSION_INSTALLATION_RECORD "installation_record"
 #define CCPOST_TASK_ARCHIVE_TEXT_LIMIT 10000
 
-#define CCPOST_TASK_FIRST_MIN 4 MINUTES
-#define CCPOST_TASK_FIRST_MAX 6 MINUTES
+#define CCPOST_TASK_FIRST_MIN 30 SECONDS
+#define CCPOST_TASK_FIRST_MAX 60 SECONDS
 #define CCPOST_TASK_INTERVAL_MIN 12 MINUTES
 #define CCPOST_TASK_INTERVAL_MAX 18 MINUTES
 #define CCPOST_TASK_RETRY_MIN 3 MINUTES
@@ -44,20 +44,20 @@
 
 // These are relative percentages of eligible routine assignments; Priority/Critical event-triggered tasks retain their event-based priorities. Each list should total 100.
 GLOBAL_LIST_INIT(ccpost_task_category_weights, list(
-	"Command Oversight" = 10,
-	"Security Oversight" = 8,
-	"Infrastructure Oversight" = 14,
-	"Communications Oversight" = 4,
-	"Medical Oversight" = 10,
-	"Operational Oversight" = 11,
-	"Administrative Oversight" = 9,
+	"Command Oversight" = 4,
+	"Security Oversight" = 4,
+	"Infrastructure Oversight" = 8,
+	"Communications Oversight" = 5,
+	"Medical Oversight" = 5,
+	"Operational Oversight" = 12,
+	"Administrative Oversight" = 11,
 	"General Oversight" = 4,
 	"Audits & Inspections" = 8,
 	"Personnel & Civilian Liaison" = 5,
-	"Sector Records & Administration" = 2,
-	"Research Oversight" = 6,
+	"Sector Records & Administration" = 24,
+	"Research Oversight" = 3,
 	"Supply Chain Oversight" = 5,
-	"Service Oversight" = 4
+	"Service Oversight" = 2
 ))
 
 GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
@@ -127,9 +127,60 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 			reachable += employee
 	return length(reachable) ? reachable : staff
 
+/datum/ccpost_task_template/proc/is_station_facing()
+	return any_station_staff || length(required_staff_accounts) || length(excluded_staff_accounts) || department_reward_id || length(additional_grant_departments)
+
+/proc/ccpost_active_station_population()
+	var/count = 0
+	for(var/mob/living/carbon/human/person as anything in GLOB.mob_living_list)
+		if(!ishuman(person) || QDELETED(person) || !person.client || person.stat == DEAD || !is_station_level(person.z))
+			continue
+		var/datum/job/job = person.mind?.assigned_role
+		if(job?.faction == FACTION_STATION && person.mind.current == person)
+			count++
+	return count
+
+/datum/ccpost_task_template/proc/contact_candidates()
+	var/list/staff = get_available_staff()
+	var/list/reachable = list()
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	for(var/mob/living/carbon/human/person as anything in staff)
+		var/datum/job/job = person.mind?.assigned_role
+		if(!person.client || world.time < (network.contact_next_dispatch[REF(person.mind)] || 0))
+			continue
+		if(network.department_standdown_active() || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+			continue
+		if(world.time < (network.department_next_dispatch["[job.paycheck_department]"] || 0) || network.has_outstanding_department(job.paycheck_department, null))
+			continue
+		reachable += person
+	return reachable
+
 /datum/ccpost_task_template/proc/is_eligible()
-	if(any_station_staff || length(required_staff_accounts) || length(excluded_staff_accounts))
-		return length(get_available_staff()) > 0
+	if(is_station_facing() && !event_only)
+		var/minimum_population = 10
+		if(length(additional_grant_departments) || template_id == "departmental_compliance" || template_id == "conflicting_accounts")
+			minimum_population = 25
+		else if(category == "Audits & Inspections" || category == "Security Oversight")
+			minimum_population = 20
+		else if(template_id == "civilian_interview" || template_id == "personnel_feedback" || template_id == "personnel_visitors")
+			minimum_population = 15
+		if(ccpost_active_station_population() < minimum_population)
+			return FALSE
+		if(department_reward_id && (minimum_population >= 25 || category == "Audits & Inspections" || category == "Security Oversight"))
+			var/list/department_counts = list()
+			for(var/mob/living/carbon/human/person as anything in GLOB.mob_living_list)
+				if(!ishuman(person) || !person.client || person.stat == DEAD || !is_station_level(person.z))
+					continue
+				var/datum/job/job = person.mind?.assigned_role
+				if(job?.faction == FACTION_STATION && person.mind.current == person)
+					department_counts["[job.paycheck_department]"] = (department_counts["[job.paycheck_department]"] || 0) + 1
+			if((department_counts["[department_reward_id]"] || 0) < 2)
+				return FALSE
+			for(var/department_id in additional_grant_departments)
+				if(!(department_counts["[department_id]"] || 0))
+					return FALSE
+		if(any_station_staff || length(required_staff_accounts) || length(excluded_staff_accounts))
+			return length(contact_candidates()) > 0
 	return TRUE
 
 /datum/ccpost_task_template/proc/configure_order(datum/ccpost_tasking_order/order, datum/ccpost_logistics_network/logistics_network)
@@ -141,7 +192,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	required_staff_accounts = list(ACCOUNT_CMD)
 	category = "Command Oversight"
 	subject = "General Operational Status"
-	instruction = "Request a concise shift-status report from Command identifying the station alert posture, unresolved critical concerns, and whether any departments need administrative support. Record one confirmed priority or explicitly report that none was identified."
+	instruction = "Consult existing records or request a concise verbal shift-status update from Command identifying the station alert posture, unresolved critical concerns, and whether any departments need administrative support. Record one confirmed priority or explicitly report that none was identified."
 	department_reward_id = ACCOUNT_CMD
 
 /datum/ccpost_task_template/command_coordination
@@ -150,7 +201,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	required_staff_accounts = list(ACCOUNT_CMD)
 	category = "Command Oversight"
 	subject = "Departmental Coordination Review"
-	instruction = "Request examples of interdepartmental requests handled this shift. Assess whether escalation channels and response responsibilities were clear, and document specific communication failures only where supported by evidence."
+	instruction = "Review existing correspondence or ask for one concise example of interdepartmental coordination this shift. Assess whether escalation channels and response responsibilities were clear, and document specific communication failures only where supported by evidence."
 	department_reward_id = ACCOUNT_CMD
 
 /datum/ccpost_task_template/command_concern
@@ -159,7 +210,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	required_staff_accounts = list(ACCOUNT_CMD)
 	category = "Command Oversight"
 	subject = "Command Concern Inquiry"
-	instruction = "Ask Command to nominate its highest unresolved operational risk, identify who is responsible for follow-up, and state what would constitute resolution. Corroborate key details where practical and distinguish plans from completed action."
+	instruction = "Ask Command whether any significant operational risk remains unresolved. If one exists, identify its follow-up owner and the conditions for resolution. Otherwise, record a no-outstanding-concerns result. Corroborate key details where practical and distinguish plans from completed action."
 	department_reward_id = ACCOUNT_CMD
 
 /datum/ccpost_task_template/security_arrests
@@ -188,7 +239,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	required_staff_accounts = list(ACCOUNT_ENG)
 	category = "Infrastructure Oversight"
 	subject = "Engineering Status Assessment"
-	instruction = "Request Engineering readings or a concise operational account for power, atmosphere, hull integrity, and telecommunications. Identify confirmed deficiencies, current mitigations, and which systems require follow-up."
+	instruction = "Consult available Engineering readings or request a concise verbal account for power, atmosphere, hull integrity, and telecommunications. Identify confirmed deficiencies, current mitigations, and which systems require follow-up."
 	department_reward_id = ACCOUNT_ENG
 
 /datum/ccpost_task_template/engineering_sustainability
@@ -297,7 +348,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /datum/ccpost_task_template/outpost_audit
 	template_id = CCPOST_TASK_AUDIT_TEMPLATE_ID
-	rotation_family = "outpost_internal"
+	rotation_family = "outpost_compliance"
 	priority = CCPOST_TASK_PRIORITY_ELEVATED
 	category = "Internal Compliance"
 	subject = "Liaison Outpost Compliance Audit"
@@ -305,7 +356,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /datum/ccpost_task_template/developing_situation
 	template_id = "developing_situation"
-	rotation_family = "station_emergency_readiness"
+	rotation_family = "station_developing_situation"
 	any_station_staff = TRUE
 	category = "General Oversight"
 	subject = "Developing Situation Review"
@@ -334,11 +385,12 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	department_reward_id = ACCOUNT_ENG
 	instruction = "An emergency indication from the station's supermatter installation has been received. Request a current operational report from Engineering or Command and document the risk, corrective action, and known outcome. This is an information-gathering assignment, not authorization to access or control the reactor."
 
-/// Scoped to broken, depowered or removed station telecomms hubs (not every radio).
+/// Legacy hardware-only incident; never dispatch. Public announcements use public_communications_blackout.
 /datum/ccpost_task_template/telecomms_incident
 	template_id = "telecomms_incident"
+	selection_weight = 0
 	rotation_family = "station_communications"
-	category = "Communications Oversight"
+	category = "Infrastructure Oversight"
 	priority = CCPOST_TASK_PRIORITY_ELEVATED
 	subject = "Telecommunications Infrastructure Incident"
 	event_only = TRUE
@@ -395,7 +447,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 /datum/ccpost_task_template/public_communications_blackout
 	template_id = "public_communications_blackout"
 	rotation_family = "station_communications"
-	category = "Communications Oversight"
+	category = "Infrastructure Oversight"
 	priority = CCPOST_TASK_PRIORITY_ELEVATED
 	subject = "Announced Communications Disruption Review"
 	event_only = TRUE
@@ -521,7 +573,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	excluded_staff_accounts = list(ACCOUNT_CMD, ACCOUNT_SEC)
 	any_station_staff = TRUE
 	category = "Personnel & Civilian Liaison"
-	subject = "Civilian Services Interview"
+	subject = "Personnel Services Interview"
 	instruction = "Interview an eligible civilian or departmental employee about specific working conditions, resource gaps, and obstacles to assigned work. Attribute statements to the source, separate observations from opinions, and recommend proportionate follow-up. If no interview can be obtained, document attempted contact."
 
 
@@ -542,7 +594,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	required_staff_accounts = list(ACCOUNT_SCI)
 	category = "Research Oversight"
 	subject = "Robotics Operational Review"
-	instruction = "Request a Robotics status report covering current cyborg availability, maintenance needs, service interruptions, and any properly documented safety incidents. Distinguish equipment issues from unverified misconduct claims."
+	instruction = "Request a Robotics status report covering current cyborg availability, maintenance needs, service interruptions, and any properly documented safety incidents. If Robotics has no active cyborgs or projects, document readiness and any actual resource constraints rather than inventing an incident. Distinguish equipment issues from unverified misconduct claims."
 	department_reward_id = ACCOUNT_SCI
 
 /datum/ccpost_task_template/science_progress
@@ -636,9 +688,81 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	instruction = "Ask Engineering for evidence of scheduled inspections or maintenance affecting critical power, atmosphere, and structural systems. Compare preventive work with any recent reactive repairs and note maintenance obligations still outstanding."
 	department_reward_id = ACCOUNT_ENG
 
+
+// Expanded routine work pool for the centralized three-Liaison dispatcher.
+// Every new family covers a distinct observable review activity and does not
+// require an unavailable station department unless explicitly specified.
+/datum/ccpost_task_template/outpost_paperwork_quality
+	template_id = "outpost_paperwork_quality"
+	rotation_family = "outpost_records"
+	category = "Administrative Oversight"
+	subject = "Administrative Paperwork Quality Review"
+	instruction = "Sample the outpost's accessible, nonconfidential tasking or correspondence records. Check whether references, issue dates, stamps, and conclusions are legible and internally consistent. Record concrete documentation gaps and proposed filing improvements. Do not alter or destroy original records."
+	selection_weight = 85
+
+/datum/ccpost_task_template/outpost_radio_readiness
+	template_id = "outpost_radio_readiness"
+	rotation_family = "outpost_radio_readiness"
+	category = "Communications Oversight"
+	subject = "Outpost Communications Readiness Check"
+	instruction = "Check the outpost's official communications equipment, channel reference and current status using ordinary authorized controls. Identify any inaccessible terminals, unanswered procedural questions or observed malfunctions. Do not transmit fake distress messages or interfere with station traffic."
+	selection_weight = 85
+
+/datum/ccpost_task_template/outpost_asset_inventory
+	template_id = "outpost_asset_inventory"
+	rotation_family = "outpost_equipment"
+	category = "Operational Oversight"
+	subject = "Outpost Equipment Accountability"
+	instruction = "Inspect publicly accessible outpost office and logistics equipment against reasonable operational needs. Record missing, damaged or incorrectly stored items, and identify which discrepancies need follow-up with Logistics. No private searches or confiscations are authorized."
+	selection_weight = 90
+
+/datum/ccpost_task_template/sector_contact_protocol
+	template_id = "sector_contact_protocol"
+	rotation_family = "sector_communications"
+	category = "Sector Records & Administration"
+	subject = "Regional Contact Procedure Verification"
+	instruction = "Review the available Sector Communications installation directory and recent nonconfidential correspondence. Confirm that installation contacts, response priorities and escalation procedures are understandable. Document gaps without sending unnecessary requests to remote installations."
+	selection_weight = 95
+
+/datum/ccpost_task_template/outpost_supply_contingency
+	template_id = "outpost_supply_contingency"
+	rotation_family = "outpost_supply_contingency"
+	category = "Supply Chain Oversight"
+	subject = "Outpost Supply Contingency Assessment"
+	instruction = "Use the Logistics Terminal and available supply records to evaluate whether a realistic shortage or delivery disruption could affect outpost operations. If none is currently evident, record existing supplies and one plausible contingency without claiming a shortage occurred. Describe available mitigations; no purchase or restricted requisition is required."
+	selection_weight = 85
+
+/datum/ccpost_task_template/outpost_visitor_wayfinding
+	template_id = "outpost_visitor_wayfinding"
+	rotation_family = "personnel_visitors"
+	category = "Personnel & Civilian Liaison"
+	subject = "Visitor Reception and Wayfinding Review"
+	instruction = "Inspect the outpost's visitor reception guidance, informational pamphlet and authorized visitor approach. Identify unclear directions, accessibility concerns or missing safety instructions. Where no visitors are present, assess the published guidance without inventing an interview."
+	selection_weight = 90
+
+/datum/ccpost_task_template/engineering_workorder_coordination
+	template_id = "engineering_workorder_coordination"
+	rotation_family = "engineering_preventive_maintenance"
+	category = "Infrastructure Oversight"
+	required_staff_accounts = list(ACCOUNT_ENG)
+	department_reward_id = ACCOUNT_ENG
+	subject = "Engineering Work Order Coordination"
+	instruction = "Contact Engineering about how maintenance requests are received, prioritized and closed during the shift. If available, verify one actual maintenance request or repair, whether documented formally or reported by the responsible Engineer. If none exists, describe the normal process and explicitly record that no example could be verified. Note any genuine need for escalation without directing repairs or inventing defects."
+	selection_weight = 90
+
+/datum/ccpost_task_template/medical_communication_review
+	template_id = "medical_communication_review"
+	rotation_family = "medical_preparedness"
+	category = "Medical Oversight"
+	required_staff_accounts = list(ACCOUNT_MED)
+	department_reward_id = ACCOUNT_MED
+	subject = "Medical Department Communications Review"
+	instruction = "Ask Medical about general procedures for routing urgent patient requests and communicating treatment availability to Command or other departments. Assess clarity and delays using confirmed operational examples without collecting confidential patient records."
+	selection_weight = 85
+
 /datum/ccpost_task_template/sector_record_certification
 	template_id = "sector_record_certification"
-	rotation_family = "sector_installations"
+	rotation_family = "sector_records"
 	category = "Sector Records & Administration"
 	subject = "Regional Installation Record Certification"
 	submission_type = CCPOST_TASK_SUBMISSION_INSTALLATION_RECORD
@@ -672,7 +796,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /datum/ccpost_task_template/sector_incident_review
 	template_id = "sector_incident_review"
-	rotation_family = "sector_installations"
+	rotation_family = "sector_status"
 	category = "Sector Records & Administration"
 	subject = "Regional Incident Documentation"
 	priority = CCPOST_TASK_PRIORITY_ELEVATED
@@ -706,7 +830,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 // These are records reviews, not invitations to fabricate incidents or personnel claims.
 /datum/ccpost_task_template/sector_communications_audit
 	template_id = "sector_communications_audit"
-	rotation_family = "sector_installations"
+	rotation_family = "sector_communications"
 	category = "Sector Records & Administration"
 	subject = "Sector Communications Audit"
 	selection_weight = 65
@@ -714,7 +838,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /datum/ccpost_task_template/installation_performance_review
 	template_id = "installation_performance_review"
-	rotation_family = "sector_installations"
+	rotation_family = "sector_status"
 	category = "Sector Records & Administration"
 	subject = "Regional Installation Performance Review"
 	selection_weight = 70
@@ -722,7 +846,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /datum/ccpost_task_template/logistics_expenditure_review
 	template_id = "logistics_expenditure_review"
-	rotation_family = "outpost_internal"
+	rotation_family = "outpost_financial"
 	category = "Audits & Inspections"
 	subject = "Outpost Logistics Expenditure Review"
 	selection_weight = 55
@@ -730,7 +854,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /datum/ccpost_task_template/records_reconciliation
 	template_id = "records_reconciliation"
-	rotation_family = "outpost_internal"
+	rotation_family = "outpost_records"
 	category = "Administrative Oversight"
 	subject = "Administrative Records Reconciliation"
 	selection_weight = 55
@@ -738,11 +862,32 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /datum/ccpost_task_template/outpost_operational_readiness
 	template_id = "outpost_operational_readiness"
-	rotation_family = "outpost_internal"
+	rotation_family = "outpost_equipment"
 	category = "Operational Oversight"
 	subject = "Outpost Operational Readiness Assessment"
 	selection_weight = 45
 	instruction = "Inspect the outpost's communications, tasking, logistics, emergency access and visitor transport equipment using ordinary authorized controls. Document actual deficiencies and maintenance needs, or confirm readiness where observed. Submit a stamped report. Do not interfere with active security defenses to conduct this review."
+
+/datum/ccpost_task_template/outpost_emergency_readiness
+	template_id = "outpost_emergency_readiness"
+	rotation_family = "outpost_emergency_readiness"
+	category = "Operational Oversight"
+	subject = "Installation Emergency Preparedness"
+	instruction = "Review available evacuation routes, emergency equipment and published emergency procedures. Record readiness and any practical improvements. Do not open restricted compartments or operate defensive equipment."
+
+/datum/ccpost_task_template/outpost_freight_readiness
+	template_id = "outpost_freight_readiness"
+	rotation_family = "outpost_freight_readiness"
+	category = "Supply Chain Oversight"
+	subject = "Regional Freight Readiness"
+	instruction = "Review freight intake, outbound routing and available manifests. Check for blocked access or unresolved freight records. Coordinate findings with local Security without interrupting active inspections."
+
+/datum/ccpost_task_template/sector_continuity
+	template_id = "sector_continuity"
+	rotation_family = "sector_continuity"
+	category = "Sector Records & Administration"
+	subject = "Regional Continuity Assessment"
+	instruction = "Compare the regional facility status records and freight advisories. Identify a dependency that could affect the outpost and recommend a proportionate contingency. No additional correspondence is required."
 
 /datum/ccpost_task_template/outpost_audit/configure_order(datum/ccpost_tasking_order/order, datum/ccpost_logistics_network/logistics_network)
 	if(!order || !logistics_network)
@@ -835,7 +980,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	participated = required
 
 /datum/ccpost_department_assessment/proc/adjusted_amount()
-	if(!participated || !rating)
+	if(!participated || !rating || rating == "Not Assessed")
 		return 0
 	var/multiplier = 1
 	switch(rating)
@@ -888,6 +1033,8 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	var/status_before_hold = CCPOST_TASK_STATUS_PENDING
 	var/held_at
 	var/obj/item/paper/on_hold_report
+	/// A report inserted while this order was active and later switched into standby.
+	var/obj/item/paper/standby_report
 
 	/// Each authorized grant recipient is evaluated independently.
 	var/list/department_assessments = list()
@@ -914,6 +1061,12 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	var/assigned_to
 	var/owner_key
 	var/assigned_terminal
+	/// Stable identity for a single genuine emergency; not its display template.
+	var/incident_key
+	/// Offer remains associated with the assignment, not the physical terminal.
+	var/voluntary_offer_expires_at = 0
+	/// One successful voluntary transfer per assignment; abandoned recovery is separate.
+	var/voluntary_transfer_count = 0
 	/// Compact, server-authored audit events shared by all tasking consoles.
 	var/list/audit_events = list()
 
@@ -960,6 +1113,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	QDEL_LIST(department_assessments)
 	QDEL_NULL(archived_paper)
 	QDEL_NULL(on_hold_report)
+	QDEL_NULL(standby_report)
 	return ..()
 
 /// Returns the Operational Allocation reward for this task.
@@ -1014,16 +1168,10 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	return null
 
 /datum/ccpost_tasking_order/proc/assessments_complete()
-	var/has_participating_department = FALSE
 	for(var/datum/ccpost_department_assessment/assessment as anything in department_assessments)
-		if(!assessment.participated)
-			continue
-		has_participating_department = TRUE
-		if(!assessment.rating)
+		if(assessment.participated && !assessment.rating)
 			return FALSE
-	// Grant-bearing assignments need at least one participating department;
-	// tasks without departmental grants continue to complete normally.
-	return has_participating_department || !length(department_assessments)
+	return TRUE
 
 /obj/item/encryptionkey/ccpost_tasking_grants
 	name = "Central Command departmental grant transceiver key"
@@ -1050,6 +1198,8 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 	/// Personal active assignment for this network-owned inbox state container.
 	var/datum/ccpost_tasking_order/current_order
+	/// One additional assigned investigation. Only one slot is operational at once.
+	var/datum/ccpost_tasking_order/standby_order
 
 	/// Last three successfully issued randomly generated task templates only.
 	var/list/recent_routine_templates = list()
@@ -1071,7 +1221,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	/// Automatically interrupted work, distinct from time-limited manual deferrals.
 	var/list/on_hold_orders = list()
 	var/max_on_hold_orders = 6
-	var/max_deferred_orders = 1
+	var/max_deferred_orders = 2
 	var/max_deferrals_per_order = 2
 	/// Completed reports can generate a bounded, single-stage follow-up.
 	var/list/followup_orders = list()
@@ -1085,6 +1235,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /obj/item/circuitboard/computer/ccpost_tasking/Destroy()
 	QDEL_NULL(current_order)
+	QDEL_NULL(standby_order)
 	QDEL_LIST(deferred_orders)
 	QDEL_LIST(on_hold_orders)
 	QDEL_LIST(followup_orders)
@@ -1099,13 +1250,52 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	var/list/registered_terminals = list()
 	var/list/family_next_dispatch = list()
 	var/list/department_next_dispatch = list()
+	var/list/contact_next_dispatch = list()
+	var/next_station_dispatch = 0
+	/// Outpost-wide pause on new departmental paperwork, shared by every Liaison.
+	var/department_standdown_until = 0
+	var/first_routine_intake_at = 0
 	/// Prevent repeated actual grants even from different incident template families.
 	var/list/department_next_grant = list()
 	var/list/event_next_dispatch = list()
 	var/next_order_number = 1
 	var/max_history = CCPOST_TASK_SHARED_ARCHIVE_LIMIT
+	var/obj/machinery/ccpost_tasking_server/server
+	var/list/pending_requests = list()
+	var/list/dispatch_log = list()
+	var/list/recent_routine_templates = list()
+	var/list/recent_routine_families = list()
+	var/list/recent_routine_categories = list()
+	var/list/routine_dispatch_counts = list()
+	/// Recently completed work blocks ONLY new routine assignments for this mind.
+	var/list/routine_cooldown_until = list()
+	var/last_routine_recipient_key
+	/// Routine intake and allocation are separate network-wide timers.
+	var/routine_timer
+	var/next_routine_at = 0
+	var/routine_dispatch_timer
+	var/next_routine_dispatch_at = 0
+	/// Lightweight queued routine work, allocated one at a time rather than issuing immediately.
+	var/routine_queue_count = 0
+	var/initial_routine_batch_sent = FALSE
+	/// Only the most recent 20 minutes affect routine assignment fairness.
+	var/list/recent_routine_dispatches = list()
+	var/routine_dispatch_active = FALSE
+	/// Shared availability check for both administrative networks.
+	var/admin_network_was_online = FALSE
+	var/admin_outage_started_at = 0
+	var/total_dispatches = 0
+	var/total_faults = 0
+	/// Exactly one naturally occurring server fault per round, even after replacement.
+	var/natural_fault_occurred = FALSE
+	var/list/telemetry_history = list()
 
 /datum/ccpost_tasking_network/Destroy()
+	if(routine_timer)
+		deltimer(routine_timer)
+	if(routine_dispatch_timer)
+		deltimer(routine_dispatch_timer)
+	QDEL_LIST(pending_requests)
 	QDEL_LIST_ASSOC_VAL(inboxes)
 	QDEL_LIST(shared_history)
 	return ..()
@@ -1141,9 +1331,9 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 /// A task is claimable only if its previous owner has been absent and inactive
 /// for the entire grace window. No reassignment of deferred/on-hold work.
 /datum/ccpost_tasking_network/proc/can_claim_inbox(obj/item/circuitboard/computer/ccpost_tasking/inbox, datum/mind/new_owner)
-	if(!inbox || !inbox.owner_mind || inbox.owner_mind == new_owner || !inbox.current_order)
+	if(!inbox || !inbox.owner_mind || inbox.owner_mind == new_owner)
 		return FALSE
-	if(inbox.current_order.status == CCPOST_TASK_STATUS_COMPLETED)
+	if(!inbox.standby_order && (!inbox.current_order || inbox.current_order.status == CCPOST_TASK_STATUS_COMPLETED))
 		return FALSE
 	if(world.time - inbox.last_owner_activity_at < CCPOST_TASK_REASSIGN_GRACE)
 		return FALSE
@@ -1158,13 +1348,19 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 		var/obj/item/circuitboard/computer/ccpost_tasking/inbox = inboxes[key]
 		if(!can_claim_inbox(inbox, new_owner))
 			continue
-		result += list(list(
-			"owner_key" = key,
-			"order_code" = inbox.current_order.order_code,
-			"subject" = inbox.current_order.subject,
-			"assigned_to" = inbox.current_order.assigned_to,
-			"priority" = inbox.current_order.priority
-		))
+		var/list/transferable = list()
+		if(inbox.current_order && inbox.current_order.status != CCPOST_TASK_STATUS_COMPLETED)
+			transferable += inbox.current_order
+		if(inbox.standby_order && !inbox.standby_order.standby_report)
+			transferable += inbox.standby_order
+		for(var/datum/ccpost_tasking_order/order as anything in transferable)
+			result += list(list(
+				"owner_key" = key,
+				"order_code" = order.order_code,
+				"subject" = order.subject,
+				"assigned_to" = order.assigned_to,
+				"priority" = order.priority
+			))
 	return result
 
 /datum/ccpost_tasking_network/proc/claim_abandoned(mob/user, from_key, expected_code)
@@ -1173,18 +1369,27 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 		return FALSE
 	var/obj/item/circuitboard/computer/ccpost_tasking/from_inbox = inboxes["[from_key]"]
 	var/obj/item/circuitboard/computer/ccpost_tasking/to_inbox = get_inbox(employee.employee_mind)
-	if(!from_inbox || !to_inbox || to_inbox.current_order || length(to_inbox.on_hold_orders) || !can_claim_inbox(from_inbox, employee.employee_mind))
+	if(!from_inbox || !to_inbox || to_inbox.current_order || to_inbox.standby_order || length(to_inbox.on_hold_orders) || !can_claim_inbox(from_inbox, employee.employee_mind))
 		return FALSE
-	var/datum/ccpost_tasking_order/order = from_inbox.current_order
-	if(order.order_code != expected_code)
+	var/datum/ccpost_tasking_order/order
+	if(from_inbox.current_order?.order_code == expected_code)
+		order = from_inbox.current_order
+	else if(from_inbox.standby_order?.order_code == expected_code)
+		order = from_inbox.standby_order
+	if(!order || order.status == CCPOST_TASK_STATUS_COMPLETED || order.standby_report)
 		return FALSE
 	// The old user's inserted physical report cannot be consumed by the new
 	// owner. Ensure no terminal still holds an authenticated old session.
 	for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in registered_terminals)
 		if(terminal.tasking_session_mind == from_inbox.owner_mind)
 			terminal.logout_tasking_session()
-	from_inbox.current_order = null
+	if(from_inbox.current_order == order)
+		from_inbox.current_order = null
+	else
+		from_inbox.standby_order = null
 	to_inbox.current_order = order
+	// Invalidate any voluntary offer from the prior owner during recovery.
+	order.voluntary_offer_expires_at = 0
 	var/old_owner = order.assigned_to
 	order.assigned_to = employee.employee_name
 	order.owner_key = REF(employee.employee_mind)
@@ -1193,14 +1398,195 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	refresh_terminals()
 	return TRUE
 
+// Voluntary reassignment is an offered transfer, NOT abandonment recovery.
+// All ownership, evidence, and recipient checks are repeated at claim time.
+/datum/ccpost_tasking_network/proc/voluntary_order_from_inbox(obj/item/circuitboard/computer/ccpost_tasking/inbox, expected_code)
+	if(!inbox || !istext(expected_code))
+		return null
+	if(inbox.current_order?.order_code == expected_code && inbox.current_order.status != CCPOST_TASK_STATUS_COMPLETED)
+		return inbox.current_order
+	if(inbox.standby_order?.order_code == expected_code)
+		return inbox.standby_order
+	for(var/datum/ccpost_tasking_order/deferred as anything in inbox.deferred_orders)
+		if(deferred.order_code == expected_code && deferred.status == CCPOST_TASK_STATUS_DEFERRED)
+			return deferred
+	return null
+
+/datum/ccpost_tasking_network/proc/voluntary_order_can_transfer(obj/item/circuitboard/computer/ccpost_tasking/inbox, datum/ccpost_tasking_order/order)
+	if(!inbox || !order || order.owner_key != REF(inbox.owner_mind) || order.rewards_issued || order.voluntary_transfer_count)
+		return FALSE
+	if(order.priority == CCPOST_TASK_PRIORITY_PRIORITY || order.priority == CCPOST_TASK_PRIORITY_CRITICAL || order.template_id == CCPOST_TASK_AUDIT_TEMPLATE_ID)
+		return FALSE
+	if(order.on_hold_report || order.standby_report || order.status == CCPOST_TASK_STATUS_COMPLETED)
+		return FALSE
+	// Do not let a transfer steal paper physically inserted in a signed-in desk.
+	if(inbox.current_order == order)
+		for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in registered_terminals)
+			if(terminal.tasking_session_mind == inbox.owner_mind && terminal.submitted_report)
+				return FALSE
+	return TRUE
+
+/datum/ccpost_tasking_network/proc/offer_voluntary_order(mob/user, expected_code)
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	if(!employee || employee.employee_role != "Central Command Liaison")
+		return FALSE
+	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = get_inbox(employee.employee_mind)
+	var/datum/ccpost_tasking_order/order = voluntary_order_from_inbox(inbox, expected_code)
+	if(!voluntary_order_can_transfer(inbox, order))
+		return FALSE
+	if(order.status == CCPOST_TASK_STATUS_DEFERRED)
+		var/effective_deadline = order.deferral_expires_at + (order.deferral_expiry_paused_at ? world.time - order.deferral_expiry_paused_at : 0)
+		if(world.time >= effective_deadline)
+			return FALSE
+	// One outstanding offer per Liaison, regardless of which slot holds it.
+	var/list/my_orders = list()
+	if(inbox.current_order)
+		my_orders += inbox.current_order
+	if(inbox.standby_order)
+		my_orders += inbox.standby_order
+	my_orders += inbox.deferred_orders
+	for(var/datum/ccpost_tasking_order/other as anything in my_orders)
+		if(other != order && other.voluntary_offer_expires_at > world.time)
+			return FALSE
+	if(order.voluntary_offer_expires_at > world.time)
+		return FALSE
+	order.voluntary_offer_expires_at = world.time + 10 MINUTES
+	order.record_action("Transfer Offered", user.name, "Voluntary reassignment offered for ten minutes")
+	addtimer(CALLBACK(src, PROC_REF(expire_voluntary_offer), REF(employee.employee_mind), order.order_code, order.voluntary_offer_expires_at), 10 MINUTES)
+	refresh_terminals()
+	return TRUE
+
+/datum/ccpost_tasking_network/proc/expire_voluntary_offer(owner_key, expected_code, expected_expiry)
+	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = inboxes["[owner_key]"]
+	var/datum/ccpost_tasking_order/order = voluntary_order_from_inbox(inbox, expected_code)
+	if(!order || order.voluntary_offer_expires_at != expected_expiry || world.time < expected_expiry)
+		return
+	order.voluntary_offer_expires_at = 0
+	order.record_action("Offer Expired", "CENTRAL COMMAND", "No Liaison claimed the voluntary transfer")
+	refresh_terminals()
+
+/datum/ccpost_tasking_network/proc/cancel_voluntary_offer(mob/user, expected_code)
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	if(!employee || employee.employee_role != "Central Command Liaison")
+		return FALSE
+	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = get_inbox(employee.employee_mind)
+	var/datum/ccpost_tasking_order/order = voluntary_order_from_inbox(inbox, expected_code)
+	if(!order || order.voluntary_offer_expires_at <= world.time)
+		return FALSE
+	order.voluntary_offer_expires_at = 0
+	order.record_action("Offer Withdrawn", user.name)
+	refresh_terminals()
+	return TRUE
+
+/datum/ccpost_tasking_network/proc/list_voluntary_offers(datum/mind/requester, own_offers = FALSE)
+	var/list/result = list()
+	for(var/key in inboxes)
+		var/obj/item/circuitboard/computer/ccpost_tasking/inbox = inboxes[key]
+		if(!inbox?.owner_mind || (own_offers ? inbox.owner_mind != requester : inbox.owner_mind == requester))
+			continue
+		var/list/potential = list()
+		if(inbox.current_order)
+			potential += inbox.current_order
+		if(inbox.standby_order)
+			potential += inbox.standby_order
+		potential += inbox.deferred_orders
+		for(var/datum/ccpost_tasking_order/order as anything in potential)
+			if(order.voluntary_offer_expires_at <= world.time || (!own_offers && !voluntary_order_can_transfer(inbox, order)))
+				continue
+			result += list(list(
+				"owner_key" = key,
+				"order_code" = order.order_code,
+				"subject" = order.subject,
+				"priority" = order.priority,
+				"assigned_to" = order.assigned_to,
+				"origin" = inbox.current_order == order ? "Active" : (inbox.standby_order == order ? "Standby" : "Deferred"),
+				"expires_in_seconds" = max(0, round((order.voluntary_offer_expires_at - world.time) / (1 SECONDS)))
+			))
+	return result
+
+/datum/ccpost_tasking_network/proc/claim_voluntary_order(obj/machinery/computer/ccpost_tasking/receiving_terminal, mob/user, from_key, expected_code)
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	if(!employee || employee.employee_role != "Central Command Liaison" || receiving_terminal.tasking_session_mind != employee.employee_mind || !receiving_terminal.session_valid_for(user))
+		return FALSE
+	if(receiving_terminal.submitted_report)
+		return FALSE
+	var/obj/item/circuitboard/computer/ccpost_tasking/from_inbox = inboxes["[from_key]"]
+	var/obj/item/circuitboard/computer/ccpost_tasking/to_inbox = get_inbox(employee.employee_mind)
+	if(!from_inbox || !to_inbox || from_inbox == to_inbox || to_inbox.current_order || to_inbox.standby_order || length(to_inbox.on_hold_orders) || length(to_inbox.event_task_queue))
+		return FALSE
+	var/datum/ccpost_tasking_order/order = voluntary_order_from_inbox(from_inbox, expected_code)
+	if(!order || order.voluntary_offer_expires_at <= world.time || !voluntary_order_can_transfer(from_inbox, order))
+		return FALSE
+	// A deferred order may only be claimed while its original, effective
+	// deferral deadline is still valid. Transfers cannot resurrect expired work.
+	var/was_deferred = (order in from_inbox.deferred_orders)
+	if(was_deferred)
+		var/obj/machinery/computer/ccpost_tasking/old_terminal
+		for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in registered_terminals)
+			if(terminal.tasking_session_mind == from_inbox.owner_mind)
+				old_terminal = terminal
+				break
+		if(old_terminal)
+			old_terminal.expire_overdue_deferrals()
+		if(!(order in from_inbox.deferred_orders))
+			return FALSE
+		var/effective_deadline = order.deferral_expires_at + (order.deferral_expiry_paused_at ? world.time - order.deferral_expiry_paused_at : 0)
+		if(world.time >= effective_deadline)
+			return FALSE
+	// Single-threaded ownership transition: remove from original slot before
+	// exposing the assignment in the claimant's inbox.
+	if(from_inbox.current_order == order)
+		from_inbox.current_order = null
+	else if(from_inbox.standby_order == order)
+		from_inbox.standby_order = null
+	else
+		from_inbox.deferred_orders -= order
+	if(was_deferred)
+		order.status = order.status_before_deferral
+		order.deferral_expiry_paused_at = 0
+		order.deferral_expires_at = 0
+		order.deferred_until = 0
+	order.voluntary_offer_expires_at = 0
+	order.voluntary_transfer_count++
+	var/previous_owner = order.assigned_to
+	order.assigned_to = employee.employee_name
+	order.owner_key = REF(employee.employee_mind)
+	order.assigned_terminal = "[receiving_terminal.x],[receiving_terminal.y],[receiving_terminal.z]"
+	order.record_action("Reassigned", user.name, "Voluntary transfer from [previous_owner] to [employee.employee_name]; prior deferral retained in audit")
+	to_inbox.current_order = order
+	to_inbox.last_owner_activity_at = world.time
+	// Ownership changes are not new assignments: no new reward, serial, grant
+	// cooldown, or additional routine-dispatch count is issued.
+	routine_cooldown_until[REF(from_inbox.owner_mind)] = max(routine_cooldown_until[REF(from_inbox.owner_mind)] || 0, world.time + 2 MINUTES)
+	log_dispatch("TRANSFER", "[order.order_code] voluntarily transferred from [previous_owner] to [employee.employee_name].")
+	for(var/obj/machinery/computer/ccpost_tasking/sender_terminal as anything in registered_terminals)
+		if(sender_terminal.tasking_session_mind != from_inbox.owner_mind)
+			continue
+		// The sender may still have a previously assigned standby task.
+		if(!from_inbox.current_order && from_inbox.standby_order)
+			sender_terminal.activate_standby_order()
+		sender_terminal.expire_overdue_deferrals()
+		break
+	receiving_terminal.print_order(order)
+	refresh_terminals()
+	return TRUE
+
 /datum/ccpost_tasking_network/proc/has_outstanding_family(family, obj/item/circuitboard/computer/ccpost_tasking/except_inbox)
 	if(!family)
 		return FALSE
+	for(var/datum/ccpost_dispatch_request/pending as anything in pending_requests)
+		var/datum/ccpost_task_template/queued_template = new pending.template_type
+		var/matching_family = queued_template.get_rotation_family() == family
+		qdel(queued_template)
+		if(matching_family)
+			return TRUE
 	for(var/key in inboxes)
 		var/obj/item/circuitboard/computer/ccpost_tasking/inbox = inboxes[key]
 		if(inbox == except_inbox)
 			continue
 		if(inbox.current_order?.rotation_family == family && inbox.current_order.status != CCPOST_TASK_STATUS_COMPLETED)
+			return TRUE
+		if(inbox.standby_order?.rotation_family == family)
 			return TRUE
 		for(var/datum/ccpost_tasking_order/deferred as anything in inbox.deferred_orders)
 			if(deferred.rotation_family == family)
@@ -1220,18 +1606,42 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 		var/list/orders = list()
 		if(inbox.current_order)
 			orders += inbox.current_order
+		if(inbox.standby_order)
+			orders += inbox.standby_order
 		orders += inbox.deferred_orders
 		orders += inbox.on_hold_orders
 		for(var/datum/ccpost_tasking_order/order as anything in orders)
 			if(order.status == CCPOST_TASK_STATUS_COMPLETED)
 				continue
-			if(order.get_department_assessment(department_id))
+			if(order.assigned_department == department_id || order.get_department_assessment(department_id))
 				return TRUE
 	return FALSE
 
-/datum/ccpost_tasking_network/proc/may_issue_template(datum/ccpost_task_template/template, obj/item/circuitboard/computer/ccpost_tasking/current_inbox)
-	if(!template)
+/datum/ccpost_tasking_network/proc/begin_department_standdown()
+	department_standdown_until = max(department_standdown_until, world.time + 10 MINUTES)
+
+/datum/ccpost_tasking_network/proc/department_standdown_active()
+	return world.time < department_standdown_until
+
+/// Internal work remains available. Only genuinely urgent incident reviews,
+/// which attach_staffing_context makes records-only, bypass the shared pause.
+/datum/ccpost_tasking_network/proc/department_dispatch_allowed(datum/ccpost_task_template/template)
+	if(!template || template.type == /datum/ccpost_task_template/telecomms_incident)
 		return FALSE
+	if(!template.is_station_facing())
+		return TRUE
+	if(template.event_only && ccpost_incident_priority_rank(template.priority) >= 3)
+		return TRUE
+	return !department_standdown_active() && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED
+
+/datum/ccpost_tasking_network/proc/may_issue_template(datum/ccpost_task_template/template, obj/item/circuitboard/computer/ccpost_tasking/current_inbox)
+	if(!department_dispatch_allowed(template))
+		return FALSE
+	if(template.is_station_facing() && !template.event_only)
+		if(!first_routine_intake_at || world.time < first_routine_intake_at + 10 MINUTES || world.time < next_station_dispatch || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+			return FALSE
+		if(count_station_orders() >= 2)
+			return FALSE
 	var/family = template.get_rotation_family()
 	if(has_outstanding_family(family, current_inbox))
 		return FALSE
@@ -1243,13 +1653,38 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	for(var/department_id in departments)
 		if(world.time < (department_next_dispatch["[department_id]"] || 0))
 			return FALSE
-		if(has_outstanding_department(department_id, current_inbox))
+		if(has_outstanding_department(department_id, null))
 			return FALSE
 	return TRUE
 
-/datum/ccpost_tasking_network/proc/note_issued(datum/ccpost_tasking_order/order)
+/datum/ccpost_tasking_network/proc/count_station_orders()
+	var/count = 0
+	for(var/key in inboxes)
+		var/obj/item/circuitboard/computer/ccpost_tasking/inbox = inboxes[key]
+		var/list/orders = list()
+		if(inbox.current_order)
+			orders += inbox.current_order
+		if(inbox.standby_order)
+			orders += inbox.standby_order
+		orders += inbox.deferred_orders
+		orders += inbox.on_hold_orders
+		for(var/datum/ccpost_tasking_order/order as anything in orders)
+			if(order.status != CCPOST_TASK_STATUS_COMPLETED && order.assigned_contact_mind && !order.source_order_code)
+				count++
+	return count
+
+/datum/ccpost_tasking_network/proc/note_issued(datum/ccpost_tasking_order/order, start_standdown = TRUE)
 	if(!order)
 		return
+	if(order.assigned_contact_mind)
+		next_station_dispatch = world.time + 10 MINUTES
+	if(start_standdown && (order.assigned_contact_mind || order.assigned_department || length(order.department_assessments)))
+		begin_department_standdown()
+	if(order.assigned_department)
+		department_next_dispatch["[order.assigned_department]"] = world.time + CCPOST_TASK_DEPARTMENT_COOLDOWN
+	var/datum/mind/contact = order.assigned_contact_mind?.resolve()
+	if(contact)
+		contact_next_dispatch[REF(contact)] = world.time + 30 MINUTES
 	for(var/datum/ccpost_department_assessment/assessment as anything in order.department_assessments)
 		department_next_dispatch["[assessment.department_id]"] = world.time + CCPOST_TASK_DEPARTMENT_COOLDOWN
 
@@ -1274,6 +1709,960 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	return best
 
 GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
+
+// Server-owned dispatch requests have absolute deadlines. Removing a queued
+// request never deletes a Liaison's assigned order or the incident record.
+/datum/ccpost_dispatch_request
+	var/template_type
+	var/incident_key
+	var/priority
+	var/priority_rank
+	var/received_at
+	var/expires_at
+	var/observation
+
+/datum/ccpost_dispatch_request/New(_template_type, _incident_key, _priority, _observation, lifetime)
+	. = ..()
+	template_type = _template_type
+	incident_key = _incident_key
+	priority = _priority
+	priority_rank = ccpost_incident_priority_rank(_priority)
+	received_at = world.time
+	expires_at = world.time + lifetime
+	observation = _observation
+
+// All actual generation and assignment distribution is coordinated here. The
+// physical server is an operational gateway; network records survive its loss.
+/datum/ccpost_tasking_network/proc/server_online()
+	return !GLOB.ccpost_outpost_signal_lost && server && !QDELETED(server) && server.operational()
+
+/datum/ccpost_tasking_network/proc/server_status()
+	if(GLOB.ccpost_outpost_signal_lost)
+		return "INSTALLATION OFFLINE"
+	if(!server || QDELETED(server))
+		return "SERVER MISSING"
+	if(server.machine_stat & BROKEN)
+		return "SERVER DAMAGED"
+	if(server.machine_stat & NOPOWER)
+		return "POWER INTERRUPTED"
+	if(server.recalibrating)
+		return "RECALIBRATING"
+	if(server.faulted)
+		return "SYNCHRONIZATION FAULT"
+	if(server.calibrating)
+		return "INITIALIZING"
+	return "ONLINE"
+
+/datum/ccpost_tasking_network/proc/refresh_admin_terminals()
+	for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in registered_terminals)
+		if(!QDELETED(terminal))
+			SStgui.update_uis(terminal)
+	if(GLOB.ccpost_sector_network)
+		GLOB.ccpost_sector_network.refresh_comms_terminals()
+	if(server && !QDELETED(server))
+		SStgui.update_uis(server)
+
+/// Run on availability transitions, not every tick. All personal and shared
+/// records remain in their owning datums when hardware is unavailable.
+/datum/ccpost_tasking_network/proc/note_admin_server_state()
+	var/current_online = server_online()
+	if(current_online == admin_network_was_online)
+		return
+	admin_network_was_online = current_online
+	if(!current_online)
+		admin_outage_started_at = world.time
+		if(routine_timer)
+			deltimer(routine_timer)
+			routine_timer = null
+		next_routine_at = 0
+		if(routine_dispatch_timer)
+			deltimer(routine_dispatch_timer)
+			routine_dispatch_timer = null
+		next_routine_dispatch_at = 0
+		GLOB.ccpost_sector_network?.pause_administrative_network()
+		log_dispatch("NETWORK OFFLINE", "Local administrative server: [server_status()].")
+	else
+		if(admin_outage_started_at)
+			var/outage_duration = max(0, world.time - admin_outage_started_at)
+			for(var/datum/ccpost_dispatch_request/request as anything in pending_requests)
+				request.expires_at += outage_duration
+			for(var/key in inboxes)
+				var/obj/item/circuitboard/computer/ccpost_tasking/inbox = inboxes[key]
+				if(!inbox)
+					continue
+				for(var/datum/ccpost_tasking_order/deferred as anything in inbox.deferred_orders)
+					if(deferred.deferred_until)
+						deferred.deferred_until += outage_duration
+					if(deferred.deferral_expires_at)
+						deferred.deferral_expires_at += outage_duration
+			admin_outage_started_at = 0
+		GLOB.ccpost_sector_network?.resume_administrative_network()
+		log_dispatch("NETWORK ONLINE", "Administrative routing restored.")
+	refresh_admin_terminals()
+
+/datum/ccpost_tasking_network/proc/record_server_telemetry()
+	telemetry_history += list(list(
+		"time" = station_time_timestamp(),
+		"queue" = length(pending_requests) + routine_queue_count,
+		"dispatched" = total_dispatches,
+		"online" = server_online() ? 1 : 0
+	))
+	if(length(telemetry_history) > 30)
+		telemetry_history.Cut(1, 2)
+
+/datum/ccpost_tasking_network/proc/log_dispatch(event_name, details)
+	if(event_name == "DISPATCHED" || event_name == "ROUTINE")
+		total_dispatches++
+	dispatch_log.Insert(1, "[station_time_timestamp()] | [event_name] | [details]")
+	if(length(dispatch_log) > 35)
+		dispatch_log.Cut(36)
+	if(server && !QDELETED(server))
+		SStgui.update_uis(server)
+
+/datum/ccpost_tasking_network/proc/prune_queue()
+	// Keep queued incident deadlines frozen throughout recoverable outages.
+	// Time is added back by note_admin_server_state() on recovery.
+	if(!server_online())
+		return
+	// Incident keys are often unique to an alarm cycle. Expired cooldowns
+	// have no reason to accumulate for an entire round.
+	for(var/incident_key in event_next_dispatch.Copy())
+		if(world.time >= event_next_dispatch[incident_key])
+			event_next_dispatch -= incident_key
+	for(var/datum/ccpost_dispatch_request/request as anything in pending_requests.Copy())
+		if(request.template_type != /datum/ccpost_task_template/telecomms_incident && world.time < request.expires_at)
+			continue
+		pending_requests -= request
+		log_dispatch("EXPIRED", "Unassigned [request.priority] request [request.incident_key] expired after its distribution window.")
+		qdel(request)
+
+/datum/ccpost_tasking_network/proc/has_outstanding_incident(incident_key)
+	if(!incident_key)
+		return FALSE
+	for(var/key in inboxes)
+		var/obj/item/circuitboard/computer/ccpost_tasking/inbox = inboxes[key]
+		if(inbox.current_order?.incident_key == incident_key && inbox.current_order.status != CCPOST_TASK_STATUS_COMPLETED)
+			return TRUE
+		if(inbox.standby_order?.incident_key == incident_key)
+			return TRUE
+		for(var/datum/ccpost_tasking_order/held as anything in inbox.on_hold_orders)
+			if(held.incident_key == incident_key)
+				return TRUE
+		for(var/datum/ccpost_tasking_order/deferred as anything in inbox.deferred_orders)
+			if(deferred.incident_key == incident_key)
+				return TRUE
+	return FALSE
+
+/datum/ccpost_tasking_network/proc/queue_event_task(template_type, cooldown_duration = 12 MINUTES, observation = null, incident_key = null)
+	if(!template_type || template_type == /datum/ccpost_task_template/telecomms_incident)
+		return FALSE
+	prune_queue()
+	var/datum/ccpost_task_template/template = new template_type
+	if(!template)
+		return FALSE
+	var/template_id = template.template_id
+	var/priority = template.priority
+	var/rank = ccpost_incident_priority_rank(priority)
+	var/key = incident_key || "[template_id]"
+	var/departmental_incident = template.is_station_facing()
+	qdel(template)
+	if(world.time < (event_next_dispatch[key] || 0))
+		return FALSE
+	if(has_outstanding_incident(key))
+		return FALSE
+	for(var/datum/ccpost_dispatch_request/existing as anything in pending_requests)
+		if(existing.incident_key == key)
+			// The first detection determines expiry; repeated alarms cannot prolong it.
+			return FALSE
+	// Reserve two of the six slots for urgent work. An existing urgent
+	// request does NOT count against the four nonurgent slots.
+	var/nonurgent_count = 0
+	var/datum/ccpost_dispatch_request/lowest
+	for(var/datum/ccpost_dispatch_request/candidate as anything in pending_requests)
+		if(candidate.priority_rank <= 2)
+			nonurgent_count++
+		if(candidate.priority_rank < rank && (!lowest || candidate.priority_rank < lowest.priority_rank))
+			lowest = candidate
+	var/nonurgent_limit_reached = rank <= 2 && nonurgent_count >= 4
+	var/total_limit_reached = length(pending_requests) >= 6
+	if(nonurgent_limit_reached || total_limit_reached)
+		// Never displace urgent work to make space for a nonurgent request.
+		if(!lowest || (rank <= 2 && lowest.priority_rank > 2))
+			log_dispatch("REJECTED", "Queue capacity reached; [key] has no lower-priority request to replace.")
+			return FALSE
+		pending_requests -= lowest
+		log_dispatch("SUPERSEDED", "[lowest.incident_key] replaced by [key].")
+		qdel(lowest)
+	var/lifetime = rank >= 3 ? 20 MINUTES : 15 MINUTES
+	var/datum/ccpost_dispatch_request/request = new(template_type, key, priority, istext(observation) ? copytext(observation, 1, 301) : null, lifetime)
+	pending_requests += request
+	// Only a newly accepted incident starts the pause; duplicate observations
+	// cannot refresh it or the original request deadline.
+	if(departmental_incident)
+		begin_department_standdown()
+	// Keep the combined six-slot ceiling AND two emergency-reserved slots.
+	var/nonurgent_pending = 0
+	for(var/datum/ccpost_dispatch_request/queued_request as anything in pending_requests)
+		if(queued_request.priority_rank <= 2)
+			nonurgent_pending++
+	while(routine_queue_count > 0 && (length(pending_requests) + routine_queue_count > 6 || nonurgent_pending + routine_queue_count > 4))
+		routine_queue_count--
+		log_dispatch("SUPERSEDED", "Routine request displaced by incoming incident [key].")
+	event_next_dispatch[key] = world.time + cooldown_duration
+	log_dispatch("RECEIVED", "[priority] incident [key] entered the central queue.")
+	// Event callbacks only queue work; dispatch occurs on the following tick.
+	addtimer(CALLBACK(src, PROC_REF(dispatch_pending)), 1 SECONDS)
+	return TRUE
+
+/datum/ccpost_tasking_network/proc/select_terminal(priority_rank = 1, preemption_allowed = FALSE, list/excluded_terminals = null, routine_only = FALSE)
+	var/obj/machinery/computer/ccpost_tasking/best
+	var/best_score = INFINITY
+	var/best_is_busy = FALSE
+	for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in registered_terminals)
+		if(QDELETED(terminal) || (terminal.machine_stat & (BROKEN | NOPOWER)) || !terminal.tasking_session_mind)
+			continue
+		// A dispatch pass can issue at most one assignment to each workstation.
+		if(excluded_terminals && (terminal in excluded_terminals))
+			continue
+		var/mob/living/carbon/human/person = terminal.tasking_session_mind.current
+		if(!person?.client || !terminal.session_valid_for(person))
+			continue
+		var/identity_key = REF(terminal.tasking_session_mind)
+		if(routine_only && world.time < (routine_cooldown_until[identity_key] || 0))
+			continue
+		var/obj/item/circuitboard/computer/ccpost_tasking/inbox = terminal.get_tasking_board()
+		if(!inbox)
+			continue
+		var/active_rank = inbox.current_order ? ccpost_incident_priority_rank(inbox.current_order.priority) : 0
+		if(inbox.current_order?.status == CCPOST_TASK_STATUS_COMPLETED)
+			active_rank = 0
+		if(routine_only)
+			// Only one additional ordinary assignment may wait in standby.
+			// Emergency and preempted work are not candidates for multitasking.
+			if(inbox.standby_order || length(inbox.on_hold_orders) || active_rank >= ccpost_incident_priority_rank(CCPOST_TASK_PRIORITY_PRIORITY))
+				continue
+		else if(active_rank && (!preemption_allowed || priority_rank <= active_rank || length(inbox.on_hold_orders) >= inbox.max_on_hold_orders))
+			continue
+		var/score = (active_rank ? 1500 + active_rank * 150 : 0) + get_recent_routine_count(identity_key) * 15 + length(inbox.on_hold_orders) * 40 + length(inbox.deferred_orders) * 20
+		// A Liaison with incoming Sector Communications should be less likely
+		// to receive new routine paperwork while another Liaison is free.
+		if(routine_only && GLOB.ccpost_sector_network)
+			for(var/datum/ccpost_sector_message/sector_message as anything in GLOB.ccpost_sector_network.sector_messages)
+				if(sector_message.resolution_status == "PENDING" && sector_message.assigned_mind == terminal.tasking_session_mind)
+					score += sector_message.message_type == "REQUEST" ? 100 : 50
+			if(GLOB.ccpost_sector_network.active_sector_paperwork?.assigned_mind == terminal.tasking_session_mind)
+				score += 150
+		if(routine_only && identity_key == last_routine_recipient_key)
+			score += 500
+		// An idle Liaison ALWAYS outranks a standby candidate, regardless
+		// of cumulative historic task counts or category weights.
+		var/is_busy = !!active_rank
+		if(routine_only && best)
+			if(is_busy && !best_is_busy)
+				continue
+			if(!is_busy && best_is_busy)
+				best_score = INFINITY
+		if(score < best_score)
+			best = terminal
+			best_score = score
+			best_is_busy = is_busy
+	return best
+
+/datum/ccpost_tasking_network/proc/dispatch_pending()
+	prune_queue()
+	if(!server_online() || !length(pending_requests))
+		return
+	// A failed staffing check for one request must not stall the other queued
+	// requests. Never retry the same failed request indefinitely in this pass.
+	// Each terminal receives at most one new incident during the pass.
+	var/list/skipped_requests = list()
+	var/list/used_terminals = list()
+	var/dispatches = 0
+	while(dispatches < 3)
+		var/datum/ccpost_dispatch_request/best_request
+		var/obj/machinery/computer/ccpost_tasking/best_terminal
+		for(var/datum/ccpost_dispatch_request/request as anything in pending_requests)
+			if(request in skipped_requests)
+				continue
+			var/datum/ccpost_task_template/queued_template = new request.template_type
+			var/allowed = department_dispatch_allowed(queued_template)
+			qdel(queued_template)
+			if(!allowed)
+				continue
+			var/obj/machinery/computer/ccpost_tasking/candidate = select_terminal(request.priority_rank, request.priority_rank >= 3, used_terminals)
+			if(!candidate)
+				continue
+			if(!best_request || request.priority_rank > best_request.priority_rank)
+				best_request = request
+				best_terminal = candidate
+		if(!best_request || !best_terminal)
+			break
+		var/obj/item/circuitboard/computer/ccpost_tasking/inbox = best_terminal.get_tasking_board()
+		if(best_request.template_type in inbox.event_task_queue)
+			// A preexisting terminal-side request must resolve separately.
+			skipped_requests += best_request
+			continue
+		best_terminal.insert_event_task_by_priority(inbox, best_request.template_type)
+		inbox.event_task_expires["[best_request.template_type]"] = best_request.expires_at
+		if(best_request.observation)
+			inbox.event_task_context["[best_request.template_type]"] = best_request.observation
+		if(!best_terminal.dispatch_queued_incident(best_request.template_type))
+			// Keep this request in the central queue with its ORIGINAL deadline.
+			// Another eligible request may still be dispatchable this tick.
+			inbox.event_task_queue -= best_request.template_type
+			inbox.event_task_expires -= "[best_request.template_type]"
+			inbox.event_task_context -= "[best_request.template_type]"
+			skipped_requests += best_request
+			continue
+		var/obj/item/circuitboard/computer/ccpost_tasking/dispatched_inbox = best_terminal.get_tasking_board()
+		if(dispatched_inbox?.current_order)
+			dispatched_inbox.current_order.incident_key = best_request.incident_key
+		pending_requests -= best_request
+		log_dispatch("DISPATCHED", "[best_request.incident_key] sent to [best_terminal.tasking_session_name].")
+		qdel(best_request)
+		used_terminals += best_terminal
+		dispatches++
+
+/// Recent activity provides fairer dispatch than all-round counts.
+/datum/ccpost_tasking_network/proc/get_recent_routine_count(owner_key)
+	var/total = 0
+	for(var/list/entry as anything in recent_routine_dispatches.Copy())
+		if(world.time - entry["at"] >= 20 MINUTES)
+			recent_routine_dispatches -= list(entry)
+			continue
+		if(entry["owner"] == owner_key)
+			total++
+	return total
+
+/// Routine work may occupy at most four slots. Two remain reserved for
+/// incoming Priority/Critical requests in the six-slot incident network.
+/datum/ccpost_tasking_network/proc/get_routine_capacity()
+	var/nonurgent_incidents = 0
+	for(var/datum/ccpost_dispatch_request/request as anything in pending_requests)
+		if(request.priority_rank <= 2)
+			nonurgent_incidents++
+	return max(0, min(4 - nonurgent_incidents, 6 - length(pending_requests)) - routine_queue_count)
+
+/datum/ccpost_tasking_network/proc/get_active_liaison_count()
+	var/list/unique_personnel = list()
+	for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in registered_terminals)
+		if(QDELETED(terminal) || (terminal.machine_stat & (BROKEN | NOPOWER)) || !terminal.tasking_session_mind)
+			continue
+		var/mob/living/carbon/human/person = terminal.tasking_session_mind.current
+		if(person?.client && terminal.session_valid_for(person))
+			unique_personnel |= REF(terminal.tasking_session_mind)
+	return length(unique_personnel)
+
+/// Schedule intake without resetting an already earlier arrival deadline.
+/datum/ccpost_tasking_network/proc/schedule_routine(minimum_delay = 0, maximum_delay = 0)
+	if(!server_online())
+		if(routine_timer)
+			deltimer(routine_timer)
+		routine_timer = null
+		next_routine_at = 0
+		return
+	if(!get_active_liaison_count())
+		if(routine_timer)
+			deltimer(routine_timer)
+		routine_timer = null
+		next_routine_at = 0
+		return
+	if(!minimum_delay || !maximum_delay)
+		minimum_delay = 4 MINUTES
+		maximum_delay = 6 MINUTES
+	var/new_deadline = world.time + rand(minimum_delay, maximum_delay)
+	if(routine_timer && next_routine_at && next_routine_at <= new_deadline)
+		return
+	if(routine_timer)
+		deltimer(routine_timer)
+	next_routine_at = new_deadline
+	routine_timer = addtimer(CALLBACK(src, PROC_REF(run_routine)), max(1 SECONDS, new_deadline - world.time), TIMER_STOPPABLE)
+
+/// An idle eligible Liaison should not wait through a stale long intake timer.
+/datum/ccpost_tasking_network/proc/accelerate_routine_intake()
+	if(server_online() && !routine_queue_count && select_terminal(routine_only = TRUE))
+		if(initial_routine_batch_sent)
+			schedule_routine(2 MINUTES, 3 MINUTES)
+		else
+			schedule_routine(30 SECONDS, 45 SECONDS)
+
+/// Create a bounded reserve only when there are people who can work on it.
+/datum/ccpost_tasking_network/proc/run_routine()
+	routine_timer = null
+	next_routine_at = 0
+	if(!server_online())
+		return
+	dispatch_pending()
+	var/staffed = get_active_liaison_count()
+	if(!staffed)
+		return
+	var/capacity = get_routine_capacity()
+	var/obj/machinery/computer/ccpost_tasking/recipient = select_terminal(routine_only = TRUE)
+	if(capacity > 0 && recipient)
+		if(!first_routine_intake_at)
+			first_routine_intake_at = world.time
+		var/initial_batch = !initial_routine_batch_sent
+		var/batch = 1
+		if(initial_batch)
+			// The opening intake can supply each of the three available Liaisons.
+			batch = min(3, staffed)
+			initial_routine_batch_sent = TRUE
+
+		// An occupied team with full standby slots cannot build a backlog.
+		batch = min(batch, capacity, max(0, (initial_batch ? 3 : 2) - routine_queue_count))
+		if(batch > 0)
+			routine_queue_count += batch
+			log_dispatch("INTAKE", "[batch] routine assignment request(s) accepted; [routine_queue_count] awaiting dispatch.")
+			schedule_routine_dispatch()
+	schedule_routine()
+
+/datum/ccpost_tasking_network/proc/schedule_routine_dispatch(delay = 30 SECONDS)
+	if(!server_online() || !routine_queue_count || routine_dispatch_timer)
+		return
+	next_routine_dispatch_at = world.time + delay
+	routine_dispatch_timer = addtimer(CALLBACK(src, PROC_REF(dispatch_routine_queue)), delay, TIMER_STOPPABLE)
+
+/datum/ccpost_tasking_network/proc/dispatch_routine_queue()
+	routine_dispatch_timer = null
+	next_routine_dispatch_at = 0
+	if(!server_online() || !routine_queue_count)
+		return
+	// Give event-driven incidents precedence over ordinary administration.
+	dispatch_pending()
+	var/obj/machinery/computer/ccpost_tasking/recipient = select_terminal(routine_only = TRUE)
+	if(!recipient)
+		schedule_routine_dispatch(45 SECONDS)
+		return
+	var/obj/item/circuitboard/computer/ccpost_tasking/before = recipient.get_tasking_board()
+	var/datum/ccpost_tasking_order/previous_active = before?.current_order
+	var/datum/ccpost_tasking_order/previous_standby = before?.standby_order
+	routine_dispatch_active = TRUE
+	recipient.issue_assignment()
+	routine_dispatch_active = FALSE
+	var/obj/item/circuitboard/computer/ccpost_tasking/board = recipient.get_tasking_board()
+	if(board && (board.current_order != previous_active || board.standby_order != previous_standby))
+		routine_queue_count--
+	else
+		// Template/staffing requirements may make this attempt ineligible.
+		log_dispatch("RETRY", "Routine request retained; no eligible template could be issued.")
+	if(routine_queue_count)
+		schedule_routine_dispatch(board && (board.current_order != previous_active || board.standby_order != previous_standby) ? 30 SECONDS : 60 SECONDS)
+	else if(get_active_liaison_count() && select_terminal(routine_only = TRUE))
+		accelerate_routine_intake()
+
+/datum/ccpost_tasking_network/proc/note_routine_issued(obj/machinery/computer/ccpost_tasking/terminal, datum/ccpost_task_template/template)
+	if(!template || !terminal?.tasking_session_mind)
+		return
+	var/key = REF(terminal.tasking_session_mind)
+	routine_dispatch_counts[key] = (routine_dispatch_counts[key] || 0) + 1
+	last_routine_recipient_key = key
+	recent_routine_dispatches += list(list("owner" = key, "at" = world.time))
+	recent_routine_templates += template.type
+	while(length(recent_routine_templates) > 5)
+		recent_routine_templates.Cut(1, 2)
+	recent_routine_families += template.get_rotation_family()
+	while(length(recent_routine_families) > 3)
+		recent_routine_families.Cut(1, 2)
+	recent_routine_categories += template.category
+	while(length(recent_routine_categories) > 4)
+		recent_routine_categories.Cut(1, 2)
+	log_dispatch("ROUTINE", "[template.template_id] distributed to [terminal.tasking_session_name].")
+
+/// Protect a Liaison from immediately receiving new routine work after completing
+/// an assignment. Real emergency dispatch deliberately ignores this cooldown.
+/datum/ccpost_tasking_network/proc/note_task_completed(datum/mind/owner)
+	if(!owner)
+		return
+	routine_cooldown_until[REF(owner)] = world.time + 2 MINUTES
+	// Resume accelerated intake only after a completion has freed a slot.
+	addtimer(CALLBACK(src, PROC_REF(accelerate_routine_intake)), 2 SECONDS)
+
+// A reconstructible dedicated board avoids affecting live PDA message servers.
+/obj/item/circuitboard/machine/ccpost_tasking_server
+	name = "Central Command Tasking Distribution Server"
+	greyscale_colors = CIRCUIT_COLOR_COMMAND
+	build_path = /obj/machinery/ccpost_tasking_server
+	req_components = list(
+		/datum/stock_part/manipulator = 2,
+		/obj/item/stack/cable_coil = 1,
+		/datum/stock_part/filter = 3
+	)
+
+// Physical Tasking Distribution Server. Its machinery availability controls
+// processing, never the lifetime of archived and personally assigned records.
+/obj/machinery/ccpost_tasking_server
+	name = "Central Command Tasking Distribution Server"
+	desc = "A hardened administrative dispatch server coordinating the outpost's personnel tasking network."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "message_server"
+	density = TRUE
+	circuit = /obj/item/circuitboard/machine/ccpost_tasking_server
+	use_power = ACTIVE_POWER_USE
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
+	processing_flags = NONE
+	var/calibrating = TRUE
+	var/list/active_atmos_areas = list()
+	var/atmos_incident_open = FALSE
+	var/atmos_incident_sequence = 0
+	var/next_atmos_incident_at = 0
+	var/last_significant_explosion_at = -10 MINUTES
+	/// Rare maintenance fault, separate from the original 15-second boot calibration.
+	var/faulted = FALSE
+	var/recalibrating = FALSE
+	var/recalibration_ends_at = 0
+	/// Invalidates callbacks from interrupted recalibration cycles.
+	var/recalibration_generation = 0
+	var/next_fault_check_at = 0
+	/// Server-side intrusion session; never affects ordinary assignment processing.
+	var/datum/mind/intrusion_mind
+	var/intrusion_serial = 0
+	var/intrusion_started_at = 0
+	var/last_intrusion_radio_at = -10 MINUTES
+	var/list/intrusion_audit = list()
+	var/obj/item/radio/intrusion_radio
+	/// Physically inserted original Operation Severance cartridge.
+	var/obj/item/ccpost_classified_cartridge/inserted_cartridge
+
+/obj/machinery/ccpost_tasking_server/proc/operational()
+	return !calibrating && !faulted && !recalibrating && !GLOB.ccpost_outpost_signal_lost && !(machine_stat & (BROKEN | NOPOWER)) && GLOB.ccpost_tasking_network.server == src
+
+/obj/machinery/ccpost_tasking_server/Initialize(mapload)
+	. = ..()
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	if(network.server && !QDELETED(network.server))
+		// Multiple mapped servers may exist, but only one is authoritative.
+		return
+	network.server = src
+	intrusion_radio = new(src)
+	intrusion_radio.set_frequency(FREQ_CENTCOM)
+	intrusion_radio.independent = TRUE
+	intrusion_radio.ignores_radio_jammers = TRUE
+	intrusion_radio.canhear_range = 0
+	intrusion_radio.set_listening(FALSE)
+	intrusion_radio.command = TRUE
+	intrusion_radio.use_command = TRUE
+	next_fault_check_at = world.time + 30 MINUTES
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(on_station_explosion))
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(on_security_level_changed))
+	RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_FIRE(ALARM_ATMOS), PROC_REF(on_atmospheric_alarm))
+	RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_CLEAR(ALARM_ATMOS), PROC_REF(on_atmospheric_alarm_cleared))
+	RegisterSignal(SSdcs, COMSIG_MAIN_SM_DELAMINATING, PROC_REF(on_supermatter_delamination))
+	addtimer(CALLBACK(src, PROC_REF(complete_calibration)), 15 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(maintenance_tick)), 1 MINUTES)
+	update_appearance()
+
+/obj/machinery/ccpost_tasking_server/proc/complete_calibration()
+	calibrating = FALSE
+	update_appearance()
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	network.note_admin_server_state()
+	if(network.server == src && operational())
+		network.log_dispatch("ONLINE", "Central Tasking Server operational.")
+		network.dispatch_pending()
+		if(!network.routine_timer)
+			network.schedule_routine(CCPOST_TASK_FIRST_MIN, CCPOST_TASK_FIRST_MAX)
+		if(network.routine_queue_count)
+			network.schedule_routine_dispatch()
+
+/obj/machinery/ccpost_tasking_server/proc/maintenance_tick()
+	if(QDELETED(src))
+		return
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	if(network.server == src)
+		if(world.time >= next_fault_check_at && !network.natural_fault_occurred)
+			next_fault_check_at = world.time + 15 MINUTES
+			if(operational() && length(GLOB.ccpost_hr_service?.roster))
+				var/critical_work = FALSE
+				for(var/datum/ccpost_dispatch_request/request as anything in network.pending_requests)
+					if(request.priority == "Critical")
+						critical_work = TRUE
+						break
+				if(!critical_work)
+					for(var/inbox_key in network.inboxes)
+						var/obj/item/circuitboard/computer/ccpost_tasking/inbox = network.inboxes[inbox_key]
+						if(inbox?.current_order?.priority == "Critical" || inbox?.standby_order?.priority == "Critical")
+							critical_work = TRUE
+							break
+				if(!critical_work && prob(15))
+					faulted = TRUE
+					network.natural_fault_occurred = TRUE
+					network.total_faults++
+					update_appearance()
+					network.log_dispatch("FAULT", "Administrative synchronization failure. Recalibration required.")
+		network.note_admin_server_state()
+		network.record_server_telemetry()
+		if(operational())
+			network.prune_queue()
+			GLOB.ccpost_tasking_network.dispatch_pending()
+			if(!GLOB.ccpost_tasking_network.routine_timer)
+				GLOB.ccpost_tasking_network.schedule_routine()
+			if(GLOB.ccpost_tasking_network.routine_queue_count)
+				GLOB.ccpost_tasking_network.schedule_routine_dispatch()
+	addtimer(CALLBACK(src, PROC_REF(maintenance_tick)), 1 MINUTES)
+
+/obj/machinery/ccpost_tasking_server/power_change()
+	. = ..()
+	if(intrusion_mind && (machine_stat & (BROKEN | NOPOWER)))
+		abort_intrusion("Unauthorized transfer lost server power or integrity.")
+	if(recalibrating && (machine_stat & (BROKEN | NOPOWER)))
+		recalibration_generation++
+		recalibrating = FALSE
+		recalibration_ends_at = 0
+		faulted = TRUE
+	update_appearance()
+	GLOB.ccpost_tasking_network.note_admin_server_state()
+	if(operational())
+		GLOB.ccpost_tasking_network.dispatch_pending()
+		if(!GLOB.ccpost_tasking_network.routine_timer)
+			GLOB.ccpost_tasking_network.schedule_routine()
+		if(GLOB.ccpost_tasking_network.routine_queue_count)
+			GLOB.ccpost_tasking_network.schedule_routine_dispatch()
+
+// Operation Severance: physically inserted single-use storage, then an asynchronous
+// 45-second download. The operative is free to move while the server transfers data.
+/obj/machinery/ccpost_tasking_server/attack_hand(mob/user, list/modifiers)
+	if(!user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex))
+		return ..()
+	if(!panel_open)
+		balloon_alert(user, "open the maintenance panel first")
+		return TRUE
+	ui_interact(user)
+	return TRUE
+
+/obj/machinery/ccpost_tasking_server/proc/insert_classified_cartridge(obj/item/ccpost_classified_cartridge/cartridge, mob/living/user)
+	if(!user || !user.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) || !user.Adjacent(src) || !user.is_holding(cartridge))
+		return FALSE
+	if(!panel_open || !operational() || inserted_cartridge || intrusion_mind || cartridge.data_complete)
+		balloon_alert(user, "storage port unavailable")
+		return FALSE
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	if(!director || director.data_downloaded || director.data_cartridge_ref?.resolve() != cartridge)
+		balloon_alert(user, "cartridge not authorized for this contract")
+		return FALSE
+	cartridge.forceMove(src)
+	inserted_cartridge = cartridge
+	record_intrusion("STORAGE MOUNTED", "Unknown operator mounted removable encrypted storage.")
+	balloon_alert_to_viewers("cartridge inserted")
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 45, FALSE)
+	SStgui.update_uis(src)
+	return TRUE
+
+/obj/machinery/ccpost_tasking_server/proc/start_classified_export(mob/user)
+	if(!user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) || !user.Adjacent(src) || !panel_open)
+		return FALSE
+	if(!operational())
+		balloon_alert(user, "server unavailable")
+		return FALSE
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	if(!director)
+		balloon_alert(user, "operation director not registered")
+		return FALSE
+	if(director.data_downloaded)
+		balloon_alert(user, "classified data already extracted")
+		return FALSE
+	if(!inserted_cartridge || inserted_cartridge.loc != src || inserted_cartridge.data_complete || director.data_cartridge_ref?.resolve() != inserted_cartridge)
+		balloon_alert(user, "insert original blank cartridge")
+		return FALSE
+	if(intrusion_mind)
+		balloon_alert(user, "export already running")
+		return FALSE
+	intrusion_mind = user.mind
+	intrusion_started_at = world.time
+	intrusion_serial++
+	var/this_transfer = intrusion_serial
+	balloon_alert_to_viewers("downloading classified data...")
+	playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 40, FALSE)
+	record_intrusion("UNAUTHORIZED EXTRACTION", "Classified Tasking Server database transfer initiated.")
+	transmit_intrusion("Warning. Unauthorized data extraction detected within the Central Command Tasking Network. Classified records are being accessed without authorization. Immediate investigation is advised.")
+	SStgui.update_uis(src)
+	to_chat(user, span_warning("GORLEX MARAUDERS: Data extraction initiated. Transfer time: 45 seconds. Return to eject your cartridge."))
+	addtimer(CALLBACK(src, PROC_REF(complete_classified_export), this_transfer, user.mind), 45 SECONDS)
+	return TRUE
+
+/obj/machinery/ccpost_tasking_server/proc/complete_classified_export(transfer_serial, datum/mind/download_mind)
+	if(QDELETED(src) || intrusion_serial != transfer_serial || intrusion_mind != download_mind)
+		return
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	if(!operational() || !director || director.data_downloaded || !inserted_cartridge || inserted_cartridge.loc != src)
+		abort_intrusion("Server authorization or removable storage became unavailable.")
+		return
+	if(!director.note_data_downloaded(download_mind, inserted_cartridge))
+		abort_intrusion("Data transfer failed contract identity verification.")
+		return
+	inserted_cartridge.downloaded_by = download_mind
+	inserted_cartridge.data_complete = TRUE
+	inserted_cartridge.name = "encrypted Central Command tasking data cartridge"
+	inserted_cartridge.desc = "The sole encrypted physical copy of classified Central Command tasking records. Recovery priority: critical."
+	intrusion_mind = null
+	intrusion_started_at = 0
+	intrusion_serial++
+	balloon_alert_to_viewers("download complete!")
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, FALSE)
+	record_intrusion("DATA COMPROMISED", "Classified tasking records copied into inserted cartridge. Cartridge remains in storage port.")
+	transmit_intrusion("Critical alert. Classified Central Command tasking records compromised. Unauthorized data extraction completed.", TRUE)
+	SStgui.update_uis(src)
+
+/obj/machinery/ccpost_tasking_server/proc/eject_classified_cartridge(mob/user)
+	if(!inserted_cartridge || !user || !user.Adjacent(src))
+		return FALSE
+	if(intrusion_mind)
+		abort_intrusion("Removable storage ejected during unauthorized transfer.")
+	var/obj/item/ccpost_classified_cartridge/cartridge = inserted_cartridge
+	inserted_cartridge = null
+	cartridge.forceMove(get_turf(src))
+	if(!user.put_in_hands(cartridge))
+		to_chat(user, span_notice("The data cartridge was ejected onto the floor beside the server."))
+	balloon_alert_to_viewers("cartridge removed")
+	playsound(src, 'sound/items/handling/disk_pickup.ogg', 45, FALSE)
+	record_intrusion("STORAGE EJECTED", "Removable encrypted cartridge removed from the Tasking Server.")
+	SStgui.update_uis(src)
+	return TRUE
+
+/obj/machinery/ccpost_tasking_server/proc/record_intrusion(event, detail)
+	var/entry = "[station_time_timestamp()] / [event] / [detail]"
+	intrusion_audit.Insert(1, entry)
+	if(length(intrusion_audit) > 16)
+		intrusion_audit.Cut(17)
+	GLOB.ccpost_tasking_network.log_dispatch("SECURITY", "[event]: [detail]")
+	log_game("CCPost Tasking Server: [entry]")
+
+/obj/machinery/ccpost_tasking_server/proc/transmit_intrusion(message, force = FALSE)
+	// Rate-limit repeated starts, but always announce completed or interrupted transfers.
+	if(!intrusion_radio || (!force && world.time < last_intrusion_radio_at + 5 SECONDS))
+		return
+	last_intrusion_radio_at = world.time
+	intrusion_radio.talk_into(src, "CENTCOM TASKING SERVER: [message]", RADIO_CHANNEL_CENTCOM)
+
+/obj/machinery/ccpost_tasking_server/proc/abort_intrusion(reason)
+	if(!intrusion_mind)
+		return
+	intrusion_mind = null
+	intrusion_started_at = 0
+	intrusion_serial++
+	balloon_alert_to_viewers("download interrupted!")
+	playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
+	record_intrusion("EXTRACTION INTERRUPTED", reason)
+	transmit_intrusion("Unauthorized data transfer interrupted. Tasking network security intervention recorded.", TRUE)
+	SStgui.update_uis(src)
+
+/obj/machinery/ccpost_tasking_server/screwdriver_act(mob/living/user, obj/item/tool)
+	toggle_panel_open()
+	tool.play_tool_sound(src)
+	balloon_alert(user, panel_open ? "panel opened" : "panel closed")
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/ccpost_tasking_server/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/ccpost_tasking_server/update_icon_state()
+	icon_state = ((machine_stat & (NOPOWER | BROKEN)) || calibrating || faulted || recalibrating) ? (panel_open ? "message_server_o_off" : "message_server_off") : (panel_open ? "message_server_o" : "message_server")
+	return ..()
+
+/obj/machinery/ccpost_tasking_server/update_overlays()
+	. = ..()
+	if(calibrating || recalibrating)
+		. += "message_server_calibrate"
+
+/obj/machinery/ccpost_tasking_server/Destroy()
+	if(intrusion_mind)
+		abort_intrusion("Tasking Server destroyed during unauthorized transfer.")
+	if(inserted_cartridge)
+		var/obj/item/ccpost_classified_cartridge/cartridge = inserted_cartridge
+		inserted_cartridge = null
+		cartridge.forceMove(get_turf(src))
+	QDEL_NULL(intrusion_radio)
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	if(network.server == src)
+		network.server = null
+		network.note_admin_server_state()
+		if(network.routine_timer)
+			deltimer(network.routine_timer)
+			network.routine_timer = null
+		network.next_routine_at = 0
+		if(network.routine_dispatch_timer)
+			deltimer(network.routine_dispatch_timer)
+			network.routine_dispatch_timer = null
+		network.next_routine_dispatch_at = 0
+	UnregisterSignal(SSdcs, list(COMSIG_GLOB_EXPLOSION, COMSIG_GLOB_ALARM_FIRE(ALARM_ATMOS), COMSIG_GLOB_ALARM_CLEAR(ALARM_ATMOS), COMSIG_MAIN_SM_DELAMINATING))
+	UnregisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED)
+	return ..()
+
+/obj/machinery/ccpost_tasking_server/proc/finish_recalibration(generation)
+	if(QDELETED(src) || !recalibrating || generation != recalibration_generation)
+		return
+	recalibrating = FALSE
+	recalibration_ends_at = 0
+	if(machine_stat & (BROKEN | NOPOWER) || GLOB.ccpost_outpost_signal_lost)
+		GLOB.ccpost_tasking_network.log_dispatch("RECOVERY ABORTED", "Power, hardware, or installation state prevented recovery.")
+	else
+		faulted = FALSE
+		GLOB.ccpost_tasking_network.log_dispatch("RECALIBRATED", "60-second administrative synchronization restored.")
+	update_appearance()
+	GLOB.ccpost_tasking_network.note_admin_server_state()
+	if(operational())
+		GLOB.ccpost_tasking_network.dispatch_pending()
+	SStgui.update_uis(src)
+
+/obj/machinery/ccpost_tasking_server/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	var/mob/user = ui?.user
+	var/is_liaison = ccpost_has_centcom_id(user)
+	var/is_breaching_gorlex = panel_open && !!user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)
+	if(action == "start_classified_export")
+		if(is_breaching_gorlex && user.can_perform_action(src))
+			start_classified_export(user)
+		return TRUE
+	if(action == "eject_classified_cartridge")
+		if((is_liaison || is_breaching_gorlex) && user?.can_perform_action(src))
+			eject_classified_cartridge(user)
+		return TRUE
+	if(!is_liaison)
+		return TRUE
+	. = ..()
+	if(.)
+		return
+	if(action == "interrupt_intrusion")
+		if(!ui?.user?.can_perform_action(src) || !intrusion_mind)
+			return TRUE
+		abort_intrusion("Central Command personnel terminated the unauthorized transfer.")
+		to_chat(ui.user, span_boldnotice("Central Command Tasking Server: Unauthorized data export terminated."))
+		return TRUE
+	if(action != "start_recalibration")
+		return FALSE
+	if(!faulted || recalibrating || calibrating || GLOB.ccpost_outpost_signal_lost || (machine_stat & (BROKEN | NOPOWER)))
+		balloon_alert(ui.user, "server not ready for recalibration")
+		return TRUE
+	recalibration_generation++
+	recalibrating = TRUE
+	recalibration_ends_at = world.time + 60 SECONDS
+	GLOB.ccpost_tasking_network.log_dispatch("RECALIBRATING", "Manual 60-second synchronization cycle started by [key_name(ui.user)].")
+	GLOB.ccpost_tasking_network.note_admin_server_state()
+	GLOB.ccpost_tasking_network.refresh_admin_terminals()
+	addtimer(CALLBACK(src, PROC_REF(finish_recalibration), recalibration_generation), 60 SECONDS)
+	update_appearance()
+	SStgui.update_uis(src)
+	return TRUE
+
+/obj/machinery/ccpost_tasking_server/proc/queue_event_task(template_type, cooldown_duration = 12 MINUTES, observation = null, incident_key = null)
+	return GLOB.ccpost_tasking_network.queue_event_task(template_type, cooldown_duration, observation, incident_key)
+
+/obj/machinery/ccpost_tasking_server/ui_interact(mob/user, datum/tgui/ui)
+	if(!ccpost_can_view_terminal(user) && !(panel_open && user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)))
+		balloon_alert(user, "central command ID or breached maintenance access required")
+		return
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CCPostTasking", name)
+		ui.open()
+
+/obj/machinery/ccpost_tasking_server/ui_data(mob/user)
+	if(!ccpost_can_view_terminal(user) && !(panel_open && user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)))
+		return list()
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	network.prune_queue()
+	var/list/data = list("is_server" = TRUE, "server_online" = operational(), "server_calibrating" = calibrating || recalibrating, "server_panel_open" = panel_open)
+	data["server_status"] = network.server_status()
+	data["server_intrusion_active"] = !!intrusion_mind
+	data["server_intrusion_seconds"] = intrusion_mind ? max(0, round(((intrusion_started_at + 45 SECONDS) - world.time) / (1 SECONDS))) : 0
+	data["server_intrusion_history"] = intrusion_audit.Copy()
+	data["server_storage_inserted"] = !!inserted_cartridge
+	data["server_storage_status"] = inserted_cartridge ? (inserted_cartridge.data_complete ? "CLASSIFIED DATA COMPLETE" : "BLANK ENCRYPTED CARTRIDGE") : "NO CARTRIDGE"
+	data["server_can_export"] = !!(panel_open && user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) && inserted_cartridge && !inserted_cartridge.data_complete && !intrusion_mind && operational())
+	data["server_can_eject"] = !!inserted_cartridge && (!!ccpost_has_centcom_id(user) || (panel_open && !!user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)))
+	data["server_is_gorlex"] = !!user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)
+	data["server_liaison_authorized"] = !!ccpost_has_centcom_id(user)
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	data["server_data_compromised"] = !!director?.data_downloaded
+	data["server_initializing"] = calibrating
+	data["server_faulted"] = faulted
+	data["server_recalibrating"] = recalibrating
+	data["server_recalibration_seconds"] = recalibrating ? max(0, round((recalibration_ends_at - world.time) / (1 SECONDS))) : 0
+	data["server_can_recalibrate"] = faulted && !recalibrating && !calibrating && !(machine_stat & (BROKEN | NOPOWER)) && !GLOB.ccpost_outpost_signal_lost && !isobserver(user)
+	data["server_history"] = network.telemetry_history.Copy()
+	data["server_total_faults"] = network.total_faults
+	data["server_total_dispatches"] = network.total_dispatches
+	data["server_queue_capacity"] = 6
+	data["server_queue_size"] = length(network.pending_requests)
+	data["server_intake_seconds"] = network.next_routine_at ? max(0, round((network.next_routine_at - world.time) / (1 SECONDS))) : 0
+	data["server_dispatch_seconds"] = network.next_routine_dispatch_at ? max(0, round((network.next_routine_dispatch_at - world.time) / (1 SECONDS))) : 0
+	data["server_routine_queue_size"] = network.routine_queue_count
+	data["server_queue_size"] += network.routine_queue_count
+	data["server_log"] = network.dispatch_log.Copy()
+	data["server_queue"] = list()
+	for(var/datum/ccpost_dispatch_request/request as anything in network.pending_requests)
+		var/datum/ccpost_task_template/template = new request.template_type
+		data["server_queue"] += list(list("subject" = template.subject, "priority" = request.priority, "expires_in_seconds" = max(0, round((request.expires_at - world.time) / (1 SECONDS)))))
+		qdel(template)
+	data["server_liaisons"] = list()
+	var/datum/ccpost_hr_service/hr_service = GLOB.ccpost_hr_service
+	if(hr_service)
+		for(var/employee_key in hr_service.roster)
+			var/datum/ccpost_hr_employee/employee = hr_service.roster[employee_key]
+			if(!employee || employee.employee_role != "Central Command Liaison")
+				continue
+			var/obj/item/circuitboard/computer/ccpost_tasking/board = network.get_inbox(employee.employee_mind)
+			var/session_online = FALSE
+			for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in network.registered_terminals)
+				if(QDELETED(terminal) || terminal.tasking_session_mind != employee.employee_mind)
+					continue
+				var/mob/living/carbon/human/person = employee.employee_mind?.current
+				if(person?.client && terminal.session_valid_for(person) && !(terminal.machine_stat & (BROKEN | NOPOWER)))
+					session_online = TRUE
+				break
+			var/assignment_label = board?.current_order?.subject || (session_online ? "Available" : "Offline / Not signed in")
+			if(board?.standby_order)
+				assignment_label += " (+1 standby)"
+			data["server_liaisons"] += list(list("name" = employee.employee_name, "assignment" = assignment_label, "held" = board ? length(board.on_hold_orders) : 0))
+	return data
+
+
+// One authoritative signal listener. Only real observed alarms are turned into
+// task requests. Repeated atmospheric area alarms are part of one incident.
+/obj/machinery/ccpost_tasking_server/proc/on_station_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range)
+	SIGNAL_HANDLER
+	if(!epicenter || !is_station_level(epicenter.z) || max(devastation_range, heavy_impact_range) < 2)
+		return
+	if(world.time - last_significant_explosion_at < 5 MINUTES)
+		queue_event_task(/datum/ccpost_task_template/sabotage_review)
+	last_significant_explosion_at = world.time
+	queue_event_task(/datum/ccpost_task_template/explosions, 12 MINUTES, "Significant explosion indication near [get_area(epicenter)] at [station_time_timestamp()]")
+
+/obj/machinery/ccpost_tasking_server/proc/on_security_level_changed(datum/source, new_security_level)
+	SIGNAL_HANDLER
+	if(new_security_level >= SEC_LEVEL_RED)
+		queue_event_task(/datum/ccpost_task_template/emergency_readiness, 15 MINUTES, "Station security level raised to red at [station_time_timestamp()]")
+
+/obj/machinery/ccpost_tasking_server/proc/on_atmospheric_alarm(datum/source, datum/alarm_handler/handler, alarm_type, area/alarmed_area, z_level)
+	SIGNAL_HANDLER
+	if(alarm_type != ALARM_ATMOS || !alarmed_area || !is_station_level(z_level))
+		return
+	if(!(alarmed_area in active_atmos_areas))
+		active_atmos_areas += alarmed_area
+	if(atmos_incident_open || STATION_TIME_PASSED() < CCPOST_TASK_ATMOS_GRACE)
+		return
+	atmos_incident_open = TRUE
+	if(world.time < next_atmos_incident_at)
+		return
+	atmos_incident_sequence++
+	queue_event_task(/datum/ccpost_task_template/atmos_emergency, 0, "Atmospheric alarm detected in [alarmed_area] at [station_time_timestamp()]", "station_atmospheric_incident_[atmos_incident_sequence]")
+
+/obj/machinery/ccpost_tasking_server/proc/on_atmospheric_alarm_cleared(datum/source, datum/alarm_handler/handler, alarm_type, area/alarmed_area)
+	SIGNAL_HANDLER
+	if(alarm_type != ALARM_ATMOS || !alarmed_area)
+		return
+	if((alarmed_area.active_alarms[ALARM_ATMOS] || 0) > 0)
+		return
+	active_atmos_areas -= alarmed_area
+	if(!length(active_atmos_areas))
+		atmos_incident_open = FALSE
+		// Avoid new requests from alarms rapidly flapping on the same equipment.
+		next_atmos_incident_at = world.time + 3 MINUTES
+
+/obj/machinery/ccpost_tasking_server/proc/on_supermatter_delamination(datum/source, delaminating)
+	SIGNAL_HANDLER
+	if(delaminating)
+		queue_event_task(/datum/ccpost_task_template/supermatter_incident, 20 MINUTES, "Supermatter delamination alert reported at [station_time_timestamp()]")
 
 // Central Command Tasking Computer
 
@@ -1300,13 +2689,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 	/// Prevents repeated manual printing.
 	COOLDOWN_DECLARE(print_cooldown)
-	/// Only linked station telecomms hubs; register per machine instead of scanning each tick.
-	var/list/monitored_telecomms_hubs = list()
-	/// Prevent repeated outage reports from the same already-failed hub.
-	var/list/failed_telecomms_hubs = list()
-	/// Fire once for a cluster of active atmospheric alarms.
-	var/list/recent_atmos_alarm_areas = list()
-	var/last_atmos_alarm_at = -10 MINUTES
+	// Incident signals and atmospheric clustering now live
+	// on the physical Tasking Distribution Server, not individual workstations.
 
 	/// Pool of Central Command assignments.
 	/// Available task template types. Concrete content lives on template datums.
@@ -1392,6 +2776,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	tasking_session_mind = null
 	tasking_session_name = null
 	SStgui.update_uis(src)
+	if(GLOB.ccpost_tasking_network?.server)
+		GLOB.ccpost_tasking_network.schedule_routine()
 
 /obj/machinery/computer/ccpost_tasking/proc/login_tasking_session(mob/user)
 	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
@@ -1411,11 +2797,13 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	if(!inbox)
 		return FALSE
 	inbox.last_owner_activity_at = world.time
-	if(!inbox.next_dispatch_at)
-		schedule_next_assignment(CCPOST_TASK_FIRST_MIN, CCPOST_TASK_FIRST_MAX)
-	else
-		var/remaining = max(1 SECONDS, inbox.next_dispatch_at - world.time)
-		schedule_next_assignment(remaining, remaining)
+	// The physical server schedules shared routine work. A new login can also
+	// receive an urgent request already waiting in the central queue.
+	if(!network.routine_timer)
+		network.schedule_routine(CCPOST_TASK_FIRST_MIN, CCPOST_TASK_FIRST_MAX)
+	addtimer(CALLBACK(network, TYPE_PROC_REF(/datum/ccpost_tasking_network, dispatch_pending)), 1 SECONDS)
+	if(network.routine_queue_count)
+		network.schedule_routine_dispatch()
 	SStgui.update_uis(src)
 	return TRUE
 
@@ -1425,26 +2813,12 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	. = ..()
 
 	// Issue the first assignment shortly after initialization.
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(on_station_explosion))
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(on_security_level_changed))
-	RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_FIRE(ALARM_ATMOS), PROC_REF(on_atmospheric_alarm))
-	RegisterSignal(SSdcs, COMSIG_MAIN_SM_DELAMINATING, PROC_REF(on_supermatter_delamination))
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_MACHINE, PROC_REF(on_new_machine))
-	addtimer(CALLBACK(src, PROC_REF(register_existing_telecomms)), 30 SECONDS)
 	grant_radio = new(src)
 	GLOB.ccpost_tasking_network.registered_terminals |= src
 
 /obj/machinery/computer/ccpost_tasking/Destroy()
 	logout_tasking_session()
 	GLOB.ccpost_tasking_network.registered_terminals -= src
-	UnregisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
-	UnregisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED)
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_ALARM_FIRE(ALARM_ATMOS), COMSIG_MAIN_SM_DELAMINATING, COMSIG_GLOB_NEW_MACHINE))
-	for(var/obj/machinery/telecomms/hub/hub as anything in monitored_telecomms_hubs)
-		if(!QDELETED(hub))
-			UnregisterSignal(hub, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST, COMSIG_MACHINERY_POWER_RESTORED, COMSIG_QDELETING))
-	monitored_telecomms_hubs = null
-	failed_telecomms_hubs = null
 	if(assignment_timer)
 		deltimer(assignment_timer)
 		assignment_timer = null
@@ -1552,6 +2926,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	var/allocation_reward = order.get_allocation_reward()
 	var/datum/ccpost_logistics_network/logistics_network = GLOB.ccpost_logistics_network
 	var/datum/ccpost_tasking_network/tasking_network = GLOB.ccpost_tasking_network
+	if(order.assigned_contact_mind)
+		tasking_network.note_issued(order, FALSE)
 	if(logistics_network && allocation_reward > 0)
 		var/credited_allocation = logistics_network.credit_allocation(
 			allocation_reward,
@@ -1565,6 +2941,10 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			say("Tasking compensation processed. Operational Allocation is already at maximum capacity.")
 
 	for(var/datum/ccpost_department_assessment/assessment as anything in order.department_assessments)
+		if(assessment.rating == "Not Assessed")
+			assessment.grant_status = "Not Assessed"
+			assessment.radio_status = "Not Applicable"
+			continue
 		if(!assessment.participated)
 			assessment.grant_status = "Not Participating"
 			assessment.radio_status = "Not Applicable"
@@ -1776,6 +3156,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 /obj/machinery/computer/ccpost_tasking/proc/reassign_unavailable_contact(datum/ccpost_tasking_order/order)
 	if(!order || !order.assigned_contact || order.status != CCPOST_TASK_STATUS_ACKNOWLEDGED)
 		return "No acknowledged assignment with a designated contact."
+	if(GLOB.ccpost_tasking_network.department_standdown_active() || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+		return "Departmental contact is temporarily suspended. Review available records and defer nonessential inquiries until operations stabilize."
 	var/datum/mind/old_mind = order.assigned_contact_mind?.resolve()
 	var/mob/living/carbon/human/old_person = old_mind?.current
 	if(istype(old_person) && old_person.stat != DEAD && old_person.client)
@@ -1800,7 +3182,9 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	var/list/alternatives = template.get_available_staff()
 	qdel(template)
 	for(var/mob/living/carbon/human/person as anything in alternatives.Copy())
-		if(person.mind == old_mind)
+		// Follow-ups use a generic template. Replacements must come from the
+		// original assigned department, not an arbitrary station employee.
+		if(!person.client || person.mind == old_mind || (order.assigned_department && person.mind?.assigned_role?.paycheck_department != order.assigned_department) || world.time < (GLOB.ccpost_tasking_network.contact_next_dispatch[REF(person.mind)] || 0))
 			alternatives -= person
 	if(!length(alternatives))
 		order.contact_unavailable = TRUE
@@ -1817,17 +3201,24 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	order.assigned_department = job.paycheck_department
 	order.contact_unavailable = !replacement.client
 	order.contact_ssd_grace_start = 0
+	GLOB.ccpost_tasking_network.note_issued(order)
 	order.instruction += "\n\nUpdated station contact: [replacement.real_name] ([job.title]). Verify findings with the replacement representative when available."
 	return "Replacement contact assigned: [replacement.real_name]."
 
 /obj/machinery/computer/ccpost_tasking/proc/attach_staffing_context(datum/ccpost_tasking_order/order, datum/ccpost_task_template/template)
-	if(!order || !template || !(template.any_station_staff || length(template.required_staff_accounts) || length(template.excluded_staff_accounts)))
+	if(!order || !template)
 		return TRUE
-	var/list/staff = template.get_available_staff()
+	if(template.event_only)
+		var/observation_start = findtext(order.instruction, "\n\nMonitoring record:")
+		var/observation = observation_start ? copytext(order.instruction, observation_start) : ""
+		order.instruction = "Review available monitoring records, public announcements and existing correspondence about [order.subject]. Record confirmed observations and uncertainties. Do not interrupt emergency responders; obtain clarification only after operations stabilize and when genuinely necessary. A stamped report based on available records is sufficient.[observation]"
+		for(var/datum/ccpost_department_assessment/assessment as anything in order.department_assessments)
+			assessment.rating = "Not Assessed"
+		return TRUE
+	if(!template.is_station_facing())
+		return TRUE
+	var/list/staff = template.contact_candidates()
 	if(!length(staff))
-		if(template.event_only)
-			order.instruction += "\n\nStaffing note: No suitable departmental representative was immediately available for contact. Coordinate with departmental personnel or Command when practical, and document any unsuccessful contact attempts."
-			return TRUE
 		return FALSE
 	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
 	var/is_interview = template.template_id == "civilian_interview" || template.template_id == "departmental_compliance"
@@ -1855,7 +3246,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	order.assigned_role = job.title
 	order.assigned_department = job.paycheck_department
 	order.contact_unavailable = !employee.client
-	order.instruction += "\n\nStaffing verification at issue: [employee.real_name] ([job.title]) is assigned to the relevant department. If the employee is not immediately reachable, use Defer or document genuine contact attempts instead of inventing an interview."
+	order.instruction += "\n\nUse existing records first. One concise request is sufficient; do not demand additional paperwork or interrupt essential duties. If cooperation is impracticable, record the reason and mark the department Not Assessed.\n\nStaffing verification at issue: [employee.real_name] ([job.title]) is assigned to the relevant department. If the employee is not immediately reachable, use Defer or document genuine contact attempts instead of inventing an interview."
 	return TRUE
 
 /// explicit allowlist for publicly announced, non-secret round events.
@@ -1865,6 +3256,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 /proc/ccpost_note_public_round_event(event_id)
 	var/template_type
 	var/cooldown_duration = 15 MINUTES
+	var/observation
 	switch(event_id)
 		if("radiation_storm")
 			template_type = /datum/ccpost_task_template/public_radiation_storm
@@ -1877,8 +3269,10 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			template_type = /datum/ccpost_task_template/public_radiation_leak
 		if("communications_blackout")
 			template_type = /datum/ccpost_task_template/public_communications_blackout
+			observation = "Public communications disruption warning issued at [station_time_timestamp()]. The warning alone does not establish that an outage occurred."
 		if("supermatter_surge")
 			template_type = /datum/ccpost_task_template/public_supermatter_surge
+			observation = "Public supermatter surge alert issued at [station_time_timestamp()]. Review the announced surge; do not infer delamination or unrelated infrastructure failures."
 			cooldown_duration = 25 MINUTES
 		if("disease_outbreak")
 			template_type = /datum/ccpost_task_template/public_disease_outbreak
@@ -1897,12 +3291,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			cooldown_duration = 25 MINUTES
 	if(!template_type)
 		return
-	// Event callbacks are rare. Use the engine's by-type machine list instead
-	// of scanning turfs/areas or registering signal handlers for secret events.
-	for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in SSmachines.get_machines_by_type(/obj/machinery/computer/ccpost_tasking))
-		if(QDELETED(terminal))
-			continue
-		terminal.queue_event_task(template_type, cooldown_duration)
+	// One central intake prevents duplicate incident requests per workstation.
+	GLOB.ccpost_tasking_network.queue_event_task(template_type, cooldown_duration, observation)
 
 // No continuous scans. The handlers only enqueue a small number of distinct assignments.
 // Larger rank means higher urgency. Equal-priority assignments keep FIFO arrival order.
@@ -1935,9 +3325,13 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 // Immediately dispatch the highest-priority queued incident if it can supersede
 // the current order. This uses the same public-event and machine-signal hooks.
 // Event orders do not require a specific online employee at the instant of issue.
-/obj/machinery/computer/ccpost_tasking/proc/dispatch_queued_incident()
+/obj/machinery/computer/ccpost_tasking/proc/dispatch_queued_incident(expected_template_type = null)
 	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
 	if(!board || (machine_stat & (NOPOWER | BROKEN)) || !length(board.event_task_queue))
+		return FALSE
+	// The central server must never record an unrelated legacy terminal
+	// incident as the request it just selected.
+	if(expected_template_type && board.event_task_queue[1] != expected_template_type)
 		return FALSE
 	if(board.current_order?.status == CCPOST_TASK_STATUS_COMPLETED)
 		archive_finished_order()
@@ -1945,7 +3339,16 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	var/datum/ccpost_task_template/incident = new template_type
 	if(!incident)
 		return FALSE
+	if(!GLOB.ccpost_tasking_network.department_dispatch_allowed(incident))
+		qdel(incident)
+		return FALSE
 	var/new_rank = ccpost_incident_priority_rank(incident.priority)
+	// Non-event templates can be used as public-alert reviews, but may still
+	// require a live departmental contact. Avoid consuming a serial number
+	// when their ordinary eligibility check has not passed.
+	if(!incident.event_only && !incident.is_eligible())
+		qdel(incident)
+		return FALSE
 	if(board.current_order && new_rank <= ccpost_incident_priority_rank(board.current_order.priority))
 		qdel(incident)
 		return FALSE
@@ -1956,7 +3359,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	incident.configure_order(new_order, GLOB.ccpost_logistics_network)
 	var/incident_observation = board.event_task_context["[template_type]"]
 	if(incident_observation)
-		new_order.instruction += "\n\nMonitoring record: [incident_observation]. Verify details with station personnel before reaching conclusions."
+		new_order.instruction += "\n\nMonitoring record: [incident_observation]. Treat this observation as preliminary; corroborate it with available records."
 	if(!attach_staffing_context(new_order, incident))
 		qdel(new_order)
 		qdel(incident)
@@ -1964,6 +3367,9 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	if(board.current_order)
 		var/datum/ccpost_tasking_order/suspended = board.current_order
 		suspended.status_before_hold = suspended.status
+		if(suspended.voluntary_offer_expires_at > world.time)
+			suspended.voluntary_offer_expires_at = 0
+			suspended.record_action("Offer Withdrawn", "CENTRAL COMMAND", "Emergency preemption")
 		suspended.status = CCPOST_TASK_STATUS_ON_HOLD
 		suspended.held_at = station_time_timestamp()
 		suspended.record_action("On Hold", "CENTRAL COMMAND", "Preempted by urgent incident")
@@ -1990,6 +3396,52 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	schedule_next_assignment()
 	return TRUE
 
+/// Switch between two assigned investigations without deferring either order.
+/// The physical report in the single machine slot follows its own order.
+/obj/machinery/computer/ccpost_tasking/proc/switch_investigation(expected_order_code)
+	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
+	if(!board?.standby_order || !board.current_order || board.current_order.status == CCPOST_TASK_STATUS_COMPLETED || board.standby_order.order_code != expected_order_code)
+		return FALSE
+	if(ccpost_incident_priority_rank(board.current_order.priority) >= ccpost_incident_priority_rank(CCPOST_TASK_PRIORITY_PRIORITY))
+		return FALSE
+	var/datum/ccpost_tasking_order/old_active = board.current_order
+	var/datum/ccpost_tasking_order/new_active = board.standby_order
+	if(submitted_report)
+		if(old_active.standby_report)
+			return FALSE
+		old_active.standby_report = submitted_report
+		submitted_report.forceMove(null)
+		submitted_report = null
+	board.standby_order = old_active
+	board.current_order = new_active
+	if(new_active.standby_report)
+		new_active.standby_report.forceMove(src)
+		submitted_report = new_active.standby_report
+		new_active.standby_report = null
+	pause_deferred_expiration(board)
+	old_active.record_action("Standby", tasking_session_name, "Investigation temporarily switched")
+	new_active.record_action("Resumed", tasking_session_name, "Investigation activated from standby")
+	SStgui.update_uis(src)
+	return TRUE
+
+/// A standby order is already assigned and therefore bypasses the new-work cooldown.
+/// It must never take precedence over higher-priority queued or held incidents.
+/obj/machinery/computer/ccpost_tasking/proc/activate_standby_order()
+	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
+	if(!board || board.current_order || !board.standby_order || length(board.on_hold_orders) || length(board.event_task_queue))
+		return FALSE
+	var/datum/ccpost_tasking_order/returning_order = board.standby_order
+	board.standby_order = null
+	board.current_order = returning_order
+	if(returning_order.standby_report)
+		returning_order.standby_report.forceMove(src)
+		submitted_report = returning_order.standby_report
+		returning_order.standby_report = null
+	pause_deferred_expiration(board)
+	returning_order.record_action("Resumed", tasking_session_name, "Standby investigation activated")
+	SStgui.update_uis(src)
+	return TRUE
+
 /// Automatically restore the newest held order once higher-priority incidents are cleared.
 /obj/machinery/computer/ccpost_tasking/proc/restore_on_hold_order()
 	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
@@ -2012,133 +3464,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 // No continuous scans. These signals queue at most one entry per incident category.
 /obj/machinery/computer/ccpost_tasking/proc/queue_event_task(template_type, cooldown_duration = 12 MINUTES, observation = null)
-	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
-	if(!template_type)
-		return
-	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
-	var/obj/machinery/computer/ccpost_tasking/recipient = network.incident_recipient(template_type)
-	if(recipient && recipient != src)
-		recipient.queue_event_task(template_type, cooldown_duration, observation)
-		return
-	if(recipient != src || !board)
-		return
-	if(world.time < (network.event_next_dispatch["[template_type]"] || 0))
-		return
-	var/last_queued = board.event_task_cooldowns["[template_type]"]
-	if(last_queued && world.time < last_queued)
-		return
-	if(template_type in board.event_task_queue)
-		return
-	// Preserve existing queued incident work rather than evicting lower ranks.
-	if(length(board.event_task_queue) >= board.max_queued_incidents)
-		return
-	var/datum/ccpost_task_template/queued_template = new template_type
-	var/queued_id = queued_template.template_id
-	qdel(queued_template)
-	if(board.current_order?.template_id == queued_id)
-		return
-	for(var/datum/ccpost_tasking_order/held as anything in board.on_hold_orders)
-		if(held.template_id == queued_id)
-			return
-	insert_event_task_by_priority(board, template_type)
-	network.event_next_dispatch["[template_type]"] = world.time + cooldown_duration
-	board.event_task_cooldowns["[template_type]"] = world.time + cooldown_duration
-	board.event_task_expires["[template_type]"] = world.time + 60 MINUTES
-	if(istext(observation) && length(observation))
-		board.event_task_context["[template_type]"] = copytext(observation, 1, 301)
-	// Dispatch on the next tick instead of waiting for the routine assignment cycle.
-	addtimer(CALLBACK(src, PROC_REF(dispatch_queued_incident)), 1 SECONDS)
-
-/obj/machinery/computer/ccpost_tasking/proc/on_station_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range)
-	SIGNAL_HANDLER
-	if(!epicenter || !is_station_level(epicenter.z))
-		return
-	if(max(devastation_range, heavy_impact_range) < 2)
-		return
-	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
-	if(board && world.time - board.last_significant_explosion_at < 5 MINUTES)
-		queue_event_task(/datum/ccpost_task_template/sabotage_review)
-	if(board)
-		board.last_significant_explosion_at = world.time
-	queue_event_task(/datum/ccpost_task_template/explosions, 12 MINUTES, "Significant explosion indication near [get_area(epicenter)] at [station_time_timestamp()]")
-
-/obj/machinery/computer/ccpost_tasking/proc/on_security_level_changed(datum/source, new_security_level)
-	SIGNAL_HANDLER
-	if(new_security_level >= SEC_LEVEL_RED)
-		queue_event_task(/datum/ccpost_task_template/emergency_readiness, 15 MINUTES, "Station security level raised to red at [station_time_timestamp()]")
-
-
-/obj/machinery/computer/ccpost_tasking/proc/on_atmospheric_alarm(datum/source, datum/alarm_handler/handler, alarm_type, area/alarmed_area, z_level)
-	SIGNAL_HANDLER
-	if(alarm_type != ALARM_ATMOS || !alarmed_area || !is_station_level(z_level))
-		return
-	if(STATION_TIME_PASSED() < CCPOST_TASK_ATMOS_GRACE)
-		return
-	if(("[alarmed_area]" in recent_atmos_alarm_areas) && world.time - last_atmos_alarm_at < 3 MINUTES)
-		return
-	if(world.time - last_atmos_alarm_at > 3 MINUTES)
-		recent_atmos_alarm_areas.Cut()
-	recent_atmos_alarm_areas += "[alarmed_area]"
-	if(length(recent_atmos_alarm_areas) > 10)
-		recent_atmos_alarm_areas.Cut(1, 2)
-	last_atmos_alarm_at = world.time
-	queue_event_task(/datum/ccpost_task_template/atmos_emergency, 8 MINUTES, "Atmospheric alarm indicated in [alarmed_area] at [station_time_timestamp()]")
-
-/obj/machinery/computer/ccpost_tasking/proc/on_supermatter_delamination(datum/source, delaminating)
-	SIGNAL_HANDLER
-	if(!delaminating)
-		return
-	queue_event_task(/datum/ccpost_task_template/supermatter_incident, 20 MINUTES, "Supermatter delamination alert reported at [station_time_timestamp()]")
-
-/obj/machinery/computer/ccpost_tasking/proc/register_existing_telecomms()
-	if(QDELETED(src))
-		return
-	for(var/obj/machinery/telecomms/hub/hub as anything in GLOB.telecomms_list)
-		if(istype(hub, /obj/machinery/telecomms/hub))
-			register_telecomms_hub(hub)
-
-/obj/machinery/computer/ccpost_tasking/proc/register_telecomms_hub(obj/machinery/telecomms/hub/hub)
-	if(!hub || QDELETED(hub) || (hub in monitored_telecomms_hubs) || !is_station_level(hub.z))
-		return
-	monitored_telecomms_hubs += hub
-	RegisterSignal(hub, COMSIG_MACHINERY_BROKEN, PROC_REF(on_telecomms_hub_failure))
-	RegisterSignal(hub, COMSIG_MACHINERY_POWER_LOST, PROC_REF(on_telecomms_hub_failure))
-	RegisterSignal(hub, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(on_telecomms_hub_power_restored))
-	RegisterSignal(hub, COMSIG_QDELETING, PROC_REF(on_telecomms_hub_removed))
-
-/obj/machinery/computer/ccpost_tasking/proc/on_new_machine(datum/source, obj/machinery/created_machine)
-	SIGNAL_HANDLER
-	if(istype(created_machine, /obj/machinery/telecomms/hub))
-		register_telecomms_hub(created_machine)
-
-/obj/machinery/computer/ccpost_tasking/proc/on_telecomms_hub_failure(datum/source)
-	SIGNAL_HANDLER
-	var/obj/machinery/telecomms/hub/hub = source
-	if(!hub || !is_station_level(hub.z) || (hub in failed_telecomms_hubs))
-		return
-	var/outage_already_reported = length(failed_telecomms_hubs) > 0
-	failed_telecomms_hubs += hub
-	// Multiple hubs losing power in the same ongoing outage are one incident.
-	if(!outage_already_reported)
-		queue_event_task(/datum/ccpost_task_template/telecomms_incident, 15 MINUTES, "Station communications hub failure recorded at [station_time_timestamp()]")
-
-/obj/machinery/computer/ccpost_tasking/proc/on_telecomms_hub_power_restored(datum/source)
-	SIGNAL_HANDLER
-	var/obj/machinery/telecomms/hub/hub = source
-	if(hub && !(hub.machine_stat & (BROKEN | NOPOWER)))
-		failed_telecomms_hubs -= hub
-
-/obj/machinery/computer/ccpost_tasking/proc/on_telecomms_hub_removed(datum/source)
-	SIGNAL_HANDLER
-	var/obj/machinery/telecomms/hub/hub = source
-	var/already_reported = FALSE
-	if(hub in failed_telecomms_hubs)
-		already_reported = TRUE
-	failed_telecomms_hubs -= hub
-	monitored_telecomms_hubs -= hub
-	if(hub && !already_reported && is_station_level(hub.z))
-		queue_event_task(/datum/ccpost_task_template/telecomms_incident, 15 MINUTES, "Station communications hub removal recorded at [station_time_timestamp()]")
-
+	return GLOB.ccpost_tasking_network.queue_event_task(template_type, cooldown_duration, observation)
 
 /// A follow-up request retains the original order reference, not the confidential report text.
 /datum/ccpost_task_followup
@@ -2161,7 +3487,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	source_rotation_family = original.rotation_family
 	source_installation_code = original.target_installation_code
 	// A report must have aged before Central Command can request another review.
-	ready_at = world.time + rand(20 MINUTES, 30 MINUTES)
+	ready_at = world.time + rand(25 MINUTES, 40 MINUTES)
 	assigned_contact = original.assigned_contact
 	assigned_role = original.assigned_role
 	assigned_department = original.assigned_department
@@ -2170,12 +3496,12 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
 	if(!board || !order?.submitted_report_text || order.source_order_code)
 		return
-	if(!(order.category in list("Audits & Inspections", "Incident Review", "Infrastructure Oversight", "Communications Oversight", "Sector Records & Administration")))
+	if(!(order.category in list("Audits & Inspections", "Incident Review", "Infrastructure Oversight", "Communications Oversight", "Sector Records & Administration", "Administrative Oversight", "Operational Oversight", "Supply Chain Oversight", "Personnel & Civilian Liaison")))
 		return
 	if(length(board.followup_orders) >= board.max_pending_followups)
 		return
 	/// Not every completed report needs revisiting. Selection never invents a finding.
-	if(world.time < board.next_followup_allowed_at)
+	if(world.time < board.next_followup_allowed_at || !prob(20))
 		return
 	var/datum/ccpost_task_followup/followup = new(order)
 	board.followup_orders += followup
@@ -2190,16 +3516,16 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	order.source_order_code = followup.source_order_code
 	// A deferred follow-up must block fresh random work about the same subject.
 	order.rotation_family = followup.source_rotation_family
-	order.assigned_department = followup.assigned_department
-	order.assigned_contact = followup.assigned_contact
-	order.assigned_role = followup.assigned_role
+	order.assigned_department = null
+	order.assigned_contact = null
+	order.assigned_role = null
 	order.subject = "Follow-Up: [followup.source_subject]"
 	var/is_simulated_installation_task = followup.source_category == "Sector Records & Administration"
 	if(is_simulated_installation_task)
 		order.target_installation_code = followup.source_installation_code
 		order.instruction = "Central Command requests an updated administrative review of archived order [followup.source_order_code] ([followup.source_subject]). Consult its retained documentation in Previous Orders. Recheck current installation status and history through the Remote Oversight Network and review applicable Sector Communications. Submit a stamped report identifying changes, unresolved questions, and recommended administrative action. This remote review does not require direct contact with installation personnel."
 	else
-		order.instruction = "Central Command requests an updated review of archived order [followup.source_order_code] ([followup.source_subject]). Consult its retained documentation in Previous Orders and obtain a current account from the responsible station department, where available. Submit a stamped report of verified changes, outstanding concerns and any unsuccessful contact attempts. Do not treat prior allegations as established findings."
+		order.instruction = "Central Command requests an updated review of archived order [followup.source_order_code] ([followup.source_subject]). Consult its retained documentation in Previous Orders and review current outpost records or existing station correspondence. Do not request a new interview or additional paperwork. Submit a stamped report of verified changes, outstanding concerns and any unsuccessful contact attempts. Do not treat prior allegations as established findings."
 	return order
 
 /obj/machinery/computer/ccpost_tasking/proc/create_task_order(datum/ccpost_task_template/template)
@@ -2221,25 +3547,29 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 /obj/machinery/computer/ccpost_tasking/proc/pause_deferred_expiration(obj/item/circuitboard/computer/ccpost_tasking/board)
 	if(!board)
 		return
+	// Treat a currently actionable investigation or urgent held work as busy.
+	// A completed order awaiting archive does not extend deferral deadlines.
+	var/occupied = (board.current_order && board.current_order.status != CCPOST_TASK_STATUS_COMPLETED) || length(board.on_hold_orders) || length(board.event_task_queue)
 	for(var/datum/ccpost_tasking_order/order as anything in board.deferred_orders)
-		if(!order.deferral_expiry_paused_at)
-			order.deferral_expiry_paused_at = world.time
+		if(occupied)
+			if(!order.deferral_expiry_paused_at)
+				order.deferral_expiry_paused_at = world.time
+		else if(order.deferral_expiry_paused_at)
+			order.deferral_expires_at += world.time - order.deferral_expiry_paused_at
+			order.deferral_expiry_paused_at = 0
 
 /obj/machinery/computer/ccpost_tasking/proc/expire_overdue_deferrals()
+	if(!GLOB.ccpost_tasking_network.server_online())
+		return
 	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
 	if(!board)
 		return
+	pause_deferred_expiration(board)
 	for(var/datum/ccpost_tasking_order/order as anything in board.deferred_orders.Copy())
-		if(board.current_order && board.current_order.status != CCPOST_TASK_STATUS_COMPLETED)
-			if(!order.deferral_expiry_paused_at)
-				order.deferral_expiry_paused_at = world.time
-			continue
-		if(order.deferral_expiry_paused_at)
-			order.deferral_expires_at += world.time - order.deferral_expiry_paused_at
-			order.deferral_expiry_paused_at = 0
-		if(world.time < order.deferral_expires_at)
+		if(order.deferral_expiry_paused_at || world.time < order.deferral_expires_at)
 			continue
 		board.deferred_orders -= order
+		order.voluntary_offer_expires_at = 0
 		order.status = CCPOST_TASK_STATUS_EXPIRED
 		order.record_action("Expired", "CENTRAL COMMAND", "Deferred work expired")
 		GLOB.ccpost_tasking_network.archive_order(order)
@@ -2248,7 +3578,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
 	if(!board || !order || !(order in board.deferred_orders))
 		return FALSE
-	if(board.current_order && board.current_order.status != CCPOST_TASK_STATUS_COMPLETED)
+	if((board.current_order && board.current_order.status != CCPOST_TASK_STATUS_COMPLETED) || length(board.on_hold_orders) || length(board.event_task_queue))
 		return FALSE
 	expire_overdue_deferrals()
 	if(world.time < order.deferred_until || world.time >= order.deferral_expires_at)
@@ -2281,22 +3611,23 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
 	if(!board || !length(board.event_task_queue))
 		return
+	// Legacy terminal requests must not outlive the 20-minute central
+	// emergency deadline or be refreshed indefinitely after each completion.
 	for(var/template_type in board.event_task_queue)
-		board.event_task_expires["[template_type]"] = world.time + 60 MINUTES
+		var/key = "[template_type]"
+		var/existing_expiry = board.event_task_expires[key]
+		if(!existing_expiry || existing_expiry > world.time + 20 MINUTES)
+			board.event_task_expires[key] = world.time + 20 MINUTES
 
 /obj/machinery/computer/ccpost_tasking/proc/schedule_next_assignment(
 	minimum_delay = CCPOST_TASK_INTERVAL_MIN,
 	maximum_delay = CCPOST_TASK_INTERVAL_MAX
 )
-	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = get_tasking_board()
-	if(!inbox)
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	if(network.routine_dispatch_active)
 		return
-	if(assignment_timer)
-		deltimer(assignment_timer)
-	var/dispatch_delay = rand(minimum_delay, maximum_delay)
-	next_assignment_attempt_at = world.time + dispatch_delay
-	inbox.next_dispatch_at = next_assignment_attempt_at
-	assignment_timer = addtimer(CALLBACK(src, PROC_REF(issue_assignment)), dispatch_delay, TIMER_STOPPABLE)
+	if(!network.routine_timer)
+		network.schedule_routine()
 
 /obj/machinery/computer/ccpost_tasking/proc/issue_assignment()
 	assignment_timer = null
@@ -2319,24 +3650,27 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		archive_finished_order()
 	if(length(board.event_task_queue) && dispatch_queued_incident())
 		return
-	if(board.current_order)
+	if(!board.current_order && board.standby_order && !length(board.on_hold_orders))
+		activate_standby_order()
+	if(board.current_order && (board.standby_order || length(board.on_hold_orders) || ccpost_incident_priority_rank(board.current_order.priority) >= ccpost_incident_priority_rank(CCPOST_TASK_PRIORITY_PRIORITY)))
 		schedule_next_assignment(CCPOST_TASK_RETRY_MIN, CCPOST_TASK_RETRY_MAX)
 		return
-	if(length(board.on_hold_orders) && restore_on_hold_order())
+	var/reserve_standby = !!board.current_order
+	if(!reserve_standby && length(board.on_hold_orders) && restore_on_hold_order())
 		schedule_next_assignment()
 		return
 
 	var/datum/ccpost_tasking_order/new_order
 	var/datum/ccpost_logistics_network/logistics_network = GLOB.ccpost_logistics_network
 	var/datum/ccpost_task_template/template
-	if(logistics_network?.contraband_audit_pending)
+	if(!reserve_standby && logistics_network?.contraband_audit_pending)
 		var/datum/ccpost_task_template/audit = new /datum/ccpost_task_template/outpost_audit
 		new_order = create_task_order(audit)
 		audit.configure_order(new_order, logistics_network)
 		qdel(audit)
 	else
 		// Elevated requests outrank resumed deferrals; expired events are never immortal.
-		var/list/queued_events = board.event_task_queue.Copy()
+		var/list/queued_events = reserve_standby ? list() : board.event_task_queue.Copy()
 		for(var/template_type in queued_events)
 			var/expiry = board.event_task_expires["[template_type]"]
 			if(!expiry || world.time >= expiry)
@@ -2345,7 +3679,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 				board.event_task_context -= "[template_type]"
 				continue
 			var/datum/ccpost_task_template/event_template = new template_type
-			if(event_template.event_only || event_template.is_eligible())
+			if(GLOB.ccpost_tasking_network.department_dispatch_allowed(event_template) && (event_template.event_only || event_template.is_eligible()))
 				template = event_template
 				board.event_task_queue -= template_type
 				board.event_task_expires -= "[template_type]"
@@ -2355,16 +3689,16 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 				board.event_task_context -= "[template_type]"
 				break
 			qdel(event_template)
-		if(!template)
+		if(!template && !reserve_standby)
 			for(var/datum/ccpost_tasking_order/deferred as anything in board.deferred_orders.Copy())
 				if(world.time >= deferred.deferred_until && world.time < deferred.deferral_expires_at)
 					board.deferred_orders -= deferred
 					deferred.status = deferred.status_before_deferral
 					new_order = deferred
 					break
-		// Keep new follow-ups queued until their individual 20-30 minute waiting
+		// Keep new follow-ups queued until their individual 25-40 minute waiting
 		// periods have passed. A new routine assignment may issue in the meantime.
-		if(!template && !new_order && length(board.followup_orders))
+		if(!reserve_standby && !template && !new_order && length(board.followup_orders))
 			for(var/datum/ccpost_task_followup/followup as anything in board.followup_orders.Copy())
 				if(world.time < followup.ready_at)
 					continue
@@ -2378,6 +3712,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			// review; a deferred installation certification blocks a different
 			// installation performance review, even though their template IDs differ.
 			var/list/outstanding_families = list()
+			if(board.current_order?.rotation_family)
+				outstanding_families += board.current_order.rotation_family
 			for(var/datum/ccpost_tasking_order/deferred as anything in board.deferred_orders)
 				if(deferred.rotation_family && !(deferred.rotation_family in outstanding_families))
 					outstanding_families += deferred.rotation_family
@@ -2388,7 +3724,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			var/list/families_by_type = list()
 			for(var/candidate_type in assignment_template_types)
 				var/datum/ccpost_task_template/candidate = new candidate_type
-				if(!candidate.event_only && candidate.selection_weight > 0 && GLOB.ccpost_task_category_weights[candidate.category] > 0)
+				if(!candidate.event_only && (!reserve_standby || candidate.priority == CCPOST_TASK_PRIORITY_ROUTINE) && candidate.selection_weight > 0 && GLOB.ccpost_task_category_weights[candidate.category] > 0)
 					var/family = candidate.get_rotation_family()
 					var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
 					var/next_family_dispatch = network.family_next_dispatch[family]
@@ -2403,18 +3739,20 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			// Prefer a task family absent from the last two random assignments.
 			// If only one or two families are available, progressively relax that
 			// preference, but NEVER bypass a family cooldown or deferred/held order.
-			var/list/recent_families = board.recent_routine_families.Copy()
+			var/list/recent_families = GLOB.ccpost_tasking_network.recent_routine_families.Copy()
 			var/last_family = length(recent_families) ? recent_families[length(recent_families)] : null
+			var/last_personal_family = length(board.recent_routine_families) ? board.recent_routine_families[length(board.recent_routine_families)] : null
 			var/list/family_filtered_priorities = list()
-			for(var/family_pass in 1 to 3)
+			for(var/family_pass in 1 to 2)
 				family_filtered_priorities.Cut()
 				for(var/priority_name in available_priorities)
 					var/list/filtered_families = list()
 					for(var/candidate_type in available_priorities[priority_name])
 						var/family = families_by_type["[candidate_type]"]
-						if(family_pass == 1 && (family in recent_families))
+						// The immediately previous routine family is a hard exclusion.
+						if(family == last_family || family == last_personal_family)
 							continue
-						if(family_pass == 2 && family == last_family)
+						if(family_pass == 1 && (family in recent_families))
 							continue
 						filtered_families += candidate_type
 					if(length(filtered_families))
@@ -2423,7 +3761,13 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 					break
 			// Apply exact-template rotation after family rotation; a small pool
 			// may require relaxing the oldest template exclusion, not all families.
-			var/list/recent_exclusions = board.recent_routine_templates.Copy()
+			var/list/recent_exclusions = GLOB.ccpost_tasking_network.recent_routine_templates.Copy()
+			// Personal recent-template history was already collected. Include it
+			// as a SOFT exclusion so that one Liaison does not repeatedly get
+			// the same exact assignment after another Liaison receives work.
+			for(var/personal_type in board.recent_routine_templates)
+				if(!(personal_type in recent_exclusions))
+					recent_exclusions += personal_type
 			var/list/filtered_priorities = list()
 			while(TRUE)
 				filtered_priorities.Cut()
@@ -2463,7 +3807,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 					for(var/weighted_type in weighted_templates)
 						total_weight += weighted_templates[weighted_type]
 					var/average_weight = total_weight / max(1, length(weighted_templates))
-					category_weights[category_name] = base_weight * average_weight / 100
+					var/rotation_factor = (category_name in GLOB.ccpost_tasking_network.recent_routine_categories) ? 0.55 : 1
+					category_weights[category_name] = base_weight * average_weight * rotation_factor / 100
 				if(length(category_weights))
 					var/chosen_category = pick_weight(category_weights)
 					var/chosen_type = pick_weight(categories[chosen_category])
@@ -2476,10 +3821,11 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			// Keep incident tasking queued until staffing is restored or it expires.
 			if(template.event_only && !(template.type in board.event_task_queue))
 				insert_event_task_by_priority(board, template.type)
-				board.event_task_expires["[template.type]"] = world.time + 60 MINUTES
+				board.event_task_expires["[template.type]"] = world.time + 20 MINUTES
 			qdel(new_order)
 			new_order = null
 		else if(!template.event_only && template.type != /datum/ccpost_task_template/archived_followup)
+			GLOB.ccpost_tasking_network.note_routine_issued(src, template)
 			board.recent_routine_templates += template.type
 			while(length(board.recent_routine_templates) > 3)
 				board.recent_routine_templates.Cut(1, 2)
@@ -2488,7 +3834,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			while(length(board.recent_routine_families) > CCPOST_TASK_FAMILY_HISTORY)
 				board.recent_routine_families.Cut(1, 2)
 			var/family_cooldown = CCPOST_TASK_FAMILY_COOLDOWN
-			if(family == "outpost_internal" || family == "sector_installations")
+			if(!template.is_station_facing())
 				family_cooldown = CCPOST_TASK_INTERNAL_FAMILY_COOLDOWN
 			GLOB.ccpost_tasking_network.family_next_dispatch[family] = world.time + family_cooldown
 		qdel(template)
@@ -2497,11 +3843,15 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		// immediately recycling an unresolved or recently issued task family.
 		schedule_next_assignment(CCPOST_TASK_VARIETY_RETRY_MIN, CCPOST_TASK_VARIETY_RETRY_MAX)
 		return
-	board.current_order = new_order
+	if(reserve_standby)
+		board.standby_order = new_order
+	else
+		board.current_order = new_order
 	GLOB.ccpost_tasking_network.note_issued(new_order)
 	pause_deferred_expiration(board)
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 45, vary = TRUE)
-	visible_message(span_notice("[src] chimes. A Central Command tasking order is ready."))
+	var/dispatch_message = reserve_standby ? "[src] chimes. A second investigation has been assigned to standby." : "[src] chimes. A Central Command tasking order is ready."
+	visible_message(span_notice(dispatch_message))
 	print_order(new_order)
 	SStgui.update_uis(src)
 	schedule_next_assignment()
@@ -2816,6 +4166,10 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	data["session_owner"] = isobserver(user) ? "Observer" : (tasking_session_name || "")
 	var/datum/ccpost_hr_employee/login_employee = GLOB.ccpost_hr_service?.employee_for(user)
 	data["identity_detected"] = !!(login_employee && login_employee.employee_role == "Central Command Liaison")
+	data["identity_portrait"] = login_employee?.portrait_base64
+	data["admin_server_online"] = GLOB.ccpost_tasking_network.server_online() && !(machine_stat & (BROKEN | NOPOWER))
+	data["admin_server_status"] = GLOB.ccpost_tasking_network.server_status()
+	data["identity_issue"] = data["identity_detected"] ? "" : "No matching Liaison HR registration. Check that your original Central Command Liaison ID is equipped and registered to your bank account."
 	if(!data["authenticated"])
 		return data
 	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
@@ -2827,17 +4181,26 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		var/obj/item/circuitboard/computer/ccpost_tasking/other_inbox = network.inboxes[key]
 		if(other_inbox.current_order && other_inbox.current_order.status != CCPOST_TASK_STATUS_COMPLETED)
 			active_task_count++
+		if(other_inbox.standby_order)
+			active_task_count++
 	data["network_active_tasks"] = active_task_count
 	data["claimable_tasks"] = isobserver(user) ? list() : network.list_claimable(tasking_session_mind)
-	data["dispatch_seconds"] = next_assignment_attempt_at ? max(0, round((next_assignment_attempt_at - world.time) / (1 SECONDS))) : 0
-	data["dispatch_pending"] = !!next_assignment_attempt_at
-	data["dispatch_machine_available"] = !(machine_stat & (NOPOWER | BROKEN))
+	data["my_reassignment_offers"] = isobserver(user) ? list() : network.list_voluntary_offers(tasking_session_mind, TRUE)
+	data["available_reassignment_offers"] = isobserver(user) ? list() : network.list_voluntary_offers(tasking_session_mind)
+	data["routine_cooldown_seconds"] = isobserver(user) ? 0 : max(0, round(((network.routine_cooldown_until[REF(tasking_session_mind)] || 0) - world.time) / (1 SECONDS)))
+	data["dispatch_seconds"] = network.next_routine_dispatch_at ? max(0, round((network.next_routine_dispatch_at - world.time) / (1 SECONDS))) : 0
+	data["dispatch_pending"] = !!network.routine_dispatch_timer
+	data["intake_seconds"] = network.next_routine_at ? max(0, round((network.next_routine_at - world.time) / (1 SECONDS))) : 0
+	data["queued_routine_requests"] = network.routine_queue_count
+	data["dispatch_machine_available"] = network.server_online() && !(machine_stat & (NOPOWER | BROKEN))
 	data["submitted_report"] = isobserver(user) ? null : report_to_ui_data(submitted_report)
 
 	var/obj/item/circuitboard/computer/ccpost_tasking/tasking_board = isobserver(user) ? null : get_tasking_board()
 
 	if(!tasking_board)
 		data["current_order"] = null
+		data["standby_order"] = null
+		data["can_switch_investigation"] = FALSE
 		var/list/observer_history = list()
 		for(var/datum/ccpost_tasking_order/archived as anything in network.shared_history)
 			observer_history += list(order_to_ui_data(archived))
@@ -2848,10 +4211,13 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		data["queued_priorities"] = list("Critical" = 0, "Priority" = 0, "Elevated" = 0, "Routine" = 0)
 		data["queued_events_ready"] = 0
 		data["queued_followups"] = 0
+		data["pending_followups"] = list()
 		data["queued_incidents"] = list()
 		return data
 
 	data["current_order"] = tasking_board.current_order?.status == CCPOST_TASK_STATUS_COMPLETED ? null : order_to_ui_data(tasking_board.current_order)
+	data["standby_order"] = order_to_ui_data(tasking_board.standby_order)
+	data["can_switch_investigation"] = !!tasking_board.standby_order && (!tasking_board.current_order || (tasking_board.current_order.status != CCPOST_TASK_STATUS_COMPLETED && ccpost_incident_priority_rank(tasking_board.current_order.priority) < ccpost_incident_priority_rank(CCPOST_TASK_PRIORITY_PRIORITY)))
 
 	expire_overdue_deferrals()
 	var/list/history_data = list()
@@ -2867,38 +4233,39 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		var/list/serialized = order_to_ui_data(deferred)
 		serialized["resume_in_seconds"] = max(0, round((deferred.deferred_until - world.time) / (1 SECONDS)))
 		serialized["expires_in_seconds"] = max(0, round(((deferred.deferral_expiry_paused_at ? deferred.deferral_expires_at + world.time - deferred.deferral_expiry_paused_at : deferred.deferral_expires_at) - world.time) / (1 SECONDS)))
+		serialized["deferral_paused"] = !!deferred.deferral_expiry_paused_at
 		deferred_data += list(serialized)
 	data["deferred_orders"] = deferred_data
+	data["max_deferred_orders"] = tasking_board.max_deferred_orders
 	var/list/on_hold_data = list()
 	for(var/datum/ccpost_tasking_order/held as anything in tasking_board.on_hold_orders)
 		on_hold_data += list(order_to_ui_data(held))
 	data["on_hold_orders"] = on_hold_data
-	data["queued_events"] = length(tasking_board.event_task_queue)
-	// Reporting eligibility explains why a correctly hooked event can remain queued.
-	// Do not reveal event identity or otherwise hidden round-event information.
-	var/queued_events_ready = 0
+	data["queued_events"] = length(network.pending_requests)
+	// The physical server owns incident requests; only dispatched work is held
+	// within the individual inbox. Do not expose hidden antagonist information.
 	var/list/priority_counts = list("Critical" = 0, "Priority" = 0, "Elevated" = 0, "Routine" = 0)
-	for(var/queued_type in tasking_board.event_task_queue)
-		var/datum/ccpost_task_template/queued_template = new queued_type
-		// Publicly announced incident orders may be issued with no named contact;
-		// the report must instead document attempts to contact station departments.
-		if(queued_template.event_only || queued_template.is_eligible())
-			queued_events_ready++
-		priority_counts[queued_template.priority] = (priority_counts[queued_template.priority] || 0) + 1
-		qdel(queued_template)
-	data["queued_events_ready"] = queued_events_ready
 	var/list/queued_incidents = list()
-	for(var/queued_type in tasking_board.event_task_queue)
-		var/datum/ccpost_task_template/queued_template = new queued_type
+	for(var/datum/ccpost_dispatch_request/request as anything in network.pending_requests)
+		var/datum/ccpost_task_template/queued_template = new request.template_type
+		priority_counts[request.priority] = (priority_counts[request.priority] || 0) + 1
 		queued_incidents += list(list(
 			"subject" = findtext(queued_template.template_id, "public_") == 1 ? queued_template.subject : "Internal incident review",
-			"priority" = queued_template.priority,
-			"reason" = tasking_board.current_order && ccpost_incident_priority_rank(tasking_board.current_order.priority) >= ccpost_incident_priority_rank(queued_template.priority) ? "Awaiting resolution of equal or higher priority assignment" : "Awaiting dispatch",
+			"priority" = request.priority,
+			"reason" = "Central queue; expires in [max(0, round((request.expires_at - world.time) / (1 MINUTES)))] minutes"
 		))
 		qdel(queued_template)
+	data["queued_events_ready"] = length(network.pending_requests)
 	data["queued_incidents"] = queued_incidents
 	data["queued_priorities"] = priority_counts
 	data["queued_followups"] = length(tasking_board.followup_orders)
+	data["pending_followups"] = list()
+	for(var/datum/ccpost_task_followup/followup as anything in tasking_board.followup_orders)
+		data["pending_followups"] += list(list(
+			"subject" = followup.source_subject,
+			"source_order_code" = followup.source_order_code,
+			"ready_in_seconds" = max(0, round((followup.ready_at - world.time) / (1 SECONDS)))
+		))
 	return data
 
 /// A PaperSheet-compatible serialized snapshot for formatting in the archive viewer.
@@ -2962,6 +4329,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		"contact_reassignable" = !!order.assigned_contact_mind,
 		"assigned_role" = order.assigned_role,
 		"deferral_count" = order.deferral_count,
+		"standby_report_retained" = !!order.standby_report,
 		"held_at" = order.held_at,
 		"deferral_reason" = order.deferral_reason,
 		"deferred_by" = order.deferred_by,
@@ -2985,6 +4353,9 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		return
 	var/mob/user = ui.user
 	if(action == "login")
+		if(!GLOB.ccpost_tasking_network.server_online())
+			balloon_alert(user, "local administrative server unavailable")
+			return TRUE
 		if(!login_tasking_session(user))
 			balloon_alert(user, "registered Liaison ID required")
 		return TRUE
@@ -2994,6 +4365,9 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		return TRUE
 	if(!session_valid_for(user))
 		return TRUE
+	if(!GLOB.ccpost_tasking_network.server_online())
+		balloon_alert(user, "local administrative server unavailable")
+		return TRUE
 
 	var/obj/item/circuitboard/computer/ccpost_tasking/tasking_board = get_tasking_board()
 
@@ -3002,6 +4376,26 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	tasking_board.last_owner_activity_at = world.time
 
 	switch(action)
+
+		if("switch_investigation")
+			var/switch_code = params["order_code"]
+			if(!istext(switch_code) || !tasking_board.standby_order || tasking_board.standby_order.order_code != switch_code)
+				return TRUE
+			var/switched = tasking_board.current_order ? switch_investigation(switch_code) : activate_standby_order()
+			balloon_alert(user, switched ? "investigation switched" : "switch unavailable")
+			return TRUE
+
+		if("offer_reassignment")
+			balloon_alert(user, GLOB.ccpost_tasking_network.offer_voluntary_order(user, params["order_code"]) ? "transfer offer posted" : "cannot offer this order")
+			return TRUE
+
+		if("withdraw_reassignment")
+			balloon_alert(user, GLOB.ccpost_tasking_network.cancel_voluntary_offer(user, params["order_code"]) ? "offer withdrawn" : "offer unavailable")
+			return TRUE
+
+		if("claim_reassignment")
+			balloon_alert(user, GLOB.ccpost_tasking_network.claim_voluntary_order(src, user, params["owner_key"], params["order_code"]) ? "assignment transferred" : "unable to claim")
+			return TRUE
 
 		if("claim_abandoned")
 			if(GLOB.ccpost_tasking_network.claim_abandoned(user, params["owner_key"], params["order_code"]))
@@ -3024,7 +4418,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			if(!assessment || !assessment.participated)
 				return TRUE
 			var/rating = params["rating"]
-			if(!(rating in list("Very Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very Satisfied")))
+			if(!(rating in list("Very Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very Satisfied", "Not Assessed")))
 				return TRUE
 			assessment.rating = rating
 			assessment.assessed_by = user.name
@@ -3065,13 +4459,15 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			order.deferred_by = user.name
 			order.deferred_at = station_time_timestamp()
 			order.deferred_until = world.time + 5 MINUTES
-			order.deferral_expires_at = world.time + 25 MINUTES
+			order.deferral_expires_at = world.time + 15 MINUTES
 			order.deferral_expiry_paused_at = 0
 			order.deferral_reason = reason
 			order.status = CCPOST_TASK_STATUS_DEFERRED
 			order.record_action("Deferred", user.name, reason)
 			tasking_board.deferred_orders += order
 			tasking_board.current_order = null
+			if(!length(tasking_board.event_task_queue) && !length(tasking_board.on_hold_orders))
+				activate_standby_order()
 			if(length(tasking_board.event_task_queue))
 				refresh_queued_incident_window()
 				schedule_next_assignment(1 SECONDS, 2 SECONDS)
@@ -3217,8 +4613,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			tasking_board.current_order.completed_by = user.name
 			tasking_board.current_order.completed_at = station_time_timestamp()
 			tasking_board.current_order.record_action("Completed", user.name, "Stamped report accepted")
-			// Resume deferred-expiry countdown now that the terminal is actionable.
-			expire_overdue_deferrals()
+			// Deferred deadlines are synchronized after queued/held/standby work
+			// has been restored; no gap is charged during the transition.
 
 			// Issue Operational Allocation and any applicable
 			// departmental budget grant.
@@ -3229,7 +4625,19 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			// CCPost HR: credit the submitting Liaison after rewards are issued.
 			ccpost_hr_note_task_completion(user, tasking_board.current_order)
 			// Publish immediately for other Liaisons instead of waiting for the next dispatch.
+			GLOB.ccpost_tasking_network.note_task_completed(tasking_session_mind)
 			archive_finished_order()
+			// Freeing this inbox may permit a pending emergency to dispatch now,
+			// without making everyone wait for the next global scheduler tick.
+			GLOB.ccpost_tasking_network.dispatch_pending()
+			// If no new emergency took this slot, restore interrupted work to
+			// the same Liaison immediately instead of waiting for their next
+			// turn in the shared routine rotation.
+			if(!tasking_board.current_order && length(tasking_board.on_hold_orders))
+				restore_on_hold_order()
+			if(!tasking_board.current_order && !length(tasking_board.event_task_queue))
+				activate_standby_order()
+			expire_overdue_deferrals()
 			if(length(tasking_board.event_task_queue) || length(tasking_board.on_hold_orders))
 				// Urgent incident work and held tasks resolve promptly after completion.
 				refresh_queued_incident_window()
@@ -3325,6 +4733,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 	if(tasking_board.current_order?.order_code == order_code)
 		return tasking_board.current_order
+	if(tasking_board.standby_order?.order_code == order_code)
+		return tasking_board.standby_order
 
 	for(var/datum/ccpost_tasking_order/order as anything in GLOB.ccpost_tasking_network.shared_history)
 		if(order.order_code == order_code)
@@ -3414,3 +4824,4 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 #undef CCPOST_TASK_DEPARTMENT_COOLDOWN
 #undef CCPOST_TASK_SHARED_ARCHIVE_LIMIT
 #undef CCPOST_TASK_REASSIGN_GRACE
+
