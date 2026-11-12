@@ -1,6 +1,9 @@
 GLOBAL_LIST_INIT(infected_contact_mobs, list())
 GLOBAL_LIST_INIT(virusDB, list())
 
+/// How far past the host's heat damage limit their body has to be for heat to cure diseases
+#define SEARING_CURE_MARGIN 30
+
 /datum/disease
 	//the disease's antigens, that the body's immune_system will read to produce corresponding antibodies. Without antigens, a disease cannot be cured.
 	var/list/antigen = list()
@@ -10,8 +13,10 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/strength = 100
 	//the percentage of the strength at which effects will start getting disabled by antibodies.
 	var/robustness = 100
-	//chance to cure the disease at every proc when the body is getting cooked alive.
+	/// Body temperature above which the disease can be burnt out of the host. Never lower than the host's own heat damage limit plus [SEARING_CURE_MARGIN]
 	var/max_bodytemperature = T0C+100
+	/// Chance per second to cure the disease while the host is above [max_bodytemperature]
+	var/searing_cure_chance = 0.8
 	//very low temperatures will stop the disease from activating/progressing
 	var/min_bodytemperature = 120
 	///split category used for predefined diseases atm
@@ -144,8 +149,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if((mob.stat == DEAD) && !process_dead)
 		return
 
-	//Searing body temperatures cure diseases, on top of killing you.
-	if(mob.bodytemperature > max_bodytemperature)
+	//Searing body temperatures cure diseases, on top of killing you. It takes a while so you actually have to cook for it
+	if(mob.bodytemperature > max(max_bodytemperature, mob.get_body_temp_heat_damage_limit() + SEARING_CURE_MARGIN) && SPT_PROB(searing_cure_chance, seconds_per_tick))
 		cure(add_resistance = FALSE, target = mob)
 		return
 
@@ -286,3 +291,5 @@ GLOBAL_LIST_INIT(virusDB, list())
 			severity = DISEASE_SEVERITY_BIOHAZARD
 		else
 			severity = "Unknown"
+
+#undef SEARING_CURE_MARGIN

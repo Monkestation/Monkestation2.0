@@ -534,6 +534,8 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 	atom_storage.max_slots = 28
+	atom_storage.max_total_storage = 168
+	atom_storage.set_holdable(null,null,null)
 
 /obj/item/storage/medkit/lone_wanderer_medkit/PopulateContents()
 	var/list/items_inside = list(

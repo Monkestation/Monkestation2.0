@@ -13,6 +13,8 @@
 		/obj/item/gun/ballistic/revolver/lone_wanderer = 1,
 		/obj/item/gps/advanced/lone_wanderer = 1,
 		/obj/item/holochip/tenthousand = 1,
+		/obj/item/construction/rcd/combat/admin = 1,
+		/obj/item/pipe_dispenser = 1
 	)
 	belt = /obj/item/defibrillator/compact/combat/loaded/nanotrasen
 	ears = /obj/item/radio/headset/headset_cent/commander

@@ -131,6 +131,9 @@
 	if(issilicon(user))
 		return TRUE
 
+	if(HAS_TRAIT(user,TRAIT_MEDICAL_HUD))
+		return TRUE
+
 	if(user.is_holding_item_of_type(/obj/item/healthanalyzer))
 		return TRUE
 
@@ -144,7 +147,6 @@
 			if(vr_comp.patient == target)
 				return TRUE
 
-	// melbert todo : add modsuit health analyzer to this
 	return FALSE
 
 /***************************BRUTE***************************/

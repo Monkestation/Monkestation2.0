@@ -1,6 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "Radios are blocked again in the abductor ship and the heretic sacrifice areas."
-  - bugfix: "You can no longer send credits from inside a virtual domain to real bank accounts."
-  - code_imp: "Mapping related area flags now live in their own var, area_flags_mapping."
