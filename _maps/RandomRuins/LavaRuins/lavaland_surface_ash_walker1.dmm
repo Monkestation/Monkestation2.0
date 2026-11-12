@@ -26,6 +26,12 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
+"bx" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/anvil,
+/obj/item/forging_hammer,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
 "bH" = (
 /obj/structure/stone_tile/slab,
 /obj/item/storage/bag/quiver,
@@ -48,6 +54,11 @@
 /area/ruin/unpowered/ash_walkers)
 "dw" = (
 /obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"et" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/alloy_forge,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "eA" = (
@@ -779,6 +790,11 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/ash_walkers)
+"DS" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/reagent_forge,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "EH" = (
@@ -1952,7 +1968,7 @@ mZ
 mZ
 qy
 cm
-Nf
+et
 NV
 zI
 Uw
@@ -2030,7 +2046,7 @@ pE
 wc
 zI
 Og
-dw
+bx
 cm
 eA
 mZ
@@ -2054,7 +2070,7 @@ OJ
 pE
 cm
 VX
-dw
+DS
 pE
 pE
 WK

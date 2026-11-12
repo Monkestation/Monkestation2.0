@@ -26,6 +26,8 @@ export type SlimeColor = {
   name: string;
   hex: string;
   transparent: BooleanLike;
+  /** Null for rainbow, which sits outside the breeding tree. */
+  tier: number | null;
   mutations: Mutation[];
   parents: string[];
   effect: string;
@@ -35,6 +37,8 @@ export type SlimeColor = {
 export type Crossbreed = {
   color: string;
   desc: string;
+  /** False for crossbreeds that can't be handed over, so can't be ordered. */
+  orderable: BooleanLike;
 };
 
 export type Family = {

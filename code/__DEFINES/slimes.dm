@@ -107,6 +107,15 @@
 /// Extracts the compressor's color tank holds.
 #define COMPRESSOR_COLOR_EXTRACTS 5
 
+#define EXTRACT_REQUEST_WAITING "waiting"
+#define EXTRACT_REQUEST_CLAIMED "claimed"
+#define EXTRACT_REQUEST_READY "ready"
+#define EXTRACT_REQUEST_PICKED_UP "picked_up"
+#define EXTRACT_REQUEST_DECLINED "declined"
+#define EXTRACT_REQUEST_CANCELLED "cancelled"
+/// Longest reason a requester or a decliner can write.
+#define EXTRACT_REQUEST_REASON_LENGTH 60
+
 /// Doesn't squash mobs like roaches and stuff when walking over them
 #define TRAIT_CAREFUL_STEPS "careful_steps"
 /// Prevents shattering glass tables

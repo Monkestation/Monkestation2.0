@@ -204,11 +204,39 @@
 	}
 
 	&__chip {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.333rem;
 		padding: 0.167rem 0.667rem;
 		border-radius: 999px;
 		background: var(--slime-cyan);
 		font-weight: bold;
+
+		&--good {
+			background: var(--slime-good);
+		}
+
+		&--caution {
+			background: var(--slime-caution);
+		}
+
+		&--danger {
+			background: var(--slime-danger);
+		}
+
+		&--ink {
+			background: var(--slime-ink);
+			color: var(--slime-cream);
+		}
+
+		&--muted {
+			background: oklch(0.75 0.03 240);
+		}
+
+		&--raspberry {
+			background: var(--slime-raspberry);
+			color: var(--slime-cream);
+		}
 	}
 
 	&__heading {

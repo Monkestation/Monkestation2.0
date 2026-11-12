@@ -154,7 +154,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("remote chemical input tank", /obj/structure/chemical_input, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote chemical grinder", /obj/structure/chemical_input/grinder, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote chemical fermenter", /obj/structure/chemical_input/fermenter, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("remote geyser pump", /obj/structure/chemical_input/liquid_pump, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE)
+	new/datum/stack_recipe("remote geyser pump", /obj/structure/chemical_input/liquid_pump, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("anvil",/obj/structure/anvil, 25, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("forge hammer",/obj/item/forging_hammer, 2, time = 2.5 SECONDS, category = CAT_EQUIPMENT)
 ))
 
 /obj/item/stack/sheet/iron
@@ -368,6 +370,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 		new /datum/stack_recipe("pew (right)", /obj/structure/chair/pew/right, 3, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE)
 		)),
 	null, \
+	new /datum/stack_recipe("assembly bench", /obj/structure/machine/assembly_bench, 15, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE)
 	))
 
 /obj/item/stack/sheet/mineral/wood
