@@ -122,6 +122,8 @@
 		"biomass_recycler",
 		"extract_compressor",
 		"slime_pen_post",
+		"extract_requests_console",
+		"extract_orders_console",
 		"slime_rancher_scanner",
 		"vacuum_pack",
 		"vacuum_upgrade_printer",

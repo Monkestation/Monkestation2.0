@@ -5,6 +5,7 @@ Self-sustaining extracts:
 /obj/item/slimecross/selfsustaining
 	name = "self-sustaining extract"
 	effect = "self-sustaining"
+	effect_desc = "Splits into 4 extracts that react without any reagents. You pick the reaction when you use one."
 	icon_state = "selfsustaining"
 	var/extract_type = /obj/item/slime_extract
 

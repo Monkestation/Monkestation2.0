@@ -348,3 +348,112 @@
   - bugfix: winter hoods now don't set you ablaze anymore when you toggle them as
       plasmaman
   - image: changed bulky plasmaman helmet icon slightly (and all variants with it)
+2026-11-09:
+  Mantlecrawler:
+  - rscadd: Command announcements now allow newlines
+  Melbert:
+  - refactor: Refactored clothing obscurity entirely. Items should be a lot more consistent
+      about what covers what, and update snappier. Report any oddities, like disappearing
+      clothes, hair or species parts
+  - refactor: Refactored handcuffs and legcuffs a bit, report anything odd like getting
+      stuck restrained
+  ThePooba:
+  - balance: this didnt need to be buffed in the first place GRAPES. *slap
+  V2LenKagamine:
+  - bugfix: Single typo
+2026-11-10:
+  Absolucy:
+  - rscadd: Most clothes should actually cover the parts of the body their sprites
+      imply they cover - i.e, morningstar coats don't cover literally nothing anymore
+  - bugfix: Goliath cloaks actually provide armor now.
+  - rscadd: Oozelings can now eat/absorb coins. Beware your valuable coins, your local
+      slime may just see them as a snack.
+  - rscadd: station traits roll off a budget now, so small traits can sneak in next
+      to the big ones
+  - rscadd: some station traits give you a sign-up button in the lobby
+  - rscadd: cargo gorilla is a lobby sign-up now instead of a ghost poll
+  - rscadd: pun pun is a playable crewmember on monkey day
+  - rscadd: 'new negative trait: radioactive nebula. build the shielders or enjoy
+      a permanent rad storm'
+  - rscadd: 'new traits: dust stormfront, postal workers strike, geared assistants,
+      the great skub contention, glowsticks party, machine language malfunction, spiked
+      drinks'
+  - bugfix: blackouts, night shift, grid checks, electrical storms and the malf AI
+      blackout actually hit mapped APCs now
+  - bugfix: stuff that's supposed to change event odds (stormfront traits, shuttle
+      insurance, meteor shields) actually does now
+  - bugfix: the department resupply shuttle loan can actually show up
+  - bugfix: bureaucratic error can't give HoS or blueshield infinite slots anymore
+  - bugfix: yellow clown spawns with the clown instead of at arrivals
+  AitorLogedo:
+  - bugfix: Job XP actually saves now, so you can level up your jobs.
+  - bugfix: Roundend job XP doesn't drop when the round goes over an hour.
+  - bugfix: Claiming job rewards doesn't eat your saved rewards and reconnecting doesn't
+      let you claim them again.
+  - bugfix: Reload Job Rewards doesn't duplicate per round rewards.
+  - bugfix: Rolling rollies only gives botanist XP to botanists.
+  - qol: The XP menu only shows station jobs and shows how much XP you have.
+  Dominion, SirNightKnight:
+  - image: After decades of failing to compete with Cohiba Robustos, Havana cigars
+      have rebranded to a new colour theme.
+  - image: Cigar butts are now distinguishable based on the type of cigar it was.
+  - bugfix: fixed some discrepancies with onmob cigarette sprites.
+  EnterTheJake:
+  - balance: Codex Cicatrix is back to being a roundstart knowledge.
+  - balance: Cosmix expansion radius reverted back to 5x5, cooldown increased from
+      15 to 30 seconds.
+  LettuceGuardian:
+  - rscadd: Syndicate command has authorized 'Drip or Drown' procedures. A MOD paint
+      kit is now located inside the infiltrator.
+  - rscadd: Two new altskins for blood-red MODs.
+  - image: Updated the alt skin for sec MODs.
+  Melbert:
+  - refactor: Species part rendering got refactored a bit, report any oddities with
+      wings, snouts, tails and the like
+  - refactor: Refactored how digitigrade legs and snouts render, report any oddities
+      with that
+  Melbert, vinylspiders:
+  - bugfix: Large wings are now fully covered by limb textures and suit meshes
+  - bugfix: Emotes like blushing and visible implants no longer get covered by limb
+      textures or suit meshes
+  - refactor: Refactored bodypart rendering ever so slightly to fix some bodypart
+      texture issues, report anything weird like missing overlays
+  SirNightKnight:
+  - bugfix: fixed the summoning fantasy effect summoning megafauna.
+  SmArtKar, Stonetear:
+  - sound: MODsuits no longer spam error buzzes when taken off with their parts retracted.
+  - sound: Retracting a sealed MODsuit part no longer plays the hiss twice.
+  - refactor: MODsuit modules render on the part they're attached to, report any weird
+      module overlays.
+  - bugfix: MODsuit modules don't get painted with the suit color anymore unless they're
+      meant to.
+  - rscadd: When a MODsuit part overslots an item, it shows underneath the part while
+      it's unsealed.
+  Tractor-Maam:
+  - code_imp: undefined some chameleon bomb definitions.
+  V2LenKagamine:
+  - admin: Hehe funny lone wanderer reference.
+  big-boss-crate:
+  - rscadd: added the *plink emote
+  - sound: added plink.ogg and plonk.ogg (equal chance for either to trigger when
+      using the emote)
+2026-11-11:
+  Absolucy:
+  - bugfix: Maybe fix the frost miner ruin failing to spawn sometimes.
+  - bugfix: Fixed damage slowdown applying while floating/levitating.
+  - rscadd: Added new xenobiology request and order consoles!
+  - rscadd: Xenobio request consoles, usually in the front of science, can be used
+      to order extracts and crossbreeds, with an optional payout, too. Also available
+      as a PDA app!
+  - rscadd: Xenobio has a purple console on their wall that allows them to view, approve,
+      deny, and fulfill orders! Sprite by kiaroh.
+  ThePooba:
+  - bugfix: Wrong sound location for the animal and dont starve voices
+  V2LenKagamine:
+  - admin: more larp to the stranger!
+  vinylspiders:
+  - bugfix: Radios are blocked again in the abductor ship and the heretic sacrifice
+      areas.
+  - bugfix: You can no longer send credits from inside a virtual domain to real bank
+      accounts.
+  - code_imp: Mapping related area flags now live in their own var, area_flags_mapping.
