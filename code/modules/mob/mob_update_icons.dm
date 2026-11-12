@@ -66,6 +66,11 @@
 /mob/proc/update_held_items()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_HELD_ITEMS)
+	if(!hud_used)
+		return
+	for(var/hand_key in hud_used.hand_slots)
+		var/atom/movable/screen/hand_slot = hud_used.hand_slots[hand_key]
+		hand_slot?.update_appearance(UPDATE_OVERLAYS)
 
 ///Updates the mask overlay & HUD element.
 /mob/proc/update_worn_mask()
