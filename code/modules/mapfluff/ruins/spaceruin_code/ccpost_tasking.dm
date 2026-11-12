@@ -1175,6 +1175,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 
 /obj/item/encryptionkey/ccpost_tasking_grants
 	name = "Central Command departmental grant transceiver key"
+	SETUP_MAP_ICONS("cypherkey_basic", "/obj/item/encryptionkey/ccpost_tasking_grants")
 	channels = list(
 		RADIO_CHANNEL_COMMAND = 1,
 		RADIO_CHANNEL_SECURITY = 1,

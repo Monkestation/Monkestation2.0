@@ -345,6 +345,7 @@
 /// Long-range PDA for Central Command outpost personnel.
 /obj/item/modular_computer/pda/heads/ccpost
 	name = "Central Command outpost PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads/ccpost")
 	long_ranged = TRUE
 
 // Shared parent for all outpost ghost roles.

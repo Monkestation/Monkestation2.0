@@ -131,8 +131,6 @@ Possible to do for anyone motivated enough:
 /datum/proximity_monitor/tutorial_holopad
 
 /datum/proximity_monitor/tutorial_holopad/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
-	SIGNAL_HANDLER
-
 	var/turf/host_turf = get_turf(host)
 	if(old_loc && host_turf && old_loc.z == host_turf.z && get_dist(old_loc, host_turf) <= current_range)
 		return
