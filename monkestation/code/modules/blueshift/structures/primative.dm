@@ -70,6 +70,9 @@
 	walltype = /turf/closed/wall/mineral/stone
 	stairs_type = /obj/structure/stairs/stone
 
+/obj/item/stack/sheet/mineral/stone/ten
+	amount = 10
+
 GLOBAL_LIST_INIT(stone_recipes, list ( \
 	new/datum/stack_recipe("stone brick wall", /turf/closed/wall/mineral/stone, 5, one_per_turf = 1, on_solid_ground = 1, applies_mats = TRUE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("stone brick tile", /obj/item/stack/tile/mineral/stone, 1, 4, 20, check_density = FALSE, category = CAT_TILES),
@@ -78,6 +81,8 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	new/datum/stack_recipe("stone stove", /obj/machinery/primitive_stove, 5, one_per_turf = 1, on_solid_ground = 1, category = CAT_STRUCTURE),
 	new/datum/stack_recipe("stone oven", /obj/machinery/oven/stone, 5, one_per_turf = 1, on_solid_ground = 1, category = CAT_STRUCTURE),
 	new/datum/stack_recipe("stone griddle", /obj/machinery/griddle/stone, 5, one_per_turf = 1, on_solid_ground = 1, category = CAT_STRUCTURE),
+	new/datum/stack_recipe("forge", /obj/structure/reagent_forge, 10, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE),
+	new/datum/stack_recipe("alloy forge", /obj/structure/alloy_forge, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE)
 	))
 
 /obj/item/stack/sheet/mineral/stone/get_main_recipes()
@@ -2511,7 +2516,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	return TRUE
 
 /obj/structure/reagent_forge/deconstruct(disassembled)
-	new /obj/item/stack/sheet/iron/ten(get_turf(src))
+	new /obj/item/stack/sheet/mineral/stone/ten(get_turf(src))
 	return ..()
 
 /obj/structure/reagent_forge/tier2
@@ -2579,8 +2584,8 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	name = "legendary smith's cloak"
 	desc = "Those who wear this cloak have the knowledge and understanding to create weapons and tools rivaling that of a god. \
 	Often heros' songs are sung about their deeds, but only the wise know the heros' deeds were only possible thanks to a blacksmith."
-	icon = 'monkestation/code/modules/smithing/icons/cloaks.dmi'
-	worn_icon = 'monkestation/code/modules/smithing/icons/neck.dmi'
+	icon = 'icons/modules/smithing/cloaks.dmi'
+	worn_icon = 'icons/modules/smithing/neck.dmi'
 	icon_state = "smithingcloak"
 	associated_skill_path = /datum/skill/smithing
 
