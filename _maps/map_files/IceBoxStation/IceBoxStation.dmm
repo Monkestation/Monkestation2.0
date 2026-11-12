@@ -7551,6 +7551,10 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
+"clB" = (
+/obj/machinery/computer/extract_requests,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "clE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -24160,9 +24164,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/airalarm/directional/south,
 /obj/machinery/biomass_recycler,
 /obj/item/stack/biomass/twenty,
+/obj/machinery/computer/extract_orders/directional/south,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "hqV" = (
@@ -76175,6 +76179,7 @@
 	dir = 1
 	},
 /obj/machinery/extract_compressor,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "xlf" = (
@@ -258110,7 +258115,7 @@ eha
 aJQ
 aJQ
 lso
-lZi
+clB
 qaE
 mBQ
 eag

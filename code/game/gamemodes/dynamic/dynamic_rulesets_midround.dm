@@ -372,7 +372,6 @@
 	antag_datum = /datum/antagonist/nukeop
 	enemy_roles = list(
 		JOB_AI,
-		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,

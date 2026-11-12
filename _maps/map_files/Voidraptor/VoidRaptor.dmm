@@ -48636,6 +48636,7 @@
 "nJx" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -51293,7 +51294,6 @@
 "owp" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/bot_red,
-/obj/structure/sign/poster/contraband/arc_slimes/directional/south,
 /obj/structure/rack,
 /obj/item/vacuum_pack{
 	pixel_x = -8
@@ -51307,6 +51307,7 @@
 /obj/item/disk/vacuum_upgrade/printer{
 	pixel_x = 4
 	},
+/obj/machinery/computer/extract_orders/directional/south,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},

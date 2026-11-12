@@ -1,0 +1,710 @@
+$spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// the shared bits of both consoles live here too, ExtractOrders.scss only has its own layout
+.ExtractRequests {
+	--preview-size: 104px;
+	--preview-rise: 2.5rem;
+	// room under the part of the preview circle that hangs inside the pane, plus a gap before the title
+	--preview-clearance: calc(var(--preview-size) - var(--preview-rise) + 0.75rem);
+
+	&__ntos {
+		height: 100%;
+		border-radius: 1.5rem;
+		background: var(--slime-housing);
+		color: var(--slime-ink);
+		// PDA themes swap these out, and the slime look is built around the default
+		font-family: Verdana, Geneva, sans-serif;
+		font-size: 12px;
+		line-height: 1.4;
+		font-variant-numeric: tabular-nums;
+	}
+
+	&__shell {
+		display: grid;
+		grid-template-rows: auto minmax(0, 1fr) auto;
+		gap: 1rem;
+		height: calc(100% - 2rem);
+		margin: 1rem;
+		padding: 1.25rem;
+		border-radius: 2.25rem;
+		background: var(--slime-shell);
+		color: var(--slime-cream);
+		box-shadow:
+			inset 0 2px 0 oklch(1 0 0 / 0.25),
+			0 4px 0 oklch(0.18 0.05 250 / 0.5);
+
+		--slime-rule-dot: oklch(0.68 0.11 252);
+	}
+
+	&__head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	&__who {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--slime-shell-text);
+
+		strong {
+			color: var(--slime-cream);
+		}
+
+		.SlimeRancher__chip {
+			color: var(--slime-ink);
+		}
+	}
+
+	&__count {
+		min-width: 1.5rem;
+		padding: 0 0.4rem;
+		border-radius: 999px;
+		background: var(--slime-raspberry);
+		color: var(--slime-cream);
+		font-size: 0.917rem;
+		line-height: 1.5rem;
+		text-align: center;
+		animation: ExtractRequests-pop 450ms $spring;
+	}
+
+	.Tab--selected &__count {
+		background: var(--slime-ink);
+	}
+
+	&__workspace {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 17rem;
+		gap: 1rem;
+		min-height: 0;
+	}
+
+	&__tray,
+	&__grid {
+		display: grid;
+		// minmax(7.5rem, auto) never grows past 7.5rem in a height-capped scroller, so two-line names spilled out
+		grid-auto-rows: auto;
+		align-content: start;
+		gap: 0.667rem;
+		min-height: 0;
+		// the selected socket scales up and grows a 3px ring, and the scroller clips anything past this
+		padding: 0.5rem;
+	}
+
+	&__tray {
+		grid-template-columns: 1.75rem repeat(4, minmax(0, 1fr));
+	}
+
+	&__grid {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	&__tier {
+		grid-column: 1;
+		display: grid;
+		place-items: center;
+		align-self: center;
+		width: 1.75rem;
+		height: 1.75rem;
+		border-radius: 50%;
+		background: var(--slime-cell-deep);
+		color: var(--slime-shell-text);
+		font-weight: bold;
+		box-shadow: inset 0 2px 4px var(--slime-cell-inset);
+	}
+
+	&__cross {
+		display: grid;
+		grid-template-columns: 12rem minmax(0, 1fr);
+		gap: 0.5rem;
+		min-height: 0;
+	}
+
+	&__families {
+		display: grid;
+		align-content: start;
+		gap: 0.25rem;
+		min-height: 0;
+		padding: 0.25rem 0.5rem 0.5rem 0;
+	}
+
+	.Button.ExtractRequests__family {
+		display: flex;
+		align-items: center;
+		min-height: 2.75rem;
+		margin: 0;
+		padding: 0 0.75rem 0 0.25rem;
+		border-radius: 999px;
+		background-color: transparent;
+		color: var(--slime-shell-text);
+		line-height: normal;
+		white-space: normal;
+		transition:
+			background-color 120ms ease-out,
+			transform 150ms $spring;
+
+		.Button__content {
+			display: flex;
+			align-items: center;
+			gap: 0.25rem;
+		}
+
+		&:hover {
+			background-color: oklch(0.5 0.12 253);
+			color: var(--slime-shell-text);
+		}
+
+		&:active {
+			transform: scale(0.97);
+		}
+
+		&.Button--selected,
+		&.Button--selected:hover {
+			background-color: var(--slime-teal);
+			color: var(--slime-ink);
+			font-weight: bold;
+			box-shadow:
+				inset 0 2px 0 var(--slime-highlight),
+				0 3px 0 oklch(0.58 0.1 205);
+		}
+	}
+
+	&__socket,
+	.Button.ExtractRequests__socket {
+		position: relative;
+		display: grid;
+		place-items: center;
+		min-width: 0;
+		min-height: 7.5rem;
+		margin: 0;
+		padding: 0.5rem 0.4rem 0.6rem;
+		border-radius: 1.25rem;
+		background-color: var(--slime-cell);
+		color: var(--slime-cream);
+		font-weight: bold;
+		line-height: 1.2;
+		text-align: center;
+		white-space: normal;
+		overflow-wrap: anywhere;
+		box-shadow: inset 0 2px 4px var(--slime-cell-inset);
+	}
+
+	.Button.ExtractRequests__socket {
+		transition:
+			transform 150ms $spring,
+			background-color 120ms ease-out;
+
+		.Button__content {
+			display: grid;
+			justify-items: center;
+			gap: 0.25rem;
+		}
+
+		&:hover {
+			background-color: oklch(0.49 0.115 254);
+			color: var(--slime-cream);
+		}
+
+		&:active {
+			transform: scale(0.96);
+		}
+
+		&.Button--selected,
+		&.Button--selected:hover {
+			z-index: 1;
+			background-color: var(--slime-teal);
+			color: var(--slime-ink);
+			transform: scale(1.04);
+			box-shadow:
+				0 0 0 3px var(--slime-cream),
+				0 3px 0 oklch(0.18 0.05 250 / 0.5);
+		}
+	}
+
+	&__socket--unbred {
+		.Slimepedia__sprite {
+			filter: grayscale(1) brightness(1.15);
+			opacity: 0.5;
+		}
+
+		.ExtractRequests__socket-name {
+			color: oklch(0.78 0.06 245);
+			font-weight: normal;
+		}
+	}
+
+	.Button--selected &__socket-name {
+		color: var(--slime-ink);
+	}
+
+	&__socket--missing {
+		border: 3px dashed oklch(0.66 0.11 252);
+		background-color: oklch(0.5 0.12 253 / 0.45);
+		color: oklch(0.8 0.06 245);
+		font-weight: normal;
+		box-shadow: none;
+		cursor: default;
+	}
+
+	&__missing-mark {
+		font-size: 2rem;
+		font-weight: bold;
+		line-height: 64px;
+	}
+
+	&__details {
+		position: relative;
+		display: grid;
+		grid-template-rows: minmax(0, 1fr);
+		min-height: 0;
+		margin-top: var(--preview-rise);
+		padding-top: var(--preview-clearance);
+		border-radius: 1.75rem;
+		background: var(--slime-cell-deep);
+		box-shadow: inset 0 2px 4px var(--slime-cell-inset);
+
+		.ExtractRequests__muted {
+			color: var(--slime-shell-text);
+		}
+	}
+
+	&__details-scroll {
+		display: grid;
+		align-content: start;
+		gap: 0.667rem;
+		min-height: 0;
+		padding: 0 0.5rem 1rem 1rem;
+	}
+
+	&__preview {
+		position: absolute;
+		top: calc(-1 * var(--preview-rise));
+		left: 50%;
+		display: grid;
+		place-items: center;
+		box-sizing: border-box;
+		width: var(--preview-size);
+		height: var(--preview-size);
+		border: 4px solid var(--slime-teal);
+		border-radius: 50%;
+		background: var(--slime-housing);
+		box-shadow: 0 3px 0 oklch(0.18 0.05 250 / 0.5);
+		transform: translateX(-50%);
+	}
+
+	&__title {
+		display: grid;
+		justify-items: center;
+		gap: 0.4rem;
+		text-align: center;
+		overflow-wrap: anywhere;
+	}
+
+	&__chips {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.333rem;
+	}
+
+	&__reaction {
+		display: grid;
+		justify-items: start;
+		gap: 0.333rem;
+		padding: 0.5rem 0.75rem 0.667rem;
+		border-radius: 1.25rem;
+		background: oklch(0.34 0.09 254);
+
+		.ExtractRequests__chips {
+			justify-content: start;
+		}
+	}
+
+	&__reagent {
+		padding: 0 0.6rem;
+		border-radius: 999px;
+		background: var(--slime-track);
+		color: var(--slime-ink);
+		font-size: 0.917rem;
+		font-weight: bold;
+		line-height: 1.5rem;
+	}
+
+	&__recipe {
+		display: grid;
+		gap: 0.4rem;
+	}
+
+	&__ingredient {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+		border-radius: 999px;
+		background: var(--slime-track);
+		color: var(--slime-ink);
+	}
+
+	&__ingredient-art {
+		display: grid;
+		place-items: center;
+		width: 2.667rem;
+		height: 2.667rem;
+		overflow: hidden;
+		border-radius: 50%;
+		background: var(--slime-housing);
+	}
+
+	&__ingredient-text {
+		display: grid;
+		min-width: 0;
+		line-height: 1.25;
+	}
+
+	&__ingredient &__muted {
+		color: oklch(0.45 0.035 245);
+		font-size: 0.917rem;
+	}
+
+	&__dim .Slimepedia__sprite {
+		filter: grayscale(1) brightness(1.15);
+		opacity: 0.5;
+	}
+
+	&__muted {
+		color: oklch(0.45 0.035 245);
+	}
+
+	&__path {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.333rem;
+	}
+
+	&__path-step {
+		display: flex;
+		align-items: center;
+		gap: 0.333rem;
+	}
+
+	&__path-color {
+		padding: 0.2rem 0.667rem;
+		border-radius: 999px;
+		background: var(--slime-track);
+		color: var(--slime-ink);
+
+		&--bred {
+			box-shadow: inset 0 0 0 2px var(--slime-good);
+		}
+	}
+
+	&__order {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding-top: 1rem;
+		background-image: radial-gradient(circle, var(--slime-rule-dot) 0.2rem, transparent 0.22rem);
+		background-position: top;
+		background-repeat: repeat-x;
+		background-size: 0.9rem 0.5rem;
+	}
+
+	&__stepper {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		padding: 0.25rem;
+		border-radius: 999px;
+		background: var(--slime-cell-deep);
+		box-shadow: inset 0 2px 4px var(--slime-cell-inset);
+
+		.Button {
+			display: grid;
+			place-items: center;
+			width: 2.75rem;
+			height: 2.75rem;
+			margin: 0;
+			padding: 0;
+			background-color: var(--slime-cell);
+			color: var(--slime-cream);
+			line-height: normal;
+			box-shadow: inset 0 2px 0 oklch(1 0 0 / 0.15);
+			transition: transform 120ms $spring;
+
+			--button-background-disabled: var(--slime-cell);
+
+			.Button--icon {
+				margin: 0;
+			}
+
+			&:hover {
+				background-color: oklch(0.49 0.115 254);
+				color: var(--slime-cream);
+			}
+
+			&:active {
+				transform: scale(0.92);
+			}
+		}
+	}
+
+	&__count-value {
+		min-width: 2.25rem;
+		font-size: 1.333rem;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	&__field {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		gap: 0.5rem;
+		min-width: 0;
+		font-weight: bold;
+	}
+
+	.Input.ExtractRequests__input {
+		flex: 1;
+		min-width: 0;
+		height: 2.75rem;
+		padding: 0 1rem;
+		border: 0;
+		border-radius: 999px;
+		background: var(--slime-track);
+		color: var(--slime-ink);
+		font-family: inherit;
+		font-weight: normal;
+		box-shadow: inset 0 2px 3px var(--slime-shadow);
+
+		&::placeholder {
+			color: oklch(0.48 0.03 245);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--slime-cyan);
+			outline-offset: 2px;
+		}
+	}
+
+	&__pay {
+		display: flex;
+		align-items: center;
+		gap: 0.333rem;
+		height: 2.75rem;
+		padding: 0 0.9rem 0 0.75rem;
+		border-radius: 999px;
+		background: var(--slime-caution);
+		color: var(--slime-ink);
+		font-weight: bold;
+		box-shadow: inset 0 2px 3px var(--slime-shadow);
+		transition: background-color 120ms ease-out;
+
+		&:focus-within {
+			outline: 2px solid var(--slime-cyan);
+			outline-offset: 2px;
+		}
+
+		&--over {
+			background: var(--slime-danger);
+		}
+
+		.Input {
+			width: 4rem;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			color: inherit;
+			font-family: inherit;
+			font-weight: bold;
+			text-align: right;
+			appearance: textfield;
+
+			&::-webkit-inner-spin-button,
+			&::-webkit-outer-spin-button {
+				appearance: none;
+				margin: 0;
+			}
+		}
+	}
+
+	.Button.ExtractRequests__button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 3.333rem;
+		margin: 0;
+		padding: 0 1.333rem;
+		border-radius: 999px;
+		background-color: var(--slime-raspberry);
+		color: var(--slime-cream);
+		font-weight: bold;
+		line-height: normal;
+		box-shadow:
+			inset 0 2px 0 oklch(1 0 0 / 0.2),
+			0 3px 0 oklch(0.36 0.13 355);
+		transition:
+			transform 120ms $spring,
+			box-shadow 120ms ease-out,
+			filter 120ms ease-out;
+
+		--button-background-disabled: oklch(0.62 0.03 245);
+		--button-disabled-opacity: 1;
+
+		.Button__content {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.Button--icon {
+			margin: 0;
+		}
+
+		&:hover {
+			background-color: var(--slime-raspberry);
+			color: var(--slime-cream);
+			filter: brightness(1.1);
+		}
+
+		&:active {
+			transform: translateY(2px) scale(0.97);
+			box-shadow: 0 1px 0 oklch(0.36 0.13 355);
+		}
+
+		&.Button--disabled {
+			color: oklch(0.88 0.01 245);
+			box-shadow: none;
+			filter: none;
+			transform: none;
+		}
+	}
+
+	.Button.ExtractRequests__button--quiet {
+		min-height: 2.5rem;
+		padding: 0 1rem;
+		background-color: var(--slime-track);
+		color: var(--slime-ink);
+		box-shadow:
+			inset 0 2px 0 var(--slime-highlight),
+			0 3px 0 var(--slime-shadow);
+
+		&:hover {
+			background-color: var(--slime-track);
+			color: var(--slime-ink);
+		}
+
+		&:active {
+			box-shadow: 0 1px 0 var(--slime-shadow);
+		}
+	}
+
+	&__list {
+		display: grid;
+		align-content: start;
+		gap: 0.667rem;
+		min-height: 0;
+		padding-right: 0.5rem;
+	}
+
+	&__row {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto auto;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+		border-radius: 999px;
+		background: var(--slime-cell);
+		box-shadow: inset 0 2px 4px var(--slime-cell-inset);
+	}
+
+	&__row-art {
+		display: grid;
+		place-items: center;
+		// matches the 2x sprite, a smaller circle grows the grid track and shoves the sprite off center
+		width: 64px;
+		height: 64px;
+		overflow: hidden;
+		border-radius: 50%;
+		background: var(--slime-cell-deep);
+		box-shadow: inset 0 2px 4px var(--slime-cell-inset);
+	}
+
+	&__row-text {
+		display: grid;
+		min-width: 0;
+		font-size: 1.083rem;
+	}
+
+	&__row-reason,
+	&__note {
+		overflow: hidden;
+		color: var(--slime-shell-text);
+		font-size: 1rem;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__row .SlimeRancher__chip {
+		color: var(--slime-ink);
+	}
+
+	&__row .SlimeRancher__chip--ink {
+		color: var(--slime-cream);
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	&__empty {
+		display: grid;
+		justify-items: center;
+		align-content: center;
+		gap: 1rem;
+		height: 100%;
+		padding: 2rem;
+		text-align: center;
+	}
+
+	&__empty-socket {
+		display: grid;
+		place-items: center;
+		width: 6rem;
+		height: 6rem;
+		border: 4px dashed oklch(0.72 0.1 252);
+		border-radius: 50%;
+		color: oklch(0.85 0.06 240);
+		font-size: 3rem;
+		font-weight: bold;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		&__count,
+		.Button.ExtractRequests__socket,
+		.Button.ExtractRequests__family,
+		.Button.ExtractRequests__button,
+		&__stepper .Button,
+		&__pay {
+			animation: none;
+			transition: none;
+		}
+	}
+}
+
+@keyframes ExtractRequests-pop {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+}
