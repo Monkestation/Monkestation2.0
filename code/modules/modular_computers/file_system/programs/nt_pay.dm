@@ -20,6 +20,9 @@
 /datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui)
 	switch(action)
 		if("Transaction")
+			var/area/user_area = get_area(usr)
+			if(user_area && is_area_virtual(user_area))
+				return to_chat(usr, span_notice("You cannot send virtual money to real accounts."))
 			token = params["token"]
 			money_to_send = params["amount"]
 			var/datum/bank_account/recipient

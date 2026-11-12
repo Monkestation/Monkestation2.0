@@ -81,6 +81,39 @@
 	taste_description = "science"
 	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS|HEAL_REFRESH_ORGANS)
 
+///Datum used in /obj/item/reagent_containers/medipen/lone_wanderer
+/datum/reagent/medicine/lonehope
+	name = "Lone Hope"
+	description = "Who knows what this is...Heals great though."
+	reagent_state = LIQUID
+	color = "#DCDCDC"
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	var/healing = 2.5
+	ph = 1
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE | REAGENT_DEAD_PROCESS | REAGENT_UNAFFECTED_BY_METABOLISM | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT
+
+/datum/reagent/medicine/lonehope/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	var/healed = healing * REM * seconds_per_tick
+	affected_mob.adjustToxLoss(-healed, FALSE, TRUE, affected_biotype)
+	affected_mob.adjustOxyLoss(-healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustBruteLoss(-healed, FALSE, TRUE, affected_bodytype)
+	affected_mob.adjustFireLoss(-healed, FALSE, TRUE, affected_bodytype)
+	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL - healed)
+		affected_mob.blood_volume += healed
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/lonehope/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
+	var/healed = healing * REM * seconds_per_tick
+	affected_mob.adjustToxLoss(-healed, FALSE, TRUE, affected_biotype)
+	affected_mob.adjustOxyLoss(-healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustBruteLoss(-healed, FALSE, TRUE, affected_bodytype)
+	affected_mob.adjustFireLoss(-healed, FALSE, TRUE, affected_bodytype)
+	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL - healed)
+		affected_mob.blood_volume += healed
+	..()
+	. = TRUE
+
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."

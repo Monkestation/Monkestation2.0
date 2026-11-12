@@ -8,7 +8,7 @@
 	static_lighting = TRUE
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
 	flags_1 = NONE
 
 // This is just to define the category
@@ -160,7 +160,7 @@
 	static_lighting = TRUE
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
 	flags_1 = NONE
 
 
@@ -169,7 +169,7 @@
 	name = "Abductor Ship"
 	icon_state = "abductor_ship"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | NOTELEPORT | AREA_BLOCKS_OUTGOING_RADIO
+	area_flags = NOTELEPORT | AREA_BLOCKS_OUTGOING_RADIO
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
@@ -181,7 +181,7 @@
 	icon_state = "syndie-ship"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_DANGER
 
@@ -244,7 +244,7 @@
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE
+	area_flags = NOTELEPORT | NO_DEATH_MESSAGE
 
 /area/centcom/ctf/control_room
 	name = "Control Room A"
@@ -288,7 +288,7 @@
 	icon_state = "asteroid"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 	ambience_index = AMBIENCE_MINING
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_ASTEROID
@@ -298,7 +298,7 @@
 	ambience_index = AMBIENCE_RUINS
 	always_unpowered = FALSE
 	requires_power = TRUE
-	area_flags = UNIQUE_AREA | BLOBS_ALLOWED
+	area_flags = BLOBS_ALLOWED
 
 /area/centcom/asteroid/nearstation/bomb_site
 	name = "\improper Bomb Testing Asteroid"

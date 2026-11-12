@@ -11356,8 +11356,8 @@
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/cup/beaker/large,
-/obj/structure/sign/xenobio_guide/directional/north,
 /obj/item/stack/sheet/mineral/plasma/five,
+/obj/machinery/computer/extract_orders/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/science/xenobiology)
 "beH" = (
@@ -68605,9 +68605,9 @@
 /area/station/maintenance/fore)
 "tdT" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/item/kirbyplants/random,
 /obj/machinery/light/directional/south,
 /obj/machinery/atm/directional/south,
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "tea" = (

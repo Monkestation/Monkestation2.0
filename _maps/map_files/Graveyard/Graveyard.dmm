@@ -8239,7 +8239,7 @@
 /area/station/commons/dorms)
 "cQQ" = (
 /obj/structure/cable,
-/obj/machinery/station_map/engineering/directional/west,
+/obj/machinery/computer/extract_orders/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "cRh" = (
@@ -58540,7 +58540,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "wNo" = (
-/obj/structure/sign/poster/official/random/directional/east,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "wNU" = (
@@ -60811,7 +60814,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
 "xFn" = (
-/turf/closed/wall,
+/obj/effect/turf_decal/trimline/piss_yellow/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner,
+/turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "xFs" = (
 /obj/structure/table,
@@ -170681,7 +170688,7 @@ rbS
 aoR
 myw
 fmd
-wNo
+fmd
 haC
 fmd
 fmd
@@ -170937,10 +170944,10 @@ fzJ
 iuz
 aoR
 uHt
-aLZ
 xFn
-pIS
 nRB
+pIS
+wNo
 efo
 efo
 ihW

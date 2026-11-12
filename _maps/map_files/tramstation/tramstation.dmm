@@ -33773,6 +33773,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
+"jua" = (
+/obj/machinery/computer/extract_orders/directional/east,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "jur" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/siding/thinplating{
@@ -48707,6 +48711,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "obh" = (
@@ -49672,6 +49677,10 @@
 "osk" = (
 /turf/closed/wall,
 /area/station/maintenance/department/eva)
+"osm" = (
+/obj/machinery/computer/extract_orders/directional/west,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "oss" = (
 /obj/structure/mirror/directional/east,
 /obj/structure/sink/directional/west,
@@ -127901,7 +127910,7 @@ fmP
 pbt
 xcM
 dtN
-whn
+osm
 whn
 tjz
 asv
@@ -128415,7 +128424,7 @@ ptq
 pbt
 dQK
 dtN
-whn
+jua
 whn
 kHX
 asv
