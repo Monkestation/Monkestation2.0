@@ -20,6 +20,10 @@ GAME_VERB_PROC_DESC(/client, readmin, "Readmin", "Regain your admin powers.", "A
 			log_admin_private("[key_name(src)][msg]")
 			return
 
+	// Native alert on purpose: tgui windows can be answered by forged topics, this can't
+	if(alert(src, "Do you want to readmin?", "Readmin", "Yes", "No") != "Yes")
+		return
+
 	A.associate(src)
 
 	if (!holder)

@@ -97,11 +97,13 @@ GLOBAL_LIST_INIT(purchasable_nifsofts, list(
 	switch(action)
 		if("purchase_product")
 			var/datum/nifsoft/product_to_buy = text2path(params["product_to_buy"])
-			if(!product_to_buy || !paying_account)
+			if(!product_to_buy || !paying_account || !(product_to_buy in GLOB.purchasable_nifsofts))
 				return FALSE
 
-			var/amount_to_charge = (params["product_cost"])
-			var/rewards_purchase = (params["rewards_purchase"])
+			var/amount_to_charge = initial(product_to_buy.purchase_price)
+			var/rewards_purchase = !!params["rewards_purchase"]
+			if(rewards_purchase && !initial(product_to_buy.rewards_points_eligible))
+				return FALSE
 
 			if(!target_nif)
 				paying_account.bank_card_talk("You need a NIF implant to purchase this.")

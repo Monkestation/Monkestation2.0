@@ -124,7 +124,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 	if(!tickets_bought)
 		return
 
-	registed_account.adjust_money(-(tickets_bought * 100), "Lottery Ticket")
+	tickets_bought = round(tickets_bought, 1)
+	if(tickets_bought <= 0 || !registed_account.adjust_money(-(tickets_bought * 100), "Lottery Ticket"))
+		balloon_alert(user, "not enough money!")
+		return
 	GLOB.lottery_ticket_owners[registed_account] += tickets_bought
 	lottery_pool += tickets_bought * 100
 
@@ -142,7 +145,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 	if(!withdraw_amount)
 		return
 
-	withdraw_amount = clamp(withdraw_amount, 0, current_balance)
+	// the balance can change while the input is open, so check it again
+	withdraw_amount = round(min(withdraw_amount, user.client?.prefs?.metacoins), 1)
+	if(withdraw_amount <= 0)
+		return
 	if(!user.client.prefs.adjust_metacoins(user.client.ckey, -withdraw_amount, "Withdrew from an ATM", donator_multiplier = FALSE))
 		return
 

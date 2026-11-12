@@ -94,7 +94,7 @@
 	. = ..()
 	if(href_list["AI_taking_over"])
 		var/mob/living/silicon/ai/usurper = locate(href_list["AI_taking_over"])
-		if(!istype(usurper))
+		if(!istype(usurper) || usurper != usr)
 			return
 		hostile_takeover(usurper)
 

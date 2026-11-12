@@ -135,8 +135,12 @@
 	preferences.character_preview_view?.update_body()
 
 /datum/preference_middleware/proc/unusual_selection(list/params, mob/user)
-	if("[params["unusual_placement"]]" in preferences.special_loadout_list["unusual"])
-		preferences.special_loadout_list["unusual"] -= params["unusual_placement"]
+	var/unusual_idx = text2num(params["unusual_placement"])
+	if(!isnum(unusual_idx) || unusual_idx != round(unusual_idx) || unusual_idx < 1 || unusual_idx > length(preferences.extra_stat_inventory["unusual"]))
+		return
+	var/placement = "[unusual_idx]"
+	if(placement in preferences.special_loadout_list["unusual"])
+		preferences.special_loadout_list["unusual"] -= placement
 		preferences.save_preferences()
 		var/datum/tgui/ui = SStgui.get_open_ui(user, preferences)
 		ui.send_update()
@@ -145,7 +149,7 @@
 	if(!islist(preferences.special_loadout_list["unusual"]))
 		preferences.special_loadout_list["unusual"] = list()
 
-	preferences.special_loadout_list["unusual"] += "[params["unusual_placement"]]"
+	preferences.special_loadout_list["unusual"] += placement
 	var/datum/tgui/ui = SStgui.get_open_ui(user, preferences)
 	ui.send_update()
 	preferences.character_preview_view?.update_body()
