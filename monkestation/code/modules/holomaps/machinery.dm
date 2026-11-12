@@ -4,6 +4,15 @@
 #define MINIMAP_FIRE_ALARM_BLIP "fire_alarm"
 /// Biggest side of the little station map drawn on the machine's screen, in pixels
 #define STATION_MAP_SCREEN_SIZE 22
+/// Icon file with the markers of the legend next to the map
+#define STATION_MAP_LEGEND_ICON 'monkestation/code/modules/holomaps/icons/station_map_legend.dmi'
+/// Width of the legend next to the map, in pixels
+#define STATION_MAP_LEGEND_WIDTH 84
+/// Height of each line of the legend, in pixels
+#define STATION_MAP_LEGEND_ROW_HEIGHT 10
+/// Colors of the checkerboard showing meteor shield coverage
+#define STATION_MAP_SHIELD_COLOR_1 rgb(0, 119, 255, 128)
+#define STATION_MAP_SHIELD_COLOR_2 rgb(0, 255, 255, 128)
 
 /// Wall mounted map of the station, shows a tactical map of the z-level it's on to whoever uses it
 /obj/machinery/station_map
@@ -260,10 +269,191 @@
 /// Minimap display used by station maps, can't be drawn on and shows the ways between floors
 /atom/movable/screen/minimap_display/station_map
 	valid_minimap_blip_tags = list(MINIMAP_LADDER_BLIP, MINIMAP_STAIR_BLIP)
+	/// Entries of the legend shown next to the map
+	var/list/atom/movable/screen/minimap_element/legend_entry/legend_entries = list()
+	/// Legend entry that toggles the meteor shield coverage, if the z-level we show has any
+	var/atom/movable/screen/minimap_element/legend_entry/meteor_shields/shield_entry
+	/// Meteor shield coverage drawn on top of the map
+	var/atom/movable/screen/minimap_element/meteor_shields/meteor_shields
+	/// If the z-level we show has any meteor shield coverage
+	var/has_meteor_shields = FALSE
+	/// If the meteor shield coverage is shown, toggled from the legend
+	var/show_meteor_shields = TRUE
+
+/atom/movable/screen/minimap_display/station_map/Destroy()
+	hide_minimap_elements(legend_entries)
+	hide_minimap_element(meteor_shields)
+	shield_entry = null
+	QDEL_LIST(legend_entries)
+	QDEL_NULL(meteor_shields)
+	return ..()
+
+/atom/movable/screen/minimap_display/station_map/set_minimap(datum/minimap/minimap)
+	. = ..()
+	if(isnull(src.minimap))
+		return
+	update_meteor_shields()
+	update_legend()
+
+/// Returns the entries of our legend, as names associated with their marker icons
+/atom/movable/screen/minimap_display/station_map/proc/get_legend_markers()
+	var/static/list/markers
+	if(isnull(markers))
+		markers = list()
+		var/static/list/department_colors = list(
+			"Command" = TACMAP_AREA_COMMAND,
+			"Security" = TACMAP_AREA_SECURITY,
+			"Medical" = TACMAP_AREA_MEDICAL,
+			"Science" = TACMAP_AREA_SCIENCE,
+			"Engineering" = TACMAP_AREA_ENGINEERING,
+			"Cargo" = TACMAP_AREA_CARGO,
+			"Service" = TACMAP_AREA_SERVICE,
+			"Maintenance" = TACMAP_AREA_MAINTENANCE,
+		)
+		for(var/department in department_colors)
+			var/icon/marker = icon(STATION_MAP_LEGEND_ICON, "area_legend")
+			marker.DrawBox(department_colors[department], 2, 2, 7, 7)
+			markers[department] = marker
+		markers["You are here"] = icon('icons/ui_icons/minimap/map_blips.dmi', "locator")
+		markers["Ladder"] = icon('icons/ui_icons/minimap/map_blips.dmi', "ladder")
+		markers["Stairs"] = icon('icons/ui_icons/minimap/map_blips.dmi', "stairs_up")
+	return markers.Copy()
+
+/// Rebuilds the legend next to the map, adding the meteor shield entry if the z-level we show has any coverage
+/atom/movable/screen/minimap_display/station_map/proc/update_legend()
+	hide_minimap_elements(legend_entries)
+	shield_entry = null
+	QDEL_LIST(legend_entries)
+
+	var/screen_width = get_screen_pixel_size()
+	var/screen_height = screen_width
+	var/mob/owner = get_mob()
+	if(owner?.client)
+		var/list/view_pixels = view_to_pixels(owner.client.view_size.getView())
+		screen_width = view_pixels[1]
+		screen_height = view_pixels[2]
+	// Left of the map if it fits on the screen, right of it otherwise, and on top of it at the edge of the screen if neither fits
+	var/legend_x = -(STATION_MAP_LEGEND_WIDTH + 4)
+	if(origin_px[1] + legend_x < 0)
+		legend_x = minimap.base_map.Width() + 4
+		if(origin_px[1] + legend_x + STATION_MAP_LEGEND_WIDTH > screen_width)
+			legend_x = screen_width - origin_px[1] - STATION_MAP_LEGEND_WIDTH - 4
+	// Lined up with the top of the map, unless that is off the screen
+	var/legend_y = min(minimap.base_map.Height(), screen_height - origin_px[2] - 4) - STATION_MAP_LEGEND_ROW_HEIGHT
+
+	var/list/markers = get_legend_markers()
+	for(var/entry_name in markers)
+		legend_entries += new /atom/movable/screen/minimap_element/legend_entry(null, null, entry_name, markers[entry_name])
+	if(has_meteor_shields)
+		shield_entry = new(null, null, "Meteor shields", icon(STATION_MAP_LEGEND_ICON, "meteor_shield"), src)
+		shield_entry.set_crossed(!show_meteor_shields)
+		legend_entries += shield_entry
+
+	for(var/atom/movable/screen/minimap_element/legend_entry/entry as anything in legend_entries)
+		entry.pixel_w = legend_x
+		entry.pixel_z = legend_y
+		legend_y -= STATION_MAP_LEGEND_ROW_HEIGHT
+	show_minimap_elements(legend_entries)
+
+/// Redraws the meteor shield coverage of the z-level we show, it can go past the edges of the map since it mostly covers space
+/atom/movable/screen/minimap_display/station_map/proc/update_meteor_shields()
+	has_meteor_shields = FALSE
+	hide_minimap_element(meteor_shields)
+	var/list/turf/open/shielded_turfs = list()
+	// World coordinates covered by the map, grown to fit every shielded turf
+	var/min_x = minimap.min_x
+	var/min_y = minimap.min_y
+	var/max_x = minimap.min_x + minimap.base_map.Width() / MINIMAP_PIXEL_MULTIPLIER - 1
+	var/max_y = minimap.min_y + minimap.base_map.Height() / MINIMAP_PIXEL_MULTIPLIER - 1
+	for(var/turf/open/shielded_turf as anything in GLOB.meteor_shielded_turfs)
+		if(shielded_turf.z != minimap.z)
+			continue
+		shielded_turfs += shielded_turf
+		min_x = min(min_x, shielded_turf.x)
+		min_y = min(min_y, shielded_turf.y)
+		max_x = max(max_x, shielded_turf.x)
+		max_y = max(max_y, shielded_turf.y)
+	if(!length(shielded_turfs))
+		return
+	has_meteor_shields = TRUE
+	var/icon/canvas = icon('icons/ui_icons/minimap/minimap.dmi')
+	canvas.Crop(1, 1, (max_x - min_x + 1) * MINIMAP_PIXEL_MULTIPLIER, (max_y - min_y + 1) * MINIMAP_PIXEL_MULTIPLIER)
+	for(var/turf/open/shielded_turf as anything in shielded_turfs)
+		var/start_x = MINIMAP_WORLD_TO_PIXEL(shielded_turf.x, min_x, 0)
+		var/start_y = MINIMAP_WORLD_TO_PIXEL(shielded_turf.y, min_y, 0)
+		var/shield_color = ISODD(shielded_turf.x + shielded_turf.y) ? STATION_MAP_SHIELD_COLOR_1 : STATION_MAP_SHIELD_COLOR_2
+		canvas.DrawBox(shield_color, start_x, start_y, start_x + MINIMAP_PIXEL_MULTIPLIER - 1, start_y + MINIMAP_PIXEL_MULTIPLIER - 1)
+	meteor_shields ||= new
+	meteor_shields.icon = canvas
+	meteor_shields.pixel_w = (min_x - minimap.min_x) * MINIMAP_PIXEL_MULTIPLIER
+	meteor_shields.pixel_z = (min_y - minimap.min_y) * MINIMAP_PIXEL_MULTIPLIER
+	if(show_meteor_shields)
+		show_minimap_element(meteor_shields)
+
+/// Shows or hides the meteor shield coverage
+/atom/movable/screen/minimap_display/station_map/proc/toggle_meteor_shields()
+	show_meteor_shields = !show_meteor_shields
+	shield_entry?.set_crossed(!show_meteor_shields)
+	if(show_meteor_shields && has_meteor_shields)
+		show_minimap_element(meteor_shields)
+	else
+		hide_minimap_element(meteor_shields)
 
 /// Engineering station maps also show fire alarms that are going off
 /atom/movable/screen/minimap_display/station_map/engineering
 	valid_minimap_blip_tags = list(MINIMAP_LADDER_BLIP, MINIMAP_STAIR_BLIP, MINIMAP_FIRE_ALARM_BLIP)
+
+/atom/movable/screen/minimap_display/station_map/engineering/get_legend_markers()
+	. = ..()
+	.["Fire alarm"] = icon('monkestation/code/modules/holomaps/icons/station_map_blips.dmi', "fire_alarm")
+
+/// Meteor shield coverage drawn on top of station maps
+/atom/movable/screen/minimap_element/meteor_shields
+	name = "meteor shields"
+	layer = MINIMAP_BLIPS_LAYER - 0.5
+
+/// One line of the legend next to station maps, a marker icon with its name
+/atom/movable/screen/minimap_element/legend_entry
+	maptext_x = 8
+	maptext_y = -4
+	maptext_width = STATION_MAP_LEGEND_WIDTH - 8
+	maptext_height = 16
+
+/atom/movable/screen/minimap_element/legend_entry/Initialize(mapload, datum/hud/hud_owner, entry_name, icon/marker)
+	. = ..()
+	if(entry_name)
+		name = entry_name
+		maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>&nbsp;[entry_name]</span>") // the space keeps the first letter from getting cut off
+	if(marker)
+		icon = marker
+
+/// Legend entry that shows or hides the meteor shield coverage when clicked
+/atom/movable/screen/minimap_element/legend_entry/meteor_shields
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	/// The station map display we toggle the coverage of
+	var/atom/movable/screen/minimap_display/station_map/display
+
+/atom/movable/screen/minimap_element/legend_entry/meteor_shields/Initialize(mapload, datum/hud/hud_owner, entry_name, icon/marker, atom/movable/screen/minimap_display/station_map/display)
+	if(marker)
+		// Widen the icon so the whole line can be clicked, not just the marker
+		marker.Crop(1, 1, STATION_MAP_LEGEND_WIDTH, marker.Height())
+	. = ..()
+	src.display = display
+
+/atom/movable/screen/minimap_element/legend_entry/meteor_shields/Destroy()
+	display = null
+	return ..()
+
+/atom/movable/screen/minimap_element/legend_entry/meteor_shields/Click(location, control, params)
+	if(..() || isnull(display) || usr != display.get_mob())
+		return
+	display.toggle_meteor_shields()
+
+/// Crosses out the marker, for when the coverage is hidden
+/atom/movable/screen/minimap_element/legend_entry/meteor_shields/proc/set_crossed(crossed)
+	cut_overlays()
+	if(crossed)
+		add_overlay(mutable_appearance(STATION_MAP_LEGEND_ICON, "legend_cross"))
 
 /obj/machinery/firealarm
 	/// If we're on engineering station maps because our area is on fire
@@ -380,3 +570,8 @@
 #undef STATION_MAP_HIGH_LIGHT
 #undef MINIMAP_FIRE_ALARM_BLIP
 #undef STATION_MAP_SCREEN_SIZE
+#undef STATION_MAP_LEGEND_ICON
+#undef STATION_MAP_LEGEND_WIDTH
+#undef STATION_MAP_LEGEND_ROW_HEIGHT
+#undef STATION_MAP_SHIELD_COLOR_1
+#undef STATION_MAP_SHIELD_COLOR_2
