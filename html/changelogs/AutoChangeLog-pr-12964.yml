@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "Searing body temperatures take a while to cure diseases instead of doing it instantly, and spicy food can't cure them anymore."

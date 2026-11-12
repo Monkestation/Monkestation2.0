@@ -129,3 +129,9 @@
 
 /obj/item/holochip/thousand
 	credits = 1000
+
+/obj/item/holochip/fivethousand
+	credits = 5000
+
+/obj/item/holochip/tenthousand
+	credits = 10000
