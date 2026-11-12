@@ -1,0 +1,5 @@
+author: "chumtoadmonke"
+delete-after: True
+changes:
+  - balance: "cyborgs are no longer counted as an enemy"
+  - balance: "security assistants are not counted as an enemy for most antagonists"
