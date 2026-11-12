@@ -65,7 +65,7 @@
 	random_color = FALSE
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
 
-/obj/item/screwdriver/drone/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+/obj/item/screwdriver/drone/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		return

@@ -10,6 +10,7 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	flags_1 = NONE
 
 //TG's files separate this into Shorts.dmi and Pants.dmi. We wont have as many, so both go into here.

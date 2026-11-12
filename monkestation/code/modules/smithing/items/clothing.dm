@@ -172,6 +172,7 @@
 	slot_flags = ITEM_SLOT_FEET
 	base_name = "shoes"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 /obj/item/clothing/smithed_clothes/shoes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "smithed_shoes_worn")

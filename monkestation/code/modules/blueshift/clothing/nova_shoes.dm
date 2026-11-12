@@ -6,6 +6,7 @@
 	icon_state = "gildedcuffs"
 	body_parts_covered = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 // Wraps have different icons so parent doesn't fit properly.
 #define SHOE_SAMPLE_X 14

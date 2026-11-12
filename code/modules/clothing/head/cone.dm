@@ -17,7 +17,7 @@
 	random_hat_stack_x_offset = FALSE
 	hat_stack_y_offset_modifier = 0.33
 
-/obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
