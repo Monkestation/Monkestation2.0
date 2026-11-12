@@ -17,16 +17,16 @@
 
 /turf/closed/mineral/random/asteroid/tospace/mineral_chances()
 	return list(
-		/obj/item/stack/ore/diamond = 5,
+		/obj/item/stack/ore/diamond = 7.5,
 		/obj/item/stack/ore/gold = 10,
 		/obj/item/stack/ore/iron = 15,
-		/obj/item/stack/ore/plasma = 5,
-		/obj/item/stack/ore/bluespace_crystal = 2,
+		/obj/item/stack/ore/plasma = 7.5,
+		/obj/item/stack/ore/bluespace_crystal = 3,
 		/obj/item/stack/ore/silver = 12,
-		/obj/item/stack/ore/titanium = 16,
+		/obj/item/stack/ore/titanium = 15,
 		/obj/item/stack/ore/uranium = 10,
-		/turf/closed/mineral/artifact = 10,
-		/turf/closed/mineral/mineral_sample = 10,
+		/turf/closed/mineral/artifact = 5,
+		/turf/closed/mineral/mineral_sample = 5,
 	)
 /// Mapping Stuff
 /turf/closed/mineral/asteroid/tospace

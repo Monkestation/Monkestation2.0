@@ -90,9 +90,7 @@
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	var/healing = 2.5
 	ph = 1
-	chemical_flags = REAGENT_NO_RANDOM_RECIPE | REAGENT_DEAD_PROCESS | REAGENT_UNAFFECTED_BY_METABOLISM | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT
-
-
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE|REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_DONOTSPLIT
 
 /datum/reagent/medicine/lonehope/proc/dohealing(mob/living/carbon/affected_mob,seconds_per_tick)
 	var/healed = healing * REM * seconds_per_tick

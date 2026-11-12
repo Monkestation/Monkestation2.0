@@ -552,9 +552,9 @@
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/bodybag/bluespace = 1,
 		/obj/item/reagent_containers/medipen/lone_wanderer = 1,
+		/obj/item/reagent_containers/medipen/lone_wanderer/painkiller = 1,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/gauze/sterilized = 1,
-		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
 		/obj/item/stack/medical/bone_gel = 1,
 	)

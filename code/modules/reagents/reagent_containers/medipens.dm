@@ -317,9 +317,19 @@
 	base_icon_state = "syndipen"
 	amount_per_transfer_from_this = 10
 	list_reagents = list(/datum/reagent/medicine/lonehope = 10)
-	label_text = "Never seems to run dry, and always seems clean."
+	label_text = "Never seems to run dry, and always seems clean. Great in a fire-fight."
 	infinite = TRUE
-///Stims used in /datum/outfit/myststranger
+
+/obj/item/reagent_containers/medipen/lone_wanderer/painkiller
+	name = "ancient med-x"
+	desc = "The pain, make it stop..."
+	icon_state = "morphen"
+	base_icon_state = "morphen"
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/medex = 10)
+	label_text = "Never seems to run dry, and always seems clean. Great when your patient won't stop screaming."
+	infinite = TRUE
+
 /obj/item/reagent_containers/medipen/lone_wanderer/single
 	name = "super stim-pac"
 	desc = "Looks ancient; where did this come from?"
@@ -327,6 +337,16 @@
 	inhand_icon_state = "gorillapen"
 	base_icon_state = "gorillapen"
 	label_text = "Something something not liable for.... wait how many sieverts did that just say this contains!?"
+	infinite = FALSE
+
+/obj/item/reagent_containers/medipen/lone_wanderer/single_painkiller
+	name = "med-x pen"
+	desc = "The pain, make it stop..."
+	icon_state = "stimpen"
+	base_icon_state = "stimpen"
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/medex = 10)
+	label_text = "Something something no overdose risk... wait how many sieverts did that just say this contains!?'"
 	infinite = FALSE
 
 /////////////////////////
