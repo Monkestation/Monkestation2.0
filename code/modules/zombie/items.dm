@@ -15,6 +15,9 @@
 	if(attack_modifiers?[ATTACK_BLOCKED])
 		return
 
+	if(QDELETED(target))
+		return
+
 	if(ishuman(target))
 		try_to_zombie_infect(target, user, user.zone_selected)
 	else if(isliving(target))

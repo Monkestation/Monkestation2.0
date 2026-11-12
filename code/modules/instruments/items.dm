@@ -209,13 +209,15 @@
 		to_chat(loc, span_warning("You stop playing the harmonica to talk..."))
 		song.playing = FALSE
 
-/obj/item/instrument/harmonica/equipped(mob/M, slot)
+/obj/item/instrument/harmonica/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	if(!(slot & slot_flags))
+		return
+	RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/obj/item/instrument/harmonica/dropped(mob/M)
+/obj/item/instrument/harmonica/dropped(mob/user, silent = FALSE)
 	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	UnregisterSignal(user, COMSIG_MOB_SAY)
 
 /datum/action/item_action/instrument
 	name = "Use Instrument"
