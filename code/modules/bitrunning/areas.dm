@@ -11,10 +11,9 @@
 /// VDOM
 
 /area/virtual_domain
-	unlimited_fishing = TRUE
 	name = "Virtual Domain"
 	icon = 'icons/area/areas_station.dmi'
-	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
 	has_gravity = STANDARD_GRAVITY
 
@@ -34,7 +33,7 @@
 
 /area/virtual_domain/safehouse
 	name = "Virtual Domain Safehouse"
-	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 	requires_power = FALSE
@@ -43,14 +42,13 @@
 /// Custom subtypes
 
 /area/lavaland/surface/outdoors/virtual_domain
-	unlimited_fishing = TRUE
 	name = "Virtual Domain Lava Ruins"
 	icon_state = "bit_ruin"
-	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
 
 /area/lavaland/surface/outdoors/virtual_domain/protected_space
-	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 
@@ -59,28 +57,26 @@
 	base_lighting_alpha = 255
 
 /area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space
-	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 
 /area/icemoon/underground/explored/virtual_domain
-	unlimited_fishing = TRUE
 	name = "Virtual Domain Ice Ruins"
 	icon_state = "bit_ice"
-	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
 
 /area/ruin/space/has_grav/powered/virtual_domain
-	unlimited_fishing = TRUE
 	name = "Virtual Domain Space Ruins"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "bit_space"
-	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
 
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space
 	name = "Virtual Domain Safe Zone"
-	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA | VIRTUAL_SAFE_AREA
 	icon_state = "bit_safe"
 

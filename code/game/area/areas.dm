@@ -27,8 +27,6 @@
 	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED
 	/// Flag for mapping related area properties (such as cavegen)
 	var/area_flags_mapping = UNIQUE_AREA
-	/// Fishing here won't remove unique/limited loot from sources that are also used outside of it (UNLIMITED_FISHING area flag on tg)
-	var/unlimited_fishing = FALSE
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE

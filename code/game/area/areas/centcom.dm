@@ -128,7 +128,7 @@
 	flags_1 = NONE
 
 /area/centcom/tdome/arena
-	unlimited_fishing = TRUE //for possible testing purposes
+	area_flags = parent_type::area_flags | UNLIMITED_FISHING //for possible testing purposes
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
 	static_lighting = FALSE

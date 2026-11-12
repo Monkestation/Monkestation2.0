@@ -151,6 +151,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<16)
 ///This area blocks outgoing radio signals. Mostly used for the abductor ship and heretic sacrifice areas.
 #define AREA_BLOCKS_OUTGOING_RADIO (1<<17)
+/// Fishing here won't remove unique/limited loot from sources that are also used outside of it
+#define UNLIMITED_FISHING (1<<18)
 
 ////////////////Area Mapping Flags\\\\\\\\\\\\\\
 /// If false, loading multiple maps with this area type will create multiple instances.
