@@ -2777,6 +2777,7 @@
 #include "code\game\objects\items\granters\magic\summon_item.dm"
 #include "code\game\objects\items\granters\martial_arts\_martial_arts.dm"
 #include "code\game\objects\items\granters\martial_arts\cqc.dm"
+#include "code\game\objects\items\granters\martial_arts\jungle_arts.dm"
 #include "code\game\objects\items\granters\martial_arts\plasma_fist.dm"
 #include "code\game\objects\items\granters\martial_arts\sleeping_carp.dm"
 #include "code\game\objects\items\granters\martial_arts\spiders_bite.dm"
