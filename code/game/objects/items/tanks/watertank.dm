@@ -414,7 +414,7 @@ GAME_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", "Object")
 		turn_on()
 
 //Todo : cache these.
-/obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE) //apply chemcolor and level
+/obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE) //apply chemcolor and level
 	. = ..()
 	//inhands + reagent_filling
 	if(isinhands || !reagents.total_volume)

@@ -112,13 +112,15 @@ There are several things that need to be remembered:
 		//"override_file = handled_by_bodyshape ? icon_file : null" MUST be added to the arguments of build_worn_icon()
 		//Friendly reminder that icon_exists(file, state, scream = TRUE) is your friend when debugging this code.
 		var/handled_by_bodyshape = TRUE
+		var/digi = (bodyshape & BODYSHAPE_DIGITIGRADE)
 		var/icon_file
 		var/woman
+		var/female_sprite_flags = uniform.female_sprite_flags
 		//BEGIN SPECIES HANDLING
-		if((bodyshape & BODYSHAPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+		if(digi && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
-		else if(dna.species.visual_gender & dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+		if(dna.species.visual_gender & dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 			woman = TRUE
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
@@ -130,7 +132,7 @@ There are several things that need to be remembered:
 			default_layer = UNIFORM_LAYER,
 			default_icon_file = icon_file,
 			isinhands = FALSE,
-			female_uniform = woman ? uniform.female_sprite_flags : null,
+			female_uniform = woman ? female_sprite_flags : null,
 			override_state = target_overlay,
 			override_file = handled_by_bodyshape ? icon_file : null,
 			bodyshape = bodyshape,
@@ -408,7 +410,7 @@ There are several things that need to be remembered:
 
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_SUITSTORE) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
-		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
+		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi', bodyshape = bodyshape)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_storage_offset?.apply_offset(s_store_overlay)
 		apply_height(s_store_overlay, ENTIRE_BODY)
@@ -626,7 +628,7 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/hand_overlay
 		var/icon_file = held_index % 2 == 0 ? worn_item.righthand_file : worn_item.lefthand_file
-		hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
+		hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = held_index, bodyshape = bodyshape)
 		var/obj/item/bodypart/arm/held_in_hand = hand_bodyparts[held_index]
 		held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
 		apply_height(hand_overlay, LOWER_BODY)
@@ -635,12 +637,12 @@ There are several things that need to be remembered:
 	return hands
 
 /// Modifies a sprite slightly to conform to female body shapes
-/proc/wear_female_version(icon_state, icon, type, greyscale_colors)
-	var/index = "[icon_state]-[greyscale_colors]"
+/proc/wear_female_version(icon_state, icon_file_path, icon, type, greyscale_colors, bodyshape)
+	var/index = "[icon_file_path]-[icon_state]-[greyscale_colors]"
 	var/static/list/female_clothing_icons = list()
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
-		var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
+		var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) || bodyshape & BODYSHAPE_DIGITIGRADE ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
 		var/icon/female_cropping_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', female_icon_state)
 		female_clothing_icon = icon(icon, icon_state)
 		female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
@@ -649,35 +651,28 @@ There are several things that need to be remembered:
 
 	return icon(female_clothing_icon)
 
-/// Modifies a sprite to conform to digitigrade body shapes
-/proc/wear_digi_version(icon/base_icon, obj/item/item, key, greyscale_colors)
-	ASSERT(istype(item), "wear_digi_version: no item passed")
-	ASSERT(istext(key), "wear_digi_version: no key passed")
-	if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
-		greyscale_colors = item.get_general_color(base_icon)
+/// Modifies a sprite to conform to custom body shapes
+/obj/item/proc/get_bodyshape_icon(icon/base_icon, key, greyscale_colors, bodyshape)
+	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
+	if(bodyshape & BODYSHAPE_CERULEAN)
+		if((bodyshapes_with_variations & BODYSHAPE_CERULEAN) || (supports_variations_flags & (CERULEAN_MASKING)))
+			return generate_cerulean_icons(base_icon, key, greyscale_colors, bodyshape)
+	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
+		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
+			greyscale_colors = get_general_color(base_icon)
 
-	var/index = "[key]-[item.type]-[greyscale_colors]"
-	var/static/list/digitigrade_clothing_cache = list()
-	var/icon/resulting_icon = digitigrade_clothing_cache[index]
-	if(!resulting_icon)
-		resulting_icon = item.generate_digitigrade_icons(base_icon, greyscale_colors)
+		var/index = "[key]-[type]-[greyscale_colors]"
+		var/static/list/digitigrade_clothing_cache = list()
+		var/icon/resulting_icon = digitigrade_clothing_cache[index]
 		if(!resulting_icon)
-			stack_trace("[item.type] is set to generate a masked digitigrade icon, but generate_digitigrade_icons was not implemented (or error'd).")
-			return base_icon
-		digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
+			resulting_icon = generate_digitigrade_icons(base_icon, greyscale_colors)
+			if(!resulting_icon)
+				stack_trace("[type] is set to generate a masked digitigrade icon, but generate_digitigrade_icons was not implemented (or error'd).")
+				return base_icon
+			digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
 
-	return icon(resulting_icon)
+		return icon(resulting_icon)
 
-/// Modifies a sprite to replace the legs with a new version
-/proc/replace_icon_legs(icon/base_icon, icon/new_legs)
-	var/static/icon/leg_mask
-	if(!leg_mask)
-		leg_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_leg_mask")
-
-	// cuts the legs off
-	base_icon.Blend(leg_mask, ICON_SUBTRACT)
-	// staples the new legs on
-	base_icon.Blend(new_legs, ICON_OVERLAY)
 	return base_icon
 
 /**
@@ -832,31 +827,26 @@ There are several things that need to be remembered:
 		client.screen += worn_item
 	update_observer_view(worn_item, inventory = TRUE)
 
-/*
-Does everything in relation to building the /mutable_appearance used in the mob's overlays list
-covers:
-Inhands and any other form of worn item
-Rentering large appearances
-Layering appearances on custom layers
-Building appearances from custom icon files
-
-By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
-
-state: A string to use as the state, this is FAR too complex to solve in this proc thanks to shitty old code
-so it's specified as an argument instead.
-
-default_layer: The layer to draw this on if no other layer is specified
-
-default_icon_file: The icon file to draw states from if no other icon file is specified
-
-isinhands: If true then alternate_worn_icon is skipped so that default_icon_file is used,
-in this situation default_icon_file is expected to match either the lefthand_ or righthand_ file var
-
-female_uniform: A value matching a uniform item's female_sprite_flags var, if this is anything but NO_FEMALE_UNIFORM, we
-generate/load female uniform sprites matching all previously decided variables
-
-
-*/
+/**
+ * Does everything in relation to building the /mutable_appearance used in the mob's overlays list
+ *
+ * Covers:
+ * * Inhands and any other form of worn item
+ * * Rendering large appearances
+ * * Layering appearances on custom layers
+ * * Building appearances from custom icon files
+ *
+ * Args:
+ * * default_layer: What layer to use if the item itself doesn't specify a worn layer. Required.
+ * * default_icon_file: The icon file to draw states from if no other icon file is specified. Required.
+ * * isinhands: Either FALSE (for "is being worn") or a hand index indiciating what hand this is being held in.
+ * * female_uniform: A female uniform flag. If this is anything but NO_FEMALE_UNIFORM, we generate/load female uniform sprites matching all previously decided variables.
+ * * override_state: An optional state to override the item's default icon state / worn icon state.
+ * * override_file: An optional icon file to override the item's default icon file / worn icon file.
+ * * bodyshape: The bodyshape to use when generating the icon. Defaults to NONE, but not typically NONE in practice.
+ *
+ * Returns a mutable_appearance representing the final constructed icon for the item.
+ */
 /obj/item/proc/build_worn_icon(
 	default_layer = 0,
 	default_icon_file = null,
@@ -879,17 +869,19 @@ generate/load female uniform sprites matching all previously decided variables
 	if(female_uniform)
 		building_icon = wear_female_version(
 			icon_state = t_state,
+			icon_file_path = file2use,
 			icon = file2use,
 			type = female_uniform,
 			greyscale_colors = greyscale_colors,
+			bodyshape = bodyshape,
 		)
 
-	if(!isinhands && (bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
-		building_icon = wear_digi_version(
+	if(!isinhands && (bodyshapes_with_variations & bodyshape))
+		building_icon = get_bodyshape_icon(
 			base_icon = building_icon || icon(file2use, t_state),
-			item = src,
 			key = "[t_state]-[file2use]-[female_uniform]",
 			greyscale_colors = greyscale_colors,
+			bodyshape = bodyshape,
 		)
 
 	if(building_icon)
@@ -899,7 +891,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(draw_target, isinhands, file2use)
+	var/list/worn_overlays = worn_overlays(draw_target, isinhands, file2use, bodyshape)
 	if(length(worn_overlays))
 		draw_target.overlays += worn_overlays
 	draw_target = color_atom_overlay(draw_target)
@@ -908,7 +900,7 @@ generate/load female uniform sprites matching all previously decided variables
 	// but KEEP_APART breaks float layering, so what we need to do is make fake KEEP_APART for us to use
 	var/mutable_appearance/standing = mutable_appearance(layer = -layer2use, appearance_flags = KEEP_TOGETHER)
 	standing.overlays += draw_target
-	var/list/separate_overlays = separate_worn_overlays(standing, draw_target, isinhands, file2use)
+	var/list/separate_overlays = separate_worn_overlays(standing, draw_target, isinhands, file2use, bodyshape)
 	if(length(separate_overlays))
 		standing.overlays += separate_overlays
 	else // Don't nest overlays if there's nothing to nest against
@@ -918,37 +910,36 @@ generate/load female uniform sprites matching all previously decided variables
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
 	//Worn offsets
-	var/list/offsets = get_worn_offsets(isinhands)
-	standing.pixel_x += offsets[1]
-	standing.pixel_y += offsets[2]
+	var/vector/offsets = get_worn_offsets(isinhands, bodyshape)
+	standing.pixel_x += offsets.x
+	standing.pixel_y += offsets.y
 
 	standing.alpha = alpha
 
 	return standing
 
-/// Returns offsets used for equipped item overlays in list(px_offset,py_offset) form.
-/obj/item/proc/get_worn_offsets(isinhands)
-	. = list(0,0) //(px,py)
-	if(isinhands)
-		//Handle held offsets
-		var/mob/holder = loc
-		if(istype(holder))
-			var/list/offsets = holder.get_item_offsets_for_index(holder.get_held_index_of_item(src))
-			if(offsets)
-				.[1] = offsets["x"]
-				.[2] = offsets["y"]
+/// Returns offsets used for equipped item overlays in vector form.
+/obj/item/proc/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = vector(0, 0)
+	if(hand_index)
+		var/vector/hand_offsets = astype(loc, /mob)?.get_item_offsets_for_index(hand_index)
+		offsets.x = hand_offsets?.x
+		offsets.y = hand_offsets?.y
+
 	else
-		.[2] = worn_y_offset
+		offsets.y = worn_y_offset
+
+	return offsets
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)
 	switch(i)
 		if(3) //odd = left hands
-			return list("x" = 0, "y" = 16)
+			return vector(0, 16)
 		if(4) //even = right hands
-			return list("x" = 0, "y" = 16)
+			return vector(0, 16)
 		else //No offsets or Unwritten number of hands
-			return list("x" = 0, "y" = 0)//Handle held offsets
+			return vector(0, 0)//Handle held offsets
 
 /mob/living/carbon/human/proc/update_observer_view(obj/item/worn_item, inventory)
 	if(observers?.len)

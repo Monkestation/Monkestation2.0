@@ -544,6 +544,7 @@
 	cold_protection = 0
 	heat_protection = 0
 	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /datum/armor/armor_changeling
 	melee = 40

@@ -8,6 +8,7 @@
 	equip_delay_self = 50
 	strip_delay = 60
 	breakouttime = 5 MINUTES
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /obj/item/clothing/suit/jacket/straight_jacket/Initialize(mapload)
 	. = ..()

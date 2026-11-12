@@ -12,6 +12,7 @@
 /obj/item/clothing/suit/utility
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	cerulean_flipper_palette = FLIPPERS
 
 /obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
@@ -53,10 +54,10 @@
 	fire = 100
 	acid = 50
 
-/obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance((bodyshape & BODYSHAPE_CERULEAN) ? CERULEAN_SUIT_FILE : icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
@@ -65,6 +66,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	cerulean_flipper_palette = "#725c3e"
 
 /obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"
@@ -81,6 +83,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
+	cerulean_flipper_palette = "#525765"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
@@ -218,6 +221,7 @@
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
+	cerulean_flipper_palette = "#ffdb57"
 
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()

@@ -151,6 +151,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<16)
 ///This area blocks outgoing radio signals. Mostly used for the abductor ship and heretic sacrifice areas.
 #define AREA_BLOCKS_OUTGOING_RADIO (1<<17)
+/// Gravity generators don't affect this area, so it has no gravity unless has_gravity is set
+#define NO_GRAVITY (1<<18)
 
 ////////////////Area Mapping Flags\\\\\\\\\\\\\\
 /// If false, loading multiple maps with this area type will create multiple instances.

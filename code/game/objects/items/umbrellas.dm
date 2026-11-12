@@ -107,20 +107,20 @@
 	SIGNAL_HANDLER
 	owner.update_held_items()
 
-/obj/item/umbrella/get_worn_offsets(isinhands)
-	. = ..()
-	var/mob/holder = loc
+/obj/item/umbrella/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = ..()
 	if(open)
-		.[2] += open_y_offset
+		offsets.y += open_y_offset
 		switch(loc.dir)
 			if(NORTH)
-				.[1] += ISODD(holder.get_held_index_of_item(src)) ? -open_x_offset : open_x_offset
+				offsets.x += ISODD(hand_index) ? -open_x_offset : open_x_offset
 			if(SOUTH)
-				.[1] += ISODD(holder.get_held_index_of_item(src)) ? open_x_offset : -open_x_offset
+				offsets.x += ISODD(hand_index) ? open_x_offset : -open_x_offset
 			if(EAST)
-				.[1] -= open_x_offset
+				offsets.x -= open_x_offset
 			if(WEST)
-				.[1] += open_x_offset
+				offsets.x += open_x_offset
+	return offsets
 
 //other umbrellas
 
