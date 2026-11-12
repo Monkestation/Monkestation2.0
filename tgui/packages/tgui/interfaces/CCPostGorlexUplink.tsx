@@ -150,7 +150,7 @@ export const CCPostGorlexUplink = () => {
           </div>
           <div className="CCPostOpsBalance"><strong>{requisitionsLocked ? 'REVOKED' : `${funds} TC`}</strong><small>FIELD ALLOCATION</small></div>
         </div>
-        {!Boolean(data.authorized) ? (
+        {!data.authorized ? (
           <NoticeBox danger>Unauthorized access. This terminal is bound to its assigned contractor.</NoticeBox>
         ) : (
           <div className="CCPostOpsLayout">
@@ -232,8 +232,7 @@ export const CCPostGorlexUplink = () => {
               )}
 
               {currentTab === 'requisitions' && (
-                <>
-                  <div className="CCPostOpsShop">
+                <div className="CCPostOpsShop">
                     <div className="CCPostOpsCategories">
                       {categories.map((entry) => (
                         <button type="button" key={entry} className={`CCPostOpsCategory ${entry === category ? 'CCPostOpsCategory--active' : ''}`} onClick={() => selectCategory(entry)}>
@@ -277,19 +276,16 @@ export const CCPostGorlexUplink = () => {
                       {!items.length && <Box>No equipment available in this category.</Box>}
                     </div>
                   </div>
-                </>
               )}
 
               {currentTab === 'intelligence' && (
                 cybersun ? (
-                  <>
-                    <Section title="BLACK WARRANT SUBJECT">
+                  <Section title="BLACK WARRANT SUBJECT">
                       <div className="CCPostOpsSubject">{data.target?.name || 'UNASSIGNED SUBJECT'}</div>
                       <Box color="label" mt={1}>Affiliation: Rogue Gorlex Marauders Operative</Box>
                       <div className="CCPostOpsSignal"><span>◆</span> {data.target?.status || 'SIGNAL UNAVAILABLE'}</div>
                       <Box mt={1} color="label">Use your Warrant Tracker for approximate direction and vicinity. Alt-click switches to the original cartridge. Pursuit is restricted to permitted off-station areas.</Box>
                     </Section>
-                  </>
                 ) : (
                   <>
                     <Box mb={2} color="label">Authenticated Liaison personnel directory. Health indicators update with available personnel signals; location tracking is not provided.</Box>

@@ -4499,16 +4499,21 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
 	return employee && employee.employee_role == "Central Command Liaison" && employee.employee_mind == sector_session_mind
 
-/obj/machinery/computer/ccpost_sector_comms/proc/logout_sector_session()
+/obj/machinery/computer/ccpost_sector_comms/proc/clear_sector_session()
 	if(!sector_session_mind)
 		return
 	GLOB.ccpost_sector_network.comms_last_active_at[REF(sector_session_mind)] = world.time
 	GLOB.ccpost_sector_network.comms_unavailable_since[REF(sector_session_mind)] = world.time
 	GLOB.ccpost_sector_network.schedule_comms_recovery_check()
-	if(submitted_paperwork)
-		eject_sector_paperwork()
 	sector_session_mind = null
 	sector_session_name = null
+
+/obj/machinery/computer/ccpost_sector_comms/proc/logout_sector_session()
+	if(!sector_session_mind)
+		return
+	clear_sector_session()
+	if(submitted_paperwork)
+		eject_sector_paperwork()
 	SStgui.update_uis(src)
 
 /obj/machinery/computer/ccpost_sector_comms/proc/login_sector_session(mob/user)
@@ -4537,7 +4542,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /obj/machinery/computer/ccpost_sector_comms/Destroy()
-	logout_sector_session()
+	clear_sector_session()
 	if(submitted_paperwork)
 		submitted_paperwork.forceMove(drop_location())
 		submitted_paperwork = null

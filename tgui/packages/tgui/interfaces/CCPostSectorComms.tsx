@@ -168,7 +168,7 @@ export const CCPostSectorComms = () => {
         <Window.Content className="ccpost-theme ccpost-theme--comms ccpost-admin-v2">
           <CCPostHeader title="Sector Communications" division="CENTRAL COMMAND" />
           <Layout.Content scrollable className="CCPostAdminBody">
-          {!Boolean(admin_server_online) && <CCPostServerUnavailable status={admin_server_status} />}
+          {!admin_server_online && <CCPostServerUnavailable status={admin_server_status} />}
           <div className="CCPostIdentityStrip"><CCPostPersonnelPortrait portrait={identity_portrait} label="OFFICIAL ID RECORD" /><div><strong>{identity_detected ? 'Registered Liaison Identified' : 'Personnel Verification Required'}</strong><div>Encrypted correspondence access is linked to the registered employee.</div></div></div>
           <div className="CCPostLogin">
           <Stack vertical fill>
@@ -178,7 +178,7 @@ export const CCPostSectorComms = () => {
                   <LabeledList.Item label="Personnel record">{identity_detected ? 'HR roster record detected' : 'Registered Liaison ID required'}</LabeledList.Item>
                   <LabeledList.Item label="Current workstation">{session_owner || 'Not signed in'}</LabeledList.Item>
                 </LabeledList>
-                <Button icon="sign-in-alt" color="good" fluid mt={1.5} disabled={!identity_detected || read_only || !Boolean(admin_server_online)} onClick={() => act('login')}>Sign In</Button>
+                <Button icon="sign-in-alt" color="good" fluid mt={1.5} disabled={!identity_detected || read_only || !admin_server_online} onClick={() => act('login')}>Sign In</Button>
               </Section>
             </Stack.Item>
           </Stack>
@@ -221,7 +221,7 @@ export const CCPostSectorComms = () => {
           </Tabs.Tab>
         </Tabs></div>
           <Layout.Content scrollable className="CCPostAdminBody">
-          {!Boolean(admin_server_online) && <CCPostServerUnavailable status={admin_server_status} />}
+          {!admin_server_online && <CCPostServerUnavailable status={admin_server_status} />}
         {Boolean(read_only) && (<NoticeBox>OBSERVER MODE: Read-only. All terminal actions are restricted to authorized Central Command personnel.</NoticeBox>)}
         <Section
           title="Correspondence Workspace"

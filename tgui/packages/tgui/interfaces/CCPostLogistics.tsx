@@ -165,7 +165,7 @@ export const CCPostLogistics = () => {
   const [manualOpen, setManualOpen] = useLocalState('ccpostLogisticsManual', false);
   const [freightExpanded, setFreightExpanded] = useLocalState('ccpostFreightExpanded', false);
 
-  if (Boolean(outpost_offline)) {
+  if (outpost_offline) {
     return (
       <Window title="Central Command Logistics" width={720} height={270} theme="ntos">
         <Window.Content className="ccpost-theme ccpost-theme--sage ccpost-admin-v2">
@@ -285,7 +285,7 @@ export const CCPostLogistics = () => {
                   {data.inspection_reference ? <>
                     <Box color="label" mt={1}>Clearance window: {formatFreightDuration(data.inspection_seconds || 0)}</Box>
                     <div className="CCPostInspectionSteps"><div><b>01</b> Check the physical manifest and remove discrepancies.</div><div><b>02</b> Stamp the original, return it inside the crate and close the lid.</div><div><b>03</b> Swipe your registered Security ID here, then return the consignment via the outbound lane.</div></div>
-                    <Button fluid icon="id-card" color="good" disabled={Boolean(read_only) || !Boolean(data.inspection_can_certify) || data.inspection_status === 'CERTIFIED'} onClick={() => act('certify_inspection', { reference: data.inspection_reference })}>{data.inspection_status === 'CERTIFIED' ? 'Consignment Certified' : 'Swipe Security ID'}</Button>
+                    <Button fluid icon="id-card" color="good" disabled={Boolean(read_only) || !data.inspection_can_certify || data.inspection_status === 'CERTIFIED'} onClick={() => act('certify_inspection', { reference: data.inspection_reference })}>{data.inspection_status === 'CERTIFIED' ? 'Consignment Certified' : 'Swipe Security ID'}</Button>
                     {!data.inspection_can_certify && <Box color="label" mt={1}>Certification requires the assigned Security Officer wearing their registered ID, and an arrived consignment.</Box>}
                   </> : <Box color="label" mt={1}>Awaiting a regional consignment for Security clearance.</Box>}
                 </Section>
@@ -633,7 +633,7 @@ const RequisitionsTab = (props: {
                             </Button>
                           }
                         >
-                          {!!pack.contents?.length ? (
+                          {pack.contents?.length ? (
                             pack.contents.map((item, index) => (
                               <Box
                                 key={`${pack.id}-content-${index}`}

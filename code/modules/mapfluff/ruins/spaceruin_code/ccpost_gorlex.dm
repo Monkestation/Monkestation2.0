@@ -862,6 +862,9 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	)
 
 /obj/item/ccpost_gorlex_uplink/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
 	if(!(action in list("purchase", "request_extraction", "request_recall")))
 		return FALSE
 	var/mob/user = ui?.user

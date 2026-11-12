@@ -109,7 +109,7 @@ export const CCPostHRFax = () => {
   const activeCase = record?.active_case;
   const isEmployee = Boolean(record);
 
-  if (Boolean(hr_outpost_offline)) {
+  if (hr_outpost_offline) {
     return (
       <Window title="Central Command Administrative Fax" width={610} height={320} theme="ntos">
         <Window.Content className="ccpost-theme ccpost-theme--sage ccpost-admin-v2">
@@ -168,7 +168,7 @@ export const CCPostHRFax = () => {
                     <LabeledList.Item label="Network Name">{fax_name}</LabeledList.Item>
                     <LabeledList.Item label="Network ID">{fax_id}</LabeledList.Item>
                     <LabeledList.Item label="Visible to Network">
-                      {Boolean(visible) ? 'Yes' : 'No'}
+                      {visible ? 'Yes' : 'No'}
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
@@ -258,8 +258,7 @@ export const CCPostHRFax = () => {
             </>
           )}
           {tab === 'history' && (
-            <>
-              <Stack.Item>
+            <Stack.Item>
                 <Section
                   title="Fax History"
                   buttons={
@@ -287,7 +286,6 @@ export const CCPostHRFax = () => {
                   )}
                 </Section>
               </Stack.Item>
-            </>
           )}
           {tab === 'records' && (
             !record ? (
@@ -333,7 +331,7 @@ export const CCPostHRFax = () => {
                     buttons={activeCase && (
                       <Button
                         icon="copy"
-                        disabled={!Boolean(activeCase.can_replace)}
+                        disabled={!activeCase.can_replace}
                         onClick={() => act('hr_replace_form')}
                       >
                         Replacement Form

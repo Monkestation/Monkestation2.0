@@ -335,27 +335,27 @@ export const CCPostTasking = () => {
               <NoticeBox danger={server_status === 'INSTALLATION OFFLINE' || server_status === 'SERVER DAMAGED'}>
                 Administrative services unavailable: {server_status}. Tasking and Sector Communications are suspended.
               </NoticeBox>
-              {Boolean(server_recalibrating) ? (
+              {server_recalibrating ? (
                 <Box className="CCPostRecalibration"><Box bold>NETWORK RECALIBRATION IN PROGRESS</Box><Box>{server_recalibration_seconds} seconds remaining</Box></Box>
               ) : (
-                <Button icon="wrench" color="average" disabled={!Boolean(server_can_recalibrate)} onClick={() => act('start_recalibration')}>
+                <Button icon="wrench" color="average" disabled={!server_can_recalibrate} onClick={() => act('start_recalibration')}>
                   Initiate Network Recalibration (60s)
                 </Button>
               )}
-              {!Boolean(server_can_recalibrate) && !Boolean(server_recalibrating) && (
+              {!server_can_recalibrate && !server_recalibrating && (
                 <Box mt={1} color="label">Only synchronization faults are recalibrated. Restore power or replace damaged hardware first.</Box>
               )}
             </Section>
           )}
           {(Boolean(server_intrusion_active) || Boolean(server_data_compromised)) && (
             <Section title="CLASSIFIED NETWORK SECURITY ALERT">
-              {Boolean(server_intrusion_active) ? (
+              {server_intrusion_active ? (
                 <>
                   <NoticeBox danger>Unauthorized classified data extraction detected. Estimated transfer time remaining: {server_intrusion_seconds}s.</NoticeBox>
                   {Boolean(server_liaison_authorized) && <Box color="label">Use the storage controls below to interrupt the transfer or eject the cartridge.</Box>}
                 </>
               ) : (
-                <NoticeBox warning>Classified Tasking Server database compromise recorded. Investigate the physical export port.</NoticeBox>
+                <NoticeBox danger>Classified Tasking Server database compromise recorded. Investigate the physical export port.</NoticeBox>
               )}
             </Section>
           )}
@@ -363,21 +363,21 @@ export const CCPostTasking = () => {
             <div className="CCPostSeveranceStorage">
               <div>
                 <Box bold>STORAGE STATUS</Box>
-                <Box color={Boolean(server_storage_inserted) ? 'good' : 'label'}>{server_storage_status}</Box>
+                <Box color={server_storage_inserted ? 'good' : 'label'}>{server_storage_status}</Box>
                 <Box color="label" fontSize="11px" mt={0.5}>
-                  {Boolean(server_is_gorlex)
+                  {server_is_gorlex
                     ? 'Insert your issued blank encrypted cartridge by using it on the server with its maintenance panel open. Start the transfer here, then return to eject it.'
                     : 'Only physically inserted storage can receive a classified export. Unauthorized transfers are recorded and may be terminated by Central Command.'}
                 </Box>
               </div>
               <div className="CCPostSeveranceStorage__actions">
                 {Boolean(server_is_gorlex) && (
-                  <Button icon="download" color="average" disabled={!Boolean(server_can_export)} onClick={() => act('start_classified_export')}>
+                  <Button icon="download" color="average" disabled={!server_can_export} onClick={() => act('start_classified_export')}>
                     Start Classified Export (45s)
                   </Button>
                 )}
                 {Boolean(server_can_eject) && (
-                  <Button icon="eject" disabled={!Boolean(server_storage_inserted)} onClick={() => act('eject_classified_cartridge')}>
+                  <Button icon="eject" disabled={!server_storage_inserted} onClick={() => act('eject_classified_cartridge')}>
                     Eject Cartridge
                   </Button>
                 )}
@@ -480,7 +480,7 @@ export const CCPostTasking = () => {
         <Window.Content className="ccpost-theme ccpost-theme--sage ccpost-admin-v2">
           <CCPostHeader title="Personnel Tasking" division="CENTRAL COMMAND" />
           <Layout.Content scrollable className="CCPostAdminBody">
-          {!Boolean(admin_server_online) && <CCPostServerUnavailable status={admin_server_status} />}
+          {!admin_server_online && <CCPostServerUnavailable status={admin_server_status} />}
           <div className="CCPostIdentityStrip"><CCPostPersonnelPortrait portrait={identity_portrait} label="OFFICIAL ID RECORD" /><div><strong>{identity_detected ? 'Registered Liaison Identified' : 'Personnel Verification Required'}</strong><div>Authentication uses the Central Command Human Resources roster.</div><div className="CCPostIdentityStrip__meta">{session_owner || 'No active workstation session'}</div></div></div>
           <div className="CCPostLogin">
           <Stack vertical fill>
@@ -513,7 +513,7 @@ export const CCPostTasking = () => {
                   fluid
                   icon="sign-in-alt"
                   color="good"
-                  disabled={!identity_detected || read_only || !Boolean(admin_server_online)}
+                  disabled={!identity_detected || read_only || !admin_server_online}
                   onClick={() => act('login')}
                 >
                   Sign In
@@ -559,7 +559,7 @@ export const CCPostTasking = () => {
               </Tabs.Tab>
             </Tabs></div>
           <Layout.Content scrollable className="CCPostAdminBody">
-          {!Boolean(admin_server_online) && <CCPostServerUnavailable status={admin_server_status} />}
+          {!admin_server_online && <CCPostServerUnavailable status={admin_server_status} />}
         <Stack vertical>
           <Stack.Item>
             <div className="CCPostWorkspaceToolbar">
@@ -614,8 +614,7 @@ export const CCPostTasking = () => {
           )}
           
           {tab === 'active' && (
-            <>
-          <div className="CCPostTaskWorkspace">
+            <div className="CCPostTaskWorkspace">
             <div className="CCPostTaskWorkspace__rail">
               <div className="CCPostTaskRailHeader">MY ASSIGNMENTS</div>
               <div className="CCPostTaskRailCard CCPostTaskRailCard--selected">
@@ -783,7 +782,7 @@ export const CCPostTasking = () => {
                           !submitted_report ||
                           !submitted_report.valid ||
                           (Boolean(current_order.cooperation_available) &&
-                            !Boolean(current_order.assessments_complete))
+                            !current_order.assessments_complete)
                         }
                         onClick={() => act('complete')}
                       >
@@ -824,7 +823,7 @@ export const CCPostTasking = () => {
                         title={grant.department_name}
                         mt={1}
                         buttons={
-                          !Boolean(grant.required) ? (
+                          !grant.required ? (
                             <Button
                               icon={grant.participated ? 'check-square' : 'square'}
                               disabled={current_order.status !== 'Acknowledged' || Boolean(read_only)}
@@ -839,7 +838,7 @@ export const CCPostTasking = () => {
                           ) : undefined
                         }
                       >
-                        {Boolean(grant.participated) ? (
+                        {grant.participated ? (
                           <>
                             <div className="CCPostAssessmentOptions">
                             {[
@@ -953,7 +952,7 @@ export const CCPostTasking = () => {
                             ? 'Installation Record'
                             : 'Written Report'}
                         >
-                          {!!submitted_report.has_text ? (
+                          {submitted_report.has_text ? (
                             <Box color="good" bold>
                               VALID
                             </Box>
@@ -973,7 +972,7 @@ export const CCPostTasking = () => {
                         )}
 
                         <LabeledList.Item label="CentCom Stamp">
-                          {!!submitted_report.has_centcom_stamp ? (
+                          {submitted_report.has_centcom_stamp ? (
                             <Box color="good" bold>
                               VALID
                             </Box>
@@ -985,7 +984,7 @@ export const CCPostTasking = () => {
                         </LabeledList.Item>
 
                         <LabeledList.Item label="Submission Status">
-                          {!!submitted_report.valid ? (
+                          {submitted_report.valid ? (
                             <Box color="good" bold>
                               READY FOR SUBMISSION
                             </Box>
@@ -1007,8 +1006,8 @@ export const CCPostTasking = () => {
                       {!!submitted_report.valid && (
                         <NoticeBox success mt={1}>
                           Supporting documentation has passed automated
-                          validation. {Boolean(current_order.cooperation_available) &&
-                          !Boolean(current_order.assessments_complete)
+                          validation. {current_order.cooperation_available &&
+                          !current_order.assessments_complete
                             ? 'Select a departmental cooperation assessment before completion.'
                             : 'The current tasking order may now be marked complete.'}
                         </NoticeBox>
@@ -1020,7 +1019,6 @@ export const CCPostTasking = () => {
             )}
             </div>
           </div>
-            </>
           )}
           {tab === 'deferred' && (
             <>
@@ -1145,9 +1143,9 @@ export const CCPostTasking = () => {
             <Stack.Item>
               <div className="CCPostDispatchStrip">
                 <Box bold>Dispatch</Box>
-                <Box>Next intake: {Boolean(dispatch_machine_available) ? `${Math.floor(Math.max(0, intake_seconds) / 60)}:${String(Math.floor(Math.max(0, intake_seconds) % 60)).padStart(2, '0')}` : 'Paused'}</Box>
+                <Box>Next intake: {dispatch_machine_available ? `${Math.floor(Math.max(0, intake_seconds) / 60)}:${String(Math.floor(Math.max(0, intake_seconds) % 60)).padStart(2, '0')}` : 'Paused'}</Box>
                 <Box>Queued: {queued_routine_requests}</Box>
-                <Box color="label">{!Boolean(dispatch_machine_available) ? 'Network offline' : Boolean(dispatch_pending) ? `Next attempt: ${Math.floor(Math.max(0, dispatch_seconds) / 60)}:${String(Math.floor(Math.max(0, dispatch_seconds) % 60)).padStart(2, '0')}` : 'Awaiting available Liaisons'}</Box>
+                <Box color="label">{!dispatch_machine_available ? 'Network offline' : dispatch_pending ? `Next attempt: ${Math.floor(Math.max(0, dispatch_seconds) / 60)}:${String(Math.floor(Math.max(0, dispatch_seconds) % 60)).padStart(2, '0')}` : 'Awaiting available Liaisons'}</Box>
                 {routine_cooldown_seconds > 0 && <Box color="label">Routine cooldown: {Math.ceil(routine_cooldown_seconds / 60)}m</Box>}
               </div>
               <Section title="Outpost Tasking Network">
@@ -1264,8 +1262,7 @@ export const CCPostTasking = () => {
             </Stack.Item>
           )}
           {tab === 'archive' && (
-            <>
-          <Stack.Item>
+            <Stack.Item>
             <Collapsible title="Previous Orders">
               {!history.length ? (
                 <NoticeBox>
@@ -1368,7 +1365,7 @@ export const CCPostTasking = () => {
                                 key={grant.department_id}
                                 label={grant.department_name}
                               >
-                                {!Boolean(grant.participated) ? (
+                                {!grant.participated ? (
                                   'Not participating'
                                 ) : (
                                   <Box>
@@ -1422,7 +1419,6 @@ export const CCPostTasking = () => {
               )}
             </Collapsible>
           </Stack.Item>
-            </>
           )}
         </Stack>
       
