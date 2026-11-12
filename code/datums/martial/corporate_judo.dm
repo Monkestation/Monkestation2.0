@@ -146,9 +146,9 @@
 
 /datum/martial_art/corpjudo/proc/eye_poke(mob/living/attacker, mob/living/defender)
 	reset_streak(defender)
-	if(defender.is_eyes_covered())
-		to_chat(attacker, span_warning("[defender] has [defender.p_their()] eyes covered."))
-		return MARTIAL_ATTACK_FAIL
+	//if(defender.is_eyes_covered())
+	//	to_chat(attacker, span_warning("[defender] has [defender.p_their()] eyes covered."))
+	//	return MARTIAL_ATTACK_FAIL
 	defender.visible_message("<span class='warning'>[attacker] jabs [defender] in [attacker.p_their()] eyes!</span>", \
 						"<span class='userdanger'>[attacker] jabs you in the eyes!</span>")
 	playsound(get_turf(attacker), 'sound/items/weapons/whip.ogg', 40, TRUE, -1)
