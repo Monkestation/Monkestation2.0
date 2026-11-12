@@ -4484,11 +4484,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"bsp" = (
-/obj/structure/anvil,
-/obj/item/forging_hammer,
-/turf/open/floor/wood,
-/area/station/smithing)
 "bst" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -6696,6 +6691,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/construction)
+"bYF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/biomass_recycler,
+/obj/item/stack/biomass/twenty,
+/obj/machinery/computer/extract_orders/directional/south,
+/turf/open/floor/iron,
+/area/station/science/xenobiology)
 "bYK" = (
 /obj/effect/landmark/start/chemist,
 /obj/structure/chair/office/light{
@@ -7556,10 +7560,6 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
-"clB" = (
-/obj/machinery/computer/extract_requests,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "clE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -13416,6 +13416,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"dXp" = (
+/obj/machinery/computer/extract_requests,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "dXy" = (
 /obj/structure/table/glass,
 /obj/machinery/vending/wallmed/directional/north,
@@ -21146,6 +21150,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
+"guI" = (
+/obj/machinery/light/directional/south,
+/obj/structure/anvil,
+/obj/item/forging_hammer,
+/turf/open/floor/wood,
+/area/station/smithing)
 "guS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24165,15 +24175,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"hqF" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/biomass_recycler,
-/obj/item/stack/biomass/twenty,
-/obj/machinery/computer/extract_orders/directional/south,
-/turf/open/floor/iron,
-/area/station/science/xenobiology)
 "hqV" = (
 /obj/structure/sign/warning/radiation/rad_area,
 /turf/closed/wall/r_wall,
@@ -32410,6 +32411,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"jTX" = (
+/obj/structure/anvil,
+/obj/item/forging_hammer,
+/turf/open/floor/wood,
+/area/station/smithing)
 "jTZ" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Room"
@@ -35737,12 +35743,6 @@
 /obj/item/toy/plush/turnipplush,
 /turf/open/floor/carpet/green,
 /area/station/service/library)
-"kVI" = (
-/obj/machinery/light/directional/south,
-/obj/structure/anvil,
-/obj/item/forging_hammer,
-/turf/open/floor/wood,
-/area/station/smithing)
 "kVM" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
@@ -36619,6 +36619,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
+"liG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/extract_compressor,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron,
+/area/station/science/xenobiology)
 "liI" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/valve{
@@ -59242,6 +59250,24 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
+"sen" = (
+/obj/structure/sign/warning/no_smoking/circle/directional/west,
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/table/glass,
+/obj/machinery/fax{
+	fax_name = "Medical";
+	name = "Medical Fax Machine"
+	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Medbay Mid-South";
+	network = "Medbay Mid-South"
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/aft)
 "seA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -62092,24 +62118,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
-"sXh" = (
-/obj/structure/sign/warning/no_smoking/circle/directional/west,
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10
-	},
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/table/glass,
-/obj/machinery/fax{
-	fax_name = "Medical";
-	name = "Medical Fax Machine"
-	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Medbay Mid-South";
-	network = list("Medbay Mid-South")
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/aft)
 "sXz" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/status_display/evac/directional/north,
@@ -76176,14 +76184,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"xla" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/extract_compressor,
-/obj/machinery/airalarm/directional/south,
-/turf/open/floor/iron,
-/area/station/science/xenobiology)
 "xlf" = (
 /obj/machinery/lapvend,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
@@ -189520,7 +189520,7 @@ aZk
 pMF
 pMF
 gMw
-hqF
+bYF
 qLY
 oSg
 xNq
@@ -189777,7 +189777,7 @@ pMF
 eub
 rSu
 iQz
-xla
+liG
 qLY
 oSg
 nYw
@@ -224185,7 +224185,7 @@ oCj
 oCj
 dAO
 liQ
-bsp
+jTX
 tKI
 lgr
 tKI
@@ -224442,7 +224442,7 @@ oCR
 wRM
 pFW
 iNH
-kVI
+guI
 tKI
 lgr
 tKI
@@ -249139,7 +249139,7 @@ qjF
 pPO
 wbN
 iyK
-sXh
+sen
 qQp
 qQp
 mMl
@@ -258117,7 +258117,7 @@ eha
 aJQ
 aJQ
 lso
-clB
+dXp
 qaE
 mBQ
 eag
