@@ -1,0 +1,6 @@
+author: "chumtoadmonke"
+delete-after: True
+changes:
+  - rscadd: "adds lightbearer and dipped wing options"
+  - rscadd: "added greyscaling to wings/antennae/eyes for moths"
+  - rscadd: "antennae reconstruction surgery"
