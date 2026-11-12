@@ -1,7 +1,7 @@
 /datum/artifact_effect/mindswap
 	examine_hint = span_warning("The words 'I am you; you are me' are being projected into your mind...")
 	examine_discovered = "Switches the minds of two nearby beings!"
-	weight = ARTIFACT_VERYRARE
+	weight = ARTIFACT_VERYRARE/1.5
 	research_value = TECHWEB_TIER_3_POINTS //wat
 	discovered_credits = CARGO_CRATE_VALUE*20 //Assassinations anyone?
 	type_name = "Mind Switch Effect"
