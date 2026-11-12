@@ -119,52 +119,56 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define VALID_TERRITORY (1<<0)
 /// If blobs can spawn there and if it counts towards their score.
 #define BLOBS_ALLOWED (1<<1)
-/// If mining tunnel generation is allowed in this area
-#define CAVES_ALLOWED (1<<2)
-/// If flora are allowed to spawn in this area randomly through tunnel generation
-#define FLORA_ALLOWED (1<<3)
-/// If mobs can be spawned by natural random generation
-#define MOB_SPAWN_ALLOWED (1<<4)
-/// If megafauna can be spawned by natural random generation
-#define MEGAFAUNA_SPAWN_ALLOWED (1<<5)
 /// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-#define NOTELEPORT (1<<6)
+#define NOTELEPORT (1<<2)
 /// Hides area from player Teleport function.
-#define HIDDEN_AREA (1<<7)
-/// If false, loading multiple maps with this area type will create multiple instances.
-#define UNIQUE_AREA (1<<8)
+#define HIDDEN_AREA (1<<3)
 /// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
-#define BLOCK_SUICIDE (1<<9)
+#define BLOCK_SUICIDE (1<<4)
 /// If set, this area will be innately traversable by Xenobiology camera consoles.
-#define XENOBIOLOGY_COMPATIBLE (1<<10)
+#define XENOBIOLOGY_COMPATIBLE (1<<5)
 /// If Abductors are unable to teleport in with their observation console
-#define ABDUCTOR_PROOF (1<<11)
+#define ABDUCTOR_PROOF (1<<6)
 /// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<12)
+#define CULT_PERMITTED (1<<7)
 ///Whther this area is iluminated by starlight. Used by the aurora_caelus event
-#define AREA_USES_STARLIGHT (1<<13)
-/// If engravings are persistent in this area
-#define PERSISTENT_ENGRAVINGS (1<<14)
+#define AREA_USES_STARLIGHT (1<<8)
 /// Mobs that die in this area don't produce a dead chat message
-#define NO_DEATH_MESSAGE (1<<15)
+#define NO_DEATH_MESSAGE (1<<9)
 /// This area should have extra shielding from certain event effects
-#define EVENT_PROTECTED (1<<16)
+#define EVENT_PROTECTED (1<<10)
 ///is this a passive area
-#define PASSIVE_AREA (1<<17)
+#define PASSIVE_AREA (1<<11)
 ///is this a ghost accessible area?
-#define GHOST_AREA (1<<18)
+#define GHOST_AREA (1<<12)
 ///can we explode during rounds?
-#define NO_GHOSTS_DURING_ROUND (1<<19)
-/// This area does not allow virtual entities to enter.
-#define VIRTUAL_SAFE_AREA (1<<20)
+#define NO_GHOSTS_DURING_ROUND (1<<13)
 /// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
-#define QUIET_LOGS (1<<21)
+#define QUIET_LOGS (1<<14)
 /// This area does not allow the Binary channel
-#define BINARY_JAMMING (1<<22)
+#define BINARY_JAMMING (1<<15)
 /// This area can always be claimed as a bloodsucker lair regardless of Z-level and such
-#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<23)
+#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<16)
 ///This area blocks outgoing radio signals. Mostly used for the abductor ship and heretic sacrifice areas.
-#define AREA_BLOCKS_OUTGOING_RADIO (1<<24)
+#define AREA_BLOCKS_OUTGOING_RADIO (1<<17)
+
+////////////////Area Mapping Flags\\\\\\\\\\\\\\
+/// If false, loading multiple maps with this area type will create multiple instances.
+#define UNIQUE_AREA (1<<0)
+/// If mining tunnel generation is allowed in this area
+#define CAVES_ALLOWED (1<<1)
+/// If flora are allowed to spawn in this area randomly through tunnel generation
+#define FLORA_ALLOWED (1<<2)
+/// If mobs can be spawned by natural random generation
+#define MOB_SPAWN_ALLOWED (1<<3)
+/// If megafauna can be spawned by natural random generation
+#define MEGAFAUNA_SPAWN_ALLOWED (1<<4)
+/// If engravings are persistent in this area
+#define PERSISTENT_ENGRAVINGS (1<<5)
+/// This area is a virtual area, used for bitrunning.
+#define VIRTUAL_AREA (1<<6)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<7)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

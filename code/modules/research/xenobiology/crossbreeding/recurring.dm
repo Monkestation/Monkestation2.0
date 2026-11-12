@@ -7,6 +7,7 @@ Recurring extracts:
 	name = "recurring extract"
 	desc = "A tiny, glowing core, wrapped in several layers of goo."
 	effect = "recurring"
+	effect_desc = "Gets a use back every few seconds, up to 10. Dies out if it ever runs out of uses."
 	icon_state = "recurring"
 	var/extract_type
 	var/obj/item/slime_extract/extract

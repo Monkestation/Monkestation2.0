@@ -437,3 +437,46 @@
   - rscadd: added the *plink emote
   - sound: added plink.ogg and plonk.ogg (equal chance for either to trigger when
       using the emote)
+2026-11-11:
+  Absolucy:
+  - bugfix: Maybe fix the frost miner ruin failing to spawn sometimes.
+  - bugfix: Fixed damage slowdown applying while floating/levitating.
+  - rscadd: Added new xenobiology request and order consoles!
+  - rscadd: Xenobio request consoles, usually in the front of science, can be used
+      to order extracts and crossbreeds, with an optional payout, too. Also available
+      as a PDA app!
+  - rscadd: Xenobio has a purple console on their wall that allows them to view, approve,
+      deny, and fulfill orders! Sprite by kiaroh.
+  ThePooba:
+  - bugfix: Wrong sound location for the animal and dont starve voices
+  V2LenKagamine:
+  - admin: more larp to the stranger!
+  vinylspiders:
+  - bugfix: Radios are blocked again in the abductor ship and the heretic sacrifice
+      areas.
+  - bugfix: You can no longer send credits from inside a virtual domain to real bank
+      accounts.
+  - code_imp: Mapping related area flags now live in their own var, area_flags_mapping.
+2026-11-12:
+  Absolucy:
+  - rscadd: bloodsuckers are now sovereign citizens of space, and can claim *custom*
+      shuttles as their lair.
+  AitorLogedo:
+  - rscadd: Simian traitors can now buy the Banana-Stained Scroll for 8 TC, which
+      teaches Jungle Arts. It only works while in combat mode, so you can still grab
+      and shove normally with it off.
+  V2LenKagamine:
+  - bugfix: 'TODO REMOVED: Having a medical hud allows you to see how much brute/burn
+      is left when doing surgery'
+  - bugfix: 'TODO REMOVED: Powergen artifacts now gausian their powergen, so higher
+      values much rarer.'
+  - admin: 'fix: the ancient medkit now accepts anything.'
+  - bugfix: powergen artifacts now have a SPAN DANGER warning because they will fucking
+      DUST YOU
+  - refactor: powergen artifacts can now be touched on aggressive to turn them off,
+      percussive maintenance style
+  chumtoadmonke:
+  - balance: cyborgs are no longer counted as an enemy
+  - balance: security assistants are not counted as an enemy for most antagonists
+  tattax:
+  - qol: handcuff sprites for each ui

@@ -54,6 +54,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/orange
 	slime_type = /datum/slime_type/orange
+	effect_desc = "Heals the target, then boils over and starts fires on the tiles around them."
 
 /obj/item/slimecross/regenerative/orange/core_effect_before(mob/living/target, mob/user)
 	target.visible_message(span_warning("\The [src] boils over!"))
