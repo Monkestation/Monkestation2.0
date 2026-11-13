@@ -5,10 +5,11 @@
  * Map owner places the director, insertion, disk return and retrieval/deployment landmarks.
  */
 
-#define CCPOST_GORLEX_TC 18
+#define CCPOST_GORLEX_TC 5
 #define CCPOST_CYBERSUN_TC 12
 #define CCPOST_GORLEX_NEGLECT_WINDOW (5 MINUTES)
 #define CCPOST_GORLEX_RECRUITMENT_RETRY_DELAY (5 MINUTES)
+#define CCPOST_GORLEX_PREPARATION_TIME (2 MINUTES)
 #define CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS 3
 #define CCPOST_GORLEX_PLASTIC_LIMIT 4
 #define CCPOST_CYBERSUN_RETRY_DELAY (5 MINUTES)
@@ -65,7 +66,12 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/automatic_recruitment_attempts = 0
 	var/next_recruitment_retry = 0
 	var/event_started = FALSE
+	/// Includes the pre-recruitment preparation window, preventing overlapping requests.
 	var/polling_ghosts = FALSE
+	/// Set once per director; retries never repeat the advisory.
+	var/security_advisory_issued = FALSE
+	/// Dedicated CentCom transmitter for the pre-deployment security advisory.
+	var/obj/item/radio/security_advisory_radio
 	var/armed_by_gorlex = FALSE
 	/// Classified records were fully copied from the Central Command Tasking Server.
 	var/data_downloaded = FALSE
@@ -130,6 +136,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 
 /obj/effect/landmark/ccpost_gorlex_director/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(security_advisory_radio)
 	clear_warrant_warning()
 	var/obj/effect/ccpost_recall_charge/manual_charge = manual_charge_ref?.resolve()
 	var/obj/effect/ccpost_recall_charge/forced_charge = forced_charge_ref?.resolve()
@@ -301,19 +308,39 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		insignia.Scale(32, 32)
 	return insignia
 
-/// Shared entry point; lock before scheduling so two requests cannot start two polls.
+/// Shared entry point; reserve recruitment before warning or polling.
 /obj/effect/landmark/ccpost_gorlex_director/proc/start_gorlex_poll(admin_forced = FALSE)
 	if(event_started || polling_ghosts || GLOB.ccpost_outpost_signal_lost || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE))
 		return FALSE
 	if(!get_disk() || (!admin_forced && (!automatic_deployment_authorized || automatic_recruitment_attempts >= CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS || !SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
 		return FALSE
+	polling_ghosts = TRUE
+	if(!security_advisory_issued)
+		security_advisory_issued = TRUE
+		issue_security_advisory()
+		log_game("CCPost Gorlex: security advisory issued; ghost recruitment opens in two minutes.")
+		addtimer(CALLBACK(src, PROC_REF(begin_gorlex_recruitment), admin_forced), CCPOST_GORLEX_PREPARATION_TIME)
+	else
+		// A previous recruitment already gave the outpost its preparation window.
+		begin_gorlex_recruitment(admin_forced)
+	return TRUE
+
+/// Revalidate after preparation, before exposing the role to ghosts.
+/obj/effect/landmark/ccpost_gorlex_director/proc/begin_gorlex_recruitment(admin_forced = FALSE)
+	if(QDELETED(src) || !polling_ghosts)
+		return
+	if(event_started || GLOB.ccpost_outpost_signal_lost || !get_disk() || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE) || (!admin_forced && (!automatic_deployment_authorized || automatic_recruitment_attempts >= CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS || !SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
+		polling_ghosts = FALSE
+		if(!admin_forced)
+			cancel_automatic_recruitment("deployment prerequisites lost before recruitment")
+		else
+			message_admins("Operation Severance: Gorlex recruitment cancelled; deployment prerequisites no longer met.")
+		return
 	if(!admin_forced)
 		automatic_recruitment_attempts++
 		next_recruitment_retry = 0
 		log_game("CCPost Gorlex: automatic recruitment attempt [automatic_recruitment_attempts]/[CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS].")
-	polling_ghosts = TRUE
 	INVOKE_ASYNC(src, PROC_REF(poll_and_deploy), admin_forced)
-	return TRUE
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/poll_and_deploy(admin_forced = FALSE)
 	var/icon/faction_icon = ccpost_poll_faction_icon(FALSE)
@@ -368,6 +395,26 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	operative_mind.add_antag_datum(/datum/antagonist/ccpost_gorlex)
 	message_admins("[ADMIN_LOOKUPFLW(operative)] has accepted Operation Severance.")
 	log_game("CCPost Gorlex: Operation Severance operative deployed at [AREACOORD(T)].")
+
+/// A single local readiness advisory, never a station-wide announcement or an operative reveal.
+/obj/effect/landmark/ccpost_gorlex_director/proc/issue_security_advisory()
+	for(var/mob/living/carbon/human/person as anything in GLOB.mob_living_list)
+		if(!ishuman(person) || QDELETED(person) || person.stat == DEAD || !person.client || !ccpost_is_outpost_personnel(person) || !istype(get_area(person), /area/ruin/space/has_grav/ccpost))
+			continue
+		SEND_SOUND(person, sound('sound/announcer/notice/notice3.ogg', volume = 65))
+	// Use the same independent CentCom radio transport as NT-ADP-7.
+	// Keep the transmitter alive for the asynchronous radio broadcast.
+	if(!security_advisory_radio)
+		security_advisory_radio = new(src)
+		security_advisory_radio.name = "Central Command"
+		security_advisory_radio.set_frequency(FREQ_CENTCOM)
+		security_advisory_radio.independent = TRUE
+		security_advisory_radio.ignores_radio_jammers = TRUE
+		security_advisory_radio.canhear_range = 0
+		security_advisory_radio.set_listening(FALSE)
+		security_advisory_radio.command = TRUE
+		security_advisory_radio.use_command = TRUE
+	security_advisory_radio.talk_into(security_advisory_radio, "Unusual activity detected near your installation. Security, conduct perimeter checks. Liaisons, secure sensitive materials. All personnel, maintain heightened vigilance.", RADIO_CHANNEL_CENTCOM)
 
 /// Reject station-level transfers without teleporting the cartridge back to the operative.
 /// Also runs periodically so nested inventory/containers cannot bypass direct Moved().
@@ -491,6 +538,13 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/turf/insertion_turf
 	var/last_recall_warning = 0
 	var/withdrawal_identity
+	/// Round-local, mind-owned allocation and spending records.
+	var/loadout_id
+	var/loadout_claiming = FALSE
+	var/requisition_balance = 0
+	var/list/requisition_purchased = list()
+	var/list/requisition_history = list()
+	var/list/loadout_issued = list()
 
 // Genuine objective datums power the antagonist HUD and the round-end report.
 // The four objectives are tracked independently by the event director.
@@ -581,7 +635,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	if(director?.operative_mind_ref?.resolve() == owner)
 		to_chat(owner.current, span_boldnotice("GORLEX COMMAND: NT-ADP-7 authorization code: [ccpost_adp7_get_authorization_code()]. Recover the physical authentication disk. Your uplink retains a copy of the code."))
 	to_chat(owner.current, span_notice("Your contract requires extraction with the intelligence. Unauthorized withdrawal after data acquisition constitutes desertion."))
-	to_chat(owner.current, span_boldnotice("Consult your Gorlex Marauders uplink for contract details, field requisitions and extraction instructions."))
+	to_chat(owner.current, span_boldnotice("Select your permanent loadout in Field Requisitions before approaching the outpost. Keep one hand free to receive your equipment bag. Your uplink also contains contract details and extraction instructions."))
 	to_chat(owner.current, span_notice("The primary Nanotrasen station is outside your authorized operational zone. Entry, interference and unrelated personnel engagement are prohibited."))
 	owner.announce_objectives()
 
@@ -646,13 +700,12 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/radio/headset/syndicate/alt
 	mask = /obj/item/clothing/mask/gas/syndicate
-	id = /obj/item/card/id/advanced/chameleon
+	id = /obj/item/card/id/advanced
 	back = /obj/item/mod/control/pre_equipped/ccpost_gorlex
 	belt = /obj/item/storage/belt/military
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	internals_slot = ITEM_SLOT_RPOCKET
 	l_pocket = /obj/item/pinpointer/ccpost_adp7/syndicate
-	r_hand = /obj/item/gun/energy/modular_laser_rifle/carbine
 	box = /obj/item/storage/box/survival/syndie
 
 /// Store issued equipment without silently deleting it when a slot is unavailable.
@@ -701,28 +754,31 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/obj/item/paper/fluff/ruins/ccpost/gorlex_adp7_intelligence/intelligence = new(operative)
 	ccpost_issue_gear(operative, intelligence)
 	ccpost_install_microbomb(operative, TRUE)
+	ccpost_issue_gear(operative, new /obj/item/pen/edagger(operative), prefer_belt = TRUE)
 	for(var/path in list(/obj/item/grenade/empgrenade, /obj/item/grenade/smokebomb))
 		var/obj/item/supply = new path(operative)
 		ccpost_issue_gear(operative, supply, prefer_belt = TRUE)
-	for(var/path in list(/obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate, /obj/item/organ/internal/cyberimp/eyes/hud/medical, /obj/item/organ/internal/cyberimp/mouth/breathing_tube))
+	for(var/path in list(/obj/item/organ/internal/cyberimp/eyes/hud/medical, /obj/item/organ/internal/cyberimp/mouth/breathing_tube))
 		ccpost_install_augment(operative, path)
 	ccpost_prepare_mod(operative)
 	var/obj/item/radio/radio = operative.ears
 	if(radio)
 		radio.set_frequency(FREQ_SYNDICATE)
 
+/// Isolated theme: retain Syndicate armor and visuals, not its combat utility modules.
+/datum/mod_theme/syndicate/ccpost_gorlex
+	inbuilt_modules = list(/obj/item/mod/module/welding/syndicate)
+
 /obj/item/mod/control/pre_equipped/ccpost_gorlex
 	name = "Gorlex field operations MODsuit"
 	desc = "An EVA-capable field suit with standardized Syndicate hardpoints."
-	theme = /datum/mod_theme/syndicate
+	theme = /datum/mod_theme/syndicate/ccpost_gorlex
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/power_store/cell/hyper
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/dna_lock
 	)
 
@@ -737,7 +793,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	icon_state = "tablet"
 	w_class = WEIGHT_CLASS_SMALL
 	var/datum/mind/owner_mind
-	var/telecrystals = CCPOST_GORLEX_TC
+	var/telecrystals = 0
 	var/list/purchased = list()
 	var/list/purchase_history = list()
 	/// The Cybersun uplink uses the identical TGUI and server purchase handler.
@@ -791,40 +847,205 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 
 /// Each server-owned entry is ID -> category, name, description, TC, max stock, type, quantity.
 /// All actual purchase checks use this function, never a client-supplied item path.
+
+/obj/item/knife/combat/ccpost_gorlex
+	name = "Gorlex tactical combat knife"
+	desc = "A reinforced mercenary field knife. Its edge is designed for close-quarters combat."
+	force = 20
+	armour_penetration = 20
+
+/// Keep the native compact shotgun capacity, but issue lethal ammunition to Breacher.
+/obj/item/ammo_box/magazine/internal/shot/com/compact/ccpost_gorlex
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/ccpost_gorlex
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact/ccpost_gorlex
+
+/obj/item/storage/backpack/duffelbag/syndie/ccpost_loadout
+	name = "Gorlex field equipment bag"
+	desc = "A sealed contractor equipment allocation bag. Keep it in your hand or transfer its contents to your MODsuit."
+
+/// No client-supplied item paths. Loadout identifiers are fixed server-side.
+/obj/item/ccpost_gorlex_uplink/proc/gorlex_antag()
+	if(cybersun_brand)
+		return null
+	var/datum/antagonist/ccpost_gorlex/antag = owner_mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)
+	return antag
+
+/obj/item/ccpost_gorlex_uplink/proc/sync_gorlex_requisitions()
+	var/datum/antagonist/ccpost_gorlex/antag = gorlex_antag()
+	if(!antag)
+		return
+	telecrystals = antag.requisition_balance
+	purchased = antag.requisition_purchased
+	purchase_history = antag.requisition_history
+
+/obj/item/ccpost_gorlex_uplink/proc/claim_loadout(mob/living/carbon/human/user, id)
+	var/datum/antagonist/ccpost_gorlex/antag = gorlex_antag()
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	if(!antag || antag.loadout_id || antag.loadout_claiming || !director || director.black_warrant || director.operative_ref?.resolve() != user || director.operative_mind_ref?.resolve() != user.mind || !ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_INCAPACITATED))
+		return FALSE
+	if(!(id in list("WRAITH", "VANGUARD", "BREACHER", "NOMAD")))
+		return FALSE
+	var/obj/item/mod/control/pre_equipped/ccpost_gorlex/mod = user.back
+	if(!istype(mod) || !mod.active || !length(user.get_empty_held_indexes()))
+		to_chat(user, span_warning("GORLEX: Wear and activate your issued MODsuit and free one hand to accept your equipment bag."))
+		return FALSE
+	antag.loadout_claiming = TRUE
+	var/obj/item/storage/backpack/duffelbag/syndie/ccpost_loadout/bag = new(user)
+	if(!user.put_in_hands(bag, del_on_fail = TRUE))
+		antag.loadout_claiming = FALSE
+		return FALSE
+	// Fit only the chosen modules; pressure seals, internals and the control unit remain intact.
+	var/list/module_paths = list()
+	var/obj/item/mod/module/jetpack/old_jetpack
+	switch(id)
+		if("WRAITH")
+			module_paths += /obj/item/mod/module/stealth
+		if("VANGUARD")
+			module_paths += /obj/item/mod/module/magnetic_harness
+		if("NOMAD")
+			module_paths += /obj/item/mod/module/night
+			module_paths += /obj/item/mod/module/jetpack/advanced
+			old_jetpack = locate(/obj/item/mod/module/jetpack) in mod.modules
+			if(!old_jetpack || istype(old_jetpack, /obj/item/mod/module/jetpack/advanced))
+				qdel(bag)
+				antag.loadout_claiming = FALSE
+				return FALSE
+	var/list/installed = list()
+	var/failed = FALSE
+	var/jetpack_was_active = FALSE
+	var/obj/item/mod/module/jetpack/advanced/new_jetpack
+	for(var/path in module_paths)
+		if(path == /obj/item/mod/module/jetpack/advanced)
+			jetpack_was_active = old_jetpack.active
+			mod.uninstall(old_jetpack)
+		var/obj/item/mod/module/module = new path(mod)
+		mod.install(module, null)
+		if(!(module in mod.modules))
+			qdel(module)
+			failed = TRUE
+			break
+		installed += module
+		if(istype(module, /obj/item/mod/module/jetpack/advanced))
+			new_jetpack = module
+	if(failed)
+		for(var/obj/item/mod/module/module as anything in installed)
+			mod.uninstall(module)
+			qdel(module)
+		if(old_jetpack && !(old_jetpack in mod.modules))
+			mod.install(old_jetpack, null)
+			if(jetpack_was_active && (old_jetpack in mod.modules))
+				old_jetpack.activate()
+		qdel(bag)
+		antag.loadout_claiming = FALSE
+		to_chat(user, span_warning("GORLEX: Module fitting failed. Restore your suit's original configuration and retry."))
+		return FALSE
+	if(old_jetpack)
+		qdel(old_jetpack)
+	if(jetpack_was_active && new_jetpack)
+		new_jetpack.activate()
+	// Native modules are installed, not issued as duplicates.
+	switch(id)
+		if("WRAITH")
+			var/obj/item/gun/ballistic/automatic/pistol/clandestine/pistol = new(bag)
+			var/obj/item/suppressor/suppressor = new(pistol)
+			pistol.install_suppressor(suppressor)
+			new /obj/item/ammo_box/magazine/m10mm(bag)
+			new /obj/item/card/emag/doorjack(bag)
+			new /obj/item/grenade/smokebomb(bag)
+			antag.loadout_issued["doorjack"] = 1
+			antag.loadout_issued["cloak"] = 1
+		if("VANGUARD")
+			new /obj/item/gun/energy/modular_laser_rifle/carbine(bag)
+			new /obj/item/knife/combat/ccpost_gorlex(bag)
+			new /obj/item/grenade/flashbang(bag)
+			new /obj/item/grenade/flashbang(bag)
+			antag.loadout_issued["knife"] = 1
+			antag.loadout_issued["magnetic"] = 1
+			antag.loadout_issued["flash"] = 2
+		if("BREACHER")
+			new /obj/item/gun/ballistic/shotgun/automatic/combat/compact/ccpost_gorlex(bag)
+			new /obj/item/ammo_box/advanced/s12gauge(bag)
+			new /obj/item/grenade/c4(bag)
+			new /obj/item/grenade/c4/x4(bag)
+			new /obj/item/storage/toolbox/syndicate(bag)
+			antag.loadout_issued["c4"] = 1
+			antag.loadout_issued["x4"] = 1
+			antag.loadout_issued["toolbox"] = 1
+		if("NOMAD")
+			new /obj/item/gun/ballistic/automatic/pistol(bag)
+			new /obj/item/ammo_box/magazine/m9mm(bag)
+			new /obj/item/storage/medkit/combat(bag)
+			antag.loadout_issued["jetpack"] = 1
+			antag.loadout_issued["night"] = 1
+	antag.loadout_id = id
+	antag.requisition_balance = CCPOST_GORLEX_TC
+	antag.loadout_claiming = FALSE
+	sync_gorlex_requisitions()
+	to_chat(user, span_boldnotice("GORLEX: [id] loadout allocated. Your equipment bag is in your hand. 5 TC discretionary reserve authorized."))
+	if(jetpack_was_active && !new_jetpack?.active)
+		to_chat(user, span_notice("GORLEX: Advanced propulsion fitted. Re-enable your jetpack using the MODsuit controls."))
+	log_game("CCPost Gorlex: [key_name(user)] selected [id].")
+	return TRUE
+
+/// Restriction and issued status are authoritative, including when equipment is lost.
+/obj/item/ccpost_gorlex_uplink/proc/gorlex_requisition_status(id)
+	var/datum/antagonist/ccpost_gorlex/antag = gorlex_antag()
+	if(!antag?.loadout_id)
+		return "Restricted"
+	var/required_loadout
+	switch(id)
+		if("doorjack", "cloak")
+			required_loadout = "WRAITH"
+		if("knife", "magnetic")
+			required_loadout = "VANGUARD"
+		if("x4", "shotgun_ammo")
+			required_loadout = "BREACHER"
+		if("jetpack", "night", "nomad_ammo")
+			required_loadout = "NOMAD"
+		if("pistol_mag")
+			required_loadout = "WRAITH"
+	if(required_loadout && antag.loadout_id != required_loadout)
+		return "Restricted"
+	if(id in list("pistol_mag", "nomad_ammo", "shotgun_ammo", "medkit", "stimulant", "c4", "x4"))
+		return "Available"
+	if(antag.loadout_issued[id] || antag.requisition_purchased[id])
+		return "Issued"
+	return "Available"
+
 /obj/item/ccpost_gorlex_uplink/proc/catalogue()
 	return list(
-		"jammer" = list("Infiltration", "Radio Jammer", "Local radio interference.", 2, 1, /obj/item/jammer, 1),
-		"chameleon" = list("Infiltration", "Chameleon Kit", "Disguise clothing and accessories.", 2, 1, /obj/item/storage/box/syndie_kit/chameleon, 1),
-		"doorjack" = list("Infiltration", "Airlock Authentication Override Card", "Airlock access bypass.", 3, 1, /obj/item/card/emag/doorjack, 1),
-		"smoke" = list("Infiltration", "Smoke Package", "Two smoke grenades.", 2, 2, /obj/item/grenade/smokebomb, 2),
-		"emp_grenade" = list("Infiltration", "EMP Grenade", "Electronic disruption.", 3, 2, /obj/item/grenade/empgrenade, 1),
-		"cloak" = list("Infiltration", "Prototype Cloaking Module", "Concealment; high power drain.", 7, 1, /obj/item/mod/module/stealth, 1),
-
-		"pistol" = list("Armaments", "Ansem Pistol", "10mm sidearm; accepts a suppressor.", 4, 1, /obj/item/gun/ballistic/automatic/pistol/clandestine, 1),
-		"pistol_mag" = list("Armaments", "10mm Magazine", "Ammunition for the Ansem pistol.", 2, 2, /obj/item/ammo_box/magazine/m10mm, 1),
-		"suppressor" = list("Armaments", "Suppressor", "Suppresses compatible firearms, including Ansem.", 1, 1, /obj/item/suppressor, 1),
-		"shotgun" = list("Armaments", "Compact Combat Shotgun", "Semi-automatic close-quarters weapon.", 8, 1, /obj/item/gun/ballistic/shotgun/automatic/combat/compact, 1),
-		"shotgun_ammo" = list("Armaments", "Shotgun Slugs", "12-gauge ammunition for the combat shotgun.", 2, 2, /obj/item/ammo_box/advanced/s12gauge, 1),
-		"edagger" = list("Armaments", "Energy Dagger", "Compact backup melee weapon.", 2, 1, /obj/item/pen/edagger, 1),
-		"esword" = list("Armaments", "Energy Sword", "Close quarters armament.", 5, 1, /obj/item/melee/energy/sword, 1),
-		"c4" = list("Sabotage", "C-4 Charge", "General demolition; shares stock with X-4.", 2, CCPOST_GORLEX_PLASTIC_LIMIT, /obj/item/grenade/c4, 1),
-		"x4" = list("Sabotage", "X-4 Shaped Charge", "Directional breaching; shares stock with C-4.", 4, CCPOST_GORLEX_PLASTIC_LIMIT, /obj/item/grenade/c4/x4, 1),
-		"toolbox" = list("Sabotage", "Syndicate Toolbox", "Field engineering tools.", 2, 1, /obj/item/storage/toolbox/syndicate, 1),
-		"nodrop" = list("Cybernetics", "Anti-Drop Implant", "Weapon retention.", 3, 1, /obj/item/autosurgeon/syndicate/nodrop, 1),
-		"reviver" = list("Cybernetics", "Reviver Implant", "Emergency medical recovery.", 6, 1, /obj/item/autosurgeon/syndicate/reviver, 1),
-		"thermal" = list("Cybernetics", "Thermal Eyes", "Enhanced detection.", 6, 1, /obj/item/autosurgeon/syndicate/thermal_eyes, 1),
-		"mantis" = list("Cybernetics", "Syndicate Mantis Blade", "Arm-mounted melee weapon.", 6, 1, /obj/item/autosurgeon/syndicate/syndie_mantis, 1),
-		"cell" = list("MOD Systems", "Bluespace Power Cell", "Increased power endurance.", 4, 1, /obj/item/stock_parts/power_store/cell/bluespace, 1),
-		"noslip" = list("MOD Systems", "Anti-Slip Module", "Prevents ordinary wet-floor slips.", 3, 1, /obj/item/mod/module/noslip, 1),
-		"shield" = list("MOD Systems", "Energy Shield Module", "Three rechargeable attack-blocking charges.", 8, 1, /obj/item/mod/module/energy_shield, 1),
+		"jammer" = list("Utility", "Radio Jammer", "Local radio interference.", 2, 1, /obj/item/jammer, 1),
+		"doorjack" = list("Specialist Equipment", "Airlock Override Card", "WRAITH only; issued with loadout.", 3, 1, /obj/item/card/emag/doorjack, 1),
+		"cloak" = list("Specialist Equipment", "Prototype Cloaking Module", "WRAITH only; fitted at allocation.", 7, 1, /obj/item/mod/module/stealth, 1),
+		"knife" = list("Specialist Equipment", "Gorlex Tactical Combat Knife", "VANGUARD only; issued with loadout.", 3, 1, /obj/item/knife/combat/ccpost_gorlex, 1),
+		"magnetic" = list("Specialist Equipment", "Magnetic Harness", "VANGUARD only; fitted at allocation.", 2, 1, /obj/item/mod/module/magnetic_harness, 1),
+		"jetpack" = list("Specialist Equipment", "Advanced Jetpack", "NOMAD only; fitted at allocation.", 3, 1, /obj/item/mod/module/jetpack/advanced, 1),
+		"night" = list("Specialist Equipment", "Night Vision Module", "NOMAD only; fitted at allocation.", 3, 1, /obj/item/mod/module/night, 1),
+		"flash" = list("Utility", "Flashbang", "One flashbang; Vanguard already issued.", 2, 1, /obj/item/grenade/flashbang, 1),
+		"toolbox" = list("Utility", "Syndicate Toolbox", "Field engineering tools.", 2, 1, /obj/item/storage/toolbox/syndicate, 1),
+		"pistol_mag" = list("Ammunition", "10mm Magazine", "WRAITH Ansem ammunition.", 2, 2, /obj/item/ammo_box/magazine/m10mm, 1),
+		"nomad_ammo" = list("Ammunition", "9mm Magazine", "NOMAD pistol ammunition.", 2, 2, /obj/item/ammo_box/magazine/m9mm, 1),
+		"shotgun_ammo" = list("Ammunition", "Shotgun Slugs", "BREACHER shotgun ammunition.", 2, 2, /obj/item/ammo_box/advanced/s12gauge, 1),
+		"c4" = list("Sabotage", "C-4 Charge", "General demolition; shared four-charge allocation.", 2, CCPOST_GORLEX_PLASTIC_LIMIT, /obj/item/grenade/c4, 1),
+		"x4" = list("Sabotage", "X-4 Shaped Charge", "BREACHER only; shared four-charge allocation.", 4, CCPOST_GORLEX_PLASTIC_LIMIT, /obj/item/grenade/c4/x4, 1),
+		"emp_shield" = list("MOD Systems", "EMP Shielding", "Electronic protection.", 3, 1, /obj/item/mod/module/emp_shield, 1),
+		"hearing" = list("MOD Systems", "Hearing Protection", "Protects hearing.", 2, 1, /obj/item/mod/module/hearing_protection, 1),
 		"holster" = list("MOD Systems", "Holster Module", "Rapid weapon storage.", 2, 1, /obj/item/mod/module/holster, 1),
+		"noslip" = list("MOD Systems", "Anti-Slip Module", "Prevents ordinary wet-floor slips.", 3, 1, /obj/item/mod/module/noslip, 1),
 		"medkit" = list("Medical & Survival", "Combat Medical Kit", "Emergency treatment.", 3, 2, /obj/item/storage/medkit/combat, 1),
-		"stimulant" = list("Medical & Survival", "Combat Stimulant Injector", "Short-term combat assistance.", 3, 1, /obj/item/reagent_containers/medipen/stimulants, 1),
-		"oxygen" = list("Medical & Survival", "Spare Oxygen", "Extended EVA operation.", 1, 2, /obj/item/tank/internals/emergency_oxygen/engi, 1)
+		"stimulant" = list("Medical & Survival", "Combat Stimulant Injector", "Reduced-dose stimulant and omnizine.", 4, 1, /obj/item/reagent_containers/medipen/stimpack/traitor, 1)
 	)
 
 /// The same authoritative stock calculation drives the UI and purchase validation.
 /obj/item/ccpost_gorlex_uplink/proc/requisition_stock(id, list/entry)
+	if(!cybersun_brand)
+		if(gorlex_requisition_status(id) != "Available")
+			return 0
+		var/datum/antagonist/ccpost_gorlex/antag = gorlex_antag()
+		if(id == "c4" || id == "x4")
+			return max(0, CCPOST_GORLEX_PLASTIC_LIMIT - (antag.loadout_issued["c4"] || 0) - (antag.loadout_issued["x4"] || 0) - (purchased["c4"] || 0) - (purchased["x4"] || 0))
 	if(id == "c4" || id == "x4")
 		return max(0, CCPOST_GORLEX_PLASTIC_LIMIT - (purchased["c4"] || 0) - (purchased["x4"] || 0))
 	return max(0, entry[5] - (purchased[id] || 0))
@@ -858,6 +1079,8 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 /obj/item/ccpost_gorlex_uplink/ui_data(mob/user)
 	if(!has_access(user))
 		return list("authorized" = FALSE)
+	sync_gorlex_requisitions()
+	var/datum/antagonist/ccpost_gorlex/gorlex = gorlex_antag()
 	var/list/items = list()
 	var/list/entries = catalogue()
 	for(var/id in entries)
@@ -878,6 +1101,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 			"stock" = requisition_stock(id, entry),
 			"quantity" = entry[7],
 			"shared_stock" = (id == "c4" || id == "x4"),
+			"allocation_status" = cybersun_brand ? null : gorlex_requisition_status(id),
 			"complexity" = module_complexity
 		))
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
@@ -926,6 +1150,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		"authorized" = TRUE,
 		"brand" = cybersun_brand ? "cybersun" : "gorlex",
 		"adp7_authorization_code" = (!cybersun_brand && director?.operative_mind_ref?.resolve() == user.mind) ? "[ccpost_adp7_get_authorization_code()]" : null,
+		"loadout" = gorlex?.loadout_id,
 		"telecrystals" = telecrystals,
 		"catalogue" = requisitions_locked ? list() : items,
 		"history" = purchase_history,
@@ -951,7 +1176,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	. = ..()
 	if(.)
 		return
-	if(!(action in list("purchase", "request_extraction", "request_recall")))
+	if(!(action in list("purchase", "request_extraction", "request_recall", "claim_loadout")))
 		return FALSE
 	var/mob/user = ui?.user
 	if(!has_access(user) || !user.can_perform_action(src))
@@ -974,6 +1199,15 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/id = params["id"]
 	if(!istext(id))
 		return TRUE
+	if(action == "claim_loadout")
+		if(!cybersun_brand && ishuman(user))
+			claim_loadout(user, id)
+		SStgui.update_uis(src)
+		return TRUE
+	sync_gorlex_requisitions()
+	var/datum/antagonist/ccpost_gorlex/gorlex = gorlex_antag()
+	if(!cybersun_brand && (!gorlex?.loadout_id || director?.operative_ref?.resolve() != user || gorlex_requisition_status(id) != "Available"))
+		return TRUE
 	var/list/entries = catalogue()
 	var/list/entry = entries[id]
 	if(!islist(entry))
@@ -982,13 +1216,25 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/used = purchased[id] || 0
 	if(cost > telecrystals || requisition_stock(id, entry) <= 0)
 		return TRUE
-	telecrystals -= cost
-	purchased[id] = used + 1
 	var/path = entry[6]
 	var/amount = entry[7]
-	for(var/i in 1 to amount)
-		var/obj/item/supply = new path(user.drop_location())
-		user.put_in_hands(supply)
+	if(!cybersun_brand)
+		// All supplementary entries issue one object. Require a free hand, never drop into space.
+		if(!length(user.get_empty_held_indexes()))
+			to_chat(user, span_warning("GORLEX: Free one hand to receive requisitions."))
+			return TRUE
+		var/obj/item/supply = new path(user)
+		if(!user.put_in_hands(supply, del_on_fail = TRUE))
+			return TRUE
+		telecrystals -= cost
+		gorlex.requisition_balance = telecrystals
+		purchased[id] = used + 1
+	else
+		telecrystals -= cost
+		purchased[id] = used + 1
+		for(var/i in 1 to amount)
+			var/obj/item/supply = new path(user.drop_location())
+			user.put_in_hands(supply)
 	purchase_history.Insert(1, "[station_time_timestamp()] / [entry[2]] / -[cost] TC")
 	if(length(purchase_history) > 12)
 		purchase_history.Cut(13)
@@ -2093,6 +2339,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 #undef CCPOST_CYBERSUN_TC
 #undef CCPOST_GORLEX_NEGLECT_WINDOW
 #undef CCPOST_GORLEX_RECRUITMENT_RETRY_DELAY
+#undef CCPOST_GORLEX_PREPARATION_TIME
 #undef CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS
 #undef CCPOST_GORLEX_SECURITY_POLL
 
@@ -2102,7 +2349,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 // Admin-only native event controls. No storyteller track; natural recruitment remains director-owned.
 /datum/round_event_control/ccpost_gorlex_deployment
 	name = "Operation Severance: Gorlex Deployment"
-	description = "Polls for a Gorlex operative at an operational Liaison Outpost, bypassing scheduled deployment checks and staffing."
+	description = "Initiates Gorlex recruitment at an operational Liaison Outpost after a two-minute security advisory window, bypassing scheduled deployment checks and staffing."
 	typepath = /datum/round_event/ccpost_gorlex_deployment
 	track = null
 	max_occurrences = 0
@@ -2117,7 +2364,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	if(QDELETED(director) || !director.start_gorlex_poll(TRUE))
 		message_admins("Operation Severance: Gorlex deployment unavailable (outpost, disk, insertion or existing contract/poll).")
 		return
-	message_admins("Operation Severance: Gorlex recruitment initiated by event trigger.")
+	message_admins("Operation Severance: Gorlex recruitment initiated by event trigger (first poll follows the two-minute advisory window).")
 
 /datum/round_event_control/ccpost_cybersun_intervention
 	name = "Operation Severance: Cybersun Intervention"

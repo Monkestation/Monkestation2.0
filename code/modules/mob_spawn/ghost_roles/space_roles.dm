@@ -382,7 +382,7 @@
 	ears = /obj/item/radio/headset/headset_cent/alt/ccpost/liaison
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/gun/energy/e_gun
+	suit_store = /obj/item/gun/energy/pulse/pistol/m1911/ccpost
 	r_pocket = /obj/item/melee/baton/telescopic
 	l_pocket = /obj/item/pen/fountain
 	r_hand = /obj/item/storage/briefcase/empty
@@ -434,7 +434,7 @@
 	l_pocket = /obj/item/pen/fountain
 	internals_slot = ITEM_SLOT_SUITSTORE
 
-	l_hand = /obj/item/gun/energy/e_gun/stun
+	l_hand = /obj/item/gun/energy/pulse/carbine/ccpost
 
 	id = /obj/item/card/id/advanced/centcom/ccpost_security
 	id_trim = /datum/id_trim/job/centcom_liaison/security_officer

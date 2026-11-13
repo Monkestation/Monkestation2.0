@@ -1,5 +1,70 @@
 ///Stuff used in Central Command Liaison Outpost Ruin.
 
+// Outpost-specific pulse weapons. Native pulse weapons remain unchanged.
+// Use a plain beam parent so the native pulse explosion-on-impact is not inherited.
+/obj/projectile/beam/ccpost_pulse
+	name = "corporate pulse"
+	icon_state = "u_laser"
+	damage = 35
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
+	tracer_type = /obj/effect/projectile/tracer/pulse
+	muzzle_type = /obj/effect/projectile/muzzle/pulse
+	impact_type = /obj/effect/projectile/impact/pulse
+	wound_bonus = 10
+	demolition_mod = 0
+	damage_walls = FALSE
+
+/obj/projectile/beam/ccpost_pulse/carbine
+	damage = 45
+
+/obj/item/ammo_casing/energy/laser/pulse/ccpost
+	projectile_type = /obj/projectile/beam/ccpost_pulse
+
+/obj/item/ammo_casing/energy/laser/pulse/ccpost/carbine
+	projectile_type = /obj/projectile/beam/ccpost_pulse/carbine
+
+// Standard laser mode also avoids direct structural damage.
+/obj/projectile/beam/laser/ccpost
+	demolition_mod = 0
+	damage_walls = FALSE
+
+/obj/item/ammo_casing/energy/laser/ccpost
+	projectile_type = /obj/projectile/beam/laser/ccpost
+
+/obj/item/stock_parts/power_store/cell/pulse/pistol/ccpost
+	name = "corporate pulse pistol power cell"
+	maxcharge = 6 * LASER_SHOTS(200, STANDARD_CELL_CHARGE * 40)
+
+/obj/item/gun/energy/pulse/pistol/m1911/ccpost
+	name = "\improper NT-P6 corporate pulse sidearm"
+	desc = "A reduced-output pulse handgun issued to Central Command liaison personnel. Its compact power cell slowly recovers charge."
+	cell_type = /obj/item/stock_parts/power_store/cell/pulse/pistol/ccpost
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/ccpost, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser/ccpost)
+	selfcharge = TRUE
+	charge_delay = 20
+
+// The parent multiplies charge by the subsystem tick length. Recover one fixed
+// pulse shot per 20 seconds instead, independent of subsystem tick frequency.
+/obj/item/gun/energy/pulse/pistol/m1911/ccpost/process(seconds_per_tick)
+	if(!cell || cell.percent() >= 100)
+		charge_timer = 0
+		return
+	charge_timer += seconds_per_tick
+	if(charge_timer < charge_delay)
+		return
+	var/charge_ticks = FLOOR(charge_timer / charge_delay, 1)
+	charge_timer -= charge_ticks * charge_delay
+	cell.give(charge_ticks * LASER_SHOTS(200, STANDARD_CELL_CHARGE * 40))
+	if(!chambered)
+		recharge_newshot(TRUE)
+	update_appearance()
+
+/obj/item/gun/energy/pulse/carbine/ccpost
+	name = "\improper NT-PC corporate security pulse carbine"
+	desc = "A regulated pulse carbine issued to Central Command installation security. Its reduced-output pulse mode is designed to protect personnel without demolishing the facility."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/ccpost/carbine, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser/ccpost)
+
 /obj/item/paper/fluff/ruins/ccpost/transmission
 	default_raw_text = "Nothing of interest"
 

@@ -22,6 +22,7 @@ type CatalogueItem = {
   quantity: number;
   shared_stock?: boolean | number;
   complexity?: number | null;
+  allocation_status?: 'Issued' | 'Restricted' | 'Available';
 };
 
 type Personnel = { name: string; role: string; portrait?: string; medical: string };
@@ -37,6 +38,7 @@ type Mission = {
 type Data = {
   authorized?: boolean | number;
   brand?: 'gorlex' | 'cybersun';
+  loadout?: string | null;
   adp7_authorization_code?: string | null;
   telecrystals?: number;
   catalogue?: CatalogueItem[];
@@ -73,6 +75,13 @@ const pages = [
   { id: 'extraction', gorlex: 'Extraction Control', cybersun: 'Recall Authorization', index: '04' },
 ];
 
+const gorlexLoadouts = [
+  { id: 'WRAITH', role: 'Covert infiltration', gear: 'Suppressed Ansem pistol, spare 10mm magazine, airlock override card, smoke grenade. Cloaking module fitted.', drawback: 'Avoid detection; no additional combat protection.' },
+  { id: 'VANGUARD', role: 'Direct action', gear: 'Laser carbine, tactical combat knife, two flashbangs. Magnetic harness fitted.', drawback: 'No enhanced armor or medical recovery.' },
+  { id: 'BREACHER', role: 'Demolition and room clearing', gear: 'Compact combat shotgun (lethal buckshot), spare slugs, one C-4, one X-4, Syndicate toolbox.', drawback: 'Limited ammunition and loud breaching.' },
+  { id: 'NOMAD', role: 'Survival and reconnaissance', gear: '9mm pistol, spare magazine, combat medical kit. Night vision and advanced jetpack fitted.', drawback: 'Light armament; advanced mobility for escape.' },
+];
+
 const status = (ok: boolean) => ok ? 'COMPLETE' : 'PENDING';
 const countdown = (seconds = 0) => {
   const remaining = Math.max(0, Math.ceil(seconds));
@@ -101,6 +110,7 @@ const MissionClock = ({ seconds = 0, duration = 1, cybersun }: { seconds?: numbe
 
 export const CCPostGorlexUplink = () => {
   const { act, data } = useBackend<Data>();
+  const [chosenLoadout, setChosenLoadout] = useState('');
   const [tab, setTab] = useState('home');
   const [category, setCategory] = useState('All');
   const navigate = (next: string) => setTab(next);
@@ -134,7 +144,7 @@ export const CCPostGorlexUplink = () => {
 
   return (
     <Window title={corporation} theme="ntos" width={900} height={710}>
-      <Window.Content scrollable className={`ccpost-theme ccpost-theme--operations ccpost-theme--severance-polish ${cybersun ? 'ccpost-theme--cybersun' : 'ccpost-theme--gorlex'} ${currentTab === 'requisitions' && data.authorized ? 'CCPostOpsRequisitionsPage' : ''}`}>
+      <Window.Content scrollable className={`ccpost-theme ccpost-theme--operations ccpost-theme--severance-polish ${cybersun ? 'ccpost-theme--cybersun' : 'ccpost-theme--gorlex'} ${currentTab === 'requisitions' && data.authorized && (cybersun || data.loadout) ? 'CCPostOpsRequisitionsPage' : ''}`}>
         <div className="CCPostOpsBackdrop" aria-hidden="true">
           <div className="CCPostOpsWatermark"><FactionMark cybersun={cybersun} /></div>
           {cybersun && <svg className="CCPostOpsCircuit" viewBox="0 0 120 80"><path d="M0 12H49L63 26H120M0 35H25L44 54H120M20 80V65L53 32H87L103 16H120"/><circle cx="49" cy="12" r="2"/><circle cx="44" cy="54" r="2"/><circle cx="87" cy="32" r="2"/></svg>}
@@ -147,9 +157,10 @@ export const CCPostGorlexUplink = () => {
             <div>
               <div className="CCPostOpsBrand__company">{corporation}</div>
               <div className="CCPostOpsBrand__subtitle">{cybersun ? 'SECURE ENFORCEMENT NETWORK / BLACK WARRANT' : 'OPERATION SEVERANCE / SECURE CONTRACT CHANNEL'}</div>
+              {!cybersun && !!data.authorized && <div className="CCPostOpsBrand__subtitle" style={{ color: '#e88484', fontWeight: 700 }}>LOADOUT: {data.loadout || 'UNASSIGNED'}</div>}
             </div>
           </div>
-          <div className="CCPostOpsBalance"><strong>{requisitionsLocked ? 'REVOKED' : `${funds} TC`}</strong><small>FIELD ALLOCATION</small></div>
+          <div className="CCPostOpsBalance"><strong>{requisitionsLocked ? 'REVOKED' : !cybersun && !data.loadout ? 'PENDING' : `${funds} TC`}</strong><small>FIELD ALLOCATION</small></div>
         </div>
         {!data.authorized ? (
           <NoticeBox danger>Unauthorized access. This terminal is bound to its assigned contractor.</NoticeBox>
@@ -239,7 +250,21 @@ export const CCPostGorlexUplink = () => {
                 </>
               )}
 
-              {currentTab === 'requisitions' && (
+              {currentTab === 'requisitions' && !cybersun && !data.loadout && (
+                <Section title="FIELD LOADOUT ALLOCATION">
+                  <NoticeBox>Choose one permanent specialization. Keep your MODsuit active and one hand free. Your equipment arrives in a handheld bag; 5 TC becomes available after allocation.</NoticeBox>
+                  <div className="CCPostOpsCards">
+                    {gorlexLoadouts.map((kit) => (
+                      <button type="button" className="CCPostOpsCard" key={kit.id} aria-pressed={chosenLoadout === kit.id} onClick={() => setChosenLoadout(kit.id)} style={chosenLoadout === kit.id ? { borderColor: '#e88484' } : undefined}>
+                        <strong>{kit.id}</strong><div>{kit.role}</div><div>{kit.gear}</div><small>{kit.drawback}</small><div>5 TC reserve</div>
+                      </button>
+                    ))}
+                  </div>
+                  <Button disabled={!chosenLoadout || requisitionsLocked} onClick={() => act('claim_loadout', { id: chosenLoadout })}>Confirm {chosenLoadout || 'Loadout'}</Button>
+                  <Box mt={1}>Selection is permanent. No other loadout or additional primary firearm can be requisitioned.</Box>
+                </Section>
+              )}
+              {currentTab === 'requisitions' && (cybersun || !!data.loadout) && (
                 <div className="CCPostOpsShop">
                     <div className="CCPostOpsCategories">
                       {categories.map((entry) => (
@@ -252,7 +277,7 @@ export const CCPostGorlexUplink = () => {
                       {items.map((item) => {
                         const stock = Math.max(0, item.stock ?? item.limit - item.purchased);
                         const sprite = data.equipment_icons?.[item.id];
-                        const unavailable = requisitionsLocked || stock === 0 || funds < item.cost;
+                        const unavailable = requisitionsLocked || stock === 0 || funds < item.cost || (!cybersun && item.allocation_status !== 'Available');
                         return (
                           <div className="CCPostOpsCatalogItem" key={item.id}>
                             <div className="CCPostOpsCatalogItem__info">
@@ -273,10 +298,10 @@ export const CCPostGorlexUplink = () => {
                             <div className="CCPostOpsCatalogItem__stock">
                               <span>{item.shared_stock ? 'Shared stock' : 'Stock'}: {stock}/{item.limit}</span>
                               {!!item.shared_stock && <small>C-4 / X-4 combined</small>}
-                              {stock === 0 ? <small>Out of stock</small> : funds < item.cost ? <small>Insufficient TC</small> : null}
+                              {!cybersun && item.allocation_status !== 'Available' ? <small>{item.allocation_status}</small> : stock === 0 ? <small>Out of stock</small> : funds < item.cost ? <small>Insufficient TC</small> : null}
                             </div>
                             <button type="button" className="CCPostOpsPurchase" disabled={unavailable} onClick={() => act('purchase', { id: item.id })}>
-                              Purchase: {item.cost} TC
+                              {!cybersun && item.allocation_status !== 'Available' ? item.allocation_status : `Purchase: ${item.cost} TC`}
                             </button>
                           </div>
                         );
