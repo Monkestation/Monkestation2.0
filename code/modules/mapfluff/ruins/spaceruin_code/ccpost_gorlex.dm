@@ -504,7 +504,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 
 /datum/objective/ccpost_gorlex_arm
 	name = "NT-ADP-7 authorization"
-	explanation_text = "Acquire the NT-ADP-7 disk and authorization code, then arm the Asset Denial Device."
+	explanation_text = "Acquire the NT-ADP-7 authentication disk and arm the Asset Denial Device using your issued authorization code."
 
 /datum/objective/ccpost_gorlex_arm/check_completion()
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
@@ -577,6 +577,9 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	to_chat(owner.current, span_boldwarning("GORLEX MARAUDERS // OPERATION SEVERANCE"))
 	to_chat(owner.current, span_boldnotice("Cybersun Industries has authorized your deployment under Operation Severance."))
 	to_chat(owner.current, span_notice("Infiltrate the Liaison Outpost, recover its classified Tasking Server data, arm NT-ADP-7 and complete authorized retrieval."))
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	if(director?.operative_mind_ref?.resolve() == owner)
+		to_chat(owner.current, span_boldnotice("GORLEX COMMAND: NT-ADP-7 authorization code: [ccpost_adp7_get_authorization_code()]. Recover the physical authentication disk. Your uplink retains a copy of the code."))
 	to_chat(owner.current, span_notice("Your contract requires extraction with the intelligence. Unauthorized withdrawal after data acquisition constitutes desertion."))
 	to_chat(owner.current, span_boldnotice("Consult your Gorlex Marauders uplink for contract details, field requisitions and extraction instructions."))
 	to_chat(owner.current, span_notice("The primary Nanotrasen station is outside your authorized operational zone. Entry, interference and unrelated personnel engagement are prohibited."))
@@ -622,6 +625,19 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 			if(3)
 				handler_message = "GORLEX COMMAND: Contract violation, operative. Your authorization excludes the main station. Return to the approved operational area."
 		to_chat(operative, span_danger(handler_message))
+
+/// Pre-deployment intelligence; separate from NanoTrasen's original directive.
+/obj/item/paper/fluff/ruins/ccpost/gorlex_adp7_intelligence
+	name = "Gorlex classified authorization intelligence"
+	desc = "An intercepted NT-ADP-7 authorization code issued to an Operation Severance operative."
+
+/obj/item/paper/fluff/ruins/ccpost/gorlex_adp7_intelligence/Initialize(mapload)
+	default_raw_text = {"<center><b>GORLEX MARAUDERS</b><br><b>CLASSIFIED: OPERATION SEVERANCE</b></center><hr>
+	<br><b>Device:</b> NT-ADP-7 Asset Denial Device
+	<br><b>Authorization Code:</b> [ccpost_adp7_get_authorization_code()]
+	<br><br>Authorization intelligence was acquired before deployment. Recover the physical NT-ADP-7 authentication disk from the Liaison Outpost and use the issued code to arm the device.
+	<br><br>A duplicate of this code is available under Contract Details in your Gorlex uplink."}
+	return ..()
 
 /datum/outfit/ccpost_gorlex
 	name = "Gorlex Marauders Field Operative"
@@ -682,6 +698,8 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/obj/item/ccpost_gorlex_uplink/uplink = new(operative)
 	uplink.owner_mind = operative.mind
 	ccpost_issue_gear(operative, uplink)
+	var/obj/item/paper/fluff/ruins/ccpost/gorlex_adp7_intelligence/intelligence = new(operative)
+	ccpost_issue_gear(operative, intelligence)
 	ccpost_install_microbomb(operative, TRUE)
 	for(var/path in list(/obj/item/grenade/empgrenade, /obj/item/grenade/smokebomb))
 		var/obj/item/supply = new path(operative)
@@ -907,6 +925,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		"forced_recall" = !!director?.enforcer_forced_pending,
 		"authorized" = TRUE,
 		"brand" = cybersun_brand ? "cybersun" : "gorlex",
+		"adp7_authorization_code" = (!cybersun_brand && director?.operative_mind_ref?.resolve() == user.mind) ? "[ccpost_adp7_get_authorization_code()]" : null,
 		"telecrystals" = telecrystals,
 		"catalogue" = requisitions_locked ? list() : items,
 		"history" = purchase_history,

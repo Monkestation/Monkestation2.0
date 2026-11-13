@@ -37,6 +37,7 @@ type Mission = {
 type Data = {
   authorized?: boolean | number;
   brand?: 'gorlex' | 'cybersun';
+  adp7_authorization_code?: string | null;
   telecrystals?: number;
   catalogue?: CatalogueItem[];
   equipment_icons?: Record<string, string>;
@@ -126,7 +127,7 @@ export const CCPostGorlexUplink = () => {
     { title: 'Authorized Personnel Recall', description: 'Complete both directives, then request bluespace extraction.', done: !!data.recalled },
   ] : [
     { title: 'Classified Data Acquisition', description: 'Download classified tasking records to your issued cartridge.', done: !!mission?.data },
-    { title: 'NT-ADP-7 Authorization', description: 'Acquire the disk and code, then arm the device.', done: !!mission?.armed },
+    { title: 'NT-ADP-7 Authorization', description: 'Acquire the authentication disk and arm the device using your issued code.', done: !!mission?.armed },
     { title: 'Authorized Retrieval', description: 'Board the assigned Gorlex pod with classified intelligence.', done: !!mission?.extracted },
     { title: 'Asset Denial', description: 'Confirm NT-ADP-7 destroys the Liaison Outpost. Additional sabotage result.', done: !!mission?.detonated },
   ];
@@ -210,6 +211,13 @@ export const CCPostGorlexUplink = () => {
                     </>
                   ) : (
                     <div className="CCPostOpsAlert"><b>{cybersun ? 'BLACK WARRANT AUTHORIZATION' : 'CONTRACT AUTHORIZATION'}</b><span>{cybersun ? 'Terminate the designated rogue contractor and recover corporate intelligence. Unrelated personnel are not valid targets.' : 'Retrieve the classified Tasking Server intelligence, arm NT-ADP-7, then use the assigned Gorlex pod. The main station is prohibited.'}</span></div>
+                  )}
+                  {!cybersun && data.adp7_authorization_code && (
+                    <Section title="CLASSIFIED AUTHORIZATION INTELLIGENCE">
+                      <Box color="label">NT-ADP-7 AUTHORIZATION CODE</Box>
+                      <Box fontSize={2} bold>{data.adp7_authorization_code}</Box>
+                      <Box mt={1}>Code acquired prior to deployment. Recover the physical authentication disk and enter this code to arm NT-ADP-7.</Box>
+                    </Section>
                   )}
                   <Section title={cybersun ? 'MANDATORY ENFORCEMENT DIRECTIVES' : 'CONTRACT OBJECTIVES'}>
                     <div className="CCPostOpsObjectives">
