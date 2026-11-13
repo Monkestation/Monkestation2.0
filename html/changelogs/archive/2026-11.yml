@@ -465,6 +465,8 @@
   - rscadd: Simian traitors can now buy the Banana-Stained Scroll for 8 TC, which
       teaches Jungle Arts. It only works while in combat mode, so you can still grab
       and shove normally with it off.
+  - bugfix: Searing body temperatures take a while to cure diseases instead of doing
+      it instantly, and spicy food can't cure them anymore.
   V2LenKagamine:
   - bugfix: 'TODO REMOVED: Having a medical hud allows you to see how much brute/burn
       is left when doing surgery'
@@ -475,8 +477,73 @@
       DUST YOU
   - refactor: powergen artifacts can now be touched on aggressive to turn them off,
       percussive maintenance style
+  - map: Box station now has smithing
+  - map: Most maps I could think of with smithing area cleaned up, and hammer added
+  - rscadd: Forging hammer, added to crates and craftable with 2 metal!
+  - rscadd: New 'Crush Hammer' weapon, 2h. Heavy blunt damage.
+  - rscadd: New 'Tanto' weapon, 1h. Quick slashing damage.
+  - rscadd: alloy forge, primitive method of alloying. Has been added to both ashwalker
+      structures
+  - rscadd: New material trait, serrated, gives bonus wound damage
+  - rscadd: Firestorm-bane trait, on bronze, deals bonus damage to anything immune
+      to an ash storm.
+  - qol: THE RHYTHM MINIGAME IS DEAD, you now hit forged items about 100 times to
+      reach full quality, with an inspect minigame instead
+  - qol: Gutlunches now produce copper in their milk if given iron, so ashwalkers
+      can make more bronze.
+  - qol: Bunch of more descriptions for random minerals, context for assembly, forge,
+      etc...
+  - qol: You can now tell roughly what a mineral does looking at it
+  - map: maps [incl ashwalkers] have had smithing areas visually improved!
+  - code_imp: new 'finisheddesc' var for smithed weapons
+  - code_imp: perfect anvils now end after the first bit because they're perfect.
+  - code_imp: forged items 'made_of' is now an /datum/material
+  - refactor: start demodularize of monkeystation/code/modules/smithing by moving
+      whole folder to code/modules/smithing.
+  - balance: you can now make assembly benches with 15 wood
+  - balance: the forge [primitive] is now made with stone. Why was it made with iron
+      before?
+  - balance: anvils can now be made using 25 iron sheets.
+  - balance: '`/turf/closed/mineral/random/` artifacts now as likely as gibtonite,
+      mineral chance added, as likely as artifacts and gibtonite.'
+  - balance: art sci meteors more likely to contain minerals [and artifacts]
+  - balance: Ashwalkers start with higher smithing, to offset below
+  - balance: smithing levels slower, to make getting good items take time.
+  - balance: your smithing skill now weighs more into the quality of items you create.
+  - balance: random minerals now worth 200 from 20 [Base value, adjusted by how good
+      they are.]
+  - balance: random minerals now range from 30 to 120 in all stats, instead of 0 to
+      125
+  - balance: slightly adjust smithing minigame speed by making at least 3 notes appear
+      per section
+  - balance: smithed objects are now more valuable by default, affected by quality
+  - balance: Nudge damage values to be more not brutal
+  - balance: Smithed Spears, Staffs, and Swords are now wieldable, and need to be
+      for full damage.
+  - balance: Smithed spears and staffs now only have 2 tile range when wielded.
+  - balance: Daggers now are weak as shit for melee, but make great one off throw
+      weapons.
+  - balance: Ideal material range for hardness and density is 140, with a 'godlike'
+      material being 200. Weapons and armor balanced around this range.
   chumtoadmonke:
   - balance: cyborgs are no longer counted as an enemy
   - balance: security assistants are not counted as an enemy for most antagonists
+  - rscadd: adds lightbearer and dipped wing options
+  - rscadd: added greyscaling to wings/antennae/eyes for moths
+  - rscadd: antennae reconstruction surgery
   tattax:
   - qol: handcuff sprites for each ui
+2026-11-13:
+  V2LenKagamine:
+  - rscadd: Med-x, it stops pain. thats it. wow.
+  - balance: ALL SMITHING WEAPONS NERFED AND CLAMPED STOP BREAKING THINGS
+  - balance: Armor laser, energy, and bullet resist half as effective, and clamp at
+      50.
+  - balance: artifacts now have a variable for when they are summoned/modified by
+      a wand, and dont give research if so.
+  - balance: artifacts and mineral samples are now rarer from asteroids,other objects
+      more common.
+  - balance: Clamp forged weapons to 22 damage because GOD FUCKING DAMMIT MATH WORK
+      DANM YOU
+  - bugfix: reagents with allow deadprocess now can actually work when you're dead!
+  - admin: more lone larp
