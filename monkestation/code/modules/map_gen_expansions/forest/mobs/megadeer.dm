@@ -69,7 +69,7 @@
 
 
 /datum/ai_controller/basic_controller/megadeer
-	behavior_tree_json = "code/datums/ai/basic_mobs/megadeer.bt.json"
+	behavior_tree_json = "monkestation/code/modules/map_gen_expansions/forest/mobs/megadeer.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,

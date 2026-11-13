@@ -1,5 +1,5 @@
 /datum/ai_controller/chicken
-	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/ranch_chicken.bt.json"
+	behavior_tree_json = "monkestation/code/modules/ranching/chickens/ai/ranch_chicken.bt.json"
 	movement_delay = 0.4 SECONDS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	blackboard = list(
@@ -35,11 +35,11 @@
 
 //HOSTILE
 /datum/ai_controller/chicken/hostile
-	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/ranch_chicken_hostile.bt.json"
+	behavior_tree_json = "monkestation/code/modules/ranching/chickens/ai/ranch_chicken_hostile.bt.json"
 
 //RETALIATE
 /datum/ai_controller/chicken/retaliate
-	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/ranch_chicken_retaliate.bt.json"
+	behavior_tree_json = "monkestation/code/modules/ranching/chickens/ai/ranch_chicken_retaliate.bt.json"
 
 /// Won't go after friends of ours
 /datum/targeting_strategy/basic/chicken

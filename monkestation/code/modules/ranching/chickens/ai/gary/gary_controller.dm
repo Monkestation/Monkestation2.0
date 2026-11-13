@@ -1,5 +1,5 @@
 /datum/ai_controller/chicken/gary
-	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/gary.bt.json"
+	behavior_tree_json = "monkestation/code/modules/ranching/chickens/ai/gary/gary.bt.json"
 	ai_movement = /datum/ai_movement/jps/gary
 	max_target_distance = 250
 

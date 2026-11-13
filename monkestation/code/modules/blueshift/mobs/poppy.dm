@@ -35,7 +35,7 @@
 	light_on = TRUE
 
 /datum/ai_controller/basic_controller/poppy
-	behavior_tree_json = "code/datums/ai/basic_mobs/poppy.bt.json"
+	behavior_tree_json = "monkestation/code/modules/blueshift/mobs/poppy.bt.json"
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 

@@ -28,6 +28,11 @@
 	if(async_flags)
 		return async_flags
 
+	// Someone may have picked it up while we walked over, don't yank it out of their inventory.
+	var/obj/item/target = controller.blackboard[target_key]
+	if(QDELETED(target) || !isturf(target.loc))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
 	return start_async()
 
 /datum/bt_node/ai_behavior/monkey_equip/ground/perform_async(datum/ai_controller/controller)
@@ -257,10 +262,18 @@
 	var/succeeded = FALSE
 	if(attack_results && !controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		succeeded = TRUE
+		var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target]
+		// A forced target may not have a grudge yet; give it one that can be satisfied.
+		if(isnull(hatred_value))
+			hatred_value = 1
+			controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
 		if(prob(MONKEY_HATRED_REDUCTION_PROB))
-			var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target] - 1
+			hatred_value--
 			if(hatred_value <= 0)
 				controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
+				// The combat tree loops until its target is cleared, even after a successful attack.
+				if(controller.blackboard[target_key] == target)
+					controller.clear_blackboard_key(target_key)
 			else
 				controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
 	finish_async(succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)

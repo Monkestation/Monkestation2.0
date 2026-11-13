@@ -30,62 +30,81 @@
 								"key": "BB_CURRENT_TARGET"
 							},
 							"child": {
-								"type": "selector",
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
 								"children": [
 									{
-										"type": "subtree",
-										"subtype": "/datum/bt_node/subtree/run_away_from_target"
-									},
-									{
-										"type": "parallel",
-										"failure_policy": "BT_PARALLEL_FAILURE_ANY",
-										"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
-										"repeat_secondary": true,
-										"finish_on_primary": true,
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
 										"children": [
 											{
-												"type": "subplan",
-												"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-												"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+												"type": "selector",
 												"children": [
 													{
-														"type": "selector",
-														"children": [
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
-																"vars": {
-																	"ability_key": "BB_TARGETED_ACTION",
-																	"target_key": "BB_CURRENT_TARGET"
-																}
-															},
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
-																"vars": {
-																	"target_key": "BB_CURRENT_TARGET"
-																}
-															},
-															{
-																"type": "leaf",
-																"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
-																"vars": {
-																	"target_key": "BB_CURRENT_TARGET",
-																	"targeting_strategy": "BB_TARGETING_STRATEGY",
-																	"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
-																}
-															}
-														]
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+														"vars": {
+															"ability_key": "BB_TARGETED_ACTION",
+															"target_key": "BB_CURRENT_TARGET"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET",
+															"targeting_strategy": "BB_TARGETING_STRATEGY",
+															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
 													}
 												]
+											}
+										]
+									},
+									{
+										"type": "selector",
+										"children": [
+											{
+												"type": "decorator",
+												"decorator": "/datum/bt_node/decorator/mob_stat_at_least",
+												"vars": {
+													"observer_abort": "BT_ABORT_SELF",
+													"key": "BB_CURRENT_TARGET",
+													"min_stat": "SOFT_CRIT"
+												},
+												"child": {
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+													"vars": {
+														"target_key": "BB_CURRENT_TARGET",
+														"required_dist": 1,
+														"finish_on_arrival": false
+													}
+												}
 											},
 											{
-												"type": "leaf",
-												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+												"type": "decorator",
+												"decorator": "/datum/bt_node/decorator/mob_stat_at_least",
 												"vars": {
-													"target_key": "BB_CURRENT_TARGET",
-													"required_dist": 1,
-													"finish_on_arrival": false
+													"observer_abort": "BT_ABORT_SELF",
+													"invert": true,
+													"key": "BB_CURRENT_TARGET",
+													"min_stat": "SOFT_CRIT"
+												},
+												"child": {
+													"type": "subtree",
+													"subtype": "/datum/bt_node/subtree/run_away_from_target"
 												}
 											}
 										]

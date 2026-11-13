@@ -34,7 +34,7 @@
 	AddElement(/datum/element/pet_bonus, "cheeps happily!")
 
 /datum/ai_controller/basic_controller/kiwi
-	behavior_tree_json = "code/datums/ai/basic_mobs/kiwi.bt.json"
+	behavior_tree_json = "monkestation/code/modules/blueshift/mobs/kiwi.bt.json"
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 

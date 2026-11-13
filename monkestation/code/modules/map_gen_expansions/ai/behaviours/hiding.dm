@@ -71,8 +71,8 @@
 
 /// Comes out of hiding while we have something to fight. Fits the while_attacking slot of the combat subtrees.
 /datum/bt_node/subtree/stop_hiding
-	behavior_tree_json = "code/datums/ai/basic_mobs/basic_subtrees/stop_hiding.bt.json"
+	behavior_tree_json = "monkestation/code/modules/map_gen_expansions/ai/behaviours/stop_hiding.bt.json"
 
 /// Randomly hides while idle. Fits the cant_attack slot of the combat subtrees.
 /datum/bt_node/subtree/random_hiding
-	behavior_tree_json = "code/datums/ai/basic_mobs/basic_subtrees/random_hiding.bt.json"
+	behavior_tree_json = "monkestation/code/modules/map_gen_expansions/ai/behaviours/random_hiding.bt.json"

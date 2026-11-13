@@ -110,7 +110,7 @@
 
 // Bumble AI controller that adds find flowers, resting, and buzzing subtrees.
 /datum/ai_controller/basic_controller/bumbles
-	behavior_tree_json = "code/modules/mob/living/basic/pets/bumbles.bt.json"
+	behavior_tree_json = "monkestation/code/modules/blueshift/mobs/bumbles.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_BASIC_MOB_SPEAK_LINES = list(

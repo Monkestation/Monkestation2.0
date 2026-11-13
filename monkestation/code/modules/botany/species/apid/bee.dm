@@ -6,7 +6,7 @@
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "code/datums/ai/basic_mobs/apid_bee.bt.json"
+	behavior_tree_json = "monkestation/code/modules/botany/species/apid/apid_bee.bt.json"
 
 /mob/living/basic/bee/apid_summoned
 	ai_controller = /datum/ai_controller/basic_controller/apid_bee

@@ -130,7 +130,7 @@
 /datum/bt_node/ai_behavior/acquire_target/proc/on_no_candidates(datum/ai_controller/controller, atom/current_target, datum/targeting_strategy/strategy, range)
 	if(!target_loss_distance || !current_target)
 		return list()
-	if(strategy.can_keep_target(controller.pawn, current_target, target_loss_distance))
+	if(strategy.can_keep_target(controller.pawn, current_target, target_loss_distance, controller))
 		return list(current_target)
 	return list()
 
@@ -169,11 +169,24 @@
 	var/list/candidates = source.collect_candidates(living_mob, controller, range)
 	if(!length(candidates))
 		candidates = on_no_candidates(controller, current_target, strategy, range)
-	var/list/filtered = filter_candidates(controller, candidates, strategy, current_target)
+	// Target sources can return shared lists so we Copy here
+	candidates = candidates?.Copy()
 	var/atom/target
-	for(var/atom/candidate as anything in filtered)
+	while(length(candidates))
+		// A previous path search may have yielded, invalidating candidates
+		var/list/filtered = filter_candidates(controller, candidates, strategy, current_target)
+		if(!length(filtered))
+			break
+		var/atom/candidate = filtered[1]
+		candidates -= candidate
 		// get_path_to may sleep here  check abort flag after it returns.
-		if(controller.can_reach_target(candidate, reach_distance, minimum_distance))
+		var/can_reach = controller.can_reach_target(candidate, reach_distance, minimum_distance)
+		if(!async_still_valid())
+			return
+		// Reachability can yield too. only select or blacklist a target that still matches
+		if(!length(filter_candidates(controller, list(candidate), strategy, current_target)))
+			continue
+		if(can_reach)
 			target = candidate
 			break
 		controller.note_unreachable_target(candidate)

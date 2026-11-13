@@ -4,7 +4,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	behavior_tree_json = "code/datums/ai/basic_mobs/fish_group.bt.json"
+	behavior_tree_json = "monkestation/code/modules/ocean_content/mobs/ai/fish_group.bt.json"
 
 /// Joins or makes a group, and starts the group's next move when it's time
 /datum/bt_node/ai_behavior/group_planning

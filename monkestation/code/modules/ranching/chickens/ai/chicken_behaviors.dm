@@ -10,4 +10,4 @@
 
 /// Shoots at whoever we're after, as long as they're not one of our friends
 /datum/bt_node/subtree/pet_command/attack/chicken_ranged
-	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/pet_command_attack_chicken_ranged.bt.json"
+	behavior_tree_json = "monkestation/code/modules/ranching/chickens/ai/pet_command_attack_chicken_ranged.bt.json"

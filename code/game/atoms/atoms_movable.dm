@@ -1677,6 +1677,7 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
 	. = grab_state
 	grab_state = newstate
+	SEND_SIGNAL(pulling, COMSIG_MOVABLE_CHANGED_GRABBED_STATE, grab_state)
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
 			pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
