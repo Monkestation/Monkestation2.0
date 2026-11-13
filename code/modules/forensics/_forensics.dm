@@ -146,7 +146,7 @@
 
 #define ITEM_FIBER_MULTIPLIER 1.2
 #define NON_ITEM_FIBER_MULTIPLIER 1
-#define FIBERS_ALLOWED(clothing) ((clothing) && !(clothing.clothing_flags & BLOCKS_FIBERS))
+#define FIBERS_ALLOWED(clothing) (isclothing(clothing) && !(clothing.clothing_flags & BLOCKS_FIBERS))
 
 /// Adds a single fiber
 /datum/forensics/proc/add_fibers(mob/living/carbon/human/suspect)

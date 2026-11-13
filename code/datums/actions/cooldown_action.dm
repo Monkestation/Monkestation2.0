@@ -208,7 +208,7 @@
 
 /// Re-enables all cooldown actions
 /datum/action/cooldown/proc/enable_cooldown_actions()
-	for(var/datum/action/cooldown/cd_action in owner.actions)
+	for(var/datum/action/cooldown/cd_action in owner?.actions)
 		cd_action.enable()
 
 /// Disables all cooldown actions
