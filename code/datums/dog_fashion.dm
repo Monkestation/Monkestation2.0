@@ -46,11 +46,11 @@
 
 ///Applies random speech modifiers to the dog
 /datum/dog_fashion/proc/apply_to_speech(list/speech_data)
-	if(LAZYLEN(emote_see))
+	if(length(emote_see))
 		speech_data[BB_EMOTE_SEE] = string_list(emote_see)
-	if(LAZYLEN(emote_hear))
+	if(length(emote_hear))
 		speech_data[BB_EMOTE_HEAR] = string_list(emote_hear)
-	if(LAZYLEN(speak))
+	if(length(speak))
 		speech_data[BB_EMOTE_SAY] = string_list(speak)
 
 /**

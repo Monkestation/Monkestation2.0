@@ -5,7 +5,7 @@
 		BB_WEEDLEVEL_THRESHOLD = 3,
 		BB_WATERLEVEL_THRESHOLD = 90,
 	)
-	ai_movement = /datum/ai_movement/basic_avoidance
+	ai_movement = /datum/ai_movement/jps // monkestation edit: use jps instead of basic avoidance
 	behavior_tree_json = "code/modules/mob/living/basic/jungle/seedling/seedling.bt.json"
 
 /datum/ai_controller/basic_controller/seedling/meanie

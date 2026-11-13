@@ -9,8 +9,6 @@
 		BB_VENDING_BUSY_TILTING = FALSE,
 		BB_VENDING_LAST_HIT_SUCCESSFUL = FALSE,
 	)
-	/// If TRUE stops mobs from buying things from active machines
-	var/block_usage = FALSE
 
 /datum/ai_controller/vending_machine/TryPossessPawn(atom/new_pawn)
 	if(!istype(new_pawn, /obj/machinery/vending))
@@ -29,18 +27,3 @@
 	vendor_pawn.squish_damage = initial(vendor_pawn.squish_damage)
 	RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, sound_vary = TRUE)
 	return ..() //Run parent at end
-
-/datum/ai_controller/vending_machine/proc/deny_vending_interact(obj/machinery/vending/vending_machine, mob/user, datum/tgui/ui)
-	SIGNAL_HANDLER
-	if(!block_usage)
-		return NONE
-	vending_machine.speak(pick(
-		"Once in a life time offer, and you [pick("blew it", "missed it", "screwed it up")]!",
-		"The deals are off!",
-		"We don't accept card, only accept flesh and blood!",
-		"You had your chance!",
-	))
-	return VENDING_DENIED
-
-/datum/ai_controller/vending_machine/eventspawn
-	block_usage = TRUE
