@@ -5,7 +5,7 @@
 	value = 0
 	//MONKESTATION EDIT START
 	mob_trait = TRAIT_PRIDE_PIN
-	quirk_flags = QUIRK_CHANGES_APPEARANCE
+	quirk_flags = QUIRK_CHANGES_APPEARANCE | QUIRK_OOZELING_SAVE
 	gain_text = span_notice("You feel proud to be queer.")
 	lose_text = span_danger("You decide to repress your feelings.")
 	//MONKESTATION EDIT END

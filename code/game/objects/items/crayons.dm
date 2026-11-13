@@ -826,6 +826,7 @@
 
 	context[SCREENTIP_CONTEXT_LMB] = "Paint"
 	context[SCREENTIP_CONTEXT_RMB] = "Coat with paint"
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Copy color"
 
 	if(isbodypart(target))
 		var/obj/item/bodypart/limb = target
@@ -990,6 +991,27 @@
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/toy/crayon/spraycan/proc/ctrl_interact(atom/interacting_with, mob/living/user)
+	if(is_capped)
+		if(!interacting_with.color)
+			// let's be generous and assume if they're trying to match something with no color, while capped,
+			// we shouldn't be blocking further interactions
+			return NONE
+		balloon_alert(user, "take the cap off first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(check_empty(user))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!isbodypart(interacting_with) || !actually_paints)
+		if(interacting_with.color)
+			paint_color = interacting_with.color
+			balloon_alert(user, "matched colour of target")
+			update_appearance()
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "can't match those colours!")
+		return ITEM_INTERACT_BLOCKING
 
 /// Lets the user pick a new style for a robotic limb, returns FALSE if the limb isnt robotic
 /obj/item/toy/crayon/spraycan/proc/color_limb(obj/item/bodypart/limb, mob/living/user)

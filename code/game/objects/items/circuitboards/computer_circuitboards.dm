@@ -1,4 +1,5 @@
 /obj/item/circuitboard/computer
+	abstract_type = /obj/item/circuitboard/computer
 	name = "Generic"
 	name_extension = "(Computer Board)"
 
@@ -439,6 +440,11 @@
 	silence_announcements = FALSE
 	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
 	return TRUE
+
+/obj/item/circuitboard/computer/extract_requests
+	name = "Extract Requests"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/extract_requests
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"

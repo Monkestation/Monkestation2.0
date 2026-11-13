@@ -5,90 +5,20 @@ import { Window } from '../layouts';
 export const XpMenu = (props) => {
   const { data } = useBackend();
   const { job_levels, job_xp, job_xp_for_level } = data;
-  const exclusions = [
-    'Santa',
-    'Unassigned Crewmember',
-    'Servant Golem',
-    'Cyber Police',
-    'Abductor Agent',
-    'Abductor Scientist',
-    'Abductor Solo',
-    'Clown Operative',
-    'Lone Operative',
-    'Morph',
-    'Nightmare',
-    'Yellow Clown',
-    'Discount Godzilla',
-    'Gorilla',
-    'NOPE',
-    'Debugger',
-    'Diet Wizard',
-    'Candy Salesman',
-    'Drifting Contractor',
-    'Zombie',
-    'Venus Human Trap',
-    'Cybersun Space Syndicate Captain',
-    'Cybersun Space Syndicate',
-    'Spider',
-    'Space Syndicate',
-    'Space Pirate',
-    'Space Doctor',
-    'Space Bartender',
-    'Space Bar Patron',
-    'Skeleton',
-    'Lifebringer',
-    'Lavaland Syndicate',
-    'Hermit',
-    'Hotel Staff',
-    'Ghost Role',
-    'Fugitive Hunter',
-    'Free Golem',
-    'Exile',
-    'Nuclear Operative',
-    'Paradox Clone',
-    'Revenant',
-    'Slaughter Demon',
-    'Space Dragon',
-    'Space Ninja',
-    'Wizard',
-    'Apprentice',
-    'Xenomorph',
-    'ERT Generic',
-    'Fugitive',
-    'Ancient Crew',
-    'Battlecruiser Crew',
-    'Battlecruiser Captain',
-    'Beach Bum',
-    'Escaped Prisoner',
-    'Ghost',
-    'Derelict Drone',
-    'Maintenance Drone',
-    'Ash Walker',
-  ];
-
-  const xpBoxes = []; // Array to store JSX elements
-
-  // Iterate over job_xp_for_level object
-  for (const job in job_xp_for_level) {
-    // Check if the job is not in the exclusions list
-    if (!exclusions.includes(job)) {
-      // Push JSX element to array
-      xpBoxes.push(
-        <Stack.Item>
-          <Section title={job}>
-            <ProgressBar
-              value={job_xp[job]}
-              minValue={0}
-              maxValue={job_xp_for_level[job]}
-              key={job}
-            >
-              Level {job_levels[job]} {job}
-            </ProgressBar>
-          </Section>
-        </Stack.Item>,
-      );
-    }
-  }
+  const xpBoxes = Object.keys(job_xp_for_level).map((job) => (
+    <Stack.Item key={job}>
+      <Section title={job}>
+        <ProgressBar
+          value={job_xp[job] || 0}
+          minValue={0}
+          maxValue={job_xp_for_level[job]}
+        >
+          Level {job_levels[job] || 0} {job} ({Math.floor(job_xp[job] || 0)}/
+          {Math.ceil(job_xp_for_level[job])} XP)
+        </ProgressBar>
+      </Section>
+    </Stack.Item>
+  ));
 
   return (
     <Window width={480} height={520}>

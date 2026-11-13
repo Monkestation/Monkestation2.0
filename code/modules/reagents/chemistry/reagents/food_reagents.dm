@@ -308,7 +308,8 @@
 			heating = 20
 			if(isslime(affected_mob))
 				heating = rand(20, 25)
-	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
+	// Spicy food makes you hot but stops before it starts burning you, upgraded microwaves put a lot of it in donk pockets
+	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, max_temp = affected_mob.get_body_temp_heat_damage_limit())
 	return ..()
 
 /datum/reagent/consumable/frostoil

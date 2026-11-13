@@ -234,6 +234,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
+/datum/design/board/extract_requests
+	name = "Extract Requests Console Board"
+	desc = "Allows for the construction of circuit boards used to build an extract request console."
+	id = "extract_requests_console"
+	build_path = /obj/item/circuitboard/computer/extract_requests
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/cargo
 	name = "Supply Console Board"
 	desc = "Allows for the construction of circuit boards used to build a Supply Console."

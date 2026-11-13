@@ -6,6 +6,7 @@ const empty_pr = {
   pull_request: {
     body: 'This PR will have no labels',
     title: 'Pr with no labels',
+    labels: [],
     mergeable: true,
   },
 };
@@ -28,6 +29,7 @@ const cl_pr = {
   pull_request: {
     body: cl,
     title: 'Awesome PR',
+    labels: [],
     mergeable: false,
   },
 };
@@ -44,14 +46,15 @@ assert.ok(
   'Feature label should be added',
 );
 assert.ok(
-  cl_label_set.includes('Feature: Refactor/Rework'),
-  'Refactor label should be added',
+  !cl_label_set.includes('Feature: Refactor/Rework'),
+  'Refactor label should not be added',
 );
 
 const title_pr = {
   action: 'opened',
   pull_request: {
     title: 'Remove monkeys',
+    labels: [],
     mergeable: true,
   },
 };
@@ -59,4 +62,4 @@ const title_label_set = await get_updated_label_set({
   github: null,
   context: { payload: title_pr },
 });
-assert.ok(title_label_set.includes('Removal'), 'Removal label should be added');
+assert.ok(title_label_set.includes('removal'), 'Removal label should be added');

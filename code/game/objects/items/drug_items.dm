@@ -1,4 +1,5 @@
 /obj/item/food/drug
+	abstract_type = /obj/item/food/drug
 	name = "generic drug"
 	desc = "I am error"
 	icon = 'icons/obj/medical/drugs.dmi'

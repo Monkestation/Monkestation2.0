@@ -79,7 +79,7 @@
 	inhand_icon_state = null
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 //Bunny bag!

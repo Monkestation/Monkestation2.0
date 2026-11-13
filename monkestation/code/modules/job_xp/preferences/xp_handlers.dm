@@ -1,39 +1,33 @@
-//this proc handles adding xp to you
+/// Gives job xp to a client. If needs_job is TRUE it only works if they are currently playing that job.
 /proc/add_jobxp(client/target, amount, job, needs_job = TRUE)
-	if(!target || !target.prefs || !amount || !job)
+	if(!target?.prefs || !amount || !job)
 		return
-	if(target.mob.mind.assigned_role.title != job && needs_job)
+	if(needs_job && target.mob?.mind?.assigned_role?.title != job)
 		return
 	target.prefs.job_xp_list[job] += amount
-	target.prefs.check_levelup(job)
+	target.prefs.job_xp_unsaved = TRUE
+	// level ups talk to the database, so don't make whatever gave us the xp sleep
+	INVOKE_ASYNC(target.prefs, TYPE_PROC_REF(/datum/preferences, check_levelup), job)
 
-//this shouldn't normally ever be called unless your sadistic
+/// Removes job xp from a client. This shouldn't normally ever be called unless you're sadistic.
 /proc/remove_jobxp(client/target, amount, job, needs_job = TRUE)
-	if(!target || !target.prefs || !amount || !job)
+	if(!target?.prefs || !amount || !job)
 		return
-	if(target.mob.mind.assigned_role.title != job && needs_job)
+	if(needs_job && target.mob?.mind?.assigned_role?.title != job)
 		return
-	target.prefs.job_xp_list[job] -= amount
+	target.prefs.job_xp_list[job] = max(target.prefs.job_xp_list[job] - amount, 0)
+	target.prefs.job_xp_unsaved = TRUE
 
-//this proc handles adding xp to you but on a chance basis useful for super spamable stuff
+/// Same as add_jobxp but only has a chance to give the xp, useful for super spammable stuff.
 /proc/add_jobxp_chance(client/target, amount, job, chance, needs_job = TRUE)
-	if(!target || !target.prefs || !amount || !job)
-		return
-	if(target.mob.mind.assigned_role.title != job && needs_job)
-		return
 	if(prob(chance))
-		target.prefs.job_xp_list[job] += amount
-		target.prefs.check_levelup(job)
+		add_jobxp(target, amount, job, needs_job)
 
-/proc/add_jobxp_chance_delayed_check(client/target, amount, job, chance, needs_job = TRUE)
-	if(!target || !target.prefs || !amount || !job)
-		return
-	if(target.mob.mind.assigned_role.title != job && needs_job)
-		return
-	if(prob(chance))
-		target.prefs.job_xp_list[job] += amount
-
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(checklevelup_delayer), target, job), 1 SECONDS)
-
-/proc/checklevelup_delayer(client/target, job)
-	target.prefs.check_levelup(job)
+/// Saves the preferences of everyone that got job xp since their last save, including people that already disconnected.
+/proc/save_all_jobxp()
+	for(var/ckey in GLOB.preferences_datums)
+		var/datum/preferences/prefs = GLOB.preferences_datums[ckey]
+		if(!prefs?.job_xp_unsaved || !prefs.savefile)
+			continue
+		prefs.save_preferences()
+		CHECK_TICK

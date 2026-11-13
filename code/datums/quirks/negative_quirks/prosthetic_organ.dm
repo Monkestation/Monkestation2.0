@@ -3,6 +3,7 @@
 	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic! WARNING: This quirk might be extra dangerous on certain species."
 	icon = FA_ICON_GEARS
 	value = -3
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SKIP
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 3

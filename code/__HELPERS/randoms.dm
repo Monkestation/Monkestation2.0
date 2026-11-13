@@ -28,21 +28,22 @@
 			/obj/item/food/spaghetti,
 		)
 
-		var/list/unfiltered_allowed_food = subtypesof(/obj/item/food) - blocked
-		for(var/obj/item/food/food as anything in unfiltered_allowed_food)
-			if(!initial(food.icon_state)) //food with no icon_state should probably not be spawned
-				continue
-			allowed_food.Add(food)
+		allowed_food = get_sane_item_types(/obj/item/food) - blocked
 
 	return pick(allowed_food)
 
 ///Gets a random drink excluding the blocked type
 /proc/get_random_drink()
-	var/list/blocked = list(
-		/obj/item/reagent_containers/cup/soda_cans,
-		/obj/item/reagent_containers/cup/glass/bottle
+	var/static/list/allowed_drinks = list()
+
+	if(!LAZYLEN(allowed_drinks))
+		var/list/blocked = list(
+			/obj/item/reagent_containers/cup/glass/bottle
 		)
-	return pick(subtypesof(/obj/item/reagent_containers/cup/glass) - blocked)
+
+		allowed_drinks = get_sane_item_types(/obj/item/reagent_containers/cup/glass) + get_sane_item_types(/obj/item/reagent_containers/cup/soda_cans) - blocked
+
+	return pick(allowed_drinks)
 
 ///Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ion_num() //! is at the start to prevent us from changing say modes via get_message_mode()

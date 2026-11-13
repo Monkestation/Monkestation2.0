@@ -1,6 +1,8 @@
 ///Variant of bodypart_overlay for displaying emote overlays. See [/datum/emote/living/blush/run_emote] for an example on how to use one of these.
 /datum/bodypart_overlay/simple/emote
 	icon = 'icons/mob/human/emote_visuals.dmi'
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	overlay_flags = NONE
 	offset_location = UPPER_BODY
 	///The body zone to attach the overlay to, overlay won't be added if no bodypart can be found with this
 	var/attached_body_zone = BODY_ZONE_CHEST
@@ -11,7 +13,7 @@
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart
 
-/datum/bodypart_overlay/simple/emote/get_image(layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/simple/emote/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	var/image/image = ..()
 	feature_offset?.apply_offset(image)
 	return image
@@ -56,13 +58,11 @@
 /datum/bodypart_overlay/simple/emote/blush
 	icon_state = "blush"
 	draw_color = COLOR_BLUSH_PINK
-	layers = EXTERNAL_ADJACENT
 	offset_key = OFFSET_FACE
 	attached_body_zone = BODY_ZONE_HEAD
 
 /datum/bodypart_overlay/simple/emote/cry
 	icon_state = "tears"
 	draw_color = COLOR_DARK_CYAN
-	layers = EXTERNAL_ADJACENT
 	offset_key = OFFSET_FACE
 	attached_body_zone = BODY_ZONE_HEAD

@@ -14,6 +14,9 @@
 	. = ..()
 	if(amount)
 		credits = amount
+	if(isnan(credits))
+		stack_trace("NaN holochip created in [get_area_name(src)]!")
+		return INITIALIZE_HINT_QDEL
 	update_appearance()
 
 /obj/item/holochip/examine(mob/user)
@@ -126,3 +129,9 @@
 
 /obj/item/holochip/thousand
 	credits = 1000
+
+/obj/item/holochip/fivethousand
+	credits = 5000
+
+/obj/item/holochip/tenthousand
+	credits = 10000

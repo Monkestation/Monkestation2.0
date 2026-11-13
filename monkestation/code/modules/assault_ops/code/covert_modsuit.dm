@@ -36,12 +36,12 @@
 		/obj/item/melee/energy/sword,
 		/obj/item/shield/energy,
 	)
-	skins = list(
+	variants = list(
 		"stealth" = list(
 			MOD_ICON_OVERRIDE = 'monkestation/code/modules/assault_ops/icons/modsuits/mod.dmi',
 			MOD_WORN_ICON_OVERRIDE = 'monkestation/code/modules/assault_ops/icons/modsuits/wornmod.dmi',
 			HELMET_LAYER = NECK_LAYER,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -50,20 +50,20 @@
 				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
 			),
-			CHESTPLATE_FLAGS  = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				CAN_OVERSLOT = TRUE,

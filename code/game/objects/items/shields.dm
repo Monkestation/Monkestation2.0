@@ -1,6 +1,7 @@
 #define BATON_BASH_COOLDOWN (3 SECONDS)
 
 /obj/item/shield
+	abstract_type = /obj/item/shield
 	name = "shield"
 	icon = 'icons/obj/weapons/shields.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'

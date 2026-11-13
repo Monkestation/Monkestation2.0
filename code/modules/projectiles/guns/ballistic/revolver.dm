@@ -482,3 +482,22 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 
 /obj/item/gun/ballistic/revolver/takbok/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+
+// But he made one fatal slip, when he tried to match the ranger with the big iron on his hip.
+
+/obj/item/gun/ballistic/revolver/lone_wanderer
+	name = "\improper Big Iron"
+	desc = "No rest for the wicked."
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/handcannon
+	can_suppress = TRUE
+	fire_delay = 0.25
+	recoil = 0.2
+	wield_recoil = 0
+
+/obj/item/gun/ballistic/revolver/lone_wanderer/attack_self(mob/living/user)
+	unload_ammo(user)
+	magazine.top_off()
+	spin()
+	user.balloon_alert(user,"reloaded!")
+	return

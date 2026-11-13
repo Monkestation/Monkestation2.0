@@ -1,3 +1,7 @@
+#define STYLE_BULKY "Jumpsuit"
+#define STYLE_NEITHER "Neither"
+#define STYLE_SLEEK "Jumpskirt"
+
 //Basically the assistant suit
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
@@ -14,13 +18,15 @@
 	greyscale_colors = "#d15b1b#d15b1b#a747c0#d15b1b#d15b1b#612313"
 	/// Used for the "sleek" icon state variant of this suit
 	var/sleek_greyscale_colors = "#d15b1b#39393f#d15b1b#39393f#d15b1b"
+	/// Style used for the suit currently. Sleek or Bulky, ditto on helmet
+	var/style = STYLE_BULKY
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/under_plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 8 SECONDS
-	var/next_extinguish = 0
+	COOLDOWN_DECLARE(next_extinguish)
 	var/extinguish_cooldown = 10 SECONDS
 	var/extinguishes_left = 5
 
@@ -33,45 +39,96 @@
 	. = ..()
 	. += span_notice("There are [extinguishes_left] extinguisher charges left in this suit.")
 
-/obj/item/clothing/under/plasmaman/proc/handle_style_change(style)
-	if(style != PREF_SKIRT)
+/obj/item/clothing/under/plasmaman/examine_more(mob/user)
+	. = ..()
+	if(style != STYLE_NEITHER)
+		if(style == STYLE_BULKY)
+			. += span_notice(span_italics("You notice the suit can be pried loose of some pieces without any function loss."))
+		else
+			. += span_notice(span_italics("You notice the suit has some open slots for some metal that can be filled in."))
+
+/*
+ * Proc that actually handles which sprite to use. -> PREF_JUMPSUIT ("Jumpsuit") for Bulky (old) | PREF_JUMPSKIRT ("Jumpskirt") for Sleek (new)
+ * based on PREF defines, but using in-file defines for better readability
+ * for consistency's sake we keep bulky vars as the default ones to fall back on using initial().
+ */
+/obj/item/clothing/under/plasmaman/proc/handle_style_change(new_style)
+	if(new_style == STYLE_SLEEK)
+		icon_state = "plasmaman_suit_s"
+		worn_icon_state = "plasmaman_suit_s_w"
+		inhand_icon_state = "plasmaman_suit_s"
+		greyscale_config = /datum/greyscale_config/plasmaman_suit/sleek
+		greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/sleek
+		greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/sleek
+		greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/sleek
+		greyscale_colors = sleek_greyscale_colors
+	else
 		icon_state = initial(icon_state)
 		worn_icon_state = initial(worn_icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
-		return
-	icon_state = "plasmaman_suit_s"
-	worn_icon_state = "plasmaman_suit_s_w"
-	inhand_icon_state = "plasmaman_suit_s"
-	greyscale_config = /datum/greyscale_config/plasmaman_suit/sleek
-	greyscale_config_worn = /datum/greyscale_config/plasmaman_suit/worn/sleek
-	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/sleek
-	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/sleek
-	greyscale_colors = sleek_greyscale_colors
+		greyscale_config = initial(greyscale_config)
+		greyscale_config_worn = initial(greyscale_config_worn)
+		greyscale_config_inhand_left = initial(greyscale_config_inhand_left)
+		greyscale_config_inhand_right = initial(greyscale_config_inhand_right)
+		greyscale_colors = initial(greyscale_colors)
+	style = new_style
+	update_greyscale()
 	update_appearance(UPDATE_ICON)
+	return TRUE
 
-/obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/under/plasmaman/proc/suit_extinguish(mob/living/carbon/human/suitedfellow)
+	if(!istype(suitedfellow))
 		return
 
-	if(H.on_fire)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
-			H.extinguish_mob()
-			new /obj/effect/particle_effect/water(get_turf(H))
+	if(!suitedfellow.on_fire)
+		return
 
-/obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
-	..()
-	if (istype(E, /obj/item/extinguisher_refill))
-		if (extinguishes_left == 5)
+	if(!extinguishes_left)
+		suitedfellow.balloon_alert(suitedfellow, "no suit extinguish charges left!")
+		return
+
+	if(!COOLDOWN_FINISHED(src, next_extinguish))
+		return
+
+	if(HAS_TRAIT(suitedfellow, TRAIT_NO_EXTINGUISH))
+		to_chat(suitedfellow, span_danger("The suit releases a meager puff of water before it hails: The fire burning you is unable to be extinguished!"))
+		return
+
+	COOLDOWN_START(src, next_extinguish, extinguish_cooldown)
+	extinguishes_left--
+	suitedfellow.visible_message(
+		span_warning("[suitedfellow]'s suit automatically extinguishes [suitedfellow.p_them()]!"),
+		span_warning("Your suit automatically extinguishes you.")
+	)
+	suitedfellow.extinguish_mob()
+	new /obj/effect/particle_effect/water(get_turf(suitedfellow))
+
+/obj/item/clothing/under/plasmaman/attackby(obj/item/hitting_item, mob/living/user, params)
+	. = ..()
+	if(istype(hitting_item, /obj/item/extinguisher_refill))
+		if(extinguishes_left == 5)
 			to_chat(user, span_notice("The inbuilt extinguisher is full."))
 		else
 			extinguishes_left = 5
 			to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
-			qdel(E)
+			qdel(hitting_item)
+
+	if(hitting_item.tool_behaviour == TOOL_CROWBAR && style == STYLE_BULKY)
+		hitting_item.play_tool_sound(src)
+		user.balloon_alert(user, "removing parts...")
+		if(do_after(user, 3 SECONDS, src))
+			if(handle_style_change(STYLE_SLEEK))
+				new /obj/item/stack/sheet/iron(get_turf(src))
+		return
+
+	if(istype(hitting_item, /obj/item/stack/sheet/iron) && style == STYLE_SLEEK)
+		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		user.balloon_alert(user, "adding parts...")
+		var/obj/item/stack/sheet/iron/metal_stack = hitting_item
+		if(do_after(user, 3 SECONDS, src))
+			if(handle_style_change(STYLE_BULKY))
+				metal_stack.use(1)
+		return
 
 /obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
@@ -113,17 +170,15 @@
 	greyscale_colors = "#eeeeee#87502e#a747c0#eeeeee#eeeeee#747182"
 	sleek_greyscale_colors = "#6a84be#39393f#6a84be#39393f#6a84be"
 
-/obj/item/clothing/under/plasmaman/enviroslacks/handle_style_change(style)
+/obj/item/clothing/under/plasmaman/enviroslacks/handle_style_change(new_style)
 	. = ..()
-	if(style != PREF_SKIRT)
-		icon_state = initial(icon_state)
-		worn_icon_state = initial(worn_icon_state)
-		inhand_icon_state = initial(inhand_icon_state)
-		return
+	if(new_style == STYLE_BULKY)
+		return TRUE
 	icon_state = "tie"
 	worn_icon_state = "tie_w"
 	inhand_icon_state = "tie"
 	update_appearance(UPDATE_ICON)
+	return TRUE
 
 /obj/item/clothing/under/plasmaman/chaplain
 	name = "chaplain's plasma envirosuit"
@@ -149,9 +204,10 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
+	style = STYLE_NEITHER
 
-/obj/item/clothing/under/plasmaman/curator/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/curator/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/under/plasmaman/janitor
 	name = "janitor's plasma envirosuit"
@@ -180,9 +236,10 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/mime
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/mime
 	greyscale_colors = "#eeeeee#39393f#eeeeee#eeeeee#eeeeee#747182"
+	style = STYLE_NEITHER
 
-/obj/item/clothing/under/plasmaman/mime/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/mime/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/under/plasmaman/clown
 	name = "clown envirosuit"
@@ -193,31 +250,44 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_suit/inhand_left/clown
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_suit/inhand_right/clown
 	greyscale_colors = "#ffc0ff#ffc0ff"
+	style = STYLE_NEITHER
 
-/obj/item/clothing/under/plasmaman/clown/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/clown/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/under/plasmaman/clown/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
-/obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/under/plasmaman/clown/suit_extinguish(mob/living/carbon/human/suitedfellow)
+	if(!istype(suitedfellow))
 		return
 
-	if(H.on_fire)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit spews space lube everywhere!"),span_warning("Your suit spews space lube everywhere!"))
-			H.extinguish_mob()
-			var/datum/effect_system/fluid_spread/foam/foam = new
-			var/datum/reagents/foamreagent = new /datum/reagents(15)
-			foamreagent.add_reagent(/datum/reagent/lube, 15)
-			foam.set_up(4, holder = src, location = H.loc, carry = foamreagent)
-			foam.start() //Truly terrifying.
+	if(!suitedfellow.on_fire)
+		return
+
+	if(!extinguishes_left)
+		suitedfellow.balloon_alert(suitedfellow, "no suit extinguish charges left!")
+		return
+
+	if(!COOLDOWN_FINISHED(src, next_extinguish))
+		return
+
+	if(!suitedfellow.extinguish_mob())
+		to_chat(suitedfellow, span_danger("The suit releases a meager puff of space lube before it hails: The fire burning you is unable to be extinguished!"))
+		return
+
+	COOLDOWN_START(src, next_extinguish, extinguish_cooldown)
+	extinguishes_left--
+	suitedfellow.visible_message(
+		span_warning("[suitedfellow]'s suit spews space lube everywhere!"),
+		span_warning("Your suit spews space lube everywhere!")
+	)
+	var/datum/effect_system/fluid_spread/foam/foam = new
+	var/datum/reagents/foamreagent = new /datum/reagents(15)
+	foamreagent.add_reagent(/datum/reagent/lube, 15)
+	foam.set_up(4, holder = src, location = suitedfellow.loc, carry = foamreagent)
+	foam.start() //Truly terrifying.
 
 /obj/item/clothing/under/plasmaman/bitrunner
 	name = "bitrunner envirosuit"
@@ -253,6 +323,11 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
+	style = STYLE_NEITHER
 
-/obj/item/clothing/under/plasmaman/plasma_bun/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/plasma_bun/handle_style_change(new_style)
+	return FALSE
+
+#undef STYLE_SLEEK
+#undef STYLE_NEITHER
+#undef STYLE_BULKY

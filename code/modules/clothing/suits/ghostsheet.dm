@@ -2,6 +2,7 @@
 	name = "ghost sheet"
 	desc = "The hands float by themselves, so it's extra spooky."
 	icon_state = "ghost_sheet"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	inhand_icon_state = null
 	throwforce = 0
 	throw_speed = 1

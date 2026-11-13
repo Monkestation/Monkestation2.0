@@ -9,6 +9,9 @@
 "p" = (
 /turf/open/misc/asteroid/airless/tospace,
 /area/template_noop)
+"q" = (
+/turf/closed/mineral/random/asteroid/tospace/highchance,
+/area/template_noop)
 "T" = (
 /turf/open/space/basic,
 /area/template_noop)
@@ -26,7 +29,7 @@ T
 a
 a
 a
-a
+q
 a
 a
 a
@@ -34,27 +37,27 @@ a
 (3,1,1) = {"
 a
 a
-a
+q
 p
-a
+q
 a
 a
 "}
 (4,1,1) = {"
 a
-a
+q
 p
 e
 p
-a
+q
 a
 "}
 (5,1,1) = {"
 a
 a
-a
+q
 p
-a
+q
 a
 a
 "}
@@ -62,7 +65,7 @@ a
 a
 a
 a
-a
+q
 a
 a
 a

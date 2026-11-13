@@ -318,6 +318,7 @@
 		"Skeleton" = /datum/species/skeleton,
 		"Vampire" = /datum/species/vampire,
 		"Snailperson" = /datum/species/snail,
+		"Shadekin" = /datum/species/shadekin,
 	)
 
 /datum/nanite_program/sensor/species/register_extra_settings()

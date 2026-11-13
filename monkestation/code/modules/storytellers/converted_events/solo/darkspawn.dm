@@ -27,7 +27,6 @@
 	required_enemies = 5
 	enemy_roles = list(
 		JOB_AI,
-		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
@@ -35,7 +34,6 @@
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 		JOB_CHIEF_ENGINEER,
-		JOB_SECURITY_ASSISTANT,
 		JOB_BRIG_PHYSICIAN,
 	)
 	base_antags = 2

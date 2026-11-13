@@ -12,10 +12,8 @@
 	var/obj/item/clothing/head/helmet/space/plasmaman/envirohelmet = H.get_item_by_slot(ITEM_SLOT_HEAD)
 	var/obj/item/clothing/under/plasmaman/envirosuit = H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	envirohelmet.handle_style_change(H.jumpsuit_style)
-	envirohelmet.update_greyscale()
 	H.update_worn_head()
 	envirosuit.handle_style_change(H.jumpsuit_style)
-	envirosuit.update_greyscale()
 	H.update_worn_undersuit()
 
 /datum/outfit/plasmaman/security

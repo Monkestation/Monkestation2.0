@@ -125,6 +125,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isteratoma(A) (is_species(A, /datum/species/teratoma))
 #define isapid(A) (is_species(A, /datum/species/apid))
 #define issimianspecies(A) (is_species(A, /datum/species/monkey/simian))
+#define isshadekin(A) (is_species(A, /datum/species/shadekin))
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
@@ -365,3 +366,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define isslugcat(A) (istype(A, /mob/living/basic/slugcat))
 
 #define isvirusdish(A) (istype(A, /obj/item/weapon/virusdish))
+
+#define is_area_virtual(checked_area) (GLOB.virtual_areas && GLOB.virtual_areas[(checked_area).type])

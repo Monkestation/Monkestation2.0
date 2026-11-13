@@ -4,6 +4,7 @@
  * Printed out by protolathes. Screwdriver to complete the shell.
  */
 /obj/item/shell
+	abstract_type = /obj/item/shell
 	name = "assembly"
 	desc = "A shell assembly that can be completed by screwdrivering it."
 	icon = 'icons/obj/science/circuits.dmi'

@@ -4,6 +4,7 @@
  * Everything that is a subclass of this counts as cheese for regal rats.
  */
 /obj/item/food/cheese
+	abstract_type = /obj/item/food/cheese
 	name = "the concept of cheese"
 	desc = "This probably shouldn't exist."
 	tastes = list("cheese" = 1)

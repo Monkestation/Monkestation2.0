@@ -55,7 +55,7 @@
 		effect_a.add_overlay(swap_b.photograph())
 		effect_b.linked_dist = effect_a
 		effect_b.add_overlay(swap_a.photograph())
-		effect_b.set_light(4, 30, "#c9fff5")
+		effect_b.set_light(l_outer_range = 4, l_power = 30, l_color = "#c9fff5")
 		LAZYADD(effects, effect_a)
 		LAZYADD(effects, effect_b)
 

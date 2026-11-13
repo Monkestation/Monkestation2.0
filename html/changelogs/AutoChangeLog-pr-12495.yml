@@ -1,5 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - balance: "Nuke disk guaranteed nukeop spawn now respects maximum antags. And if fails will try again in 5 minutes."
-  - bugfix: "Nuke disk no longer tracks time at half the rate of intended"

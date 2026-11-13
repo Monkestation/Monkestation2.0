@@ -5,6 +5,7 @@
  * as much as possible to the components/elements system
  */
 /atom
+	abstract_type = /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
@@ -84,8 +85,15 @@
 	var/light_power = 1
 	///Hexadecimal RGB string representing the colour of the light. White by default.
 	var/light_color = COLOR_WHITE
+	/// Angle of light to show in light_dir
+	/// 360 is a circle, 90 is a cone, etc.
+	var/light_angle = 360
+	/// What angle to project light in
+	var/light_dir = NORTH
 	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
 	var/light_on = TRUE
+	/// How many tiles "up" this light is. 1 is typical, should only really change this if it's a floor light
+	var/light_height = LIGHTING_HEIGHT
 	///Bitflags to determine lighting-related atom properties.
 	var/light_flags = NONE
 	///Our light source. Don't fuck with this directly unless you have a good reason!
@@ -112,6 +120,9 @@
 	var/base_pixel_z = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
+
+	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
+	var/spawn_blacklisted = FALSE
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE

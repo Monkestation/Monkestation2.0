@@ -283,12 +283,16 @@
 
 #undef VERY_LATE_ARRIVAL_TOAST_PROB
 
+/// Return the outfit to use
+/datum/job/proc/get_outfit(visual_only)
+	return outfit
+
 /mob/living/proc/dress_up_as_job(datum/job/equipping, visual_only = FALSE)
 	return
 
 /mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only = FALSE, datum/preferences/used_pref)
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
-	equip_outfit_and_loadout(equipping.outfit, used_pref, visual_only, equipping)
+	equip_outfit_and_loadout(equipping.get_outfit(visual_only), used_pref, visual_only, equipping)
 
 /datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(!human)
@@ -581,13 +585,17 @@
 			else
 				spawn_points_not_picked += spawn_point
 
-	var/obj/effect/landmark/start/picked = length(spawn_points_not_picked) ? pick(spawn_points_not_picked) : pick(spawn_points_picked)
+	if(.)
+		return
 
-	. = picked
-	picked.used = TRUE
-
-	if(!.)
+	var/list/spawn_pool = length(spawn_points_not_picked) ? spawn_points_not_picked : spawn_points_picked
+	if(!length(spawn_pool))
 		log_world("Couldn't find a round start spawn point for [title]")
+		return
+
+	var/obj/effect/landmark/start/picked = pick(spawn_pool)
+	picked.used = TRUE
+	return picked
 
 
 /// Finds a valid latejoin spawn point, checking for events and special conditions.

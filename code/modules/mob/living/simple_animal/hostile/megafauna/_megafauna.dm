@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile/megafauna
+	abstract_type = /mob/living/simple_animal/hostile/megafauna
 	name = "boss of this gym"
 	desc = "Attack the weak point for massive damage."
 	health = 1000

@@ -1,5 +1,6 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/instrument
+	abstract_type = /obj/item/instrument
 	name = "generic instrument"
 	force = 10
 	max_integrity = 100

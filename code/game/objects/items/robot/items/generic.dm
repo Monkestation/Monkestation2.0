@@ -13,6 +13,7 @@
 #define CHARGER_MODE_CHARGE "charge"
 
 /obj/item/borg
+	abstract_type = /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
 /// Cost to use the stun arm

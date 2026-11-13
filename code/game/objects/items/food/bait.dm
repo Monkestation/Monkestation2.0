@@ -1,4 +1,5 @@
 /obj/item/food/bait
+	abstract_type = /obj/item/food/bait
 	name = "this is bait"
 	desc = "you got baited."
 	icon = 'icons/obj/fishing.dmi'

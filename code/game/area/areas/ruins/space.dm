@@ -2,7 +2,7 @@
 
 /area/ruin/space
 	has_gravity = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/space/unpowered
 	always_unpowered = TRUE
@@ -20,7 +20,7 @@
 // Ruin solars define, /area/solars was moved to /area/station/solars, causing the solars specific areas to lose their properties
 /area/ruin/space/solars
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -299,7 +299,7 @@
 	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	sound_environment = SOUND_AREA_SPACE
 
 /area/ruin/space/ancientstation/charlie/storage
@@ -558,7 +558,7 @@
 /area/ruin/space/djstation/solars
 	name = "\improper DJ Station Solars"
 	icon_state = "DJ"
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	has_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/djstation/service
@@ -601,7 +601,7 @@
 
 /area/ruin/space/has_grav/hellfactoryoffice
 	name = "\improper Hell Factory Office"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT //who decided blobs should be allowed, i don't know, but it's funny
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | NOTELEPORT //who decided blobs should be allowed, i don't know, but it's funny
 
 //Ruin of Spinward Smoothies
 

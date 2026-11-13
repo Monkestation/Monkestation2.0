@@ -5,7 +5,7 @@
 
 # byond version
 export BYOND_MAJOR=516
-export BYOND_MINOR=1663
+export BYOND_MINOR=1687
 
 #rust_g repo
 export RUST_G_REPO="Monkestation/rust-g"

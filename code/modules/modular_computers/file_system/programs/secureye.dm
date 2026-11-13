@@ -30,7 +30,7 @@
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/camera/cam_screen
 
-	///Internal tracker used to find a specific person and keep them on cameras.
+	///Internal tracker used to find a specific person and keep them on cameras, only used if this is a 'spying' console.
 	var/datum/trackable/internal_tracker
 
 ///Syndicate subtype that has no access restrictions and is available on Syndinet
@@ -121,15 +121,21 @@
 		return
 	switch(action)
 		if("switch_camera")
+			var/obj/machinery/camera/active_camera = camera_ref?.resolve()
+			if(!spying && active_camera)
+				active_camera.on_stop_watching(src)
+
+			if(!spying)
+				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
+
 			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 			if(selected_camera)
 				camera_ref = WEAKREF(selected_camera)
 			else
 				camera_ref = null
-			if(!spying)
-				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
-			if(isnull(camera_ref))
 				return TRUE
+			if(!spying)
+				selected_camera.on_start_watching(src)
 			if(internal_tracker)
 				internal_tracker.reset_tracking()
 
@@ -173,6 +179,9 @@
 	cam_screen.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
+		var/obj/machinery/camera/active_camera = camera_ref?.resolve()
+		if(!spying && active_camera)
+			active_camera.on_stop_watching(src)
 		camera_ref = null
 		last_camera_turf = null
 		if(!spying)

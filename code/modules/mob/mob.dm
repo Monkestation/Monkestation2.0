@@ -33,6 +33,7 @@
 	persistent_client?.set_mob(null)
 
 	unset_machine()
+	active_storage?.hide_contents(src)
 	clear_fullscreens()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
@@ -702,13 +703,20 @@ GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", "IC", /atom)
 		return
 
 	// check to see if their face is blocked or, if not, a signal blocks it
-	if(examined_mob.is_face_visible() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
+	if(examined_mob.can_eye_contact() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 0.3 SECONDS) // so the examine signal has time to fire and this will print after
 
-	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
+	if(!imagined_eye_contact && can_eye_contact() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 3)
+
+/// Checks if we can make eye contact or someone can make eye contact with us
+/mob/living/proc/can_eye_contact()
+	return TRUE
+
+/mob/living/carbon/can_eye_contact()
+	return !(obscured_slots & HIDEFACE)
 
 /**
  * Called by using Activate Held Object with an empty hand/limb
@@ -893,7 +901,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
  * - cycle_dir: A cardinal (NORTH, SOUTH, EAST, WEST) direction. Defaults to WEST, which is forwards.
  * - climb: If TRUE, wrapping will also shift rows/columns.
  * - silent: If applicable and TRUE, will output messages to the mob.
- * - intial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
+ * - initial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
  */
 /mob/proc/cycle_hand(cycle_dir = WEST, climb = TRUE, silent = FALSE, initial_index = active_hand_index)
 	if(!(cycle_dir in GLOB.cardinals))
@@ -973,13 +981,10 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
-		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots["[previous_index]"]
-		if(!isnull(held_location))
-			held_location.update_appearance()
-		held_location = hud_used.hand_slots["[held_index]"]
-		if(!isnull(held_location))
-			held_location.update_appearance()
+		// update the previous handset and the current handset
+		for(var/hand_index in list(previous_index, get_offhand_index(previous_index), held_index, get_offhand_index(held_index)))
+			var/atom/movable/screen/inventory/hand/held_location = hud_used.hand_slots["[hand_index]"]
+			held_location?.update_appearance()
 	return TRUE
 
 /mob/proc/activate_hand(selected_hand)
@@ -1538,7 +1543,7 @@ GAME_VERB(/mob, open_language_menu_verb, "Open Language Menu", "IC")
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
-///Apply a proper movespeed modifier based on items we have equipped
+/// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = 0
 	var/immutable_speedies = 0

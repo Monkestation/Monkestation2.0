@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/jacket
+	abstract_type = /obj/item/clothing/suit/jacket
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	allowed = list(
@@ -15,6 +16,9 @@
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/toggle/jacket
+	abstract_type = /obj/item/clothing/suit/toggle/jacket
 
 /obj/item/clothing/suit/toggle/jacket/sweater
 	name = "sweater jacket"
