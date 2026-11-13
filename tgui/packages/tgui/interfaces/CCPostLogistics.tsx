@@ -23,6 +23,7 @@ type SupplyPackage = {
   name: string;
   description: string;
   category: string;
+  subcategory: string;
   cost: number;
   round_limit?: number;
   contents: SupplyPackageContent[];
@@ -348,7 +349,14 @@ const RequisitionsTab = (props: {
     'Administration',
   );
 
-  const [priceAscending, setPriceAscending] = useLocalState('ccpostPriceAscending', true);
+  const [sortMode, setSortMode] = useLocalState(
+    'ccpostSortMode',
+    'priceAscending',
+  );
+  const [selectedSubcategory, setSelectedSubcategory] = useLocalState(
+    'ccpostSubcategory',
+    'All',
+  );
   const [packageSearch, setPackageSearch] = useLocalState('ccpostPackageSearch', '');
   const [expandedPackageId, setExpandedPackageId] = useLocalState(
     'expandedPackageId',
@@ -407,9 +415,31 @@ const RequisitionsTab = (props: {
     ? selectedCategory
     : categories[0];
 
-  const activeCategoryPackages = catalog.filter(
-    (pack) => pack.category === activeCategory && (!packageSearch.trim() || `${pack.name} ${pack.description}`.toLowerCase().includes(packageSearch.trim().toLowerCase())),
-  ).sort((a, b) => (priceAscending ? a.cost - b.cost : b.cost - a.cost) || a.name.localeCompare(b.name));
+  const categoryPackages = catalog.filter((pack) => pack.category === activeCategory);
+  const subcategories = [
+    'All',
+    ...Array.from(new Set(categoryPackages.map((pack) => pack.subcategory || 'General'))).sort(),
+  ];
+  const activeSubcategory = subcategories.includes(selectedSubcategory)
+    ? selectedSubcategory
+    : 'All';
+  const search = packageSearch.trim().toLowerCase();
+  const activeCategoryPackages = categoryPackages
+    .filter((pack) => {
+      const group = pack.subcategory || 'General';
+      const searchText = `${pack.name} ${pack.description} ${group} ${pack.contents?.map((item) => item.name).join(' ') || ''}`.toLowerCase();
+      return (activeSubcategory === 'All' || group === activeSubcategory)
+        && (!search || searchText.includes(search));
+    })
+    .sort((a, b) => {
+      if (sortMode === 'name') {
+        return a.name.localeCompare(b.name);
+      }
+      if (sortMode === 'priceDescending') {
+        return b.cost - a.cost || a.name.localeCompare(b.name);
+      }
+      return a.cost - b.cost || a.name.localeCompare(b.name);
+    });
 
   const activeCategoryRecallLocked =
     activeCategory === 'Medical' && Boolean(medicalRecallActive);
@@ -426,7 +456,14 @@ const RequisitionsTab = (props: {
   return (
     <Section
       title={`Requisitions | ${availableAllocation} CU available`}
-      buttons={<Button icon={priceAscending ? "sort-amount-down-alt" : "sort-amount-down"} onClick={() => setPriceAscending(!priceAscending)}>{priceAscending ? "Price: Low to High" : "Price: High to Low"}</Button>}
+      buttons={
+        <Button
+          icon="sort"
+          onClick={() => setSortMode(sortMode === 'priceAscending' ? 'priceDescending' : sortMode === 'priceDescending' ? 'name' : 'priceAscending')}
+        >
+          {sortMode === 'name' ? 'Name: A-Z' : sortMode === 'priceAscending' ? 'Price: Low to High' : 'Price: High to Low'}
+        </Button>
+      }
     >
       {activeShipments >= maxActiveShipments && (
         <NoticeBox danger>
@@ -480,7 +517,11 @@ const RequisitionsTab = (props: {
                   key={category}
                   icon={categoryLocked ? 'lock' : undefined}
                   selected={activeCategory === category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => {
+                    setSelectedCategory(category);
+                    setSelectedSubcategory('All');
+                    setExpandedPackageId('');
+                  }}
                 >
                   {categoryLabel}
                 </Tabs.Tab>
@@ -504,6 +545,21 @@ const RequisitionsTab = (props: {
               ) : undefined
             }
           >
+            <Box mb={1}>
+              {subcategories.map((subcategory) => (
+                <Button
+                  key={subcategory}
+                  selected={activeSubcategory === subcategory}
+                  onClick={() => {
+                    setSelectedSubcategory(subcategory);
+                    setExpandedPackageId('');
+                  }}
+                >
+                  {subcategory}
+                </Button>
+              ))}
+              <Box color="label" mt={0.5}>{activeCategoryPackages.length} packages available</Box>
+            </Box>
             <Stack vertical>
               {!activeCategoryPackages.length && <Box color="label">No packages match this search.</Box>}
               {activeCategoryPackages.map((pack) => {

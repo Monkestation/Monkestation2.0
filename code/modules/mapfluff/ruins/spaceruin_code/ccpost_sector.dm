@@ -2352,6 +2352,9 @@
 	var/active_followup_origin_title
 	var/active_followup_start_status
 	var/followup_chain_step = 0
+	var/deferred_followup_step = 0
+	var/deferred_denial_title
+	var/deferred_denial_status
 
 	/// Destroyed installations are permanently removed from normal rotation.
 	var/destroyed = FALSE
@@ -2595,6 +2598,9 @@
 /datum/ccpost_sector_network
 	/// Prevents several displays from independently starting network timers.
 	var/started = FALSE
+	var/staffing_check_timer
+	var/intake_staffed = FALSE
+	var/assignment_fax_sent = FALSE
 
 	/// Every Remote Status Display connected to this shared network.
 	var/list/registered_displays = list()
@@ -2774,6 +2780,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		if(administrative_paused_at)
 			return
 	administrative_paused_at = max(world.time, 1)
+	intake_staffed = FALSE
 	if(sector_message_timer)
 		deltimer(sector_message_timer)
 		sector_message_timer = null
@@ -2801,10 +2808,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			comms_unavailable_since[owner_key] += duration
 		administrative_paused_at = 0
 	if(started)
-		if(!sector_message_timer)
-			schedule_next_sector_message(1 MINUTES, 2 MINUTES)
-		if(!sector_paperwork_timer && !active_sector_paperwork)
-			schedule_next_sector_paperwork(2 MINUTES, 4 MINUTES)
+		update_sector_staffing()
 		dispatch_sector_work()
 	refresh_comms_terminals()
 
@@ -2837,9 +2841,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 	schedule_next_sector_installation_update()
 
-	schedule_next_sector_message()
-
-	schedule_next_sector_paperwork()
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(schedule_assignment_fax)))
+	check_sector_staffing()
 
 
 /// Records the most recent authenticated contact from a remote installation.
@@ -2934,7 +2937,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		if(QDELETED(terminal) || terminal.sector_session_mind != owner || (terminal.machine_stat & (BROKEN | NOPOWER)))
 			continue
 		var/mob/living/carbon/human/person = owner.current
-		if(person?.client && terminal.sector_session_valid_for(person))
+		if(ishuman(person) && person.client && person.stat != DEAD && terminal.sector_session_valid_for(person))
 			return terminal
 	return null
 
@@ -3052,7 +3055,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		if(QDELETED(terminal) || (terminal.machine_stat & (BROKEN | NOPOWER)) || !terminal.sector_session_mind)
 			continue
 		var/mob/living/carbon/human/person = terminal.sector_session_mind.current
-		if(!person?.client || !terminal.sector_session_valid_for(person))
+		if(!ishuman(person) || !person.client || person.stat == DEAD || !terminal.sector_session_valid_for(person))
 			continue
 		var/key = REF(terminal.sector_session_mind)
 		var/load = sector_workload_points(terminal.sector_session_mind)
@@ -3127,12 +3130,123 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	schedule_comms_recovery_check()
 	refresh_comms_terminals()
 
+/// Staffed intake is independent of Tasking sign-in and existing work ownership.
+/datum/ccpost_sector_network/proc/has_sector_staff()
+	for(var/obj/machinery/computer/ccpost_sector_comms/terminal as anything in registered_comms_terminals)
+		if(QDELETED(terminal) || (terminal.machine_stat & (BROKEN | NOPOWER)) || !terminal.sector_session_mind)
+			continue
+		var/mob/living/carbon/human/person = terminal.sector_session_mind.current
+		if(ishuman(person) && person.client && person.stat != DEAD && terminal.sector_session_valid_for(person))
+			return TRUE
+	return FALSE
+
+/datum/ccpost_sector_network/proc/can_generate_sector_work()
+	return administrative_server_online() && has_sector_staff()
+
+/// Poll for SSD, death, terminal outages and reconnection without per-tick work.
+/datum/ccpost_sector_network/proc/check_sector_staffing()
+	staffing_check_timer = null
+	update_sector_staffing()
+	if(!GLOB.ccpost_outpost_signal_lost)
+		staffing_check_timer = addtimer(CALLBACK(src, PROC_REF(check_sector_staffing)), 5 SECONDS, TIMER_STOPPABLE)
+
+/datum/ccpost_sector_network/proc/update_sector_staffing()
+	var/staffed = can_generate_sector_work()
+	if(!staffed)
+		intake_staffed = FALSE
+		if(sector_message_timer)
+			deltimer(sector_message_timer)
+			sector_message_timer = null
+		if(sector_paperwork_timer)
+			deltimer(sector_paperwork_timer)
+			sector_paperwork_timer = null
+		return
+	if(intake_staffed)
+		return
+	intake_staffed = TRUE
+	if(!sector_message_timer)
+		schedule_next_sector_message(1 MINUTES, 2 MINUTES)
+	if(!sector_paperwork_timer && !active_sector_paperwork)
+		schedule_next_sector_paperwork(2 MINUTES, 4 MINUTES)
+	// Resume only existing cases, with fresh staggered delays and current conditions.
+	for(var/datum/ccpost_sector_installation/installation as anything in sector_installations)
+		if(QDELETED(installation) || installation.destroyed)
+			continue
+		if(installation.deferred_followup_step && installation.active_followup_origin_code)
+			addtimer(CALLBACK(src, PROC_REF(issue_installation_followup), installation.installation_code, installation.active_followup_origin_code, installation.deferred_followup_step), rand(1 MINUTES, 3 MINUTES), TIMER_STOPPABLE)
+			installation.deferred_followup_step = 0
+		if(installation.deferred_denial_title)
+			addtimer(CALLBACK(src, PROC_REF(issue_denial_followup), installation.installation_code, installation.deferred_denial_title, installation.deferred_denial_status), rand(1 MINUTES, 3 MINUTES), TIMER_STOPPABLE)
+			installation.deferred_denial_title = null
+			installation.deferred_denial_status = null
+	dispatch_sector_work()
+
+/// Send the approved assignment notice once per shift, irrespective of staffing.
+/datum/ccpost_sector_network/proc/schedule_assignment_fax()
+	var/delay = 2 MINUTES
+	if(SSticker.round_start_time)
+		delay = max(1, SSticker.round_start_time + 2 MINUTES - world.time)
+	addtimer(CALLBACK(src, PROC_REF(send_assignment_fax)), delay)
+
+/datum/ccpost_sector_network/proc/send_assignment_fax()
+	if(assignment_fax_sent || GLOB.ccpost_outpost_signal_lost)
+		return
+	assignment_fax_sent = TRUE
+	var/list/command_areas = list(
+		/area/station/command/heads_quarters/captain,
+		/area/station/command/heads_quarters/hop,
+		/area/station/command/heads_quarters/hos,
+		/area/station/command/heads_quarters/ce,
+		/area/station/command/heads_quarters/cmo,
+		/area/station/command/heads_quarters/rd,
+		/area/station/cargo/quartermaster,
+	)
+	var/list/sent_areas = list()
+	for(var/obj/machinery/fax/fax as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
+		if(QDELETED(fax) || !is_station_level(fax.z) || !fax.is_operational || fax.jammed || fax.recieve_notifies_admins)
+			continue
+		var/area/fax_area = get_area(fax)
+		var/recipient_type
+		for(var/area_type in command_areas)
+			if(istype(fax_area, area_type))
+				recipient_type = area_type
+				break
+		if(!recipient_type || (recipient_type in sent_areas))
+			continue
+		sent_areas += recipient_type
+		var/obj/item/paper/letter = new(fax)
+		letter.name = "CCL-001 - Sector Liaison Assignment"
+		var/report = ccpost_paper_header()
+		report += "<center><b>NANOTRASEN CENTRAL COMMAND</b><br>OFFICE OF SECTOR ADMINISTRATION</center>"
+		report += ccpost_paper_document_heading("Sector Liaison Assignment", "CCL-001", "Official Correspondence")
+		report += ccpost_paper_value_field("To", "Station Command Personnel")
+		report += ccpost_paper_value_field("From", "Nina C. Trayson, Central Command Official")
+		report += ccpost_paper_value_field("Position", "Liaison Manager")
+		report += "<br>Dear Command Personnel,<br><br>"
+		report += "A Central Command Liaison Outpost has been assigned to your operational sector for the duration of this shift.<br><br>"
+		report += "Our Liaisons are here to support your station through administrative oversight, departmental reviews, logistical assistance and communication with Central Command.<br><br>"
+		report += "Please remember that <b>Liaisons are not part of your station's chain of command.</b> They may request documentation, arrange meetings, conduct assessments and offer assistance, but they cannot issue orders, overrule Command decisions or direct your personnel.<br><br>"
+		report += "Liaisons are expected to work <b>with</b> station Command, not above it. Requests should be made professionally and respectfully, and cooperation is encouraged wherever reasonably possible.<br><br>"
+		report += "<b>Should a Liaison overstep their authority, make unreasonable demands or otherwise interfere with station operations, you are under no obligation to entertain their requests.</b> Command personnel may disregard such requests and, where necessary, report the matter to Central Command.<br><br>"
+		report += "Should you require assistance, have concerns or simply wish to meet your assigned Liaisons, please contact the outpost through official communications channels.<br><br>"
+		report += "We look forward to a pleasant and productive working relationship.<br><br>"
+		report += "<b>Kind regards,<br>Nina C. Trayson</b><br>Central Command Official<br>Liaison Manager<br>NanoTrasen Central Command<br><br>"
+		report += "<i>Automated correspondence. No acknowledgement required.</i>"
+		letter.add_raw_text(report)
+		letter.update_appearance()
+		fax.receive(letter, "NanoTrasen Central Command - Nina C. Trayson")
+	log_game("CCPost: CCL-001 dispatched to [length(sent_areas)] station Command office fax(es).")
+
 /datum/ccpost_sector_network/proc/schedule_next_sector_message(
 	minimum_delay = 3 MINUTES,
 	maximum_delay = 6 MINUTES
 )
 	if(sector_message_timer)
 		deltimer(sector_message_timer)
+		sector_message_timer = null
+
+	if(!can_generate_sector_work())
+		return
 
 	var/delay = rand(minimum_delay, maximum_delay)
 	delay = round(delay * get_sector_message_interval_multiplier(), 1 SECONDS)
@@ -3148,6 +3262,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 )
 	if(sector_paperwork_timer)
 		deltimer(sector_paperwork_timer)
+		sector_paperwork_timer = null
+
+	if(!can_generate_sector_work())
+		return
 
 	var/delay = rand(minimum_delay, maximum_delay)
 	delay = round(delay * get_sector_paperwork_interval_multiplier(), 1 SECONDS)
@@ -3227,7 +3345,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /datum/ccpost_sector_network/proc/issue_sector_paperwork()
 	sector_paperwork_timer = null
-	if(!administrative_server_online())
+	if(!can_generate_sector_work())
 		return
 
 	// One physical document slot means one active paperwork request at a time.
@@ -3722,6 +3840,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	installation.active_followup_origin_title = null
 	installation.active_followup_start_status = null
 	installation.followup_chain_step = 0
+	installation.deferred_followup_step = 0
 
 
 /// Human-readable follow-up state for Liaison-facing records. Internal chain
@@ -3757,6 +3876,10 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			"The continuing matter associated with [installation.active_followup_origin_title] was superseded when the installation entered CRITICAL status."
 		)
 		clear_installation_followup(installation)
+		return
+
+	if(!can_generate_sector_work())
+		installation.deferred_followup_step = step
 		return
 
 	installation.followup_chain_step = step
@@ -3967,6 +4090,12 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(!installation || installation.destroyed)
 		return
 
+	if(!can_generate_sector_work())
+		// One deferred denial follow-up per installation; no unattended backlog.
+		installation.deferred_denial_title = request_title
+		installation.deferred_denial_status = denied_status
+		return
+
 	var/followup_priority = CCPOST_PRIORITY_ROUTINE
 
 	// Match the follow-up priority to the installation's condition when the
@@ -4023,7 +4152,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /datum/ccpost_sector_network/proc/maybe_issue_installation_aid_request(datum/ccpost_sector_installation/installation)
-	if(!installation || installation.destroyed)
+	if(!can_generate_sector_work() || !installation || installation.destroyed)
 		return FALSE
 
 	if(is_installation_green(installation))
@@ -4075,7 +4204,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	datum/ccpost_sector_installation/installation,
 	datum/ccpost_sector_message_template/template
 )
-	if(!installation || !template)
+	if(!installation || !template || !can_generate_sector_work())
 		return null
 
 	var/message_code = "CC-SC-[next_sector_message_number]"
@@ -4149,7 +4278,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /datum/ccpost_sector_network/proc/issue_sector_message()
 	sector_message_timer = null
-	if(!administrative_server_online())
+	if(!can_generate_sector_work())
 		return
 
 	var/list/eligible_templates = get_eligible_sector_message_templates()
@@ -4248,8 +4377,9 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		chosen_template
 	)
 
-	notify_comms_terminals(new_message)
-	maybe_start_installation_followup(new_message)
+	if(new_message)
+		notify_comms_terminals(new_message)
+		maybe_start_installation_followup(new_message)
 
 	schedule_next_sector_message()
 
@@ -4507,6 +4637,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	GLOB.ccpost_sector_network.schedule_comms_recovery_check()
 	sector_session_mind = null
 	sector_session_name = null
+	GLOB.ccpost_sector_network.update_sector_staffing()
 
 /obj/machinery/computer/ccpost_sector_comms/proc/logout_sector_session()
 	if(!sector_session_mind)
@@ -4530,6 +4661,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	sector_session_name = employee.employee_name
 	network.comms_last_active_at[REF(sector_session_mind)] = world.time
 	network.comms_unavailable_since -= REF(sector_session_mind)
+	network.update_sector_staffing()
 	network.dispatch_sector_work()
 	network.rebalance_sector_correspondence()
 	SStgui.update_uis(src)

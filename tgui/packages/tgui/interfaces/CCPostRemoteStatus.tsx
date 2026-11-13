@@ -3,6 +3,7 @@ import { useBackend, useLocalState, useSharedState } from '../backend';
 import {
   Box,
   Button,
+  Collapsible,
   Input,
   LabeledList,
   NoticeBox,
@@ -791,29 +792,28 @@ export const CCPostRemoteStatus = () => {
                         </LabeledList.Item>
                       </LabeledList>
 
-                      <Box mt={1.5} bold>
-                        Recent Administrative History
-                      </Box>
+                      <Collapsible title={`Recent Administrative History (${activeRecordInstallation.history.length})`}>
 
-                      {!activeRecordInstallation.history.length ? (
-                        <Box mt={1} color="label">
-                          No notable history has been recorded this shift.
-                        </Box>
-                      ) : (
-                        activeRecordInstallation.history.map((entry, index) => (
-                          <Box
-                            key={`${activeRecordInstallation.code}-${entry.timestamp}-${index}`}
-                            mt={1}
-                            p={1}
-                            backgroundColor="rgba(255, 255, 255, 0.04)"
-                          >
-                            <Box bold>
-                              {entry.timestamp} — {entry.category}: {entry.title}
-                            </Box>
-                            <Box mt={0.5}>{entry.details}</Box>
+                        {!activeRecordInstallation.history.length ? (
+                          <Box mt={1} color="label">
+                            No notable history has been recorded this shift.
                           </Box>
-                        ))
-                      )}
+                        ) : (
+                          activeRecordInstallation.history.map((entry, index) => (
+                            <Box
+                              key={`${activeRecordInstallation.code}-${entry.timestamp}-${index}`}
+                              mt={1}
+                              p={1}
+                              backgroundColor="rgba(255, 255, 255, 0.04)"
+                            >
+                              <Box bold>
+                                {entry.timestamp} — {entry.category}: {entry.title}
+                              </Box>
+                              <Box mt={0.5}>{entry.details}</Box>
+                            </Box>
+                          ))
+                        )}
+                      </Collapsible>
                     </Section>
                   )}
                 </div>

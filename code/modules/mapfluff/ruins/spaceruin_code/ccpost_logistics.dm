@@ -1175,6 +1175,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 			"name" = package.name,
 			"description" = package.desc,
 			"category" = package.category,
+			"subcategory" = package.subcategory,
 			"cost" = package.cost,
 			"round_limit" = package.round_limit,
 			"contents" = package.get_content_entries(),
@@ -1405,6 +1406,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	report_text += ccpost_paper_value_field("Classification", procurement_class)
 	report_text += ccpost_paper_value_field("Priority", "Routine")
 	report_text += ccpost_paper_value_field("Category", package.category)
+	report_text += ccpost_paper_value_field("Subcategory", package.subcategory)
 	report_text += ccpost_paper_value_field("Subject", package.name)
 	report_text += ccpost_paper_value_field("Issued", station_time_timestamp())
 	report_text += ccpost_paper_section("Requisition Details")
@@ -1631,6 +1633,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	var/name = "Undefined Supply Package"
 	var/desc = "No package description available."
 	var/category = "General"
+	var/subcategory = "General"
 	var/cost = 0
 
 	/// Restricted packages are only visible and orderable through a compromised terminal.
@@ -1642,6 +1645,8 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	var/round_limit = 0
 
 	var/list/contains = list()
+	/// Optional exact stack sizes for bulk material requisitions.
+	var/list/stack_sizes = list()
 
 /// Returns a package's declared contents for TGUI and printed manifests.
 /// Uses type defaults without spawning temporary items.
@@ -1659,6 +1664,12 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 		if(!item_name)
 			item_name = "[item_type]"
+
+		if(ispath(item_type, /obj/item/stack))
+			var/units_per_stack = stack_sizes[item_type] || initial(item_type:amount)
+			if(units_per_stack > 1)
+				quantity *= units_per_stack
+				item_name = "[item_name] (units)"
 
 		entries += list(list(
 			"name" = item_name,
@@ -1678,13 +1689,880 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 			amount = 1
 
 		for(var/i in 1 to amount)
-			new item_type(freight_crate)
+			if(stack_sizes[item_type])
+				new item_type(freight_crate, stack_sizes[item_type], FALSE)
+			else
+				new item_type(freight_crate)
 
 // Logistics CATALOG START
+
+/datum/ccpost_supply_package/admin_stationery
+	id = "admin_stationery"
+	name = "Stationery Resupply"
+	desc = "Paperwork consumables and photocopier toner for the installation offices."
+	category = CCPOST_SUPPLY_CATEGORY_ADMINISTRATION
+	subcategory = "Stationery"
+	cost = 3
+	contains = list(
+		/obj/item/paper_bin = 2,
+		/obj/item/pen = 4,
+		/obj/item/storage/box/fountainpens = 1,
+		/obj/item/folder/blue = 2,
+		/obj/item/folder/red = 1,
+		/obj/item/folder/yellow = 1,
+		/obj/item/clipboard = 2,
+		/obj/item/hand_labeler_refill = 2,
+		/obj/item/toner = 3
+	)
+
+/datum/ccpost_supply_package/admin_correspondence
+	id = "admin_correspondence"
+	name = "Correspondence Equipment Package"
+	desc = "Standard fax construction board and replacement paper and toner supplies."
+	category = CCPOST_SUPPLY_CATEGORY_ADMINISTRATION
+	subcategory = "Office Equipment"
+	cost = 5
+	contains = list(
+		/obj/item/circuitboard/machine/fax = 1,
+		/obj/item/toner = 2,
+		/obj/item/paper_bin = 2,
+		/obj/item/paper_bin/carbon = 1
+	)
+
+/datum/ccpost_supply_package/admin_meeting
+	id = "admin_meeting"
+	name = "Meeting & Presentation Equipment"
+	desc = "Recording and documentation equipment for meetings, interviews and assessments."
+	category = CCPOST_SUPPLY_CATEGORY_ADMINISTRATION
+	subcategory = "Office Equipment"
+	cost = 6
+	contains = list(
+		/obj/item/taperecorder = 2,
+		/obj/item/tape = 6,
+		/obj/item/clipboard = 4,
+		/obj/item/pen = 4,
+		/obj/item/folder/blue = 2,
+		/obj/item/folder/red = 1,
+		/obj/item/folder/yellow = 1,
+		/obj/item/camera = 1,
+		/obj/item/camera_film = 2
+	)
+
+/datum/ccpost_supply_package/sustenance_pantry
+	id = "sustenance_pantry"
+	name = "Kitchen Pantry Restock"
+	desc = "Everyday cooking ingredients for the cafeteria."
+	category = CCPOST_SUPPLY_CATEGORY_SUSTENANCE
+	subcategory = "Kitchen Supplies"
+	cost = 6
+	contains = list(
+		/obj/item/reagent_containers/condiment/flour = 2,
+		/obj/item/reagent_containers/condiment/rice = 1,
+		/obj/item/reagent_containers/condiment/milk = 1,
+		/obj/item/reagent_containers/condiment/soymilk = 1,
+		/obj/item/storage/fancy/egg_box = 1,
+		/obj/item/reagent_containers/condiment/saltshaker = 1,
+		/obj/item/reagent_containers/condiment/peppermill = 1,
+		/obj/item/reagent_containers/condiment/enzyme = 1,
+		/obj/item/food/cheese/wedge = 2,
+		/obj/item/food/meat/slab/monkey = 3,
+		/obj/item/food/meat/slab/chicken = 3,
+		/obj/item/food/meat/rawbacon = 3
+	)
+
+/datum/ccpost_supply_package/sustenance_baking
+	id = "sustenance_baking"
+	name = "Baking Supplies Package"
+	desc = "Ingredients for cakes, pastries, cookies and desserts."
+	category = CCPOST_SUPPLY_CATEGORY_SUSTENANCE
+	subcategory = "Kitchen Supplies"
+	cost = 5
+	contains = list(
+		/obj/item/reagent_containers/condiment/flour = 2,
+		/obj/item/reagent_containers/condiment/sugar = 2,
+		/obj/item/storage/fancy/egg_box = 1,
+		/obj/item/reagent_containers/condiment/milk = 1,
+		/obj/item/food/chocolatebar = 4,
+		/obj/item/food/butter = 3,
+		/obj/item/food/grown/vanillapod = 1,
+		/obj/item/food/grown/berries = 4,
+		/obj/item/food/grown/banana = 3
+	)
+
+/datum/ccpost_supply_package/sustenance_produce
+	id = "sustenance_produce"
+	name = "Fresh Produce Crate"
+	desc = "Fresh fruit and vegetables for meals and beverages."
+	category = CCPOST_SUPPLY_CATEGORY_SUSTENANCE
+	subcategory = "Kitchen Supplies"
+	cost = 5
+	contains = list(
+		/obj/item/food/grown/apple = 4,
+		/obj/item/food/grown/citrus/orange = 4,
+		/obj/item/food/grown/tomato = 4,
+		/obj/item/food/grown/potato = 4,
+		/obj/item/food/grown/carrot = 4,
+		/obj/item/food/grown/cabbage = 2,
+		/obj/item/food/grown/watermelon = 2,
+		/obj/item/food/grown/citrus/lemon = 2,
+		/obj/item/food/grown/citrus/lime = 2
+	)
+
+/datum/ccpost_supply_package/sustenance_bar
+	id = "sustenance_bar"
+	name = "Bar & Beverage Restock"
+	desc = "Refill cartridges for beverage and dinnerware vendors, plus replacement drink dispenser power cells."
+	category = CCPOST_SUPPLY_CATEGORY_SUSTENANCE
+	subcategory = "Beverages"
+	cost = 7
+	contains = list(
+		/obj/item/vending_refill/boozeomat = 2,
+		/obj/item/vending_refill/cola = 2,
+		/obj/item/vending_refill/coffee = 1,
+		/obj/item/vending_refill/dinnerware = 1,
+		/obj/item/stock_parts/power_store/cell/high = 2
+	)
+
+/datum/ccpost_supply_package/sustenance_botany
+	id = "sustenance_botany"
+	name = "Botanical Supplies Package"
+	desc = "Growing supplies and standard crop and flower seeds."
+	category = CCPOST_SUPPLY_CATEGORY_SUSTENANCE
+	subcategory = "Hydroponics"
+	cost = 6
+	contains = list(
+		/obj/item/plant_analyzer = 1,
+		/obj/item/cultivator = 1,
+		/obj/item/storage/bag/plants = 1,
+		/obj/item/reagent_containers/cup/bottle/nutrient/ez = 2,
+		/obj/item/reagent_containers/cup/bottle/ammonia = 2,
+		/obj/item/reagent_containers/spray/plantbgone = 1,
+		/obj/item/seeds/tomato = 2,
+		/obj/item/seeds/wheat = 2,
+		/obj/item/seeds/potato = 2,
+		/obj/item/seeds/berry = 2,
+		/obj/item/seeds/sunflower = 1,
+		/obj/item/seeds/rose = 1
+	)
+
+/datum/ccpost_supply_package/medical_wound_care
+	id = "medical_wound_care"
+	name = "Wound Care Consumables"
+	desc = "Consumable supplies for ongoing wound treatment."
+	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
+	subcategory = "Treatment"
+	cost = 5
+	contains = list(
+		/obj/item/stack/medical/gauze = 4,
+		/obj/item/stack/medical/suture = 4,
+		/obj/item/stack/medical/mesh = 4,
+		/obj/item/stack/medical/bone_gel = 2,
+		/obj/item/reagent_containers/medigel/sterilizine = 1
+	)
+
+/datum/ccpost_supply_package/medical_pharma
+	id = "medical_pharma"
+	name = "Pharmaceutical Resupply"
+	desc = "Ordinary medication and NanoMed refill supplies."
+	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
+	subcategory = "Pharmaceuticals"
+	cost = 8
+	contains = list(
+		/obj/item/reagent_containers/cup/bottle/multiver = 2,
+		/obj/item/reagent_containers/cup/bottle/epinephrine = 2,
+		/obj/item/reagent_containers/cup/bottle/morphine = 1,
+		/obj/item/storage/box/medigels = 1,
+		/obj/item/storage/box/syringes = 1,
+		/obj/item/reagent_containers/syringe/convermol = 2,
+		/obj/item/vending_refill/wallmed = 2
+	)
+
+/datum/ccpost_supply_package/medical_chemistry
+	id = "medical_chemistry"
+	name = "Chemistry Supplies"
+	desc = "Laboratory tools and empty containers for medication preparation."
+	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
+	subcategory = "Pharmaceuticals"
+	cost = 5
+	contains = list(
+		/obj/item/storage/box/beakers = 1,
+		/obj/item/reagent_containers/cup/beaker/large = 3,
+		/obj/item/reagent_containers/dropper = 2,
+		/obj/item/storage/box/syringes = 1,
+		/obj/item/clothing/glasses/science = 2,
+		/obj/item/reagent_containers/cup/bottle = 6,
+		/obj/item/storage/pill_bottle = 4
+	)
+
+/datum/ccpost_supply_package/medical_equipment
+	id = "medical_equipment"
+	name = "Medical Equipment Replacement"
+	desc = "Replacement diagnostic equipment and patient transport supplies."
+	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
+	subcategory = "Diagnostics & Equipment"
+	cost = 8
+	contains = list(
+		/obj/item/healthanalyzer/advanced = 2,
+		/obj/item/emergency_bed = 1,
+		/obj/item/clothing/glasses/hud/health = 2,
+		/obj/item/storage/box/bodybags = 1,
+		/obj/machinery/iv_drip = 1
+	)
+
+/datum/ccpost_supply_package/medical_ipc_repair
+	id = "medical_ipc_repair"
+	name = "IPC Repair & Maintenance"
+	desc = "Mechanical repair equipment for synthetic injuries and positronic reboot procedures."
+	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
+	subcategory = "Synthetic Care"
+	cost = 7
+	contains = list(
+		/obj/item/weldingtool = 1,
+		/obj/item/clothing/glasses/welding = 1,
+		/obj/item/screwdriver = 1,
+		/obj/item/crowbar = 1,
+		/obj/item/wirecutters = 1,
+		/obj/item/wrench = 1,
+		/obj/item/multitool = 1,
+		/obj/item/stack/cable_coil = 2,
+		/obj/item/stack/sheet/iron/twenty = 1,
+		/obj/item/soap = 1,
+		/obj/item/healthanalyzer = 1
+	)
+
+/datum/ccpost_supply_package/medical_ipc_pharma
+	id = "medical_ipc_pharma"
+	name = "Synthetic Pharmaceuticals"
+	desc = "Synthetic medicines. Concentrated nanite slurry is intended for critical organ repair and may cause overheating and chassis damage."
+	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
+	subcategory = "Synthetic Care"
+	cost = 8
+	contains = list(
+		/obj/item/storage/pill_bottle/liquid_solder = 2,
+		/obj/item/storage/pill_bottle/system_cleaner = 2,
+		/obj/item/storage/pill_bottle/nanite_slurry = 1
+	)
+
+/datum/ccpost_supply_package/medical_ipc_components
+	id = "medical_ipc_components"
+	name = "IPC Replacement Components"
+	desc = "Standard IPC limbs and synthetic organs for restorative surgery. Does not include a positronic brain or construction core."
+	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
+	subcategory = "Synthetic Care"
+	cost = 12
+	contains = list(
+		/obj/item/bodypart/arm/left/ipc = 1,
+		/obj/item/bodypart/arm/right/ipc = 1,
+		/obj/item/bodypart/leg/left/ipc = 1,
+		/obj/item/bodypart/leg/right/ipc = 1,
+		/obj/item/bodypart/head/ipc = 1,
+		/obj/item/organ/internal/eyes/synth = 1,
+		/obj/item/organ/internal/ears/synth = 1,
+		/obj/item/organ/internal/heart/synth = 1,
+		/obj/item/organ/internal/lungs/synth = 1,
+		/obj/item/organ/internal/liver/synth = 1,
+		/obj/item/organ/internal/stomach/synth = 1
+	)
+
+/datum/ccpost_supply_package/materials_iron
+	id = "materials_iron"
+	name = "Iron Sheets Crate"
+	desc = "Bulk supply: 100 units of iron sheets."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Common Materials"
+	cost = 5
+	contains = list(
+		/obj/item/stack/sheet/iron = 2
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/iron = 50
+	)
+
+/datum/ccpost_supply_package/materials_glass
+	id = "materials_glass"
+	name = "Glass Sheets Crate"
+	desc = "Bulk supply: 100 units of glass sheets."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Common Materials"
+	cost = 5
+	contains = list(
+		/obj/item/stack/sheet/glass = 2
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/glass = 50
+	)
+
+/datum/ccpost_supply_package/materials_plastic
+	id = "materials_plastic"
+	name = "Plastic Sheets Crate"
+	desc = "Bulk supply: 100 units of plastic sheets."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Common Materials"
+	cost = 5
+	contains = list(
+		/obj/item/stack/sheet/plastic = 2
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/plastic = 50
+	)
+
+/datum/ccpost_supply_package/materials_wood
+	id = "materials_wood"
+	name = "Wood Planks Crate"
+	desc = "Bulk supply: 100 units of wood planks."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Common Materials"
+	cost = 5
+	contains = list(
+		/obj/item/stack/sheet/mineral/wood = 2
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/mineral/wood = 50
+	)
+
+/datum/ccpost_supply_package/materials_rglass
+	id = "materials_rglass"
+	name = "Reinforced Glass Crate"
+	desc = "Bulk supply: 50 units of reinforced glass."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Industrial Materials"
+	cost = 6
+	contains = list(
+		/obj/item/stack/sheet/rglass = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/rglass = 50
+	)
+
+/datum/ccpost_supply_package/materials_plasteel
+	id = "materials_plasteel"
+	name = "Plasteel Sheets Crate"
+	desc = "Bulk supply: 50 units of plasteel sheets."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Industrial Materials"
+	cost = 12
+	contains = list(
+		/obj/item/stack/sheet/plasteel = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/plasteel = 50
+	)
+
+/datum/ccpost_supply_package/materials_titanium
+	id = "materials_titanium"
+	name = "Titanium Crate"
+	desc = "Bulk supply: 50 units of titanium."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Industrial Materials"
+	cost = 10
+	contains = list(
+		/obj/item/stack/sheet/mineral/titanium = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/mineral/titanium = 50
+	)
+
+/datum/ccpost_supply_package/materials_silver
+	id = "materials_silver"
+	name = "Silver Crate"
+	desc = "Bulk supply: 20 units of silver."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Advanced Materials"
+	cost = 8
+	contains = list(
+		/obj/item/stack/sheet/mineral/silver = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/mineral/silver = 20
+	)
+
+/datum/ccpost_supply_package/materials_gold
+	id = "materials_gold"
+	name = "Gold Crate"
+	desc = "Bulk supply: 20 units of gold."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Advanced Materials"
+	cost = 10
+	contains = list(
+		/obj/item/stack/sheet/mineral/gold = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/mineral/gold = 20
+	)
+
+/datum/ccpost_supply_package/materials_plasma
+	id = "materials_plasma"
+	name = "Plasma Sheets Crate"
+	desc = "Bulk supply: 50 units of plasma sheets."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Advanced Materials"
+	cost = 10
+	contains = list(
+		/obj/item/stack/sheet/mineral/plasma = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/mineral/plasma = 50
+	)
+
+/datum/ccpost_supply_package/materials_uranium
+	id = "materials_uranium"
+	name = "Uranium Crate"
+	desc = "Bulk supply: 20 units of uranium."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Advanced Materials"
+	cost = 12
+	contains = list(
+		/obj/item/stack/sheet/mineral/uranium = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/mineral/uranium = 20
+	)
+
+/datum/ccpost_supply_package/materials_diamond
+	id = "materials_diamond"
+	name = "Diamond Crate"
+	desc = "Bulk supply: 10 units of diamond."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Advanced Materials"
+	cost = 15
+	contains = list(
+		/obj/item/stack/sheet/mineral/diamond = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/mineral/diamond = 10
+	)
+
+/datum/ccpost_supply_package/materials_bluespace
+	id = "materials_bluespace"
+	name = "Bluespace Crystals Crate"
+	desc = "Bulk supply: 10 units of bluespace crystals."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Advanced Materials"
+	cost = 16
+	contains = list(
+		/obj/item/stack/sheet/bluespace_crystal = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/bluespace_crystal = 10
+	)
+
+/datum/ccpost_supply_package/materials_bananium
+	id = "materials_bananium"
+	name = "Bananium Crate"
+	desc = "Bulk supply: 10 units of bananium."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Advanced Materials"
+	cost = 8
+	contains = list(
+		/obj/item/stack/sheet/mineral/bananium = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/mineral/bananium = 10
+	)
+
+/datum/ccpost_supply_package/materials_bulk
+	id = "materials_bulk"
+	name = "Bulk Construction Materials"
+	desc = "100 iron, 100 glass and 50 plasteel for major installation projects."
+	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
+	subcategory = "Material Bundles"
+	cost = 20
+	contains = list(
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/sheet/plasteel = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/iron = 50,
+		/obj/item/stack/sheet/glass = 50,
+		/obj/item/stack/sheet/plasteel = 50
+	)
+
+/datum/ccpost_supply_package/technical_parts_t1
+	id = "technical_parts_t1"
+	name = "Tier I Stock Parts Crate"
+	desc = "6 of each of the five standard tier 1 stock part families (30 total)."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Stock Parts"
+	cost = 5
+	contains = list(
+		/obj/item/stock_parts/capacitor = 6,
+		/obj/item/stock_parts/scanning_module = 6,
+		/obj/item/stock_parts/manipulator = 6,
+		/obj/item/stock_parts/micro_laser = 6,
+		/obj/item/stock_parts/matter_bin = 6
+	)
+
+/datum/ccpost_supply_package/technical_parts_t2
+	id = "technical_parts_t2"
+	name = "Tier II Stock Parts Crate"
+	desc = "6 of each of the five standard tier 2 stock part families (30 total)."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Stock Parts"
+	cost = 9
+	contains = list(
+		/obj/item/stock_parts/capacitor/adv = 6,
+		/obj/item/stock_parts/scanning_module/adv = 6,
+		/obj/item/stock_parts/manipulator/nano = 6,
+		/obj/item/stock_parts/micro_laser/high = 6,
+		/obj/item/stock_parts/matter_bin/adv = 6
+	)
+
+/datum/ccpost_supply_package/technical_parts_t3
+	id = "technical_parts_t3"
+	name = "Tier III Stock Parts Crate"
+	desc = "5 of each of the five standard tier 3 stock part families (25 total)."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Stock Parts"
+	cost = 15
+	contains = list(
+		/obj/item/stock_parts/capacitor/super = 5,
+		/obj/item/stock_parts/scanning_module/phasic = 5,
+		/obj/item/stock_parts/manipulator/pico = 5,
+		/obj/item/stock_parts/micro_laser/ultra = 5,
+		/obj/item/stock_parts/matter_bin/super = 5
+	)
+
+/datum/ccpost_supply_package/technical_parts_t4
+	id = "technical_parts_t4"
+	name = "Tier IV Stock Parts Crate"
+	desc = "4 of each of the five standard tier 4 stock part families (20 total)."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Stock Parts"
+	cost = 20
+	contains = list(
+		/obj/item/stock_parts/capacitor/quadratic = 4,
+		/obj/item/stock_parts/scanning_module/triphasic = 4,
+		/obj/item/stock_parts/manipulator/femto = 4,
+		/obj/item/stock_parts/micro_laser/quadultra = 4,
+		/obj/item/stock_parts/matter_bin/bluespace = 4
+	)
+
+/datum/ccpost_supply_package/technical_engineering_boards
+	id = "technical_engineering_boards"
+	name = "Engineering Circuit Boards"
+	desc = "Standard engineering machine and solar control boards."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Circuit Boards"
+	cost = 8
+	contains = list(
+		/obj/item/circuitboard/machine/autolathe = 1,
+		/obj/item/circuitboard/machine/cell_charger = 1,
+		/obj/item/circuitboard/machine/recharger = 1,
+		/obj/item/circuitboard/machine/pump = 1,
+		/obj/item/circuitboard/machine/scrubber = 1,
+		/obj/item/circuitboard/computer/solar_control = 1
+	)
+
+/datum/ccpost_supply_package/technical_medical_boards
+	id = "technical_medical_boards"
+	name = "Medical Circuit Boards"
+	desc = "Standard medbay machinery boards."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Circuit Boards"
+	cost = 8
+	contains = list(
+		/obj/item/circuitboard/machine/chem_dispenser = 1,
+		/obj/item/circuitboard/machine/chem_master = 1,
+		/obj/item/circuitboard/machine/chem_heater = 1,
+		/obj/item/circuitboard/machine/stasis = 1,
+		/obj/item/circuitboard/machine/sleeper = 1,
+		/obj/item/circuitboard/machine/cryo_tube = 1
+	)
+
+/datum/ccpost_supply_package/technical_service_boards
+	id = "technical_service_boards"
+	name = "Service Circuit Boards"
+	desc = "Kitchen and hydroponics boards. Includes the specialized water recycler for the Impressa, which also requires Tier II parts."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Circuit Boards"
+	cost = 8
+	contains = list(
+		/obj/item/circuitboard/machine/microwave = 1,
+		/obj/item/circuitboard/machine/oven = 1,
+		/obj/item/circuitboard/machine/griddle = 1,
+		/obj/item/circuitboard/machine/processor = 1,
+		/obj/item/circuitboard/machine/hydroponics = 2,
+		/obj/item/circuitboard/machine/seed_extractor = 1,
+		/obj/item/circuitboard/machine/biogenerator = 1,
+		/obj/item/circuitboard/machine/coffeemaker/impressa = 1,
+		/obj/item/stock_parts/water_recycler = 1
+	)
+
+/datum/ccpost_supply_package/technical_servicing
+	id = "technical_servicing"
+	name = "Machinery Servicing Kit"
+	desc = "Standard rapid part exchanger and maintenance tools."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Machinery Maintenance"
+	cost = 5
+	contains = list(
+		/obj/item/storage/part_replacer = 1,
+		/obj/item/screwdriver = 1,
+		/obj/item/crowbar = 1,
+		/obj/item/multitool = 1
+	)
+
+/datum/ccpost_supply_package/technical_cells
+	id = "technical_cells"
+	name = "Power Cell Resupply"
+	desc = "Five high-capacity replacement power cells."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Machinery Maintenance"
+	cost = 6
+	contains = list(
+		/obj/item/stock_parts/power_store/cell/high = 5
+	)
+
+/datum/ccpost_supply_package/technical_cells_advanced
+	id = "technical_cells_advanced"
+	name = "Advanced Power Cell Resupply"
+	desc = "Three super-capacity cells and one hyper-capacity cell."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Machinery Maintenance"
+	cost = 12
+	contains = list(
+		/obj/item/stock_parts/power_store/cell/super = 3,
+		/obj/item/stock_parts/power_store/cell/hyper = 1
+	)
+
+/datum/ccpost_supply_package/technical_construction
+	id = "technical_construction"
+	name = "Machinery Construction Kit"
+	desc = "Machine frames, wiring and materials for assembling standard machinery."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Machinery Maintenance"
+	cost = 8
+	contains = list(
+		/obj/item/stack/sheet/iron/fifty = 1,
+		/obj/item/stack/sheet/glass/fifty = 1,
+		/obj/item/stack/cable_coil = 2,
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/structure/frame/machine = 2
+	)
+
+/datum/ccpost_supply_package/technical_ripley
+	id = "technical_ripley"
+	name = "Ripley Exosuit Assembly Kit"
+	desc = "Complete standard industrial Ripley assembly components and hydraulic clamp. Requires ordinary construction tools."
+	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
+	subcategory = "Robotics & Exosuits"
+	cost = 25
+	contains = list(
+		/obj/item/mecha_parts/chassis/ripley = 1,
+		/obj/item/mecha_parts/part/ripley_torso = 1,
+		/obj/item/mecha_parts/part/ripley_left_arm = 1,
+		/obj/item/mecha_parts/part/ripley_right_arm = 1,
+		/obj/item/mecha_parts/part/ripley_left_leg = 1,
+		/obj/item/mecha_parts/part/ripley_right_leg = 1,
+		/obj/item/circuitboard/mecha/ripley/main = 1,
+		/obj/item/circuitboard/mecha/ripley/peripherals = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/power_store/cell/high = 1,
+		/obj/item/stack/sheet/iron/twenty = 1,
+		/obj/item/stack/rods = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp = 1,
+		/obj/item/circuitboard/machine/mech_recharger = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/rods = 20
+	)
+
+/datum/ccpost_supply_package/engineering_rapid
+	id = "engineering_rapid"
+	name = "Rapid Construction Equipment"
+	desc = "Standard RCD, RPD and four replacement matter cartridges."
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	subcategory = "Construction"
+	cost = 12
+	contains = list(
+		/obj/item/construction/rcd/loaded = 1,
+		/obj/item/pipe_dispenser = 1,
+		/obj/item/rcd_ammo = 4
+	)
+
+/datum/ccpost_supply_package/engineering_rcd_ammo
+	id = "engineering_rcd_ammo"
+	name = "Compressed Matter Resupply"
+	desc = "Six replacement RCD compressed matter cartridges."
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	subcategory = "Construction"
+	cost = 4
+	contains = list(
+		/obj/item/rcd_ammo = 6
+	)
+
+/datum/ccpost_supply_package/engineering_infrastructure_electrical
+	id = "engineering_infrastructure_electrical"
+	name = "Electrical Infrastructure"
+	desc = "APC frames, power control boards, cells and cable for electrical repairs."
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	subcategory = "Electrical"
+	cost = 10
+	contains = list(
+		/obj/item/wallframe/apc = 2,
+		/obj/item/electronics/apc = 2,
+		/obj/item/stock_parts/power_store/cell/high = 3,
+		/obj/item/stack/cable_coil = 3
+	)
+
+/datum/ccpost_supply_package/engineering_lighting
+	id = "engineering_lighting"
+	name = "Lighting & Fixtures"
+	desc = "Replacement lights and wall fixtures."
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	subcategory = "Electrical"
+	cost = 4
+	contains = list(
+		/obj/item/storage/box/lights/tubes = 1,
+		/obj/item/storage/box/lights/bulbs = 1,
+		/obj/item/wallframe/light_fixture = 3,
+		/obj/item/wallframe/light_fixture/small = 2
+	)
+
+/datum/ccpost_supply_package/engineering_atmos_construction
+	id = "engineering_atmos_construction"
+	name = "Atmospheric Construction"
+	desc = "Pipe dispenser and replacement atmospheric fittings for infrastructure maintenance."
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	subcategory = "Atmospherics"
+	cost = 8
+	contains = list(
+		/obj/item/pipe_dispenser = 1,
+		/obj/item/pipe/directional/vent = 2,
+		/obj/item/pipe/directional/scrubber = 2,
+		/obj/item/stack/sheet/iron/twenty = 1
+	)
+
+/datum/ccpost_supply_package/engineering_cargo
+	id = "engineering_cargo"
+	name = "Cargo Infrastructure"
+	desc = "Conveyor construction supplies, switches and freight shelving."
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	subcategory = "Infrastructure"
+	cost = 8
+	contains = list(
+		/obj/item/stack/conveyor/thirty = 1,
+		/obj/item/conveyor_switch_construct = 1,
+		/obj/item/rack_parts/cargo_shelf = 2
+	)
+
+/datum/ccpost_supply_package/engineering_housekeeping
+	id = "engineering_housekeeping"
+	name = "Housekeeping & Sanitation"
+	desc = "Everyday cleaning tools and sanitation consumables."
+	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	subcategory = "Infrastructure"
+	cost = 4
+	contains = list(
+		/obj/item/mop = 1,
+		/obj/item/reagent_containers/cup/bucket = 1,
+		/obj/item/pushbroom = 1,
+		/obj/item/storage/bag/trash = 2,
+		/obj/item/reagent_containers/spray/cleaner = 2,
+		/obj/item/reagent_containers/cup/rag = 2,
+		/obj/item/clothing/suit/caution = 2,
+		/obj/item/soap = 2
+	)
+
+/datum/ccpost_supply_package/entertainment_art
+	id = "entertainment_art"
+	name = "Artist's Workshop"
+	desc = "Painting supplies for creating and displaying original artwork."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	subcategory = "Arts & Hobbies"
+	cost = 6
+	contains = list(
+		/obj/item/canvas/nineteen_nineteen = 2,
+		/obj/item/canvas/twentythree_twentythree = 2,
+		/obj/item/canvas/twentyfour_twentyfour = 2,
+		/obj/item/paint_palette = 2,
+		/obj/item/storage/crayons = 1,
+		/obj/item/wallframe/painting = 4,
+		/obj/structure/easel = 2
+	)
+
+/datum/ccpost_supply_package/entertainment_photography
+	id = "entertainment_photography"
+	name = "Photography & Scrapbook"
+	desc = "Cameras, spare film, albums and frames for documenting installation life."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	subcategory = "Arts & Hobbies"
+	cost = 5
+	contains = list(
+		/obj/item/camera = 2,
+		/obj/item/camera_film = 4,
+		/obj/item/storage/photo_album/personal = 2,
+		/obj/item/wallframe/picture = 4
+	)
+
+/datum/ccpost_supply_package/entertainment_tcg
+	id = "entertainment_tcg"
+	name = "Trading Card Collectors"
+	desc = "Six randomized native NT trading card booster packs."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	subcategory = "Games"
+	cost = 6
+	contains = list(
+		/obj/item/cardpack = 6
+	)
+
+/datum/ccpost_supply_package/entertainment_tcg/get_content_entries()
+	return list(list("name" = "Random NT trading card booster pack", "quantity" = 6))
+
+/datum/ccpost_supply_package/entertainment_tcg/fill_crate(obj/structure/closet/crate/ccpost_freight/freight_crate)
+	if(!freight_crate)
+		return
+	for(var/i in 1 to 6)
+		var/pack_type = pick(subtypesof(/obj/item/cardpack))
+		new pack_type(freight_crate)
+
+/datum/ccpost_supply_package/entertainment_arcade
+	id = "entertainment_arcade"
+	name = "Arcade Machine Package"
+	desc = "Orion Trail board, computer frame, cable and glass for a native arcade construction project. Requires ordinary construction tools."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	subcategory = "Games"
+	cost = 10
+	contains = list(
+		/obj/item/circuitboard/computer/arcade/orion_trail = 1,
+		/obj/structure/frame/computer = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/cable_coil = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5
+	)
+
+
+/datum/ccpost_supply_package/entertainment_models
+	id = "entertainment_models"
+	name = "Collectible Models & Figures"
+	desc = "Four miniature mechs and four corporate employee figures."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	subcategory = "Collectibles"
+	cost = 5
+	contains = list(
+		/obj/item/toy/mecha/ripley = 1,
+		/obj/item/toy/mecha/marauder = 1,
+		/obj/item/toy/mecha/seraph = 1,
+		/obj/item/toy/mecha/gygax = 1,
+		/obj/item/toy/figure/captain = 1,
+		/obj/item/toy/figure/hop = 1,
+		/obj/item/toy/figure/ce = 1,
+		/obj/item/toy/figure/hos = 1
+	)
 
 
 /datum/ccpost_supply_package/administrative
 	id = "administrative"
+	subcategory = "Stationery"
 	name = "Administrative Supplies"
 	desc = "Replacement paperwork, writing implements, and general administrative equipment."
 	category = CCPOST_SUPPLY_CATEGORY_ADMINISTRATION
@@ -1692,14 +2570,17 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 	contains = list(
 		/obj/item/paper_bin = 1,
-		/obj/item/pen = 2,
+		/obj/item/pen = 3,
 		/obj/item/stamp/granted = 1,
 		/obj/item/stamp/denied = 1,
-		/obj/item/stamp/centcom = 1
+		/obj/item/stamp/centcom = 1,
+		/obj/item/clipboard = 1,
+		/obj/item/folder/blue = 1
 	)
 
 /datum/ccpost_supply_package/administrative/records
 	id = "records_filing"
+	subcategory = "Records & Filing"
 	name = "Records & Filing Package"
 	desc = "Expanded records-management supplies for installations experiencing dangerous levels of unfiled paperwork."
 	cost = 5
@@ -1721,6 +2602,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/sustenance
 	id = "sustenance"
+	subcategory = "Prepared Food"
 	name = "Basic Sustenance Package"
 	desc = "A modest selection of pre-approved meals for remote installation personnel."
 	category = CCPOST_SUPPLY_CATEGORY_SUSTENANCE
@@ -1738,6 +2620,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/sustenance/rations
 	id = "emergency_rations"
+	subcategory = "Prepared Food"
 	name = "Emergency Ration Package"
 	desc = "Three sealed surplus ration boxes intended for extended isolation, delayed freight, or culinary emergencies."
 	cost = 4
@@ -1748,6 +2631,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/sustenance/coffee
 	id = "coffee_refreshments"
+	subcategory = "Beverages"
 	name = "Coffee & Refreshments Package"
 	desc = "A complete coffee-service restock for maintaining alertness, morale, and the appearance of productivity."
 	cost = 4
@@ -1766,6 +2650,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/sustenance/hospitality
 	id = "sustenance_hospitality"
+	subcategory = "Hospitality"
 	name = "Visitor Refreshments Package"
 	desc = "Non-alcoholic beverages, snacks, and serving equipment intended for visiting station officials, corporate representatives, and authorized guests."
 	cost = 5
@@ -1780,6 +2665,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/sustenance/luxury
 	id = "luxury_goods"
+	subcategory = "Hospitality"
 	name = "Luxury Goods Crate"
 	desc = "A curated assortment of premium consumables intended for executive hospitality, visiting officials, and approved morale expenditure."
 	cost = 9
@@ -1795,6 +2681,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/medical
 	id = "medical"
+	subcategory = "Treatment"
 	name = "Medical Resupply Package"
 	desc = "General medical provisions including emergency treatment kits, diagnostic equipment, and wound-care supplies for outpost personnel."
 	category = CCPOST_SUPPLY_CATEGORY_MEDICAL
@@ -1806,11 +2693,14 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 		/obj/item/storage/medkit/fire = 1,
 		/obj/item/healthanalyzer = 1,
 		/obj/item/stack/medical/gauze = 2,
-		/obj/item/reagent_containers/medipen = 2
+		/obj/item/reagent_containers/medipen = 2,
+		/obj/item/storage/medkit/brute = 1,
+		/obj/item/storage/medkit/toxin = 1
 	)
 
 /datum/ccpost_supply_package/medical/trauma
 	id = "medical_trauma"
+	subcategory = "Treatment"
 	name = "Trauma Treatment Package"
 	desc = "Rapid-response medication and wound-care supplies for stabilizing serious injuries before evacuation or surgery."
 	cost = 6
@@ -1824,19 +2714,26 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/medical/blood_fluids
 	id = "medical_blood_fluids"
+	subcategory = "Treatment"
 	name = "Blood & Fluid Resupply"
-	desc = "A compact blood and saline reserve for treating blood loss and supporting emergency transfusion procedures."
+	desc = "A multi-species blood, oil and saline reserve for organic and synthetic emergency transfusions."
 	cost = 6
 
 	contains = list(
 		/obj/item/reagent_containers/blood/o_minus = 3,
 		/obj/item/reagent_containers/blood/a_plus = 1,
 		/obj/item/reagent_containers/blood/b_plus = 1,
-		/obj/item/reagent_containers/chem_pack/saline = 3
+		/obj/item/reagent_containers/chem_pack/saline = 3,
+		/obj/item/reagent_containers/blood/lizard = 1,
+		/obj/item/reagent_containers/blood/ethereal = 1,
+		/obj/item/reagent_containers/blood/hemolymph = 1,
+		/obj/item/reagent_containers/blood/slime = 1,
+		/obj/item/reagent_containers/blood/oil = 3
 	)
 
 /datum/ccpost_supply_package/medical/defibrillators
 	id = "medical_defibrillators"
+	subcategory = "Diagnostics & Equipment"
 	name = "Defibrillator Package"
 	desc = "Two loaded defibrillators for installations expecting cardiac emergencies, major trauma, or questionable workplace decisions."
 	cost = 8
@@ -1847,6 +2744,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/medical/surgery
 	id = "medical_surgical"
+	subcategory = "Surgery"
 	name = "Surgical Support Package"
 	desc = "A compact set of surgical supplies for emergency procedures when routine medical support is unavailable."
 	cost = 9
@@ -1859,6 +2757,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/medical/triage
 	id = "medical_triage"
+	subcategory = "Diagnostics & Equipment"
 	name = "Mobile Triage Station"
 	desc = "Portable diagnostic and stabilization equipment for assessing casualties and providing emergency treatment before transfer to a fully equipped medical facility."
 	cost = 9
@@ -1876,6 +2775,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering
 	id = "engineering"
+	subcategory = "Tools"
 	name = "Engineering Maintenance Package"
 	desc = "A comprehensive supply of tools, construction materials, replacement lighting, basic replacement components, and electrical protection for routine installation maintenance."
 	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
@@ -1895,6 +2795,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/toolboxes
 	id = "engineering_toolboxes"
+	subcategory = "Tools"
 	name = "Toolbox Package"
 	desc = "A reserve of electrical and mechanical toolboxes for repairs, maintenance, and emergency improvisation."
 	cost = 6
@@ -1906,6 +2807,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/electrical
 	id = "engineering_electrical"
+	subcategory = "Electrical"
 	name = "Electrical Repair Package"
 	desc = "Insulated gloves, replacement power cells, and cable for restoring damaged electrical systems."
 	cost = 7
@@ -1918,6 +2820,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/atmos
 	id = "engineering_atmos"
+	subcategory = "Atmospherics"
 	name = "Atmospheric Recovery Package"
 	desc = "Portable atmospheric equipment for recovering air and clearing contaminants."
 	cost = 6
@@ -1929,6 +2832,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/atmos_air
 	id = "engineering_atmos_air"
+	subcategory = "Atmospherics"
 	name = "Emergency Air Supply"
 	desc = "Two canisters of breathable air for repressurization."
 	cost = 4
@@ -1938,6 +2842,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/atmos_oxygen
 	id = "engineering_atmos_oxygen"
+	subcategory = "Atmospherics"
 	name = "Oxygen Resupply"
 	desc = "Two standard oxygen canisters for atmospheric maintenance."
 	cost = 5
@@ -1947,6 +2852,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/atmos_nitrogen
 	id = "engineering_atmos_nitrogen"
+	subcategory = "Atmospherics"
 	name = "Nitrogen Resupply"
 	desc = "Two standard nitrogen canisters for atmospheric maintenance."
 	cost = 4
@@ -1956,6 +2862,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/atmos_maintenance
 	id = "engineering_atmos_maintenance"
+	subcategory = "Atmospherics"
 	name = "Atmospheric Maintenance"
 	desc = "Portable pipe dispenser, gas analyzer and atmospheric holofan projector."
 	cost = 6
@@ -1967,6 +2874,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/atmos_empty
 	id = "engineering_atmos_empty"
+	subcategory = "Atmospherics"
 	name = "Empty Canister Package"
 	desc = "Two empty gas canisters for storage and recovery."
 	cost = 2
@@ -1976,6 +2884,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/breach
 	id = "engineering_breach"
+	subcategory = "Construction"
 	name = "Hull Breach Response Package"
 	desc = "Anti-breach shield projectors and metal-foam supplies for rapid containment of structural damage."
 	cost = 11
@@ -1987,6 +2896,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/power
 	id = "engineering_power"
+	subcategory = "Electrical"
 	name = "Portable Power Package"
 	desc = "Portable power-induction equipment and high-capacity cells for keeping essential systems running away from fixed chargers."
 	cost = 8
@@ -1998,6 +2908,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/engineering/auxiliary_generator
 	id = "engineering_auxiliary_generator"
+	subcategory = "Electrical"
 	name = "Auxiliary Generator Package"
 	desc = "A portable plasma-powered generator and supporting electrical equipment for restoring power during major installation failures."
 	cost = 12
@@ -2014,6 +2925,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/materials/refurbishment
 	id = "materials_refurbishment"
+	subcategory = "Material Bundles"
 	name = "Interior Refurbishment Materials"
 	desc = "A selection of carpeting and timber for approved office renovations, replacement furnishings, and decorative improvements."
 	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
@@ -2028,6 +2940,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/materials/safety
 	id = "materials_safety"
+	subcategory = "Material Bundles"
 	name = "Safety Flooring & Reinforcement Package"
 	desc = "Industrial anti-slip flooring, structural rods, and emergency sealing supplies for improving the safety of installation corridors and work areas."
 	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
@@ -2041,6 +2954,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/materials/construction
 	id = "materials_construction"
+	subcategory = "Material Bundles"
 	name = "Construction Materials Package"
 	desc = "Bulk iron, glass, and plastic stock for routine construction, repairs, and approved installation improvements."
 	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
@@ -2054,6 +2968,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/materials/emergency
 	id = "materials_emergency"
+	subcategory = "Material Bundles"
 	name = "Emergency Repair Materials"
 	desc = "Reinforced construction stock and breach-control supplies intended for significant structural damage."
 	category = CCPOST_SUPPLY_CATEGORY_MATERIALS
@@ -2068,24 +2983,9 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 
 
-/datum/ccpost_supply_package/technical/advanced_parts
-	id = "technical_parts"
-	name = "Advanced Parts Package"
-	desc = "A rapid part exchanger and a limited reserve of high-grade parts for authorized machinery repairs."
-	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
-	cost = 12
-
-	contains = list(
-		/obj/item/storage/part_replacer = 1,
-		/obj/item/stock_parts/power_store/cell/high = 5,
-		/obj/item/stock_parts/matter_bin/super = 3,
-		/obj/item/stock_parts/micro_laser/quadultra = 3,
-		/obj/item/stock_parts/manipulator/nano = 3,
-		/obj/item/stock_parts/capacitor/quadratic = 3
-	)
-
 /datum/ccpost_supply_package/technical/robotics
 	id = "technical_robotics"
+	subcategory = "Robotics & Exosuits"
 	name = "Robotics Utility Package"
 	desc = "Basic bot assemblies, sensors, and robotic components for constructing simple support machines."
 	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
@@ -2104,6 +3004,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/technical/mod_maintenance
 	id = "technical_mod_maintenance"
+	subcategory = "Machinery Maintenance"
 	name = "MODsuit Maintenance Package"
 	desc = "Replacement MODsuit power components and maintenance equipment for servicing authorized corporate protective systems."
 	category = CCPOST_SUPPLY_CATEGORY_TECHNICAL
@@ -2119,6 +3020,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/emergency/radiation
 	id = "emergency_radiation"
+	subcategory = "Disaster Response"
 	name = "Radiation Protection Package"
 	desc = "Two complete radiation protection sets and portable radiation detection equipment for incidents involving contaminated cargo or hazardous environments."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
@@ -2132,6 +3034,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/emergency/explosive_hazard
 	id = "emergency_explosive_hazard"
+	subcategory = "Disaster Response"
 	name = "Explosive Hazard Response Package"
 	desc = "Protective clothing and inspection tools intended for personnel responding to suspected explosive devices and other dangerous equipment."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
@@ -2149,6 +3052,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/eva
 	id = "eva"
+	subcategory = "EVA & Life Support"
 	name = "Emergency EVA Package"
 	desc = "Two complete sets of emergency EVA equipment for evacuation, exterior repairs, and rescue operations in depressurized environments."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
@@ -2163,6 +3067,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/emergency/firefighting
 	id = "emergency_firefighting"
+	subcategory = "Disaster Response"
 	name = "Firefighting Package"
 	desc = "Protective equipment and extinguishing gear for responding to major fires and heat hazards."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
@@ -2180,9 +3085,10 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/emergency/internals
 	id = "emergency_internals"
+	subcategory = "EVA & Life Support"
 	name = "Emergency Internals Package"
 	desc = "Breathing masks and portable oxygen supplies for atmospheric emergencies and evacuation."
-	category = CCPOST_SUPPLY_CATEGORY_ENGINEERING
+	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
 	cost = 3
 
 	contains = list(
@@ -2192,6 +3098,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/emergency/mass_casualty
 	id = "emergency_mass_casualty"
+	subcategory = "Rescue & Medical"
 	name = "Mass Casualty Package"
 	desc = "A broad medical reserve intended for incidents producing more casualties than the outpost's routine stock can comfortably support."
 	category = CCPOST_SUPPLY_CATEGORY_EMERGENCY
@@ -2212,6 +3119,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security
 	id = "security"
+	subcategory = "Duty Equipment"
 	round_limit = 1
 	name = "Security Support Package"
 	desc = "Limited defensive equipment intended for protection of Central Command personnel and property."
@@ -2228,6 +3136,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/base_defense
 	round_limit = 0
 	id = "security_base_defense"
+	subcategory = "Protective Equipment"
 	name = "Base Defense Supplies Crate"
 	desc = "Deployable fortifications for Central Command perimeter and corridor defense: filled sandbags, barrier grenades, pneumatic airlock seals, and a security holobarrier projector."
 	cost = 10
@@ -2242,6 +3151,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/wt550_ammo
 	round_limit = 0
 	id = "security_wt550_ammo"
+	subcategory = "Ammunition"
 	name = "WT-550 Ammunition Resupply"
 	desc = "Three replacement WT-550 magazines for the outpost armory."
 	cost = 4
@@ -2251,6 +3161,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/wt550_replacement
 	id = "security_wt550_replacement"
+	subcategory = "Weapons"
 	round_limit = 1
 	name = "WT-550 Replacement Weapon"
 	desc = "A replacement WT-550 autorifle and one spare magazine for an authorized outpost officer."
@@ -2263,6 +3174,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/forensics
 	round_limit = 0
 	id = "security_forensics"
+	subcategory = "Duty Equipment"
 	name = "Forensic Investigation Package"
 	desc = "Investigation and evidence-processing equipment intended for examining security incidents, suspicious deliveries, and possible theft of corporate property."
 	cost = 5
@@ -2278,6 +3190,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/nonlethal
 	id = "security_nonlethal"
+	subcategory = "Duty Equipment"
 	round_limit = 2
 	name = "Non-Lethal Response Package"
 	desc = "An expanded set of incapacitation, restraint, and temporary containment equipment for installation security personnel."
@@ -2294,6 +3207,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/protective
 	round_limit = 0
 	id = "security_protective"
+	subcategory = "Protective Equipment"
 	name = "Protective Equipment Package"
 	desc = "Three complete sets of standard security armor and protective accessories for reinforcing installation personnel."
 	cost = 8
@@ -2307,6 +3221,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/riot_control
 	round_limit = 0
 	id = "security_riot_control"
+	subcategory = "Protective Equipment"
 	name = "Riot Control Equipment Package"
 	desc = "Two complete riot protection sets, including reinforced armor, helmets, shields, and deployable barriers for defending installation access points."
 	cost = 16
@@ -2321,6 +3236,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/containment
 	round_limit = 0
 	id = "security_containment"
+	subcategory = "Containment"
 	name = "Biological Containment Package"
 	desc = "Protective suits, pathology equipment, and portable barriers for isolating suspected biological hazards."
 	cost = 12
@@ -2336,6 +3252,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/armory_energy
 	id = "security_armory_energy"
+	subcategory = "Weapons"
 	round_limit = 1
 	name = "Armory Energy Weapons Package"
 	desc = "Replacement energy, laser and disabler weapons for serious threats. Limited to one requisition per shift."
@@ -2349,6 +3266,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/armory_ballistic
 	id = "security_armory_ballistic"
+	subcategory = "Weapons"
 	round_limit = 1
 	name = "Armory Ballistic Weapons Package"
 	desc = "A standard riot shotgun with a bandolier and non-lethal ammunition for situations requiring armed defensive intervention."
@@ -2364,6 +3282,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/security/armory_ammunition
 	round_limit = 0
 	id = "security_armory_ammunition"
+	subcategory = "Ammunition"
 	name = "Armory Ammunition Resupply"
 	desc = "A reserve of standard shotgun ammunition, including rubber shot, beanbag rounds, and lethal shells. Intended for replenishing authorized defensive weapons."
 	cost = 5
@@ -2376,6 +3295,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/crowd_control
 	id = "security_crowd_control"
+	subcategory = "Duty Equipment"
 	round_limit = 2
 	name = "Crowd Control Supplies Package"
 	desc = "Flashbangs, tear gas, temporary barriers, and portable barricades for authorized outpost defensive duties."
@@ -2390,6 +3310,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/security/corporate_modsuit
 	id = "security_corporate_modsuit"
+	subcategory = "Protective Equipment"
 	round_limit = 1
 	name = "Corporate Security MODsuit"
 	desc = "A Corporate-pattern MODsuit authorized for Central Command installation security personnel. Features reinforced corporate protective plating, integrated utility systems, and a rechargeable power core. Intended for replacement equipment or additional authorized security personnel."
@@ -2402,6 +3323,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/bunny
 	id = "entertainment_centcom_bunny"
+	subcategory = "Costumes & Apparel"
 	name = "CentCom Bunny Attire Package"
 	desc = "A complete set of approved Central Command hospitality attire for formal receptions, morale initiatives, and other duties which Human Resources has declined to explain."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2418,6 +3340,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/cards
 	id = "entertainment_cards"
+	subcategory = "Games"
 	name = "Card & Table Games Package"
 	desc = "Cards, dice, and a company-approved tabletop diversion for personnel with sufficient unallocated time."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2432,6 +3355,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/lasertag
 	id = "entertainment_lasertag"
+	subcategory = "Games"
 	name = "Laser Tag Recreation Package"
 	desc = "Two complete opposing laser-tag teams for structured recreational conflict that is considerably cheaper than actual security incidents."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2448,6 +3372,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/morale
 	id = "entertainment_morale"
+	subcategory = "Events"
 	name = "Corporate Morale Package"
 	desc = "A pre-approved assortment of recreational materials intended to maintain employee morale without meaningfully impacting productivity."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2465,6 +3390,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/morale_implants
 	id = "entertainment_morale_implants"
+	subcategory = "Events"
 	name = "Corporate Morale Implant Kit"
 	desc = "Two voluntary employee-augmentation implants: sponsorship and an automated sad trombone. Corporate morale, now permanently installed."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2477,6 +3403,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/music
 	id = "entertainment_music"
+	subcategory = "Music"
 	name = "Music & Leisure Package"
 	desc = "A selection of portable musical instruments for sanctioned recreation and unsanctioned hallway concerts."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2493,6 +3420,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/formal
 	id = "entertainment_formal"
+	subcategory = "Costumes & Apparel"
 	name = "Formal Social Package"
 	desc = "A small wardrobe of formal clothing suitable for receptions, ceremonies, and meetings where appearing expensive is operationally useful."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2512,6 +3440,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/costumes
 	id = "entertainment_costumes"
+	subcategory = "Costumes & Apparel"
 	name = "Costume Package"
 	desc = "An assortment of harmless theatrical costumes for morale events, dramatic reenactments, and regrettable photographs."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2529,6 +3458,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/plushies
 	id = "entertainment_plushies"
+	subcategory = "Collectibles"
 	name = "Plushie Assortment"
 	desc = "A selection of soft corporate-approved companions for isolated personnel, decorative use, and entirely professional desk arrangements."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2546,6 +3476,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/admin_plushies
 	id = "entertainment_admin_plushies"
+	subcategory = "Collectibles"
 	name = "Central Command Plushie Collection"
 	desc = "A complete collection of commemorative plushies depicting distinguished NanoTrasen administrative personnel. Approved for morale improvement, decorative purposes, and questionable collecting habits."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2562,6 +3493,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/entertainment/reception
 	id = "entertainment_reception"
+	subcategory = "Events"
 	name = "Corporate Reception Supplies"
 	desc = "Decorations, serving equipment, and approved recreational materials for welcoming visiting dignitaries and hosting official receptions."
 	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
@@ -2585,6 +3517,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/contraband/ert_equipment
 	audit_risk = 5
 	id = "ert_equipment"
+	subcategory = "Tactical Equipment"
 	name = "Emergency Response Team Equipment"
 	desc = "Unregistered Emergency Response Team equipment routed through an unauthorized Central Command procurement channel."
 	cost = 45
@@ -2600,6 +3533,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/contraband/combat_medical
 	id = "restricted_combat_medical"
+	subcategory = "Tactical Equipment"
 	name = "Unregistered Combat Medical Supplies"
 	desc = "A collection of specialized combat medical equipment intended for high-risk corporate deployments. Supplies were diverted from a restricted Emergency Response Team allocation and lack the required medical authorization records."
 	cost = 20
@@ -2616,6 +3550,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/contraband/restricted_costume
 	audit_risk = 1
 	id = "restricted_costume"
+	subcategory = "Novelty Contraband"
 	name = "Black-Market Costume Crate"
 	desc = "An assortment of unlicensed, politically questionable, and otherwise unauthorized costumes acquired through procurement channels that officially do not exist. Central Command assumes no responsibility for disciplinary action, mistaken identity, or hostile reactions resulting from their use."
 	cost = 10
@@ -2632,6 +3567,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/contraband/restricted_exec
 	audit_risk = 1
 	id = "restricted_exec"
+	subcategory = "Unauthorized Luxuries"
 	name = "Executive Vice Package"
 	desc = "A discreet selection of premium indulgences intended for executives, dignitaries, and personnel with sufficiently flexible expense accounts. Contents may include comforts not covered under standard operational provisioning."
 	cost = 8
@@ -2649,6 +3585,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 /datum/ccpost_supply_package/contraband/implant_stock
 	id = "restricted_implant_stock"
+	subcategory = "Tactical Equipment"
 	name = "Off-Ledger Tactical Implant Stock"
 	desc = "Unapproved tactical augmentations for restraint escape, covert concealment, electronic disruption, and smoke deployment. Intended for personnel whose expense approvals have already been denied."
 	cost = 50
@@ -2664,6 +3601,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/contraband/restricted_decor
 	audit_risk = 1
 	id = "restricted_decor"
+	subcategory = "Unauthorized Luxuries"
 	name = "Unapproved Exotic Decor"
 	desc = "A collection of lavish and impractical furnishings sourced through unapproved procurement channels. Perfect for personnel who believe operational efficiency improves dramatically when surrounded by expensive carpet, questionable art, and décor that definitely was not included in the original budget."
 	cost = 8
@@ -2683,6 +3621,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/contraband/restricted_recovequip
 	audit_risk = 6
 	id = "restricted_recovequip"
+	subcategory = "Syndicate Equipment"
 	name = "Recovered Syndicate Equipment"
 	desc = "A sealed assortment of equipment recovered from Syndicate personnel, caches, and compromised operations. Items have been cleared for controlled redistribution through channels that Internal Security would strongly prefer you not ask about."
 	cost = 50
@@ -2702,6 +3641,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /datum/ccpost_supply_package/contraband/restricted_party
 	audit_risk = 1
 	id = "restricted_party"
+	subcategory = "Novelty Contraband"
 	name = "Unauthorized Party Supplies"
 	desc = "An unapproved assortment of celebratory supplies acquired outside standard procurement channels. Contents are intended for morale events, unofficial gatherings, and other festivities that Finance has already declined to reimburse."
 	cost = 8

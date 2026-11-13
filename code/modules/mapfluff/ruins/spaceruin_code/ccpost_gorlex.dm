@@ -7,8 +7,7 @@
 
 #define CCPOST_GORLEX_TC 18
 #define CCPOST_CYBERSUN_TC 12
-#define CCPOST_GORLEX_FIRST_CHECK (15 MINUTES)
-#define CCPOST_GORLEX_CHECK_INTERVAL (10 MINUTES)
+#define CCPOST_GORLEX_NEGLECT_WINDOW (5 MINUTES)
 #define CCPOST_GORLEX_PLASTIC_LIMIT 4
 #define CCPOST_CYBERSUN_RETRY_DELAY (5 MINUTES)
 #define CCPOST_GORLEX_SECURITY_POLL (5 SECONDS)
@@ -58,7 +57,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	name = "Operation Severance event director"
 	var/unsecured_since = 0
 	var/last_security_scan = 0
-	var/next_event_check = 0
+	var/next_event_check = 1
 	var/event_started = FALSE
 	var/polling_ghosts = FALSE
 	var/armed_by_gorlex = FALSE
@@ -175,7 +174,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 /obj/effect/landmark/ccpost_gorlex_director/proc/active_outpost_personnel()
 	var/count = 0
 	for(var/mob/living/carbon/human/person as anything in GLOB.mob_living_list)
-		if(QDELETED(person) || person.stat == DEAD || !person.client || !person.mind)
+		if(!ishuman(person) || QDELETED(person) || person.stat == DEAD || !person.client || !person.mind)
 			continue
 		if(!istype(get_area(person), /area/ruin/space/has_grav/ccpost))
 			continue
@@ -195,17 +194,16 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		current_container = current_container.loc
 	return FALSE
 
-/// Reset the entire neglect window whenever staffing or disk security is restored.
+/// Reset neglect independently of the fixed deployment schedule.
 /obj/effect/landmark/ccpost_gorlex_director/proc/reset_neglect()
 	unsecured_since = 0
-	next_event_check = 0
 
 /// Shared predicate for the scheduled roll and the end of a recruitment poll.
-/obj/effect/landmark/ccpost_gorlex_director/proc/neglect_eligible(obj/item/disk/nuclear/ccpost_nuke/disk)
+/obj/effect/landmark/ccpost_gorlex_director/proc/deployment_eligible(obj/item/disk/nuclear/ccpost_nuke/disk)
 	if(GLOB.ccpost_outpost_signal_lost || active_outpost_personnel() < 2 || !disk || QDELETED(disk))
 		return FALSE
 	var/turf/current_location = get_turf(disk)
-	return current_location && istype(get_area(current_location), /area/ruin/space/has_grav/ccpost) && !disk_is_actively_guarded(disk)
+	return current_location && istype(get_area(current_location), /area/ruin/space/has_grav/ccpost)
 
 /obj/effect/landmark/ccpost_gorlex_director/process(seconds_per_tick)
 	// Keep the stolen cartridge off the main station even after deployment.
@@ -226,20 +224,33 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/obj/item/disk/nuclear/ccpost_nuke/disk = get_disk()
 	if(!GLOB.ccpost_outpost_signal_lost)
 		return_disk_if_offsite(disk)
-	if(!neglect_eligible(disk))
+	if(!SSticker.HasRoundStarted() || next_event_check > 3)
+		return
+	var/eligible = deployment_eligible(disk)
+	if(!eligible || disk_is_actively_guarded(disk))
 		reset_neglect()
-		return
-	if(!unsecured_since)
+	else if(!unsecured_since)
 		unsecured_since = world.time
-		next_event_check = unsecured_since + CCPOST_GORLEX_FIRST_CHECK
-	if(polling_ghosts || world.time < next_event_check)
-		return
-	// First roll at 15 minutes, then every ten minutes; cap at 40%.
-	next_event_check = world.time + CCPOST_GORLEX_CHECK_INTERVAL
-	var/neglect_minutes = (world.time - unsecured_since) / (1 MINUTES)
-	var/chance = neglect_minutes >= 25 ? 40 : 15
-	if(prob(chance) && length(GLOB.ccpost_gorlex_insertions))
-		start_gorlex_poll()
+	var/static/list/check_times = list(20 MINUTES, 35 MINUTES, 50 MINUTES)
+	var/static/list/neglect_chances = list(20, 30, 40)
+	var/elapsed = world.time - SSticker.round_start_time
+	while(next_event_check <= length(check_times) && elapsed >= check_times[next_event_check])
+		var/check_index = next_event_check
+		next_event_check++
+		// Never replay missed checks after lag, late loading or ineligible staffing.
+		var/check_minute = check_times[check_index] / (1 MINUTES)
+		if(elapsed > check_times[check_index] + CCPOST_GORLEX_SECURITY_POLL)
+			log_game("CCPost Gorlex: minute [check_minute] check expired; no catch-up roll.")
+			continue
+		if(!eligible || polling_ghosts || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE))
+			log_game("CCPost Gorlex: minute [check_minute] check skipped (deployment prerequisites not met or poll active).")
+			continue
+		var/neglected = unsecured_since && world.time - unsecured_since >= CCPOST_GORLEX_NEGLECT_WINDOW
+		var/chance = neglected ? neglect_chances[check_index] : 5
+		var/successful_roll = prob(chance)
+		log_game("CCPost Gorlex: minute [check_minute] check, neglect=[neglected], chance=[chance]%, success=[successful_roll].")
+		if(successful_roll)
+			start_gorlex_poll()
 
 /// Use existing faction artwork rather than weapon silhouettes for both ghost-poll surfaces.
 /proc/ccpost_poll_faction_icon(cybersun = FALSE)
@@ -256,7 +267,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 /obj/effect/landmark/ccpost_gorlex_director/proc/start_gorlex_poll(admin_forced = FALSE)
 	if(event_started || polling_ghosts || GLOB.ccpost_outpost_signal_lost || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE))
 		return FALSE
-	if(!get_disk() || (!admin_forced && (!neglect_eligible(get_disk()) || !unsecured_since || world.time - unsecured_since < CCPOST_GORLEX_FIRST_CHECK)))
+	if(!get_disk() || (!admin_forced && !deployment_eligible(get_disk())))
 		return FALSE
 	polling_ghosts = TRUE
 	INVOKE_ASYNC(src, PROC_REF(poll_and_deploy), admin_forced)
@@ -275,7 +286,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	polling_ghosts = FALSE
 	if(QDELETED(src) || event_started || GLOB.ccpost_outpost_signal_lost || !length(candidates))
 		return
-	if(!get_disk() || (!admin_forced && (!neglect_eligible(get_disk()) || !unsecured_since || world.time - unsecured_since < CCPOST_GORLEX_FIRST_CHECK)))
+	if(!get_disk() || (!admin_forced && !deployment_eligible(get_disk())))
 		return
 	var/turf/T = pick_landing(GLOB.ccpost_gorlex_insertions, TRUE)
 	if(!T)
@@ -2005,8 +2016,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 #undef CCPOST_GORLEX_OPERATION_RADIUS
 #undef CCPOST_GORLEX_TC
 #undef CCPOST_CYBERSUN_TC
-#undef CCPOST_GORLEX_FIRST_CHECK
-#undef CCPOST_GORLEX_CHECK_INTERVAL
+#undef CCPOST_GORLEX_NEGLECT_WINDOW
 #undef CCPOST_GORLEX_SECURITY_POLL
 
 #undef CCPOST_GORLEX_PLASTIC_LIMIT
@@ -2015,7 +2025,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 // Admin-only native event controls. No storyteller track; natural recruitment remains director-owned.
 /datum/round_event_control/ccpost_gorlex_deployment
 	name = "Operation Severance: Gorlex Deployment"
-	description = "Polls for a Gorlex operative at an operational Liaison Outpost, bypassing the neglect timer only."
+	description = "Polls for a Gorlex operative at an operational Liaison Outpost, bypassing scheduled deployment checks and staffing."
 	typepath = /datum/round_event/ccpost_gorlex_deployment
 	track = null
 	max_occurrences = 0
