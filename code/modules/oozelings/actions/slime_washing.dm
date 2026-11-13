@@ -41,6 +41,7 @@
 
 /datum/status_effect/slime_washing/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	COOLDOWN_RESET(src, standing_wash)
 	owner.visible_message(
 		span_notice("[owner]'s outer membrane returns to normal, no longer cleaning [owner.p_their()] surroundings."),
 		span_notice("Your outer membrane returns to normal, filth no longer being cleansed.")
