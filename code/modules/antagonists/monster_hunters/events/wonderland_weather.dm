@@ -32,6 +32,7 @@
 
 /datum/weather/wonderland/end()
 	deltimer(music_timer)
+	music_timer = null
 	for(var/area/tinted as anything in tinted_areas)
 		tinted.set_base_lighting(new_alpha = 0)
 	tinted_areas.Cut()
@@ -43,7 +44,13 @@
 		var/turf/listener_turf = get_turf(listener)
 		if(!listener_turf || !is_station_level(listener_turf.z))
 			continue
-		listener.playsound_local(null, 'sound/ambience/wonderland.ogg', 20, channel = CHANNEL_WEATHER)
+		listener.playsound_local(null,
+			'sound/ambience/wonderland.ogg',
+			vol = 15,
+			channel = CHANNEL_WEATHER,
+			pressure_affected = FALSE,
+			mixer_channel = CHANNEL_WEATHER
+		)
 
 /// Rooms that already set their own base lighting (space, solars) are left alone, we could not put them back
 /datum/weather/wonderland/proc/tint_areas()
