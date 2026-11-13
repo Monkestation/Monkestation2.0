@@ -13,6 +13,8 @@
 	custom_price = PAYCHECK_CREW * 3
 	can_be_tied = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	/// How much wearing these galoshes affects fishing difficulty
+	var/fishing_modifier = -3
 
 /obj/item/clothing/shoes/galoshes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "galoshes")
@@ -21,6 +23,7 @@
 	name = "absorbent galoshes"
 	desc = "A pair of purple rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
+	fishing_modifier = -6
 
 /datum/armor/shoes_galoshes
 	bio = 100
@@ -36,3 +39,8 @@
 
 	var/turf/open/t_loc = get_turf(src)
 	SEND_SIGNAL(t_loc, COMSIG_TURF_MAKE_DRY, TURF_WET_WATER, TRUE, INFINITY)
+
+
+/obj/item/clothing/shoes/galoshes/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)

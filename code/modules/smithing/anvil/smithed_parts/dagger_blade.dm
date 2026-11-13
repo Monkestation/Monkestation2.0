@@ -13,14 +13,14 @@
 	tool_behaviour = TOOL_KNIFE
 	sharpness = SHARP_POINTY
 	embed_type = /datum/embedding/dagger_blade
-	armour_penetration = 35 * (smithed_quality / 100)
+	armour_penetration = 25 * (smithed_quality / 100)
 
 	attack_speed = CLICK_CD_FAST_MELEE
 
 	wound_bonus = -5 //aint cutting shit
 	bare_wound_bonus = 20 //Unless you are unarmored.
 
-	throwforce = floor(((material_stats.density + material_stats.hardness) / 7.5) * (smithed_quality * 0.01))
+	throwforce = floor(((material_stats.density + material_stats.hardness) / 9) * (smithed_quality * 0.01))
 	force = floor(throwforce * 0.2)
 	w_class = WEIGHT_CLASS_SMALL
 	..()

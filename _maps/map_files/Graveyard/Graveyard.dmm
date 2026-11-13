@@ -42370,7 +42370,7 @@
 /area/station/hallway/primary/upper)
 "qud" = (
 /obj/structure/lattice/catwalk,
-/obj/item/fish_feed,
+/obj/item/reagent_containers/cup/fish_feed,
 /turf/open/misc/asteroid,
 /area/graveyard/tunnels/mobspawngen)
 "quh" = (
@@ -57990,7 +57990,7 @@
 /area/graveyard/bunker/command)
 "wDy" = (
 /obj/structure/table/glass,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_y = 3
 	},
 /obj/item/fishing_hook,

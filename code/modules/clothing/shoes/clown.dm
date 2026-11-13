@@ -19,6 +19,7 @@
 		create_storage(storage_type = /datum/storage/pockets/shoes/clown)
 	LoadComponent(/datum/component/squeak, squeak_sound, 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 3) //Goofy
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/living/user, slot)
 	. = ..()
@@ -65,6 +66,10 @@
 	icon_state = "ducky_shoes"
 	inhand_icon_state = "ducky_shoes"
 	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
+
+/obj/item/clothing/shoes/clown_shoes/ducky_shoes/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -7) //deploy tactical duckling lure
 
 /obj/item/clothing/shoes/clown_shoes/cluwne
 	name = "cluwne shoes"

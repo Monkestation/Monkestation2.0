@@ -111,6 +111,10 @@
 	inhand_icon_state = null
 	dog_fashion = /datum/dog_fashion/head/pirate
 
+/obj/item/clothing/head/collectable/pirate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
 /obj/item/clothing/head/collectable/kitty
 	name = "collectable kitty ears"
 	desc = "The fur feels... a bit too realistic."
@@ -132,6 +136,10 @@
 	worn_icon = 'icons/mob/clothing/head/wizard.dmi'
 	icon_state = "wizard"
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+
+/obj/item/clothing/head/collectable/wizard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
@@ -177,3 +185,7 @@
 	inhand_icon_state = "swatsyndie_helmet"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/collectable/swat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 2)

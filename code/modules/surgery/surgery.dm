@@ -127,21 +127,20 @@
 	if((user.istate & ISTATE_SECONDARY))
 		try_to_fail = TRUE
 
-	var/datum/surgery_step/step = get_surgery_step()
+	var/datum/surgery_step/step = GLOB.surgery_steps[steps[status]]
 	if(isnull(step))
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
-	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+	if(!tool)
+		return FALSE
+	//Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+	if((surgery_flags & SURGERY_CHECK_TOOL_BEHAVIOUR) ? tool.tool_behaviour : (tool.item_flags & SURGICAL_TOOL))
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
 
 	return FALSE
-
-/datum/surgery/proc/get_surgery_step()
-	var/step_type = steps[status]
-	return new step_type
 
 /datum/surgery/proc/get_surgery_next_step()
 	if(status < steps.len)

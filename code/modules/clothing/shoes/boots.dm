@@ -292,3 +292,12 @@
 	icon_state = "admiral_drag"
 	worn_icon_state = "admiral_drag"
 	inhand_icon_state = "admiral_drag"
+
+
+/obj/item/clothing/shoes/jackboots/floortile/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
+
+/obj/item/clothing/shoes/pirate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)

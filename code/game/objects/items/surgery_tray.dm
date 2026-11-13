@@ -151,8 +151,7 @@
 	if(!user.can_perform_action(src, NEED_HANDS) || !length(contents))
 		return ..()
 	var/obj/item/grabbies = pick(contents)
-	if(grabbies)
-		atom_storage.remove_single(user, grabbies, drop_location())
+	if(grabbies && atom_storage.remove_single(user, grabbies, drop_location()))
 		user.put_in_hands(grabbies)
 	return TRUE
 

@@ -249,7 +249,7 @@ monkestation end*/
 	var/obj/item/fish/fishie = shipped
 	if(istype(shipped, /obj/item/storage/fish_case))
 		fishie = locate() in shipped
-	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_FROM_CASE))
+	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_LOW_PRICE))
 		reward -= shipping_penalty
 
 ///A subtype of the fish bounty that requires fish with a specific fluid type
@@ -265,4 +265,4 @@ monkestation end*/
 	description = "We need [lowertext(fluid_type)] fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
 
 /datum/bounty/item/assistant/fish/fluid/can_ship_fish(obj/item/fish/fishie)
-	return compatible_fluid_type(fishie.required_fluid_type, fluid_type)
+	return (fluid_type in GLOB.fish_compatible_fluid_types[fishie.required_fluid_type])

@@ -16,12 +16,12 @@
 /obj/item/smithed_part/weapon_part/spear_blade/finish_weapon()
 	sharpness = SHARP_POINTY
 	embed_type = /datum/embedding/spear_blade
-	armour_penetration = 40 * (smithed_quality / 100)
+	armour_penetration = 20 * (smithed_quality / 100)
 
-	force = floor(((material_stats.density + material_stats.hardness) / 9) * (smithed_quality * 0.01))
-	wield_force = floor(force * 1.25)
+	force = floor(((material_stats.density + material_stats.hardness) / 10.25) * (smithed_quality * 0.01))
+	wield_force = floor(force * 1.1)
 	unwield_force = force
-	throwforce = force * 1.25
+	throwforce = force * 1.2
 
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 

@@ -8,7 +8,10 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	custom_materials = null
-	var/anomaly_type = /obj/effect/anomaly
+	/// The anomaly this core came from
+	var/obj/effect/anomaly/anomaly_type = /obj/effect/anomaly
+	/// Color of the core's glow
+	var/core_color = COLOR_WHITE
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
@@ -40,54 +43,63 @@
 	desc = "The neutralized core of a pyroclastic anomaly. It feels warm to the touch. It'd probably be valuable for research."
 	icon_state = "pyro_core"
 	anomaly_type = /obj/effect/anomaly/pyro
+	core_color = COLOR_BRIGHT_ORANGE
 
 /obj/item/assembly/signaler/anomaly/grav
 	name = "\improper gravitational anomaly core"
 	desc = "The neutralized core of a gravitational anomaly. It feels much heavier than it looks. It'd probably be valuable for research."
 	icon_state = "grav_core"
 	anomaly_type = /obj/effect/anomaly/grav
+	core_color = COLOR_LIME
 
 /obj/item/assembly/signaler/anomaly/flux
 	name = "\improper flux anomaly core"
 	desc = "The neutralized core of a flux anomaly. Touching it makes your skin tingle. It'd probably be valuable for research."
 	icon_state = "flux_core"
 	anomaly_type = /obj/effect/anomaly/flux
+	core_color = COLOR_YELLOW
 
 /obj/item/assembly/signaler/anomaly/bluespace
 	name = "\improper bluespace anomaly core"
 	desc = "The neutralized core of a bluespace anomaly. It keeps phasing in and out of view. It'd probably be valuable for research."
 	icon_state = "anomaly_core"
 	anomaly_type = /obj/effect/anomaly/bluespace
+	core_color = COLOR_DARK_CYAN
 
 /obj/item/assembly/signaler/anomaly/vortex
 	name = "\improper vortex anomaly core"
 	desc = "The neutralized core of a vortex anomaly. It won't sit still, as if some invisible force is acting on it. It'd probably be valuable for research."
 	icon_state = "vortex_core"
 	anomaly_type = /obj/effect/anomaly/bhole
+	core_color = COLOR_PURPLE
 
 /obj/item/assembly/signaler/anomaly/bioscrambler
 	name = "\improper bioscrambler anomaly core"
 	desc = "The neutralized core of a bioscrambler anomaly. It's squirming, as if moving. It'd probably be valuable for research."
 	icon_state = "bioscrambler_core"
 	anomaly_type = /obj/effect/anomaly/bioscrambler
+	core_color = COLOR_OLIVE_GREEN
 
 /obj/item/assembly/signaler/anomaly/hallucination
 	name = "\improper hallucination anomaly core"
 	desc = "The neutralized core of a hallucination anomaly. It seems to be moving, but it's probably your imagination. It'd probably be valuable for research."
 	icon_state = "hallucination_core"
 	anomaly_type = /obj/effect/anomaly/hallucination
+	core_color = COLOR_SOFT_RED
 
 /obj/item/assembly/signaler/anomaly/dimensional
 	name = "\improper dimensional anomaly core"
 	desc = "The neutralized core of a dimensional anomaly. Objects reflected on its surface don't look quite right. It'd probably be valuable for research."
 	icon_state = "dimensional_core"
 	anomaly_type = /obj/effect/anomaly/dimensional
+	core_color = COLOR_WHITE
 
 /obj/item/assembly/signaler/anomaly/ectoplasm
 	name = "\improper ectoplasm anomaly core"
 	desc = "The neutralized core of an ectoplasmic anomaly. When you hold it close, you can hear faint murmuring from inside. It'd probably be valuable for research."
 	icon_state = "dimensional_core"
 	anomaly_type = /obj/effect/anomaly/ectoplasm
+	core_color = COLOR_WHITE
 
 // MONKESTATION ADDITION
 

@@ -63,7 +63,7 @@
 	material_stats.liquid_flow = material.liquid_flow
 	material_stats.refractiveness = material.refractiveness
 	material_stats.material_name = material.name
-	material_stats.merged_color = material.greyscale_colors
+	material_stats.merged_color = material.greyscale_color || material.color
 	material_stats.apply_color()
 
 	for(var/datum/material_trait/trait as anything in material.material_traits)

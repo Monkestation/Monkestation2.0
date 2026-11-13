@@ -2560,6 +2560,24 @@
 /obj/machinery/gbp_redemption,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"aMJ" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "Biohazard";
+	name = "Emergency Research Blast Door"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
+	},
+/obj/machinery/computer/extract_requests,
+/turf/open/floor/iron/dark,
+/area/station/science/research)
 "aMU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -12780,22 +12798,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"dXW" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/old,
-/mob/living/basic/clown{
-	name = "John Gamer The Prisoner Terminator";
-	limb_destroyer = 1;
-	desc = "Whenever you look at him you can sense an incomprehensible eldrich presence...";
-	maxHealth = 200;
-	wound_bonus = 10;
-	health = 200;
-	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."), "emote_hear" = list("honks","squeaks"), "emote_sound" = list('sound/items/bikehorn.ogg'), "emote_chance" = 5)
-	},
-/turf/open/ballpit,
-/area/station/security/bitden)
 "dYu" = (
 /obj/structure/chair{
 	dir = 8
@@ -15112,6 +15114,15 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
+"eLy" = (
+/obj/machinery/smartfridge/extract/preloaded,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/computer/extract_orders/directional/west,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/xenobiology)
 "eLz" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/corner{
@@ -31181,15 +31192,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/port/greater)
-"jAM" = (
-/obj/machinery/smartfridge/extract/preloaded,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/computer/extract_orders/directional/west,
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/xenobiology)
 "jBh" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -31773,19 +31775,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"jKw" = (
-/obj/structure/table,
-/obj/structure/railing,
-/obj/effect/turf_decal/bot,
-/obj/item/aquarium_kit,
-/obj/item/fishing_rod,
-/obj/item/fish_feed{
-	pixel_y = 3
-	},
-/obj/item/fishing_hook,
-/obj/item/fishing_line,
-/turf/open/floor/iron,
-/area/station/service/hydroponics)
 "jKz" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
@@ -35908,6 +35897,19 @@
 "lbO" = (
 /turf/closed/wall,
 /area/station/service/library)
+"lbR" = (
+/obj/structure/table,
+/obj/structure/railing,
+/obj/effect/turf_decal/bot,
+/obj/item/aquarium_kit,
+/obj/item/fishing_rod,
+/obj/item/reagent_containers/cup/fish_feed{
+	pixel_y = 3
+	},
+/obj/item/fishing_hook,
+/obj/item/fishing_line,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "lca" = (
 /obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -46513,6 +46515,22 @@
 /obj/structure/lattice/catwalk,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
+"oxU" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/clown{
+	name = "John Gamer The Prisoner Terminator";
+	limb_destroyer = 1;
+	desc = "Whenever you look at him you can sense an incomprehensible eldrich presence...";
+	maxHealth = 200;
+	wound_bonus = 10;
+	health = 200;
+	emotes = list("emote_say" = list("HONK","Honk!","Welcome to clown planet!","Punch me, I dare you..."), "emote_hear" = list("honks","squeaks"), "emote_sound" = list('sound/items/bikehorn.ogg'), "emote_chance" = 5)
+	},
+/turf/open/ballpit,
+/area/station/security/bitden)
 "oxW" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -56823,24 +56841,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"rGV" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "Biohazard";
-	name = "Emergency Research Blast Door"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/caution/stand_clear{
-	dir = 8
-	},
-/obj/machinery/computer/extract_requests,
-/turf/open/floor/iron/dark,
-/area/station/science/research)
 "rHi" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
@@ -82926,7 +82926,7 @@ kYY
 bpC
 gbu
 vlE
-dXW
+oxU
 hyT
 miD
 nEP
@@ -112709,7 +112709,7 @@ fLv
 dfU
 lJJ
 cAu
-jKw
+lbR
 xvj
 aMe
 ncY
@@ -113693,7 +113693,7 @@ aeu
 wuc
 kar
 qpf
-jAM
+eLy
 tdT
 nJJ
 hGr
@@ -114756,7 +114756,7 @@ bBF
 sxB
 mUU
 qfo
-rGV
+aMJ
 vFY
 ofs
 mnl

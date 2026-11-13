@@ -185,7 +185,7 @@
 				research_added += activator.research_value
 			last_results += "ARTIFACT ACTIVATORS REVEALED."
 		last_results+= "WARNING: ARTIFACT FAULT NOW ACTIVE."
-		if(research_added > 0 && !artifact.researched)
+		if(research_added > 0 && (!artifact.researched || artifact.from_wand))
 			artifact.researched = TRUE
 			src.visible_message(span_notice("[src] blares: ") + span_robot("ARTIFACT RESEARCHED:[research_added] ADDED TO LINKED CONSOLE"))
 			stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_added))
