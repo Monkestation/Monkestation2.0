@@ -137,6 +137,13 @@ export const inquisitive_ghost: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const allow_ghost_observe: FeatureToggle = {
+  name: 'Allow ghost observing',
+  category: 'GHOST',
+  description: 'Let ghosts observe you, which shows them your view and HUD.',
+  component: CheckboxInput,
+};
+
 export const ghost_roles: FeatureToggle = {
   name: 'Get ghost roles',
   category: 'GHOST',

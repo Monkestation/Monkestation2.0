@@ -65,6 +65,16 @@
 	GenerateTag()
 	return ..()
 
+/// Drops every non-admin observer if this mob's player has turned off ghost observing.
+/mob/proc/kick_unpermitted_observers()
+	if(!length(observers) || !GLOB.ghost_observe_opt_outs[ckey])
+		return
+	for(var/mob/dead/observer/observer as anything in observers)
+		if(observer.client?.holder)
+			continue
+		observer.reset_perspective(null)
+		to_chat(observer, span_warning("[src] doesn't allow ghosts to observe [p_them()]."), type = MESSAGE_TYPE_WARNING, confidental = TRUE)
+
 /// Assigns a (c)key to this mob.
 /mob/proc/PossessByPlayer(ckey)
 	SHOULD_NOT_OVERRIDE(TRUE)

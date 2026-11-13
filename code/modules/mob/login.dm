@@ -35,6 +35,7 @@
 	lastKnownIP = client.address
 	computer_id = client.computer_id
 	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
+	kick_unpermitted_observers()
 	world.update_status()
 	client.clear_screen() //remove hud items just in case
 	client.images = list()

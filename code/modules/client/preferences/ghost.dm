@@ -175,6 +175,19 @@
 	savefile_identifier = PREFERENCE_PLAYER
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 
+// cached so it still works while disconnected
+GLOBAL_ALIST_EMPTY(ghost_observe_opt_outs)
+
+/// Whether non-admin ghosts can observe you (see your view and HUD).
+/datum/preference/toggle/allow_ghost_observe
+	savefile_key = "allow_ghost_observe"
+	savefile_identifier = PREFERENCE_PLAYER
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+
+/datum/preference/toggle/allow_ghost_observe/apply_to_client(client/client, value)
+	GLOB.ghost_observe_opt_outs[client.ckey] = !value
+	client.mob?.kick_unpermitted_observers()
+
 /// When enabled, prevents any and all ghost role pop-ups.
 /datum/preference/toggle/ghost_roles
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
