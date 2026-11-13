@@ -73,7 +73,7 @@
 		if(observer.client?.holder)
 			continue
 		observer.reset_perspective(null)
-		to_chat(observer, span_warning("[src] doesn't allow ghosts to observe [p_them()]."), type = MESSAGE_TYPE_WARNING, confidental = TRUE)
+		to_chat(observer, span_warning("[src] doesn't allow ghosts to observe [p_them()]."), type = MESSAGE_TYPE_WARNING, confidential = TRUE)
 
 /// Assigns a (c)key to this mob.
 /mob/proc/PossessByPlayer(ckey)

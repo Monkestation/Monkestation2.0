@@ -880,7 +880,7 @@ GAME_VERB(/mob/dead/observer, observe, "Observe", "Ghost")
 		return
 
 	if(GLOB.ghost_observe_opt_outs[mob_eye.ckey] && !client?.holder)
-		to_chat(src, span_warning("[mob_eye] doesn't allow ghosts to observe [mob_eye.p_them()]."), type = MESSAGE_TYPE_WARNING, confidental = TRUE)
+		to_chat(src, span_warning("[mob_eye] doesn't allow ghosts to observe [mob_eye.p_them()]."), type = MESSAGE_TYPE_WARNING, confidential = TRUE)
 		return
 
 	//Istype so we filter out points of interest that are not mobs
