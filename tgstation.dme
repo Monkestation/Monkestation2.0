@@ -3174,6 +3174,7 @@
 #include "code\modules\admin\smites\curse_of_babel.dm"
 #include "code\modules\admin\smites\dagothkillsmite.dm"
 #include "code\modules\admin\smites\dagothstripsmite.dm"
+#include "code\modules\admin\smites\disassemble.dm"
 #include "code\modules\admin\smites\dock_pay.dm"
 #include "code\modules\admin\smites\fake_bwoink.dm"
 #include "code\modules\admin\smites\fat.dm"
