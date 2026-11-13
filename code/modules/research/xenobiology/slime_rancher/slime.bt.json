@@ -1,0 +1,233 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/slime",
+	"type": "selector",
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_buckled_to_obj",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_contained_in_obj",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_grabbed_by_enemy",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+						"targeting_strategy_key": "BB_PET_TARGETING_STRATEGY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/pawn_is_restrained",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/resist"
+					}
+				}
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/ability_available",
+			"vars": {
+				"ability_key": "BB_SLIME_EVOLVE"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+				"vars": {
+					"ability_key": "BB_SLIME_EVOLVE"
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/slime_wild_split",
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/slime_wild_split"
+			}
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "0.5 SECONDS",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+					"children": [
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set/slime_chase",
+									"vars": {
+										"key": "BB_SLIME_EAT_TARGET"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/slime_chase/hunt/meal"
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set/slime_chase",
+									"vars": {
+										"key": "BB_CURRENT_TARGET"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/slime_chase/hunt/grudge"
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set/slime_chase",
+									"vars": {
+										"key": "BB_SLIME_ITEM_TARGET"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/slime_chase/eat_item"
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set/slime_chase",
+									"vars": {
+										"key": "BB_SLIME_CLEAN_TARGET"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/slime_chase/clean"
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set/slime_chase",
+									"vars": {
+										"key": "BB_SLIME_NUZZLE_TARGET"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/slime_chase/nuzzle"
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set/slime_chase",
+									"vars": {
+										"key": "BB_SLIME_BOUNCE_TARGET"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/slime_chase/bounce"
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set/slime_chase",
+									"vars": {
+										"key": "BB_SLIME_ROAM_TARGET"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/slime_chase/roam"
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set/slime_chase",
+									"vars": {
+										"key": "BB_SLIME_STACK_TARGET"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/slime_chase/stack"
+									}
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/random_walk"
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/slime_find_target/meal"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/slime_find_target/grudge"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/slime_find_target/item"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/slime_find_target/mess"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/slime_find_target/friend"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/slime_find_target/person"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/slime_find_target/roam"
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/slime_find_target/stack"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_speech_loop"
+				}
+			]
+		}
+	]
+}

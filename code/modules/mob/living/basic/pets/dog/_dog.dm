@@ -10,7 +10,7 @@
 /datum/pet_command/attack/dog
 	attack_subtree = /datum/bt_node/subtree/pet_command/attack/dog
 
-/datum/pet_command/point_targeting/attack/dog/set_command_active(mob/living/parent, mob/living/commander)
+/datum/pet_command/attack/dog/set_command_active(mob/living/parent, mob/living/commander)
 	. = ..()
 	parent.ai_controller.set_blackboard_key(BB_DOG_HARASS_HARM, TRUE)
 
@@ -40,8 +40,8 @@
 		/datum/pet_command/free,
 		/datum/pet_command/good_boy/dog,
 		/datum/pet_command/follow/dog,
-		/datum/pet_command/point_targeting/attack/dog,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/attack/dog,
+		/datum/pet_command/fetch,
 		/datum/pet_command/play_dead,
 	)
 
@@ -68,10 +68,9 @@
 /// Subtypes override this to apply fashion accessories or variant speech.
 /mob/living/basic/pet/dog/proc/update_dog_speak_blackboard(datum/ai_controller/controller)
 	var/list/speech_data = list()
-	speech_data[BB_EMOTE_SAY] = list("YAP", "Woof!", "Bark!", "AUUUUUU")
-	speech_data[BB_EMOTE_HEAR] = list("barks!", "woofs!", "yaps.", "pants.")
-	speech_data[BB_EMOTE_SEE] = list("shakes [p_their()] head.", "chases [p_their()] tail.", "shivers.")
-	speech_data[BB_SPEAK_CHANCE] = 1
+	update_dog_speech(speech_data)
+	if(!speech_data[BB_SPEAK_CHANCE])
+		speech_data[BB_SPEAK_CHANCE] = 1
 	controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, speech_data)
 
 ///Proc to run on a successful taming attempt

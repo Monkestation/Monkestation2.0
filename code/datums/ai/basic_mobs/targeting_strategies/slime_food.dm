@@ -1,44 +1,51 @@
-/// Accepts edible targets for slimes based on hunger level, faction, and species.
-/// Requires the controller (reads slime hunger/rabid/current-target blackboard keys).
+/// What a slime will chase down and drain. Grudges count too, but only if they're actually edible.
 /datum/targeting_strategy/slime_food
 
 /datum/targeting_strategy/slime_food/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(!controller)
-		return FALSE
-	// Anything that attacked us is a valid target even if we can't eat it.
-	if(target in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
-		var/datum/targeting_strategy/retaliate_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends)
-		return retaliate_strategy.is_valid_target(living_mob, target, vision_range)
-
 	var/mob/living/basic/slime/hunter = living_mob
-	var/mob/living/candidate = target
-	if(!isliving(candidate))
+	controller ||= hunter.ai_controller
+	if(!isslime(hunter) || isnull(controller) || !isliving(target) || QDELETED(target))
 		return FALSE
 
-	// We're already latched onto them and feeding; don't invalidate our own meal.
+	if(target in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+		var/datum/targeting_strategy/grudge_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends)
+		if(!grudge_strategy.is_valid_target(living_mob, target, vision_range, controller))
+			return FALSE
+		return hunter.buckled == target || hunter.can_feed_on(target, silent = TRUE)
+
+	var/mob/living/candidate = target
+	// checked before the latched-meal line, so flipping either on mid-meal makes us let go
+	if(hunter.cleaner_slime)
+		return FALSE
+	if(hunter.cat_slime && candidate.mob_size >= hunter.mob_size)
+		return FALSE
+	// don't invalidate the meal we're already latched onto
 	if(hunter.buckled == candidate)
 		return TRUE
-
-	var/static/list/slime_faction
-	if(isnull(slime_faction))
-		slime_faction = string_list(list(FACTION_SLIME))
-
-	if(FAST_FACTION_CHECK(slime_faction, candidate.get_faction(), hunter.allies, candidate.allies, FALSE))
+	if((FACTION_SLIME in candidate.faction) || (REF(candidate) in hunter.faction))
 		return FALSE
-
-	if(!hunter.can_feed_on(candidate, check_adjacent = FALSE))
+	if(!hunter.can_feed_on(candidate, silent = TRUE))
+		return FALSE
+	if(!can_see(hunter, candidate, vision_range))
 		return FALSE
 
 	if(candidate == controller.blackboard[BB_CURRENT_TARGET])
-		return can_see(hunter, candidate, vision_range)
-
+		return TRUE
 	if(controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_STARVING && controller.blackboard[BB_SLIME_RABID])
-		return can_see(hunter, candidate, vision_range)
-
-	if(islarva(candidate) || ismonkey(candidate) || ishuman(candidate) || isalienadult(candidate))
-		return can_see(hunter, candidate, vision_range)
-
-	return FALSE
+		return TRUE
+	// monkeys are humans here, so they're always on the menu
+	if(ishuman(candidate) || isalien(candidate))
+		return TRUE
+	var/static/list/livestock = typecacheof(list(
+		/mob/living/basic/cow,
+		/mob/living/basic/pig,
+		/mob/living/basic/sheep,
+		/mob/living/basic/goat,
+		/mob/living/basic/chicken,
+		/mob/living/basic/rabbit,
+	))
+	if(livestock[candidate.type])
+		return TRUE
+	// critters we still owe a mutation stay food even after their quota's done - a critter-only pen still has to feed us
+	var/list/wanted_mobs = controller.blackboard[BB_SLIME_WANTED_MOBS]
+	return !!wanted_mobs?[candidate.type]

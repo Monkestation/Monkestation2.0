@@ -16,7 +16,7 @@
 	behavior_tree_json = "code/modules/mob/living/basic/jungle/seedling/seedling_meanie.bt.json"
 
 ///pet commands
-/datum/pet_command/point_targeting/use_ability/solarbeam
+/datum/pet_command/use_ability/solarbeam
 	command_name = "Launch solarbeam"
 	command_desc = "Command your pet to launch a solarbeam at your target!"
 	radial_icon = 'icons/effects/beam.dmi'
@@ -24,7 +24,7 @@
 	speech_commands = list("beam", "solar")
 	pet_ability_key = BB_SOLARBEAM_ABILITY
 
-/datum/pet_command/point_targeting/use_ability/rapidseeds
+/datum/pet_command/use_ability/rapidseeds
 	command_name = "Rapid seeds"
 	command_desc = "Command your pet to launch a volley of seeds at your target!"
 	radial_icon = 'icons/obj/weapons/guns/projectiles.dmi'

@@ -7,13 +7,15 @@
 /datum/pet_command/idle
 	command_name = "Stay"
 	command_desc = "Command your pet to stay idle in this location."
-	radial_icon = 'icons/obj/objects.dmi'
-	radial_icon_state = "dogbed"
+	radial_icon_state = "halt"
 	speech_commands = list("sit", "stay", "stop")
 	command_feedback = "sits"
 
 /datum/pet_command/idle/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/stay)
+
+/datum/pet_command/idle/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to stay idle!"
 
 /**
  * # Pet Command: Stop
@@ -22,14 +24,16 @@
 /datum/pet_command/free
 	command_name = "Loose"
 	command_desc = "Allow your pet to resume its natural behaviours."
-	radial_icon = 'icons/mob/actions/actions_spells.dmi'
-	radial_icon_state = "repulse"
+	radial_icon_state = "free"
 	speech_commands = list("free", "loose")
 	command_feedback = "relaxes"
 
 /datum/pet_command/free/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+
+/datum/pet_command/free/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to go free!"
 
 /**
  * # Pet Command: Follow
@@ -38,10 +42,8 @@
 /datum/pet_command/follow
 	command_name = "Follow"
 	command_desc = "Command your pet to accompany you."
-	radial_icon = 'icons/testing/turf_analysis.dmi'
-	radial_icon_state = "red_arrow"
+	radial_icon_state = "follow"
 	speech_commands = list("heel", "follow")
-	callout_type = /datum/callout_option/move
 	///should we activate immediately if we're doing nothing else and gain a friend?
 	var/activate_on_befriend = FALSE
 	/// BT subtree installed by execute_action; override to use a mob-specific follow tree.
@@ -51,8 +53,23 @@
 	. = ..()
 	set_command_target(parent, commander)
 
+/datum/pet_command/follow/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to follow!"
+
 /datum/pet_command/follow/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, follow_subtree)
+
+/datum/pet_command/follow/add_new_friend(mob/living/tamer)
+	. = ..()
+	var/mob/living/parent = weak_parent.resolve()
+	if (!parent)
+		return
+	if (activate_on_befriend && !parent.ai_controller.blackboard_key_exists(BB_ACTIVE_PET_COMMAND))
+		try_activate_command(tamer)
+
+/// Like follow but start active
+/datum/pet_command/follow/start_active
+	activate_on_befriend = TRUE
 
 /**
  * # Pet Command: Play Dead
@@ -61,12 +78,14 @@
 /datum/pet_command/play_dead
 	command_name = "Play Dead"
 	command_desc = "Play a macabre trick."
-	radial_icon = 'icons/mob/simple/pets.dmi'
-	radial_icon_state = "puppy_dead"
+	radial_icon_state = "play_dead"
 	speech_commands = list("play dead") // Don't get too creative here, people talk about dying pretty often
 
 /datum/pet_command/play_dead/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/play_dead)
+
+/datum/pet_command/play_dead/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to play dead!"
 
 /**
  * # Pet Command: Good Boy
@@ -121,12 +140,11 @@
  * # Pet Command: Attack
  * Tells a pet to chase and bite the next thing you point at
  */
-/datum/pet_command/point_targeting/attack
+/datum/pet_command/attack
 	command_name = "Attack"
 	command_desc = "Command your pet to attack things that you point out to it."
-	radial_icon = 'icons/effects/effects.dmi'
-	radial_icon_state = "bite"
-
+	radial_icon_state = "attack"
+	requires_pointing = TRUE
 	speech_commands = list("attack", "sic", "kill")
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
@@ -135,22 +153,25 @@
 	var/datum/bt_node/subtree/attack_subtree = /datum/bt_node/subtree/pet_command/attack
 
 // Refuse to target things we can't target, chiefly other friends
-/datum/pet_command/point_targeting/attack/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/attack/set_command_target(mob/living/parent, atom/target)
 	if (!target)
-		return
+		return FALSE
 	var/mob/living/living_parent = parent
 	if (!living_parent.ai_controller)
-		return
+		return FALSE
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(living_parent.ai_controller.blackboard[targeting_strategy_key])
 	if (!targeter)
 		return FALSE
 	if (!targeter.is_valid_target(living_parent, target))
 		refuse_target(parent, target)
-		return
+		return FALSE
 	return ..()
 
+/datum/pet_command/attack/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to attack [target]!"
+
 /// Display feedback about not targeting something
-/datum/pet_command/point_targeting/attack/proc/refuse_target(mob/living/parent, atom/target)
+/datum/pet_command/attack/proc/refuse_target(mob/living/parent, atom/target)
 	var/mob/living/living_parent = parent
 	living_parent.balloon_alert_to_viewers("[refuse_reaction]")
 	living_parent.visible_message(span_notice("[living_parent] refuses to attack [target]."))
@@ -161,46 +182,50 @@
 /**
  * # Breed command. breed with a partner!
  */
-/datum/pet_command/point_targeting/breed
+/datum/pet_command/breed
 	command_name = "Breed"
 	command_desc = "Command your pet to attempt to breed with a partner."
-	radial_icon = 'icons/mob/simple/animal.dmi'
-	radial_icon_state = "heart"
+	requires_pointing = TRUE
+	radial_icon_state = "breed"
 	speech_commands = list("breed", "consummate")
 
-/datum/pet_command/point_targeting/breed/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/breed/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !isliving(target))
-		return
+		return FALSE
 	if(!HAS_TRAIT(parent, TRAIT_MOB_BREEDER) || !HAS_TRAIT(target, TRAIT_MOB_BREEDER))
-		return
+		return FALSE
 	if(isnull(parent.ai_controller))
-		return
+		return FALSE
 	if(!parent.ai_controller.blackboard[BB_BREED_READY] || isnull(parent.ai_controller.blackboard[BB_BABIES_PARTNER_TYPES]))
-		return
+		return FALSE
 	var/mob/living/living_target = target
 	if(!living_target.ai_controller?.blackboard[BB_BREED_READY])
-		return
+		return FALSE
 	return ..()
 
 /datum/pet_command/breed/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/breed)
 
+/datum/pet_command/breed/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to breed with [target]!"
+
 /**
  * # Pet Command: Targetted Ability
  * Tells a pet to use some kind of ability on the next thing you point at
  */
-/datum/pet_command/point_targeting/use_ability
+/datum/pet_command/use_ability
 	command_name = "Use ability"
 	command_desc = "Command your pet to use one of its special skills on something that you point out to it."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "projectile"
+	requires_pointing = TRUE
 	speech_commands = list("shoot", "blast", "cast")
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored
 	var/pet_ability_key
 
-/datum/pet_command/point_targeting/use_ability/execute_action(datum/ai_controller/controller)
+/datum/pet_command/use_ability/execute_action(datum/ai_controller/controller)
 	if (!pet_ability_key)
 		return
 	var/datum/action/cooldown/using_action = controller.blackboard[pet_ability_key]
@@ -209,6 +234,9 @@
 	// Store the action datum in a fixed key so the targeted_ability subtree can find it
 	controller.override_blackboard_key(BB_TARGETED_ACTION, using_action)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/targeted_ability)
+
+/datum/pet_command/use_ability/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to use an ability on [target]!"
 
 /datum/pet_command/protect_owner
 	command_name = "Protect owner"
@@ -236,6 +264,8 @@
 	set_command_target(parent, victim)
 
 /datum/pet_command/protect_owner/proc/set_attacking_target(atom/source, mob/living/attacker)
+	SIGNAL_HANDLER
+
 	var/mob/living/basic/owner = weak_parent.resolve()
 	if(isnull(owner))
 		return

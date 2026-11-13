@@ -46,9 +46,9 @@
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/mine_walls)
 
 //pet commands
-/datum/pet_command/point_targeting/breed/gutlunch
+/datum/pet_command/breed/gutlunch
 
-/datum/pet_command/point_targeting/breed/gutlunch/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/breed/gutlunch/set_command_target(mob/living/parent, atom/target)
 	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
 		parent.balloon_alert_to_viewers("can't reproduce anymore!")
 		return

@@ -8,7 +8,7 @@
 		)
 	idle_behavior = /datum/idle_behavior/chicken
 	blackboard = list(
-		BB_BASIC_MOB_CURRENT_TARGET = null,
+		BB_CURRENT_TARGET = null,
 		BB_CHICKEN_TARGETED_ABILITY = null,
 		BB_CHICKEN_SELF_ABILITY = null,
 		BB_CHICKEN_RECRUIT_COOLDOWN = null,
@@ -43,7 +43,7 @@
 //HOSTILE
 /datum/ai_controller/chicken/hostile
 	blackboard = list(
-		BB_BASIC_MOB_CURRENT_TARGET = null,
+		BB_CURRENT_TARGET = null,
 		BB_CHICKEN_TARGETED_ABILITY = null,
 		BB_CHICKEN_SELF_ABILITY = null,
 		BB_CHICKEN_RECRUIT_COOLDOWN = null,
@@ -70,7 +70,7 @@
 //RETALIATE
 /datum/ai_controller/chicken/retaliate
 	blackboard = list(
-		BB_BASIC_MOB_CURRENT_TARGET = null,
+		BB_CURRENT_TARGET = null,
 		BB_CHICKEN_TARGETED_ABILITY = null,
 		BB_CHICKEN_SELF_ABILITY = null,
 		BB_CHICKEN_RECRUIT_COOLDOWN = null,
@@ -118,7 +118,7 @@
 
 /datum/ai_planning_subtree/flee_target/low_health/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(!controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	if(!controller.blackboard[BB_CURRENT_TARGET])
 		return
 	if(living_pawn.health > CHICKEN_FLEE_HEALTH) //Time to skeddadle
 		return

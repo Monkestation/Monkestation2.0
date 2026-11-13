@@ -1,0 +1,18 @@
+{
+	"dm_type": "/datum/bt_node/subtree/pet_command/attack/slime",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CURRENT_PET_TARGET",
+				"observer_abort": "BT_ABORT_BOTH"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/slime_chase/hunt/pet"
+			}
+		}
+	]
+}

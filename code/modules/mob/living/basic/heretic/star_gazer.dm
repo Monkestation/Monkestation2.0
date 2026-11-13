@@ -423,7 +423,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	behavior_tree_json = "code/modules/mob/living/basic/heretic/star_gazer.bt.json"
 
-/datum/pet_command/point_targeting/attack/star_gazer
+/datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
 	command_feedback = "stares!"
 	pointed_reaction = "stares intensely!"

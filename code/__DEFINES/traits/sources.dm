@@ -370,3 +370,5 @@
 #define SLIME_WINDUP_TRAIT "slime_windup"
 /// Pauses a slime's AI while it sits in a vacuum pack
 #define VACUUM_STORED_TRAIT "vacuum_stored"
+/// Pauses a slime's AI while it lies dazed after falling off a slime stack
+#define SLIME_TUMBLE_TRAIT "slime_tumble"

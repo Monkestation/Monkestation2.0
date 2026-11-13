@@ -1,7 +1,7 @@
 ///commands the chief can pick from
 GLOBAL_LIST_INIT(mook_commands, list(
-	new /datum/pet_command/point_targeting/attack,
-	new /datum/pet_command/point_targeting/fetch,
+	new /datum/pet_command/attack,
+	new /datum/pet_command/fetch,
 ))
 
 /datum/ai_controller/basic_controller/mook

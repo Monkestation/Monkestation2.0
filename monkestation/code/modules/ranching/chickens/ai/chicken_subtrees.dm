@@ -1,7 +1,7 @@
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken
 	ability_key = BB_CHICKEN_TARGETED_ABILITY
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range
-	target_key = BB_BASIC_MOB_CURRENT_TARGET
+	target_key = BB_CURRENT_TARGET
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/target = controller.blackboard[target_key]
@@ -84,7 +84,7 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/feed
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/on_top
-	target_key = BB_BASIC_MOB_CURRENT_TARGET
+	target_key = BB_CURRENT_TARGET
 	ability_key = BB_CHICKEN_FEED
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/feed/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)

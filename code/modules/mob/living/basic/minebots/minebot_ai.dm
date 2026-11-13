@@ -219,7 +219,7 @@
 /datum/pet_command/attack/minebot
 	attack_subtree = /datum/bt_node/subtree/pet_command/attack/minebot
 
-/datum/pet_command/point_targeting/attack/minebot/execute_action(datum/ai_controller/controller)
+/datum/pet_command/attack/minebot/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
 	var/mob/living/living_pawn = controller.pawn
 	if(!(living_pawn.istate & ISTATE_HARM))

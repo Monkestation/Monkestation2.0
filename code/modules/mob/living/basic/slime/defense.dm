@@ -108,7 +108,7 @@
 		var/datum/ai_controller/basic_controller/slime/controller = ai_controller
 		if(controller)
 			controller.ignore_target(victim, SLIME_LATCH_COOLDOWN)
-			for(var/target_key in list(BB_SLIME_EAT_TARGET, BB_BASIC_MOB_CURRENT_TARGET))
+			for(var/target_key in list(BB_SLIME_EAT_TARGET, BB_CURRENT_TARGET))
 				if(controller.blackboard[target_key] == victim)
 					controller.clear_blackboard_key(target_key)
 	stop_feeding(silent = TRUE)

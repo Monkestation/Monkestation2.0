@@ -100,7 +100,7 @@
 	manual_emote(pick("smells [target].", "sniffs [target].", "collects some nectar."))
 
 	// Clear the target, if any or we'll stunlock on a flower.
-	ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+	ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
 
 	return TRUE
 

@@ -11,7 +11,7 @@
 	var/cooldown_before_stop_hiding_key = BB_HIDING_COOLDOWN_BEFORE_STOP_HIDING
 	/// The blackboard target key to check, that will force a cooldown reset
 	/// if the cooldown is below the minimum cooldown duration.
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 
 
 /datum/ai_planning_subtree/random_hiding/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)

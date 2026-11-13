@@ -106,7 +106,7 @@
 	radial_icon_state = "mop"
 	speech_commands = list("clean", "mop")
 
-/datum/pet_command/point_targeting/clean/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/clean/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !istype(target, /obj/effect/decal/cleanable))
 		return
 	if(isnull(parent.ai_controller))

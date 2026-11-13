@@ -3,7 +3,7 @@
 /// How far away the magicarp looks for a regular spell target
 #define MAGICARP_SPELL_ENEMY_SEEK_RANGE 9
 
-/datum/pet_command/point_targeting/use_ability/magicarp
+/datum/pet_command/use_ability/magicarp
 	pet_ability_key = BB_MAGICARP_SPELL
 
 /**

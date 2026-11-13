@@ -4,15 +4,6 @@ GLOBAL_LIST_EMPTY(slime_pens)
 /mob/living/basic/slime/proc/is_ranched()
 	return pen || (!cleaner_slime && !COOLDOWN_FINISHED(src, pen_expiry_cooldown))
 
-/// slime food doesn't need to screech in your ear for the whole shift
-/datum/idle_behavior/idle_monkey/penned
-	common_emotes = list(
-		"scratch",
-		"jump",
-		"roll",
-		"tail",
-	)
-
 /// handles a single slime pen and tracks the slimes in it
 /datum/slime_pen
 	/// Slimes in the pen rn, null when it's empty
@@ -146,7 +137,8 @@ GLOBAL_LIST_EMPTY(slime_pens)
 	var/mob/living/penned_monkey = arrived
 	if(!ismonkeybasic(penned_monkey) || !istype(penned_monkey.ai_controller, /datum/ai_controller/monkey) || penned_monkey.ai_controller.blackboard[BB_MONKEY_PENNED])
 		return
-	penned_monkey.ai_controller.idle_behavior = new /datum/idle_behavior/idle_monkey/penned
+	// slime food doesn't need to screech in your ear for the whole shift
+	penned_monkey.ai_controller.override_blackboard_key(BB_MONKEY_IDLE_COMMON_EMOTES, list("scratch", "jump", "roll", "tail"))
 	penned_monkey.ai_controller.set_blackboard_key(BB_MONKEY_PENNED, TRUE)
 
 /// actually sets up the fence piece and such
