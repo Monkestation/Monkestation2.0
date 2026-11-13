@@ -454,6 +454,12 @@
 	unarmed_damage_high = 11
 	unarmed_stun_threshold = 11
 	speed_modifier = 1.5
+///Free golem legs [So they dont move at speed no]
+/obj/item/bodypart/leg/left/golem/free
+	speed_modifier = 1
+
+/obj/item/bodypart/leg/right/golem/free
+	speed_modifier = 1
 
 ///CULT GOLEM
 /obj/item/bodypart/head/golem/cult

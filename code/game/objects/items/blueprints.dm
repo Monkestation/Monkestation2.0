@@ -238,7 +238,7 @@
 /obj/item/blueprints/golem/ui_interact(mob/user, datum/tgui/ui)
 	if(iscarbon(user))
 		var/mob/living/carbon/boi = user
-		if(boi.job != /datum/job/free_golem && !(HAS_TRAIT(boi,TRAIT_WEATHER_IMMUNE))) //TODO: move to free golem/admin specific trait?
+		if(boi.job != /datum/job/free_golem && !(HAS_TRAIT(boi,TRAIT_NUKEIMMUNE))) //ok if they're nuke immune probably an admin so.
 			balloon_alert(user,"nope!")
 			return
 		. = ..()
