@@ -1,5 +1,0 @@
-author: "big-boss-crate"
-delete-after: True
-changes:
-  - rscadd: "added the *plink emote"
-  - sound: "added plink.ogg and plonk.ogg (equal chance for either to trigger when using the emote)"

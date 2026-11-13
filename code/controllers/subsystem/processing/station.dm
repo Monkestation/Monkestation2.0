@@ -17,6 +17,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
 	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
 	SetupTraits()
+	display_lobby_traits()
 	#endif
 
 	announcer = new announcer() //Initialize the station's announcer datum
@@ -41,8 +42,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		forced_traits_text_paths = SANITIZE_LIST(forced_traits_text_paths)
 
 		for (var/trait_text_path in forced_traits_text_paths)
-			var/station_trait_path = text2path(trait_text_path)
-			if (!ispath(station_trait_path, /datum/station_trait) || station_trait_path == /datum/station_trait)
+			var/datum/station_trait/station_trait_path = text2path(trait_text_path)
+			if (!ispath(station_trait_path, /datum/station_trait) || station_trait_path::abstract_type == station_trait_path)
 				var/message = "Invalid station trait path [station_trait_path] was requested in the future station traits!"
 				log_game(message)
 				message_admins(message)
@@ -67,30 +68,70 @@ PROCESSING_SUBSYSTEM_DEF(station)
 			setup_trait(trait_typepath)
 			continue
 
-		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)
+		if(initial(trait_typepath.abstract_type) == trait_typepath)
 			continue //Dont add abstract ones to it
+
+		// pick_weight() hands back the first entry when every weight left is 0, so weightless traits would still roll
+		if(initial(trait_typepath.weight) <= 0)
+			continue
+
+		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_PLANETARY) && SSmapping.is_planetary()) // we're on a planet but we can't do planet ;_;
+			continue
+
+		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_SPACE_BOUND) && !SSmapping.is_planetary()) //we're in space but we can't do space ;_;
+			continue
+
+		if((initial(trait_typepath.trait_flags) & STATION_TRAIT_REQUIRES_AI) && !CONFIG_GET(flag/allow_ai)) //can't have AI traits without AI
+			continue
+
+		if(ispath(trait_typepath, /datum/station_trait/random_event_weight_modifier)) //Don't add event modifiers for events that can't occur on our map.
+			var/datum/station_trait/random_event_weight_modifier/random_trait_typepath = trait_typepath
+			var/datum/round_event_control/event_to_check = initial(random_trait_typepath.event_control_path)
+			if(event_to_check)
+				event_to_check = new event_to_check()
+				var/valid_for_map = event_to_check.valid_for_map()
+				qdel(event_to_check)
+				if(!valid_for_map)
+					continue
+
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
-	var/positive_trait_count = pick(4;0, 3;1, 2;2, 1;3)
-	var/neutral_trait_count = pick(3;0, 6;1, 3;2, 1;3)
-	var/negative_trait_count = pick(4;0, 3;1, 2;2, 1;3)
+	var/positive_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/positive_station_traits)))
+	var/neutral_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/neutral_station_traits)))
+	var/negative_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/negative_station_traits)))
 
-	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_count)
-	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)
-	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_count)
+	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_budget)
+	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_budget)
+	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_budget)
 
-///Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them, adds them to the list of traits,
-///then removes them from possible traits as to not roll twice.
-/datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, amount)
-	if(!amount)
+/**
+ * Picks traits of a specific category (e.g. bad or good), initializes them, adds them to the list of traits,
+ * then removes them from possible traits as to not roll twice and subtracts their cost from the budget.
+ * All until the whole budget is spent or no more traits can be picked with it.
+ */
+/datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, budget)
+	if(!budget)
 		return
-	for(var/iterator in 1 to amount)
-		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
-		selectable_traits_by_types[trait_sign] -= trait_type
+	///A list of traits of the same trait sign
+	var/list/selectable_traits = selectable_traits_by_types[trait_sign]
+	while(budget)
+		///Remove any station trait with a cost bigger than the budget
+		for(var/datum/station_trait/proto_trait as anything in selectable_traits)
+			if(initial(proto_trait.cost) > budget)
+				selectable_traits -= proto_trait
+		///We have spare budget but no trait that can be bought with what's left of it
+		if(!length(selectable_traits))
+			return
+		//Rolls from the table for the specific trait type
+		var/datum/station_trait/trait_type = pick_weight(selectable_traits)
+		selectable_traits -= trait_type
+		budget -= initial(trait_type.cost)
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.
 /datum/controller/subsystem/processing/station/proc/setup_trait(datum/station_trait/trait_type)
+	if(locate(trait_type) in station_traits)
+		return
 	var/datum/station_trait/trait_instance = new trait_type()
 	station_traits += trait_instance
 	log_game("Station Trait: [trait_instance.name] chosen for this round.")
@@ -99,3 +140,11 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	for(var/i in trait_instance.blacklist)
 		var/datum/station_trait/trait_to_remove = i
 		selectable_traits_by_types[initial(trait_to_remove.trait_type)] -= trait_to_remove
+
+/// Update station trait lobby buttons for clients who joined before we initialised this subsystem
+/datum/controller/subsystem/processing/station/proc/display_lobby_traits()
+	for (var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		var/datum/hud/new_player/observer_hud = player.hud_used
+		if (!istype(observer_hud))
+			continue
+		observer_hud.show_station_trait_buttons()

@@ -105,7 +105,10 @@
 /datum/round_event_control/antagonist/New()
 	. = ..()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		restricted_roles |= protected_roles
+		LAZYOR(restricted_roles, protected_roles)
+	for(var/datum/job/job_type as anything in subtypesof(/datum/job))
+		if(job_type::job_flags & JOB_ANTAG_BLACKLISTED)
+			LAZYOR(restricted_roles, job_type::title)
 
 /datum/round_event_control/antagonist/return_failure_string(players_amt)
 	. =..()

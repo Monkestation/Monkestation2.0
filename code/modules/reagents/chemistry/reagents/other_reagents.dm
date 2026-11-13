@@ -3037,3 +3037,14 @@
 		exposed_mob.adjustBruteLoss(20)
 		exposed_mob.AddElement(/datum/element/squish, reac_volume * 5 SECONDS)
 		exposed_mob.visible_message(span_warning("[exposed_mob] is violently compacted for no apparent reason!"), span_warning("Your flesh and bone suddenly collapse inwards, scrunching you flat!"))
+
+//Literally stops pain. Thats it.
+/datum/reagent/medex
+	name = "Med-x"
+	description = "Sweet release from the pain."
+	reagent_state = LIQUID
+	color = "#78dee6"
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	ph = 1
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT
+	metabolized_traits = list(TRAIT_ANALGESIA)

@@ -1,7 +1,8 @@
 /area/station/maintenance
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+	area_flags_mapping = UNIQUE_AREA | PERSISTENT_ENGRAVINGS
 	mood_bonus = 15
 	mood_message = "Being in maintenance makes me feel like i'm home again!"
 	mood_trait = TRAIT_MAINTENANCE_DWELLER
@@ -104,7 +105,8 @@
 /area/station/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
+	area_flags_mapping = UNIQUE_AREA
 
 /area/station/maintenance/chicken
 	name = "Ranching Maintenance"

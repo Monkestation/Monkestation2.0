@@ -35,6 +35,17 @@ Assistant
 	rpg_title = "Lout"
 	config_tag = "ASSISTANT"
 
+/datum/job/assistant/get_outfit(visual_only)
+	if(visual_only || !HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
+		return ..()
+
+	var/static/list/gimmicks = list()
+	if(!length(gimmicks))
+		for(var/datum/outfit/job/assistant/gimmick/gimmick_outfit as anything in subtypesof(/datum/outfit/job/assistant/gimmick))
+			gimmicks[gimmick_outfit] = gimmick_outfit::outfit_weight
+
+	return pick_weight(gimmicks)
+
 /datum/outfit/job/assistant
 	name = JOB_ASSISTANT
 	jobtype = /datum/job/assistant

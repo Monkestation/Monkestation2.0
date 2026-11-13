@@ -5,3 +5,4 @@
 	worn_icon = 'monkestation/code/modules/cybernetics/icons/suit.dmi'
 	icon = 'monkestation/code/modules/cybernetics/icons/suits.dmi'
 	icon_state = "punk"
+	body_parts_covered = CHEST|GROIN|ARMS

@@ -26,7 +26,6 @@
 		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
 		JOB_CHIEF_ENGINEER = /mob/living/basic/parrot/poly,
 		JOB_QUARTERMASTER = list(
-			/mob/living/basic/gorilla/cargorilla,
 			/mob/living/basic/sloth/citrus,
 			/mob/living/basic/sloth/paperwork,
 		),

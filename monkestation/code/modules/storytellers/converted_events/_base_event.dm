@@ -160,6 +160,7 @@
 /datum/round_event/antagonist/ghost/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
 		add_datum_to_mind(antag_mind)
+		SEND_GLOBAL_SIGNAL(COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS, antag_mind.current)
 
 /datum/round_event/antagonist/ghost/setup()
 	var/datum/round_event_control/antagonist/cast_control = control

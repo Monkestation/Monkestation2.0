@@ -700,3 +700,25 @@
 /datum/status_effect/rev_resilience/on_remove()
 	to_chat(owner, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
 	owner.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+
+/// Makes the mob immune to radiation for a short bit to help with safely spawning in hazardous areas
+/datum/status_effect/radiation_immunity
+	id = "radiation_immunity"
+	duration = 1 MINUTES
+	show_duration = TRUE
+	alert_type = null
+
+/datum/status_effect/radiation_immunity/on_apply()
+	ADD_TRAIT(owner, TRAIT_RADIMMUNE, TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/radiation_immunity/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_RADIMMUNE, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/radiation_immunity/radnebula
+	alert_type = /atom/movable/screen/alert/status_effect/radiation_immunity
+
+/atom/movable/screen/alert/status_effect/radiation_immunity
+	name = "Radiation shielding"
+	desc = "You're immune to radiation, get settled quick!"
+	icon_state = "radiation_shield"

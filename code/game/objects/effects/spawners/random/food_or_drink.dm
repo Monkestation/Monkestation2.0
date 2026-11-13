@@ -274,3 +274,14 @@
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		spawn_loot_chance = 0
 	return ..()
+
+/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage
+	name = "any snack or beverage spawner"
+	icon_state = "slime_jelly_donut"
+	loot = list(
+		/obj/effect/spawner/random/food_or_drink/snack = 6,
+		/obj/effect/spawner/random/food_or_drink/refreshing_beverage = 6,
+		/obj/effect/spawner/random/food_or_drink/donkpockets_single = 5,
+		/obj/effect/spawner/random/food_or_drink/booze = 4,
+		/obj/effect/spawner/random/food_or_drink/snack/lizard = 4,
+	)
