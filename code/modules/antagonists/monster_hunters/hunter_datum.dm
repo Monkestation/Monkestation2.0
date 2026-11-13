@@ -27,8 +27,6 @@
 	var/datum/movement_detector/rabbit_tracker
 	///have we triggered the apocalypse
 	var/apocalypse = FALSE
-	///a list of our prey
-	var/list/datum/mind/prey = list()
 	/// What each insight told us about our prey, kept for the antag info UI.
 	var/list/journal = list()
 	/// A list of traits innately granted to monster hunters.
@@ -298,91 +296,90 @@
 /datum/antagonist/monsterhunter/proc/insight_gained()
 	SIGNAL_HANDLER
 
-	var/description
-	var/datum/objective/hunter/obj
 	var/list/unchecked_objectives
 	for(var/datum/objective/hunter/goal in objectives)
 		if(!goal.discovered)
 			LAZYADD(unchecked_objectives, goal)
 	if(unchecked_objectives)
-		obj = pick(unchecked_objectives)
-	if(obj)
-		obj.uncover_target()
-		var/datum/mind/target = obj.target
-		if(target)
-			var/mob/target_body = target.current
-			var/target_name = target.name || target_body?.real_name || target_body?.name
-			var/list/abilities = list()
-			for(var/datum/action/ability as anything in target_body?.actions)
-				if(!is_type_in_typecache(ability, monster_abilities))
-					continue
-				abilities |= "[ability.name]"
-			var/datum/antagonist/heretic/heretic_target = target.has_antag_datum(/datum/antagonist/heretic)
-			var/datum/antagonist/bloodsucker/bloodsucker_target = target.has_antag_datum(/datum/antagonist/bloodsucker)
-			var/datum/antagonist/changeling/changeling_target = target.has_antag_datum(/datum/antagonist/changeling)
-			var/kind_icon
-			if(heretic_target)
-				kind_icon = FA_ICON_BOOK_SKULL
-				switch(heretic_target.heretic_path?.route || PATH_START)
-					if(PATH_START)
-						description = "[target_name] is a heretic, and has not yet decided what to be heretical about. Dithering. I do not care for dithering."
-					if(PATH_ASH)
-						description = "[target_name] is a heretic of ash. It plays with fire and supposes that makes it warm company. Mind your sleeves."
-					if(PATH_RUST)
-						description = "[target_name] is a heretic of rust. Whatever it touches goes to rot and ruin, and it has never once wiped its hands."
-					if(PATH_FLESH)
-						description = "[target_name] is a heretic of flesh. It keeps ghouls, and it plays with its meat. Revolting. Do not look at its plate."
-					if(PATH_VOID)
-						description = "[target_name] is a heretic of the void. Cold, empty, and proud of both. Button your coat."
-					if(PATH_BLADE)
-						description = "[target_name] is a heretic of blades. It collects knives and calls its brawling 'duels'. Guard up - elbows in."
-					if(PATH_COSMIC)
-						description = "[target_name] is a heretic of the cosmos. It scribbles with stars. Somebody ought to have taken them away from it."
-					if(PATH_LOCK)
-						description = "[target_name] is a heretic of the lock. It opens doors it was never invited through. Knock first, so that one of you has manners."
-					if(PATH_MOON)
-						description = "[target_name] is a heretic of the moon - the other moon, the wrong one, the one that keeps jesters. Moonstruck. Do not clap for it."
-					else
-						description = "[target_name] is a heretic. It reads books it was told not to. Shoulders back when you meet it."
-			else if(bloodsucker_target)
-				kind_icon = FA_ICON_DROPLET
-				var/clan_name = bloodsucker_target.my_clan?.name
-				if(!clan_name)
-					description = "[target_name] is a bloodsucker that has not yet chosen a clan. Undecided, at its age."
-				else
-					switch(clan_name)
-						if(CLAN_NONE)
-							description = "[target_name] is a bloodsucker of no clan at all. Plain as porridge."
-						if(CLAN_TREMERE)
-							description = "[target_name] is a Tremere bloodsucker. It does sums in blood and calls that magic, and the chapel burns it."
-						if(CLAN_VENTRUE)
-							description = "[target_name] is a Ventrue bloodsucker. It is fussy about whom it drinks, and it is bringing up a favorite vassal to be a bloodsucker too."
-						if(CLAN_NOSFERATU)
-							description = "[target_name] is a Nosferatu bloodsucker. It cannot pass for crew, so it keeps to the vents. One does not crawl."
-						if(CLAN_MALKAVIAN)
-							description = "[target_name] is a Malkavian bloodsucker. Quite mad. It prophesies at people without being asked."
-						else
-							description = "[target_name] is a bloodsucker. It drinks people - at the table, I expect."
-			else if(changeling_target)
-				kind_icon = FA_ICON_DNA
-				description = "[target_name] is a changeling. It wears faces it did not pay for, and none of them fit."
-			else
-				kind_icon = FA_ICON_MASK
-				description = "[target_name] is not what it says it is. Few things are."
-			journal += list(list(
-				"ref" = REF(target),
-				"name" = target_name,
-				"icon" = kind_icon,
-				"text" = description,
-				"abilities" = abilities,
-			))
-			if(!heretic_target)
-				description += " It knows [english_list(abilities)]."
-		update_static_data_for_all_viewers()
-
+		reveal_prey(pick(unchecked_objectives))
 	rabbits_spotted++
-	if(description)
-		to_chat(owner.current, span_boldnotice("[description]"))
+
+/datum/antagonist/monsterhunter/proc/reveal_prey(datum/objective/hunter/goal)
+	if(goal.discovered)
+		return
+	goal.uncover_target()
+	var/datum/mind/target = goal.target
+	var/mob/target_body = target.current
+	var/target_name = target.name || target_body?.real_name || target_body?.name
+	var/list/abilities = list()
+	for(var/datum/action/ability as anything in target_body?.actions)
+		if(!is_type_in_typecache(ability, monster_abilities))
+			continue
+		abilities |= "[ability.name]"
+	var/datum/antagonist/heretic/heretic_target = target.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/bloodsucker/bloodsucker_target = target.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/changeling/changeling_target = target.has_antag_datum(/datum/antagonist/changeling)
+	var/description
+	var/kind_icon
+	if(heretic_target)
+		kind_icon = FA_ICON_BOOK_SKULL
+		switch(heretic_target.heretic_path?.route || PATH_START)
+			if(PATH_START)
+				description = "[target_name] is a heretic, and has not yet decided what to be heretical about. Dithering. I do not care for dithering."
+			if(PATH_ASH)
+				description = "[target_name] is a heretic of ash. It plays with fire and supposes that makes it warm company. Mind your sleeves."
+			if(PATH_RUST)
+				description = "[target_name] is a heretic of rust. Whatever it touches goes to rot and ruin, and it has never once wiped its hands."
+			if(PATH_FLESH)
+				description = "[target_name] is a heretic of flesh. It keeps ghouls, and it plays with its meat. Revolting. Do not look at its plate."
+			if(PATH_VOID)
+				description = "[target_name] is a heretic of the void. Cold, empty, and proud of both. Button your coat."
+			if(PATH_BLADE)
+				description = "[target_name] is a heretic of blades. It collects knives and calls its brawling 'duels'. Guard up - elbows in."
+			if(PATH_COSMIC)
+				description = "[target_name] is a heretic of the cosmos. It scribbles with stars. Somebody ought to have taken them away from it."
+			if(PATH_LOCK)
+				description = "[target_name] is a heretic of the lock. It opens doors it was never invited through. Knock first, so that one of you has manners."
+			if(PATH_MOON)
+				description = "[target_name] is a heretic of the moon - the other moon, the wrong one, the one that keeps jesters. Moonstruck. Do not clap for it."
+			else
+				description = "[target_name] is a heretic. It reads books it was told not to. Shoulders back when you meet it."
+	else if(bloodsucker_target)
+		kind_icon = FA_ICON_DROPLET
+		var/clan_name = bloodsucker_target.my_clan?.name
+		if(!clan_name)
+			description = "[target_name] is a bloodsucker that has not yet chosen a clan. Undecided, at its age."
+		else
+			switch(clan_name)
+				if(CLAN_NONE)
+					description = "[target_name] is a bloodsucker of no clan at all. Plain as porridge."
+				if(CLAN_TREMERE)
+					description = "[target_name] is a Tremere bloodsucker. It does sums in blood and calls that magic, and the chapel burns it."
+				if(CLAN_VENTRUE)
+					description = "[target_name] is a Ventrue bloodsucker. It is fussy about whom it drinks, and it is bringing up a favorite vassal to be a bloodsucker too."
+				if(CLAN_NOSFERATU)
+					description = "[target_name] is a Nosferatu bloodsucker. It cannot pass for crew, so it keeps to the vents. One does not crawl."
+				if(CLAN_MALKAVIAN)
+					description = "[target_name] is a Malkavian bloodsucker. Quite mad. It prophesies at people without being asked."
+				else
+					description = "[target_name] is a bloodsucker. It drinks people - at the table, I expect."
+	else if(changeling_target)
+		kind_icon = FA_ICON_DNA
+		description = "[target_name] is a changeling. It wears faces it did not pay for, and none of them fit."
+	else
+		kind_icon = FA_ICON_MASK
+		description = "[target_name] is not what it says it is. Few things are."
+	journal += list(list(
+		"ref" = REF(target),
+		"name" = target_name,
+		"icon" = kind_icon,
+		"text" = description,
+		"abilities" = abilities,
+	))
+	if(!heretic_target)
+		description += " It knows [english_list(abilities)]."
+	update_static_data_for_all_viewers()
+	to_chat(owner.current, span_boldnotice("[description]"))
 
 /datum/antagonist/monsterhunter/process(seconds_per_tick)
 	var/list/watching = list()
@@ -493,7 +490,6 @@
 				target = candidate
 		possible_targets -= target
 		kill_monster.target = target
-		prey += target
 		add_objective(kill_monster)
 
 /obj/item/clothing/mask/monster_preview_mask

@@ -3798,6 +3798,7 @@
 #include "code\modules\antagonists\malf_ai\malf_ai.dm"
 #include "code\modules\antagonists\malf_ai\malf_ai_module_picker.dm"
 #include "code\modules\antagonists\malf_ai\malf_ai_modules.dm"
+#include "code\modules\antagonists\monster_hunters\hunter_admin.dm"
 #include "code\modules\antagonists\monster_hunters\hunter_datum.dm"
 #include "code\modules\antagonists\monster_hunters\hunter_rulesets.dm"
 #include "code\modules\antagonists\monster_hunters\abilities\attire.dm"

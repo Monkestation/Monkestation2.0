@@ -45,7 +45,7 @@
 		var/remove_from_vision = TRUE
 		for(var/datum/objective/hunter/goal in objectives_list) //take them out if they are not our prey
 			if(goal.target == viewer.mind)
-				goal.uncover_target()
+				hunter.reveal_prey(goal)
 				remove_from_vision = FALSE
 				break
 		if(remove_from_vision)
