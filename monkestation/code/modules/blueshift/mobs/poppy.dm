@@ -35,19 +35,11 @@
 	light_on = TRUE
 
 /datum/ai_controller/basic_controller/poppy
-	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-	)
-
+	behavior_tree_json = "code/datums/ai/basic_mobs/poppy.bt.json"
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/poppy,
-	)
-
-/datum/ai_planning_subtree/random_speech/poppy
+/datum/bt_node/ai_behavior/random_speech/poppy
 	speak = list("Hiss!", "HISS!", "Hissss?")
 	emote_hear = list("hisses.")
 	emote_see = list("runs in a circle.", "shakes.")

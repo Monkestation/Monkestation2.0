@@ -61,11 +61,6 @@
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
 
-
-	var/atom/move_target = ai_controller.current_movement_target
-	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
-		return
-
 	var/list/our_path = source.movement_path
 	if(!length(our_path))
 		return
@@ -104,11 +99,6 @@
 /mob/living/basic/bot/proc/handle_hud_path()
 	if(client || !length(current_pathed_turfs) || isnull(ai_controller))
 		return
-
-	var/atom/move_target = ai_controller.current_movement_target
-
-	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
-		clear_path_hud()
 
 	var/turf/our_turf = get_turf(src)
 	var/image/target_image = current_pathed_turfs[our_turf]

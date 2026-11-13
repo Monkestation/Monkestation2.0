@@ -97,7 +97,7 @@
 		announcement?.announce(pick(controller.blackboard[BB_NEAR_DEATH_SPEECH]))
 	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[bot_pawn] healing [patient] (dmg=[patient.get_total_damage()])", get_turf(patient), "Heal")
 	bot_pawn.melee_attack(patient)
-	finish_action(controller, TRUE, target_key, is_stationary)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded)
 	. = ..()

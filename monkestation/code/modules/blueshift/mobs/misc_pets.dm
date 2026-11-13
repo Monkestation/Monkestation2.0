@@ -109,9 +109,9 @@
 		message = pick(markus_speak) // markus only talks business
 	return ..()
 
-/mob/living/basic/pet/dog/markus/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+/mob/living/basic/pet/dog/markus/update_dog_speech(list/speech_data)
 	. = ..()
-	speech.speak = markus_speak
+	speech_data[BB_EMOTE_SAY] = markus_speak
 
 /datum/chemical_reaction/mark_reaction
 	results = list(/datum/reagent/consumable/liquidgibs = 15)

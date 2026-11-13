@@ -27,21 +27,16 @@
 
 	for(var/mob/living/other in oview(range, pawn_mob))
 		if(!pawn_mob.faction_check_atom(other))
-			finish_action(controller, FALSE)
-			return
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-		if(children >= max_children)
-			finish_action(controller, FALSE)
-			return
-
-		if(other.stat != CONSCIOUS) //Check if it's conscious FIRST.
+		if(!is_type_in_list(other, similar_species_types))
 			continue
 
-		if(is_type_in_list(other, child_types)) //Check for children SECOND.
-			children++
-			continue
+		if(++nearby_pop >= maximum_pop)
+			controller.set_blackboard_key(BB_PARTNER_SEARCH_TIMEOUT, world.time + FIND_PARTNER_COOLDOWN)
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-		if(!is_type_in_list(other, partner_types) || !HAS_TRAIT(other, TRAIT_MOB_BREEDER))
+		if(!HAS_TRAIT(other, TRAIT_MOB_BREEDER) || other.ckey)
 			continue
 
 		if(other.stat != CONSCIOUS)
@@ -50,8 +45,11 @@
 		if(other.gender != living_pawn.gender && !(other.flags_1 & HOLOGRAM_1))
 			possible_partners += other
 
-	finish_action(controller, FALSE)
+	if(!length(possible_partners))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
+	controller.set_blackboard_key(target_key, pick(possible_partners))
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// I'm not saying what this behavior does :flushed:
 /datum/bt_node/ai_behavior/make_babies

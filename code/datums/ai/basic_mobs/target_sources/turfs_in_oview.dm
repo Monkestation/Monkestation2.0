@@ -16,7 +16,7 @@
 	. = ..()
 	var/list/candidates = list()
 	for(var/turf/open/potential_floor in oview(range, pawn))
-		if(iswaterturf(potential_floor))
+		if(iswater(potential_floor))
 			continue
 		candidates += potential_floor
 

@@ -83,10 +83,10 @@
 	UnregisterSignal(pawn, list(COMSIG_BOT_MODE_FLAGS_SET))
 	return ..()
 
-/datum/ai_controller/basic_controller/bot/able_to_run()
+/datum/ai_controller/basic_controller/bot/get_able_to_run()
 	var/mob/living/basic/bot/bot_pawn = pawn
 	if(!(bot_pawn.bot_mode_flags & BOT_MODE_ON))
-		return FALSE
+		return AI_UNABLE_TO_RUN
 	return ..()
 
 /datum/ai_controller/basic_controller/bot/get_access()

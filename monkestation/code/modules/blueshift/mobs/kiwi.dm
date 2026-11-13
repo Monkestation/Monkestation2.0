@@ -34,17 +34,11 @@
 	AddElement(/datum/element/pet_bonus, "cheeps happily!")
 
 /datum/ai_controller/basic_controller/kiwi
-	blackboard = list()
-
+	behavior_tree_json = "code/datums/ai/basic_mobs/kiwi.bt.json"
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/kiwi,
-	)
-
-/datum/ai_planning_subtree/random_speech/kiwi
+/datum/bt_node/ai_behavior/random_speech/kiwi
 	speech_chance = 5
 	emote_hear = list("makes a loud cheep.", "cheeps happily.")
 	emote_see = list("runs around.")

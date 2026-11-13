@@ -1482,3 +1482,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Has this mob been tamed?
 #define TRAIT_TAMED "tamed"
+
+/// Mobs with this trait will always have be a priority target for mining mobs
+#define TRAIT_MINING_AGGRO "mining_aggro"

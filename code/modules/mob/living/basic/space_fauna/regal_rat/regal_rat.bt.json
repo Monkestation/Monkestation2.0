@@ -87,7 +87,7 @@
 				},
 				{
 					"type": "leaf",
-					"behavior": "/datum/bt_node/ai_behavior/use_mob_ability/domain",
+					"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
 					"vars": {
 						"ability_key": "BB_DOMAIN_ABILITY"
 					}

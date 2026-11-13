@@ -100,11 +100,17 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	set_trip_mode(mode = TRUE)
 
-/datum/ai_controller/monkey/able_to_run()
+/datum/ai_controller/monkey/get_able_to_run()
 	var/mob/living/living_pawn = pawn
+	if(living_pawn.stat)
+		return AI_UNABLE_TO_RUN
+	return ..()
 
-	if(IS_DEAD_OR_INCAP(living_pawn))
-		return FALSE
+/// There's no signal for incapacitation changes, so it gets checked every tick instead
+/datum/ai_controller/monkey/SelectBehaviors(seconds_per_tick)
+	var/mob/living/living_pawn = pawn
+	if(living_pawn.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_GRAB))
+		return
 	return ..()
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)

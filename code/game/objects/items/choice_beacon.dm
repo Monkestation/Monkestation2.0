@@ -259,12 +259,13 @@
 		if(!checking)
 			pet.AddComponent(/datum/component/obeys_commands, pet_commands)
 
-		var/list/new_planning_subtree = list()
-		new_planning_subtree |= /datum/ai_planning_subtree/pet_planning
-
-		for(var/datum/ai_planning_subtree/listed_tree as anything in pet.ai_controller.planning_subtrees)
-			new_planning_subtree |= listed_tree.type
-		pet.ai_controller.replace_planning_subtrees(new_planning_subtree)
+		var/datum/ai_controller/pet_controller = pet.ai_controller
+		if(pet_controller && !LAZYACCESS(pet_controller.override_slots, SUBPLAN_ID_PET_COMMAND))
+			// pets that don't normally take commands get a slot for them in front of their tree
+			var/datum/bt_node/subtree/pet_command_slot = new
+			pet_command_slot.override_id = SUBPLAN_ID_PET_COMMAND
+			pet_controller.behavior_nodes.Insert(1, pet_command_slot)
+			pet_controller.finalize_tree()
 
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 

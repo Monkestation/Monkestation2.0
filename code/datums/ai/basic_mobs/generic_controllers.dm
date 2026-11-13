@@ -1,5 +1,5 @@
-/// The most basic AI tree which just finds a guy and then runs at them to click them
-/datum/ai_controller/basic_controller/simple_hostile
+/// Basetype with normal parameters
+/datum/ai_controller/basic_controller/simple
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)

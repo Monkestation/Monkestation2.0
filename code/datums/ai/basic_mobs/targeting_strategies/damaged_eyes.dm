@@ -11,7 +11,7 @@
 	if(!threshold)
 		return FALSE
 	var/mob/living/carbon/carbon_target = target
-	var/obj/item/organ/eyes/eyes = carbon_target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = carbon_target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(isnull(eyes) || eyes.damage < threshold)
 		return FALSE
 	return TRUE

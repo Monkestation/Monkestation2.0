@@ -4,7 +4,8 @@
 		BB_MOD_TARGET,
 		BB_MOD_IMPLANT,
 	)
-	can_idle = FALSE
+	ai_traits = RUN_WHILE_UNWATCHED | ALWAYS_HIGH_PRIORITY
+	behavior_tree_json = "code/datums/ai/objects/mod.bt.json"
 	max_target_distance = MOD_AI_RANGE //a little spicy but its one specific item that summons it, and it doesn't run otherwise
 	ai_movement = /datum/ai_movement/jps
 	///ID card generated from the suit's required access. Used for pathing.
@@ -23,27 +24,34 @@
 	QDEL_NULL(id_card)
 	return ..() //Run parent at end
 
-/datum/ai_controller/mod/SelectBehaviors(seconds_per_tick)
-	current_behaviors = list()
-	if(blackboard[BB_MOD_TARGET] && blackboard[BB_MOD_IMPLANT])
-		queue_behavior(/datum/ai_behavior/mod_attach)
-
 /datum/ai_controller/mod/get_access()
 	return id_card.GetAccess()
 
-/datum/ai_behavior/mod_attach
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT|AI_BEHAVIOR_MOVE_AND_PERFORM
+/// Puts the suit on its owner once it got next to them.
+/datum/bt_node/ai_behavior/mod_attach
 
-/datum/ai_behavior/mod_attach/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
+/datum/bt_node/ai_behavior/mod_attach/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!controller.pawn.Adjacent(controller.blackboard[BB_MOD_TARGET]))
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/obj/item/implant/mod/implant = controller.blackboard[BB_MOD_IMPLANT]
 	implant.module.attach(controller.blackboard[BB_MOD_TARGET])
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/mod_attach/finish_action(datum/ai_controller/controller, succeeded)
+/datum/bt_node/ai_behavior/mod_attach/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	if(succeeded)
+		mod_end_recall(controller, TRUE)
+
+/// Ends the recall when the suit couldn't get to its owner.
+/datum/bt_node/ai_behavior/mod_give_up
+
+/datum/bt_node/ai_behavior/mod_give_up/perform(seconds_per_tick, datum/ai_controller/controller)
+	mod_end_recall(controller, FALSE)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+
+/// Clears the target and ends the recall on the next tick
+/proc/mod_end_recall(datum/ai_controller/controller, succeeded)
 	controller.clear_blackboard_key(BB_MOD_TARGET)
 	var/obj/item/implant/mod/implant = controller.blackboard[BB_MOD_IMPLANT]
-	implant.end_recall(succeeded)
+	// the recall deletes the controller, so not in the middle of its tick
+	addtimer(CALLBACK(implant, TYPE_PROC_REF(/obj/item/implant/mod, end_recall), succeeded), 0)

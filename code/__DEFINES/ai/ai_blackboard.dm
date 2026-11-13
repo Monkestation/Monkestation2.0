@@ -207,7 +207,10 @@
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
 
+///The group_planning datum this mob moves around with
 #define BB_GROUP_DATUM "BB_group_datum"
+///Turf the group told this mob to move to
+#define BB_GROUP_MOVE_TARGET "BB_group_move_target"
 ///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
 ///are we in some kind of temporary state of ignoring factions when targeting? can result in volatile results if multiple behaviours touch this
@@ -248,7 +251,6 @@
 #define BB_ONLY_FISH_WHILE_HUNGRY "BB_only_fish_while_hungry"
 
 ///drillable ice we can make holes in
-#define BB_DRILLABLE_ICE "BB_drillable_ice"
 
 
 //emotions we displays depending on our happiness
@@ -345,3 +347,9 @@
 
 ///key holding any food we've found
 #define BB_TARGET_FOOD "BB_TARGET_FOOD"
+
+///Currently enraged
+#define BB_BASIC_MOB_ENRAGE "BB_enraged"
+
+///Previous melee cooldown
+#define BB_BASIC_MOB_PREVIOUS_MELEE_COOLDOWN "BB_previous_melee_cooldown"

@@ -14,18 +14,37 @@
 	return ..() //Run parent at end
 
 
-/datum/ai_controller/basic_controller/able_to_run()
+/datum/ai_controller/basic_controller/setup_able_to_run()
 	. = ..()
-	if(!isliving(pawn))
-		return
+	if(ai_traits & PAUSE_DURING_DO_AFTER)
+		RegisterSignals(pawn, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_able_to_run))
+
+/datum/ai_controller/basic_controller/clear_able_to_run()
+	UnregisterSignal(pawn, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
+	return ..()
+
+/datum/ai_controller/basic_controller/get_able_to_run()
+	. = ..()
+	if(. & AI_UNABLE_TO_RUN)
+		return .
 	var/mob/living/living_pawn = pawn
-	var/incap_flags = NONE
-	if (ai_traits & CAN_ACT_IN_STASIS)
-		incap_flags |= IGNORE_STASIS
-	if(!(ai_traits & CAN_ACT_WHILE_DEAD) && (living_pawn.incapacitated(incap_flags) || living_pawn.stat))
-		return FALSE
+	if(living_pawn.stat && !(ai_traits & CAN_ACT_WHILE_DEAD))
+		return AI_UNABLE_TO_RUN
 	if(ai_traits & PAUSE_DURING_DO_AFTER && LAZYLEN(living_pawn.do_afters))
-		return FALSE
+		return AI_UNABLE_TO_RUN
+
+/// There's no signal for incapacitation changes, so it gets checked every tick instead
+/datum/ai_controller/basic_controller/SelectBehaviors(seconds_per_tick)
+	var/mob/living/living_pawn = pawn
+	if(!(ai_traits & CAN_ACT_WHILE_DEAD))
+		var/ignore_flags = NONE
+		if(ai_traits & CAN_ACT_IN_STASIS)
+			ignore_flags |= IGNORE_STASIS
+		if(ai_traits & CAN_ACT_WHILE_GRABBED)
+			ignore_flags |= IGNORE_GRAB
+		if(living_pawn.incapacitated(ignore_flags))
+			return
+	return ..()
 
 /datum/ai_controller/basic_controller/proc/update_speed(mob/living/basic/basic_mob)
 	SIGNAL_HANDLER

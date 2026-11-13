@@ -153,12 +153,6 @@
 
 	ai_movement = /datum/ai_movement/jps
 
-/datum/ai_planning_subtree/basic_melee_attack_subtree/statue
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/statue
-
-/datum/ai_behavior/basic_melee_attack/statue
-	action_cooldown = 1 SECONDS
-
 /mob/living/basic/statue/frosty
 	name = "Frosty"
 	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman."
