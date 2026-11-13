@@ -286,4 +286,5 @@
 	desc = "A handy-dandy holographic projector that places tiny holographic candles."
 	ignore_other_signs = TRUE
 	holosign_type = /obj/item/flashlight/flare/candle/holo_candle
+	creation_time = 0.8 SECONDS
 
