@@ -8,6 +8,7 @@
 	var/list/traits_to_give = list(
 		TRAIT_ANTIMAGIC,
 		TRAIT_NOFLASH,
+		TRAIT_NOCRITDAMAGE,
 	)
 
 /atom/movable/screen/alert/status_effect/queens_crown
@@ -28,6 +29,9 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/queens_crown)
 	owner.remove_traits(traits_to_give, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("queens_crown")
+
+/datum/status_effect/queens_crown/get_examine_text()
+	return span_rose("There is no crown on [owner.p_their()] head, and yet you are certain it sits perfectly straight. Nothing done to [owner.p_them()] seems to stay done.")
 
 /datum/status_effect/queens_crown/tick(seconds_between_ticks, times_fired)
 	var/needs_update = FALSE

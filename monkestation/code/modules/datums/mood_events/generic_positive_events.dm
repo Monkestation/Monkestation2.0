@@ -6,7 +6,7 @@
 	description = "<span class='nicegreen robot'>+++++++[message]+++++++</span>"
 
 /datum/mood_event/monster_hunter
-	description = "Glory to the hunt."
+	description = span_rose("She is pleased with you. Do not make a fuss about it.")
 	mood_change = 10
 	hidden = TRUE
 

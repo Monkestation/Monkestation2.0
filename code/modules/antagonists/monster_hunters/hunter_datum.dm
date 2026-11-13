@@ -3,12 +3,13 @@
 	roundend_category = "Monster Hunters"
 	antagpanel_category = "Monster Hunter"
 	job_rank = ROLE_MONSTERHUNTER
-	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_hud_name = "hunter"
 	preview_outfit = /datum/outfit/monsterhunter
 	antag_moodlet = /datum/mood_event/monster_hunter
 	show_to_ghosts = TRUE
 	ui_name = "AntagInfoMonsterHunter"
+	info_background_icon_state = "bg_wonderland"
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_OBSERVER_VISIBLE_PANEL
 	stinger_sound = 'sound/music/antag/monster_hunter.ogg'
 	var/list/datum/action/powers = list()
 	/// Have we chosen a weapon yet?
@@ -28,6 +29,8 @@
 	var/apocalypse = FALSE
 	///a list of our prey
 	var/list/datum/mind/prey = list()
+	/// What each insight told us about our prey, kept for the antag info UI.
+	var/list/journal = list()
 	/// A list of traits innately granted to monster hunters.
 	var/static/list/granted_traits = list(
 		TRAIT_FEARLESS, // to ensure things like fear of heresy or blood or whatever don't fuck them over
@@ -74,8 +77,10 @@
 	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_WONDERLAND)
 	owner.add_traits(mind_traits, HUNTER_TRAIT)
 	//Teach Stake crafting
-	owner.teach_crafting_recipe(/datum/crafting_recipe/hardened_stake)
-	owner.teach_crafting_recipe(/datum/crafting_recipe/silver_stake)
+	owner.teach_crafting_recipe(list(
+		/datum/crafting_recipe/hardened_stake,
+		/datum/crafting_recipe/silver_stake,
+	))
 	var/mob/living/carbon/criminal = owner.current
 	var/obj/item/rabbit_locator/card = new(criminal.drop_location(), src)
 	var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK, "left pocket" = ITEM_SLOT_LPOCKET, "right pocket" = ITEM_SLOT_RPOCKET)
@@ -152,7 +157,12 @@
 		if(!objective.check_completion())
 			completed = FALSE
 			break
+	var/list/sightings = list()
+	for(var/datum/objective/hunter/goal in objectives)
+		if(goal.spotted && goal.last_area_name)
+			sightings[REF(goal.target)] = goal.last_area_name
 	return list(
+		"sightings" = sightings,
 		"weapon_claimed" = weapon_claimed,
 		"rabbits_spotted" = rabbits_spotted,
 		"rabbits_remaining" = length(rabbits),
@@ -171,7 +181,10 @@
 			"icon" = trick_weapon::icon_preview || trick_weapon::icon,
 			"icon_state" = trick_weapon::icon_state_preview || trick_weapon::icon_state,
 		))
-	return list("weapons" = weapons)
+	return list(
+		"weapons" = weapons,
+		"journal" = journal,
+	)
 
 /datum/antagonist/monsterhunter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -295,7 +308,6 @@
 		obj = pick(unchecked_objectives)
 	if(obj)
 		obj.uncover_target()
-		update_static_data_for_all_viewers()
 		var/datum/mind/target = obj.target
 		if(target)
 			var/mob/target_body = target.current
@@ -305,10 +317,12 @@
 				if(!is_type_in_typecache(ability, monster_abilities))
 					continue
 				abilities |= "[ability.name]"
-			var/ability_list = english_list(abilities)
 			var/datum/antagonist/heretic/heretic_target = target.has_antag_datum(/datum/antagonist/heretic)
 			var/datum/antagonist/bloodsucker/bloodsucker_target = target.has_antag_datum(/datum/antagonist/bloodsucker)
+			var/datum/antagonist/changeling/changeling_target = target.has_antag_datum(/datum/antagonist/changeling)
+			var/kind_icon
 			if(heretic_target)
+				kind_icon = FA_ICON_BOOK_SKULL
 				switch(heretic_target.heretic_path?.route || PATH_START)
 					if(PATH_START)
 						description = "[target_name] is a heretic, and has not yet decided what to be heretical about. Dithering. I do not care for dithering."
@@ -331,27 +345,40 @@
 					else
 						description = "[target_name] is a heretic. It reads books it was told not to. Shoulders back when you meet it."
 			else if(bloodsucker_target)
+				kind_icon = FA_ICON_DROPLET
 				var/clan_name = bloodsucker_target.my_clan?.name
 				if(!clan_name)
-					description = "[target_name] is a bloodsucker that has not yet chosen a clan. Undecided, at its age. It knows [ability_list]."
+					description = "[target_name] is a bloodsucker that has not yet chosen a clan. Undecided, at its age."
 				else
 					switch(clan_name)
 						if(CLAN_NONE)
-							description = "[target_name] is a bloodsucker of no clan at all. Plain as porridge. It knows [ability_list]."
+							description = "[target_name] is a bloodsucker of no clan at all. Plain as porridge."
 						if(CLAN_TREMERE)
-							description = "[target_name] is a Tremere bloodsucker. It does sums in blood and calls that magic, and the chapel burns it. It knows [ability_list]."
+							description = "[target_name] is a Tremere bloodsucker. It does sums in blood and calls that magic, and the chapel burns it."
 						if(CLAN_VENTRUE)
-							description = "[target_name] is a Ventrue bloodsucker. It is fussy about whom it drinks, and it is bringing up a favorite vassal to be a bloodsucker too. It knows [ability_list]."
+							description = "[target_name] is a Ventrue bloodsucker. It is fussy about whom it drinks, and it is bringing up a favorite vassal to be a bloodsucker too."
 						if(CLAN_NOSFERATU)
-							description = "[target_name] is a Nosferatu bloodsucker. It cannot pass for crew, so it keeps to the vents. One does not crawl. It knows [ability_list]."
+							description = "[target_name] is a Nosferatu bloodsucker. It cannot pass for crew, so it keeps to the vents. One does not crawl."
 						if(CLAN_MALKAVIAN)
-							description = "[target_name] is a Malkavian bloodsucker. Quite mad. It prophesies at people without being asked. It knows [ability_list]."
+							description = "[target_name] is a Malkavian bloodsucker. Quite mad. It prophesies at people without being asked."
 						else
-							description = "[target_name] is a bloodsucker. It drinks people - at the table, I expect. It knows [ability_list]."
-			else if(target.has_antag_datum(/datum/antagonist/changeling))
-				description = "[target_name] is a changeling. It wears faces it did not pay for, and none of them fit. It knows [ability_list]."
+							description = "[target_name] is a bloodsucker. It drinks people - at the table, I expect."
+			else if(changeling_target)
+				kind_icon = FA_ICON_DNA
+				description = "[target_name] is a changeling. It wears faces it did not pay for, and none of them fit."
 			else
-				description = "[target_name] is not what it says it is. Few things are. It knows [ability_list]."
+				kind_icon = FA_ICON_MASK
+				description = "[target_name] is not what it says it is. Few things are."
+			journal += list(list(
+				"ref" = REF(target),
+				"name" = target_name,
+				"icon" = kind_icon,
+				"text" = description,
+				"abilities" = abilities,
+			))
+			if(!heretic_target)
+				description += " It knows [english_list(abilities)]."
+		update_static_data_for_all_viewers()
 
 	rabbits_spotted++
 	if(description)
@@ -435,7 +462,7 @@
 	if(!discovered)
 		explanation_text = initial(explanation_text)
 		return
-	var/target_name = target.name || target.current?.real_name || target.current?.real_name
+	var/target_name = target.name || target.current?.real_name || target.current?.name
 	var/datum/antagonist/bloodsucker/bloodsucker = target.has_antag_datum(/datum/antagonist/bloodsucker)
 	var/datum/antagonist/heretic/heretic = target.has_antag_datum(/datum/antagonist/heretic)
 	if(bloodsucker)
@@ -452,14 +479,19 @@
 	SStgui.update_uis(owner.has_antag_datum(/datum/antagonist/monsterhunter))
 
 /datum/antagonist/monsterhunter/proc/find_monster_targets()
-	var/list/possible_targets = get_all_monster_hunter_prey(include_dead = FALSE)
+	var/list/threats = get_all_monster_hunter_prey(include_dead = FALSE)
+	var/list/possible_targets = shuffle(assoc_to_keys(threats))
 
 	for(var/i in 1 to 3) //we get 3 targets
 		if(!length(possible_targets))
 			break
 		var/datum/objective/hunter/kill_monster = new
 		kill_monster.owner = owner
-		var/datum/mind/target = pick_n_take(possible_targets)
+		var/datum/mind/target = possible_targets[1]
+		for(var/datum/mind/candidate as anything in possible_targets)
+			if(threats[candidate] > threats[target])
+				target = candidate
+		possible_targets -= target
 		kill_monster.target = target
 		prey += target
 		add_objective(kill_monster)
@@ -543,22 +575,61 @@
 			return TRUE
 	return FALSE
 
-/proc/get_all_monster_hunter_prey(include_dead = FALSE)
+/proc/query_monster_hunter_prey()
 	. = list()
 #ifndef TESTING
 	var/list/prey = list()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MONSTER_HUNTER_QUERY, prey)
-	for(var/datum/mind/monster as anything in prey)
-		var/mob/living/current = monster.current
-		if(QDELETED(current) || (!include_dead && current.stat == DEAD))
-			continue
-		. += monster
+	return prey
 #else // make testing easier
 	for(var/datum/mind/monster in SSticker.minds)
-		if(!is_monster_hunter_prey(monster))
-			continue
-		var/mob/living/current = monster.current
-		if(QDELETED(current) || (!include_dead && current.stat == DEAD))
-			continue
-		. += monster
+		if(is_monster_hunter_prey(monster))
+			.[monster] = MONSTER_THREAT_HIGH
 #endif
+
+/// Ghosted and logged out players can't be hunted, or a disconnect would be a free kill.
+/proc/monster_hunter_prey_exclusion(datum/mind/monster, include_dead = FALSE)
+	var/mob/living/current = monster.current
+	if(QDELETED(current))
+		return "no body"
+	if(!include_dead && current.stat == DEAD)
+		return "dead"
+	if(!current.client)
+		return "no player"
+	return null
+
+/proc/get_all_monster_hunter_prey(include_dead = FALSE)
+	. = list()
+	var/list/prey = query_monster_hunter_prey()
+	for(var/datum/mind/monster as anything in prey)
+		if(!prey[monster] || monster_hunter_prey_exclusion(monster, include_dead))
+			continue
+		.[monster] = prey[monster]
+
+/proc/can_monster_hunter_spawn()
+	var/list/prey = get_all_monster_hunter_prey()
+	if(length(prey) < MONSTER_HUNTER_PREY_REQUIRED)
+		return FALSE
+	var/total_threat = 0
+	for(var/datum/mind/monster as anything in prey)
+		total_threat += prey[monster]
+	return total_threat >= MONSTER_HUNTER_THREAT_REQUIRED
+
+ADMIN_VERB(debug_monster_hunter_prey, R_DEBUG, FALSE, "Debug Monster Hunter Prey", "Lists prey threat and what hunters are targeting.", ADMIN_CATEGORY_DEBUG)
+	var/list/lines = list("<b>Monster hunter prey</b>")
+	var/list/prey = query_monster_hunter_prey()
+	var/counted = 0
+	var/total_threat = 0
+	for(var/datum/mind/monster as anything in prey)
+		var/points = prey[monster]
+		var/exclusion = monster_hunter_prey_exclusion(monster)
+		if(points && !exclusion)
+			counted++
+			total_threat += points
+		lines += "[monster.name] ([monster.current?.type || "no body"]): [points] points[exclusion ? ", not counted: [exclusion]" : ""]"
+	lines += "Counted prey: [counted]/[MONSTER_HUNTER_PREY_REQUIRED], threat: [total_threat]/[MONSTER_HUNTER_THREAT_REQUIRED]. A hunter [can_monster_hunter_spawn() ? "can" : "cannot"] spawn."
+	for(var/datum/antagonist/monsterhunter/hunter in GLOB.antagonists)
+		lines += "<b>Hunter [hunter.owner?.name]</b>"
+		for(var/datum/objective/hunter/objective in hunter.objectives)
+			lines += "- [objective.target?.name] ([objective.discovered ? "named" : "unnamed"], [objective.target?.current?.stat == DEAD ? "dead" : "alive"])"
+	to_chat(user, boxed_message(jointext(lines, "<br>")), confidential = TRUE)

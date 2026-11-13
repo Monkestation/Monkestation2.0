@@ -893,8 +893,14 @@
 
 /datum/antagonist/changeling/proc/query_for_monster_hunter(datum/source, list/prey)
 	SIGNAL_HANDLER
-	if(births > 0 || true_absorbs > 0 || used_weird_power)
-		prey += owner
+	if(births >= 2 || true_absorbs >= 3)
+		prey[owner] = MONSTER_THREAT_HIGH
+	else if(true_absorbs >= 1)
+		prey[owner] = MONSTER_THREAT_MEDIUM
+	else if(births > 0 || used_weird_power)
+		prey[owner] = MONSTER_THREAT_LOW
+	else
+		prey[owner] = 0
 
 // Changeling profile themselves. Store a data to store what every DNA instance looked like.
 /datum/changeling_profile
