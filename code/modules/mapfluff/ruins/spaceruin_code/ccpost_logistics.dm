@@ -3510,6 +3510,79 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 
 
+/// Fish update part 2 compatability in case it gets removed
+/proc/ccpost_fishing_feed_type()
+	var/feed_type = text2path("/obj/item/reagent_containers/cup/fish_feed")
+	if(!ispath(feed_type, /obj/item))
+		feed_type = text2path("/obj/item/fish_feed")
+	return feed_type
+
+/datum/ccpost_supply_package/entertainment/fishing_starter
+	id = "entertainment_fishing_starter"
+	name = "Recreational Fishing Starter Package"
+	desc = "A fishing and aquarium construction set with portal components, construction materials and fish care supplies. Requires ordinary construction tools."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	subcategory = "Fishing & Aquatics"
+	cost = 6
+	contains = list(
+		/obj/item/fishing_rod = 1,
+		/obj/item/bait_can/worm = 1,
+		/obj/item/aquarium_kit = 1,
+		/obj/item/circuitboard/machine/fishing_portal_generator = 1,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/sheet/iron = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/storage/fish_case = 1
+	)
+	stack_sizes = list(
+		/obj/item/stack/sheet/iron = 30,
+		/obj/item/stack/sheet/glass = 10,
+		/obj/item/stack/cable_coil = 5
+	)
+
+/datum/ccpost_supply_package/entertainment/fishing_starter/New()
+	. = ..()
+	contains = contains.Copy()
+	var/feed_type = ccpost_fishing_feed_type()
+	if(ispath(feed_type, /obj/item))
+		contains[feed_type] = 1
+
+/datum/ccpost_supply_package/entertainment/fishing_deluxe
+	id = "entertainment_fishing_deluxe"
+	name = "Deluxe Fishing & Aquatics Package"
+	desc = "Advanced rod with renewable synthetic bait, fish analysis equipment, reference material and aquarium accessories."
+	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
+	subcategory = "Fishing & Aquatics"
+	cost = 8
+	contains = list(
+		/obj/item/fishing_rod/tech = 1,
+		/obj/item/bait_can/worm/premium = 1,
+		/obj/item/fish_analyzer = 1,
+		/obj/item/book/manual/fish_catalog = 1,
+		/obj/item/storage/box/aquarium_props = 1,
+		/obj/item/storage/fish_case = 2
+	)
+
+/datum/ccpost_supply_package/entertainment/fishing_deluxe/New()
+	. = ..()
+	contains = contains.Copy()
+	stack_sizes = stack_sizes.Copy()
+	var/feed_type = ccpost_fishing_feed_type()
+	if(ispath(feed_type, /obj/item))
+		contains[feed_type] = 1
+
+	// Fish update 2 compatability in case it gets removed
+	var/lure_set_type = text2path("/obj/item/storage/box/fishing_lures")
+	if(ispath(lure_set_type, /obj/item))
+		contains[lure_set_type] = 1
+	var/portable_tank_type = text2path("/obj/item/fish_tank")
+	if(ispath(portable_tank_type, /obj/item))
+		contains[/obj/item/aquarium_kit] = 1
+		contains[/obj/item/stack/sheet/plastic] = 1
+		stack_sizes[/obj/item/stack/sheet/plastic] = 5
+
 /datum/ccpost_supply_package/contraband
 	category = CCPOST_SUPPLY_CATEGORY_RESTRICTED
 	contraband = TRUE

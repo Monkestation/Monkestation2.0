@@ -8,6 +8,8 @@
 #define CCPOST_GORLEX_TC 18
 #define CCPOST_CYBERSUN_TC 12
 #define CCPOST_GORLEX_NEGLECT_WINDOW (5 MINUTES)
+#define CCPOST_GORLEX_RECRUITMENT_RETRY_DELAY (5 MINUTES)
+#define CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS 3
 #define CCPOST_GORLEX_PLASTIC_LIMIT 4
 #define CCPOST_CYBERSUN_RETRY_DELAY (5 MINUTES)
 #define CCPOST_GORLEX_SECURITY_POLL (5 SECONDS)
@@ -58,6 +60,10 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/unsecured_since = 0
 	var/last_security_scan = 0
 	var/next_event_check = 1
+	/// A successful automatic roll consumes the remaining scheduled rolls.
+	var/automatic_deployment_authorized = FALSE
+	var/automatic_recruitment_attempts = 0
+	var/next_recruitment_retry = 0
 	var/event_started = FALSE
 	var/polling_ghosts = FALSE
 	var/armed_by_gorlex = FALSE
@@ -224,9 +230,21 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/obj/item/disk/nuclear/ccpost_nuke/disk = get_disk()
 	if(!GLOB.ccpost_outpost_signal_lost)
 		return_disk_if_offsite(disk)
-	if(!SSticker.HasRoundStarted() || next_event_check > 3)
+	if(!SSticker.IsRoundInProgress())
 		return
 	var/eligible = deployment_eligible(disk)
+	if(automatic_deployment_authorized)
+		if(!next_recruitment_retry || polling_ghosts || world.time < next_recruitment_retry)
+			return
+		next_recruitment_retry = 0
+		if(!eligible || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE))
+			cancel_automatic_recruitment("deployment prerequisites no longer met")
+			return
+		if(!start_gorlex_poll())
+			cancel_automatic_recruitment("retry could not start")
+		return
+	if(next_event_check > 3)
+		return
 	if(!eligible || disk_is_actively_guarded(disk))
 		reset_neglect()
 	else if(!unsecured_since)
@@ -250,7 +268,27 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		var/successful_roll = prob(chance)
 		log_game("CCPost Gorlex: minute [check_minute] check, neglect=[neglected], chance=[chance]%, success=[successful_roll].")
 		if(successful_roll)
-			start_gorlex_poll()
+			automatic_deployment_authorized = TRUE
+			// This authorization owns all subsequent recruitment; no further random rolls.
+			next_event_check = length(check_times) + 1
+			if(!start_gorlex_poll())
+				cancel_automatic_recruitment("initial poll could not start")
+			return
+
+/// End automatic recruitment without reopening consumed deployment opportunities.
+/obj/effect/landmark/ccpost_gorlex_director/proc/cancel_automatic_recruitment(reason)
+	next_recruitment_retry = 0
+	log_game("CCPost Gorlex: automatic recruitment closed ([reason]); attempts=[automatic_recruitment_attempts].")
+
+/// Only failed automatic polls receive retries. Admin polls remain single attempts.
+/obj/effect/landmark/ccpost_gorlex_director/proc/handle_failed_gorlex_recruitment(admin_forced, reason)
+	if(admin_forced || !automatic_deployment_authorized || event_started)
+		return
+	if(automatic_recruitment_attempts >= CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS)
+		cancel_automatic_recruitment("recruitment attempts exhausted: [reason]")
+		return
+	next_recruitment_retry = world.time + CCPOST_GORLEX_RECRUITMENT_RETRY_DELAY
+	log_game("CCPost Gorlex: recruitment attempt [automatic_recruitment_attempts] failed ([reason]); retry in five minutes.")
 
 /// Use existing faction artwork rather than weapon silhouettes for both ghost-poll surfaces.
 /proc/ccpost_poll_faction_icon(cybersun = FALSE)
@@ -267,8 +305,12 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 /obj/effect/landmark/ccpost_gorlex_director/proc/start_gorlex_poll(admin_forced = FALSE)
 	if(event_started || polling_ghosts || GLOB.ccpost_outpost_signal_lost || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE))
 		return FALSE
-	if(!get_disk() || (!admin_forced && !deployment_eligible(get_disk())))
+	if(!get_disk() || (!admin_forced && (!automatic_deployment_authorized || automatic_recruitment_attempts >= CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS || !SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
 		return FALSE
+	if(!admin_forced)
+		automatic_recruitment_attempts++
+		next_recruitment_retry = 0
+		log_game("CCPost Gorlex: automatic recruitment attempt [automatic_recruitment_attempts]/[CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS].")
 	polling_ghosts = TRUE
 	INVOKE_ASYNC(src, PROC_REF(poll_and_deploy), admin_forced)
 	return TRUE
@@ -283,18 +325,30 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		chat_text_border_icon = image(faction_icon),
 		role_name_text = "Gorlex Marauders operative"
 	)
-	polling_ghosts = FALSE
-	if(QDELETED(src) || event_started || GLOB.ccpost_outpost_signal_lost || !length(candidates))
+	if(QDELETED(src))
 		return
-	if(!get_disk() || (!admin_forced && !deployment_eligible(get_disk())))
+	polling_ghosts = FALSE
+	if(event_started)
+		return
+	if(GLOB.ccpost_outpost_signal_lost || !get_disk() || (!admin_forced && (!SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
+		if(!admin_forced)
+			cancel_automatic_recruitment("deployment prerequisites lost during poll")
 		return
 	var/turf/T = pick_landing(GLOB.ccpost_gorlex_insertions, TRUE)
 	if(!T)
 		log_game("CCPost Gorlex: no eligible insertion landmark; poll ended without deployment.")
+		if(!admin_forced)
+			cancel_automatic_recruitment("insertion unavailable after poll")
 		return
-	var/mob/dead/observer/selected = pick(candidates)
-	if(!selected?.client || !selected.key)
+	// A volunteer may disconnect or leave their ghost before the poll resolves.
+	var/list/valid_candidates = list()
+	for(var/mob/dead/observer/candidate as anything in candidates)
+		if(!QDELETED(candidate) && candidate.client && candidate.key)
+			valid_candidates += candidate
+	if(!length(valid_candidates))
+		handle_failed_gorlex_recruitment(admin_forced, "no eligible volunteers")
 		return
+	var/mob/dead/observer/selected = pick(valid_candidates)
 	var/mob/living/carbon/human/operative = new(T)
 	operative.randomize_human_appearance(~RANDOMIZE_SPECIES)
 	operative.dna.update_dna_identity()
@@ -305,8 +359,10 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	operative_mind.transfer_to(operative)
 	if(!operative.mind)
 		qdel(operative)
+		handle_failed_gorlex_recruitment(admin_forced, "operative mind transfer failed")
 		return
 	event_started = TRUE
+	next_recruitment_retry = 0
 	operative_ref = WEAKREF(operative)
 	operative_mind_ref = WEAKREF(operative_mind)
 	operative_mind.add_antag_datum(/datum/antagonist/ccpost_gorlex)
@@ -2017,6 +2073,8 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 #undef CCPOST_GORLEX_TC
 #undef CCPOST_CYBERSUN_TC
 #undef CCPOST_GORLEX_NEGLECT_WINDOW
+#undef CCPOST_GORLEX_RECRUITMENT_RETRY_DELAY
+#undef CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS
 #undef CCPOST_GORLEX_SECURITY_POLL
 
 #undef CCPOST_GORLEX_PLASTIC_LIMIT
