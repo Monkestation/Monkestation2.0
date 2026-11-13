@@ -108,6 +108,10 @@
 		EVLOG_LINES(src, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(pawn), get_turf(target))
 		set_blackboard_key(key, target)
 		return TRUE
-	if(!bypass_add_to_blacklist)
-		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
+	if(bypass_add_to_blacklist)
+		return FALSE
+	var/final_duration = duration || blackboard[BB_UNREACHABLE_LIST_COOLDOWN]
+	EVLOG_MAPTEXT(src, EVLOG_CATEGORY_AI_TARGETING, "[pawn] has added [target] to its targetting blacklist!", get_turf(target), "Target: [target]")
+	EVLOG_LINES(src, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(pawn), get_turf(target))
+	add_to_blacklist(target, final_duration)
 	return FALSE
