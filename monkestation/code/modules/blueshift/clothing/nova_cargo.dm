@@ -3,6 +3,7 @@
 /obj/item/clothing/under/rank/cargo/tech/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/cargo.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/cargo.dmi'
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/under/rank/cargo/qm/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/cargo.dmi'
@@ -44,6 +45,7 @@
 	name = "supply skirtleneck"
 	desc = "A snug turtleneck sweater worn by Supply, this time with a skirt attached!"
 	icon_state = "skirtleneck"
+	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/cargo/tech/nova/evil

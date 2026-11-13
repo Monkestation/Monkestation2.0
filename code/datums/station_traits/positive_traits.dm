@@ -54,11 +54,63 @@
 	name = "Bountiful bounties"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "It seems collectors in this system are extra keen to on bounties, and will pay more to see their completion."
 
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
+
+///A positive station trait that scatters a bunch of lit glowsticks throughout maintenance
+/datum/station_trait/glowsticks
+	name = "Glowsticks party"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 2
+	show_in_report = TRUE
+	report_message = "We've glowsticks upon glowsticks to spare, so we scattered some around maintenance (plus a couple floor lights)."
+
+/datum/station_trait/glowsticks/New()
+	..()
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(on_pregame))
+
+/datum/station_trait/glowsticks/proc/on_pregame(datum/source)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(light_up_the_night))
+
+/datum/station_trait/glowsticks/proc/light_up_the_night()
+	var/list/glowsticks = list(
+		/obj/item/flashlight/glowstick,
+		/obj/item/flashlight/glowstick/red,
+		/obj/item/flashlight/glowstick/blue,
+		/obj/item/flashlight/glowstick/cyan,
+		/obj/item/flashlight/glowstick/orange,
+		/obj/item/flashlight/glowstick/yellow,
+		/obj/item/flashlight/glowstick/pink,
+	)
+	for(var/area/station/maintenance/maint in GLOB.areas)
+		var/list/turfs = get_area_turfs(maint)
+		for(var/i in 1 to round(length(turfs) * 0.115))
+			CHECK_TICK
+			var/turf/open/chosen = pick_n_take(turfs)
+			if(!istype(chosen))
+				continue
+			var/skip_this = FALSE
+			for(var/atom/movable/mov as anything in chosen) //stop glowing sticks from spawning on windows
+				if(mov.density && !(mov.pass_flags_self & LETPASSTHROW))
+					skip_this = TRUE
+					break
+			if(skip_this)
+				continue
+			if(prob(3.4)) ///Rare, but this is something that can survive past the lifespawn of glowsticks.
+				new /obj/machinery/light/floor(chosen)
+				continue
+			var/stick_type = pick(glowsticks)
+			var/obj/item/flashlight/glowstick/stick = new stick_type(chosen)
+			///we want a wider range, otherwise they'd all burn out in about 20 minutes.
+			stick.fuel = rand(10 MINUTES, 45 MINUTES)
+			stick.on = TRUE
+			stick.update_brightness()
+			START_PROCESSING(SSobj, stick)
 
 /datum/station_trait/strong_supply_lines
 	name = "Strong supply lines"
@@ -76,8 +128,9 @@
 	name = "Filled up maintenance"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "Our workers accidentally forgot more of their personal belongings in the maintenace areas."
+	report_message = "Our workers accidentally forgot more of their personal belongings in the maintenance areas."
 	blacklist = list(/datum/station_trait/empty_maint)
 	trait_to_give = STATION_TRAIT_FILLED_MAINT
 
@@ -100,7 +153,7 @@
 	name = "deathrattled department"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/deathrattle_department
 	blacklist = list(/datum/station_trait/deathrattle_all)
 
 	var/department_to_apply_to
@@ -128,49 +181,42 @@
 
 /datum/station_trait/deathrattle_department/service
 	name = "Deathrattled Service"
-	trait_flags = NONE
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SERVICE
 	department_name = "Service"
 
 /datum/station_trait/deathrattle_department/cargo
 	name = "Deathrattled Cargo"
-	trait_flags = NONE
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
 	name = "Deathrattled Engineering"
-	trait_flags = NONE
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
 	name = "Deathrattled Command"
-	trait_flags = NONE
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
 	name = "Deathrattled Science"
-	trait_flags = NONE
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
 	name = "Deathrattled Security"
-	trait_flags = NONE
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SECURITY
 	department_name = "Security"
 
 /datum/station_trait/deathrattle_department/medical
 	name = "Deathrattled Medical"
-	trait_flags = NONE
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_MEDICAL
 	department_name = "Medical"
@@ -211,8 +257,10 @@
 		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics,
 		/datum/job/barber = /obj/item/organ/internal/cyberimp/arm/item_set/barber,
 		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
+		/datum/job/bird_watcher = /obj/item/organ/internal/ears/cybernetic,
 		/datum/job/bitrunner = /obj/item/organ/internal/eyes/robotic/thermals,
 		/datum/job/blueshield = /obj/item/organ/internal/cyberimp/arm/ammo_counter,
+		/datum/job/bridge_assistant = /obj/item/organ/internal/heart/cybernetic/tier2,
 		/datum/job/brig_physician = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 		/datum/job/botanist = /obj/item/organ/internal/cyberimp/arm/item_set/botany,
 		/datum/job/candysalesman =  /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
@@ -226,20 +274,29 @@
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/arm/item_set/cook,
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
 		/datum/job/detective = /obj/item/organ/internal/cyberimp/arm/item_set/detective,
+		/datum/job/dietwizard = /obj/item/organ/internal/cyberimp/brain/anti_stun,
+		/datum/job/easter_bunny = list(/obj/item/organ/internal/cyberimp/leg/sprinter, /obj/item/organ/internal/cyberimp/leg/sprinter/l),
 		/datum/job/explorer = /obj/item/organ/internal/eyes/robotic/meson,
+		/datum/job/florist = /obj/item/organ/internal/cyberimp/arm/item_set/botany,
+		/datum/job/ghost = /obj/item/organ/internal/eyes/robotic/glow,
 		/datum/job/godzilla = /obj/item/organ/internal/cyberimp/brain/anti_stun,
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 		/datum/job/geneticist = /obj/item/organ/internal/fly,
 		/datum/job/gorilla = /obj/item/organ/internal/cyberimp/arm/strongarm,
+		/datum/job/grill_master = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
+		/datum/job/gym_bro = /obj/item/organ/internal/cyberimp/arm/strongarm,
 		/datum/job/head_of_personnel = /obj/item/organ/internal/cyberimp/eyes/hud/security,
 		/datum/job/head_of_security = /obj/item/organ/internal/cyberimp/arm/item_set/combat,
+		/datum/job/hotdog_dude = /obj/item/organ/internal/stomach/cybernetic/tier2,
 		/datum/job/janitor = /obj/item/organ/internal/cyberimp/arm/item_set/janitor,
 		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
 		/datum/job/mime = /obj/item/organ/internal/tongue/robot,
 		/datum/job/nanotrasen_representative = list(/obj/item/organ/internal/cyberimp/leg/shove_resist, /obj/item/organ/internal/cyberimp/leg/shove_resist/l),
+		/datum/job/news_reporter = /obj/item/organ/internal/ears/cybernetic/whisper,
 		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/arm/item_set/paramedic,
 		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
 		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/whisper,
+		/datum/job/pun_pun = /obj/item/organ/internal/cyberimp/arm/strongarm,
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
 		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
@@ -248,9 +305,13 @@
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/item_set/flash,
 		/datum/job/shaft_miner = /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/diamond,
 		/datum/job/signal_technician = /obj/item/organ/internal/cyberimp/arm/heater,
+		/datum/job/skeleton = /obj/item/organ/internal/tongue/bone,
+		/datum/job/spring_cleaner = /obj/item/organ/internal/cyberimp/arm/item_set/janitor,
 		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/item_set/toolset,
+		/datum/job/tourist = /obj/item/organ/internal/eyes/robotic,
 		/datum/job/virologist = /obj/item/organ/internal/cyberimp/eyes/hud/pathology,
 		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
+		/datum/job/xenobiologist = /obj/item/organ/internal/ears/cybernetic,
 		/datum/job/yellowclown = /obj/item/organ/internal/cyberimp/chest/knockout,
 	)
 
@@ -288,13 +349,14 @@
 	name = "Advanced Medbots"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "Your station's medibots have recieved a hardware upgrade, enabling expanded healing capabilities."
+	report_message = "Your station's medibots have received a hardware upgrade, enabling expanded healing capabilities."
 	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
 
 /datum/station_trait/random_event_weight_modifier/shuttle_loans
 	name = "Loaner Shuttle"
-	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to recieve more shuttle loan opportunities, with slightly higher payouts."
+	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to receive more shuttle loan opportunities, with slightly higher payouts."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 4
 	event_control_path = /datum/round_event_control/shuttle_loan
@@ -324,6 +386,7 @@
 	report_message = "A repair technician left their wallet in a locker somewhere. They would greatly appreciate if you could locate and return it to them when the shift has ended."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 
 /datum/station_trait/missing_wallet/on_round_start()
@@ -357,6 +420,16 @@
 	assignment = "Repair Technician"
 	trim_state = "trim_stationengineer"
 	department_color = COLOR_ASSISTANT_GRAY
+
+/// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
+/datum/station_trait/assistant_gimmicks
+	name = "Geared Assistants Pilot"
+	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipment helps improve productivity!"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 3
+	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
+	show_in_report = TRUE
+	blacklist = list(/datum/station_trait/colored_assistants)
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
