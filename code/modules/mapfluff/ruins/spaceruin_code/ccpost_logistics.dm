@@ -3068,42 +3068,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_logistics, 32)
 
 	return TRUE
 
-
-/datum/ccpost_supply_package/entertainment/fishing_starter
-	id = "entertainment_fishing_starter"
-	name = "Recreational Fishing Starter Package"
-	desc = "A complete fishing and aquarium construction set. Includes portal components, construction materials and fish care supplies."
-	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
-	cost = 6
-	contains = list(
-		/obj/item/fishing_rod = 1,
-		/obj/item/bait_can/worm = 1,
-		/obj/item/aquarium_kit = 1,
-		/obj/item/circuitboard/machine/fishing_portal_generator = 1,
-		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stack/sheet/iron/ten = 3,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/fish_feed = 1,
-		/obj/item/storage/fish_case = 1
-	)
-
-/datum/ccpost_supply_package/entertainment/fishing_deluxe
-	id = "entertainment_fishing_deluxe"
-	name = "Deluxe Fishing & Aquatics Package"
-	desc = "Advanced rod with renewable synthetic bait, fish analysis equipment, reference material and aquarium accessories."
-	category = CCPOST_SUPPLY_CATEGORY_ENTERTAINMENT
-	cost = 8
-	contains = list(
-		/obj/item/fishing_rod/tech = 1,
-		/obj/item/bait_can/worm/premium = 1,
-		/obj/item/fish_analyzer = 1,
-		/obj/item/book/manual/fish_catalog = 1,
-		/obj/item/storage/box/aquarium_props = 1,
-		/obj/item/fish_feed = 1,
-		/obj/item/storage/fish_case = 2
-	)
-
 // Regional inspection consignments use only ordinary, noncombat goods.
 // The declared type/quantity counts and original stamped manifest remain authoritative.
 /obj/structure/closet/crate/ccpost_freight/inspection
