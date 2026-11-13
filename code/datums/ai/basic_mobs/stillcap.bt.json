@@ -1,0 +1,140 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/stillcap",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/escape_captivity"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree",
+					"override_id": "SUBPLAN_ID_PET_COMMAND"
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_BASIC_MOB_FLEE_TARGET",
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/stop_hiding"
+							},
+							{
+								"type": "subtree",
+								"subtype": "/datum/bt_node/subtree/run_away_from_target",
+								"bindings": {
+									"byk9gqj4": "BB_BASIC_MOB_FLEE_TARGET"
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_HIDING_HIDDEN",
+						"observer_abort": "BT_ABORT_BOTH"
+					},
+					"child": {
+						"type": "parallel",
+						"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+						"repeat_secondary": true,
+						"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+						"finish_on_primary": true,
+						"children": [
+							{
+								"type": "selector",
+								"children": [
+									{
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/bb_key_set",
+										"vars": {
+											"key": "BB_CURRENT_TARGET",
+											"observer_abort": "BT_ABORT_BOTH"
+										},
+										"child": {
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/stop_hiding"
+										}
+									},
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+										"loop_delay": "1 SECONDS",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/random_hiding"
+											}
+										]
+									}
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"targeting_strategy": "BB_TARGETING_STRATEGY",
+									"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/simple_hostile_obstacles_combat",
+					"bindings": {
+						"b95z0f0c": "/datum/bt_node/subtree/stop_hiding",
+						"by235tlw": "/datum/bt_node/subtree/random_hiding"
+					}
+				}
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_BASIC_MOB_STOP_FLEEING",
+				"invert": true
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets/nearest",
+				"vars": {
+					"target_key": "BB_BASIC_MOB_FLEE_TARGET",
+					"targeting_strategy": "BB_TARGETING_STRATEGY",
+					"hiding_location_key": "BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION"
+				}
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+			"vars": {
+				"target_key": "BB_CURRENT_TARGET",
+				"targeting_strategy": "BB_TARGETING_STRATEGY",
+				"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+				"check_faction": true
+			}
+		}
+	]
+}
