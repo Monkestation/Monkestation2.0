@@ -87,19 +87,6 @@
 													"required_dist": 1,
 													"finish_on_arrival": false
 												}
-											},
-											{
-												"type": "decorator",
-												"decorator": "/datum/bt_node/decorator/cooldown",
-												"vars": {
-													"cooldown_key": "BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN",
-													"cooldown_duration": "30 SECONDS",
-													"lock_on_succeed": true
-												},
-												"child": {
-													"type": "leaf",
-													"behavior": "/datum/bt_node/ai_behavior/call_reinforcements/mining"
-												}
 											}
 										]
 									}

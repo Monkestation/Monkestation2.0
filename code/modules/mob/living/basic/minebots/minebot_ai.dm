@@ -3,6 +3,8 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_BASIC_MOB_FLEE_DISTANCE = 3,
+		BB_MINIMUM_SHOOTING_DISTANCE = 3,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite),
 		BB_AUTOMATED_MINING = FALSE,
 		BB_OWNER_SELF_HARM_RESPONSES = list(
@@ -72,41 +74,18 @@
 	var/mob/living/carbon/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 	if(QDELETED(target) || is_station_level(target.z))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/turf/target_turf = get_turf(target)
 	var/obj/item/implant/radio/radio_implant = locate(/obj/item/implant/radio) in living_pawn.contents
 	if(!radio_implant)
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/message = "ALERT, [target] in need of help at coordinates: [target_turf.x], [target_turf.y], [target_turf.z]!"
 	radio_implant.radio.talk_into(living_pawn, message, RADIO_CHANNEL_SUPPLY)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/send_sos_message/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-
-/// Moves adjacent to an allied node drone and repairs it if its health is below the threshold.
-/// Fails if the drone is healthy, not allied, or repair is disabled.
-/datum/bt_node/ai_behavior/repair_drone
-	var/target_key = BB_DRONE_DEFEND
-	var/repair_threshold = 0.75
-
-/datum/bt_node/ai_behavior/repair_drone/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(!controller.blackboard[BB_MINEBOT_REPAIR_DRONE])
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.has_ally(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if(target.health >= target.maxHealth * repair_threshold)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/atom/movable, say), "REPAIRING [target]!")
-	INVOKE_ASYNC(controller, TYPE_PROC_REF(/datum/ai_controller, ai_interact), target)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Turns off combat mode then interacts with a nearby ore to collect it. Clears the target key on finish.
 /datum/bt_node/ai_behavior/collect_ore/minebot
@@ -125,16 +104,6 @@
 /datum/bt_node/ai_behavior/collect_ore/minebot/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-
-/// befriend_target variant that fails immediately if the target is already an ally  used to gate the drone-defend block.
-/datum/bt_node/ai_behavior/befriend_target/check_ally
-
-/datum/bt_node/ai_behavior/befriend_target/check_ally/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/living_pawn = controller.pawn
-	var/mob/living/living_target = controller.blackboard[target_key]
-	if(QDELETED(living_target) || living_pawn.has_ally(living_target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	return ..()
 
 /// BT-native ranged attack for the minebot. Avoids friendly fire.
 /datum/bt_node/ai_behavior/basic_ranged_attack/minebot

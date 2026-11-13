@@ -46,4 +46,9 @@ OVIEW_TARGET_SOURCE(hivebot, mob/living/basic/hivebot)
 OVIEW_TARGET_SOURCE(ants, obj/effect/decal/cleanable/ants)
 OVIEW_TARGET_SOURCE(deer_animals, mob/living/basic/deer)
 
+// these live somewhere else in monke
+OVIEW_TARGET_SOURCE(gutlunch_trough, obj/structure/ore_container/gutlunch_trough)
+OVIEW_TARGET_SOURCE(carrot, obj/item/food/grown/carrot)
+OVIEW_TARGET_SOURCE(honeycomb, obj/item/reagent_containers/honeycomb)
+
 #undef OVIEW_TARGET_SOURCE
