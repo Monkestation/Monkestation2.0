@@ -30,4 +30,7 @@
 		to_chat(usr, span_warning("Please enter a direct HTTPS image URL from a configured host (Default: Catbox, Imgbox, Gyazo, Lensdump), ending in JPG, PNG, JPEG, or WebP"))
 		return FALSE
 
+	if(usr)
+		log_game("[key_name(usr)] set their headshot to: [value]")
+
 	return TRUE
