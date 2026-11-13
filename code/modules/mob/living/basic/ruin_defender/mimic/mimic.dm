@@ -267,10 +267,8 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/copy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(!.) //dead or deleted
-		return
 	if(idledamage && !ckey && !ai_controller?.blackboard[BB_CURRENT_TARGET]) //Objects eventually revert to normal if no one is around to terrorize
-		adjust_brute_loss(0.5 * seconds_per_tick)
+		adjustBruteLoss(0.5 * seconds_per_tick)
 	for(var/mob/living/victim in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 		return

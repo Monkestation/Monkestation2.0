@@ -38,11 +38,14 @@
 	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/meteor_heart_death))
 	AddElement(/datum/element/relay_attackers)
 
-	var/static/list/innate_actions = list(
-		SPIKES_ABILITY_TYPEPATH = BB_METEOR_HEART_GROUND_SPIKES,
-		/datum/action/cooldown/mob_cooldown/spine_traps = BB_METEOR_HEART_SPINE_TRAPS,
-	)
-	grant_actions_by_list(innate_actions)
+	spikes = new(src)
+	spikes.Grant(src)
+	ai_controller.set_blackboard_key(BB_METEOR_HEART_GROUND_SPIKES, spikes)
+
+	traps = new(src)
+	traps.Grant(src)
+	ai_controller.set_blackboard_key(BB_METEOR_HEART_SPINE_TRAPS, traps)
+
 	ai_controller.force_ai_off()
 
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
