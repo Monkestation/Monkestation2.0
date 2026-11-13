@@ -539,6 +539,7 @@
 
 /proc/get_all_monster_hunter_prey(include_dead = FALSE)
 	. = list()
+#ifndef TESTING
 	var/list/prey = list()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MONSTER_HUNTER_QUERY, prey)
 	for(var/datum/mind/monster as anything in prey)
@@ -546,3 +547,12 @@
 		if(QDELETED(current) || (!include_dead && current.stat == DEAD))
 			continue
 		. += monster
+#else // make testing easier
+	for(var/datum/mind/monster in SSticker.minds)
+		if(!is_monster_hunter_prey(monster))
+			continue
+		var/mob/living/current = monster.current
+		if(QDELETED(current) || (!include_dead && current.stat == DEAD))
+			continue
+		. += monster
+#endif
