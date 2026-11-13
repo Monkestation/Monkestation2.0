@@ -13,6 +13,9 @@
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	///are we allowed to place another sign/thing when there is already one here?
+	var/ignore_other_signs = FALSE
 	var/list/signs
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
@@ -60,7 +63,7 @@
 	var/turf/target_turf = get_turf(interacting_with)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
 
-	if(target_holosign)
+	if(target_holosign && !ignore_other_signs)
 		return ITEM_INTERACT_BLOCKING
 	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
 		return NONE
@@ -277,3 +280,10 @@
 	for(var/sign in signs)
 		qdel(sign)
 	balloon_alert(user, "holograms cleared")
+
+/obj/item/holosign_creator/holo_candle
+	name = "HOLO Candle Projector"
+	desc = "A handy-dandy holographic projector that places tiny holographic candles."
+	ignore_other_signs = TRUE
+	holosign_type = /obj/item/flashlight/flare/candle/holo_candle
+
