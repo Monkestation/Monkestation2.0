@@ -90,27 +90,28 @@
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	var/healing = 2.5
 	ph = 1
-	chemical_flags = REAGENT_NO_RANDOM_RECIPE | REAGENT_DEAD_PROCESS | REAGENT_UNAFFECTED_BY_METABOLISM | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE|REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_DONOTSPLIT
 
-/datum/reagent/medicine/lonehope/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/medicine/lonehope/proc/dohealing(mob/living/carbon/affected_mob,seconds_per_tick)
 	var/healed = healing * REM * seconds_per_tick
 	affected_mob.adjustToxLoss(-healed, FALSE, TRUE, affected_biotype)
-	affected_mob.adjustOxyLoss(-healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustOxyLoss(-2*healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustBruteLoss(-healed, FALSE, TRUE, affected_bodytype)
 	affected_mob.adjustFireLoss(-healed, FALSE, TRUE, affected_bodytype)
-	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL - healed)
-		affected_mob.blood_volume += healed
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_EARS, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, -healed)
+	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL - (4*healed))
+		affected_mob.blood_volume += (4*healed)
+/datum/reagent/medicine/lonehope/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	dohealing(affected_mob,seconds_per_tick)
 	..()
 	. = TRUE
-
 /datum/reagent/medicine/lonehope/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
-	var/healed = healing * REM * seconds_per_tick
-	affected_mob.adjustToxLoss(-healed, FALSE, TRUE, affected_biotype)
-	affected_mob.adjustOxyLoss(-healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
-	affected_mob.adjustBruteLoss(-healed, FALSE, TRUE, affected_bodytype)
-	affected_mob.adjustFireLoss(-healed, FALSE, TRUE, affected_bodytype)
-	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL - healed)
-		affected_mob.blood_volume += healed
+	dohealing(affected_mob,seconds_per_tick)
 	..()
 	. = TRUE
 

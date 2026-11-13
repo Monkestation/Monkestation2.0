@@ -673,14 +673,14 @@
 
 	if(!owner)
 		owner = reagent.holder.my_atom
-
-	if(!owner || !reagent || (dead && !(reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
+	var/allow_deadprocess = !(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
+	if(!owner || !reagent || dead && allow_deadprocess)
 		return FALSE
 
 	if(owner.reagent_tick(reagent, seconds_per_tick, times_fired))
 		return FALSE
 
-	if(liverless && !reagent.self_consuming) //need to be metabolized
+	if(liverless && !reagent.self_consuming && !dead && !allow_deadprocess) //need to be metabolized,unless we are dead and allow deadprocess.
 		return FALSE
 
 	var/need_mob_update = FALSE
