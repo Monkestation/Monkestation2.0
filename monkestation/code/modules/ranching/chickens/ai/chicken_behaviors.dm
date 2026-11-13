@@ -1,32 +1,13 @@
-/datum/ai_movement/jps/oneshot
-	max_pathing_attempts = 1
+/// Walks into range of whoever the ability in ability_key wants to be used on, see the ability's ai_range
+/datum/bt_node/ai_behavior/move_to_target/chicken_ability
+	var/ability_key
 
-/datum/ai_behavior/targeted_mob_ability/min_range/chicken
-	new_movement = /datum/ai_movement/jps/oneshot
+/datum/bt_node/ai_behavior/move_to_target/chicken_ability/setup(datum/ai_controller/controller)
+	var/datum/action/cooldown/mob_cooldown/chicken/ability = controller.blackboard[ability_key]
+	if(istype(ability))
+		required_dist = ability.ai_range
+	return ..()
 
-/datum/ai_behavior/targeted_mob_ability/min_range/chicken/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
-	. = ..()
-	controller.change_ai_movement_type(/datum/ai_movement/dumb)
-
-/datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
-	required_distance = 1
-
-/datum/ai_behavior/targeted_mob_ability/min_range/chicken/gaze
-	required_distance = 4
-
-/datum/ai_behavior/targeted_mob_ability/min_range/chicken/on_top
-	required_distance = 0
-
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/chicken
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/chicken
-
-/datum/ai_behavior/basic_ranged_attack/chicken
-	required_distance = 5
-
-/datum/ai_behavior/basic_ranged_attack/chicken/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	var/atom/target = controller.blackboard[target_key]
-	if(SEND_SIGNAL(controller.pawn, COMSIG_FRIENDSHIP_CHECK_LEVEL, target, FRIENDSHIP_FRIEND))
-		controller.clear_blackboard_key(target_key)
-		finish_action(controller, succeeded = FALSE)
-		return
-	. = ..()
+/// Shoots at whoever we're after, as long as they're not one of our friends
+/datum/bt_node/subtree/pet_command/attack/chicken_ranged
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/pet_command_attack_chicken_ranged.bt.json"

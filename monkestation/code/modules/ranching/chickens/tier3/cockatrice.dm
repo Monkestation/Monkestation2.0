@@ -33,16 +33,6 @@
 
 	layer_hen_type = /mob/living/basic/chicken/cockatrice
 
-/mob/living/basic/chicken/cockatrice/Initialize(mapload)
-	. = ..()
-	if(gender == FEMALE)
-		var/list/new_planning_subtree = list()
-		for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
-			new_planning_subtree |= listed_tree.type
-
-		new_planning_subtree -= /datum/ai_planning_subtree/basic_melee_attack_subtree/chicken
-		ai_controller.replace_planning_subtrees(new_planning_subtree)
-
 /obj/item/ammo_casing/venomous_spit
 	projectile_type = /obj/projectile/magic/venomous_spit
 
@@ -70,7 +60,7 @@
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/gaze
+	ai_range = 4
 
 /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze/PreActivate(atom/target)
 	if (target == owner)

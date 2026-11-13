@@ -1,0 +1,102 @@
+{
+	"dm_type": "/datum/ai_controller/chicken/gary",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_GARY_HIDEOUT",
+				"invert": true
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/gary_pick_hideout"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_true",
+			"vars": {
+				"key": "BB_GARY_COME_HOME",
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/gary_travel/head_to_hideout"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_true",
+			"vars": {
+				"key": "BB_GARY_HIDEOUT_SETTING_UP"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/gary_setup_hideout"
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_true",
+			"vars": {
+				"key": "BB_GARY_BARTERING",
+				"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+			},
+			"child": {
+				"type": "selector",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_equals",
+						"vars": {
+							"key": "BB_GARY_BARTER_STEP",
+							"value": 1
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/gary_travel/retrieve_item"
+						}
+					},
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_equals",
+						"vars": {
+							"key": "BB_GARY_BARTER_STEP",
+							"value": 2
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/gary_give_item"
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "subplan",
+			"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+			"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/gary_wants_to_wander",
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/gary_travel/visit_player"
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "/datum/bt_node/subtree/random_walk"
+						}
+					]
+				}
+			]
+		}
+	]
+}

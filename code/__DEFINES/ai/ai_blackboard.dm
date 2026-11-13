@@ -274,6 +274,12 @@
 #define BB_CHICKEN_LAY_EGG "BB_chicken_lay_egg"
 #define BB_CHICKEN_NESTING_BOX "BB_chicken_lay_target"
 #define BB_CHICKEN_FEED "BB_chicken_feed_ability"
+/// Chicken feed we're going to eat
+#define BB_CHICKEN_FEED_TARGET "BB_chicken_feed_target"
+/// Whoever our targeted ability is going to be used on
+#define BB_CHICKEN_ABILITY_TARGET "BB_chicken_ability_target"
+/// Set on chickens that shoot instead of pecking
+#define BB_CHICKEN_RANGED "BB_chicken_ranged"
 
 ///gary defines
 #define BB_GARY_HIDEOUT "BB_gary_hideout"
