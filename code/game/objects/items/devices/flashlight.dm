@@ -533,8 +533,8 @@
 	if(src_location == over_location)
 		var/list/modifiers = params2list(params)
 		if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-			var/x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), (world.icon_size/2))
-			var/y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), (world.icon_size/2))
+			var/x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), (ICON_SIZE_X/2))
+			var/y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), (ICON_SIZE_Y/2))
 			user.transfer_item_to_turf(src, src_location, x_offset, y_offset, silent = FALSE)
 
 /obj/item/flashlight/flare/candle/Initialize(mapload)
