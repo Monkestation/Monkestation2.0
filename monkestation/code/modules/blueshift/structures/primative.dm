@@ -1371,7 +1371,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 /obj/item/glassblowing/blowing_rod/examine(mob/user)
 	. = ..()
-	var/obj/item/glassblowing/molten_glass/glass = glass_ref.resolve()
+	var/obj/item/glassblowing/molten_glass/glass = glass_ref?.resolve()
 	if(!glass)
 		return
 	. += get_examine_message(glass)

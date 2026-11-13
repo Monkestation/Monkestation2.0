@@ -28,6 +28,8 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 
 /datum/nifsoft/hivemind/New()
 	. = ..()
+	if(QDELETED(src))
+		return
 
 	user_network = linked_mob.AddComponent(/datum/component/mind_linker/active_linking/nif, \
 		network_name = "Hivemind Link", \

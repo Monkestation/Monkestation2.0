@@ -443,7 +443,7 @@
 	var/where = "[AREACOORD(location)]"
 	var/contained = length(contained_reagents) ? "[contained_reagents.Join(", ", " \[", "\]")] @ [chemholder.chem_temp]K" : null
 	var/area/fluid_area = get_area(location)
-	if(carry.my_atom?.fingerprintslast) //Some reagents don't have a my_atom in some cases
+	if(carry?.my_atom?.fingerprintslast) //Some reagents don't have a my_atom in some cases
 		var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 		var/more = ""
 		if(M)
@@ -452,7 +452,7 @@
 			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. Key: [more ? more : carry.my_atom.fingerprintslast].")
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last touched by [carry.my_atom.fingerprintslast].")
 	else
-		if(!istype(carry.my_atom, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) // Deathmatch has way too much smoke to log
+		if(!istype(carry?.my_atom, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) // Deathmatch has way too much smoke to log
 			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. No associated key.")
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 

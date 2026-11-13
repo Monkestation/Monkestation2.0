@@ -461,10 +461,10 @@
 	unbuckle_all_mobs()
 
 	if(load) //don't have to do any of this for mobs.
-		load.forceMove(loc)
-		load.pixel_y = initial(load.pixel_y)
-		load.layer = initial(load.layer)
-		SET_PLANE_EXPLICIT(load, initial(load.plane), src)
+		cached_load.forceMove(loc)
+		cached_load.pixel_y = initial(cached_load.pixel_y)
+		cached_load.layer = initial(cached_load.layer)
+		SET_PLANE_EXPLICIT(cached_load, initial(cached_load.plane), src)
 		load = null
 
 	if(dirn) //move the thing to the delivery point.

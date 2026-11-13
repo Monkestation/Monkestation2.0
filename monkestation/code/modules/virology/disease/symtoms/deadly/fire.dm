@@ -39,6 +39,6 @@
 
 /datum/symptom/fire/proc/warn_mob(mob/living/mob)
 	if(prob(33.33))
-		mob.audible_message(self_message = "You hear a crackling noise.")
+		mob.show_message("You hear a crackling noise.", MSG_AUDIBLE)
 	else
 		to_chat(mob, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
