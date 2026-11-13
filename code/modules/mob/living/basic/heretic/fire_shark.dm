@@ -6,7 +6,7 @@
 	icon_living = "fire_shark"
 	pass_flags = PASSTABLE | PASSMOB
 	istate = ISTATE_HARM | ISTATE_BLOCKING
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	speed = -0.5
 	health = 16
 	maxHealth = 16
@@ -33,3 +33,6 @@
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/basic/heretic_summon/fire_shark/wild
+	faction = list(FACTION_HOSTILE)

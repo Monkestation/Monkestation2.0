@@ -146,10 +146,10 @@ const FishItem = (props) => {
                 />
               </Stack.Item>
               <Stack.Item style={{ fontSize: '10px' }}>
-                {fish.fish_weight}g
+                {fish.fish_weight} kiloclam
               </Stack.Item>
               <Stack.Item style={{ fontSize: '10px' }}>
-                {fish.fish_size}cm
+                {fish.fish_size} cm
               </Stack.Item>
             </Stack>
           </Flex.Item>
@@ -183,7 +183,7 @@ const FishItem = (props) => {
                           tooltip={
                             <Stack vertical>
                               <Stack.Item>
-                                Inheritance: {trait.trait_inherit}
+                                Inheritance: {trait.trait_inherit}%
                               </Stack.Item>
                               <Stack.Item>{trait.trait_desc}</Stack.Item>
                             </Stack>
@@ -216,7 +216,7 @@ const FishItem = (props) => {
                 Hunger:{' '}
                 <ProgressBar
                   width="95%"
-                  value={fish.fish_hunger / 100}
+                  value={fish.fish_hunger}
                   ranges={{
                     good: [0.9, Infinity],
                     average: [0.5, 0.9],

@@ -342,3 +342,9 @@
 	return
 //MONKESTATION EDIT STOP
 
+///Makes the mob hop onto a random adjacent turf
+/mob/living/basic/proc/hop_on_nearby_turf()
+	var/dir = pick(GLOB.cardinals)
+	Move(get_step(src, dir), dir)
+	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
+	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)

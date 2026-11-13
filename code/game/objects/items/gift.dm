@@ -217,7 +217,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/mining_scanner/admin,
 		/obj/item/kinetic_crusher/adminpilebunker,
 		/obj/item/camera/spooky/badmin,
-		/obj/item/storage/box/fish_debug,
 	)
 
 	for(var/blocked_item in blocked_items)
