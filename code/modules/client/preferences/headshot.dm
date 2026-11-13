@@ -18,7 +18,6 @@
 
 	var/configured_pattern = CONFIG_GET(string/headshot_link_regex)
 	if(!configured_pattern)
-		to_chat(usr, span_warning("Invalid character artwork link"))
 		return FALSE
 
 	var/static/regex/compiled_link_regex
