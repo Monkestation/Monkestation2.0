@@ -51,7 +51,7 @@
 		source.update_bot_mode(new_mode = BOT_PATROL)
 		return
 
-	source.clear_path_hud(remove_hud = FALSE)
+	source.clear_path_hud()
 
 /datum/ai_controller/basic_controller/bot/proc/add_to_blacklist(atom/target, duration)
 	if(QDELETED(target))

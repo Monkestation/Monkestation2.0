@@ -34,7 +34,7 @@
 	if(!controller.pawn.Adjacent(controller.blackboard[BB_MOD_TARGET]))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/obj/item/implant/mod/implant = controller.blackboard[BB_MOD_IMPLANT]
-	implant.module.attach(controller.blackboard[BB_MOD_TARGET])
+	INVOKE_ASYNC(implant.module, TYPE_PROC_REF(/obj/item/mod/module/pathfinder, attach), controller.blackboard[BB_MOD_TARGET])
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/mod_attach/finish_action(datum/ai_controller/controller, succeeded)

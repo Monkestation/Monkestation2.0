@@ -64,13 +64,11 @@
 	return start_async()
 
 /datum/bt_node/ai_behavior/hunt_target/interact_with_target/perform_async(datum/ai_controller/controller)
-	target_caught(controller.pawn, hunt_async_target)
+	// not through target_caught(), the base perform() can't sleep and ai_interact() can
+	controller.ai_interact(target = hunt_async_target, combat_mode = behavior_combat_mode)
 	if(!async_still_valid())
 		return
 	finish_async(AI_BEHAVIOR_SUCCEEDED)
-
-/datum/bt_node/ai_behavior/hunt_target/interact_with_target/target_caught(mob/living/hunter, atom/hunted)
-	hunter.ai_controller.ai_interact(target = hunted, combat_mode = behavior_combat_mode)
 
 /// Uses a cooldown ability from ability_key on the target.
 /datum/bt_node/ai_behavior/hunt_target/use_ability_on_target

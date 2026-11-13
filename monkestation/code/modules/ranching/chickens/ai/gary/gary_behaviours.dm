@@ -55,9 +55,8 @@
 		return AI_BEHAVIOR_SUCCEEDED
 	if(movement_failed)
 		var/turf/landing = get_turf(destination)
-		if(landing && pawn.fading_leap_up())
-			pawn.forceMove(landing)
-			pawn.fading_leap_down()
+		if(landing)
+			INVOKE_ASYNC(pawn, TYPE_PROC_REF(/mob/living/basic/chicken/gary, leap_to), landing)
 		arrived(controller)
 		return AI_BEHAVIOR_SUCCEEDED
 	if(!controller.ai_movement.moving_controllers[controller])
@@ -256,3 +255,10 @@
 /datum/bt_node/ai_behavior/gary_give_item/Destroy()
 	receiver = null
 	return ..()
+
+/// Jumps out of view and lands on the turf, for when pathing gives up
+/mob/living/basic/chicken/gary/proc/leap_to(turf/landing)
+	if(!fading_leap_up())
+		return
+	forceMove(landing)
+	fading_leap_down()

@@ -32,7 +32,7 @@
 	command_desc = "Command your pet to mine down walls."
 	speech_commands = list("mine", "smash")
 
-/datum/pet_command/mine_walls/try_activate_command(mob/living/commander)
+/datum/pet_command/mine_walls/try_activate_command(mob/living/commander, radial_command)
 	var/mob/living/parent = weak_parent.resolve()
 	if(isnull(parent))
 		return

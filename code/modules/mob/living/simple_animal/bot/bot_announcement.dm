@@ -47,9 +47,7 @@
 
 	INVOKE_ASYNC(bot_owner, TYPE_PROC_REF(/atom/movable, say), line)
 	if (channel && bot_owner.internal_radio.channels[channel])
-		bot_owner.internal_radio.talk_into(bot_owner, message = line, channel = channel)
-	else
-		bot_owner.say(line)
+		INVOKE_ASYNC(bot_owner.internal_radio, TYPE_PROC_REF(/obj/item, talk_into), bot_owner, line, channel)
 
 	if (length(automated_announcements) && !isnull(automated_announcements[line]))
 		playsound(bot_owner, automated_announcements[line], vol = 50, vary = FALSE)

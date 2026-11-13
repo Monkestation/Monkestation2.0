@@ -116,7 +116,7 @@
 	radial_icon_state = "slimesplit"
 
 // deliberately skips set_command_active - toggling the split prime shouldn't cancel an active Follow/Stay
-/datum/pet_command/slime_split/try_activate_command(mob/living/commander)
+/datum/pet_command/slime_split/try_activate_command(mob/living/commander, radial_command)
 	var/mob/living/basic/slime/parent = weak_parent.resolve()
 	if(!istype(parent) || IS_DEAD_OR_INCAP(parent))
 		return
