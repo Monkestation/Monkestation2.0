@@ -4,6 +4,9 @@
 		Wonderland will fetch it for you, this once. \
 		And the next time. \
 		Do stop dropping it."
+	background_icon_state = "bg_wonderland"
+	overlay_icon_state = null
+	active_overlay_icon_state = null
 	invocation = "Everything in its place."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_CASTABLE_WITHOUT_INVOCATION

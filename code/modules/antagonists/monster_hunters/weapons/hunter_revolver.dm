@@ -117,7 +117,7 @@
 	ADD_TRAIT(owner, TRAIT_BLOODSILVER_CURSE, TRAIT_STATUS_EFFECT(id))
 	owner.apply_status_effect(/datum/status_effect/wonderland_district/bloodsilver)
 	to_chat(owner, span_userdanger("An invisible blaze fills your body, you feel as if your abilities are compromised!"), type = MESSAGE_TYPE_COMBAT)
-	to_chat(owner, span_hearts_fury("(WRITER TODO) hearts - a list of punishments for its powers that spirals into nonsense"), type = MESSAGE_TYPE_COMBAT)
+	to_chat(owner, span_hearts_fury("No tricks! Gag it! Starch it! Stand it in the corner!"), type = MESSAGE_TYPE_COMBAT)
 	SEND_SIGNAL(owner, COMSIG_LIVING_BLOODSILVER_HIT)
 	remove_effects()
 	RegisterSignal(owner, COMSIG_MOB_PRE_JAUNT, PROC_REF(on_jaunt))
@@ -147,14 +147,14 @@
 	SIGNAL_HANDLER
 
 	playsound(jaunter, 'sound/effects/meteorimpact.ogg', vol = 40, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_SOUND_EFFECTS)
-	to_chat(jaunter, span_userdanger("(WRITER TODO) plain - u tried to jaunt and something huge dragged u back down"), type = MESSAGE_TYPE_WARNING)
-	to_chat(jaunter, span_hearts_fury("(WRITER TODO) hearts - nobody leaves before the sentence"), type = MESSAGE_TYPE_WARNING)
+	to_chat(jaunter, span_userdanger("You try to jaunt away, but something enormous drags you back down!"), type = MESSAGE_TYPE_WARNING)
+	to_chat(jaunter, span_hearts_fury("Nobody leaves before the sentence!"), type = MESSAGE_TYPE_WARNING)
 	jaunter.set_confusion_if_lower(2.5 SECONDS)
 	jaunter.Knockdown(0.5 SECONDS, ignore_canstun = TRUE)
 	return COMPONENT_BLOCK_JAUNT
 
 /atom/movable/screen/alert/status_effect/silver_bullet
 	name = "Bloodsilver Curse"
-	desc = "(WRITER TODO) plain - a queen shut ur powers up"
+	desc = "Your powers have been silenced by an otherworldly queen!"
 	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "wonderland"

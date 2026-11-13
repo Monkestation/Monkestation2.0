@@ -1,4 +1,5 @@
-GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
+/// The Wonderland apocalypse, if one has started.
+GLOBAL_DATUM(wonderland_apocalypse, /datum/wonderland_apocalypse)
 
 /datum/dimension_theme/wonderland
 	icon = 'icons/mob/simple/rabbit.dmi'
@@ -11,40 +12,85 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 		/obj/structure/table = list(/obj/structure/table/wood = 1), \
 		/obj/machinery/holopad  = list(/obj/structure/flora/tree/jungle = 1 ), \
 		/obj/machinery/atmospherics/components/unary/vent_scrubber = list(/obj/structure/flora/tree/dead = 1))
+	/// Whether this patch is a chess board instead of a meadow.
+	var/chess_board = FALSE
 
+/datum/dimension_theme/wonderland/New()
+	. = ..()
+	chess_board = prob(20)
+
+/datum/dimension_theme/wonderland/transform_floor(turf/open/floor/affected_floor)
+	// overlapping patches would otherwise redo a board and stack its pieces
+	if(istype(affected_floor, /turf/open/floor/black/wonderland) || istype(affected_floor, /turf/open/floor/white/wonderland))
+		return FALSE
+	if(chess_board)
+		affected_floor.replace_floor(((affected_floor.x + affected_floor.y) % 2) ? /turf/open/floor/white/wonderland : /turf/open/floor/black/wonderland, flags = CHANGETURF_INHERIT_AIR)
+		if(prob(4) && !affected_floor.is_blocked_turf(exclude_mobs = TRUE))
+			var/piece = pick(
+				/obj/structure/chess/whitepawn,
+				/obj/structure/chess/whiterook,
+				/obj/structure/chess/whiteknight,
+				/obj/structure/chess/whitebishop,
+				/obj/structure/chess/whitequeen,
+				/obj/structure/chess/whiteking,
+				/obj/structure/chess/blackpawn,
+				/obj/structure/chess/blackrook,
+				/obj/structure/chess/blackknight,
+				/obj/structure/chess/blackbishop,
+				/obj/structure/chess/blackqueen,
+				/obj/structure/chess/blackking,
+			)
+			new piece(affected_floor)
+		return TRUE
+	. = ..()
+	if(. && prob(8) && !affected_floor.is_blocked_turf(exclude_mobs = TRUE))
+		var/flowers = pick(
+			/obj/structure/flora/bush/flowers_yw/style_random,
+			/obj/structure/flora/bush/flowers_br/style_random,
+			/obj/structure/flora/bush/flowers_pp/style_random,
+		)
+		new flowers(affected_floor)
+
+/turf/open/floor/black/wonderland
+
+/turf/open/floor/white/wonderland
 
 /turf/open/misc/grass/jungle/wonderland
 	underfloor_accessibility = UNDERFLOOR_HIDDEN
 
-/datum/round_event_control/wonderlandapocalypse
-	name = "Apocalypse"
-	typepath = /datum/round_event/wonderlandapocalypse
-	max_occurrences = 0
-	weight = 0
-	alert_observers = FALSE
-	category = EVENT_CATEGORY_SPACE
-	track = EVENT_TRACK_OBJECTIVES
+/datum/wonderland_apocalypse
+	/// Killer rabbits our rabbit holes have let out that are still alive.
+	var/wave_rabbits = 0
+	/// Timer id of the check for the shuttle docking.
+	var/dock_timer
 
-/datum/round_event/wonderlandapocalypse/announce(fake)
-	if(!fake && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_DELTA)
-		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+/datum/wonderland_apocalypse/New()
+	GLOB.wonderland_apocalypse = src
+	SSgamemode.halted_storyteller = TRUE
+	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_LAMBDA)
+		SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
 	priority_announce(
-		text = "What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!",
-		title = Gibberish("[command_name()] Higher Dimensional Affairs", TRUE, 45),
+		text = "Something has just torn through into your station, and our scanners are showing a meadow where you should be. " \
+			+ Gibberish("Get to the shuttle.", chance = 15) + " " + Gibberish("Do not stop for anyth-", chance = 40) + \
+			span_hearts_announcement("That is quite enough from them. \
+				This station is mine now - every floor, every door, and everybody on it. \
+				Court is in session, and you are all the accused. There will be no magic and no tricks in my court. \
+				Now, has anybody seen the cake?" \
+			),
+		title = "Higher Dimensional Affairs",
 		sound = 'sound/music/antag/monster_hunter.ogg',
-		encode_title = FALSE, // Gibberish() already sanitizes
+		encode_text = FALSE,
 		color_override = "purple"
 	)
-
-/datum/round_event/wonderlandapocalypse/start()
-	GLOB.wonderland_apocalypse = TRUE
+	if(EMERGENCY_IDLE_OR_RECALLED)
+		addtimer(CALLBACK(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, call_evac_shuttle), "A hostile higher-dimensional entity has claimed the station as its own. Crew survival is no longer considered likely. Priority evacuation shuttle dispatched."), 25 SECONDS, TIMER_UNIQUE)
 	SSshuttle.emergency_no_recall = TRUE
 	for(var/turf/anomaly_turf as anything in pick_noise_station_turfs(16, 4))
 		new /obj/effect/anomaly/dimensional/wonderland(anomaly_turf, null, FALSE)
 	for(var/turf/rift_turf as anything in pick_noise_station_turfs(4, 4, list(/obj/effect/anomaly/dimensional/wonderland)))
 		var/obj/structure/wonderland_rift/rift = new(rift_turf)
 		notify_ghosts(
-			"A doorway to the wonderland has been opened!",
+			"A rift to Wonderland has been torn open!",
 			source = rift,
 			action = NOTIFY_ORBIT,
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
@@ -58,9 +104,87 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 			continue
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, apply_status_effect), /datum/status_effect/wonderland_district), rand(5 SECONDS, 10 SECONDS))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(apply_pressure_to_new_mob))
+	SSweather.run_weather(/datum/weather/wonderland)
+	var/list/white_rabbits = list()
+	for(var/mob/living/basic/wonderland_rabbit/rabbit in GLOB.mob_living_list)
+		white_rabbits += rabbit
+	shuffle_inplace(white_rabbits)
+	for(var/i in 1 to min(length(white_rabbits), 8))
+		addtimer(CALLBACK(white_rabbits[i], TYPE_PROC_REF(/mob/living/basic/wonderland_rabbit, turn_killer)), rand(10 SECONDS, 60 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(open_rabbit_holes)), 1 MINUTES, TIMER_LOOP)
+	dock_timer = addtimer(CALLBACK(src, PROC_REF(check_shuttle_docked)), 10 SECONDS, TIMER_LOOP | TIMER_STOPPABLE)
+	seal_endings()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WONDERLAND_APOCALYPSE)
 
-/datum/round_event/wonderlandapocalypse/proc/apply_pressure_to_new_mob(datum/source, mob/living/target)
+/// Only new rituals are refused, one already under way is left to finish so it cannot strand the shuttle
+/datum/wonderland_apocalypse/proc/seal_endings()
+	for(var/datum/antagonist/heretic/heretic in GLOB.antagonists)
+		if(heretic.ascended || QDELETED(heretic.owner?.current))
+			continue
+		to_chat(heretic.owner.current, span_hearts_decree("And you, with the book - close it. There is one crown on this station, and I am wearing it."))
+
+/datum/wonderland_apocalypse/proc/open_rabbit_holes()
+	if(wave_rabbits >= 20)
+		return
+	var/list/victims = list()
+	for(var/mob/living/player as anything in GLOB.alive_player_list)
+		var/turf/player_turf = get_turf(player)
+		if(!player_turf || !is_station_level(player_turf.z) || (FACTION_RABBITS in player.faction))
+			continue
+		victims += player
+	for(var/i in 1 to min(2, length(victims)))
+		var/mob/living/victim = pick_n_take(victims)
+		var/turf/hole_turf = pick_open_turf(view(4, victim) - range(1, victim))
+		if(!hole_turf)
+			continue
+		new /obj/effect/temp_visual/wonderland_hole(hole_turf)
+		for(var/j in 1 to 2)
+			var/mob/living/basic/killer_rabbit/rabbit = new(hole_turf)
+			wave_rabbits++
+			RegisterSignal(rabbit, COMSIG_QDELETING, PROC_REF(wave_rabbit_gone))
+			climb_out_of_rabbit_hole(rabbit)
+
+/datum/wonderland_apocalypse/proc/wave_rabbit_gone(datum/source)
+	SIGNAL_HANDLER
+	wave_rabbits--
+
+/datum/wonderland_apocalypse/proc/pick_open_turf(list/turfs)
+	var/list/open_turfs = list()
+	for(var/turf/open/candidate in turfs)
+		if(isgroundlessturf(candidate) || !istype(get_area(candidate), /area/station) || candidate.is_blocked_turf(exclude_mobs = TRUE))
+			continue
+		open_turfs += candidate
+	return pick(open_turfs)
+
+/// There is no docking signal, so we poll
+/datum/wonderland_apocalypse/proc/check_shuttle_docked()
+	if(!EMERGENCY_AT_LEAST_DOCKED || EMERGENCY_ESCAPED_OR_ENDGAMED)
+		return
+	if(open_gate())
+		deltimer(dock_timer)
+
+/datum/wonderland_apocalypse/proc/open_gate()
+	var/turf/gate_turf = pick_open_turf(RANGE_TURFS(12, SSshuttle.emergency)) || pick(pick_noise_station_turfs(1, 4))
+	if(!gate_turf)
+		return FALSE
+	var/obj/structure/wonderland_rift/gate/gate = new(gate_turf)
+	priority_announce(
+		text = span_hearts_announcement("You are keeping me waiting, and I do not wait. Open the gate. Let the rest of my court in."),
+		title = "Higher Dimensional Affairs",
+		sound = 'sound/music/antag/monster_hunter.ogg',
+		encode_text = FALSE,
+		color_override = "purple"
+	)
+	notify_ghosts(
+		"A gate to Wonderland has opened. Every ghost may come through, once.",
+		source = gate,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "Wonderland Gate Opened",
+	)
+	return TRUE
+
+/datum/wonderland_apocalypse/proc/apply_pressure_to_new_mob(datum/source, mob/living/target)
 	SIGNAL_HANDLER
 	if(!istype(target) || QDELING(target))
 		return
@@ -97,8 +221,8 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	return
 
 /obj/structure/wonderland_rift
-	name = "Wonderland Door"
-	desc = "A door leading to a magical beautiful land."
+	name = "\improper Wonderland rift"
+	desc = "A tear in the world with a sunny meadow on the other side. Something very large is on its way through."
 	icon = 'icons/mob/infils.dmi'
 	icon_state = "cyborg_rift"
 	anchored = TRUE
@@ -130,10 +254,37 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	if(spawn_check != "Yes" || QDELETED(src) || QDELETED(user) || enemy_spawned)
 		return FALSE
 	enemy_spawned = TRUE
-	var/mob/living/basic/red_rabbit/evil_rabbit = new(get_turf(src))
+	var/turf/rift_turf = get_turf(src)
+	new /obj/effect/temp_visual/jabberwocky_hole(rift_turf)
+	var/mob/living/basic/red_rabbit/evil_rabbit = new(rift_turf)
+	evil_rabbit.alpha = 0
+	animate(evil_rabbit, time = 1.1 SECONDS)
+	animate(alpha = 255, time = 0.4 SECONDS)
 	evil_rabbit.PossessByPlayer(user.key)
-	to_chat(evil_rabbit, span_boldwarning("(WRITER TODO) plain - ur a jabberwocky, wreck everything, spare nobody"))
-	to_chat(evil_rabbit, span_hearts_tantrum("(WRITER TODO) hearts - go collect every head on the station"))
+	to_chat(evil_rabbit, span_boldwarning("You are a jabberwocky. Destroy everything, spare no one."))
+	to_chat(evil_rabbit, span_hearts_tantrum("Bring me every last head!"))
+	return TRUE
+
+/obj/structure/wonderland_rift/gate
+	name = "\improper Wonderland gate"
+	desc = "A tear wide enough for a whole court to walk through. They are walking through."
+	/// Ckeys that have already come through, each ghost gets one turn.
+	var/list/used_ckeys
+
+/obj/structure/wonderland_rift/gate/Initialize(mapload)
+	. = ..()
+	transform *= 2
+
+/obj/structure/wonderland_rift/gate/summon_rabbit(mob/user)
+	var/user_ckey = user.ckey
+	if(user_ckey in used_ckeys)
+		to_chat(user, span_hearts_decree("You have had your turn. Wait in the corner like everyone else."))
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	LAZYADD(used_ckeys, user_ckey)
+	enemy_spawned = FALSE
 
 /datum/status_effect/wonderland_district
 	id = "wonderland_district"
@@ -141,17 +292,6 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	tick_interval = STATUS_EFFECT_NO_TICK
 	/// List of /datum/action instance that we've registered `COMSIG_ACTION_TRIGGER` on.
 	var/list/datum/action/registered_actions
-/* leaving this here for later planned changes ~Lucy
-	/// List of traits that will always be removed from affected monsters.
-	var/static/list/banned_traits = list(
-		TRAIT_ABATES_SHOCK,
-		TRAIT_ANALGESIA,
-		TRAIT_HARDLY_WOUNDED,
-		TRAIT_NEVER_WOUNDED,
-		TRAIT_NO_PAIN_EFFECTS,
-		TRAIT_NO_SHOCK_BUILDUP,
-	)
-*/
 	/// Message given to the user when the status effect is given.
 	var/apply_message = "You feel an ominous pressure fill the air around you..."
 	/// The "cause" used for logging damage from recoil.
@@ -179,16 +319,9 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 /datum/status_effect/wonderland_district/on_apply()
 	if(FACTION_RABBITS in owner?.faction)
 		return FALSE
-/* leaving this here for later planned changes ~Lucy
-	if(is_monster_hunter_prey(owner))
-		ADD_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
-		for(var/trait in banned_traits)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(trait), PROC_REF(remove_banned_traits))
-		remove_banned_traits()
-*/
 	if(apply_message)
 		to_chat(owner, span_warning(apply_message))
-		to_chat(owner, span_hearts_decree("(WRITER TODO) hearts - everyone's guilty, she'll figure out of what later"))
+		to_chat(owner, span_hearts_decree("Guilty, every one of you. Of what, I shall decide later."))
 	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(owner, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(after_spell_cast))
 	RegisterSignal(owner, COMSIG_MOB_GRANTED_ACTION, PROC_REF(owner_granted_action))
@@ -201,19 +334,10 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 /datum/status_effect/wonderland_district/on_remove()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_ENTER_AREA, COMSIG_MOB_AFTER_SPELL_CAST, COMSIG_MOB_GRANTED_ACTION, COMSIG_MOB_REMOVED_ACTION))
-	/* for(var/trait in banned_traits)
-		UnregisterSignal(owner, SIGNAL_ADDTRAIT(trait)) */
 	for(var/datum/action/action as anything in registered_actions)
 		UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
 	LAZYNULL(registered_actions)
 	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
-
-/* leaving this here for later planned changes ~Lucy
-/// Removes all banned traits from the victim.
-/datum/status_effect/wonderland_district/proc/remove_banned_traits()
-	SIGNAL_HANDLER
-	owner.remove_traits(banned_traits) // not passing a source removes them from ALL sources
-*/
 
 /datum/status_effect/wonderland_district/proc/on_enter_area(datum/source, area/centcom/new_area)
 	SIGNAL_HANDLER
@@ -254,9 +378,9 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	if(vis_msg)
 		owner.visible_message(vis_msg, self_msg)
 		to_chat(owner, span_hearts_decree(pick(
-			"(WRITER TODO) hearts - who said u could do that",
-			"(WRITER TODO) hearts - sit down",
-			"(WRITER TODO) hearts - permission denied",
+			"Who said you could?",
+			"Sit down.",
+			"Not without my leave.",
 		)))
 	owner.take_overall_damage(brute = rand(5, 15))
 	if(iscarbon(owner))
@@ -284,3 +408,13 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	desc = "The veil between fantasy and reality has been shattered!"
 	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "wonderland"
+
+#ifdef TESTING
+ADMIN_VERB(start_wonderland_apocalypse, R_DEBUG, FALSE, "Start Wonderland Apocalypse", "Starts the monster hunter finale right now.", ADMIN_CATEGORY_DEBUG)
+	if(GLOB.wonderland_apocalypse)
+		to_chat(user, span_warning("The Wonderland apocalypse has already started."), confidential = TRUE)
+		return
+	message_admins("[key_name_admin(user)] started the Wonderland apocalypse.")
+	log_admin("[key_name(user)] started the Wonderland apocalypse.")
+	new /datum/wonderland_apocalypse
+#endif

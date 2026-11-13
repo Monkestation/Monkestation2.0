@@ -1,7 +1,8 @@
 /datum/action/cooldown/wonderland_drop
 	name = "To Wonderland"
-	button_icon = 'icons/turf/floors.dmi'
-	button_icon_state = "junglegrass"
+	background_icon_state = "bg_wonderland"
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "beam_up"
 	cooldown_time = 5 MINUTES
 	///where the user originally was
 	var/turf/original_loc
@@ -21,7 +22,7 @@
 	addtimer(CALLBACK(src, PROC_REF(awaken), sleeper), 3 SECONDS)
 
 /datum/action/cooldown/wonderland_drop/proc/awaken(mob/living/sleeper)
-	to_chat(sleeper, span_warning("(WRITER TODO) red queen - welcome to wonderland, mind ur manners"))
+	to_chat(sleeper, span_warning("Welcome to Wonderland. Wipe your feet, and mind your manners."))
 	owner.playsound_local(sleeper, 'sound/ambience/wonderland.ogg', vol = 10)
 	addtimer(CALLBACK(src, PROC_REF(return_to_station), sleeper), 1 MINUTES)
 	StartCooldown()
@@ -32,5 +33,5 @@
 	sleeper.forceMove(original_loc)
 	new /obj/effect/temp_visual/wonderland_hole(original_loc)
 	climb_out_of_rabbit_hole(sleeper)
-	to_chat(sleeper, span_warning("(WRITER TODO) red queen - nope, it wasn't a dream"))
+	to_chat(sleeper, span_warning("No, it was not a dream. Do keep up."))
 	original_loc = null

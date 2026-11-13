@@ -35,6 +35,9 @@
 	if(team.lucidity < team.required_succs)
 		to_chat(owner, span_warning("You do not have enough unique lucidity! ([team.lucidity] / [team.required_succs])"))
 		return
+	if(GLOB.wonderland_apocalypse && !GLOB.sacrament_done)
+		to_chat(owner, span_hearts_decree("Dark? I did not order dark! Light the lamps! Arrest the shadows! You - yes, you, the gloomy one - stay exactly as you are."))
+		return
 	if(tgui_alert(owner, "The Sacrament is ready! Are you prepared?", name, list("Yes", "No")) != "Yes")
 		return
 	if(GLOB.sacrament_done)

@@ -137,23 +137,6 @@
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	AddElement(/datum/element/queens_huntsman)
 
-/obj/item/storage/box/queens_huntsman
-	name = "Queen's Huntsman Kit"
-	desc = "A battered box holding a full set of a monster hunter's attire."
-	icon = 'icons/obj/items/monster_hunter.dmi'
-	icon_state = "armorbox"
-	illustration = null
-
-/obj/item/storage/box/queens_huntsman/PopulateContents()
-	new /obj/item/clothing/head/hats/queens_huntsman(src)
-	new /obj/item/clothing/suit/armor/queens_huntsman(src)
-	new /obj/item/clothing/under/costume/queens_huntsman(src)
-	if(prob(50))
-		new /obj/item/clothing/gloves/queens_huntsman(src)
-	else
-		new /obj/item/clothing/gloves/queens_huntsman/red(src)
-	new /obj/item/clothing/shoes/queens_huntsman(src)
-
 /// Element that removes the armor if a non-hunter wears it, so I don't have to dupe code
 /datum/element/queens_huntsman
 

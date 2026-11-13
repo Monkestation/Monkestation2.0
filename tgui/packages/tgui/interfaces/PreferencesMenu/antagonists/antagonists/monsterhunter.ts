@@ -6,9 +6,10 @@ const MonsterHunter: Antagonist = {
   name: 'Monster Hunter',
   description: [
     multiline`
-      WRITER: plain - the red queen's pawn, out hunting monsters. thinks
-      they're the hero, they're not. every kill and every rift drags
-      wonderland closer til it eats the station.
+      The Red Queen's pawn, sent to hunt the monsters hiding among the crew.
+      You may think you are the hero, but you are not. Every kill and every
+      rift you tear open drags Wonderland closer, until it swallows the
+      station whole.
     `,
   ],
   category: Category.Midround,

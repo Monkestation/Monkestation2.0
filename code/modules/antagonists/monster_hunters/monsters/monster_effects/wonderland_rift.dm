@@ -133,16 +133,16 @@
 	var/list/extra_logs = list()
 	switch(hunter_antag?.rabbits_spotted)
 		if(0)
-			to_chat(user, span_boldnotice("(WRITER TODO) red queen - rift one, here's the mask. she thinks ur kinda clumsy at this"))
+			to_chat(user, span_boldnotice("One. Clumsily done, but done. Here is a mask - wear it, and do try to look as though you meant to."))
 		if(1)
-			to_chat(user, span_boldnotice("(WRITER TODO) red queen - rift two, here's the revolver"))
+			to_chat(user, span_boldnotice("Two. Here is a revolver. It is for monsters - not for the floor, and not for your foot."))
 		if(2)
-			to_chat(user, span_boldnotice("(WRITER TODO) red queen - rift three, here's the armor. halfway there"))
+			to_chat(user, span_boldnotice("Three. Your huntsman's clothes will come when called now - do get dressed. That is halfway, and halfway is not a place. Nobody lives there."))
 		if(3)
-			to_chat(user, span_boldnotice("(WRITER TODO) red queen - rift four. ur slipping, manners and face both"))
+			to_chat(user, span_boldnotice("Four. You are slipping. Your manners went first, and now your face is following. Straighten both."))
 		if(4)
-			to_chat(user, span_boldnotice("(WRITER TODO) red queen - rift five, edge of the board. she stops guiding u and just watches"))
-			to_chat(user, span_hypnophrase("(WRITER TODO) narrator - something else behind her voice finds this funny"))
+			to_chat(user, span_boldnotice("Five. That is the edge of the board. I shall not lead you any further - I shall only watch."))
+			to_chat(user, span_hypnophrase("Something behind her voice is laughing."))
 	if(hunter_antag)
 		if(hunter_antag.rabbits_spotted == 0) //our first bunny
 			user.put_in_hands(new /obj/item/clothing/mask/cursed_rabbit(drop_location()))
@@ -151,8 +151,10 @@
 			give_gun(user)
 			extra_logs += "the hunter's revolver"
 		else if(hunter_antag.rabbits_spotted == 2)
-			user.put_in_hands(new /obj/item/storage/box/queens_huntsman(drop_location()))
-			extra_logs += "the huntsman kit"
+			var/datum/action/cooldown/spell/huntsman_attire/attire = new
+			attire.Grant(user)
+			hunter_antag.powers += attire
+			extra_logs += "the huntsman attire spell"
 	user.put_in_hands(new /obj/item/rabbit_eye(drop_location()))
 	hunter_antag?.rabbits -= src
 	var/msg = "claimed a white rabbit at [AREACOORD(src)]"

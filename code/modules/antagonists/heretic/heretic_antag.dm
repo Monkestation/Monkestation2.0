@@ -1298,6 +1298,8 @@
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
  */
 /datum/antagonist/heretic/proc/can_ascend()
+	if(GLOB.wonderland_apocalypse)
+		return "\"Ascend? Over MY head? Nobody on this station goes higher than me!\" (Wonderland has sealed your ascension.)"
 	if(feast_of_owls)
 		return "The owls have taken your right of ascension (denied ascension)." // We sold our ambition for immediate power :/
 	if(!can_assign_self_objectives)

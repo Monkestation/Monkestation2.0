@@ -93,12 +93,14 @@
 /datum/antagonist/monsterhunter/on_removal()
 	STOP_PROCESSING(SSprocessing, src)
 	UnregisterSignal(src, COMSIG_GAIN_INSIGHT)
+	QDEL_LIST(powers)
 	owner.remove_traits(mind_traits, HUNTER_TRAIT)
+	owner.current?.remove_status_effect(/datum/status_effect/queens_crown)
 	QDEL_LIST(rabbits)
 	QDEL_LIST(wonderland_rabbits)
 	locator?.hunter = null
 	locator = null
-	to_chat(owner.current, span_userdanger("(WRITER TODO) red queen - she shrinks and goes quiet (the kitten nod from the handoff)"))
+	to_chat(owner.current, span_userdanger("\"That will do. Off the board with you,\" she says, very small now. Then nothing but purring."))
 	to_chat(owner.current, span_userdanger("You are no longer a Monster Hunter."))
 	owner.special_role = null
 	return ..()
@@ -195,13 +197,16 @@
 					return
 			var/turf/current_turf = get_turf(user)
 			if(!is_station_level(current_turf.z))
-				to_chat(user, span_warning("(WRITER TODO) red queen - not here, the coronation happens on the station"))
+				to_chat(user, span_warning("Not here. A pawn is crowned on the board, not beside it. Back to the station."))
 				return
-			to_chat(user, span_hearts_tantrum("(WRITER TODO) hearts - this is where she takes over. everyone's sentenced, right now"))
+			to_chat(user, span_hearts_tantrum("My turn. Everyone hold still and be sentenced!"))
+			to_chat(user, span_hearts_decree("There. A crown, since you have been so good. Wear it straight, and if anyone says it does not suit you, they may lose their heads over it."))
+			user.apply_status_effect(/datum/status_effect/queens_crown)
 			apocalypse = TRUE
 			user.log_message("initiated the Wonderland Apocalypse.", LOG_GAME)
 			message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has initiated the Wonderland Apocalypse."))
-			force_event(/datum/round_event_control/wonderlandapocalypse, "a monster hunter turning into a beast")
+			if(!GLOB.wonderland_apocalypse)
+				new /datum/wonderland_apocalypse
 
 /datum/antagonist/monsterhunter/proc/purchase(obj/item/weapon_type, mob/living/user)
 	user.log_message("claimed the [weapon_type::name] ([weapon_type]) as their Monster Hunter weapon.", LOG_GAME)
@@ -269,12 +274,12 @@
 
 /datum/antagonist/monsterhunter/greet()
 	. = ..()
-	to_chat(owner.current, span_userdanger("(WRITER TODO) red queen - welcomes them as her pawn. pawns only go forward, reach the far side and u get crowned"))
-	to_chat(owner.current, span_announce("(WRITER TODO) red queen - monsters are hiding in the crew, rifts are hiding in the floors. find one and u find the other. station's next after that"))
-	to_chat(owner.current, span_announce("(WRITER TODO) red queen - anyone in ur way can be removed. cold about it, not bloodthirsty"))
-	to_chat(owner.current, span_announce("(WRITER TODO) red queen - security won't get it, they never do. stay out of sight"))
-	to_chat(owner.current, span_announce("(WRITER TODO) red queen - nicking a few things along the way is fine, a servant's owed something"))
-	to_chat(owner.current, span_warning("(WRITER TODO) plain - ur the villain, not the hero. once ur prey is dead and every rift's open, u can drop wonderland on the whole station"))
+	to_chat(owner.current, span_userdanger("Chin up. Hands still. You are my pawn now, and pawns go forward - never sideways, never back. Reach the far side of the board and you shall be crowned."), type = MESSAGE_TYPE_INFO)
+	to_chat(owner.current, span_announce("There are monsters tucked in among the crew, and rifts tucked under the floors. Find the one and you will find the other. After that, we shall see about the station."), type = MESSAGE_TYPE_INFO)
+	to_chat(owner.current, span_announce("Anyone who stands in your way may be removed. Do it quietly, and do not make a face about it."), type = MESSAGE_TYPE_INFO)
+	to_chat(owner.current, span_announce("Security will not understand. They never do. You need not explain yourself - only stay out of their sight."), type = MESSAGE_TYPE_INFO)
+	to_chat(owner.current, span_announce("You may pocket a thing or two along the way. A servant is owed something. Do not be greedy about it."), type = MESSAGE_TYPE_INFO)
+	to_chat(owner.current, span_warning("Once your prey is dead and every rift is open, you can unleash Wonderland on the whole station."), type = MESSAGE_TYPE_INFO)
 	owner.announce_objectives()
 
 /datum/antagonist/monsterhunter/proc/insight_gained()
@@ -306,47 +311,47 @@
 			if(heretic_target)
 				switch(heretic_target.heretic_path?.route || PATH_START)
 					if(PATH_START)
-						description = "(WRITER TODO) red queen - [target_name] hasn't even picked a path yet lol"
+						description = "[target_name] is a heretic, and has not yet decided what to be heretical about. Dithering. I do not care for dithering."
 					if(PATH_ASH)
-						description = "(WRITER TODO) red queen - [target_name] is the fire one"
+						description = "[target_name] is a heretic of ash. It plays with fire and supposes that makes it warm company. Mind your sleeves."
 					if(PATH_RUST)
-						description = "(WRITER TODO) red queen - [target_name] rots stuff, rust and decay"
+						description = "[target_name] is a heretic of rust. Whatever it touches goes to rot and ruin, and it has never once wiped its hands."
 					if(PATH_FLESH)
-						description = "(WRITER TODO) red queen - [target_name] does ghouls and meat, gross"
+						description = "[target_name] is a heretic of flesh. It keeps ghouls, and it plays with its meat. Revolting. Do not look at its plate."
 					if(PATH_VOID)
-						description = "(WRITER TODO) red queen - [target_name] is cold and empty, void stuff"
+						description = "[target_name] is a heretic of the void. Cold, empty, and proud of both. Button your coat."
 					if(PATH_BLADE)
-						description = "(WRITER TODO) red queen - [target_name] is the knives and duels one"
+						description = "[target_name] is a heretic of blades. It collects knives and calls its brawling 'duels'. Guard up - elbows in."
 					if(PATH_COSMIC)
-						description = "(WRITER TODO) red queen - [target_name] does star stuff"
+						description = "[target_name] is a heretic of the cosmos. It scribbles with stars. Somebody ought to have taken them away from it."
 					if(PATH_LOCK)
-						description = "(WRITER TODO) red queen - [target_name] messes with doors and keys"
+						description = "[target_name] is a heretic of the lock. It opens doors it was never invited through. Knock first, so that one of you has manners."
 					if(PATH_MOON)
-						description = "(WRITER TODO) red queen - [target_name] serves the *other* moon, the wrong one. tie it to the 'moonstruck jesters' line in moon_lore.dm"
+						description = "[target_name] is a heretic of the moon - the other moon, the wrong one, the one that keeps jesters. Moonstruck. Do not clap for it."
 					else
-						description = "(WRITER TODO) red queen - [target_name] is a heretic, generic"
+						description = "[target_name] is a heretic. It reads books it was told not to. Shoulders back when you meet it."
 			else if(bloodsucker_target)
 				var/clan_name = bloodsucker_target.my_clan?.name
 				if(!clan_name)
-					description = "(WRITER TODO) red queen - [target_name] hasn't picked a clan yet. list its tricks: [ability_list]"
+					description = "[target_name] is a bloodsucker that has not yet chosen a clan. Undecided, at its age. It knows [ability_list]."
 				else
 					switch(clan_name)
 						if(CLAN_NONE)
-							description = "(WRITER TODO) red queen - [target_name] is clanless, super plain. tricks: [ability_list]"
+							description = "[target_name] is a bloodsucker of no clan at all. Plain as porridge. It knows [ability_list]."
 						if(CLAN_TREMERE)
-							description = "(WRITER TODO) red queen - [target_name] does blood magic, and the chapel burns it. tricks: [ability_list]"
+							description = "[target_name] is a Tremere bloodsucker. It does sums in blood and calls that magic, and the chapel burns it. It knows [ability_list]."
 						if(CLAN_VENTRUE)
-							description = "(WRITER TODO) red queen - [target_name] is picky about what it drinks, and it's raising a fave vassal into a bloodsucker. tricks: [ability_list]"
+							description = "[target_name] is a Ventrue bloodsucker. It is fussy about whom it drinks, and it is bringing up a favorite vassal to be a bloodsucker too. It knows [ability_list]."
 						if(CLAN_NOSFERATU)
-							description = "(WRITER TODO) red queen - [target_name] can't pass as crew at all, lives in the vents. tricks: [ability_list]"
+							description = "[target_name] is a Nosferatu bloodsucker. It cannot pass for crew, so it keeps to the vents. One does not crawl. It knows [ability_list]."
 						if(CLAN_MALKAVIAN)
-							description = "(WRITER TODO) red queen - [target_name] is completely nuts, rambling prophet type. tricks: [ability_list]"
+							description = "[target_name] is a Malkavian bloodsucker. Quite mad. It prophesies at people without being asked. It knows [ability_list]."
 						else
-							description = "(WRITER TODO) red queen - [target_name] drinks people, generic bloodsucker. tricks: [ability_list]"
+							description = "[target_name] is a bloodsucker. It drinks people - at the table, I expect. It knows [ability_list]."
 			else if(target.has_antag_datum(/datum/antagonist/changeling))
-				description = "(WRITER TODO) red queen - [target_name] wears stolen faces. tricks: [ability_list]"
+				description = "[target_name] is a changeling. It wears faces it did not pay for, and none of them fit. It knows [ability_list]."
 			else
-				description = "(WRITER TODO) red queen - [target_name] isn't what it says it is. tricks: [ability_list]"
+				description = "[target_name] is not what it says it is. Few things are. It knows [ability_list]."
 
 	rabbits_spotted++
 	if(description)
@@ -394,7 +399,7 @@
 			spotted = FALSE
 			seen_time = 0
 			last_area_name = null
-			to_chat(hunter, span_boldnotice("(WRITER TODO) red queen - rabbits lost track of [target.name || prey?.real_name]"))
+			to_chat(hunter, span_boldnotice("[target.name || prey?.real_name] has slipped out of the rabbits' sight. Careless of them."))
 		return
 	unseen_time = 0
 	seen_time += seconds_per_tick SECONDS
@@ -402,11 +407,11 @@
 		spotted = TRUE
 	if(!spotted)
 		return
-	var/area_name = get_area_name(prey)
+	var/area_name = get_area_name(prey, format_text = TRUE)
 	if(area_name == last_area_name)
 		return
 	last_area_name = area_name
-	to_chat(hunter, span_boldnotice("(WRITER TODO) red queen - a rabbit's got eyes on [target.name || prey.real_name] in [area_name]"))
+	to_chat(hunter, span_boldnotice("A rabbit has [target.name || prey.real_name] in sight - [area_name]."))
 
 /datum/objective/hunter/Destroy()
 	if(target)
@@ -418,7 +423,7 @@
 		return
 	discovered = TRUE
 	update_explanation_text()
-	to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
+	to_chat(owner.current, span_userdanger("One of your prey has been named. Your objective list has been updated!"))
 	owner.current?.log_message("identified one of their targets, [key_name(target.current)].", LOG_GAME)
 	target.current?.log_message("was identified by [key_name(owner.current)], a Monster Hunter.", LOG_GAME, log_globally = FALSE)
 	RegisterSignals(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_BLOODSUCKER_CLAN_CHOSEN), TYPE_PROC_REF(/datum/objective, update_explanation_text))
@@ -482,13 +487,13 @@
 			count++
 
 	if(apocalypse)
-		parts += span_greentext(span_big("(WRITER TODO) narrator - the pawn made it to the far side and nobody remembers what it used to be"))
+		parts += span_greentext(span_big("The pawn reached the far side of the board. Nobody remembers what it was before."))
 
 	else
 		if(hunter_win)
-			parts += span_greentext("(WRITER TODO) narrator - tidy hunt, but nobody got crowned")
+			parts += span_greentext("A very tidy hunt. Nobody was crowned.")
 		else
-			parts += span_redtext("(WRITER TODO) narrator - the pawn got taken, which is what usually happens to pawns")
+			parts += span_redtext("The pawn was taken. Pawns usually are.")
 
 	return parts.Join("<br>")
 
@@ -499,7 +504,8 @@
 /datum/action/rabbit_hole_item
 	name = "Summon Monster Hunter Tools"
 	desc = "Summon specific monster hunter tools that will aid us with our hunt."
-	button_icon = 'icons/obj/devices/tracker.dmi'
+	background_icon_state = "bg_wonderland"
+	button_icon ='icons/obj/devices/tracker.dmi'
 	button_icon_state = "beacon"
 
 /datum/action/rabbit_hole_item/New(obj/item/target)

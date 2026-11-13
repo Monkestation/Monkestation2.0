@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		to_chat(current_mob, span_hypnophrase("The only thing you remember is suddenly feeling hard ground beneath you and the safety of home."))
 		current_mob.forceMove(find_safe_turf())
 
-	if(GLOB.narsie_breaching_rune)
+	if(GLOB.narsie_breaching_rune && !GLOB.wonderland_apocalypse)
 		if(istype(GLOB.narsie_breaching_rune, /obj/effect/rune/narsie))
 			new /obj/narsie(get_turf(GLOB.narsie_breaching_rune))
 		else
@@ -134,6 +134,9 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 /obj/structure/destructible/clockwork/the_ark/proc/prepare_ark()
 	if(current_state > ARK_STATE_BASE)
+		return
+	if(GLOB.wonderland_apocalypse)
+		send_clock_message(span_hearts_decree("Your Ark may sit in the corner and think about what it has done. It opens when I say, and I shall not say."))
 		return
 	current_state = ARK_STATE_CHARGING
 	SSshuttle.registerHostileEnvironment(src)

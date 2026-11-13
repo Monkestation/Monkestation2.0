@@ -58,6 +58,7 @@
 #define span_grey(str) ("<span class='grey'>" + str + "</span>")
 #define span_header(str) ("<span class='header'>" + str + "</span>")
 #define span_hear(str) ("<span class='hear'>" + str + "</span>")
+#define span_hearts_announcement(str) ("<span class='hearts_announcement'>" + str + "</span>")
 #define span_hearts_decree(str) ("<span class='hearts_decree'>" + str + "</span>")
 #define span_hearts_fury(str) ("<span class='hearts_fury'>" + str + "</span>")
 #define span_hearts_tantrum(str) ("<span class='hearts_tantrum'>" + str + "</span>")

@@ -83,13 +83,14 @@ const HuntersGuide = () => {
     <Section fill title="Hunter's Guide">
       <Stack vertical textAlign="center">
         <Stack.Item>
-          WRITER: red queen - still has to explain the mechanics: rifts are in
-          the floor, the card finds them, tear em open w ur weapon, eyes go to
-          the forge, rabbits that come out watch ur prey
+          The rifts are under the floors. My card will find them, and your
+          weapon will tear them open. Take the eyes to the forge to sharpen that
+          weapon. The rabbits that come out will watch your prey for you, so be
+          civil to them.
         </Stack.Item>
         <Stack.Item>
-          WRITER: red queen - there was never a contract. kill the prey, open
-          every rift, then{' '}
+          There was never a contract. I do not make them. Kill your prey, open
+          every rift, and then you may bring on the{' '}
           <Box inline color="red" bold>
             APOCALYPSE
           </Box>

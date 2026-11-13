@@ -860,6 +860,19 @@ h2.alert {
   font-style: italic;
 }
 
+.hearts_announcement {
+  display: block;
+  margin: 0.5rem -0.5rem -0.5rem;
+  padding: 0.6rem 0.5rem;
+  background: hsl(350, 70%, 34%);
+  border-top: 2px solid hsl(350, 80%, 24%);
+  color: hsl(40, 70%, 92%);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 115%;
+}
+
 .hearts_decree {
   color: hsl(350, 75%, 32%);
   font-family: Georgia, 'Times New Roman', serif;

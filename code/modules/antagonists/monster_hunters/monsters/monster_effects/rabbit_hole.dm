@@ -27,6 +27,18 @@
 	animate(time = 0.9 SECONDS)
 	animate(transform = matrix().Scale(0.1), alpha = 0, time = 0.35 SECONDS)
 
+/// Opens, holds while a jabberwocky fades in over it, then closes
+/obj/effect/temp_visual/jabberwocky_hole
+	name = "rabbit hole"
+	icon = 'icons/mob/red_rabbit.dmi'
+	icon_state = "red_rabbit_hole"
+	plane = GAME_PLANE
+	layer = BELOW_MOB_LAYER
+	randomdir = FALSE
+	duration = 3.4 SECONDS
+	pixel_x = -(ICON_SIZE_X / 2)
+	pixel_y = -ICON_SIZE_Y + 4
+
 /// The body already moved the instant the power fired, so this copy is what actually sinks (or rises) while everyone watches
 /obj/effect/temp_visual/rabbit_hole_stand_in
 	randomdir = FALSE

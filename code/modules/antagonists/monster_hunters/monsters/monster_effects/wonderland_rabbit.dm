@@ -51,6 +51,12 @@
 	exit.setDir(dir)
 	return ..()
 
+/mob/living/basic/wonderland_rabbit/proc/turn_killer()
+	visible_message(span_danger("[src] drops down a rabbit hole. Something else climbs out."))
+	new /obj/effect/temp_visual/wonderland_hole(loc)
+	climb_out_of_rabbit_hole(new /mob/living/basic/killer_rabbit(loc))
+	qdel(src)
+
 /mob/living/basic/wonderland_rabbit/update_overlays()
 	. = ..()
 	if(staring)

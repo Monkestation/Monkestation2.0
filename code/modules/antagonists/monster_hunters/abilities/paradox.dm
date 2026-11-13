@@ -1,6 +1,7 @@
 /datum/action/cooldown/paradox
 	name = "Paradox Rabbit"
 	desc = "The rabbit's movements will be translated onto you, ignoring any solid objects in your way."
+	background_icon_state = "bg_wonderland"
 	button_icon = 'icons/mob/simple/rabbit.dmi'
 	button_icon_state = "rabbit_white_dead"
 	cooldown_time = 3 MINUTES
@@ -12,7 +13,7 @@
 /datum/action/cooldown/paradox/Activate()
 	var/turf/owner_turf = get_turf(owner)
 	if(!is_station_level(owner_turf.z))
-		to_chat(owner, span_warning("(WRITER TODO) red queen - not here, the coronation happens on the station"))
+		to_chat(owner, span_warning("Not here. You have wandered off the board. Back to the station."))
 		return
 	var/obj/effect/landmark/wonderchess_mark/chessmark = GLOB.wonderland_marks["Wonderchess landmark"]
 	var/obj/effect/landmark/wonderland_mark/landmark = GLOB.wonderland_marks["Wonderland landmark"]
