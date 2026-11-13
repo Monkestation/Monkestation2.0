@@ -47,6 +47,11 @@
 
 	var/to_swap_key = to_swap.key
 
+	var/turf/swap_turf = get_turf(caster)
+	caster.log_message("swapped minds with [key_name(to_swap)] via [our_artifact?.holder] at [AREACOORD(swap_turf)]", LOG_GAME)
+	to_swap.log_message("swapped minds with [key_name(caster)] via [our_artifact?.holder] at [AREACOORD(swap_turf)]", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(caster)] and [ADMIN_LOOKUPFLW(to_swap)] had their minds swapped by [our_artifact?.holder] at [ADMIN_VERBOSEJMP(swap_turf)]")
+
 	caster_mind.transfer_to(to_swap)
 	to_swap_mind.transfer_to(caster)
 
