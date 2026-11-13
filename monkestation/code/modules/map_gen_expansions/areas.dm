@@ -3,7 +3,8 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = UNIQUE_AREA | FLORA_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED
 	//ambience_index = AMBIENCE_ICEMOON
 	sound_environment = SOUND_ENVIRONMENT_PLAIN
 	ambient_buzz = 'sound/ambience/forest_ambience.ogg'
@@ -23,7 +24,8 @@
 
 /area/forestplanet/outdoors/unexplored
 	icon_state = "unexplored"
-	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
 	map_generator = /datum/map_generator/cave_generator/forest
 
 /area/forestplanet/outdoors/unexplored/deep

@@ -652,7 +652,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon = 'icons/obj/clothing/suits/wizard.dmi'
 	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = null
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	armor_type = /datum/armor/suit_magusred
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -671,6 +671,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "\improper Nar'Sian hardened armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_armor"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals)

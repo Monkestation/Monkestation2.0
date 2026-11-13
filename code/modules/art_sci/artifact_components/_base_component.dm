@@ -58,6 +58,8 @@
 	var/list/datum/artifact_effect/artifact_effects = list()
 	///A list of effects that have been discovered
 	var/list/datum/artifact_effect/discovered_effects = list()
+	///was this created OR modified by an artifact wand, if so, no points!
+	var/from_wand = FALSE
 
 	COOLDOWN_DECLARE(reactivate_cooldown)
 

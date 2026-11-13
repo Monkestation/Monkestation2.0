@@ -71,6 +71,7 @@
 //Supply
 #define JOB_QUARTERMASTER "Quartermaster"
 #define JOB_CARGO_TECHNICIAN "Cargo Technician"
+#define JOB_CARGO_GORILLA "Cargo Gorilla"
 #define JOB_SHAFT_MINER "Shaft Miner"
 #define JOB_BITRUNNER "Bitrunner"
 //Service
@@ -84,6 +85,7 @@
 #define JOB_LAWYER "Lawyer"
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
+#define JOB_PUN_PUN "Pun Pun"
 //Spring Donator Jobs
 #define JOB_NEWS_REPORTER "News Reporter"
 #define JOB_EASTER_BUNNY "Easter Bunny"
@@ -148,6 +150,7 @@
 #define JOB_DISPLAY_ORDER_LAWYER 11
 #define JOB_DISPLAY_ORDER_CHAPLAIN 12
 #define JOB_DISPLAY_ORDER_PSYCHOLOGIST 13
+#define JOB_DISPLAY_ORDER_PUN_PUN 13.25
 #define JOB_DISPLAY_ORDER_BARBER 13.5
 #define JOB_DISPLAY_ORDER_AI 14
 #define JOB_DISPLAY_ORDER_CYBORG 15
@@ -160,6 +163,7 @@
 #define JOB_DISPLAY_ORDER_SHAFT_MINER 21
 #define JOB_DISPLAY_ORDER_EXPLORER 21.5
 #define JOB_DISPLAY_ORDER_BITRUNNER 22
+#define JOB_DISPLAY_ORDER_CARGO_GORILLA 22.5
 #define JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER 23
 #define JOB_DISPLAY_ORDER_MEDICAL_DOCTOR 24
 #define JOB_DISPLAY_ORDER_PARAMEDIC 25
@@ -242,11 +246,19 @@
 #define JOB_NO_PLANETARY (1<<11)
 /// This job is a head of staff.
 #define JOB_HEAD_OF_STAFF (1<<12)
+/// This job will not display on the job menu when there are no slots available, instead of appearing greyed out
+#define JOB_HIDE_WHEN_EMPTY (1<<13)
+/// This job cannot be signed up for at round start or recorded in your preferences
+#define JOB_LATEJOIN_ONLY (1<<14)
+/// This job will NEVER be selected as an antag role
+#define JOB_ANTAG_BLACKLISTED (1<<15)
 
 /// Combination flag for jobs which are considered regular crew members of the station.
 #define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
 /// Combination flag for jobs which are considered heads of staff.
 #define HEAD_OF_STAFF_JOB_FLAGS (JOB_BOLD_SELECT_TEXT|JOB_CANNOT_OPEN_SLOTS|JOB_HEAD_OF_STAFF)
+/// Combination flag for jobs which are enabled by station traits.
+#define STATION_TRAIT_JOB_FLAGS (JOB_CANNOT_OPEN_SLOTS|JOB_HIDE_WHEN_EMPTY|JOB_LATEJOIN_ONLY)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"
@@ -257,6 +269,7 @@
 #define SUPERVISOR_CMO "the Chief Medical Officer"
 #define SUPERVISOR_HOP "the Head of Personnel"
 #define SUPERVISOR_HOS "the Head of Security"
+#define SUPERVISOR_QM "the Quartermaster"
 #define SUPERVISOR_QM_HOP "the Quartermaster and the Head of Personnel"
 #define SUPERVISOR_RD "the Research Director"
 

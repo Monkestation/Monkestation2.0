@@ -17,6 +17,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MARKET_CRASHING "market_crashing"
 
 /// Traits given by station traits
+#define STATION_TRAIT_ASSISTANT_GIMMICKS "station_trait_assistant_gimmicks"
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
 #define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
 #define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
@@ -28,12 +29,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_HANGOVER "station_trait_hangover"
 #define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
 #define STATION_TRAIT_LOANER_SHUTTLE "station_trait_loaner_shuttle"
+#define STATION_TRAIT_MACHINES_GLITCHED "station_trait_machine_glitch"
 #define STATION_TRAIT_MEDBOT_MANIA "station_trait_medbot_mania"
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 #define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
+#define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
 #define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
 #define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
 #define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
+#define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 #define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
 #define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
@@ -477,6 +481,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAINTENANCE_DWELLER "maintenance_dweller"
 /// makes your footsteps completely silent
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
+///Trait which silences all chemical reactions in its container
+#define TRAIT_SILENT_REACTIONS "silent_reactions"
 /// hnnnnnnnggggg..... you're pretty good....
 #define TRAIT_NICE_SHOT "nice_shot"
 /// prevents the damage done by a brain tumor

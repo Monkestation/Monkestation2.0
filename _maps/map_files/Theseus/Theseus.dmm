@@ -8829,7 +8829,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/xenobio_guide/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/bot_white,
 /obj/structure/rack,
@@ -8847,6 +8846,7 @@
 	pixel_x = 8;
 	pixel_y = -8
 	},
+/obj/machinery/computer/extract_orders/directional/north,
 /turf/open/floor/iron/dark/side,
 /area/station/science/xenobiology/hallway)
 "cFl" = (
@@ -30697,6 +30697,7 @@
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron,
 /area/station/science/research)
 "jbJ" = (

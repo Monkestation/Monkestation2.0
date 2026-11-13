@@ -428,9 +428,11 @@
 	addtimer(CALLBACK(src, PROC_REF(boost_aftereffects), mod.wearer), 7 SECONDS)
 
 /obj/item/mod/module/adrenaline_boost/on_install()
+	. = ..()
 	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /obj/item/mod/module/adrenaline_boost/on_uninstall(deleting = FALSE)
+	. = ..()
 	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
 
 /obj/item/mod/module/adrenaline_boost/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
