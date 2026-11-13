@@ -145,6 +145,8 @@ GAME_VERB(/mob, me_verb, "Me", "IC")
 		if(SSticker.current_state != GAME_STATE_FINISHED && (M.see_invisible < invisibility || (!isdead(M) && !HAS_TRAIT(M, TRAIT_SIXTHSENSE))))
 			continue
 		if (M.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+			if(displayed_key && ((displayed_key in M.client.prefs.ignoring) || (ckey(displayed_key) in M.client.prefs.ignoring)))
+				continue
 			M.create_chat_message(src, /datum/language/common, message)
 
 

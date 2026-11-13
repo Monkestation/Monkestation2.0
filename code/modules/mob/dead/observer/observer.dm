@@ -879,6 +879,13 @@ GAME_VERB(/mob/dead/observer, observe, "Observe", "Ghost")
 	if(HAS_TRAIT(src, TRAIT_NO_OBSERVE))
 		return
 
+	if(ismob(mob_eye) && !client?.holder)
+		var/datum/preferences/target_prefs = GLOB.preferences_datums[mob_eye.ckey]
+		for(var/ignored_key in target_prefs?.ignoring)
+			if(ckey(ignored_key) == ckey)
+				to_chat(src, span_warning("You can't observe [mob_eye]."))
+				return
+
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.set_eye(mob_eye)
