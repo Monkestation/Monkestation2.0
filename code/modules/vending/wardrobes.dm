@@ -481,7 +481,7 @@
 		/obj/item/clothing/shoes/heels = 2, //MONKESTATION ADDITION
 		/obj/item/clothing/accessory/badge/lawyer = 2,
 		/obj/item/radio/headset/headset_srv = 2,
-		/obj/item/fish_feed = 1,
+		/obj/item/reagent_containers/cup/fish_feed = 1,
 	)
 	premium = list(
 		/obj/item/mod/control/pre_equipped/portable_suit = 1,

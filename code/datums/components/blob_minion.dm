@@ -152,6 +152,6 @@
 	SIGNAL_HANDLER
 	blob_team?.make_minion(replacement)
 
-/datum/component/blob_minion/PostTransfer()
-	if(!isliving(parent))
+/datum/component/blob_minion/PostTransfer(datum/new_parent)
+	if(!isliving(new_parent))
 		return COMPONENT_INCOMPATIBLE

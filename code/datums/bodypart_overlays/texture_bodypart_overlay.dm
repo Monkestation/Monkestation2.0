@@ -48,6 +48,15 @@
 	texture_icon = 'icons/mob/human/textures.dmi'
 	overlay_priority = BODYPART_OVERLAY_FISH_INFUSION
 
+/datum/bodypart_texture/checkered
+	texture_icon_state = "checkered"
+	texture_icon = 'icons/mob/human/textures.dmi'
+	overlay_priority = BODYPART_OVERLAY_CSS_SUICIDE
+
+/datum/bodypart_texture/checkered/modify_bodypart_appearance(image/appearance)
+	. = ..()
+	appearance.color = COLOR_WHITE
+
 /datum/bodypart_texture/mesh
 	texture_icon_state = "mesh_mask"
 	texture_icon = 'icons/mob/clothing/tail_suit_mask.dmi'
