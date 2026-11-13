@@ -8,9 +8,9 @@
 	base_icon_state = "chain"
 	icon_state = "chain"
 
-	//* A note about Force: A 100% quality weapon with a 140 combined TOUGH/HARD should be:                      */
-	//* 1 Handed weapons: 20 force 75 AP,                                                                        */
-	//* 2 Handed weapons: 28 force 60 AP. Wielded                                                                */
+	//* A note about Force: A 100% quality weapon with a 180 combined TOUGH/HARD should be:                      */
+	//* 1 Handed weapons: 22.5 force 60 AP,                                                                      */
+	//* 2 Handed weapons: 25 force 60 AP. Wielded                                                                */
 	//* 200 TOUGH/HARD Should NEVER EXCEED 1.25X                                                                 */
 	//* If your attack delay is higher, feel free to nudge around a bit; aim for 2x as slow meaning 1.5x damage. */
 
@@ -163,6 +163,12 @@
 			var/datum/material_trait/newtrait = new trait.type
 			//Why are we calling this here? Because we modify force and other stats that are normally in init
 			newtrait.post_parent_init(src)
+
+	///I hate I have to fucking clamp this bullshit STOP BREAKING SHIT.
+	force = clamp(force,0,22.5)
+	throwforce = clamp(throwforce,0,25)
+	wield_force = clamp(wield_force,0,30)
+	unwield_force = clamp(unwield_force,0,22.5)
 	update_name()
 
 /datum/export/smithed_part

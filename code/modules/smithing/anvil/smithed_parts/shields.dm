@@ -25,14 +25,14 @@
 
 	var/datum/armor/temp = new() //Scuffed, but no idea how to better.
 	set_armor(temp.generate_new_with_modifiers(list(
-		ACID = clamp(floor((material_stats.density / 1.4) * (smithed_quality/100)),30,100),
-		BOMB = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
-		BULLET = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
-		ENERGY = clamp(floor((material_stats.refractiveness / 1.4) * (smithed_quality/100)),30,100),
-		FIRE = clamp(floor(((100-material_stats.thermal)/1.4) * (smithed_quality/100)),30,100),
-		LASER = clamp(floor(((material_stats.refractiveness + material_stats.density)/2.8) * (smithed_quality/100)),30,100),
-		MELEE = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),30,100),
-		WOUND = clamp(floor((material_stats.density/1.4) * (smithed_quality/100)),30,100)
+		ACID = clamp(round((material_stats.density / 1.6) * (smithed_quality/100)),10,100),
+		BOMB = clamp(round(((material_stats.density + material_stats.hardness)/3.2) * (smithed_quality/100)),10,100),
+		BULLET = clamp(round(((material_stats.density + material_stats.hardness)/6.4) * (smithed_quality/100)),10,50),
+		ENERGY = clamp(round((material_stats.refractiveness / 3.2) * (smithed_quality/100)),10,50),
+		FIRE = clamp(round(((100-material_stats.thermal)/1.6) * (smithed_quality/100)),10,100),
+		LASER = clamp(round(((material_stats.refractiveness + material_stats.density)/6.4) * (smithed_quality/100)),10,50),
+		MELEE = clamp(round(((material_stats.density + material_stats.hardness)/3.2) * (smithed_quality/100)),10,100),
+		WOUND = clamp(round((material_stats.density/1.6) * (smithed_quality/100)),10,100)
 	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 	..()
@@ -64,14 +64,14 @@
 
 	var/datum/armor/temp = new() //Scuffed, but no idea how to better.
 	set_armor(temp.generate_new_with_modifiers(list(
-		ACID = clamp(floor((material_stats.density / 1.4) * (smithed_quality/100)),40,100),
-		BOMB = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
-		BULLET = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
-		ENERGY = clamp(floor((material_stats.refractiveness / 1.4) * (smithed_quality/100)),40,100),
-		FIRE = clamp(floor(((100-material_stats.thermal)/1.4) * (smithed_quality/100)),40,100),
-		LASER = clamp(floor(((material_stats.refractiveness + material_stats.density)/2.8) * (smithed_quality/100)),40,100),
-		MELEE = clamp(floor(((material_stats.density + material_stats.hardness)/2.8) * (smithed_quality/100)),40,100),
-		WOUND = clamp(floor((material_stats.density/1.4) * (smithed_quality/100)),40,100)
+		ACID = clamp(round((material_stats.density / 1.6) * (smithed_quality/100)),10,100),
+		BOMB = clamp(round(((material_stats.density + material_stats.hardness)/3.2) * (smithed_quality/100)),10,100),
+		BULLET = clamp(round(((material_stats.density + material_stats.hardness)/6.4) * (smithed_quality/100)),10,50),
+		ENERGY = clamp(round((material_stats.refractiveness / 3.2) * (smithed_quality/100)),10,50),
+		FIRE = clamp(round(((100-material_stats.thermal)/1.6) * (smithed_quality/100)),10,100),
+		LASER = clamp(round(((material_stats.refractiveness + material_stats.density)/6.4) * (smithed_quality/100)),10,50),
+		MELEE = clamp(round(((material_stats.density + material_stats.hardness)/3.2) * (smithed_quality/100)),10,100),
+		WOUND = clamp(round((material_stats.density/1.6) * (smithed_quality/100)),10,100)
 	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 	..()
