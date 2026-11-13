@@ -46,7 +46,7 @@
 	return FALSE
 
 /datum/nanite_program/sensor/proc/check_spent_inverted(event_result)
-	if(!check_event())
+	if(!event_result)
 		if(!spent_inverted)
 			spent_inverted = TRUE
 			return TRUE
