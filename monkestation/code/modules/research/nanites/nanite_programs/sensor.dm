@@ -12,12 +12,8 @@
 	var/spendable = TRUE
 
 /datum/nanite_program/sensor/register_extra_settings()
-	extra_settings[NES_SENT_CODE_SIGNAL] = new /datum/nanite_extra_setting/number(0, 1, 9999)
-	extra_settings[NES_SENT_CODE_SIGNAL_INVERTED] = new /datum/nanite_extra_setting/number(0, 1, 9999)
-
-	if (can_trigger)
-		extra_settings[NES_SENT_CODE_TRIGGER] = new /datum/nanite_extra_setting/number(0, 1, 9999)
-		extra_settings[NES_SENT_CODE_TRIGGER_INVERTED] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_SENT_CODE_INVERTED] = new /datum/nanite_extra_setting/number(0, 1, 9999)
 
 /datum/nanite_program/sensor/proc/check_event()
 	return FALSE
@@ -33,15 +29,15 @@
 
 /datum/nanite_program/sensor/on_trigger(comm_message)
 	if (check_event())
-		send_trigger_code()
+		send_code()
 	else
-		send_trigger_code_inverted()
+		send_code_inverted()
 
 /datum/nanite_program/sensor/proc/make_rule(datum/nanite_program/target)
 	return
 
 /datum/nanite_program/sensor/proc/check_spent(event_result)
-	if(check_event())
+	if(event_result)
 		if(!spent)
 			spent = TRUE
 			return TRUE
@@ -50,7 +46,7 @@
 	return FALSE
 
 /datum/nanite_program/sensor/proc/check_spent_inverted(event_result)
-	if(!check_event())
+	if(!event_result)
 		if(!spent_inverted)
 			spent_inverted = TRUE
 			return TRUE
@@ -283,16 +279,12 @@
 	var/datum/nanite_extra_setting/match = extra_settings[NES_MATCH_MODE]
 	if(!sentence.get_value())
 		return
-	if(match.get_value())
-		if(findtext(hearing_args[HEARING_RAW_MESSAGE], sentence.get_value()))
-			send_code_any(NES_SENT_CODE_SIGNAL)
-		else
-			send_code_any(NES_SENT_CODE_SIGNAL_INVERTED)
+
+	var/triggerHeard = match.get_value() ? findtext(hearing_args[HEARING_RAW_MESSAGE], sentence.get_value()) : LOWER_TEXT(hearing_args[HEARING_RAW_MESSAGE]) == LOWER_TEXT(sentence.get_value())
+	if(triggerHeard)
+		send_code()
 	else
-		if(LOWER_TEXT(hearing_args[HEARING_RAW_MESSAGE]) == LOWER_TEXT(sentence.get_value()))
-			send_code_any(NES_SENT_CODE_SIGNAL)
-		else
-			send_code_any(NES_SENT_CODE_SIGNAL_INVERTED)
+		send_code_inverted()
 
 /datum/nanite_program/sensor/species
 	name = "Species Sensor"
