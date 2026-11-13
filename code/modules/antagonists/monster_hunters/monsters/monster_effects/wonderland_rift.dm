@@ -157,7 +157,7 @@
 			extra_logs += "the huntsman attire spell"
 	user.put_in_hands(new /obj/item/rabbit_eye(drop_location()))
 	hunter_antag?.rabbits -= src
-	var/msg = "claimed a white rabbit at [AREACOORD(src)]"
+	var/msg = "claimed a wonderland rift at [AREACOORD(src)]"
 	if(length(extra_logs) > 0)
 		msg += ", which dropped [english_list(extra_logs)]"
 	user.log_message(msg, LOG_GAME)

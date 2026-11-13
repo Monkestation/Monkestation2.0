@@ -17,6 +17,8 @@
 	faction = list(FACTION_RABBITS)
 	sentience_type = SENTIENCE_BOSS
 	ai_controller = /datum/ai_controller/basic_controller/wonderland_rabbit
+	mob_size = MOB_SIZE_SMALL
+	habitable_atmos = null
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
