@@ -118,10 +118,49 @@ GLOBAL_DATUM(wonderland_apocalypse, /datum/wonderland_apocalypse)
 
 /// Only new rituals are refused, one already under way is left to finish so it cannot strand the shuttle
 /datum/wonderland_apocalypse/proc/seal_endings()
-	for(var/datum/antagonist/heretic/heretic in GLOB.antagonists)
-		if(heretic.ascended || QDELETED(heretic.owner?.current))
+	var/static/alist/decrees = alist(
+		/datum/antagonist/wizard = list(
+			"You, in the ridiculous hat - put the wand away. I have seen better magic from a pack of cards, and I had those beheaded.",
+			"You have bent reality your whole life, and now it will not bend. The Grand Ritual is closed to you, and even your simplest spell will bite back.",
+		),
+		/datum/antagonist/cult = list(
+			"You wanted the veil torn, and now it is. How ungrateful of you to look so disappointed at who came through.",
+			"The Geometer's voice thins to nothing in your head. She cannot be summoned while this thing holds the station, and her magic will tear at you if you call on it.",
+		),
+		/datum/antagonist/clock_cultist = list(
+			"Stop that ticking at once. Your rusty old engine may keep his own time elsewhere - here it is always six o'clock, and he is not invited to tea.",
+			"The ticking you have marched to all this time skips, then stalls. The Ark will not open while this thing holds the station.",
+		),
+		/datum/antagonist/heretic = list(
+			"Go on, peek through one of your little cracks in the world. Whatever used to whisper back is gone. There is only me now.",
+			"You reach for the Mansus out of habit, and nothing reaches back. There will be no ascension while this thing holds the station.",
+		),
+		/datum/antagonist/bloodsucker = list(
+			"A Masquerade in my court, and I was not invited? Masks off, Kindred. Without my word of acceptance you are nothing.",
+			"The blood in your veins shrinks from her voice like prey. Every power you call on will cost you dearly now.",
+		),
+		/datum/antagonist/changeling = list(
+			"I know what you are under that borrowed face. Pick one and keep it - I will not have my executioner guessing which head is yours.",
+			"She is looking straight at you, and no face you own will change that. Your flesh will fight you every time you ask it to shift.",
+		),
+		/datum/antagonist/darkspawn = list(
+			"You come from the nothing between places. My garden has grown over it now. There is nowhere left for you to crawl back to.",
+			"You listen for the Void and hear birdsong. The Sacrament cannot be performed while this thing holds the station.",
+		),
+		/datum/antagonist/nightmare = list(
+			"A nightmare, in my dream? I think not. Leave my lamps alone - I intend to see every moment of your trial.",
+			"For the first time since you crawled out of it, the dark does not feel like yours.",
+		),
+	)
+	for(var/datum/antagonist/antag as anything in GLOB.antagonists)
+		var/mob/target = antag.owner?.current
+		if(QDELETED(target))
 			continue
-		to_chat(heretic.owner.current, span_hearts_decree("And you, with the book - close it. There is one crown on this station, and I am wearing it."))
+		for(var/antag_type, lines in decrees)
+			if(istype(antag, antag_type))
+				to_chat(target, span_hearts_decree(lines[1]), type = MESSAGE_TYPE_WARNING)
+				to_chat(target, span_warning(lines[2]), type = MESSAGE_TYPE_WARNING)
+				break
 
 /datum/wonderland_apocalypse/proc/open_rabbit_holes()
 	if(wave_rabbits >= 20)
@@ -146,6 +185,7 @@ GLOBAL_DATUM(wonderland_apocalypse, /datum/wonderland_apocalypse)
 
 /datum/wonderland_apocalypse/proc/wave_rabbit_gone(datum/source)
 	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_QDELETING)
 	wave_rabbits--
 
 /datum/wonderland_apocalypse/proc/pick_open_turf(list/turfs)
