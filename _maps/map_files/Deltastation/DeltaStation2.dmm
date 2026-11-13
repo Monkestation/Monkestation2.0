@@ -41880,8 +41880,8 @@
 "jNO" = (
 /obj/structure/table/wood/fancy/green,
 /obj/structure/window/spawner/directional/west,
-/obj/item/fish_feed,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed,
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_y = 9
 	},
 /obj/machinery/door/firedoor/border_only{

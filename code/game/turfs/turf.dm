@@ -106,6 +106,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	/// The weight of the turf for A* pathfinding.
 	var/astar_weight = 50
+	///The typepath we use for lazy fishing on turfs, to save on world init time.
+	var/fish_source
 
 
 /turf/vv_edit_var(var_name, new_value)
@@ -806,6 +808,22 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
 
+/turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(alpha < 255)
+		AddElement(/datum/element/turf_z_transparency)
+		main_material.setup_glow(src)
+	rust_resistance = main_material.mat_rust_resistance
+
+/turf/remove_main_material_effects(datum/material/custom_material, amount, multipier)
+	. = ..()
+	rust_resistance = initial(rust_resistance)
+	if(alpha == 255)
+		return
+	RemoveElement(/datum/element/turf_z_transparency)
+	// yeets glow
+	set_light(0, 0, null)
+
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
 	return TRUE
@@ -833,3 +851,71 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	visible_message(span_userdanger("\The [src] looks like its about to collapse!"))
 	Shake(0.2, 0.2, shake_duration)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, explosion_stats[1], explosion_stats[2], explosion_stats[3], 0, 0, do_log), shake_duration)
+/**
+ * the following are some fishing-related optimizations to shave off as much
+ * time we spend implementing the fishing as possible, even if that means
+ * hackier code, because we've hundreds of turfs like lava, water etc every round,
+ */
+/turf/proc/add_lazy_fishing(fish_source_path)
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(add_fishing_spot_comp))
+	RegisterSignal(src, COMSIG_NPC_FISHING, PROC_REF(on_npc_fishing))
+	RegisterSignal(src, COMSIG_FISH_RELEASED_INTO, PROC_REF(on_fish_release_into))
+	RegisterSignal(src, COMSIG_TURF_CHANGE, PROC_REF(remove_lazy_fishing))
+	ADD_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
+	fish_source = fish_source_path
+
+/// Stops the turf from turning into a fishing spot when interacted with
+/turf/proc/remove_lazy_fishing()
+	SIGNAL_HANDLER
+	UnregisterSignal(src, list(
+		COMSIG_FISHING_ROD_CAST,
+		COMSIG_NPC_FISHING,
+		COMSIG_FISH_RELEASED_INTO,
+		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
+		COMSIG_TURF_CHANGE,
+	))
+	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
+	fish_source = null
+
+/// Turns the turf into an actual fishing spot the first time someone casts on it
+/turf/proc/add_fishing_spot_comp(datum/source, obj/item/fishing_rod/rod, mob/user)
+	SIGNAL_HANDLER
+	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[fish_source])
+	remove_lazy_fishing()
+	return spot.handle_cast(arglist(args))
+
+/// Gives the fish source of this turf to NPCs looking for somewhere to fish
+/turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
+	SIGNAL_HANDLER
+	fish_spot_container[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[fish_source]
+
+/// Lets the fish source of this turf know a fish was released into it, so it can be repopulated
+/turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	GLOB.preset_fish_sources[fish_source].readd_fish(src, fish, releaser)
+
+/turf/examine(mob/user)
+	. = ..()
+	if(!fish_source || !HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
+		return
+	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes(src))
+		return
+	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
+
+/turf/examine_more(mob/user)
+	. = ..()
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT) || !fish_source)
+		return
+	GLOB.preset_fish_sources[fish_source].get_catchable_fish_names(user, src, .)
+
+/turf/ex_act(severity, target)
+	. = ..()
+	if(!fish_source)
+		return
+	GLOB.preset_fish_sources[fish_source].spawn_reward_from_explosion(src, severity)
+
+/turf/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!fish_source || !istype(tool.buffer?.resolve(), /obj/machinery/fishing_portal_generator))
+		return ..()
+	var/obj/machinery/fishing_portal_generator/portal = tool.buffer.resolve()
+	return portal.link_fishing_spot(GLOB.preset_fish_sources[fish_source], src, user)

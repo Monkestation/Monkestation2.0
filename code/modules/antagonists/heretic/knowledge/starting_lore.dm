@@ -24,9 +24,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	is_starting_knowledge = TRUE
 
-/*
 // Heretics can enhance their fishing rods to fish better - fishing content.
-// Lasts until successfully fishing something up.
+// Lasts until succesfully fishing something up.
 /datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
@@ -57,7 +56,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		item.remove_filter("mansus_infusion")
 		REMOVE_TRAIT(item, TRAIT_ROD_MANSUS_INFUSED, REF(item))
 		item.difficulty_modifier += 20
- */
 
 /**
  * The Living Heart heretic knowledge.

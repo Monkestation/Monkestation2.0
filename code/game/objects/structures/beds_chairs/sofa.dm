@@ -22,6 +22,7 @@ path/corner/color_name {\
 	astar_weight = 5
 	var/has_armrests = TRUE
 	var/mutable_appearance/armrest
+	fishing_modifier = -6
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	. = ..()

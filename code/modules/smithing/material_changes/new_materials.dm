@@ -3,7 +3,6 @@
 	desc = "How this even exists is byond me"
 	desc = "A semi-solid state of farts originally proposed to exist by Dr. Prof. Wonk in 2016."
 	color = "#003300"
-	greyscale_colors = "#003300"
 	thermal = 5
 	density = 30
 	hardness = 20
