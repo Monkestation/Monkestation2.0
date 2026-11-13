@@ -13,16 +13,16 @@
 
 /obj/item/smithed_part/weapon_part/crush_hammer/finish_weapon()
 	wound_bonus = 20
-	armour_penetration = 60 * (smithed_quality / 100)
+	armour_penetration = 40 * (smithed_quality / 100)
 
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 
 	attack_speed = CLICK_CD_BULKY_WEAPON
 
-	force = floor(((material_stats.density + material_stats.hardness) / 7) * (smithed_quality * 0.01))
+	force = floor(((material_stats.density + material_stats.hardness) / 9.25) * (smithed_quality * 0.01))
 	throwforce = floor(force * 0.5)
 
-	unwield_force = round(force * 0.75)
+	unwield_force = round(force * 0.5)
 	wield_force = force
 	w_class = WEIGHT_CLASS_BULKY
 	..()

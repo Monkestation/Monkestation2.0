@@ -15,16 +15,16 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 5
 	bare_wound_bonus = 15
-	armour_penetration = 40 * (smithed_quality / 100)
+	armour_penetration = 10 * (smithed_quality / 100)
 
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 
 	attack_speed = CLICK_CD_LARGE_WEAPON
 
-	force = floor(((material_stats.density + material_stats.hardness) / 7.5) * (smithed_quality * 0.01))
+	force = floor(((material_stats.density + material_stats.hardness) / 9.75) * (smithed_quality * 0.01))
 	throwforce = floor(force * 0.7)
 
-	unwield_force = floor(force * 0.75)
+	unwield_force = floor(force * 0.8)
 	wield_force = force
 
 	w_class = WEIGHT_CLASS_BULKY

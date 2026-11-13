@@ -15,14 +15,14 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 5
 	bare_wound_bonus = 15 //Someone please add a suicide act where you sudoku.
-	armour_penetration = 45 * (smithed_quality / 100)
+	armour_penetration = 15 * (smithed_quality / 100)
 
 
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT | ITEM_SLOT_BELT
 
 	attack_speed = CLICK_CD_LIGHT_WEAPON
 
-	force = floor(((material_stats.density + material_stats.hardness) / 9.75) * (smithed_quality * 0.01))
+	force = floor(((material_stats.density + material_stats.hardness) / 10.25) * (smithed_quality * 0.01))
 	throwforce = floor(force * 0.75)
 	w_class = WEIGHT_CLASS_NORMAL
 	..()

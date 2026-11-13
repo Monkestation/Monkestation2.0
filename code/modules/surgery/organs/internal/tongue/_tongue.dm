@@ -605,6 +605,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
 	languages_native = list(/datum/language/nekomimetic)
+	organ_traits = list(TRAIT_FISH_EATER)
 
 /obj/item/organ/internal/tongue/shadekin
 	name = "shadekin tongue"

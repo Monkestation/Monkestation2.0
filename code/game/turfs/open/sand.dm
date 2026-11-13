@@ -10,8 +10,14 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_REINFORCED
 
+/turf/open/misc/beach/Initialize(mapload)
+	. = ..()
+	add_lazy_fishing(/datum/fish_source/sand)
+
 /turf/open/misc/beach/ex_act(severity, target)
-	return
+	if(fish_source)
+		GLOB.preset_fish_sources[fish_source].spawn_reward_from_explosion(src, severity)
+	return FALSE
 
 /turf/open/misc/beach/sand
 	gender = PLURAL
@@ -27,6 +33,14 @@
 	icon_state = "sandwater_t"
 	base_icon_state = "sandwater_t"
 	baseturfs = /turf/open/misc/beach/coastline_t
+
+/turf/open/misc/beach/coastline_t/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
+/turf/open/misc/beach/coastline_b/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
 
 /turf/open/misc/beach/sand/coastline_t/break_tile()
 	. = ..()

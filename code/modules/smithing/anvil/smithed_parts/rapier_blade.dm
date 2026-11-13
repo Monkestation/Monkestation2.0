@@ -13,12 +13,12 @@
 	sharpness = SHARP_POINTY
 	wound_bonus = 5
 	bare_wound_bonus = 10
-	armour_penetration = 75 * (smithed_quality / 100)
+	armour_penetration = 55 * (smithed_quality / 100)
 	AddComponent(/datum/component/multi_hit, icon_state = "stab", height = 2)
 
 	attack_speed = CLICK_CD_LIGHT_WEAPON
 
-	force = floor(((material_stats.density + material_stats.hardness) / 11.5) * (smithed_quality * 0.01))
+	force = floor(((material_stats.density + material_stats.hardness) / 12.75) * (smithed_quality * 0.01))
 	throwforce = force * 0.9
 	w_class = WEIGHT_CLASS_NORMAL
 	..()

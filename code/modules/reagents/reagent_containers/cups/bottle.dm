@@ -124,6 +124,16 @@
 	desc = "A small bottle. Contains cold sauce."
 	list_reagents = list(/datum/reagent/consumable/frostoil = 50)
 
+/obj/item/reagent_containers/cup/bottle/strange_reagent
+	name = "Strange Reagent Bottle"
+	desc = "A small bottle. May be used to revive people."
+	list_reagents = list(/datum/reagent/medicine/strange_reagent = 30)
+
+/obj/item/reagent_containers/cup/bottle/fishy_reagent
+	name = "Fishy Reagent Bottle"
+	desc = "A small bottle. May be used to revive fish."
+	list_reagents = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 30)
+
 /obj/item/reagent_containers/cup/bottle/traitor
 	name = "syndicate bottle"
 	desc = "A small bottle. Contains a random nasty chemical."

@@ -66,6 +66,7 @@
 		if(!art_comp)
 			visible_message(span_notice("Something goes wrong, and [src] fizzles!"))
 			return
+		art_comp.from_wand = TRUE
 		switch(selected_mode)//0 left blank, as we don't need to do anything else.
 			if(1)
 				art_comp.clear_out()
@@ -74,6 +75,7 @@
 				var/obj/newer_artifact = spawn_artifact(attempt_location,forced_effect = slotted_disk.effect)
 				var/datum/component/artifact/new_comp = newer_artifact.GetComponent(/datum/component/artifact)
 				new_comp.clear_out() //Yes I know we just made one, but we need it blank because we want a COPY, no random BS!
+				new_comp.from_wand = TRUE
 				if(slotted_disk.activator)
 					new_comp.add_activator(slotted_disk.activator)
 				if(slotted_disk.fault)
@@ -150,6 +152,7 @@
 						added_anything |= art_comp.try_add_effect(slotted_disk.effect)
 			if(added_anything)
 				visible_message(span_notice("[user] configures the [attacked_atom] with [src]!"),span_notice("You configure the [attacked_atom] with [src], which switftly disintegrates!"))
+				art_comp.from_wand = TRUE
 				if(slotted_disk)
 					if(!user.put_in_active_hand(slotted_disk))
 						slotted_disk.forceMove(get_turf(user))

@@ -64,6 +64,7 @@ Behavior that's still missing from this component that original food items had t
 	datum/callback/on_consume,
 	datum/callback/check_liked,
 	required_trait,
+	reagent_purity = 0.5,
 )
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -89,8 +90,6 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignals(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, PROC_REF(OnCraft))
-	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(OnProcessed))
-	RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
 	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, PROC_REF(on_ooze_eat))
 	RegisterSignal(parent, COMSIG_TRY_EAT_TRAIT, PROC_REF(try_eat_trait))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(show_radial_recipes)) //Monkestation edit: CHEWIN COOKING
@@ -105,6 +104,9 @@ Behavior that's still missing from this component that original food items had t
 
 	else if(isturf(parent) || isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(TryToEatIt))
+
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 /datum/component/edible/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -122,6 +124,9 @@ Behavior that's still missing from this component that original food items had t
 	))
 
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
+
+	if(foodtypes & GORE)
+		REMOVE_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 /datum/component/edible/InheritComponent(
 	datum/component/edible/old_comp,
@@ -147,6 +152,9 @@ Behavior that's still missing from this component that original food items had t
 		foodtypes = old_comp.foodtypes
 		tastes = old_comp.tastes
 		eatverbs = old_comp.eatverbs
+
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 	// only edit if we're OG
 	if(!i_am_original)
@@ -224,6 +232,9 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+
+	if(food_flags & FOOD_NO_EXAMINE)
+		return
 
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
@@ -488,8 +499,7 @@ Behavior that's still missing from this component that original food items had t
 		On_Consume(eater, feeder)
 
 	//Invoke our after eat callback if it is valid
-	if(after_eat)
-		after_eat.Invoke(eater, feeder, bitecount)
+	after_eat?.Invoke(eater, feeder, bitecount)
 
 	//Invoke the eater's stomach's after_eat callback if valid
 	if(iscarbon(eater))
@@ -589,14 +599,17 @@ Behavior that's still missing from this component that original food items had t
 
 /// Get the complexity of the crafted food
 /datum/component/edible/proc/get_recipe_complexity()
+	var/list/extra_complexity = list(0)
+	SEND_SIGNAL(parent, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, extra_complexity)
+	var/complexity_to_add = extra_complexity[1]
 	if(!HAS_TRAIT(parent, TRAIT_FOOD_CHEF_MADE) || !istype(parent, /obj/item/food))
-		return 0 // It is factory made. Soulless.
+		return complexity_to_add // It is factory made. Soulless.
 	// monkestation edit start
 	/* original - food complexity is unported
 	var/obj/item/food/food = parent
-	return food.crafting_complexity
+	return food.crafting_complexity + complexity_to_add
 	*/
-	return FOOD_QUALITY_NICE
+	return FOOD_QUALITY_NICE + complexity_to_add
 	// monkestatione edit end
 
 /// Get food quality adjusted according to eater's preferences
@@ -686,7 +699,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(!isdog(user))
+	if(!isdog(user) || (food_flags & FOOD_NO_BITECOUNT)) //this entirely relies on bitecounts alas
 		return
 	var/mob/living/L = user
 	if(bitecount == 0 || prob(50))

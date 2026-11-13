@@ -17,7 +17,8 @@
 	open = round(rand(0, 1))
 	update_appearance()
 	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
-		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
+		AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/toilet])
+	AddElement(/datum/element/fish_safe_storage)
 
 /obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -706,6 +707,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	resistance_flags = UNACIDABLE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
+/obj/structure/water_source/puddle/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/water_source/puddle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Scoop Tadpoles"
+
 /obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
 	icon_state = "puddle-splash"
 	. = ..()
@@ -715,6 +725,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
+
+/obj/structure/water_source/puddle/attack_hand_secondary(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	icon_state = "puddle-splash"
+	balloon_alert(user, "scooping tadpoles...")
+	if(do_after(user, 5 SECONDS, src))
+		playsound(loc, 'sound/effects/slosh.ogg', 15, TRUE)
+		balloon_alert(user, "got a tadpole")
+		var/obj/item/fish/tadpole/tadpole = new(loc)
+		tadpole.randomize_size_and_weight()
+		user.put_in_hands(tadpole)
+	icon_state = "puddle"
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/water_source/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)

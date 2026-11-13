@@ -8,6 +8,7 @@
 	worn_icon_state = "fish_analyzer"
 	desc = "A fish-shaped scanner used to monitor fish's status and evolutionary traits."
 	flags_1 = CONDUCT_1
+	custom_price = PAYCHECK_CREW * 3
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
@@ -20,8 +21,8 @@
 	greyscale_config_worn = /datum/greyscale_config/fish_analyzer_worn
 	///The color of the case. Used by grayscale configs and update_overlays()
 	var/case_color
-	///the item we have scanned
-	var/datum/weakref/scanned_item
+	///the atom (aquarium or fish) we have scanned
+	var/atom/scanned_object
 
 /obj/item/fish_analyzer/Initialize(mapload)
 	case_color = rgb(rand(16, 255), rand(16, 255), rand(16, 255))
@@ -40,7 +41,11 @@
 
 	register_item_context()
 	update_appearance()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3, ITEM_SLOT_HANDS)
 
+/obj/item/fish_analyzer/Destroy()
+	scanned_object = null
+	return ..()
 
 /obj/item/fish_analyzer/examine(mob/user)
 	. = ..()
@@ -58,21 +63,42 @@
 	. += emissive_appearance(icon, "fish_analyzer_emissive", src)
 
 /obj/item/fish_analyzer/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(!isfish(target) && !isaquarium(target))
+	if(!isfish(target) && !HAS_TRAIT(target, TRAIT_IS_AQUARIUM))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 
-	if(isfish(target) || istype(target, /obj/structure/aquarium))
-		scanned_item = WEAKREF(target)
-		ui_interact(user)
-		return ITEM_INTERACT_SUCCESS
+	SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
+	if(target != scanned_object)
+		unregister_scanned()
+		register_scanned(target)
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
-	return NONE
+/// Starts tracking the scanned object so the UI can show it
+/obj/item/fish_analyzer/proc/register_scanned(atom/target)
+	scanned_object = target
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
 
-/obj/item/fish_analyzer/ui_interact(mob/user, datum/tgui/ui)
-	if(isnull(scanned_item?.resolve()))
+/// Stops tracking the scanned object
+/obj/item/fish_analyzer/proc/unregister_scanned()
+	if(!scanned_object)
+		return
+	UnregisterSignal(scanned_object, COMSIG_QDELETING)
+	scanned_object = null
+
+/// Stops tracking the scanned object when it's deleted
+/obj/item/fish_analyzer/proc/on_target_deleted()
+	SIGNAL_HANDLER
+	unregister_scanned()
+
+/obj/item/fish_analyzer/ui_interact(mob/living/user, datum/tgui/ui)
+	if(isnull(scanned_object))
 		balloon_alert(user, "no specimen data!")
+		return TRUE
+	if(istype(user) && !(scanned_object in (view(7, get_turf(src)) | user.get_equipped_items(INCLUDE_HELD))))
+		balloon_alert(user, "specimen data lost!")
+		unregister_scanned()
 		return TRUE
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -80,9 +106,17 @@
 		ui = new(user, src, "FishAnalyzer")
 		ui.open()
 
-/obj/item/fish_analyzer/ui_static_data(mob/user)
+/obj/item/fish_analyzer/ui_status(mob/living/user, datum/ui_state/state)
+	if(!istype(user)) //observers shouldn't disrupt things.
+		return ..()
+	if(!scanned_object || !(scanned_object in (view(7, get_turf(src)) | user.get_equipped_items(INCLUDE_HELD))))
+		balloon_alert(user, "specimen data lost!")
+		unregister_scanned()
+		return UI_CLOSE
+	return ..()
+
+/obj/item/fish_analyzer/ui_data(mob/user)
 	var/list/data = list()
-	var/atom/scanned_object = scanned_item?.resolve()
 	data["fish_list"] = list()
 	data["fish_scanned"] = FALSE
 
@@ -90,14 +124,13 @@
 		data["fish_scanned"] = TRUE
 		return extract_fish_info(data, scanned_object)
 
-	var/obj/structure/aquarium/aquarium = scanned_object
-	for(var/obj/item/fish/fishie in aquarium)
-		extract_fish_info(data, fishie, aquarium)
+	for(var/obj/item/fish/fishie in scanned_object)
+		extract_fish_info(data, fishie)
 
 	return data
 
 /// Adds the info of the given fish to the ui data
-/obj/item/fish_analyzer/proc/extract_fish_info(list/data, obj/item/fish/fishie, obj/structure/aquarium/aquarium)
+/obj/item/fish_analyzer/proc/extract_fish_info(list/data, obj/item/fish/fishie)
 	var/list/fish_traits = list()
 	var/list/fish_evolutions = list()
 
@@ -114,26 +147,26 @@
 
 	for(var/trait_type in fishie.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-		fish_traits += list(list("trait_name" = trait.name, "trait_desc" = trait.catalog_description, "trait_inherit" = trait.diff_traits_inheritability))
+		fish_traits += list(list("trait_name" = trait.name, "trait_desc" = trait.catalog_description, "trait_inherit" = trait.inheritability))
 
 	data["fish_list"] += list(list(
 		"fish_name" = fishie.name,
-		"fish_icon" = fishie::icon,
-		"fish_icon_state" = fishie::icon_state,
-		"fish_health" = fishie.status == FISH_DEAD ? 0 : PERCENT(fishie.health/initial(fishie.health)),
-		"fish_size" = fishie.size,
-		"fish_weight" = fishie.weight,
-		"fish_food" = fishie.food::name,
+		"fish_icon" = fishie.icon,
+		"fish_icon_state" = fishie.base_icon_state,
+		"fish_food" = fishie.food.name,
 		"fish_food_color" = fishie.food::color,
 		"fish_min_temp" = fishie.required_temperature_min,
 		"fish_max_temp" = fishie.required_temperature_max,
-		"fish_hunger" = HAS_TRAIT(fishie, TRAIT_FISH_NO_HUNGER) ? 0 :  PERCENT(min((world.time - fishie.last_feeding) / fishie.feeding_frequency, 1)),
-		"fish_fluid_compatible" = aquarium ? compatible_fluid_type(fishie.required_fluid_type, aquarium.fluid_type) : null,
+		"fish_fluid_compatible" = fishie.fish_flags & FISH_FLAG_SAFE_FLUID,
 		"fish_fluid_type" = fishie.required_fluid_type,
-		"fish_breed_timer" = round(max(fishie.breeding_wait - world.time, 0) / 10),
 		"fish_traits" = fish_traits,
 		"fish_evolutions" = fish_evolutions,
-		"fish_suitable_temp" = aquarium ? ISINRANGE(aquarium.fluid_temp, fishie.required_temperature_min, fishie.required_temperature_max) : null
+		"fish_suitable_temp" = fishie.fish_flags & FISH_FLAG_SAFE_TEMPERATURE,
+		"fish_health" = fishie.status == FISH_DEAD ? 0 : PERCENT(fishie.get_health_percentage()),
+		"fish_size" = fishie.size,
+		"fish_weight" = fishie.weight,
+		"fish_hunger" = HAS_TRAIT(fishie, TRAIT_FISH_NO_HUNGER) ? 0 :  1 - fishie.get_hunger(),
+		"fish_breed_timer" = round(max(fishie.breeding_wait - world.time, 0) / 10),
 	))
 
 	return data
