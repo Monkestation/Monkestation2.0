@@ -60,7 +60,7 @@
 	var/obj/structure/destructible/clockwork/gear_base/powered/structure = attack_target
 	if(istype(structure) && istate != ISTATE_HARM)
 		structure.try_toggle_power(src)
-		return ATTACK_DO_NOTHING
+		return
 	return ..()
 
 
