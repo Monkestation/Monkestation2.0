@@ -1255,9 +1255,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"Pn" = (
-/turf/closed/wall/r_wall,
-/area/template_noop)
 "PM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/grille_or_waste,
@@ -1860,7 +1857,7 @@ Bh
 Uf
 DP
 Sh
-Pn
+Sh
 "}
 (19,1,1) = {"
 je

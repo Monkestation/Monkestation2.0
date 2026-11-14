@@ -378,6 +378,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
  * * [mob][user]- the user building this structure
  */
 /obj/item/construction/rcd/proc/rcd_create(atom/target, mob/user)
+	if(isopenturf(target))
+		var/turf/open/open = target
+		if(!open.CanBuildHere())
+			return NONE
+
 	//does this atom allow for rcd actions?
 	var/list/rcd_results = target.rcd_vals(user, src)
 	if(!rcd_results)

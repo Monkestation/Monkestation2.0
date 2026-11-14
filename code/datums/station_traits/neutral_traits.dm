@@ -556,3 +556,13 @@
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
 		ai_datum.total_positions = 3
+
+/// Tells the area map generator to ADD MORE TREEEES
+/datum/station_trait/forested
+	name = "Forested"
+	trait_type = STATION_TRAIT_NEUTRAL
+	trait_to_give = STATION_TRAIT_FORESTED
+	trait_flags = STATION_TRAIT_PLANETARY
+	weight = 10
+	show_in_report = TRUE
+	report_message = "There sure are a lot of trees out there."

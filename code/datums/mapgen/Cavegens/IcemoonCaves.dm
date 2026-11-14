@@ -29,12 +29,57 @@
 	)
 
 /datum/map_generator/cave_generator/icemoon/surface
-	flora_spawn_chance = 4
-	weighted_mob_spawn_list = null
+	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 1)
+	flora_spawn_chance = 60
 	initial_closed_chance = 53
 	birth_limit = 5
 	death_limit = 4
 	smoothing_iterations = 10
+
+	feature_spawn_chance = 0.15
+
+	weighted_flora_spawn_list = list(
+		/obj/structure/flora/ash/chilly = 2,
+		/obj/structure/flora/grass/both/style_random = 20,
+		/obj/structure/flora/rock/icy/style_random = 2,
+		/obj/structure/flora/rock/pile/icy/style_random = 2,
+		/obj/structure/flora/tree/pine/style_random = 2,
+	)
+
+	// the surface is meant to be the quiet bit, the real monsters live down in the caves
+	mob_spawn_chance = 0.25
+	weighted_mob_spawn_list = list(
+		/mob/living/basic/deer/ice = 6,
+		/mob/living/basic/pet/fox/arctic = 3,
+		/mob/living/basic/pet/penguin/emperor/icemoon = 1,
+		/mob/living/basic/mining/wolf = 1,
+	)
+
+/// Surface snow generator variant for forested station trait, WITH FORESTSSSS
+/datum/map_generator/cave_generator/icemoon/surface/forested
+	initial_closed_chance = 10
+
+	flora_spawn_chance = 80
+	weighted_flora_spawn_list = list(
+		/obj/structure/flora/tree/pine/style_random = 18,
+		/obj/structure/flora/tree/dead/style_random = 1,
+		/obj/structure/flora/tree/stump = 1,
+		/obj/structure/flora/rock/icy/style_random = 1,
+		/obj/structure/flora/rock/pile/icy/style_random = 3,
+		/obj/structure/flora/grass/both/style_random = 50,
+		/obj/structure/flora/bush/flowers_pp/style_random = 25,
+		/obj/structure/flora/ash/chilly = 1,
+	)
+
+	mob_spawn_chance = 0.2
+	weighted_mob_spawn_list = list(/mob/living/basic/deer/ice = 99, /mob/living/basic/tree = 1)
+
+/datum/map_generator/cave_generator/icemoon/surface/rocky
+
+/// Open plains for the wilderness levels around the station, with the odd rock here and there
+/datum/map_generator/cave_generator/icemoon/surface/wilderness
+	// the smoothing pass eats most of the noise, so 45 comes out as ~7% rock and 53 as ~29%
+	initial_closed_chance = 45
 
 /datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 

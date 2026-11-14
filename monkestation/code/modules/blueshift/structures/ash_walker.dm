@@ -1080,6 +1080,8 @@
 
 /turf/open/misc/asteroid/basalt/getDug()
 	. = ..()
+	if(!.)
+		return
 	AddComponent(/datum/component/simple_farm)
 
 /turf/open/misc/asteroid/basalt/refill_dug()
@@ -1088,6 +1090,8 @@
 
 /turf/open/misc/asteroid/snow/getDug()
 	. = ..()
+	if(!.)
+		return
 	AddComponent(/datum/component/simple_farm)
 
 /turf/open/misc/asteroid/snow/refill_dug()

@@ -103,11 +103,6 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining)
-"p" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/plating,
-/area/template_noop)
 "q" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/delivery,
@@ -120,6 +115,11 @@
 "s" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"t" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating,
 /area/shuttle/mining)
 
 (1,1,1) = {"
@@ -146,7 +146,7 @@ d
 g
 k
 n
-p
+t
 s
 "}
 (4,1,1) = {"

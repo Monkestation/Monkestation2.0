@@ -1,4 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/surface/outdoors/nospawn)
+"ab" = (
+/turf/open/lava/plasma/ice_moon,
+/area/ruin/powered/shuttle)
+"ac" = (
+/turf/template_noop,
+/area/icemoon/underground/unexplored/rivers)
 "bf" = (
 /obj/machinery/growing/soil,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -76,9 +85,6 @@
 /mob/living/basic/tree,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"sF" = (
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/surface/outdoors/nospawn)
 "tD" = (
 /obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -146,9 +152,6 @@
 /turf/open/floor/stone{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/ruin/powered/shuttle)
-"wN" = (
-/turf/open/openspace/icemoon/keep_below,
 /area/ruin/powered/shuttle)
 "ym" = (
 /obj/structure/chair/wood{
@@ -320,9 +323,6 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
-"Sv" = (
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers)
 "SJ" = (
 /obj/structure/railing{
 	color = "#8a7453";
@@ -373,38 +373,38 @@
 /area/ruin/powered/shuttle)
 
 (1,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 "}
 (2,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 ol
 ol
 ol
@@ -415,16 +415,16 @@ mq
 SJ
 vk
 qd
-Sv
-Sv
+ac
+ac
 "}
 (3,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
+ac
+ac
 ol
 ol
 ol
@@ -439,13 +439,13 @@ zd
 Ht
 Ht
 Ht
-Sv
+ac
 "}
 (4,1,1) = {"
-Sv
-sF
-Sv
-Sv
+ac
+aa
+ac
+ac
 qd
 Ht
 Vf
@@ -462,14 +462,14 @@ Ht
 Ht
 Ht
 Ht
-Sv
+ac
 "}
 (5,1,1) = {"
-Sv
-Sv
-sF
-sF
-sF
+ac
+ac
+aa
+aa
+aa
 Ht
 ol
 Nz
@@ -485,15 +485,15 @@ Ht
 FS
 yO
 Ht
-Sv
+ac
 "}
 (6,1,1) = {"
-Sv
-Sv
-Sv
-sF
-sF
-sF
+ac
+ac
+ac
+aa
+aa
+aa
 ol
 uH
 ng
@@ -508,15 +508,15 @@ bf
 Ez
 Ht
 tD
-Sv
+ac
 "}
 (7,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-sF
-sF
+ac
+ac
+ac
+ac
+aa
+aa
 ol
 ol
 ol
@@ -531,18 +531,18 @@ bf
 Tf
 ht
 Ht
-Sv
+ac
 "}
 (8,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-sF
-sF
-sF
+ac
+ac
+ac
+ac
+aa
+aa
+aa
 Hy
-wN
+ab
 Zg
 ng
 ng
@@ -554,13 +554,13 @@ Ht
 Ht
 Ht
 Ht
-Sv
+ac
 "}
 (9,1,1) = {"
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
 Ht
 Ht
 Ht
@@ -576,15 +576,15 @@ bf
 bf
 bf
 Ht
-Sv
-Sv
+ac
+ac
 "}
 (10,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
+ac
 VV
 Ht
 ol
@@ -598,16 +598,16 @@ Ht
 TP
 bf
 Tf
-Sv
-Sv
-Sv
+ac
+ac
+ac
 "}
 (11,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
+ac
 Ht
 Ht
 Mf
@@ -621,17 +621,17 @@ Ht
 Ht
 Ht
 Ht
-Sv
-Sv
-Sv
+ac
+ac
+ac
 "}
 (12,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
+ac
+ac
 Fg
 Ht
 Ht
@@ -642,32 +642,32 @@ kj
 kj
 kj
 Ht
-Sv
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
+ac
 "}
 (13,1,1) = {"
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 "}

@@ -1,4 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 8;
+	faction = list("pirate")
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "am" = (
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
@@ -385,16 +395,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"wE" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 8;
-	faction = list("pirate")
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 6
-	},
-/turf/open/floor/plating/airless,
-/area/template_noop)
 "xe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/light/directional/east,
@@ -520,7 +520,7 @@
 /obj/docking_port/mobile/pirate{
 	dir = 4;
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Silverscale Cruiser";
 	preferred_direction = 4
 	},
@@ -1334,7 +1334,7 @@ rB
 rB
 "}
 (18,1,1) = {"
-wE
+aa
 rB
 lu
 RU
@@ -1350,7 +1350,7 @@ rB
 Uf
 DP
 rB
-wE
+aa
 "}
 (19,1,1) = {"
 je

@@ -14,21 +14,23 @@
 	},
 	"traits": [
 		{
-			"Up": true,
 			"Baseturf": "/turf/open/misc/asteroid",
 			"Mining": true,
-			"Linkage": "Cross",
+			"Linkage": null,
 			"Gravity": true,
 			"No Parallax": true
 		},
 		{
-			"Down": true,
 			"Baseturf": "/turf/open/misc/dirt/jungle",
 			"Mining": false,
-			"Linkage": "Cross",
+			"Linkage": null,
 			"Gravity": true,
 			"No Parallax": true
 		}
+	],
+	"banned_station_traits": [
+		"/datum/station_trait/bright_day",
+		"/datum/station_trait/forested"
 	],
 	"minetype": "none",
 	"job_changes": {
