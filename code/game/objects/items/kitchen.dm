@@ -332,7 +332,7 @@
 	throwforce = 2
 	throw_speed = 4
 	throw_range = 3
-	custom_materials = list(datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 1.5)
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes", "jabs", "sticks", "whacks")
 	attack_verb_simple = list("poke", "jab", "stick", "whack")
