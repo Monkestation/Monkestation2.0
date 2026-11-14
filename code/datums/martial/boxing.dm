@@ -417,6 +417,101 @@
 	to_chat(usr, "[span_notice("Sucker Punch")]: Any combination done to a vulnerable target becomes a sucker punch. This could knock them out in one!.</b>")
 
 	to_chat(usr, "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>")
+
+
+/// Hunter Boxing: for the uncaring, completely deranged one-spacer ecological disaster.
+/// The honor check accepts boxing ready targets, OR various biotypes as valid targets. Uses a special crit effect rather than the standard one (against monsters).
+/// I guess technically, this allows for lethal boxing. If you want.
+/datum/martial_art/boxing/hunter
+	name = "Hunter Boxing"
+	id = MARTIALART_HUNTER_BOXING
+	pacifist_style = FALSE
+	help_verb = /mob/living/proc/hunter_boxing_help
+	default_damage_type = BRUTE
+	boxing_traits = list(TRAIT_BOXING_READY)
+	ignore_grab_restriction = TRUE
+	/// The mobs we are looking for to pass the honor check
+	var/honorable_mob_biotypes = MOB_BEAST | MOB_SPECIAL | MOB_PLANT | MOB_BUG | MOB_MINING | MOB_CRUSTACEAN | MOB_REPTILE
+	/// Our crit shout words. First word is then paired with a second word to form an attack name.
+	var/list/first_word_strike = list("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
+	var/list/second_word_strike = list(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight", " Strike", " Lunge")
+
+/// Tells a hunter boxer what their moves do.
+/mob/living/proc/hunter_boxing_help()
+	set name = "Focus on the Hunt"
+	set desc = "You focus on how to best punch the wildlife into submission."
+	set category = "Hunter Boxing"
+
+	to_chat(usr, "<b><i>You focus on your Fists. You focus on Adventure. You focus on the Hunt.</i></b>")
+	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
+
+	to_chat(usr, "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage.")
+	to_chat(usr, "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead.")
+	to_chat(usr, "[span_notice("Left/Right Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit.")
+	to_chat(usr, "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to critically hit the target, but slows your next hit.</b>")
+
+	to_chat(usr, "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>")
+	to_chat(usr, "<b><i>Stringing together effective combos restores some of your health and deals even more damage.</i></b>")
+
+	to_chat(usr, "<b><i>Your hunter boxing abilities are only able to be used on the various flora, fauna and unnatural creatures that reside in this universe. Against normal humanoids, you are just a boxer.</i></b>")
+
+/datum/martial_art/boxing/hunter/honor_check(mob/living/possible_boxer)
+	if(HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))
+		return TRUE
+
+	if(possible_boxer.mob_biotypes & MOB_HUMANOID && !istype(possible_boxer, /mob/living/simple_animal/hostile/megafauna)) //We're after animals, not people. Unless they want to box. (Or a megafauna)
+		return FALSE
+
+	if(possible_boxer.mob_biotypes & honorable_mob_biotypes) //We're after animals, not people
+		return TRUE
+
+	return FALSE //rather than default assume TRUE, we default assume FALSE. After all, there could be mobs that are none of our biotypes and also not humanoid. By default, they would be valid for being boxed if TRUE.
+
+// Our hunter boxer applies a rebuke and double damage against the target of their crit. If the target is humanoid, we just perform our regular crit effect instead.
+
+/datum/martial_art/boxing/hunter/crit_effect(mob/living/attacker, mob/living/defender, armor_block = 0, damage_type = STAMINA, damage = 0)
+	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
+		return ..() //Applies the regular crit effect if it is a normal human, and not a megafauna
+
+	var/first_word_pick = pick(first_word_strike)
+	var/second_word_pick = pick(second_word_strike)
+
+	defender.visible_message(
+		span_danger("[attacker] knocks the absolute bajeezus out of [defender] utilizing the terrifying [first_word_pick][second_word_pick]!!!"),
+		span_userdanger("You have the absolute bajeezus knocked out of you by [attacker]!!!"),
+		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		COMBAT_MESSAGE_RANGE,
+		attacker,
+	)
+	to_chat(attacker, span_danger("You knock the absolute bajeezus out of [defender] out with the terrifying [first_word_pick][second_word_pick]!!!"))
+	if(ishuman(attacker))
+		var/mob/living/carbon/human/human_attacker = attacker
+		human_attacker.force_say()
+		human_attacker.say("[first_word_pick][second_word_pick]!!!", forced = "hunter boxing enthusiastic battlecry")
+	defender.apply_status_effect(/datum/status_effect/rebuked)
+	defender.apply_damage(damage * 2, default_damage_type, BODY_ZONE_CHEST, armor_block) //deals double our damage AGAIN
+
+	var/healing_factor = round(damage/3, 1)
+	attacker.heal_overall_damage(healing_factor, healing_factor, healing_factor)
+	log_combat(attacker, defender, "hunter crit punched (boxing)")
+
+// Our hunter boxer does a sizable amount of extra damage on a successful combo or block
+
+/datum/martial_art/boxing/hunter/perform_extra_effect(mob/living/attacker, mob/living/defender)
+	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
+		return // Does not apply to humans (who aren't megafauna)
+
+	defender.apply_damage(rand(15,20), default_damage_type, BODY_ZONE_CHEST)
+
+/datum/martial_art/boxing/hunter/skill_experience_adjustment(mob/living/boxer, mob/living/defender, experience_value)
+	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
+		return ..() //IF they're a normal human, we give the normal amount of experience instead
+
+	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 2 : 1
+	var/big_game_bonus = (defender.maxHealth / 500)
+
+	boxer.mind?.adjust_experience(/datum/skill/athletics, round(experience_value * (gravity_modifier + big_game_bonus), 1))
+
 #undef LEFT_RIGHT_COMBO
 #undef RIGHT_LEFT_COMBO
 #undef LEFT_LEFT_COMBO

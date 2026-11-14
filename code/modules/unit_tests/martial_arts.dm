@@ -97,3 +97,27 @@
 	boxer.UnarmedAttack(sparring_partner, proximity_flag = TRUE)
 	TEST_ASSERT(sparring_partner.getStaminaLoss() > 0, "Boxing punches should deal stamina damage")
 	TEST_ASSERT_EQUAL(boxer.next_move, punch_time + CLICK_CD_MELEE * 1.5, "A left hook should slow down the next punch")
+
+/// Punching mitts teach hunter boxing, which is allowed to grab and punches wildlife for brute damage.
+/datum/unit_test/hunter_boxing
+
+/datum/unit_test/hunter_boxing/Run()
+	var/mob/living/carbon/human/consistent/hunter = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/bystander = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/basic/carp/prey = allocate(/mob/living/basic/carp)
+	QDEL_NULL(prey.ai_controller)
+	hunter.mind_initialize()
+	var/obj/item/clothing/gloves/fingerless/punch_mitts/mitts = allocate(/obj/item/clothing/gloves/fingerless/punch_mitts)
+
+	hunter.equip_to_slot_if_possible(mitts, ITEM_SLOT_GLOVES)
+	TEST_ASSERT(istype(GET_ACTIVE_MARTIAL_ART(hunter), /datum/martial_art/boxing/hunter), "Wearing punching mitts should teach hunter boxing")
+
+	TEST_ASSERT_EQUAL(hunter.grab(bystander), GRAB_SUCCESS, "A hunter boxer should be able to grab")
+	hunter.stop_pulling()
+
+	hunter.swap_hand(1, silent = TRUE)
+	hunter.istate = ISTATE_HARM
+	hunter.UnarmedAttack(prey, proximity_flag = TRUE)
+	hunter.UnarmedAttack(prey, proximity_flag = TRUE)
+	TEST_ASSERT(prey.health < prey.maxHealth, "A straight punch from a hunter boxer should hurt a carp")
+	TEST_ASSERT_EQUAL(prey.getStaminaLoss(), 0, "Hunter boxing should deal brute damage to wildlife, not stamina")
