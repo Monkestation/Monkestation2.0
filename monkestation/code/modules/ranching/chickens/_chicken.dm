@@ -34,7 +34,6 @@
 	speed = 1.1
 	butcher_results = list(/obj/item/food/meat/slab/chicken = 2)
 	worn_slot_flags = ITEM_SLOT_HEAD
-	can_be_held = TRUE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	chat_color = "#FFDC9B"
@@ -44,6 +43,7 @@
 
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	head_icon = 'icons/mob/pets_held_large.dmi'
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)

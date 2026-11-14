@@ -11,6 +11,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "corgi"
+	cult_icon_state = "narsian"
 	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
 	///Access card for the corgi.
 	var/obj/item/card/id/access_card = null

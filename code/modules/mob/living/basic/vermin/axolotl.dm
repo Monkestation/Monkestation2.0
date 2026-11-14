@@ -26,7 +26,6 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	held_lh = 'icons/mob/inhands/animal_item_lefthand.dmi'
 	held_rh = 'icons/mob/inhands/animal_item_righthand.dmi'
@@ -40,6 +39,7 @@
 
 /mob/living/basic/axolotl/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),

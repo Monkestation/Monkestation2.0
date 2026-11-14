@@ -30,6 +30,7 @@
 
 /mob/living/basic/crab/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held) //monkestation edit
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/sideway_movement)
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_TINY)

@@ -10,7 +10,6 @@
 	health = 1
 	maxHealth = 1
 	speed = 1.25
-	can_be_held = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 
@@ -37,6 +36,7 @@
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts)
 	AddElement(/datum/element/death_drops, roach_drops)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)

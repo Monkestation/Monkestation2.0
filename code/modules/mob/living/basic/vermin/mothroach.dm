@@ -16,7 +16,6 @@
 	maxHealth = 25
 	speed = 1.25
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 
 	verb_say = "flutters"
@@ -36,6 +35,7 @@
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

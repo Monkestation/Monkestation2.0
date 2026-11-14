@@ -1802,6 +1802,23 @@
 	return match_all
 
 /// Returns TRUE if the faction or factions in the list are in our faction list. If match_all is set, all of them have to be there.
+/**
+ * Replaces the atom's faction list with the given list of factions, or clears it if the list is empty or null.
+ */
+/atom/movable/proc/set_faction(factions)
+	if (factions == faction) // Same list in memory - early return
+		return TRUE
+	if (!islist(factions) && !isnull(factions))
+		stack_trace("Tried to call set_faction on [src] with a non-list arg.")
+		return FALSE
+
+	if (!LAZYLEN(factions)) // empty list, should just null it in that case
+		LAZYNULL(faction)
+		return TRUE
+
+	faction = string_list(factions)
+	return TRUE
+
 /atom/movable/proc/has_faction(faction_or_factions, match_all)
 	if(!LAZYLEN(faction))
 		return FALSE

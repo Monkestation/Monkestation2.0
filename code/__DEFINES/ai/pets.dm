@@ -58,3 +58,16 @@
 
 ///Timeout for finding partners when theres too many of us in 1 location
 #define BB_PARTNER_SEARCH_TIMEOUT "BB_partner_search_timeout"
+///our ability to summon runes
+#define BB_RUNE_ABILITY "rune_ability"
+///the cult team we serve
+#define BB_CULT_TEAM "cult_team"
+///our dead cultist we revive
+#define BB_DEAD_CULTIST "dead_cultist"
+///nearby runes
+#define BB_NEARBY_RUNE "nearby_rune"
+///occupied runes
+#define BB_OCCUPIED_RUNE "occupied_rune"
+
+///friendly cultists we befriend
+#define BB_FRIENDLY_CULTIST "friendly_cultist"

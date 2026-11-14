@@ -11,7 +11,6 @@
 	density = FALSE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_TINY
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -55,6 +54,7 @@
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	if(contributes_to_ratcap)
 		var/cap = CONFIG_GET(number/ratcap)
 		if (LAZYLEN(SSmobs.cheeserats) > cap)

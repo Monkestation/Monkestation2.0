@@ -32,7 +32,6 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/lizard
 
 	/// Typecache of things that we seek out to eat. Yummy.
@@ -43,6 +42,7 @@
 
 /mob/living/basic/lizard/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/pet_bonus, "sticks its tongue out contentedly!")
 	AddElement(/datum/element/basic_eating, heal_amt = 5, food_types = edibles)

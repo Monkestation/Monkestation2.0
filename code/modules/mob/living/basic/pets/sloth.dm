@@ -10,7 +10,6 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	speak_emote = list("yawns")
 
-	can_be_held = TRUE
 	held_state = "sloth"
 
 	response_help_continuous = "pets"
@@ -39,6 +38,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 /mob/living/basic/sloth/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	AddElement(/datum/element/pet_bonus, "slowly smiles!")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_retaliate)

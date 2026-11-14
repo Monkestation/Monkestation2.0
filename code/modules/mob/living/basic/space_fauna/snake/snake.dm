@@ -46,6 +46,7 @@
 
 /mob/living/basic/snake/Initialize(mapload, special_reagent)
 	. = ..()
+	AddElement(/datum/element/can_be_held) //monkestation edit
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	AddElement(/datum/element/ai_retaliate)

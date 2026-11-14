@@ -86,7 +86,6 @@
 		)
 	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
 	gender = MALE
-	can_be_held = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	///can this mob breed?
 	var/can_breed = TRUE
@@ -96,6 +95,7 @@
 
 /mob/living/basic/pet/dog/markus/Initialize(mapload)
 	. = ..()
+	RemoveElement(/datum/element/can_be_held)
 	if(!can_breed)
 		return
 	AddComponent(\

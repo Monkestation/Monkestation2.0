@@ -19,7 +19,6 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	held_state = "fox"
 	melee_damage_lower = 5
 	melee_damage_upper = 5
@@ -31,6 +30,9 @@
 
 /mob/living/basic/pet/fox/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
+	AddElement(/datum/element/cultist_pet)
+	AddElement(/datum/element/wears_collar)
 	AddElement(/datum/element/pet_bonus, "pants and yaps happily!")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_SMALL)

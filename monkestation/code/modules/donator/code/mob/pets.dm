@@ -76,10 +76,13 @@
 	icon_living = "germanshepherd"
 	icon_dead = "germanshepherd_dead"
 	icon_gib = null
-	can_be_held = FALSE // as funny as this would be, a german shepherd is way too big to carry with one hand
 	gold_core_spawnable = NO_SPAWN
 
 	ckeywhitelist = list("mjolnir2")
+
+/mob/living/basic/pet/dog/germanshepherd/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/can_be_held) // as funny as this would be, a german shepherd is way too big to carry with one hand
 
 /mob/living/basic/pet/slime/talkative
 	name = "Extroverted Slime"

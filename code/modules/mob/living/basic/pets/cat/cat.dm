@@ -30,9 +30,8 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/items/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	collar_icon_state = "cat"
-	has_collar_resting_icon_state = TRUE
-	can_be_held = TRUE
+	///icon of the collar we can wear
+	var/collar_icon_state = "cat"
 	///can this cat breed?
 	var/can_breed = TRUE
 	///can hold items?
@@ -56,15 +55,20 @@
 	var/obj/item/held_food
 	///mutable appearance for held item
 	var/mutable_appearance/held_item_overlay
+	///icon state of our cult icon
+	var/cult_icon_state = "cat_cult"
 	///callback for after a kitten is born
 	var/datum/callback/post_birth_callback
 
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
+	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purr", /datum/mood_event/pet_animal)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/can_be_held)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -126,14 +130,10 @@
 	icon_state = "[icon_living]"
 
 /mob/living/basic/pet/cat/proc/add_breeding_component()
-	var/static/list/partner_types = typecacheof(list(/mob/living/basic/pet/cat))
-	var/static/list/baby_types = list(
-		/mob/living/basic/pet/cat/kitten = 1,
-	)
 	AddComponent(\
 		/datum/component/breed,\
 		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
-		baby_paths = baby_types,\
+		baby_path = /mob/living/basic/pet/cat/kitten,\
 		post_birth = post_birth_callback,\
 	)
 

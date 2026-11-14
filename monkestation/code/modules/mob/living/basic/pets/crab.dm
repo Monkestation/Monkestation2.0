@@ -1,5 +1,4 @@
 /mob/living/basic/crab
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	head_icon = 'icons/mob/pets_held.dmi'
 	held_lh = 'icons/mob/pets_held_lh.dmi'

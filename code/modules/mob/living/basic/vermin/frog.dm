@@ -31,7 +31,6 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	worn_slot_flags = ITEM_SLOT_HEAD
 	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
@@ -48,6 +47,7 @@
 
 /mob/living/basic/frog/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

@@ -16,7 +16,6 @@
 	gender = NEUTER
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = NO_SPAWN
-	can_be_held = FALSE
 	density = FALSE
 	melee_damage_lower = 3
 	melee_damage_upper = 3

@@ -22,7 +22,6 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 15
 	can_buckle_to = FALSE
-	can_be_held = TRUE
 
 	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1) //Healed by fire
 	unsuitable_cold_damage = 15
@@ -138,6 +137,7 @@
 
 /mob/living/basic/slime/Initialize(mapload, new_type = /datum/slime_type/grey, new_life_stage = SLIME_LIFE_STAGE_BABY)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 
 	evolve_action = new (src)
 	evolve_action.Grant(src)

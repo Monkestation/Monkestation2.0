@@ -1096,3 +1096,5 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define IS_UNCONSCIOUS(mob) (HAS_TRAIT(mob, TRAIT_KNOCKEDOUT))
 /// Checks if the mob is in soft crit, hard crit, dead, or is otherwise unconscious (which hard crit and death apply anyways)
 #define IS_UNCONSCIOUS_OR_CRIT(mob) (IS_UNCONSCIOUS(mob) || mob.stat >= SOFT_CRIT)
+/// Checks if the mob is dead or faking death (via [TRAIT_FAKEDEATH])
+#define IS_DEAD_OR_FAKING(mob) (mob.stat == DEAD || HAS_TRAIT(mob, TRAIT_FAKEDEATH))

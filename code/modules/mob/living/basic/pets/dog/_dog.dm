@@ -26,7 +26,6 @@
 	response_harm_simple = "kick"
 	speak_emote = list("barks", "woofs")
 	faction = list(FACTION_NEUTRAL)
-	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/dog
 	// The dog attack pet command can raise melee attack above 0
 	attack_verb_continuous = "bites"
@@ -44,9 +43,16 @@
 		/datum/pet_command/fetch,
 		/datum/pet_command/play_dead,
 	)
+	///icon state of the collar we can wear
+	var/collar_icon_state
+	///icon state of our cult icon
+	var/cult_icon_state
 
 /mob/living/basic/pet/dog/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
+	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
+	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state)
 	AddElement(/datum/element/pet_bonus, "woofs happily!")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
