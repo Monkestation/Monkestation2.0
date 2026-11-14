@@ -5,13 +5,14 @@
  * * no_brain - Should the mob NOT drop a brain?
  * * no_organs - Should the mob NOT drop organs?
  * * no_bodyparts - Should the mob NOT drop bodyparts?
+ * * no_blood - Should the mob NOT drop blood (for "clean" gibs)?
 */
-/mob/living/proc/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
+/mob/living/proc/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE, no_blood = FALSE)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
 
-	if(!prev_lying)
+	if(!(prev_lying || no_blood))
 		gib_animation()
 
 	ghostize()
@@ -20,15 +21,16 @@
 	if(!no_bodyparts)
 		spread_bodyparts(no_brain, no_organs, TRUE)
 
-	spawn_gibs(no_bodyparts)
-	///lol I want it to be bloody as fuck
-	blood_particles(5, min_deviation = 70, max_deviation = 120, min_pixel_z = 4, max_pixel_z = 11)
-	blood_particles(6, min_deviation = -70, max_deviation = -30, min_pixel_z = 5, max_pixel_z = 7)
-	blood_particles(4, min_deviation = -190, max_deviation = -80, min_pixel_z = 0, max_pixel_z = 9)
-	blood_particles(7, min_deviation = 130, max_deviation = 160, min_pixel_z = 12, max_pixel_z = 16)
-	blood_particles(4, min_deviation = -200, max_deviation = -220, min_pixel_z = 4, max_pixel_z = 6)
-	blood_particles(2, min_deviation = 161, max_deviation = 200, min_pixel_z = 2, max_pixel_z = 12)
-	///lol
+	if(!no_blood)
+		spawn_gibs(no_bodyparts)
+		///lol I want it to be bloody as fuck
+		blood_particles(5, min_deviation = 70, max_deviation = 120, min_pixel_z = 4, max_pixel_z = 11)
+		blood_particles(6, min_deviation = -70, max_deviation = -30, min_pixel_z = 5, max_pixel_z = 7)
+		blood_particles(4, min_deviation = -190, max_deviation = -80, min_pixel_z = 0, max_pixel_z = 9)
+		blood_particles(7, min_deviation = 130, max_deviation = 160, min_pixel_z = 12, max_pixel_z = 16)
+		blood_particles(4, min_deviation = -200, max_deviation = -220, min_pixel_z = 4, max_pixel_z = 6)
+		blood_particles(2, min_deviation = 161, max_deviation = 200, min_pixel_z = 2, max_pixel_z = 12)
+		///lol
 	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, no_brain, no_organs, no_bodyparts)
 	qdel(src)
 
@@ -50,15 +52,25 @@
 #define DUST_ANIMATION_TIME 1.3 SECONDS
 
 /**
- * This is the proc for turning a mob into ash.
+ * This is the proc for turning an atom into ash.
  * Dusting robots does not eject the MMI, so it's a bit more powerful than gib()
  *
- * Arguments:
+ * Arguments: (Only used for mobs)
  * * just_ash - If TRUE, ash will spawn where the mob was, as opposed to remains
  * * drop_items - Should the mob drop their items before dusting?
  * * force - Should this mob be FORCABLY dusted?
 */
-/mob/living/proc/dust(just_ash, drop_items, force)
+/atom/movable/proc/dust(just_ash, drop_items, force)
+	dust_animation()
+	// since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play.
+	// Looks much nicer and doesn't cause multiple runtimes.
+	QDEL_IN(src, DUST_ANIMATION_TIME)
+
+/mob/living/dust(just_ash, drop_items, force)
+	..()
+	if(body_position == STANDING_UP)
+		// keep us upright so the animation fits.
+		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
 	death(TRUE)
 
 	if(QDELETED(src))
@@ -70,10 +82,8 @@
 	if(buckled)
 		buckled.unbuckle_mob(src, force = TRUE)
 
-	dust_animation()
 	addtimer(CALLBACK(src, PROC_REF(spawn_dust), just_ash), DUST_ANIMATION_TIME - 0.3 SECONDS)
 	ghostize()
-	QDEL_IN(src, DUST_ANIMATION_TIME) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
 /// Animates turning into dust.
 /// Does not delete src afterwards, BUT it will become invisible (and grey), so ensure you handle that yourself

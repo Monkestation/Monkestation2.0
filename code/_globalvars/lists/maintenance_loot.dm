@@ -162,6 +162,7 @@ monkestation end */
 		/obj/item/stack/spacecash/c10 = 1,
 		/obj/item/stack/sticky_tape = 1,
 		/obj/item/tank/internals/emergency_oxygen = 1,
+		/obj/item/paper/paperslip/fishing_tip = 1,
 
 		//light sources
 		/obj/effect/spawner/random/decoration/glowstick = 1,
@@ -233,6 +234,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/book/granter/crafting_recipe/death_sandwich = 1,
 		/obj/item/book/granter/crafting_recipe/donk_secret_recipe = 1,
+		/obj/item/survivalcapsule/fishing = 1,
 		) = 8,
 
 	list(//medical and chemicals

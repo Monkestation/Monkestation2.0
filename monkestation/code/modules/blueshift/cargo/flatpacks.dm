@@ -23,7 +23,13 @@
 		/obj/machinery/griddle/frontier_tabletop/unanchored,
 		/obj/machinery/microwave/frontier_printed/unanchored,
 		/obj/machinery/oven/range_frontier/unanchored,
+		/obj/item/plate/oven_tray,
+		/obj/item/reagent_containers/cup/soup_pot,
 		/obj/machinery/biogenerator/foodricator,
+		/obj/item/cutting_board,
+		/obj/item/knife/kitchen,
+		/obj/item/kitchen/rollingpin,
+		/obj/item/wrench,
 	)
 	crate_name = "frontier kitchen crate"
 

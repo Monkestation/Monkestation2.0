@@ -12,11 +12,12 @@
 
 /obj/item/holochip/Initialize(mapload, amount)
 	. = ..()
-	if(amount)
+	if(!credits && amount)
 		credits = amount
 	if(isnan(credits))
 		stack_trace("NaN holochip created in [get_area_name(src)]!")
 		return INITIALIZE_HINT_QDEL
+	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 	update_appearance()
 
 /obj/item/holochip/examine(mob/user)

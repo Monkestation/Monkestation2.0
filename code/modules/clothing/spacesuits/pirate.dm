@@ -7,6 +7,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES
 	strip_delay = 40
 	equip_delay_other = 20
+	fishing_modifier = -2
 
 /datum/armor/space_pirate
 	melee = 30
@@ -32,3 +33,4 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+	fishing_modifier = -3

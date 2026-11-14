@@ -224,3 +224,9 @@
 	desc = "Cantelopes dumb friend they insist on bringing to the party. The worst part of everything it is in."
 	database_id = MEDAL_JARED_LETO
 	icon_state = "jared_leto"
+
+/datum/award/achievement/misc/sharkdragon
+	name = "You're What You Eat"
+	desc = "Nutritionists often recommend a balanced and varied diet. However that clearly isn't the case for some creatures."
+	database_id = MEDAL_SHARKDRAGON
+	icon_state = "dragon_plus_fish"
