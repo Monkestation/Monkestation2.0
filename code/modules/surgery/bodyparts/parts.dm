@@ -119,7 +119,6 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
 	unarmed_damage_high = 2
-	unarmed_stun_threshold = 3
 */
 
 /obj/item/bodypart/arm/left/alien
@@ -152,7 +151,6 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2
 	unarmed_damage_high = 2
-	unarmed_stun_threshold = 3
 */
 
 /obj/item/bodypart/arm/right/alien
@@ -181,10 +179,11 @@
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
-	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
-	unarmed_damage_low = 8
-	unarmed_damage_high = 8
-	unarmed_stun_threshold = 10
+	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_attack_verbs_continuous = list("kicks")
+	unarmed_damage_low = 7
+	unarmed_damage_high = 15
+	unarmed_effectiveness = 15
 
 	/// Used by the bloodysoles component to make footprints
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
@@ -275,7 +274,6 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 3
 	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
 	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
 */
 
@@ -372,7 +370,6 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 3
 	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
 	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
 */
 

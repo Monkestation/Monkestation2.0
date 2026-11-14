@@ -58,9 +58,9 @@
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2 // monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
-	unarmed_damage_high = 2
-	unarmed_stun_threshold = 3
+	unarmed_damage_low = 3 // monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
+	unarmed_damage_high = 8
+	unarmed_effectiveness = 5
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
 
@@ -78,9 +78,9 @@
 	px_x = 5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
-	unarmed_damage_high = 2
-	unarmed_stun_threshold = 3
+	unarmed_damage_low = 3
+	unarmed_damage_high = 8
+	unarmed_effectiveness = 5
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
 
@@ -97,9 +97,9 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 3
+	unarmed_damage_low = 2
 	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
+	unarmed_effectiveness = 5
 	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 	speed_modifier = -0.05
 	palette = /datum/color_palette/generic_colors
@@ -118,9 +118,9 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 3
+	unarmed_damage_low = 2
 	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
+	unarmed_effectiveness = 5
 	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 	speed_modifier = -0.05
 	palette = /datum/color_palette/generic_colors

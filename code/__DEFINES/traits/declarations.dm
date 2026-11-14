@@ -319,6 +319,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
+/// Prevents shovies and some strong blows such as unarmed punches and (unreliably) tackles the owner down
+#define TRAIT_BRAWLING_KNOCKDOWN_BLOCKED "brawling_knockdown_blocked"
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
 /// Mobs with this trait are allowed to use silicon emotes
@@ -1065,6 +1067,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
+/// Trait that determines whether our mob gains more strength from drinking during a fist fight
+#define TRAIT_DRUNKEN_BRAWLER "drunken brawler"
 #define TRAIT_SNOB "snob"
 #define TRAIT_NO_CLONE "NO_CLONE"
 #define TRAIT_BALD "bald"

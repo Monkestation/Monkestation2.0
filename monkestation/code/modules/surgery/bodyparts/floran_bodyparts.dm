@@ -20,8 +20,11 @@
 /obj/item/bodypart/arm/left/floran
 	icon_greyscale = 'icons/mob/human/species/floran/bodyparts.dmi'
 	limb_id = SPECIES_FLORAN
-	unarmed_attack_verb = "slash"
-	unarmed_damage_high = 4
+	unarmed_attack_verbs = list("slash")
+	unarmed_attack_verbs_continuous = list("slashes")
+	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
+	unarmed_damage_high = 8
 	unarmed_damage_low = 4
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
@@ -34,8 +37,11 @@
 /obj/item/bodypart/arm/right/floran
 	icon_greyscale = 'icons/mob/human/species/floran/bodyparts.dmi'
 	limb_id = SPECIES_FLORAN
-	unarmed_attack_verb = "slash"
-	unarmed_damage_high = 4
+	unarmed_attack_verbs = list("slash")
+	unarmed_attack_verbs_continuous = list("slashes")
+	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
+	unarmed_damage_high = 8
 	unarmed_damage_low = 4
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
