@@ -337,6 +337,6 @@
 	attack_verb_continuous = list("pokes", "jabs", "sticks", "whacks")
 	attack_verb_simple = list("poke", "jab", "stick", "whack")
 	custom_price = PAYCHECK_CREW * 0.1
-	tool_behaviour = TOOL_CHOPSTICK
+	tool_behaviour = TOOL_HEMOSTAT
 
 #undef PLASTIC_BREAK_PROBABILITY
