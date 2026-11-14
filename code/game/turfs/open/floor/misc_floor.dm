@@ -79,6 +79,9 @@
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "mainframe base"
 
+/turf/open/floor/circuit/telecomms/mainframe/icebox
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/circuit/telecomms/server
 	name = "server base"
 

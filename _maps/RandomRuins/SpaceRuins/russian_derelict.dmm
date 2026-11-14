@@ -8,6 +8,36 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_storage)
+"ac" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/table,
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_x = 6;
+	pixel_y = 15
+	},
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/stock_parts/power_store/battery/high{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/stock_parts/capacitor{
+	pixel_y = 4
+	},
+/obj/item/stock_parts/manipulator,
+/obj/structure/cable,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/secure_storage)
 "ad" = (
 /obj/structure/table_frame,
 /obj/effect/decal/cleanable/dirt,
@@ -18,6 +48,14 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/engine_control_room)
+"af" = (
+/obj/structure/cable,
+/obj/structure/rack,
+/obj/item/stack/cable_coil/five,
+/obj/item/screwdriver,
+/obj/item/stock_parts/power_store/battery/high,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "ag" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -431,14 +469,6 @@
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/bar)
-"dv" = (
-/obj/structure/cable,
-/obj/structure/rack,
-/obj/item/stack/cable_coil/five,
-/obj/item/screwdriver,
-/obj/item/stock_parts/power_store/cell/high,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "dA" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -967,36 +997,6 @@
 "ic" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/engineering/engine_control_room)
-"id" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/table,
-/obj/item/stock_parts/power_store/cell/high{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/stock_parts/power_store/cell/high{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/stock_parts/power_store/cell/high{
-	pixel_x = 7;
-	pixel_y = 1
-	},
-/obj/item/stock_parts/power_store/cell/high{
-	pixel_x = -7;
-	pixel_y = 7
-	},
-/obj/item/stock_parts/power_store/cell/high{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/item/stock_parts/capacitor{
-	pixel_y = 4
-	},
-/obj/item/stock_parts/manipulator,
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/secure_storage)
 "ie" = (
 /obj/machinery/computer/old,
 /obj/effect/decal/cleanable/dirt,
@@ -15305,7 +15305,7 @@ QS
 xF
 QM
 Jm
-id
+ac
 Ed
 rr
 QV
@@ -17651,7 +17651,7 @@ bP
 aa
 aa
 xS
-dv
+af
 eV
 Uq
 zC
