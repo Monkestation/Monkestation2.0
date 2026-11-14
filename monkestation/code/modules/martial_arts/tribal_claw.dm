@@ -129,7 +129,7 @@ If the target is T3 grabbed or sleeping, instead deal 60 damage with a weeping a
 	log_combat(attacker, defender, "tail grabbed (Tribal Claw)", name)
 	defender.visible_message(span_warning("[attacker] grabs [defender] with their tail!"), \
 						span_userdanger("[attacker] grabs you with their tail!6</span>"))
-	defender.grabbedby(attacker, 1)
+	INVOKE_ASYNC(defender, TYPE_PROC_REF(/mob/living, grabbedby), attacker, 1)
 	defender.Knockdown(5) //Without knockdown defender still stands up while T3 grabbed.
 	attacker.setGrabState(GRAB_NECK)
 	defender.adjust_silence_up_to(10 SECONDS, 10 SECONDS)

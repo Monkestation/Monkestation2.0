@@ -42,7 +42,7 @@
 	. = ..()
 	if(!ishuman(user) || !user.mind)
 		return
-	if((user.mind.martial_art != user.mind.default_martial_art) && !user.mind.has_martialart(MARTIALART_CQC)) //prevents people from learning several martial arts or swapping between them
+	if(user.mind.martial_art && !istype(user.mind.martial_art, /datum/martial_art/cqc)) //prevents people from learning several martial arts or swapping between them
 		to_chat(user, span_warning("You are already dedicated to using [user.mind.martial_art.name]!"))
 		return
 	playsound(user,'sound/effects/phasein.ogg', 20, 1)
@@ -103,7 +103,7 @@
 	. = ..()
 	if(!ishuman(user) || !user.mind)
 		return
-	if((user.mind.martial_art != user.mind.default_martial_art) && !user.mind.has_martialart(MARTIALART_CQC)) //prevents people from learning several martial arts or swapping between them
+	if(user.mind.martial_art && !istype(user.mind.martial_art, /datum/martial_art/cqc)) //prevents people from learning several martial arts or swapping between them
 		to_chat(user, span_warning("You are already dedicated to using [user.mind.martial_art.name]!"))
 		return
 	playsound(user,'sound/effects/phasein.ogg', 20, 1)

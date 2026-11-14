@@ -45,7 +45,7 @@
 /datum/martial_art/boxing/disarm_act(mob/living/attacker, mob/living/defender)
 	if(honor_check(defender))
 		add_to_streak("D", defender)
-	tussle(attacker, defender, "right hook", "right hooked")
+	INVOKE_ASYNC(src, PROC_REF(tussle), attacker, defender, "right hook", "right hooked")
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/boxing/grab_act(mob/living/attacker, mob/living/defender)
@@ -57,14 +57,14 @@
 /datum/martial_art/boxing/harm_act(mob/living/attacker, mob/living/defender)
 	if(honor_check(defender))
 		add_to_streak("H", defender)
-	tussle(attacker, defender, "left hook", "left hooked")
+	INVOKE_ASYNC(src, PROC_REF(tussle), attacker, defender, "left hook", "left hooked")
 	return MARTIAL_ATTACK_SUCCESS
 
 /// Our only boxing move, which occurs on literally all attacks; the tussle. However, quite a lot morphs the results of this proc. Combos, unlike most martial arts attacks, are checked in this proc rather than our standard unarmed procs
 /datum/martial_art/boxing/proc/tussle(mob/living/attacker, mob/living/defender, atk_verb = "blind jab", atk_verbed = "blind jabbed")
 
 	if(honorable_boxer) //Being a good sport, you never hit someone on the ground or already knocked down. It shows you're the better person.
-		if(defender.body_position == LYING_DOWN && defender.stamina.loss >= 100 || defender.IsUnconscious()) //If they're in stamcrit or unconscious, don't bloody punch them
+		if(defender.body_position == LYING_DOWN && defender.getStaminaLoss() >= 100 || defender.IsUnconscious()) //If they're in stamcrit or unconscious, don't bloody punch them
 			attacker.balloon_alert(attacker, "unsportsmanlike behaviour!")
 			return FALSE
 

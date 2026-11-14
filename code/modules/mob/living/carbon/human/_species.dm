@@ -1154,9 +1154,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(SEND_SIGNAL(target, COMSIG_CARBON_PRE_HELP, user, attacker_style) & COMPONENT_BLOCK_HELP_ACT)
 		return TRUE
 
-	if(attacker_style?.help_act(user, target) == MARTIAL_ATTACK_SUCCESS)
-		return TRUE
-
 	if(target.body_position == STANDING_UP || (target.appears_alive() && target.stat != SOFT_CRIT && target.stat != HARD_CRIT))
 		target.help_shake_act(user)
 		if(target != user)
@@ -1165,120 +1162,107 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	user.do_cpr(target)
 
-/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(attacker_style?.grab_act(user, target) == MARTIAL_ATTACK_SUCCESS)
-		return TRUE
-	target.grabbedby(user)
-	return TRUE
-
 ///This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !attacker_style?.pacifist_style)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
 		return FALSE
-	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
-		return TRUE
-	else
+	var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
+	var/atk_verb = attacking_bodypart.unarmed_attack_verb
+	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
-		var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
-		var/atk_verb = attacking_bodypart.unarmed_attack_verb
-		var/atk_effect = attacking_bodypart.unarmed_attack_effect
-
-		if(atk_effect == ATTACK_EFFECT_BITE)
-			if(user.is_mouth_covered(ITEM_SLOT_MASK))
-				to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
-				return FALSE
-		user.do_attack_animation(target, atk_effect)
-
-		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
-		var/zone = target.get_random_valid_zone(user.zone_selected)
-		var/obj/item/bodypart/affecting = target.get_bodypart(zone)
-
-		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(attacking_bodypart.unarmed_damage_low)
-			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
-				miss_chance = 0
-			else
-				miss_chance = min((attacking_bodypart.unarmed_damage_high/attacking_bodypart.unarmed_damage_low) + user.stamina.loss + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
-
-		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
-			playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
-			target.visible_message(span_danger("[user]'s [atk_verb] misses [target]!"), \
-							span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
-			log_combat(user, target, "attempted to punch")
+	if(atk_effect == ATTACK_EFFECT_BITE)
+		if(user.is_mouth_covered(ITEM_SLOT_MASK))
+			to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
 			return FALSE
+	user.do_attack_animation(target, atk_effect)
 
-		var/armor_block = target.run_armor_check(affecting, MELEE)
+	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+	var/zone = target.get_random_valid_zone(user.zone_selected)
+	var/obj/item/bodypart/affecting = target.get_bodypart(zone)
 
-		//MONKESTATION EDIT START
-		var/feeble = HAS_TRAIT(user, TRAIT_FEEBLE)
-		if (feeble)
-			damage *= 0.5
-			atk_verb = "weakly [atk_verb]"
-		// playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1) - MONKESTATION EDIT ORIGINAL
-		playsound(target.loc, attacking_bodypart.unarmed_attack_sound, feeble ? 10 : 25, TRUE, -1)
-		//MONKESTATION EDIT END
+	var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
+	if(attacking_bodypart.unarmed_damage_low)
+		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
+			miss_chance = 0
+		else
+			miss_chance = min((attacking_bodypart.unarmed_damage_high/attacking_bodypart.unarmed_damage_low) + user.stamina.loss + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
 
-		target.visible_message(span_danger("[user] [atk_verb]ed [target]!"), \
-						span_userdanger("You're [atk_verb]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [atk_verb] [target]!"))
+	if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
+		playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
+		target.visible_message(span_danger("[user]'s [atk_verb] misses [target]!"), \
+						span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
+		log_combat(user, target, "attempted to punch")
+		return FALSE
 
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
-		user.dna.species.spec_unarmedattacked(user, target)
+	var/armor_block = target.run_armor_check(affecting, MELEE)
 
-		if(user.limb_destroyer)
-			target.dismembering_strike(user, affecting.body_zone)
+	//MONKESTATION EDIT START
+	var/feeble = HAS_TRAIT(user, TRAIT_FEEBLE)
+	if (feeble)
+		damage *= 0.5
+		atk_verb = "weakly [atk_verb]"
+	// playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1) - MONKESTATION EDIT ORIGINAL
+	playsound(target.loc, attacking_bodypart.unarmed_attack_sound, feeble ? 10 : 25, TRUE, -1)
+	//MONKESTATION EDIT END
 
-		var/attack_direction = get_dir(user, target)
-		var/attack_type = attacking_bodypart.attack_type
-		SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting)
-		SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting)
-		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
-			if(damage >= 9)
-				target.force_say()
-			log_combat(user, target, "kicked")
-			var/damagemod = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 3 : 1 //yeowch
-			target.apply_damage(damage * 1.5 * damagemod, attack_type, affecting, armor_block, attack_direction = attack_direction)
-			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
-				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
-					if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
-						if((iter_clothing.clothing_flags & THICKMATERIAL) || iter_clothing.get_armor_rating(MELEE) >= 15)
-							if(iter_clothing.body_parts_covered & GROIN)
-								return TRUE
-				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
-				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
-				target.emote("scream", message="screams for dear life!")
-				if(HAS_TRAIT(user, TRAIT_NUTCRACKER))
-					target.Paralyze(50)
-					target.Knockdown(200)
-				else
-					target.Knockdown(50)
-				playsound(get_turf(target), 'sound/effects/glass/glassbr1.ogg')
-		else//other attacks deal full raw damage + 1.5x in stamina damage
-			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
-			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
-			if(damage >= 9)
-				target.force_say()
-			log_combat(user, target, "punched")
+	target.visible_message(span_danger("[user] [atk_verb]ed [target]!"), \
+					span_userdanger("You're [atk_verb]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("You [atk_verb] [target]!"))
 
-		if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold)
-			target.visible_message(span_danger("[user] knocks [target] down!"), \
-							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("You knock [target] down!"))
-			var/knockdown_duration = 40 + (target.stamina.loss + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
-			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
-			log_combat(user, target, "got a stun punch with their previous punch")
-		return TRUE // monkestation edit
+	target.lastattacker = user.real_name
+	target.lastattackerckey = user.ckey
+	user.dna.species.spec_unarmedattacked(user, target)
+
+	if(user.limb_destroyer)
+		target.dismembering_strike(user, affecting.body_zone)
+
+	var/attack_direction = get_dir(user, target)
+	var/attack_type = attacking_bodypart.attack_type
+	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting)
+	SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting)
+	if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
+		if(damage >= 9)
+			target.force_say()
+		log_combat(user, target, "kicked")
+		var/damagemod = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 3 : 1 //yeowch
+		target.apply_damage(damage * 1.5 * damagemod, attack_type, affecting, armor_block, attack_direction = attack_direction)
+		if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
+			for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
+				if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
+					if((iter_clothing.clothing_flags & THICKMATERIAL) || iter_clothing.get_armor_rating(MELEE) >= 15)
+						if(iter_clothing.body_parts_covered & GROIN)
+							return TRUE
+			user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
+			to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
+			target.emote("scream", message="screams for dear life!")
+			if(HAS_TRAIT(user, TRAIT_NUTCRACKER))
+				target.Paralyze(50)
+				target.Knockdown(200)
+			else
+				target.Knockdown(50)
+			playsound(get_turf(target), 'sound/effects/glass/glassbr1.ogg')
+	else//other attacks deal full raw damage + 1.5x in stamina damage
+		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
+		target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
+		if(damage >= 9)
+			target.force_say()
+		log_combat(user, target, "punched")
+
+	if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold)
+		target.visible_message(span_danger("[user] knocks [target] down!"), \
+						span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("You knock [target] down!"))
+		var/knockdown_duration = 40 + (target.stamina.loss + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
+		target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
+		log_combat(user, target, "got a stun punch with their previous punch")
+	return TRUE // monkestation edit
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
-		user.animate_interact(target, INTERACT_DISARM) //monkestation edit
-		return TRUE
 	if(user.body_position != STANDING_UP)
 		return FALSE
 	if(user == target)
@@ -1321,7 +1305,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(.)
 			owner.animate_interact(target, INTERACT_HARM)
 	else if ((owner.istate & ISTATE_CONTROL))
-		. = grab(owner, target, attacker_style)
+		. = owner.grab(target)
 		if(.)
 			owner.animate_interact(target, INTERACT_GRAB)
 	else

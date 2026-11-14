@@ -63,7 +63,7 @@
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender, set_damage)
 	damage = 55
 	. = ..(attacker, defender)
-	attacker.say("Crushing Maw!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
+	INVOKE_ASYNC(attacker, TYPE_PROC_REF(/atom/movable, say), "Crushing Maw!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/launchKick(mob/living/attacker, mob/living/defender, set_damage)
 	damage = 40
@@ -71,13 +71,13 @@
 	zone = BODY_ZONE_HEAD
 	zone_message = "head"
 	. = ..(attacker, defender, set_damage = FALSE)
-	attacker.say("Tsunami Kick of the Heavenly Serpent!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
+	INVOKE_ASYNC(attacker, TYPE_PROC_REF(/atom/movable, say), "Tsunami Kick of the Heavenly Serpent!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender, set_damage)
 	stamina_damage = -50
 	. = ..(attacker, defender, set_damage = FALSE)
 	defender.adjustOxyLoss(30)
-	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
+	INVOKE_ASYNC(attacker, TYPE_PROC_REF(/atom/movable, say), "Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 GAME_VERB_PROC_DESC(/mob/living, awakened_dragon_help, "Recall Teachings", "Remember the martial techniques of the Awakened Dragon.", "Awakened Dragon")
 

@@ -23,22 +23,20 @@
 	var/damage_sharpness = NONE
 	var/instant_grab = FALSE
 
-/datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/target, make_temporary = FALSE)
+/datum/martial_art/the_sleeping_carp/on_teach(mob/living/new_holder)
 	. = ..()
-	if(!.)
-		return
-	target.add_traits(scarp_traits, SLEEPING_CARP_TRAIT)
-	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
-	RegisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
-	target.faction |= FACTION_CARP //:D
-	target.grant_language(/datum/language/carptongue, ALL, type)
+	new_holder.add_traits(scarp_traits, SLEEPING_CARP_TRAIT)
+	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(new_holder, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
+	new_holder.faction |= FACTION_CARP //:D
+	new_holder.grant_language(/datum/language/carptongue, ALL, type)
 
-/datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
-	REMOVE_TRAITS_IN(target, SLEEPING_CARP_TRAIT)
-	UnregisterSignal(target, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT))
-	target.faction -= FACTION_CARP //:(
-	target.remove_language(/datum/language/carptongue, ALL, type)
-	. = ..()
+/datum/martial_art/the_sleeping_carp/on_remove(mob/living/remove_from)
+	REMOVE_TRAITS_IN(remove_from, SLEEPING_CARP_TRAIT)
+	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT))
+	remove_from.faction -= FACTION_CARP //:(
+	remove_from.remove_language(/datum/language/carptongue, ALL, type)
+	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)
 	if(findtext(streak, STRONG_PUNCH_COMBO))
@@ -134,7 +132,10 @@
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/attacker, mob/living/defender)
 	var/old_grab_state = attacker.grab_state
 	if(!can_deflect(attacker)) //allows for deniability
-		return ..()
+		return MARTIAL_ATTACK_INVALID
+
+	if(defender.check_block(attacker, 0, "[attacker]'s grab", UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
 
 	add_to_streak("G", defender)
 	if(check_streak(attacker, defender))
@@ -151,14 +152,14 @@
 		defender.Unconscious(10 SECONDS)
 		if(old_grab_state == GRAB_PASSIVE || old_grab_state == GRAB_AGGRESSIVE && instant_grab == TRUE)
 			attacker.setGrabState(GRAB_NECK)
-			defender.grabbedby(attacker, 1)
+			INVOKE_ASYNC(defender, TYPE_PROC_REF(/mob/living, grabbedby), attacker, 1)
 			log_combat(attacker, defender, "grabbed", addition="by the neck")
 			defender.visible_message(span_warning("[attacker] violently grabs [defender]!"), \
 			span_userdanger("You're grabbed violently by [attacker]!"), span_hear("You hear sounds of aggressive fondling!"), COMBAT_MESSAGE_RANGE, attacker)
 			to_chat(attacker, span_danger("You violently grab [defender]!"))
-	defender.stamina.adjust(-25)
+	defender.adjustStaminaLoss(25)
 	log_combat(attacker, defender, "[grab_log_description] (Sleeping Carp)")
-	return ..()
+	return MARTIAL_ATTACK_INVALID // normal grab
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/attacker, mob/living/defender)
 	if(attacker.grab_state == GRAB_KILL \
@@ -183,6 +184,10 @@
 				defender.investigate_log("has had [defender.p_their()] neck snapped by [attacker].", INVESTIGATE_DEATHS)
 			return MARTIAL_ATTACK_SUCCESS
 
+	var/atk_verb = pick("kick", "chop", "hit", "slam")
+	if(defender.check_block(attacker, 15, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
+
 	add_to_streak("H", defender)
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
@@ -190,7 +195,6 @@
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	var/def_check = defender.getarmor(affecting, MELEE)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	var/atk_verb = pick("kick", "chop", "hit", "slam")
 	defender.visible_message(
 		span_danger("[attacker] [atk_verb]s [defender]!"),
 		span_userdanger("[attacker] [atk_verb]s you!"), null, null, attacker
@@ -204,7 +208,9 @@
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/attacker, mob/living/defender)
 	if(!can_deflect(attacker)) //allows for deniability
-		return ..()
+		return MARTIAL_ATTACK_INVALID
+	if(defender.check_block(attacker, 0, attacker.name, UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
 
 	add_to_streak("D", defender)
 	if(check_streak(attacker, defender))
@@ -212,10 +218,9 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
-	defender.stamina.adjust(-25)
+	defender.adjustStaminaLoss(25)
 	log_combat(attacker, defender, "disarmed ([log_name])") //monke edit
-
-	return ..()
+	return MARTIAL_ATTACK_INVALID // normal disarm
 
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user, check_intent = TRUE)
 	if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
