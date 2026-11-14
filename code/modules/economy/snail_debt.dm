@@ -246,7 +246,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 	var/list/debts_by_carrier = list()
 	var/mob/living/original_target
 	var/datum/weakref/collector_weakref = collector_ref
-	var/mob/living/basic/immortal_snail/collector = collector_weakref.resolve()
+	var/mob/living/basic/immortal_snail/collector = collector_weakref?.resolve()
 	if(collector)
 		original_target = collector.original_target()
 	for(var/datum/holder as anything in claims)
@@ -257,7 +257,8 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 			debts_by_carrier[carrier] += claims[holder]
 	for(var/datum/bank_account/account as anything in banked_debts)
 		for(var/debtor_key in banked_debts[account])
-			var/mob/living/debtor = debtor_refs[debtor_key]?.resolve()
+			var/datum/weakref/debtor_ref = debtor_refs[debtor_key]
+			var/mob/living/debtor = debtor_ref?.resolve()
 			if(debtor)
 				debts_by_carrier[debtor] += banked_debts[account][debtor_key]
 	for(var/mob/living/person as anything in GLOB.player_list)
