@@ -50,15 +50,60 @@
 	. = ..()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	mimic_ability = new(src)
 
 /datum/component/perfect_mimicry/Destroy(force)
-	QDEL_NULL(mimic_ability)
+	if(!QDELETED(mimic_ability))
+		UnregisterSignal(mimic_ability, COMSIG_QDELETING)
+		QDEL_NULL(mimic_ability)
+	else
+		mimic_ability = null
 	stop_mimicry()
 	return ..()
 
 /datum/component/perfect_mimicry/RegisterWithParent()
-	mimic_ability.Grant(parent)
+	if(QDELETED(mimic_ability))
+		mimic_ability = create_mimic_action(/datum/action/cooldown/mimic_object)
+	else
+		mimic_ability.Grant(parent)
+
+/datum/component/perfect_mimicry/proc/create_mimic_action(action_type)
+	var/datum/action/cooldown/new_action = new action_type(src)
+	if(QDELETED(new_action))
+		return null
+
+	RegisterSignal(new_action, COMSIG_QDELETING, PROC_REF(on_mimic_action_deleted))
+	new_action.Grant(parent)
+	return new_action
+
+/datum/component/perfect_mimicry/proc/on_mimic_action_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	if(QDELETED(src))
+		return
+
+	if(source == mimic_ability)
+		var/datum/action/cooldown/mimic_object/old_action = source
+		var/remaining_cooldown = max(0, old_action.next_use_time - world.time)
+
+		if(mimicked_object)
+			remaining_cooldown = max(remaining_cooldown, old_action.cooldown_after_use)
+
+		UnregisterSignal(source, COMSIG_QDELETING)
+		mimic_ability = null
+
+		if(!QDELETED(src))
+			addtimer(CALLBACK(src, PROC_REF(restore_mimic_action), old_action.type, remaining_cooldown), 1)
+
+/datum/component/perfect_mimicry/proc/restore_mimic_action(action_type, remaining_cooldown = 0)
+	if(QDELETED(src) || QDELETED(parent))
+		return
+
+	if(action_type == /datum/action/cooldown/mimic_object)
+		if(mimic_ability)
+			return
+		mimic_ability = create_mimic_action(action_type)
+		if(mimic_ability && remaining_cooldown > 0)
+			mimic_ability.StartCooldown(remaining_cooldown)
 
 /// Called when the current disguise is deleted externally.
 /datum/component/perfect_mimicry/proc/on_object_qdel(datum/source, force)
@@ -311,8 +356,14 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 
+/datum/action/cooldown/mimic_object/New(Target, original)
+	. = ..()
+	if(!istype(target, /datum/component/perfect_mimicry))
+		qdel(src)
+		return
+
 /datum/action/cooldown/mimic_object/Destroy(force)
-	if(!QDELETED(target))
+	if(istype(target, /datum/component/perfect_mimicry) && !QDELETED(target))
 		var/datum/component/perfect_mimicry/mimic_component = target
 		mimic_component.stop_mimicry()
 	return ..()
