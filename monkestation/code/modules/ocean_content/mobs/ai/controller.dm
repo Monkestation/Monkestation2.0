@@ -21,6 +21,7 @@
 	group.update(controller)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
+/// Returns a group of our type from a mob in view, or a new one
 /datum/bt_node/ai_behavior/group_planning/proc/find_group(datum/ai_controller/controller)
 	for(var/mob/living/basic/found_basic in view(7, controller.pawn))
 		var/datum/group_planning/found_group = found_basic.ai_controller?.blackboard[BB_GROUP_DATUM]
@@ -28,6 +29,7 @@
 			return found_group
 	return new group_type
 
+/// Fish only school with other fish
 /datum/bt_node/ai_behavior/group_planning/fish
 	group_type = /datum/group_planning/fish
 

@@ -66,6 +66,7 @@
 	/// How close the AI walks up to its target before using this
 	var/ai_range = 1
 
+/// Chicken attack command, the ranged subtype shoots instead of pecking
 /datum/pet_command/attack/chicken
 
 /datum/pet_command/attack/chicken/ranged

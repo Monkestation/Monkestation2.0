@@ -100,6 +100,7 @@
 /mob/living/basic/slime/get_mob_buckling_height(mob/seat)
 	return 0
 
+/// Looks for a slime to hop on top of
 /datum/bt_node/ai_behavior/slime_find_target/stack
 	target_key = BB_SLIME_STACK_TARGET
 	must_be_reachable = TRUE

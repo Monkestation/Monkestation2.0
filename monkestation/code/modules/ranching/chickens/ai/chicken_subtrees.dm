@@ -1,6 +1,7 @@
 /// Picks who our targeted ability gets used on, see /mob/living/basic/chicken/proc/pick_ability_target()
 /datum/bt_node/ai_behavior/chicken_pick_ability_target
 	time_between_perform = 2 SECONDS
+	/// Blackboard key the picked target goes in
 	var/target_key = BB_CHICKEN_ABILITY_TARGET
 
 /datum/bt_node/ai_behavior/chicken_pick_ability_target/perform(seconds_per_tick, datum/ai_controller/controller)

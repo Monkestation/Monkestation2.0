@@ -38,6 +38,7 @@
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 
+/// Kiwi cheeps
 /datum/bt_node/ai_behavior/random_speech/kiwi
 	speech_chance = 5
 	emote_hear = list("makes a loud cheep.", "cheeps happily.")

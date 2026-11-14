@@ -42,6 +42,7 @@
 	controller.ai_movement.start_moving_towards(controller, destination, required_distance)
 	return TRUE
 
+/// Pathing gave up, gary leaps there instead
 /datum/bt_node/ai_behavior/gary_travel/proc/on_movement_failed(atom/source)
 	SIGNAL_HANDLER
 	movement_failed = TRUE

@@ -39,6 +39,7 @@
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 
+/// Poppy hisses
 /datum/bt_node/ai_behavior/random_speech/poppy
 	speak = list("Hiss!", "HISS!", "Hissss?")
 	emote_hear = list("hisses.")

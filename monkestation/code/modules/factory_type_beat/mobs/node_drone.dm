@@ -184,6 +184,7 @@
 /// Finds a vent to latch onto. Should focus on the one it is parented to first.
 /datum/bt_node/ai_behavior/node_drone_find_vent
 	time_between_perform = 2 SECONDS
+	/// Blackboard key the vent we found goes in
 	var/target_key = BB_CURRENT_HUNTING_TARGET
 	/// How far we look for vents
 	var/hunt_range = 7

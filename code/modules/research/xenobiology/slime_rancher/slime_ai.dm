@@ -145,6 +145,7 @@
 	var/datum/action/reproduce = controller.blackboard[BB_SLIME_REPRODUCE]
 	return reproduce?.IsAvailable()
 
+/// Wild slimes split on their own once they are big and fed enough
 /datum/bt_node/ai_behavior/slime_wild_split
 	time_between_perform = 1 SECONDS
 
@@ -270,6 +271,7 @@
 /datum/bt_node/ai_behavior/slime_find_target/proc/pick_target(datum/ai_controller/controller, list/candidates)
 	return pick(candidates)
 
+/// Looks for something to latch onto and eat
 /datum/bt_node/ai_behavior/slime_find_target/meal
 	target_key = BB_SLIME_EAT_TARGET
 	must_be_reachable = TRUE
@@ -294,6 +296,7 @@
 /datum/bt_node/ai_behavior/slime_find_target/meal/get_cooldown(datum/ai_controller/cooldown_for)
 	return rand(1 SECONDS, 4 SECONDS)
 
+/// Goes after whoever we hold a grudge against
 /datum/bt_node/ai_behavior/slime_find_target/grudge
 	target_key = BB_CURRENT_TARGET
 	scan_range = 9
@@ -310,6 +313,7 @@
 	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[BB_TARGETING_STRATEGY])
 	return strategy.is_valid_target(controller.pawn, target, scan_range, controller)
 
+/// Looks for an item we can eat
 /datum/bt_node/ai_behavior/slime_find_target/item
 	target_key = BB_SLIME_ITEM_TARGET
 	must_be_reachable = TRUE
@@ -333,6 +337,7 @@
 	var/list/wanted_types = controller.blackboard[BB_SLIME_WANTED_ITEMS]
 	return !!wanted_types?[item_target.type]
 
+/// Looks for a mess to clean up
 /datum/bt_node/ai_behavior/slime_find_target/mess
 	target_key = BB_SLIME_CLEAN_TARGET
 	time_between_perform = 0.5 SECONDS
@@ -384,6 +389,7 @@
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	return ismovable(target) && slime_pawn.can_dissolve(target)
 
+/// Looks for a friend to nuzzle
 /datum/bt_node/ai_behavior/slime_find_target/friend
 	target_key = BB_SLIME_NUZZLE_TARGET
 	must_be_reachable = TRUE
@@ -461,6 +467,7 @@
 	controller.active_chase = src
 	return TRUE
 
+/// Pathing gave up, so the chase is over
 /datum/bt_node/ai_behavior/slime_chase/proc/on_movement_failed(atom/source)
 	SIGNAL_HANDLER
 	movement_failed = TRUE
@@ -550,9 +557,11 @@
 	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[BB_TARGETING_STRATEGY])
 	return strategy.is_valid_target(controller.pawn, target, controller.max_target_distance, controller)
 
+/// Chases our meal down
 /datum/bt_node/ai_behavior/slime_chase/hunt/meal
 	target_key = BB_SLIME_EAT_TARGET
 
+/// Chases whoever we hold a grudge against
 /datum/bt_node/ai_behavior/slime_chase/hunt/grudge
 	target_key = BB_CURRENT_TARGET
 
@@ -567,6 +576,7 @@
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	return slime_pawn.buckled == target || slime_pawn.can_feed_on(target, silent = TRUE, check_friendship = TRUE)
 
+/// Goes to the item and eats it
 /datum/bt_node/ai_behavior/slime_chase/eat_item
 	target_key = BB_SLIME_ITEM_TARGET
 
@@ -577,6 +587,7 @@
 		return AI_BEHAVIOR_FAILED
 	return slime_pawn.eat_wanted_item(meal) ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED
 
+/// Goes to the mess and cleans it
 /datum/bt_node/ai_behavior/slime_chase/clean
 	target_key = BB_SLIME_CLEAN_TARGET
 
@@ -587,6 +598,7 @@
 		return AI_BEHAVIOR_FAILED
 	return slime_pawn.try_dissolve(mess) ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED
 
+/// Goes to our friend and nuzzles them
 /datum/bt_node/ai_behavior/slime_chase/nuzzle
 	target_key = BB_SLIME_NUZZLE_TARGET
 
@@ -598,6 +610,7 @@
 	slime_pawn.nuzzle(friend)
 	return AI_BEHAVIOR_SUCCEEDED
 
+/// Goes to the person and bounces on them
 /datum/bt_node/ai_behavior/slime_chase/bounce
 	target_key = BB_SLIME_BOUNCE_TARGET
 

@@ -51,6 +51,7 @@
 /datum/group_planning/proc/decide_next_action()
 	return
 
+/// Sends the mob to our target and marks it as busy
 /datum/group_planning/proc/send_on_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_GROUP_MOVE_TARGET, target)
 	in_progress_mobs |= controller.pawn

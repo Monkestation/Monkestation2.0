@@ -1,5 +1,6 @@
 /// Walks into range of whoever the ability in ability_key wants to be used on, see the ability's ai_range
 /datum/bt_node/ai_behavior/move_to_target/chicken_ability
+	/// Blackboard key holding the chicken ability to use once we get there
 	var/ability_key
 
 /datum/bt_node/ai_behavior/move_to_target/chicken_ability/setup(datum/ai_controller/controller)
