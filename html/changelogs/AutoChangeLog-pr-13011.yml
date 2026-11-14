@@ -1,0 +1,6 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "Fishing organs out of patients during organ manipulation surgery actually works now."
+  - bugfix: "Patients no longer stay fishable after the surgery is cancelled."
+  - balance: "Vital organs like the brain can't be fished out."
