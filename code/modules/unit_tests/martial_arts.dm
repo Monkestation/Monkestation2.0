@@ -67,3 +67,33 @@
 	krav.unlearn(student)
 	TEST_ASSERT_EQUAL(GET_ACTIVE_MARTIAL_ART(student), cqc, "Forgetting the active martial art should fall back to the older one")
 	TEST_ASSERT(cqc.active, "The fallback martial art should become active")
+
+/// Boxers can't grab, not even through the ctrl click pull fallback, and alternating buttons into the matching hand throws a slower hook.
+/datum/unit_test/boxing_moves
+
+/datum/unit_test/boxing_moves/Run()
+	var/mob/living/carbon/human/consistent/boxer = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/sparring_partner = allocate(/mob/living/carbon/human/consistent)
+	boxer.mind_initialize()
+	var/datum/martial_art/boxing/style = allocate(/datum/martial_art/boxing)
+	var/datum/martial_art/boxing/partner_style = allocate(/datum/martial_art/boxing)
+	style.teach(boxer)
+	partner_style.teach(sparring_partner)
+
+	TEST_ASSERT_EQUAL(boxer.grab(sparring_partner), GRAB_FAILURE, "A boxer's grab should fail")
+	boxer.base_click_ctrl(sparring_partner)
+	TEST_ASSERT_NULL(boxer.pulling, "A failed boxing grab should not fall back to pulling")
+
+	boxer.swap_hand(1, silent = TRUE)
+	boxer.istate = ISTATE_HARM
+	boxer.UnarmedAttack(sparring_partner, proximity_flag = TRUE)
+	var/punch_time = world.time
+	boxer.UnarmedAttack(sparring_partner, proximity_flag = TRUE)
+	TEST_ASSERT_EQUAL(boxer.next_move, punch_time + CLICK_CD_MELEE, "A straight punch should not slow down the next punch")
+
+	boxer.UnarmedAttack(sparring_partner, proximity_flag = TRUE)
+	boxer.istate = ISTATE_SECONDARY
+	punch_time = world.time
+	boxer.UnarmedAttack(sparring_partner, proximity_flag = TRUE)
+	TEST_ASSERT(sparring_partner.getStaminaLoss() > 0, "Boxing punches should deal stamina damage")
+	TEST_ASSERT_EQUAL(boxer.next_move, punch_time + CLICK_CD_MELEE * 1.5, "A left hook should slow down the next punch")

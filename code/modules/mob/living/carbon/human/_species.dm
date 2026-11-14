@@ -1473,7 +1473,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(.)
 			owner.animate_interact(target, INTERACT_HARM)
 	else if ((owner.istate & ISTATE_CONTROL))
-		. = owner.grab(target)
+		. = owner.grab(target) == GRAB_SUCCESS
 		if(.)
 			owner.animate_interact(target, INTERACT_GRAB)
 	else
