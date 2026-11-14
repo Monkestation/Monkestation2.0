@@ -547,3 +547,41 @@
 
 #undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING
+
+///Checks that fishing on a patient during organ manipulation actually pulls out one of their organs
+/datum/unit_test/fish_surgery_organ
+
+/datum/unit_test/fish_surgery_organ/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/datum/surgery/organ_manipulation/surgery = new(patient, BODY_ZONE_CHEST, patient.get_bodypart(BODY_ZONE_CHEST))
+	surgery.status = surgery.steps.Find(/datum/surgery_step/manipulate_organs/internal)
+	var/datum/fish_source/surgery/source = GLOB.preset_fish_sources[/datum/fish_source/surgery]
+	var/obj/item/organ/organ = source.spawn_reward(FISHING_RANDOM_ORGAN, run_loc_floor_bottom_left, patient)
+	TEST_ASSERT(istype(organ), "Fishing on a patient during organ manipulation didn't return an organ")
+	TEST_ASSERT_NULL(organ.owner, "The fished organ still has an owner")
+	TEST_ASSERT(!(organ in patient.organs), "The fished organ is still in the patient")
+	TEST_ASSERT_EQUAL(organ.loc, run_loc_floor_bottom_left, "The fished organ wasn't moved to the spawn location")
+	qdel(organ)
+	qdel(surgery)
+
+///Checks that the patient stops being a fishing spot once the organ manipulation surgery ends, whether it's finished or cancelled
+/datum/unit_test/fish_surgery_spot_cleanup
+
+/datum/unit_test/fish_surgery_spot_cleanup/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+
+	//Cancelled while organs are being manipulated
+	var/datum/surgery/organ_manipulation/surgery = new(patient, BODY_ZONE_CHEST, patient.get_bodypart(BODY_ZONE_CHEST))
+	surgery.status = surgery.steps.Find(/datum/surgery_step/manipulate_organs/internal)
+	patient.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery)
+	qdel(surgery)
+	TEST_ASSERT(!HAS_TRAIT(patient, TRAIT_FISHING_SPOT), "Patient is still a fishing spot after cancelling the surgery")
+	TEST_ASSERT(!length(patient.surgeries), "Cancelled surgery is still on the patient")
+
+	//Finished, the last step pushes the status past the end of the list
+	surgery = new(patient, BODY_ZONE_CHEST, patient.get_bodypart(BODY_ZONE_CHEST))
+	patient.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery)
+	surgery.status = length(surgery.steps) + 1
+	qdel(surgery)
+	TEST_ASSERT(!HAS_TRAIT(patient, TRAIT_FISHING_SPOT), "Patient is still a fishing spot after finishing the surgery")
+	TEST_ASSERT(!length(patient.surgeries), "Finished surgery is still on the patient")
