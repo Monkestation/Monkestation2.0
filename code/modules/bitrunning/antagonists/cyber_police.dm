@@ -23,7 +23,7 @@
 	player.equipOutfit(/datum/outfit/cyber_police)
 	player.fully_replace_character_name(player.name, pick(GLOB.cyberauth_names))
 
-	var/datum/martial_art/the_sleeping_carp/carp = new()
+	var/datum/martial_art/the_sleeping_carp/carp = new(src)
 	carp.teach(player)
 
 	player.add_traits(list(

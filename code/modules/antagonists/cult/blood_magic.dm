@@ -513,7 +513,7 @@
 
 // If this is gonna be a snowflake touch spell despite not being an actual touch spell, then we get to have snowflake code to ensure it behaves like it should.
 /obj/item/melee/blood_magic/stun/proc/snowflake_martial_arts_handler(mob/living/target, mob/living/carbon/user)
-	var/datum/martial_art/martial_art = target?.mind?.martial_art
+	var/datum/martial_art/martial_art = target ? GET_ACTIVE_MARTIAL_ART(target) : null
 	if(!martial_art?.can_use())
 		return FALSE
 	var/counter = FALSE

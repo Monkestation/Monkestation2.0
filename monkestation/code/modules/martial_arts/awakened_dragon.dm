@@ -41,7 +41,7 @@
 		return FALSE
 	return TRUE
 
-/datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
+/datum/martial_art/the_sleeping_carp/awakened_dragon/activate_style(mob/living/carbon/human/target)
 	. = ..()
 	target.physiology.stamina_mod *= 0.7
 	if(title && findtext_char(target.real_name, title) == 1)
@@ -55,7 +55,7 @@
 	titled_name = "[title] [original_name]"
 	target.fully_replace_character_name(original_name, titled_name)
 
-/datum/martial_art/the_sleeping_carp/awakened_dragon/remove(mob/living/carbon/human/target)
+/datum/martial_art/the_sleeping_carp/awakened_dragon/deactivate_style(mob/living/carbon/human/target)
 	. = ..()
 	target.physiology.stamina_mod /= 0.7
 	target.fully_replace_character_name(titled_name, original_name)

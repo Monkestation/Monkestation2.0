@@ -10,7 +10,7 @@
 	/// Reference to the tackling component applied
 	var/datum/component/tackler/tackle_comp
 
-/datum/martial_art/spiders_bite/teach(mob/living/new_holder)
+/datum/martial_art/spiders_bite/activate_style(mob/living/new_holder)
 	. = ..()
 	RegisterSignal(new_holder, COMSIG_HUMAN_PUNCHED, PROC_REF(kick_disarm))
 	tackle_comp = new_holder.AddComponent(/datum/component/tackler, \
@@ -23,7 +23,7 @@
 		silent_gain = TRUE, \
 	)
 
-/datum/martial_art/spiders_bite/on_remove(mob/living/old_holder)
+/datum/martial_art/spiders_bite/deactivate_style(mob/living/old_holder)
 	. = ..()
 	UnregisterSignal(old_holder, COMSIG_HUMAN_PUNCHED)
 	QDEL_NULL(tackle_comp)

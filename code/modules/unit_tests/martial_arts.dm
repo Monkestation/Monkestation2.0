@@ -8,7 +8,7 @@
 
 	var/datum/martial_art/cqc/style = allocate(/datum/martial_art/cqc)
 	TEST_ASSERT(style.teach(attacker), "CQC could not be taught")
-	TEST_ASSERT_EQUAL(attacker.mind.martial_art, style, "CQC was not set as the attacker's martial art")
+	TEST_ASSERT_EQUAL(GET_ACTIVE_MARTIAL_ART(attacker), style, "CQC was not set as the attacker's martial art")
 
 	attacker.istate = ISTATE_HARM
 	attacker.UnarmedAttack(victim, proximity_flag = TRUE)
@@ -21,8 +21,8 @@
 	TEST_ASSERT_EQUAL(attacker.grab_state, GRAB_AGGRESSIVE, "A CQC grab should be instantly aggressive")
 
 	attacker.stop_pulling()
-	style.remove(attacker)
-	TEST_ASSERT_NULL(attacker.mind.martial_art, "Removing CQC should leave no martial art behind")
+	style.unlearn(attacker)
+	TEST_ASSERT_NULL(GET_ACTIVE_MARTIAL_ART(attacker), "Removing CQC should leave no martial art behind")
 
 	attacker.UnarmedAttack(victim, proximity_flag = TRUE)
 	TEST_ASSERT_EQUAL(attacker.pulling, victim, "A normal grab should still grab the victim")
@@ -37,16 +37,33 @@
 	var/obj/item/clothing/gloves/the_sleeping_carp/gloves = allocate(/obj/item/clothing/gloves/the_sleeping_carp)
 
 	wearer.put_in_active_hand(gloves, forced = TRUE)
-	TEST_ASSERT_NULL(wearer.mind.martial_art, "Holding carp gloves should not teach sleeping carp")
+	TEST_ASSERT_NULL(GET_ACTIVE_MARTIAL_ART(wearer), "Holding carp gloves should not teach sleeping carp")
 	wearer.dropItemToGround(gloves)
-	TEST_ASSERT_NULL(wearer.mind.martial_art, "Dropping carp gloves that were never worn should change nothing")
+	TEST_ASSERT_NULL(GET_ACTIVE_MARTIAL_ART(wearer), "Dropping carp gloves that were never worn should change nothing")
 
 	wearer.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES)
-	TEST_ASSERT(istype(wearer.mind.martial_art, /datum/martial_art/the_sleeping_carp), "Wearing carp gloves should teach sleeping carp")
+	TEST_ASSERT(istype(GET_ACTIVE_MARTIAL_ART(wearer), /datum/martial_art/the_sleeping_carp), "Wearing carp gloves should teach sleeping carp")
 
 	wearer.dropItemToGround(gloves)
-	TEST_ASSERT_NULL(wearer.mind.martial_art, "Taking off carp gloves should remove sleeping carp")
+	TEST_ASSERT_NULL(GET_ACTIVE_MARTIAL_ART(wearer), "Taking off carp gloves should remove sleeping carp")
 
 	wearer.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES)
 	qdel(gloves)
-	TEST_ASSERT_NULL(wearer.mind.martial_art, "Deleting worn carp gloves should remove sleeping carp")
+	TEST_ASSERT_NULL(GET_ACTIVE_MARTIAL_ART(wearer), "Deleting worn carp gloves should remove sleeping carp")
+
+/// Knowing more than one martial art keeps the newest one active and falls back to the older one when it is forgotten.
+/datum/unit_test/martial_art_swapping
+
+/datum/unit_test/martial_art_swapping/Run()
+	var/mob/living/carbon/human/consistent/student = allocate(/mob/living/carbon/human/consistent)
+	var/datum/martial_art/cqc/cqc = allocate(/datum/martial_art/cqc)
+	var/datum/martial_art/krav_maga/krav = allocate(/datum/martial_art/krav_maga)
+
+	cqc.teach(student)
+	krav.teach(student)
+	TEST_ASSERT_EQUAL(GET_ACTIVE_MARTIAL_ART(student), krav, "The newest martial art should be the active one")
+	TEST_ASSERT(krav.active && !cqc.active, "Only the active martial art should be marked as active")
+
+	krav.unlearn(student)
+	TEST_ASSERT_EQUAL(GET_ACTIVE_MARTIAL_ART(student), cqc, "Forgetting the active martial art should fall back to the older one")
+	TEST_ASSERT(cqc.active, "The fallback martial art should become active")

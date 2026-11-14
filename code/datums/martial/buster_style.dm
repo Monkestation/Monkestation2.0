@@ -26,13 +26,11 @@
 	wire_action = new(src)
 	megabuster_action = new(src)
 
-/datum/martial_art/buster_style/teach(mob/living/carbon/owner, make_temporary = FALSE, arm_index)
-	if(!istype(owner))
-		return FALSE
+/datum/martial_art/buster_style/can_teach(mob/living/new_holder)
+	return iscarbon(new_holder)
+
+/datum/martial_art/buster_style/activate_style(mob/living/carbon/owner)
 	. = ..()
-	if(!.)
-		return
-	src.arm_index = arm_index
 	to_chat(owner, span_userdanger("You know the arts of [name]!"))
 	slam_action.Grant(owner)
 	slam_action.arm_index = arm_index
@@ -52,7 +50,7 @@
 		owner_species.no_equip_flags |= ITEM_SLOT_GLOVES
 		owner_species.update_no_equip_flags(owner, owner_species.no_equip_flags)
 
-/datum/martial_art/buster_style/on_remove(mob/living/carbon/owner)
+/datum/martial_art/buster_style/deactivate_style(mob/living/carbon/owner)
 	to_chat(owner, span_userdanger("You suddenly forget the arts of [name]..."))
 	slam_action.Remove(owner)
 	grapple_action.Remove(owner)

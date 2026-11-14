@@ -14,13 +14,14 @@
 	/// Balloon alert cooldown for warning our boxer to alternate their blows to get more damage
 	COOLDOWN_DECLARE(warning_cooldown)
 
-/datum/martial_art/boxing/teach(mob/living/new_holder, make_temporary)
-	if(!ishuman(new_holder))
-		return FALSE
-	new_holder.add_traits(boxing_traits, BOXING_TRAIT)
-	return ..()
+/datum/martial_art/boxing/can_teach(mob/living/new_holder)
+	return ishuman(new_holder)
 
-/datum/martial_art/boxing/on_remove(mob/living/remove_from)
+/datum/martial_art/boxing/activate_style(mob/living/new_holder)
+	. = ..()
+	new_holder.add_traits(boxing_traits, BOXING_TRAIT)
+
+/datum/martial_art/boxing/deactivate_style(mob/living/remove_from)
 	remove_from.remove_traits(boxing_traits, BOXING_TRAIT)
 	return ..()
 

@@ -27,10 +27,11 @@
 	. = ..()
 	if(!.)
 		return
-	style.teach(new_arm_owner, TRUE, arm_index = 1)
+	style.arm_index = 1
+	style.teach(new_arm_owner)
 
 /obj/item/bodypart/arm/left/robot/buster/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
-	style.remove(owner)
+	style.unlearn(owner)
 	return ..()
 
 /obj/item/bodypart/arm/left/robot/buster/dismember(dam_type, silent, wounding_type, sound)
@@ -42,8 +43,10 @@
 	. = ..()
 	if(!ishuman(user) || !user.mind)
 		return
-	if(user.mind.martial_art && !istype(user.mind.martial_art, /datum/martial_art/cqc)) //prevents people from learning several martial arts or swapping between them
-		to_chat(user, span_warning("You are already dedicated to using [user.mind.martial_art.name]!"))
+	var/mob/living/living_user = user
+	var/datum/martial_art/active_art = GET_ACTIVE_MARTIAL_ART(living_user)
+	if(active_art && !istype(active_art, /datum/martial_art/cqc)) //prevents people from learning several martial arts or swapping between them
+		to_chat(user, span_warning("You are already dedicated to using [active_art.name]!"))
 		return
 	playsound(user,'sound/effects/phasein.ogg', 20, 1)
 	to_chat(user, span_notice("You bump the prosthetic near your shoulder. In a flurry faster than your eyes can follow, it takes the place of your left arm!"))
@@ -88,10 +91,11 @@
 	. = ..()
 	if(!.)
 		return
-	style.teach(new_arm_owner, TRUE, arm_index = 2)
+	style.arm_index = 2
+	style.teach(new_arm_owner)
 
 /obj/item/bodypart/arm/right/robot/buster/drop_limb(special, dismembered, violent, move_to_floor = TRUE)
-	style.remove(owner)
+	style.unlearn(owner)
 	return ..()
 
 /obj/item/bodypart/arm/right/robot/buster/dismember(dam_type, silent, wounding_type, sound)
@@ -103,8 +107,10 @@
 	. = ..()
 	if(!ishuman(user) || !user.mind)
 		return
-	if(user.mind.martial_art && !istype(user.mind.martial_art, /datum/martial_art/cqc)) //prevents people from learning several martial arts or swapping between them
-		to_chat(user, span_warning("You are already dedicated to using [user.mind.martial_art.name]!"))
+	var/mob/living/living_user = user
+	var/datum/martial_art/active_art = GET_ACTIVE_MARTIAL_ART(living_user)
+	if(active_art && !istype(active_art, /datum/martial_art/cqc)) //prevents people from learning several martial arts or swapping between them
+		to_chat(user, span_warning("You are already dedicated to using [active_art.name]!"))
 		return
 	playsound(user,'sound/effects/phasein.ogg', 20, 1)
 	to_chat(user, span_notice("You bump the prosthetic near your shoulder. In a flurry faster than your eyes can follow, it takes the place of your right arm!"))

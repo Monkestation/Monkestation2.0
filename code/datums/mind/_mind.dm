@@ -51,8 +51,6 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	/// Martial art on this mind
-	var/datum/martial_art/martial_art
 	/// List of antag datums on this mind
 	var/list/antag_datums
 	/// this mind's ANTAG_HUD should have this icon_state
@@ -136,7 +134,6 @@
 	.["name"] = name
 	.["ghostname"] = ghostname
 	.["memories"] = length(memories) ? memories : null
-	.["martial_art"] = martial_art
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
 	.["special_role"] = special_role

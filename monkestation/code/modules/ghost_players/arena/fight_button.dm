@@ -189,8 +189,9 @@
 	player_two?.dueling = FALSE
 	SEND_SIGNAL(player_one, COMSIG_HUMAN_END_DUEL)
 	SEND_SIGNAL(player_two, COMSIG_HUMAN_END_DUEL)
-	player_one?.mind?.martial_art?.remove(player_one)
-	player_two?.mind?.martial_art?.remove(player_two)
+	for(var/mob/living/duelist as anything in list(player_one, player_two))
+		var/datum/martial_art/duelist_art = GET_ACTIVE_MARTIAL_ART(duelist)
+		duelist_art?.unlearn(duelist)
 	player_one = null
 	player_two = null
 

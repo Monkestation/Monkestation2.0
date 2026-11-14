@@ -1149,7 +1149,7 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 			altered_grab_state++
 		if(ishuman(pulledby))
 			var/mob/living/carbon/human/human_puller = pulledby
-			var/datum/martial_art/puller_art = human_puller?.mind.martial_art
+			var/datum/martial_art/puller_art = GET_ACTIVE_MARTIAL_ART(human_puller)
 			if(puller_art?.can_use(human_puller))
 				altered_grab_state += puller_art.grab_state_modifier
 				escape_chance += puller_art.grab_escape_chance_modifier

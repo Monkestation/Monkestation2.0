@@ -5,7 +5,6 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
-	allow_temp_override = FALSE
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
 	COOLDOWN_DECLARE(block_cooldown)
@@ -23,7 +22,7 @@
 	var/damage_sharpness = NONE
 	var/instant_grab = FALSE
 
-/datum/martial_art/the_sleeping_carp/on_teach(mob/living/new_holder)
+/datum/martial_art/the_sleeping_carp/activate_style(mob/living/new_holder)
 	. = ..()
 	new_holder.add_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
@@ -31,7 +30,7 @@
 	new_holder.faction |= FACTION_CARP //:D
 	new_holder.grant_language(/datum/language/carptongue, ALL, type)
 
-/datum/martial_art/the_sleeping_carp/on_remove(mob/living/remove_from)
+/datum/martial_art/the_sleeping_carp/deactivate_style(mob/living/remove_from)
 	REMOVE_TRAITS_IN(remove_from, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT))
 	remove_from.faction -= FACTION_CARP //:(

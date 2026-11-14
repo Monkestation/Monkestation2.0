@@ -8,7 +8,7 @@
 /datum/martial_art/tribal_claw
 	name = "Tribal Claw"
 	id = MARTIALART_TRIBALCLAW
-	allow_temp_override = FALSE
+	locked_to_use = TRUE
 	help_verb = /mob/living/carbon/human/proc/tribal_claw_help
 	var/list/tribal_traits = list(TRAIT_HARDLY_WOUNDED, TRAIT_HARD_SOLES)
 
@@ -24,14 +24,12 @@
 	laser = 20
 	wound = 20
 
-/datum/martial_art/tribal_claw/teach(mob/living/carbon/human/target, make_temporary = FALSE)
+/datum/martial_art/tribal_claw/activate_style(mob/living/carbon/human/target)
 	. = ..()
-	if(!.)
-		return
 	target.add_traits(tribal_traits)
 	target.set_armor(target.get_armor().add_other_armor(/datum/armor/scales))
 
-/datum/martial_art/tribal_claw/on_remove(mob/living/carbon/human/target)
+/datum/martial_art/tribal_claw/deactivate_style(mob/living/carbon/human/target)
 	target.set_armor(target.get_armor().subtract_other_armor(/datum/armor/scales))
 	REMOVE_TRAITS_IN(target, tribal_traits)
 	. = ..()
