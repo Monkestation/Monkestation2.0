@@ -2455,7 +2455,7 @@
 "jd" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/bed/dogbed,
-/mob/living/simple_animal/pet/cat/kitten,
+/mob/living/basic/pet/cat/kitten,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 6
 	},

@@ -357,6 +357,8 @@
 
 /// key that holds things we can hunt
 #define BB_HUNTABLE_PREY "huntable_prey"
+/// key that holds the target we will battle over our turf
+#define BB_TRESSPASSER_TARGET "tresspasser_target"
 
 ///key that holds our landmine ability
 #define BB_MINEBOT_LANDMINE_ABILITY "minebot_landmine_ability"

@@ -1561,8 +1561,8 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-				/mob/living/simple_animal/pet/cat,
-				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/basic/pet/cat,
+				/mob/living/basic/pet/cat/cak,
 				/mob/living/basic/pony,
 				/mob/living/basic/pony/syndicate,
 			)

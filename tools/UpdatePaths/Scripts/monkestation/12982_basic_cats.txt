@@ -1,0 +1,3 @@
+/mob/living/simple_animal/hostile/feraltabby : /mob/living/basic/pet/cat/feral/tabby{@OLD}
+/mob/living/simple_animal/hostile/feral : /mob/living/basic/pet/cat/feral{@OLD}
+/mob/living/simple_animal/hostile/syndicat/@SUBTYPES : /mob/living/basic/pet/cat/syndicat/@SUBTYPES{@OLD}

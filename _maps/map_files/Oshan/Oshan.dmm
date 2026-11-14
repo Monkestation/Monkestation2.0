@@ -55472,7 +55472,7 @@
 /area/station/medical/treatment_center)
 "qSH" = (
 /obj/structure/window/spawner/directional/west,
-/mob/living/simple_animal/pet/cat/cak,
+/mob/living/basic/pet/cat/cak,
 /turf/open/floor/iron/smooth_large,
 /area/station/maintenance/port/central)
 "qSI" = (
@@ -59017,7 +59017,7 @@
 /area/station/maintenance/starboard/upper)
 "rZS" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /obj/structure/filingcabinet/medical{
 	pixel_y = 24;
 	pixel_x = 11

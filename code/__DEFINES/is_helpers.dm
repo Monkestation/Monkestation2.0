@@ -192,10 +192,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isdrone(A) (istype(A, /mob/living/basic/drone))
 
 GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
-	/mob/living/simple_animal/pet/cat,
-	/mob/living/simple_animal/hostile/syndicat,
-	/mob/living/simple_animal/hostile/feral,
-	/mob/living/simple_animal/hostile/feraltabby,
+	/mob/living/basic/pet/cat,
 )))
 
 #define iscat(A) (is_type_in_typecache(A, GLOB.cat_typecache))
