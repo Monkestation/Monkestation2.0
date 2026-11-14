@@ -1,0 +1,7 @@
+author: "HoggyHart"
+delete-after: True
+changes:
+  - rscdel: "Removed references to nanite trigger and signal codes"
+  - qol: "Simplified nanite sensor usage"
+  - bugfix: "Nanite sensors now use the results of the automatic checks they perform"
+  - code_imp: "(hopefully) tiny efficiency + readability increases"
