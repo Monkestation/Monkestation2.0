@@ -30,7 +30,17 @@
 
 /obj/item/holochip/update_name()
 	name = "\improper [credits] credit holochip"
+	if(GLOB.snail_debt?.claims[src])
+		name = "\improper cursed [credits] credit holochip"
 	return ..()
+
+/obj/item/holochip/update_appearance(updates)
+	. = ..()
+	if(GLOB.snail_debt?.claims[src])
+		add_filter("immortal_snail_curse", 1, outline_filter(1, "#B95BDB90", OUTLINE_SHARP))
+	else
+		remove_filter("immortal_snail_curse")
+	return .
 
 /obj/item/holochip/update_icon_state()
 	var/icon_suffix = ""
@@ -81,14 +91,16 @@
 	holochip_overlay.color = overlay_color
 	. += holochip_overlay
 
-/obj/item/holochip/proc/spend(amount, pay_anyway = FALSE)
+/obj/item/holochip/proc/spend(amount, pay_anyway = FALSE, datum/recipient)
 	if(credits >= amount)
+		SEND_SIGNAL(src, COMSIG_CREDITS_TRANSFERRED, recipient, amount)
 		credits -= amount
 		if(credits == 0)
 			qdel(src)
 		update_appearance()
 		return amount
 	else if(pay_anyway)
+		SEND_SIGNAL(src, COMSIG_CREDITS_TRANSFERRED, recipient, credits)
 		qdel(src)
 		return credits
 	else
@@ -98,6 +110,9 @@
 	..()
 	if(istype(attacking_item, /obj/item/holochip))
 		var/obj/item/holochip/H = attacking_item
+		if(H == src)
+			return
+		SEND_SIGNAL(H, COMSIG_CREDITS_TRANSFERRED, src, H.credits)
 		credits += H.credits
 		to_chat(user, span_notice("You insert the credits into [src]."))
 		update_appearance()
@@ -110,8 +125,9 @@
 	var/split_amount = tgui_input_number(user, "How many credits do you want to extract from the holochip? (Max: [credits] cr)", "Holochip", max_value = credits)
 	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH) || loc != user)
 		return CLICK_ACTION_BLOCKING
-	var/new_credits = spend(split_amount, TRUE)
-	var/obj/item/holochip/chip = new(user ? user : drop_location(), new_credits)
+	split_amount = min(round(split_amount), credits)
+	var/obj/item/holochip/chip = new(user ? user : drop_location(), split_amount)
+	spend(split_amount, TRUE, chip)
 	if(user)
 		if(!user.put_in_hands(chip))
 			chip.forceMove(user.drop_location())

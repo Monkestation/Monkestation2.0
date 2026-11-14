@@ -111,6 +111,8 @@
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
+	/// Set FALSE for alerts whose hover tooltip should contain only descriptive text.
+	var/show_tooltip_title = TRUE
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 	var/mob/owner //Alert owner
 
@@ -133,7 +135,7 @@
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	. = ..()
 	if(!QDELETED(src))
-		openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
+		openToolTip(usr,src,params,title = show_tooltip_title ? name : "",content = desc,theme = alerttooltipstyle)
 
 
 /atom/movable/screen/alert/MouseExited()

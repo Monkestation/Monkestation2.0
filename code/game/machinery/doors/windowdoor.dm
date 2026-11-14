@@ -191,7 +191,7 @@
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/window/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	return !density || (dir != to_dir) || (check_access_list(pass_info.access) && hasPower() && !pass_info.no_id)
+	return (pass_info.pass_flags & pass_flags_self) || !density || (dir != to_dir) || (check_access_list(pass_info.access) && hasPower() && !pass_info.no_id)
 
 /obj/machinery/door/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
