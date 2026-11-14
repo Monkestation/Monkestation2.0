@@ -123,6 +123,8 @@
 #define COMSIG_MOVABLE_CHASM_DROPPED "movable_chasm_dropped"
 	/// Stop it from actually dropping into the chasm
 	#define COMPONENT_NO_CHASM_DROP (1<<0)
+///From /datum/component/aquarium/get_content_beauty: (beauty_holder)
+#define COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY "movable_ge_aquarium_beauty"
 
 /// Sent to movables when they are being stolen by a spy: (mob/living/spy, datum/spy_bounty/bounty)
 #define COMSIG_MOVABLE_SPY_STEALING "movable_spy_stealing"
@@ -130,6 +132,14 @@
 ///from base of /atom/movable/living/can_track(): (mob/user)
 #define COMSIG_MOVABLE_CAN_TRACK "movable_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
+
+///from base of /datum/component/splat/splat: (hit_atom)
+#define COMSIG_MOVABLE_SPLAT "movable_splat"
+///from /atom/movable/proc/throw_impact() after hitby() was called on the hit atom: (atom/hit_atom, datum/thrownthing/throwingdatum, caught)
+#define COMSIG_MOVABLE_POST_IMPACT "movable_post_impact"
+
+/// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
+#define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
 
 /// From base of area/Exited(): (area/left, direction)
 #define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"

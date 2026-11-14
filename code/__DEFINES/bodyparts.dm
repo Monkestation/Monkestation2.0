@@ -12,7 +12,8 @@
 // Overlay priorities
 #define BODYPART_OVERLAY_FISH_INFUSION 1
 #define BODYPART_OVERLAY_CARP_INFUSION 2
-#define BODYPART_OVERLAY_MESH 3
+#define BODYPART_OVERLAY_CSS_SUICIDE 3
+#define BODYPART_OVERLAY_MESH 4
 
 // Flag associatd with specific overlays on bodyparts
 // Used to determine how the overlay is handled in rendering

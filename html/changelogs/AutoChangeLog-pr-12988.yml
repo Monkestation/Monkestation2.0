@@ -1,8 +1,0 @@
-author: "V2LenKagamine"
-delete-after: True
-changes:
-  - bugfix: "TODO REMOVED: Having a medical hud allows you to see how much brute/burn is left when doing surgery"
-  - bugfix: "TODO REMOVED: Powergen artifacts now gausian their powergen, so higher values much rarer."
-  - admin: "fix: the ancient medkit now accepts anything."
-  - bugfix: "powergen artifacts now have a SPAN DANGER warning because they will fucking DUST YOU"
-  - refactor: "powergen artifacts can now be touched on aggressive to turn them off, percussive maintenance style"

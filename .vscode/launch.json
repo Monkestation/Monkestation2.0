@@ -9,6 +9,14 @@
 			"json_path": "${workspaceFolder}/${command:CurrentJson}"
 		},
 		{
+			"type": "auxtools",
+			"request": "launch",
+			"name": "Debug in DreamDaemon",
+			"dmb": "${workspaceFolder}/tgstation.dmb",
+			"preLaunchTask": "Build All",
+			"server": "dreamdaemon"
+		},
+		{
 			"type": "byond",
 			"request": "launch",
 			"name": "Launch DreamSeeker",
