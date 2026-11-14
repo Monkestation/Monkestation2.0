@@ -1,8 +1,0 @@
-author: "EatsTheGrapes"
-delete-after: True
-changes:
-  - rscadd: "A cursed slot machine can occasionally replace a station slot. Take its 100,000 credits and an immortal snail will hunt you until you die."
-  - rscadd: "Cursed holochips are named and outlined, while cursed-credit carriers see their current debt in a status alert."
-  - rscadd: "Ghosts can orbit an immortal snail on spawn, then click it to inspect its current target and live cursed-credit trail."
-  - bugfix: "The immortal snail now routes through airtight delivery flaps and tries legal detours before breaching a direct line through the station."
-  - admin: "Immortal-snail curse acceptance, fulfillment, recovery and unexpected body loss are logged for admins."
