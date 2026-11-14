@@ -626,6 +626,7 @@
 /datum/bt_node/subtree/pet_command/attack/slime
 	behavior_tree_json = "code/modules/research/xenobiology/slime_rancher/pet_command_attack_slime.bt.json"
 
+/// Attack command that also lets slimes latch on and eat
 /datum/pet_command/attack/slime
 	speech_commands = list("attack", "sic", "kill", "eat", "feed")
 	command_feedback = "blorbles"
