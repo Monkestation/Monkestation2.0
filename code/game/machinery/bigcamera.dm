@@ -46,12 +46,12 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	broadcast_name = tgui_input_text(user = user, title = "Broadcast Name", message = "What will be the name of your broadcast?", default = "[broadcast_name]", max_length = MAX_CHARTER_LEN, encode = FALSE)
+	broadcast_name = tgui_input_text(user = user, title = "Broadcast Name", message = "What will be the name of your broadcast?", default = "[broadcast_name]", max_length = MAX_CHARTER_LEN)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/big_broadcast_camera/examine(mob/user)
 	. = ..()
-	. += span_notice("Broadcast name is <b>[html_encode(broadcast_name)]</b>")
+	. += span_notice("Broadcast name is <b>[broadcast_name]</b>")
 	. += span_notice("The microphone is <b>[active_microphone ? "On" : "Off"]</b>")
 	. += span_notice("You can adjust the [src]'s focus using a <b>multitool</b>.")
 	. += span_notice("[src] is <b>[anchored ? "anchored" : "not anchored"]</b>.")

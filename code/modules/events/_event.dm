@@ -369,12 +369,12 @@ Runs the event
 		if(roundstart)
 			if(!can_run_post_roundstart)
 				return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a>"
-			return "<a href='byond://?src=[REF(src)];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];action=schedule'>Schedule</a>"
+			return "<a href='byond://?src=[REF(src)];[HrefToken()];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=schedule'>Schedule</a>"
 		else
-			return "<a href='byond://?src=[REF(src)];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];action=schedule'>Schedule</a> <a href='byond://?src=[REF(src)];action=force_next'>Force Next</a>"
+			return "<a href='byond://?src=[REF(src)];[HrefToken()];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=schedule'>Schedule</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=force_next'>Force Next</a>"
 	else
 		if(roundstart)
-			return "<a href='byond://?src=[REF(src)];action=schedule'>Add Roundstart</a> <a href='byond://?src=[REF(src)];action=force_next'>Force Roundstart</a>"
+			return "<a href='byond://?src=[REF(src)];[HrefToken()];action=schedule'>Add Roundstart</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=force_next'>Force Roundstart</a>"
 		else
 			return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a> <a class='linkOff'>Force Next</a>"
 
@@ -384,7 +384,7 @@ Runs the event
 	if(QDELETED(src))
 		return
 
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 
 	switch(href_list["action"])

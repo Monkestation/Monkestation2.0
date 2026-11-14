@@ -156,6 +156,8 @@
 
 /datum/media_player/Topic(href, list/href_list)
 	. = ..()
+	if(usr?.client != owner)
+		return
 	var/message_type = href_list["type"]
 	if(!message_type)
 		return

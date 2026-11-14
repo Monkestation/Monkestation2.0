@@ -333,7 +333,7 @@
 			. = TRUE
 		if("set_extra_setting")
 			current_program.set_extra_setting(params["target_setting"], params["value"])
-			investigate_log("[key_name(usr)] edited [current_program.name]'s extra setting '[params["target_setting"]]' into [params["value"]]", INVESTIGATE_NANITES)
+			investigate_log("[key_name(usr)] edited [current_program.name]'s extra setting '[html_encode(params["target_setting"])]' into [html_encode("[params["value"]]")]", INVESTIGATE_NANITES)
 			playsound(src, "terminal_type", 25, FALSE)
 			. = TRUE
 		if("set_restart_timer")
