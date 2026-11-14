@@ -124,8 +124,7 @@
 		"spans" = spans,
 		"mods" = message_mods
 	)
-	// levels = SSmapping.get_connected_levels(get_turf(source)) -- MONKESTATION EDIT OLD
-	levels = lvls != null ? lvls : SSmapping.get_connected_levels(get_turf(source)) // MONKESTATION EDIT NEW
+	levels = !isnull(lvls) ? lvls : get_telecomms_levels(get_turf(source))
 
 /datum/signal/subspace/vocal/copy()
 	var/datum/signal/subspace/vocal/copy = new(source, frequency, virt, language)

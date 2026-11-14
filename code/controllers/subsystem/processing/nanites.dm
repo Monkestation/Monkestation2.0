@@ -11,12 +11,14 @@ PROCESSING_SUBSYSTEM_DEF(nanites)
 /datum/controller/subsystem/processing/nanites/proc/check_hardware(datum/nanite_cloud_backup/backup)
 	if(QDELETED(backup.storage) || (backup.storage.machine_stat & (NOPOWER|BROKEN)))
 		return FALSE
+	if(get_warped_room(get_turf(backup.storage)))
+		return FALSE
 	return TRUE
 
 /datum/controller/subsystem/processing/nanites/proc/get_cloud_backup(cloud_id, force = FALSE)
 	for(var/I in cloud_backups)
 		var/datum/nanite_cloud_backup/backup = I
 		if(!force && !check_hardware(backup))
-			return
+			continue
 		if(backup.cloud_id == cloud_id)
 			return backup
