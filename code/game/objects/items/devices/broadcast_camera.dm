@@ -93,7 +93,7 @@
 	internal_camera.c_tag = "LIVE: [broadcast_name]"
 	internal_camera.follow_holder()
 	wielder.apply_status_effect(/datum/status_effect/streamer, internal_camera, CALLBACK(src, PROC_REF(ensure_still_active)))
-	wielder.log_message("started a Spess.tv stream named \"[html_encode(broadcast_name)]\" at [loc_name(wielder)]", LOG_GAME)
+	wielder.log_message("started a Spess.tv stream named \"[broadcast_name]\" at [loc_name(wielder)]", LOG_GAME)
 	start_broadcasting_network(camera_networks, "[broadcast_name] is now LIVE!")
 
 	// INTERNAL RADIO

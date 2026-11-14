@@ -81,8 +81,6 @@
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(!check_rights(R_ADMIN))
-		return
 	var/round_started = SSticker.HasRoundStarted()
 	switch(href_list["action"])
 		if("cancel")

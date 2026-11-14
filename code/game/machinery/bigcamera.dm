@@ -66,7 +66,7 @@
 	internal_camera.network = camera_networks
 	internal_camera.c_tag = "LIVE: [broadcast_name]"
 	internal_camera.follow_holder()
-	user.log_message("started a Spess.tv stream named \"[html_encode(broadcast_name)]\" at [loc_name(user)]", LOG_GAME)
+	user.log_message("started a Spess.tv stream named \"[broadcast_name]\" at [loc_name(user)]", LOG_GAME)
 	start_broadcasting_network(camera_networks, "[broadcast_name] is now LIVE!")
 
 	// INTERNAL RADIO
