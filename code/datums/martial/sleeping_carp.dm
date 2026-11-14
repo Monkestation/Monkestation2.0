@@ -202,7 +202,7 @@
 
 	defender.apply_damage(15, attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND, blocked = def_check)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(attacker, defender, "punched ([log_name]])") //monke edit
+	log_combat(attacker, defender, "punched ([log_name])") //monke edit
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/attacker, mob/living/defender)
