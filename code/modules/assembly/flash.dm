@@ -262,27 +262,31 @@
 	// Attacker lateral to the victim.
 	return DEVIATION_PARTIAL
 
-/obj/item/assembly/flash/attack(mob/living/M, mob/user)
+/obj/item/assembly/flash/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!try_use_flash(user))
 		return FALSE
 
 	. = TRUE
-	if(iscarbon(M))
-		flash_carbon(M, user, confusion_duration = 5 SECONDS, targeted = TRUE)
-		return
-	if(issilicon(M))
-		var/mob/living/silicon/robot/flashed_borgo = M
-		log_combat(user, flashed_borgo, "flashed", src)
-		update_icon(ALL, TRUE)
-		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
-			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
-			return
-		flashed_borgo.Paralyze(7 SECONDS)
-		flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
-		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
+	if(iscarbon(target_mob))
+		flash_carbon(target_mob, user, confusion_duration = 5 SECONDS, targeted = TRUE)
 		return
 
-	user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to blind [M] with the flash!"))
+	if(iscyborg(target_mob))
+		var/mob/living/silicon/robot/cyborg_mob = target_mob
+		log_combat(user, cyborg_mob, "flashed", src)
+		update_icon(ALL, TRUE)
+
+		if(cyborg_mob.is_blind())
+			user.visible_message(span_warning("[user] overloads [cyborg_mob]'s sensors and computing with the flash!"), span_danger("You overload [cyborg_mob]'s sensors and computing with the flash!"))
+			cyborg_mob.Paralyze(7 SECONDS)
+			cyborg_mob.set_temp_blindness_if_lower(7 SECONDS)
+			return
+		user.visible_message(span_warning("[user] blinds [cyborg_mob] with the flash!"), span_danger("You blind [cyborg_mob] with the flash!"))
+		cyborg_mob.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
+		cyborg_mob.set_temp_blindness_if_lower(7 SECONDS)
+		return
+
+	user.visible_message(span_warning("[user] fails to blind [target_mob] with the flash!"), span_warning("You fail to blind [target_mob] with the flash!"))
 
 /obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)

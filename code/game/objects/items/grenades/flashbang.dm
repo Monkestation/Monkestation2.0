@@ -44,9 +44,13 @@
 			hit_the_deck_and_faceplanted = TRUE
 //Flash
 	if(!living_mob.has_status_effect(/datum/status_effect/currently_flashed) && !hit_the_deck_and_faceplanted)
-		if(living_mob.flash_act(affect_silicon = 1))
-			living_mob.Paralyze(max(20/max(1, distance), 5))
-			living_mob.Knockdown(max(200/max(1, distance), 60))
+		if(living_mob.flash_act(affect_silicon = TRUE))
+			var/knockdown_or_blindness_duration = max((20 SECONDS)/ max(1, distance), 6 SECONDS)
+			if(iscyborg(living_mob) && !living_mob.is_blind())
+				living_mob.set_temp_blindness_if_lower(knockdown_or_blindness_duration)
+			else
+				living_mob.Paralyze(max((2 SECONDS) / max(1, distance), 0.5 SECONDS))
+				living_mob.Knockdown(knockdown_or_blindness_duration)
 
 //Bang
 	if(!distance || loc == living_mob || loc == living_mob.loc)
