@@ -172,9 +172,7 @@
 	icon_state = "snail"
 	name = "Immortal snail curse"
 	desc = "An immortal snail is hunting you."
-
-/atom/movable/screen/alert/immortal_snail_debt/MouseEntered(location, control, params)
-	openToolTip(usr, src, params, content = desc, theme = alerttooltipstyle)
+	show_tooltip_title = FALSE
 
 /atom/movable/screen/alert/immortal_snail_debt/proc/set_debt(amount)
 	name = "Immortal snail curse: [amount] cr"
