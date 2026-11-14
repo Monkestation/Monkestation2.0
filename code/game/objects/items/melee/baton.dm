@@ -211,10 +211,8 @@
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 
 			if(ishuman(target))
-				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
-				target.Disorient(SHOVE_SLOWDOWN_LENGTH)
+				target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
+				target.Disorient(STAGGERED_SLOWDOWN_LENGTH)
 		else
 			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)

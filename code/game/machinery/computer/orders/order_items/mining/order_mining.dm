@@ -22,6 +22,10 @@
 	item_path = /obj/item/kheiral_cuffs
 	cost_per_order = 750
 
+/datum/orderable_item/mining/punching_mitts
+	item_path = /obj/item/clothing/gloves/fingerless/punch_mitts
+	cost_per_order = 1000
+
 /datum/orderable_item/mining/mining_belt
 	item_path = /obj/item/storage/belt/mining
 	cost_per_order = 500

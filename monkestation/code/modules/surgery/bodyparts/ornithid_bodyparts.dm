@@ -6,7 +6,10 @@
 /obj/item/bodypart/arm/left/ornithid
 	limb_id = SPECIES_ORNITHID
 	icon_greyscale = 'monkestation/code/modules/the_bird_inside_of_me/icons/ornithid_parts_greyscale.dmi'
-	unarmed_attack_verb = "slash"
+	unarmed_attack_verbs = list("slash")
+	unarmed_attack_verbs_continuous = list("slashes")
+	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -16,7 +19,10 @@
 /obj/item/bodypart/arm/right/ornithid
 	limb_id = SPECIES_ORNITHID
 	icon_greyscale = 'monkestation/code/modules/the_bird_inside_of_me/icons/ornithid_parts_greyscale.dmi'
-	unarmed_attack_verb = "slash"
+	unarmed_attack_verbs = list("slash")
+	unarmed_attack_verbs_continuous = list("slashes")
+	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'

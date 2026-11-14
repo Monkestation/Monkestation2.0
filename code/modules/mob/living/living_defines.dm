@@ -243,3 +243,8 @@
 	var/datum/component/team_monitor/team_monitor
 	///a reference to a stored /datum/component/tracking_beacon used by victims of antags
 	var/datum/component/tracking_beacon/tracking_beacon
+
+	/// Lazylist of martial arts this mob knows
+	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
+	/// Reference handling is done by the martial arts themselves
+	var/list/datum/martial_art/martial_arts

@@ -1,5 +1,5 @@
 
-/mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
+/mob/living/silicon/grippedby(mob/living/carbon/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
 
 /mob/living/silicon/get_ear_protection()//no ears
@@ -87,6 +87,9 @@
 		return SUCCESSFUL_BLOCK
 	return FAILED_BLOCK
 
+/// Minimum unarmed effectiveness a fleshy limb needs to hurt a borg, roughly what it takes to land a knockdown stagger combo
+#define BORG_PUNCH_MIN_EFFECTIVENESS 20
+
 /mob/living/silicon/proc/try_punch_borg(mob/living/carbon/human/attacker)
 	if(HAS_TRAIT(attacker, TRAIT_FEEBLE))
 		return FALSE
@@ -95,13 +98,17 @@
 	if(!attacking_bodypart)
 		return FALSE
 
-	// You either need a robotic arm (metal can punch metal), able to deal enough damage to knockdown, or have the TRAIT_BORG_PUNCHER trait on yourself or the attacking limb.
-	if((attacking_bodypart.unarmed_damage_high < attacking_bodypart.unarmed_stun_threshold) && !(attacking_bodypart.bodytype & BODYTYPE_ROBOTIC) && !HAS_TRAIT(attacking_bodypart, TRAIT_BORG_PUNCHER) && !HAS_TRAIT(attacker, TRAIT_BORG_PUNCHER))
+	// You either need a robotic arm (metal can punch metal), a limb effective enough to knock someone down with a stagger combo, or have the TRAIT_BORG_PUNCHER trait on yourself or the attacking limb.
+	if((attacking_bodypart.unarmed_effectiveness < BORG_PUNCH_MIN_EFFECTIVENESS) && !(attacking_bodypart.bodytype & BODYTYPE_ROBOTIC) && !HAS_TRAIT(attacking_bodypart, TRAIT_BORG_PUNCHER) && !HAS_TRAIT(attacker, TRAIT_BORG_PUNCHER))
 		return FALSE
 
 	. = TRUE
 
-	var/atk_verb = attacking_bodypart.unarmed_attack_verb
+	var/atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
+	var/atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
+	var/atk_verb_continuous = "[atk_verb]s"
+	if(length(attacking_bodypart.unarmed_attack_verbs_continuous) >= atk_verb_index)
+		atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE && attacker.is_mouth_covered(ITEM_SLOT_MASK))
@@ -109,13 +116,15 @@
 		return FALSE
 	attacker.do_attack_animation(src, atk_effect)
 
-	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+	var/upper_unarmed_damage = attacking_bodypart.unarmed_damage_high + (HAS_TRAIT(attacker, TRAIT_STRENGTH) ? 2 : 0)
+	var/lower_unarmed_damage = min(attacking_bodypart.unarmed_damage_low + (attacker.mind?.get_skill_level(/datum/skill/athletics) || 0), upper_unarmed_damage)
+	var/damage = rand(lower_unarmed_damage, upper_unarmed_damage)
 	var/armor_block = run_armor_check(attack_flag = MELEE)
 
 	playsound(src, 'sound/items/weapons/bat_hit.ogg', 15, TRUE)
 	visible_message(
-		span_danger("[attacker] [atk_verb]ed [src]!"),
-		span_userdanger("You're [atk_verb]ed by [attacker]!"),
+		span_danger("[attacker] [atk_verb_continuous] [src]!"),
+		span_userdanger("[attacker] [atk_verb_continuous] you!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		ignored_mobs = attacker,
 	)
@@ -127,11 +136,12 @@
 	var/attack_direction = get_dir(attacker, src)
 
 	var/log_what = "punched"
-	if(atk_effect == ATTACK_EFFECT_KICK) //kicks deal 1.5x raw damage
+	if(atk_effect == ATTACK_EFFECT_KICK)
 		log_what = "kicked"
-		damage *= 1.5
 	apply_damage(damage, attacking_bodypart.attack_type, blocked = armor_block, attack_direction = attack_direction)
 	log_combat(attacker, src, log_what)
+
+#undef BORG_PUNCH_MIN_EFFECTIVENESS
 
 /mob/living/silicon/attack_drone(mob/living/basic/drone/user)
 	if((user.istate & ISTATE_HARM))

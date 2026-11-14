@@ -10,6 +10,36 @@
 
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being punched")
 
+/// Punches roll between the limb's damage values, deal no stamina damage, hit harder on grappled targets and weaker when feeble
+/datum/unit_test/harm_punch_damage
+
+/datum/unit_test/harm_punch_damage/Run()
+	var/mob/living/carbon/human/puncher = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
+	ADD_TRAIT(puncher, TRAIT_PERFECT_ATTACKER, INNATE_TRAIT)
+	puncher.set_combat_mode(TRUE)
+
+	var/obj/item/bodypart/arm/punching_arm = puncher.get_active_hand()
+	punching_arm.unarmed_damage_low = 10
+	punching_arm.unarmed_damage_high = 10
+
+	victim.attack_hand(puncher, list(RIGHT_CLICK = FALSE))
+	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 10, "Punch didn't deal the arm's unarmed damage")
+	TEST_ASSERT_EQUAL(victim.getStaminaLoss(), 0, "Punches shouldn't deal stamina damage")
+	victim.fully_heal()
+
+	puncher.start_pulling(victim)
+	puncher.setGrabState(GRAB_AGGRESSIVE)
+	victim.attack_hand(puncher, list(RIGHT_CLICK = FALSE))
+	// Grapple punches also get armor penetration, which works as a damage bonus against someone naked
+	TEST_ASSERT(victim.getBruteLoss() >= 10 * punching_arm.unarmed_pummeling_bonus, "Punching a grappled target didn't apply the pummeling bonus")
+	puncher.stop_pulling()
+	victim.fully_heal()
+
+	ADD_TRAIT(puncher, TRAIT_FEEBLE, INNATE_TRAIT)
+	victim.attack_hand(puncher, list(RIGHT_CLICK = FALSE))
+	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 5, "Feeble punch didn't deal half damage")
+
 /datum/unit_test/harm_melee/Run()
 	var/mob/living/carbon/human/tider = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)

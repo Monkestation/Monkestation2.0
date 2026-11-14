@@ -10,7 +10,7 @@
 	/// Reference to the tackling component applied
 	var/datum/component/tackler/tackle_comp
 
-/datum/martial_art/spiders_bite/teach(mob/living/new_holder)
+/datum/martial_art/spiders_bite/activate_style(mob/living/new_holder)
 	. = ..()
 	RegisterSignal(new_holder, COMSIG_HUMAN_PUNCHED, PROC_REF(kick_disarm))
 	tackle_comp = new_holder.AddComponent(/datum/component/tackler, \
@@ -23,15 +23,15 @@
 		silent_gain = TRUE, \
 	)
 
-/datum/martial_art/spiders_bite/on_remove(mob/living/old_holder)
+/datum/martial_art/spiders_bite/deactivate_style(mob/living/old_holder)
 	. = ..()
 	UnregisterSignal(old_holder, COMSIG_HUMAN_PUNCHED)
 	QDEL_NULL(tackle_comp)
 
-/datum/martial_art/spiders_bite/proc/kick_disarm(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
+/datum/martial_art/spiders_bite/proc/kick_disarm(mob/living/source, mob/living/target, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 	SIGNAL_HANDLER
 
-	if(!kicking)
+	if(atk_effect != ATTACK_EFFECT_KICK)
 		last_hit_ref = null
 		return
 	var/new_hit_ref = WEAKREF(target)

@@ -25,7 +25,7 @@
 	used_ability = FALSE
 
 /obj/item/gun/ballistic/revolver/joel/proc/velvet_check(mob/living/target)
-	if(target.mind && istype(target.mind.martial_art, /datum/martial_art/velvetfu))
+	if(istype(GET_ACTIVE_MARTIAL_ART(target), /datum/martial_art/velvetfu))
 		return TRUE
 	return FALSE
 
