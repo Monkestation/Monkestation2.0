@@ -812,3 +812,80 @@
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
+
+// Central Command Liaison Outpost
+/area/ruin/space/has_grav/ccpost
+	name = "Central Command Liaison Outpost"
+
+/area/ruin/space/has_grav/ccpost/lobby
+	name = "Central Command Liaison Outpost Lobby"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/boardroom
+	name = "Central Command Liaison Outpost Boardroom"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/commsroom
+	name = "Central Command Liaison Outpost Communications"
+	ambience_index = AMBIENCE_ENGI
+
+/area/ruin/space/has_grav/ccpost/centralhallway
+	name = "Central Command Liaison Outpost Central Hallway"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/quarters
+	name = "Central Command Liaison Outpost Quarters"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/offices
+	name = "Central Command Liaison Outpost Offices"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/medbay
+	name = "Central Command Liaison Outpost Medbay"
+	ambience_index = AMBIENCE_MEDICAL
+
+/area/ruin/space/has_grav/ccpost/engineering
+	name = "Central Command Liaison Outpost Engineering"
+	ambience_index = AMBIENCE_ENGI
+
+/area/ruin/space/has_grav/ccpost/breakroom
+	name = "Central Command Liaison Outpost Breakroom"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/cargo
+	name = "Central Command Liaison Outpost Cargo bay"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/cafeteria
+	name = "Central Command Liaison Outpost Cafeteria"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/has_grav/ccpost/maintenance
+	name = "Central Command Liaison Outpost Maintenance"
+	ambience_index = AMBIENCE_MAINT
+
+/area/ruin/space/has_grav/ccpost/secoffice
+	name = "Central Command Liaison Outpost Security Office"
+	ambience_index = AMBIENCE_GENERIC
+
+/area/ruin/space/solars/ccpost/solars/starboard
+	name = "Central Command Liaison Outpost Starboard Solars"
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	sound_environment = SOUND_AREA_SPACE
+
+/area/ruin/space/solars/ccpost/solars/aft
+	name = "Central Command Liaison Outpost Aft Solars"
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	sound_environment = SOUND_AREA_SPACE
+
+/area/ruin/space/has_grav/ccpost/asteroid
+	name = "Central Command Liaison Outpost Exterior"
+	sound_environment = SOUND_AREA_SPACE
+	area_flags = AREA_USES_STARLIGHT
+
+/area/ruin/space/has_grav/ccpost/executive_suite
+	name = "Central Command Executive Guest Suite"
+	ambience_index = AMBIENCE_GENERIC

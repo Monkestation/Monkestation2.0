@@ -23,6 +23,8 @@
 	if(!COOLDOWN_FINISHED(controller, announcement_spam_protection) && !fake)
 		return
 	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", ANNOUNCER_POWEROFF)
+	if(!fake)
+		ccpost_note_public_round_event("major_power_failure")
 	if(!fake) // Only start the CD if we're real
 		COOLDOWN_START(controller, announcement_spam_protection, 30 SECONDS)
 
