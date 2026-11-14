@@ -623,6 +623,11 @@ WEBMAP_URL https://maps.monkestation.com/maps/Monkestation/$map
 #FLOXY_USERNAME
 #FLOXY_PASSWORD
 
+## Hides every ckey in replay recordings behind an alias (anon1, anon2, ...). The replay viewer shows
+## the ckeys again once someone types this key into it. Make it long and random: anyone holding a
+## recording can guess a short one offline. Leave it commented out to write ckeys as they are.
+#REPLAY_CKEY_KEY
+
 ## While this is uncommented, server initialization will include some asset generation usually useful for development.
 ## It increases initialization time significantly so you'll want to disable this in live environments.
 GENERATE_ASSETS_IN_INIT

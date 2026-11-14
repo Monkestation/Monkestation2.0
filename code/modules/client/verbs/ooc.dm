@@ -136,9 +136,9 @@ GAME_VERB(/client, ooc, "OOC", "OOC")
 				if(check_rights_for(src, R_ADMIN))
 					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
 					var/has_ooc_color = CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color
-					to_chat(receiver, span_adminooc("[has_ooc_color ? "<font color='[ooc_color]'>" : "" ][span_prefix("OOC:")] <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span>[has_ooc_color ? "</font>" : ""]"), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_adminooc("[has_ooc_color ? "<font color='[ooc_color]'>" : "" ][span_prefix("OOC:")] <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span>[has_ooc_color ? "</font>" : ""]"), avoid_highlighting = avoid_highlight, confidential = !isnull(holder.fakekey))
 				else
-					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[prefix][keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight, confidential = !isnull(holder.fakekey))
 			else
 				var/keyfield
 				var/keyfield_pre = holder.fakekey ? holder.fakekey : key
@@ -170,6 +170,14 @@ GAME_VERB(/client, ooc, "OOC", "OOC")
 				to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[key_prefix][keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
 			else
 				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[key_prefix][keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+
+	// under the name players see, so a stealthed admin stays stealthed
+	if(GLOB.replay_recorder_running)
+		var/replay_key = holder?.fakekey ? holder.fakekey : "[key_prefix][keyname]"
+		if(GLOB.OOC_COLOR)
+			replay_record_global_chat(span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[replay_key]:</EM> <span class='message linkify'>[msg]</span></b></font>"), MESSAGE_TYPE_OOC)
+		else
+			replay_record_global_chat(span_ooc(span_prefix("OOC:</span> <EM>[replay_key]:</EM> <span class='message linkify'>[msg]")), MESSAGE_TYPE_OOC)
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc

@@ -29,8 +29,8 @@
 
 		SEND_SOUND(initiator, sound('sound/effects/adminhelp.ogg'))
 
-		to_chat(initiator, "<font color='red' size='4'><b>- MentorHelp Question! -</b></font>")
-		to_chat(initiator, "<font color='red'>This question is about <b>game mechanics</b>, so should be asked in <b>Mentorhelp</b> instead. To do so, use the <b>Mentorhelp</b> verb under the <b>Mentor<b> tab on the upper right of your screen.</font>")
+		to_chat(initiator, "<font color='red' size='4'><b>- MentorHelp Question! -</b></font>", confidential = TRUE)
+		to_chat(initiator, "<font color='red'>This question is about <b>game mechanics</b>, so should be asked in <b>Mentorhelp</b> instead. To do so, use the <b>Mentorhelp</b> verb under the <b>Mentor<b> tab on the upper right of your screen.</font>", confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "mhelp this")
 	var/msg = "Ticket [TicketHref("#[id]")] told to mentorhelp by [key_name]"
