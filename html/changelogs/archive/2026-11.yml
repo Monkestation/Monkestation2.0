@@ -692,3 +692,8 @@
       DANM YOU
   - bugfix: reagents with allow deadprocess now can actually work when you're dead!
   - admin: more lone larp
+2026-11-14:
+  AitorLogedo:
+  - balance: fireproof helmets now protect your mask, glasses, neck item and headset
+      from burning while you're on fire
+  - balance: masks can burn again if you're on fire without a fireproof helmet
