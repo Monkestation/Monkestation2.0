@@ -38,8 +38,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/bloodling_bio_display
 
-	var/atom/movable/screen/combo/combo_display
-
 	var/atom/movable/screen/action_intent
 	var/atom/movable/screen/zone_select
 	var/atom/movable/screen/pull_icon
@@ -257,7 +255,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	alien_plasma_display = null
 	bloodling_bio_display = null
 	alien_queen_finder = null
-	combo_display = null
 	mapvote_hud = null
 
 	QDEL_LIST_ASSOC_VAL(master_groups)
