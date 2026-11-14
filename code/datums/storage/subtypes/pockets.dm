@@ -177,7 +177,7 @@
 /datum/storage/pockets/armor
 	max_slots = 2
 	rustle_sound = TRUE
-	attack_hand_interact = TRUE
+	attack_hand_interact = FALSE
 
 ///Void cloak pocket
 /datum/storage/pockets/void_cloak
