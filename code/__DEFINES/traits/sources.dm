@@ -174,7 +174,6 @@
 #define SKILL_TRAIT "skill"
 #define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
-#define LOCKED_BORG_TRAIT "locked-borg"
 /// trait associated to not having locomotion appendages nor the ability to fly or float
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades"
 #define CRYO_TRAIT "cryo"
@@ -277,13 +276,23 @@
 */
 #define NO_TONGUE_TRAIT "no_tongue_trait"
 
-/// Trait granted by [/mob/living/silicon/robot].
-/// Traits applied to a silicon mob by their model.
+/**
+ * Trait sourced by [/mob/living/silicon/robot] associated with their model.
+ * Applied at [/mob/living/silicon/robot/proc/apply_model].
+*/
 #define CYBORG_MODEL_TRAIT "cyborg_model_trait"
 
-/// Trait granted by [/mob/living/silicon/robot].
-/// Traits applied to a silicon mob by their skin.
+/**
+ * Trait sourced by [/mob/living/silicon/robot] associated with their skin.
+ * Applied at [/mob/living/silicon/robot/proc/apply_skin].
+*/
 #define CYBORG_SKIN_TRAIT "cyborg_skin_trait"
+
+/**
+ * Trait sourced by [/mob/living/silicon/robot] associated with their lockcharge status.
+ * Applied at [/mob/living/silicon/robot/proc/set_lockcharge].
+*/
+#define CYBORG_LOCKED_TRAIT "cyborg_locked_trait"
 
 /// Trait granted by [mob/living/silicon/ai]
 /// Applied when the ai anchors itself
