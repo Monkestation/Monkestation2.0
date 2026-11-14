@@ -34,16 +34,19 @@
 		if(SPT_PROB(5, seconds_per_tick))
 			to_chat(organ_owner, span_purple("Your body's thirst for plasma is quenched, your inner and outer membrane using it to regenerate."))
 
-	else if(chem.type == /datum/reagent/water)
+	else if(chem.type == /datum/reagent/water || chem.type == /datum/reagent/water/salt)
 		if(HAS_TRAIT(organ_owner, TRAIT_GODMODE) || organ_owner.blood_volume <= 0)
 			return
 
+		var/water_damage = 4 * seconds_per_tick
 		var/datum/antagonist/bloodsucker/bloodsucker = IS_BLOODSUCKER(organ_owner)
 		if(bloodsucker)
-			bloodsucker.AddBloodVolume(-3 * seconds_per_tick)
+			bloodsucker.AddBloodVolume(water_damage)
 		else
-			organ_owner.blood_volume = max(organ_owner.blood_volume - (3 * seconds_per_tick), 0)
+			organ_owner.blood_volume = max(organ_owner.blood_volume - water_damage, 0)
 
+		// Water slowly deteriorates the slime's internal organs.
+		organ_owner.adjustOrganLoss(pick(organs_we_mend), 2 * seconds_per_tick)
 		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(organ_owner, span_warning("The water starts to weaken and adulterate your insides!"))
 
