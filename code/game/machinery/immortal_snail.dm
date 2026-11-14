@@ -102,6 +102,8 @@
 	/// Time spent visibly gliding across one tile, rather than waiting then hopping.
 	var/move_interval = 2.2 SECONDS
 	var/zero_gravity_move_interval = 1.8 SECONDS
+	/// Consecutive no-route sidesteps before the curse gives up and breaches forward.
+	var/no_route_detours = 0
 	/// Only the three most recently vacated tiles retain cursed slime.
 	var/list/slime_trail = list()
 	var/pursuing = FALSE
@@ -508,10 +510,6 @@
 		var/turf/candidate = get_step(src, direction)
 		if(!CAN_STEP(current_turf, candidate, FALSE, pass_info, null))
 			continue
-		// A side-step that cannot reduce distance causes an endless two-tile
-		// oscillation at sealed walls. With no route, chew through instead.
-		if(get_dist(candidate, destination) >= get_dist(current_turf, destination))
-			continue
 		if(!best_next || get_dist(candidate, destination) < get_dist(best_next, destination))
 			best_next = candidate
 	return best_next
@@ -567,8 +565,17 @@
 	var/fallback_direction = get_dir(src, destination)
 	if(ISDIAGONALDIR(fallback_direction))
 		fallback_direction &= EAST|WEST
-	var/turf/next = length(route) ? route[1] : passable_detour(destination, pass_info)
+	var/turf/next = length(route) ? route[1] : null
+	if(length(route))
+		no_route_detours = 0
+	else if(no_route_detours < 2)
+		next = passable_detour(destination, pass_info)
+		if(next)
+			no_route_detours++
 	if(!next)
+		// A couple of legal detours rule out a transient JPS miss. Do not pace
+		// forever beside a sealed wall: the curse must eventually breach it.
+		no_route_detours = 0
 		next = get_step(src, fallback_direction)
 	if(isclosedturf(next))
 		var/step_direction = get_dir(src, next)
