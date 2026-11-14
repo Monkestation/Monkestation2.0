@@ -32,6 +32,9 @@ STATIONNAME Space Station 13
 ## Discord URL: Shown in a few places such as the lobby screen and Verify Discord Account menu.
 DISCORDURL https://discord.gg/notarealserverblahblah
 
+## Regex for character artwork URLs, Customize to change allowed hosts or image extensions for character headshots
+# HEADSHOT_LINK_REGEX ^https://(?:i\.gyazo\.com|i\.l3n\.co|(?:images|thumbs)[24]\.imgbox\.com|files\.catbox\.moe)/[^?#]+\.(?:jpg|jpeg|png|webp)(?:\?[^#]*)?(?:#.*)?$
+
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
 
