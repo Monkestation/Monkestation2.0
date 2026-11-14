@@ -1,3 +1,9 @@
+/// Runtime Station is not guaranteed to leave the generic unit-test coordinates open.
+/// Build the small pursuit arena explicitly so these tests remain map-independent.
+/datum/unit_test/proc/immortal_snail_test_floor(turf/tile)
+	tile.ChangeTurf(/turf/open/floor/plating)
+	return tile
+
 /datum/unit_test/immortal_snail_money
 	var/datum/snail_debt/previous_ledger
 
@@ -559,10 +565,12 @@
 	TEST_ASSERT(get_dist(snail, person) >= 10, "Z travel must reappear at a distance, not on the victim")
 
 /datum/unit_test/immortal_snail_route_fallback/Run()
-	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_bottom_left)
+	var/turf/start_turf = immortal_snail_test_floor(run_loc_floor_bottom_left)
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, start_turf)
 	QDEL_NULL(snail.pursuit_driver)
 	var/turf/direct_wall_turf = get_step(snail, EAST)
-	var/turf/target_turf = get_step(direct_wall_turf, EAST)
+	direct_wall_turf.ChangeTurf(/turf/closed/wall)
+	var/turf/target_turf = immortal_snail_test_floor(get_step(direct_wall_turf, EAST))
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, target_turf)
 	var/list/isolated_surroundings = list()
 	for(var/turf/neighbor in orange(1, target_turf))
@@ -578,10 +586,11 @@
 		neighbor.ChangeTurf(isolated_surroundings[neighbor])
 
 /datum/unit_test/immortal_snail_delivery_flaps/Run()
-	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_bottom_left)
+	var/turf/start_turf = immortal_snail_test_floor(run_loc_floor_bottom_left)
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, start_turf)
 	QDEL_NULL(snail.pursuit_driver)
-	var/turf/flap_turf = get_step(snail, EAST)
-	var/turf/target_turf = get_step(flap_turf, EAST)
+	var/turf/flap_turf = immortal_snail_test_floor(get_step(snail, EAST))
+	var/turf/target_turf = immortal_snail_test_floor(get_step(flap_turf, EAST))
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, target_turf)
 	var/list/sealed_surroundings = list()
 	for(var/turf/neighbor in orange(1, snail))
@@ -597,9 +606,11 @@
 		neighbor.ChangeTurf(sealed_surroundings[neighbor])
 
 /datum/unit_test/immortal_snail_trail/Run()
-	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
+	var/turf/starting = immortal_snail_test_floor(run_loc_floor_bottom_left)
+	for(var/turf/tile in range(4, starting))
+		immortal_snail_test_floor(tile)
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, starting)
 	QDEL_NULL(snail.pursuit_driver)
-	var/turf/starting = get_turf(snail)
 	snail.forceMove(get_step(starting, EAST))
 	var/obj/effect/decal/cleanable/immortal_snail_slime/first_patch = locate() in starting
 	TEST_ASSERT(first_patch, "Slime must appear on the tile the snail leaves")
@@ -626,8 +637,10 @@
 	var/mob/living/basic/immortal_snail/test_snail
 
 /datum/unit_test/immortal_snail_scheduled_pursuit/Run()
-	test_snail = allocate(/mob/living/basic/immortal_snail)
-	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
+	var/turf/start_turf = immortal_snail_test_floor(run_loc_floor_bottom_left)
+	var/turf/target_turf = immortal_snail_test_floor(run_loc_floor_top_right)
+	test_snail = allocate(/mob/living/basic/immortal_snail, start_turf)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, target_turf)
 	test_snail.bind_target(person, 100000)
 	test_snail.next_step = world.time
 	var/datum/immortal_snail_pursuit/driver = test_snail.pursuit_driver
