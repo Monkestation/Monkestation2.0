@@ -1,0 +1,5 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - balance: "fireproof helmets now protect your mask, glasses, neck item and headset from burning while you're on fire"
+  - balance: "masks can burn again if you're on fire without a fireproof helmet"

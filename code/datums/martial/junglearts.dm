@@ -76,3 +76,16 @@
 		return MARTIAL_ATTACK_SUCCESS
 
 	return MARTIAL_ATTACK_FAIL
+
+/// Jungle Arts learned from the simian uplink scroll. Only kicks in while in combat mode (or a harmful intent), so you can still grab and shove normally with it off.
+/datum/martial_art/jungle_arts/trained
+
+/datum/martial_art/jungle_arts/trained/disarm_act(mob/living/attacker, mob/living/defender)
+	if(!(attacker.istate & ISTATE_HARM))
+		return MARTIAL_ATTACK_INVALID
+	return ..()
+
+/datum/martial_art/jungle_arts/trained/grab_act(mob/living/attacker, mob/living/defender)
+	if(!(attacker.istate & ISTATE_HARM))
+		return MARTIAL_ATTACK_INVALID
+	return ..()

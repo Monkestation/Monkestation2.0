@@ -247,7 +247,7 @@
 #define LEFT_LEG_TRAIT "left_leg"
 
 ///coming from a fish trait datum.
-#define FISH_DATUM_TRAIT "FISH_DATUM_TRAIT"
+#define FISH_TRAIT_DATUM "FISH_TRAIT_DATUM"
 ///coming from a fish evolution datum
 #define FISH_EVOLUTION "fish_evolution"
 
@@ -372,3 +372,9 @@
 #define VACUUM_STORED_TRAIT "vacuum_stored"
 /// Pauses a slime's AI while it lies dazed after falling off a slime stack
 #define SLIME_TUMBLE_TRAIT "slime_tumble"
+
+/// Trait from an engraving
+#define ENGRAVED_TRAIT "engraved"
+
+/// From the aquarium component
+#define AQUARIUM_TRAIT "aquarium"

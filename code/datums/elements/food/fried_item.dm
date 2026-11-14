@@ -41,7 +41,6 @@
 			this_food.desc = "A heavily-fried... something. Who can tell anymore?"
 
 	this_food.add_traits(list(TRAIT_FOOD_FRIED, TRAIT_MECHCOMP_INTERACTION_BANNED), ELEMENT_TRAIT(type)) // monkestation edit: also add TRAIT_MECHCOMP_INTERACTION_BANNED
-	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time)
 	// Already edible items will inherent these parameters
 	// Otherwise, we will become edible.
 	this_food.AddComponent( \
@@ -52,6 +51,8 @@
 		foodtypes = FRIED, \
 		volume = this_food.reagents?.maximum_volume, \
 	)
+	// MONKESTATION EDIT: our fryers count fry_time in seconds, listeners get deciseconds like on tg (grilled_item sends deciseconds too)
+	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time SECONDS)
 
 /datum/element/fried_item/Detach(atom/source, ...)
 	for(var/color in fried_colors)

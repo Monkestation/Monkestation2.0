@@ -24,6 +24,7 @@
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
+		"surgery_antennae_reconstruction", // monke edit: antennae reconstruction surgery
 		"surgery_heal_robot_upgrade_femto", // monke edit: advanced mechanical surgery
 		"surgery_filter_upgrade_femto", // monkestation edit: advanced blood filter surgery
 	)

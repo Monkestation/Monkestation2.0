@@ -242,6 +242,8 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_CASSETTE_DUMP "cassette_tape_dump"
 #define SFX_CASSETTE_ASMR "cassette_tape_asmr"
 #define SFX_REEL "reel"
+#define SFX_DEFAULT_FISH_SLAP "default_fish_slap"
+#define SFX_ALT_FISH_SLAP "alt_fish_slap"
 #define SFX_FISH_PICKUP "fish_pickup"
 
 #define SFX_CAT_MEOW "cat_meow"

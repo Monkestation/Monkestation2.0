@@ -44,6 +44,7 @@
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/secureye/spesstv,
 		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/extract_requests,
 	)
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(
@@ -438,7 +439,7 @@
 	return TRUE
 
 /obj/item/modular_computer/pda/silicon/ui_state(mob/user)
-	return GLOB.reverse_contained_state
+	return GLOB.deep_inventory_state
 
 /obj/item/modular_computer/pda/silicon/explode(mob/target, mob/bomber, from_message_menu)
 	if(from_message_menu)
