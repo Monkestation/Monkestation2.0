@@ -46,7 +46,7 @@
 			var/review = params["new_review"]
 			if(!istext(review))
 				return FALSE
-			return update_comment(trim(html_decode(review), MAX_BROADCAST_LEN))
+			return update_comment(trim(html_encode(review), MAX_BROADCAST_LEN))
 
 ///Updates the roundend NT rep final score to what we've inputed, if the round is in progress.
 /datum/computer_file/program/nt_rep_comments/proc/update_rating(new_rating)

@@ -252,6 +252,8 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 		qdel(query_add_admin_log)
 
 /datum/admins/proc/remove_admin(admin_ckey, admin_key, use_db, datum/admins/D)
+	if(!check_rights(R_PERMISSIONS))
+		return
 	if(tgui_alert(usr,"Are you sure you want to remove [admin_ckey]?","Confirm Removal",list("Do it","Cancel")) == "Do it")
 		GLOB.admin_datums -= admin_ckey
 		GLOB.deadmins -= admin_ckey
@@ -512,7 +514,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 	if(!admin_rank)
 		return
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		if(R.name == admin_rank && (!(R.rights & usr.client.holder.can_edit_rights_flags()) == R.rights))
+		if(R.name == admin_rank && ((R.rights & usr.client.holder.can_edit_rights_flags()) != R.rights))
 			to_chat(usr, "<span class='admin prefix'>You don't have edit rights to all the rights this rank has, rank deletion not permitted.</span>", confidential = TRUE)
 			return
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && (admin_rank in GLOB.protected_ranks))
