@@ -51,7 +51,6 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back/armorvest
 
-//MONKESTATION EDIT START
 /obj/item/clothing/suit/armor/surplus
 	name = "surplus armor vest"
 	desc = "An armored vest that provides decent protection against most types of damage."
@@ -61,7 +60,6 @@
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back/armorvest
-//MONKESTATION EDIT STOP
 
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
@@ -178,6 +176,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
+	has_coat_pockets = TRUE
 
 /datum/armor/armor_hos
 	melee = 30
@@ -230,6 +229,7 @@
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
@@ -245,6 +245,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
@@ -255,6 +256,7 @@
 	armor_type = /datum/armor/vest_capcarapace
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
+	has_coat_pockets = TRUE
 
 /datum/armor/vest_capcarapace
 	melee = 50
@@ -324,6 +326,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -469,11 +472,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	tackle_mod = 2
-
-/obj/item/clothing/suit/armor/swat/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/armor)
+	has_coat_pockets = TRUE
+	coat_pocket_storage_datum = /datum/storage/pockets/armor
 
 //All of the armor below is mostly unused
 
@@ -649,6 +649,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/vest_russian_coat
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /datum/armor/vest_russian_coat
 	melee = 25
@@ -698,6 +699,7 @@
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_centcom_formal
+	has_coat_pockets = TRUE
 
 /datum/armor/armor_centcom_formal
 	melee = 35
@@ -720,6 +722,7 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"
@@ -730,6 +733,7 @@
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/coat_militia
+	has_coat_pockets = TRUE
 
 /datum/armor/coat_militia
 	melee = 40
@@ -753,6 +757,7 @@
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_centcom_formal
+	has_coat_pockets = TRUE
 
 
 /obj/item/clothing/suit/armor/centcom_admiral/Initialize(mapload)
