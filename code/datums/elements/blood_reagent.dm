@@ -5,6 +5,7 @@
 	argument_hash_start_idx = 3
 	/// Blood type associated with this element
 	var/datum/blood_type/blood_type
+	var/is_changeling_blood = FALSE
 
 /*
  * Arguments:
@@ -22,6 +23,7 @@
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_OBJ, PROC_REF(on_obj_expose))
 	RegisterSignal(target, COMSIG_REAGENT_ON_MERGE, PROC_REF(on_merge))
 	RegisterSignal(target, COMSIG_REAGENT_ON_TRANSFER, PROC_REF(on_transfer))
+	RegisterSignal(target, COMSIG_REAGENT_TEMP_CHANGE, PROC_REF(on_temp_change))
 
 	if (!target.data)
 		target.data = list()
@@ -31,8 +33,11 @@
 		target.description = blood_type.desc
 	target.color = blood_type.get_color()
 
-	if (!blood_source)
+	if(!blood_source)
 		return
+
+	if(blood_source?.mind?.has_antag_datum(/datum/antagonist/changeling))
+		is_changeling_blood = TRUE
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])
@@ -54,6 +59,7 @@
 			// Concat viruses, resistances, etc
 			target_data |= data_list
 
+
 // Shouldn't realistically happen but just in case
 /datum/element/blood_reagent/Detach(datum/reagent/target)
 	. = ..()
@@ -63,6 +69,7 @@
 		COMSIG_REAGENT_EXPOSE_OBJ,
 		COMSIG_REAGENT_ON_MERGE,
 		COMSIG_REAGENT_ON_TRANSFER,
+		COMSIG_REAGENT_TEMP_CHANGE,
 	))
 
 /// Cover the mob in blood and transfer our viruses and resistances to them
@@ -222,3 +229,19 @@
 /datum/element/blood_reagent/proc/on_transfer(datum/reagent/reagent, datum/reagents/target_holder, datum/reagent/new_reagent)
 	SIGNAL_HANDLER
 	new_reagent.AddElement(/datum/element/blood_reagent, null, blood_type)
+
+/datum/element/blood_reagent/proc/on_temp_change(datum/reagent/source, new_holder_temperature, old_holder_temperature)
+	SIGNAL_HANDLER
+	if(!source.holder)
+		return
+	if(!is_changeling_blood)
+		return
+	if(new_holder_temperature < 395)
+		return
+	if(!source.holder.my_atom)
+		return
+	var/atom/screamer = source.holder.my_atom
+	screamer.audible_message(span_warning("\The [screamer] hisses and boils over violently!"))
+	playsound(screamer, 'sound/effects/chemistry/changeling_blood_scream.ogg', 75, TRUE) // scream cuz it hurts
+	on_turf_expose(source, get_turf(screamer), source.volume) // splatter the floor because it jumped out
+	source.holder.del_reagent(source.type)

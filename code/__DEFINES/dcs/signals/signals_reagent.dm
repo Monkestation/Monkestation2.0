@@ -23,6 +23,9 @@
 ///from base of [/datum/reagent/proc/on_transfer_creation(reagent, target_holder, new_reagent)]: (datum/reagents/target_holder, datum/reagent/new_reagent)
 #define COMSIG_REAGENT_ON_TRANSFER "reagent_on_transfer"
 
+/// from base of [/datum/reagent/proc/on_holder_temperature_update]: (new_holder_temperature, old_holder_temperature)
+#define COMSIG_REAGENT_TEMP_CHANGE "reagent_on_holder_temp_changed"
+
 ///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
 
