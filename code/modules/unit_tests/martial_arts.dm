@@ -27,3 +27,26 @@
 	attacker.UnarmedAttack(victim, proximity_flag = TRUE)
 	TEST_ASSERT_EQUAL(attacker.pulling, victim, "A normal grab should still grab the victim")
 	TEST_ASSERT_EQUAL(attacker.grab_state, GRAB_PASSIVE, "A normal grab should start passive")
+
+/// Items with the martial_art_giver component teach their martial art only while worn.
+/datum/unit_test/martial_art_giver
+
+/datum/unit_test/martial_art_giver/Run()
+	var/mob/living/carbon/human/consistent/wearer = allocate(/mob/living/carbon/human/consistent)
+	wearer.mind_initialize()
+	var/obj/item/clothing/gloves/the_sleeping_carp/gloves = allocate(/obj/item/clothing/gloves/the_sleeping_carp)
+
+	wearer.put_in_active_hand(gloves, forced = TRUE)
+	TEST_ASSERT_NULL(wearer.mind.martial_art, "Holding carp gloves should not teach sleeping carp")
+	wearer.dropItemToGround(gloves)
+	TEST_ASSERT_NULL(wearer.mind.martial_art, "Dropping carp gloves that were never worn should change nothing")
+
+	wearer.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES)
+	TEST_ASSERT(istype(wearer.mind.martial_art, /datum/martial_art/the_sleeping_carp), "Wearing carp gloves should teach sleeping carp")
+
+	wearer.dropItemToGround(gloves)
+	TEST_ASSERT_NULL(wearer.mind.martial_art, "Taking off carp gloves should remove sleeping carp")
+
+	wearer.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES)
+	qdel(gloves)
+	TEST_ASSERT_NULL(wearer.mind.martial_art, "Deleting worn carp gloves should remove sleeping carp")

@@ -8,31 +8,11 @@
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	/// Determines the version of boxing (or any martial art for that matter) that the boxing gloves gives
 	var/style_to_give = /datum/martial_art/boxing
-	/// The martial art we teach to whoever wears us
-	var/datum/martial_art/style
 
 /obj/item/clothing/gloves/boxing/Initialize(mapload)
 	. = ..()
-	style = new style_to_give()
+	AddComponent(/datum/component/martial_art_giver, style_to_give)
 	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
-
-/obj/item/clothing/gloves/boxing/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/clothing/gloves/boxing/equipped(mob/user, slot)
-	. = ..()
-	// boxing requires human
-	if(!ishuman(user))
-		return
-	if(slot & ITEM_SLOT_GLOVES)
-		style.teach(user, TRUE)
-
-/obj/item/clothing/gloves/boxing/dropped(mob/user)
-	. = ..()
-	if(!ishuman(user))
-		return
-	style.remove(user)
 
 /obj/item/clothing/gloves/boxing/evil
 	name = "evil boxing gloves"

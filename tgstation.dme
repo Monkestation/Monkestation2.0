@@ -1295,6 +1295,7 @@
 #include "code\datums\components\magnet.dm"
 #include "code\datums\components\manual_blinking.dm"
 #include "code\datums\components\manual_breathing.dm"
+#include "code\datums\components\martial_art_giver.dm"
 #include "code\datums\components\material_bane.dm"
 #include "code\datums\components\mind_linker.dm"
 #include "code\datums\components\mirage_border.dm"
