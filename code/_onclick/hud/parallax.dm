@@ -22,7 +22,6 @@
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/stars(null, src)
 		if(SSparallax.nebula_layer)
 			C.parallax_layers_cached += new SSparallax.nebula_layer(null, src)
-		/* monkestation removal
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, src)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, src)
 		if(SSparallax.random_layer)
@@ -86,12 +85,12 @@
 
 	switch(parallax_selection)
 		if (PARALLAX_INSANE)
-			C.parallax_layers_max = 6
+			C.parallax_layers_max = 8
 			C.do_parallax_animations = TRUE
 			return TRUE
 
 		if(PARALLAX_HIGH)
-			C.parallax_layers_max = 5
+			C.parallax_layers_max = 6
 			C.do_parallax_animations = TRUE
 			return TRUE
 
@@ -337,11 +336,25 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	icon_state = "stars"
 	blend_mode = BLEND_OVERLAY
 	speed = 0.5
-//monkestation edit end
-/* monkestation removal start
-	icon_state = "layer1"
-	speed = 0.6
 	layer = 1
+
+/// Gassy background that nebula station traits put over space
+/atom/movable/screen/parallax_layer/space_gas
+	icon_state = "space_gas"
+	blend_mode = BLEND_OVERLAY
+	speed = 2
+	layer = 4
+	/// The color we are
+	var/parallax_color
+
+/atom/movable/screen/parallax_layer/space_gas/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	add_atom_colour(parallax_color, ADMIN_COLOUR_PRIORITY)
+
+/// Space gas but green for the radioactive nebula station trait
+
+/atom/movable/screen/parallax_layer/space_gas/radioactive
+	parallax_color = list(0,0,0,0, 0,2,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //very vibrant green
 
 /atom/movable/screen/parallax_layer/layer_2
 	icon_state = "stars2"
@@ -397,7 +410,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/random
 	blend_mode = BLEND_OVERLAY
 	speed = 3
-	layer = 3
+	layer = 5
 
 /atom/movable/screen/parallax_layer/random/asteroids
 	icon_state = "asteroids"
