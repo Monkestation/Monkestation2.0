@@ -26,7 +26,17 @@
 
 /obj/item/holochip/update_name()
 	name = "\improper [credits] credit holochip"
+	if(GLOB.snail_debt?.claims[src])
+		name = "\improper cursed [credits] credit holochip"
 	return ..()
+
+/obj/item/holochip/update_appearance(updates)
+	. = ..()
+	if(GLOB.snail_debt?.claims[src])
+		add_filter("immortal_snail_curse", 1, outline_filter(1, "#B95BDB90", OUTLINE_SHARP))
+	else
+		remove_filter("immortal_snail_curse")
+	return .
 
 /obj/item/holochip/update_icon_state()
 	var/icon_suffix = ""

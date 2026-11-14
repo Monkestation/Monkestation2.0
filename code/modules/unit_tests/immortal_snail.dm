@@ -9,6 +9,8 @@
 	var/obj/item/holochip/prize = allocate(/obj/item/holochip, person, 100000)
 	var/obj/item/holochip/split = allocate(/obj/item/holochip, person, 0)
 	ledger.mark(prize, 100000)
+	TEST_ASSERT(findtext(prize.name, "cursed"), "Cursed holochips must identify themselves by name")
+	TEST_ASSERT(prize.get_filter("immortal_snail_curse"), "Cursed holochips must have a visible outline")
 	// Exercise the real spend path used by chip splitting.
 	split.credits = prize.spend(25000, FALSE, split)
 	TEST_ASSERT_EQUAL(ledger.claims[prize], 75000, null)
@@ -24,6 +26,8 @@
 	TEST_ASSERT(account.adjust_money(-10000, "Test withdrawal", withdrawal), "Withdrawal failed")
 	TEST_ASSERT_EQUAL(ledger.claims[withdrawal], 10000, null)
 	TEST_ASSERT_EQUAL(ledger.claims[account], 15000, null)
+	TEST_ASSERT(findtext(withdrawal.name, "cursed"), "Withdrawing from cursed bank funds must create a cursed holochip")
+	TEST_ASSERT_EQUAL(ledger.banked_debts[account][REF(person)], 15000, "A partial withdrawal must reduce only that depositor's banked curse")
 	ledger.collect(account)
 	TEST_ASSERT_EQUAL(account.account_balance, 1000, "Unrelated funds must survive reclamation")
 	// Spending only part of the cursed chip creates a personal death debt.
@@ -231,7 +235,6 @@
 	var/datum/snail_debt/ledger = allocate(/datum/snail_debt, run_loc_floor_bottom_left)
 	GLOB.snail_debt = ledger
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
-	var/datum/mind/npc_mind = snail.mind
 	var/datum/immortal_snail_pursuit/driver = snail.pursuit_driver
 	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
 	var/obj/item/holochip/chip = allocate(/obj/item/holochip, person, 100)
@@ -253,7 +256,7 @@
 	TEST_ASSERT(!length(snail.route) && !snail.route_destination && !snail.chemical_target, "Cached navigation and chemical references must be cleared")
 	TEST_ASSERT(!length(snail.pending_paths), "No path searches may remain owned by the deleted body")
 	TEST_ASSERT(QDELETED(driver) && !(driver in SSfastprocess.processing), "The movement driver must stop processing")
-	TEST_ASSERT(!QDELETED(npc_mind) && !npc_mind.current, "Deleting a snail body must preserve its mind without retaining the deleted body")
+	TEST_ASSERT(!snail.mind, "The autonomous snail must not allocate an antagonist mind")
 	TEST_ASSERT(toast && !toast.target && !test_ghost.alerts[alert_key], "Ghost notifications must release deleted snail bodies immediately")
 	TEST_ASSERT(QDELETED(ledger) && !ledger.origin && !ledger.collector_ref && !length(ledger.claims) && !length(ledger.last_carriers), "The ledger must release its claims and references")
 	TEST_ASSERT(QDELETED(trace), "Cancelling the ledger must clean up its abstract currency traces")
@@ -424,20 +427,10 @@
 	GLOB.player_list |= test_ghost
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)
 	QDEL_NULL(snail.pursuit_driver)
-	var/datum/antagonist/immortal_snail/antag = snail.mind?.has_antag_datum(/datum/antagonist/immortal_snail)
-	TEST_ASSERT(antag && antag.show_to_ghosts, "The autonomous snail must have a ghost-visible antagonist datum")
 	var/atom/movable/screen/alert/notify_action/toast = test_ghost.alerts["[REF(snail)]_notify_action"]
 	TEST_ASSERT(toast, "Spawning must give ghosts the same notification button as a singularity")
 	TEST_ASSERT_EQUAL(toast.target, snail, "The notification must target the spawned snail")
 	TEST_ASSERT_EQUAL(toast.action, NOTIFY_ORBIT, "The notification must let ghosts orbit the snail")
-	var/list/orbit_data = GLOB.orbit_menu.ui_static_data(test_ghost)
-	var/list/antagonists = orbit_data["antagonists"]
-	var/found_snail = FALSE
-	for(var/list/entry as anything in antagonists)
-		if(entry["ref"] == REF(snail))
-			found_snail = TRUE
-			break
-	TEST_ASSERT(found_snail, "The snail must appear in the ghost orbit menu's antagonist section")
 	GLOB.player_list -= test_ghost
 
 /datum/unit_test/immortal_snail_ghost_spectating/Destroy()
@@ -464,6 +457,7 @@
 	snail.bind_target(person, 100000)
 	person.death()
 	snail.next_step = 0
+	snail.process(1)
 	snail.process(1)
 	TEST_ASSERT_EQUAL(account.account_balance, 500, "Recovery through a PDA must remove only cursed credits")
 	TEST_ASSERT_EQUAL(ledger.recovered, 100000, "The complete bank claim must be reclaimed")
@@ -563,6 +557,44 @@
 	snail.pursue(person)
 	TEST_ASSERT_EQUAL(snail.z, person.z, "The snail must follow between z levels")
 	TEST_ASSERT(get_dist(snail, person) >= 10, "Z travel must reappear at a distance, not on the victim")
+
+/datum/unit_test/immortal_snail_route_fallback/Run()
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_bottom_left)
+	QDEL_NULL(snail.pursuit_driver)
+	var/turf/direct_wall_turf = get_step(snail, EAST)
+	var/turf/target_turf = get_step(direct_wall_turf, EAST)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, target_turf)
+	var/list/isolated_surroundings = list()
+	for(var/turf/neighbor in orange(1, target_turf))
+		if(neighbor == get_turf(snail))
+			continue
+		isolated_surroundings[neighbor] = neighbor.type
+		neighbor.ChangeTurf(/turf/closed/wall)
+	snail.route.Cut()
+	snail.pursue(person)
+	TEST_ASSERT(get_turf(snail) != direct_wall_turf, "A temporary pathfinding miss must not make the snail chew directly toward its target")
+	TEST_ASSERT(!snail.chemical_target && !direct_wall_turf.GetComponent(/datum/component/thermite), "A reachable detour must be tried before chemical breaching")
+	for(var/turf/neighbor as anything in isolated_surroundings)
+		neighbor.ChangeTurf(isolated_surroundings[neighbor])
+
+/datum/unit_test/immortal_snail_delivery_flaps/Run()
+	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail, run_loc_floor_bottom_left)
+	QDEL_NULL(snail.pursuit_driver)
+	var/turf/flap_turf = get_step(snail, EAST)
+	var/turf/target_turf = get_step(flap_turf, EAST)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent, target_turf)
+	var/list/sealed_surroundings = list()
+	for(var/turf/neighbor in orange(1, snail))
+		if(neighbor == flap_turf)
+			continue
+		sealed_surroundings[neighbor] = neighbor.type
+		neighbor.ChangeTurf(/turf/closed/wall)
+	allocate(/obj/structure/plasticflaps, flap_turf)
+	snail.pursue(person)
+	TEST_ASSERT_EQUAL(get_turf(snail), flap_turf, "The snail must plan through and pass airtight delivery flaps")
+	TEST_ASSERT(!snail.chemical_target, "Delivery flaps are a legal shortcut, not a chemical target")
+	for(var/turf/neighbor as anything in sealed_surroundings)
+		neighbor.ChangeTurf(sealed_surroundings[neighbor])
 
 /datum/unit_test/immortal_snail_trail/Run()
 	var/mob/living/basic/immortal_snail/snail = allocate(/mob/living/basic/immortal_snail)

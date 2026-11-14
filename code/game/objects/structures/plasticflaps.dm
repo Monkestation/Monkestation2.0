@@ -85,6 +85,8 @@
 	return TRUE
 
 /obj/structure/plasticflaps/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(pass_info.pass_flags & PASSFLAPS)
+		return TRUE
 	if(pass_info.is_living)
 		if(pass_info.is_bot)
 			return TRUE

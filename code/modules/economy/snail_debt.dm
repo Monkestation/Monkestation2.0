@@ -4,6 +4,9 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 /datum/snail_debt
 	var/list/claims = list()
 	var/list/last_carriers = list()
+	/// Banked cursed funds retain the identity of the person who deposited them.
+	var/list/banked_debts = list()
+	var/list/debtor_refs = list()
 	var/turf/origin
 	var/recovered = 0
 	/// The pursuer owns this ledger; other snails must not delete or consume it.
@@ -20,6 +23,9 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 			qdel(holder)
 	claims.Cut()
 	last_carriers.Cut()
+	banked_debts.Cut()
+	debtor_refs.Cut()
+	clear_curse_alerts()
 	origin = null
 	collector_ref = null
 	if(GLOB.snail_debt == src)
@@ -38,6 +44,10 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 			RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_money_moved))
 	claims[holder] += amount
 	remember_carrier(holder)
+	if(istype(holder, /obj/item/holochip))
+		var/obj/item/holochip/chip = holder
+		chip.update_appearance()
+	update_curse_alerts()
 
 /datum/snail_debt/proc/remember_carrier(datum/holder)
 	var/mob/living/carrier = carrier_of(holder)
@@ -47,6 +57,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 /datum/snail_debt/proc/on_money_moved(datum/source)
 	SIGNAL_HANDLER
 	remember_carrier(source)
+	update_curse_alerts()
 	if(!get_turf(location_of(source)))
 		transfer(source, null, claims[source])
 
@@ -97,11 +108,20 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 		mark(recipient, moving)
 		if(spender && !last_carriers[recipient])
 			last_carriers[recipient] = WEAKREF(spender)
+		if(istype(recipient, /datum/bank_account))
+			remember_banked_debt(recipient, spender, moving)
+	if(istype(from, /datum/bank_account))
+		consume_banked_debt(from, spender, moving)
 	claims[from] -= moving
 	if(!claims[from])
 		claims -= from
 		last_carriers -= from
+		banked_debts -= from
 		UnregisterSignal(from, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_CREDITS_TRANSFERRED))
+		if(istype(from, /obj/item/holochip))
+			var/obj/item/holochip/chip = from
+			chip.update_appearance()
+	update_curse_alerts()
 
 /datum/snail_debt/proc/on_debtor_death(mob/living/source)
 	SIGNAL_HANDLER
@@ -109,6 +129,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 	claims -= source
 	last_carriers -= source
 	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_CREDITS_TRANSFERRED))
+	update_curse_alerts()
 
 /datum/snail_debt/proc/on_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -167,6 +188,7 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 				return
 	claims -= holder
 	last_carriers -= holder
+	banked_debts -= holder
 	UnregisterSignal(holder, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_CREDITS_TRANSFERRED))
 	recovered += amount
 	if(isliving(holder))
@@ -185,6 +207,65 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 		account.bank_card_talk(span_warning("An impossible transfer reclaims [amount] cursed credits. The debt is settled."), TRUE)
 	else if(istype(holder, /obj/effect/snail_credit_trace))
 		qdel(holder)
+	update_curse_alerts()
+
+/// Records whose personal status owns cursed credits after they are deposited.
+/datum/snail_debt/proc/remember_banked_debt(datum/bank_account/account, mob/living/debtor, amount)
+	if(!account || !debtor || amount <= 0)
+		return
+	var/debtor_key = REF(debtor)
+	debtor_refs[debtor_key] = WEAKREF(debtor)
+	LAZYINITLIST(banked_debts[account])
+	banked_debts[account][debtor_key] += amount
+
+/// A withdrawal takes the depositor's own cursed balance first, then any remaining pooled balance.
+/datum/snail_debt/proc/consume_banked_debt(datum/bank_account/account, mob/living/preferred_debtor, amount)
+	var/list/account_debts = banked_debts[account]
+	if(!account_debts || amount <= 0)
+		return
+	var/remaining = amount
+	if(preferred_debtor)
+		remaining -= consume_banked_debt_for(account_debts, REF(preferred_debtor), remaining)
+	for(var/debtor_key in account_debts.Copy())
+		if(remaining <= 0)
+			break
+		remaining -= consume_banked_debt_for(account_debts, debtor_key, remaining)
+	if(!length(account_debts))
+		banked_debts -= account
+
+/datum/snail_debt/proc/consume_banked_debt_for(list/account_debts, debtor_key, amount)
+	var/available = account_debts[debtor_key]
+	var/consumed = min(available, amount)
+	account_debts[debtor_key] -= consumed
+	if(!account_debts[debtor_key])
+		account_debts -= debtor_key
+	return consumed
+
+/// Shows every player both carried and personally banked cursed balances.
+/datum/snail_debt/proc/update_curse_alerts()
+	var/list/debts_by_carrier = list()
+	for(var/datum/holder as anything in claims)
+		if(istype(holder, /datum/bank_account))
+			continue
+		var/mob/living/carrier = carrier_of(holder)
+		if(carrier)
+			debts_by_carrier[carrier] += claims[holder]
+	for(var/datum/bank_account/account as anything in banked_debts)
+		for(var/debtor_key in banked_debts[account])
+			var/mob/living/debtor = debtor_refs[debtor_key]?.resolve()
+			if(debtor)
+				debts_by_carrier[debtor] += banked_debts[account][debtor_key]
+	for(var/mob/living/person as anything in GLOB.player_list)
+		var/amount = debts_by_carrier[person]
+		if(amount)
+			var/atom/movable/screen/alert/immortal_snail_debt/alert = person.throw_alert("immortal_snail_debt", /atom/movable/screen/alert/immortal_snail_debt)
+			alert?.set_debt(amount)
+		else
+			person.clear_alert("immortal_snail_debt")
+
+/datum/snail_debt/proc/clear_curse_alerts()
+	for(var/mob/living/person as anything in GLOB.player_list)
+		person.clear_alert("immortal_snail_debt")
 
 /// Non-spendable trace left where currency was consumed by an economic sink.
 /obj/effect/snail_credit_trace

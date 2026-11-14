@@ -73,20 +73,6 @@
 /obj/machinery/computer/slot_machine/immortal_snail/multitool_act(mob/living/user, obj/item/tool)
 	return NONE
 
-/// A pursuer, not a combat AI: attacks never distract it from its contract.
-/datum/antagonist/immortal_snail
-	name = "Immortal Snail"
-	antagpanel_category = ANTAG_GROUP_HORRORS
-	show_in_antagpanel = FALSE
-	show_name_in_check_antagonists = TRUE
-	show_to_ghosts = TRUE
-	show_in_roundend = FALSE
-	count_against_dynamic_roll_chance = FALSE
-	prevent_roundtype_conversion = FALSE
-	replace_banned = FALSE
-	silent = TRUE
-	antag_flags = FLAG_ANTAG_CAP_IGNORE_HUMANITY
-
 /mob/living/basic/immortal_snail
 	name = "immortal snail"
 	desc = "A small snail leaving a glistening trail of slime. Do not touch it."
@@ -95,7 +81,7 @@
 	icon_living = "snail"
 	density = FALSE
 	movement_type = FLYING
-	pass_flags = PASSDOORS
+	pass_flags = PASSDOORS | PASSFLAPS
 	maxHealth = INFINITY
 	health = INFINITY
 	status_flags = NONE
@@ -147,8 +133,6 @@
 	// Living mobs already use DF_ISPROCESSING for their life subsystem.
 	// A separate datum owns the fast movement registration.
 	pursuit_driver = new(src)
-	mind_initialize()
-	mind.add_antag_datum(/datum/antagonist/immortal_snail)
 	if(!mapload)
 		notify_ghosts(
 			"An immortal snail has appeared. A cursed bargain has been struck.",
@@ -160,6 +144,41 @@
 /mob/living/basic/immortal_snail/proc/prevent_premature_deletion(datum/source, force)
 	SIGNAL_HANDLER
 	return contract_value && !curse_fulfilled && !force
+
+/mob/living/basic/immortal_snail/examine(mob/user)
+	. = ..()
+	if(!isobserver(user) || !debt)
+		return
+	var/mob/living/target = original_target()
+	var/target_name = target ? target.real_name : "lost"
+	. += span_notice("<hr><b>Curse telemetry</b>")
+	. += span_notice("Current target: [html_encode(target_name)]")
+	. += span_notice("Outstanding cursed credits: [contract_value - debt.recovered] cr")
+	if(!length(debt.claims))
+		. += span_notice("No outstanding recoverable credits.")
+		return
+	. += span_notice("<b>Debt trail:</b>")
+	for(var/datum/holder as anything in debt.claims)
+		var/mob/living/carrier = debt.carrier_of(holder)
+		var/holder_name = carrier ? carrier.real_name : "unattended cursed credits"
+		. += span_notice("• [html_encode(holder_name)]: [debt.claims[holder]] cr")
+
+/mob/living/basic/immortal_snail/attack_ghost(mob/dead/observer/user)
+	examine(user)
+	return TRUE
+
+/atom/movable/screen/alert/immortal_snail_debt
+	icon = 'icons/mob/simple/immortal_snail.dmi'
+	icon_state = "snail"
+	name = "Immortal snail curse"
+	desc = "An immortal snail is hunting you."
+
+/atom/movable/screen/alert/immortal_snail_debt/MouseEntered(location, control, params)
+	openToolTip(usr, src, params, content = desc, theme = alerttooltipstyle)
+
+/atom/movable/screen/alert/immortal_snail_debt/proc/set_debt(amount)
+	name = "Immortal snail curse: [amount] cr"
+	desc = "You are responsible for [amount] cursed credit\s. An immortal snail is hunting its money."
 
 /mob/living/basic/immortal_snail/Destroy(force)
 	if(contract_value && !curse_fulfilled && !force)
@@ -324,6 +343,11 @@
 	if(target.mind)
 		target_mind_ref = WEAKREF(target.mind)
 	var/datum/bank_account/account = target.get_bank_account()
+	if(!account && debt)
+		for(var/datum/bank_account/candidate as anything in debt.claims)
+			if(debt.carrier_of(candidate) == target)
+				account = candidate
+				break
 	if(account)
 		account_ref = WEAKREF(account)
 	contract_value = amount
@@ -442,6 +466,19 @@
 		return list()
 	return result[1]
 
+/// A failed JPS search is not proof that the wall toward the target needs breaching.
+/// Keep moving through a legal adjacent tile and let the next search recover first.
+/mob/living/basic/immortal_snail/proc/passable_detour(turf/destination, datum/can_pass_info/pass_info)
+	var/turf/best_next
+	var/turf/current_turf = get_turf(src)
+	for(var/direction in GLOB.cardinals)
+		var/turf/candidate = get_step(src, direction)
+		if(!CAN_STEP(current_turf, candidate, FALSE, pass_info, null))
+			continue
+		if(!best_next || get_dist(candidate, destination) < get_dist(best_next, destination))
+			best_next = candidate
+	return best_next
+
 /mob/living/basic/immortal_snail/proc/pursue(atom/target)
 	var/turf/destination = get_turf(target)
 	if(!destination)
@@ -493,7 +530,9 @@
 	var/fallback_direction = get_dir(src, destination)
 	if(ISDIAGONALDIR(fallback_direction))
 		fallback_direction &= EAST|WEST
-	var/turf/next = length(route) ? route[1] : get_step(src, fallback_direction)
+	var/turf/next = length(route) ? route[1] : passable_detour(destination, pass_info)
+	if(!next)
+		next = get_step(src, fallback_direction)
 	if(isclosedturf(next))
 		var/step_direction = get_dir(src, next)
 		if(!chemically_breach(next))
@@ -639,6 +678,8 @@
 
 /mob/living/basic/immortal_snail/proc/available_credits(mob/living/victim)
 	var/datum/bank_account/account = account_ref?.resolve()
+	if(!istype(account))
+		account = null
 	var/total = account ? account.account_balance : 0
 	for(var/obj/item/item in victim.get_all_contents())
 		if(istype(item, /obj/item/holochip) || istype(item, /obj/item/stack/spacecash) || istype(item, /obj/item/coin))
