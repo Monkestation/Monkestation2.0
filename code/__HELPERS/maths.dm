@@ -246,5 +246,5 @@
 			continue
 		var/idx0 = idx - 1
 		var/x = (idx0 % width) + 1
-		var/y = idx0 / width + 1
+		var/y = floor(idx0 / width) + 1
 		. += list(list(x, y))

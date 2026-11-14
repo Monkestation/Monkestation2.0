@@ -1,0 +1,154 @@
+.theme-wonderland:root {
+	--wonderland-bone: oklch(0.9 0.025 75);
+	--wonderland-madder: oklch(0.42 0.14 8);
+	--wonderland-heart: oklch(0.53 0.21 25);
+	--wonderland-shadow: oklch(0.1 0.04 8 / 0.45);
+
+	--color-base: oklch(0.24 0.07 8);
+	--color-primary: var(--wonderland-heart);
+	--color-good: oklch(0.55 0.14 150);
+	--color-bad: var(--wonderland-heart);
+	--color-label: oklch(0.75 0.04 30);
+	--base-gradient-spread: 0;
+	--titlebar-background: oklch(0.2 0.06 8);
+	--section-background: oklch(0.31 0.09 8);
+	--section-title-color: var(--wonderland-bone);
+	--blockquote-color: var(--wonderland-bone);
+	--blockquote-border: 2px solid var(--wonderland-madder);
+	--candystripe-odd: oklch(0.9 0.025 75 / 0.05), oklch(0.9 0.025 75 / 0.05);
+	--candystripe-even: transparent, transparent;
+
+	.Layout__content {
+		background-image: none;
+	}
+
+	.AntagInfoMonsterHunter .Section {
+		overflow: hidden;
+		border-radius: 0.75rem;
+		color: var(--wonderland-bone);
+		box-shadow:
+			0 1px 2px var(--wonderland-shadow),
+			0 4px 12px var(--wonderland-shadow);
+	}
+
+	// the Queen's chessboard, two rows of squares where the separator line would be
+	.AntagInfoMonsterHunter .Section__title {
+		padding-bottom: calc(var(--space-m) + 12px);
+		border-bottom: 0;
+		background-image: conic-gradient(
+			var(--wonderland-bone) 25%,
+			var(--wonderland-madder) 0 50%,
+			var(--wonderland-bone) 0 75%,
+			var(--wonderland-madder) 0
+		);
+		background-size: 12px 12px;
+		background-repeat: repeat-x;
+		background-position: left bottom;
+	}
+
+	.AntagInfoMonsterHunter .Section__titleText {
+		font-family: Georgia, serif;
+		font-size: 1.25rem;
+		text-wrap: balance;
+	}
+}
+
+.AntagInfoMonsterHunter {
+	&__tabs {
+		--tabs-container-background: transparent;
+		--tab-background: var(--section-background);
+		--tab-background-hover: oklch(0.38 0.11 8);
+		--tab-background-selected: var(--wonderland-bone);
+		--tab-color: oklch(0.9 0.025 75 / 0.75);
+		--tab-color-selected: var(--wonderland-madder);
+		--tab-indicator-size: 0;
+		gap: 0.333rem;
+		margin: 0;
+		padding: 0;
+		border-bottom: 3px solid var(--wonderland-bone);
+
+		.Tab {
+			min-height: 2.75rem;
+			border-radius: 0.5rem 0.5rem 0 0;
+			font: bold 1.167rem Georgia, serif;
+		}
+
+		.Tab__left {
+			margin-left: 0.75rem;
+		}
+	}
+
+	&__page {
+		flex-basis: 0;
+		min-height: 0;
+		overflow-y: auto;
+	}
+
+	&__yapping {
+		font: 1.083rem/1.5 Georgia, serif;
+		text-wrap: pretty;
+
+		p {
+			margin: 0;
+		}
+
+		p + p {
+			margin-top: 0.75rem;
+		}
+
+		b {
+			color: oklch(0.78 0.1 5);
+		}
+	}
+
+	&__empty {
+		padding: 2rem 0;
+		text-align: center;
+		color: var(--color-label);
+	}
+
+	&__rabbits {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	&__rabbit {
+		image-rendering: pixelated;
+
+		&--hidden {
+			opacity: 0.2;
+			filter: grayscale(1);
+		}
+	}
+
+	&__count {
+		font-variant-numeric: tabular-nums;
+	}
+
+	&__entry + &__entry {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid oklch(0.9 0.025 75 / 0.15);
+	}
+
+	&__prey {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.5rem;
+		font: bold 1.167rem Georgia, serif;
+	}
+
+	&__kind {
+		width: 1.25em;
+		text-align: center;
+		color: oklch(0.78 0.1 5);
+	}
+
+	&__quote {
+		margin-bottom: 0.5rem;
+		font-style: italic;
+		text-wrap: pretty;
+	}
+}

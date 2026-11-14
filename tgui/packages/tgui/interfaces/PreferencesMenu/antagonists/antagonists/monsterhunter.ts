@@ -6,10 +6,10 @@ const MonsterHunter: Antagonist = {
   name: 'Monster Hunter',
   description: [
     multiline`
-      Quitting retirement due to an increase of Monsters on station,
-      Monster Hunters are humans out for the kill on the monstrous activities
-      on board Space Station 13. Prepared with stakes and Martial arts,
-      these expert Hunters will stop at nothing to kill their prey.
+      The Red Queen's pawn, sent to hunt the monsters hiding among the crew.
+      You may think you are the hero, but you are not. Every kill and every
+      rift you tear open drags Wonderland closer, until it swallows the
+      station whole.
     `,
   ],
   category: Category.Midround,

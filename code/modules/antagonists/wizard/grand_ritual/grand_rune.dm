@@ -122,6 +122,9 @@
 
 /obj/effect/grand_rune/interact(mob/living/user)
 	. = ..()
+	if(GLOB.wonderland_apocalypse)
+		to_chat(user, span_hearts_decree("Stop waving your arms at my floor. I said no tricks, and I meant yours most of all."))
+		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(invoke_rune), user)
 	return TRUE
 

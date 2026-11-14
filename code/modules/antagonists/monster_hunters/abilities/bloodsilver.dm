@@ -1,6 +1,9 @@
 /datum/action/cooldown/spell/conjure_item/blood_silver
 	name = "Create bloodsilver bullet"
 	desc = "Wield your blood and mold it into a bloodsilver bullet"
+	background_icon_state = "bg_wonderland"
+	overlay_icon_state = null
+	active_overlay_icon_state = null
 	button_icon = 'icons/obj/guns/ammo.dmi'
 	button_icon_state = "bloodsilver"
 	cooldown_time = 2 MINUTES

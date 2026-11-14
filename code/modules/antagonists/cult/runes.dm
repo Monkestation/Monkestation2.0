@@ -623,6 +623,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_warning("Nar'Sie is already on this plane!"))
 		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - already summoned.")
 		return
+	if(GLOB.wonderland_apocalypse)
+		for(var/invoker in invokers)
+			to_chat(invoker, span_hearts_decree("A god? I did not send for a god. Send it back! Fine it! Mop it up! ...And who has been drawing on my floor?"))
+		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - Wonderland has sealed it.")
+		return
 //monkestation edit start
 	used = TRUE
 	var/datum/team/cult/cult_team = user_antag.cult_team

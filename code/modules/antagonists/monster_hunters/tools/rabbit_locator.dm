@@ -1,6 +1,6 @@
 /obj/item/rabbit_locator
 	name = "Accursed Red Queen card"
-	desc = "Hunts down the white rabbits.\n<b>This does <i>NOT</i> track down monster targets, it tracks down the rabbits you must collect.</b>"
+	desc = "Hunts down the wonderland rifts.\n<b>This does <i>NOT</i> track down monster targets, it tracks down the rifts you must tear open.</b>"
 	icon = 'icons/obj/items/monster_hunter.dmi'
 	icon_state = "locator"
 	w_class = WEIGHT_CLASS_SMALL
@@ -61,7 +61,7 @@
 		to_chat(user,span_warning("You feel a VERY strong hint..."))
 	if(distance < 10)
 		sound_value = 100
-		to_chat(user, span_warning("Here... the white rabbit is definitely here!"))
+		to_chat(user, span_warning("Here... the rift is definitely here!"))
 	COOLDOWN_START(src, locator_timer, 3 SECONDS)
 	if(!sound_value)
 		return

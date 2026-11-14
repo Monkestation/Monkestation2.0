@@ -12,6 +12,13 @@
 	faction = list(FACTION_RABBITS)
 	ai_controller = /datum/ai_controller/basic_controller/killer_rabbit
 	basic_mob_flags = DEL_ON_DEATH
+	mob_size = MOB_SIZE_SMALL
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+
+	habitable_atmos = null
+	unsuitable_atmos_damage = 0
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
 
 /mob/living/basic/killer_rabbit/Initialize(mapload)
 	. = ..()
@@ -21,7 +28,7 @@
 /mob/living/basic/killer_rabbit/proc/hostile_attackingtarget(mob/living/basic/source, atom/target, success)
 	SIGNAL_HANDLER
 
-	if(!success || !ishuman(target))
+	if(!success || !isliving(target))
 		return
 	explosion(src, heavy_impact_range = 1, light_impact_range = 1, flame_range = 2)
 	gib(src)

@@ -25,6 +25,10 @@
 		to_chat(invoker, span_userdanger("No ark located, contact the admins with an ahelp(f1)."))
 		return FALSE
 
+	if(GLOB.wonderland_apocalypse)
+		to_chat(invoker, span_hearts_decree("Stop that ticking this instant! I will not have another door opened in my court. Wind it down! Lock it up! Sentence the key!"))
+		return FALSE
+
 	if(SSthe_ark.charged_anchoring_crystals < ANCHORING_CRYSTALS_TO_SUMMON)
 		to_chat(invoker, span_brass("Reebe is not yet anchored enough to this realm, the ark cannot open until enough anchoring crystals are summoned and protected."))
 		return FALSE

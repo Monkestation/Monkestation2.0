@@ -136,6 +136,9 @@
 
 /// Checks if you're actually able to draw a rune here
 /datum/action/cooldown/grand_ritual/proc/start_drawing_rune()
+	if(GLOB.wonderland_apocalypse)
+		to_chat(owner, span_hearts_decree("No scribbling! There will be one grand finale today, and it is mine. Hat off in my court - yes, the pointed one."))
+		return
 	var/atom/existing_rune = rune?.resolve()
 	if (existing_rune)
 		owner.balloon_alert(owner, "rune already exists!")

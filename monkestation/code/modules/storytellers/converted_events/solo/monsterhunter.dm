@@ -1,5 +1,3 @@
-#define MINIMUM_MONSTERS_REQUIRED 2
-
 /datum/round_event_control/antagonist/monsterhunter
 	name = "Monster Hunters"
 	track = EVENT_TRACK_MAJOR
@@ -39,10 +37,4 @@
 	if(!.)
 		return
 
-	var/count = length(get_all_monster_hunter_prey())
-	if(MINIMUM_MONSTERS_REQUIRED > count)
-		return FALSE
-
-	return TRUE
-
-#undef MINIMUM_MONSTERS_REQUIRED
+	return can_monster_hunter_spawn()

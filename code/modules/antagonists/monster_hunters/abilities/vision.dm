@@ -1,6 +1,9 @@
 /datum/action/cooldown/spell/track_monster
 	name = "Hunter Vision"
 	desc = "Detect monsters within vicinity"
+	background_icon_state = "bg_wonderland"
+	overlay_icon_state = null
+	active_overlay_icon_state = null
 	button_icon_state = "blind"
 	cooldown_time = 5 SECONDS
 	spell_requirements = NONE
@@ -42,7 +45,7 @@
 		var/remove_from_vision = TRUE
 		for(var/datum/objective/hunter/goal in objectives_list) //take them out if they are not our prey
 			if(goal.target == viewer.mind)
-				goal.uncover_target()
+				hunter.reveal_prey(goal)
 				remove_from_vision = FALSE
 				break
 		if(remove_from_vision)

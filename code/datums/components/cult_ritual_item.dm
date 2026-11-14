@@ -343,6 +343,9 @@
 /datum/component/cult_ritual_item/proc/scribe_narsie_rune(mob/living/cultist, datum/team/cult/cult_team)
 	var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
 	var/datum/objective/sacrifice/sac_objective = locate() in cult_team.objectives
+	if(GLOB.wonderland_apocalypse)
+		to_chat(cultist, span_hearts_decree("Put the knife down. That is my floor, and you may not write on it. I have had quite enough of gods today!"))
+		return FALSE
 	if(!check_if_in_ritual_site(cultist, cult_team))
 		return FALSE
 	if(sac_objective && !sac_objective.check_completion())
