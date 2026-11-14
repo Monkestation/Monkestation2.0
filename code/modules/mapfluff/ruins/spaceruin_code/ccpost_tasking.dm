@@ -5002,7 +5002,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			SStgui.update_uis(terminal)
 
 /datum/ccpost_tasking_network/proc/security_archive(datum/ccpost_tasking_order/order)
-	if(!order || order in security_history)
+	if(!order || (order in security_history))
 		return
 	security_history.Insert(1, order)
 	while(length(security_history) > max_history)

@@ -4615,7 +4615,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	var/obj/item/card/id/worn_card = person.wear_id?.GetID()
 	if(worn_card)
 		cards |= worn_card
-	for(var/obj/item/held as anything in person.held_items)
+	for(var/obj/item/held as anything in person.get_held_items())
 		var/obj/item/card/id/card = held?.GetID()
 		if(card)
 			cards |= card
