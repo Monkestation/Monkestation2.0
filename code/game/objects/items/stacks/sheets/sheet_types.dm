@@ -408,6 +408,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	new/datum/stack_recipe("punji sticks trap", /obj/structure/punji_sticks, 5, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("bamboo spear", /obj/item/spear/bamboospear, 25, time = 9 SECONDS, check_density = FALSE, category = CAT_WEAPON_MELEE), \
+	new/datum/stack_recipe("chopsticks", /obj/item/kitchen/chopstick, 2, time = 1 SECONDS, check_density = FALSE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("blow gun", /obj/item/gun/syringe/blowgun, 10, time = 7 SECONDS, check_density = FALSE, category = CAT_WEAPON_RANGED), \
 	new/datum/stack_recipe("crude syringe", /obj/item/reagent_containers/syringe/crude, 5, time = 1 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY), \
 	new/datum/stack_recipe("rice hat", /obj/item/clothing/head/costume/rice_hat, 10, time = 7 SECONDS, check_density = FALSE, category = CAT_CLOTHING), \
