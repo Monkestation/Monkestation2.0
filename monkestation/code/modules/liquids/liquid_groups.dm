@@ -403,7 +403,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	process_group()
 
 /datum/liquid_group/proc/add_reagent(obj/effect/abstract/liquid_turf/member, datum/reagent/reagent, amount, temperature)
-	reagents.add_reagent(reagent, amount, temperature, no_react = TRUE)
+	reagents.add_reagent(reagent, amount, reagtemp = temperature, no_react = TRUE)
 	handle_visual_changes()
 	process_group()
 

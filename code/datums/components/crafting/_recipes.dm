@@ -31,6 +31,8 @@
 	var/list/structures
 	///Should only one object exist on the same turf?
 	var/one_per_turf = FALSE
+	/// Collects the items used in the craft for check_requirements(). Only a few recipes need it, and collecting them is a lot of work.
+	var/collect_requirements = FALSE
 	/// Steps needed to achieve the result
 	var/list/steps
 	/// Whether the result can be crafted with a crafting menu button

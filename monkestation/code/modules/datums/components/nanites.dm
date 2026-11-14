@@ -122,6 +122,8 @@
 		if(cloud_id && cloud_active && world.time > next_sync)
 			cloud_sync()
 			next_sync = world.time + NANITE_SYNC_DELAY
+	if(QDELETED(src))
+		return PROCESS_KILL
 	set_nanite_bar()
 
 ///Deletes nanites!

@@ -58,9 +58,9 @@
 
 	msg = emoji_parse(msg)
 	SEND_SOUND(chosen_client, 'sound/items/bikehorn.ogg')
-	var/list/all_requests = GLOB.mentor_requests.requests
-	var/list/chosen_requests = all_requests[chosen_client.ckey]
-	var/chosen_requests_len = length(chosen_requests)
+	var/ticket_ckey = check_mentor_rights_for(src, R_MENTOR) ? chosen_client.ckey : ckey
+	var/list/ticket_requests = GLOB.mentor_requests.requests[ticket_ckey]
+	var/datum/request/request = LAZYACCESS(ticket_requests, length(ticket_requests))
 	if(check_mentor_rights_for(chosen_client, R_MENTOR))
 		if(check_mentor_rights_for(src, R_MENTOR))
 			/// Both are Mentors
@@ -84,8 +84,8 @@
 				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
 				avoid_highlighting = TRUE,
 				confidential = TRUE)
-			var/datum/request/request = chosen_requests[chosen_requests_len]
-			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, msg)
+			if(request)
+				SSplexora.mticket_pm(request, src.mob, chosen_client.mob, msg)
 	else
 		if(check_mentor_rights_for(src, R_MENTOR))
 			/// Reciever is a Non-Mentor - Left unsorted so people that Mentorhelp with Mod chat off will still get it, otherwise they'll complain.
@@ -95,21 +95,12 @@
 				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
 				avoid_highlighting = TRUE,
 				confidential = TRUE)
-			var/datum/request/request = chosen_requests[chosen_requests_len]
-			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, html_decode(msg))
+			if(request)
+				SSplexora.mticket_pm(request, src.mob, chosen_client.mob, html_decode(msg))
 
 	var/id = "None"
-
-	if(!check_mentor_rights_for(src, R_MENTOR))
-		var/list/our_requests = all_requests[ckey]
-		var/our_requests_len = length(our_requests)
-		var/datum/request/request = our_requests[our_requests_len]
-		if(request)
-			id = "[request.id]"
-	else
-		var/datum/request/request = chosen_requests[chosen_requests_len]
-		if(request)
-			id = "[request.id]"
+	if(request)
+		id = "[request.id]"
 
 	if(check_mentor_rights_for(src, R_MENTOR) && check_mentor_rights_for(chosen_client, R_MENTOR))
 		id = "Both Mentors, ID Retrival may be wrong: [id]"

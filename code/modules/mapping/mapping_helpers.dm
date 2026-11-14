@@ -426,7 +426,7 @@
 
 	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 	if(isnull(target))
-		var/area/target_area = get_area(target)
+		var/area/target_area = get_area(src)
 		log_mapping("[src] failed to find an apc at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)

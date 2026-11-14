@@ -1,4 +1,9 @@
 .Changelog {
+  &__Scroller {
+    height: 100%;
+    overflow-y: auto;
+  }
+
   &__Button {
     height: 22px;
   }

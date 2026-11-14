@@ -104,6 +104,7 @@
 	)
 	time = 10 SECONDS
 	category = CAT_TOOLS
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/shuttle_blueprints/check_requirements(mob/user, list/collected_requirements)
 	var/list/crayons = collected_requirements[/obj/item/toy/crayon]

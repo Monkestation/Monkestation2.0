@@ -610,7 +610,7 @@
 	SIGNAL_HANDLER
 	user.add_sight(SEE_MOBS)
 	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
-	user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5))
+	user.lighting_color_cutoffs = user.lighting_color_cutoffs ? blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5)) : list(25, 8, 5)
 
 /datum/antagonist/bloodsucker/proc/on_bloodsilver_hit(mob/living/source)
 	SIGNAL_HANDLER

@@ -22,6 +22,7 @@
 	if(!usr)
 		usr = GLOB.lua_usr
 	callback = CALLBACK(arglist(args))
+	callback.datum_flags |= DF_VAR_EDITED
 	INVOKE_ASYNC(src, PROC_REF(perform))
 
 /datum/promise/proc/perform()

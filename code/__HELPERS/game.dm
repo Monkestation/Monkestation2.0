@@ -243,7 +243,7 @@
 		var/mob/player_mob = flashed_client
 		if(player_mob.client)
 			flashed_client = player_mob.client
-	if(!flashed_client || (!flashed_client.prefs.read_preference(/datum/preference/toggle/window_flashing) && !ignorepref))
+	if(!flashed_client || (!flashed_client.prefs?.read_preference(/datum/preference/toggle/window_flashing) && !ignorepref))
 		return
 	winset(flashed_client, "mainwindow", "flash=5")
 

@@ -378,6 +378,8 @@
 
 /// Maximum Plasma effects. "Too much Plasma!"
 /obj/item/organ/internal/lungs/proc/too_much_plasma(mob/living/carbon/breather, datum/gas_mixture/breath, plasma_pp, old_plasma_pp)
+	if(!safe_plasma_max)
+		return
 	if(plasma_pp <= safe_plasma_max)
 		if(old_plasma_pp > safe_plasma_max)
 			return BREATH_LOST

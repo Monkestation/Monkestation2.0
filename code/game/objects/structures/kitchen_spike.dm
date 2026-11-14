@@ -57,8 +57,8 @@
 	var/obj/item/stack/rods/used_rods = attacking_item
 	if(used_rods.get_amount() >= MEATSPIKE_IRONROD_REQUIREMENT)
 		used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
-		balloon_alert(user, "meatspike built")
 		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
+		new_meatspike.balloon_alert(user, "meatspike built")
 		transfer_fingerprints_to(new_meatspike)
 		qdel(src)
 		return

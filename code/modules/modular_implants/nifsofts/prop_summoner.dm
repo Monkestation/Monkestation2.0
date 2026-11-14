@@ -122,13 +122,15 @@
 	var/obj/item/summoned_item = parent
 	if(holographic_filter)
 		summoned_item.alpha = SUMMONED_ITEM_ALPHA
-		summoned_item.set_light(SUMMONED_ITEM_LIGHT)
+		if(summoned_item.light_system == COMPLEX_LIGHT)
+			summoned_item.set_light(SUMMONED_ITEM_LIGHT)
 		summoned_item.add_atom_colour("#acccff",FIXED_COLOUR_PRIORITY)
 
 		if(istype(summoned_item, /obj/item/storage))
 			for(var/obj/item/stored_item as anything in summoned_item)
 				stored_item.alpha = SUMMONED_ITEM_ALPHA
-				stored_item.set_light(SUMMONED_ITEM_LIGHT)
+				if(stored_item.light_system == COMPLEX_LIGHT)
+					stored_item.set_light(SUMMONED_ITEM_LIGHT)
 				stored_item.add_atom_colour("#acccff",FIXED_COLOUR_PRIORITY)
 				sub_items += stored_item
 
@@ -140,7 +142,8 @@
 
 			for(var/obj/item/toy/single_card in cardlist)
 				single_card.alpha = SUMMONED_ITEM_ALPHA
-				single_card.set_light(SUMMONED_ITEM_LIGHT)
+				if(single_card.light_system == COMPLEX_LIGHT)
+					single_card.set_light(SUMMONED_ITEM_LIGHT)
 				single_card.add_atom_colour("#acccff",FIXED_COLOUR_PRIORITY)
 				sub_items += single_card
 

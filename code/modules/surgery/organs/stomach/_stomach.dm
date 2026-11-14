@@ -252,7 +252,7 @@
 
 /obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = FALSE)
 	if(ishuman(stomach_owner))
-		var/mob/living/carbon/human/human_owner = owner
+		var/mob/living/carbon/human/human_owner = stomach_owner
 		human_owner.clear_alert(ALERT_DISGUST)
 		human_owner.clear_mood_event("disgust")
 	stomach_owner.hud_used?.hunger?.update_hunger_bar()
