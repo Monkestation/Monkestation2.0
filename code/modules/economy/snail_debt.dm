@@ -244,6 +244,10 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 /// Shows every player both carried and personally banked cursed balances.
 /datum/snail_debt/proc/update_curse_alerts()
 	var/list/debts_by_carrier = list()
+	var/mob/living/original_target
+	var/mob/living/basic/immortal_snail/collector = collector_ref?.resolve()
+	if(collector)
+		original_target = collector.original_target()
 	for(var/datum/holder as anything in claims)
 		if(istype(holder, /datum/bank_account))
 			continue
@@ -257,7 +261,10 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 				debts_by_carrier[debtor] += banked_debts[account][debtor_key]
 	for(var/mob/living/person as anything in GLOB.player_list)
 		var/amount = debts_by_carrier[person]
-		if(amount)
+		if(person == original_target)
+			var/atom/movable/screen/alert/immortal_snail_debt/original_alert = person.throw_alert("immortal_snail_debt", /atom/movable/screen/alert/immortal_snail_debt)
+			original_alert?.set_original_curse(collector.contract_value, max(0, collector.contract_value - collector.available_credits(person)))
+		else if(amount)
 			var/atom/movable/screen/alert/immortal_snail_debt/alert = person.throw_alert("immortal_snail_debt", /atom/movable/screen/alert/immortal_snail_debt)
 			alert?.set_debt(amount)
 		else

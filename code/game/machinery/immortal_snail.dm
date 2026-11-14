@@ -153,13 +153,13 @@
 		return
 	var/mob/living/target = original_target()
 	var/target_name = target ? target.real_name : "lost"
-	. += span_notice("<hr><b>Curse telemetry</b>")
-	. += span_notice("Current target: [html_encode(target_name)]")
-	. += span_notice("Outstanding cursed credits: [contract_value - debt.recovered] cr")
+	. += span_notice("<hr><b>Curse trail</b>")
+	. += span_notice("It is hunting: [html_encode(target_name)]")
+	. += span_notice("Cursed money still uncollected: [contract_value - debt.recovered] cr")
 	if(!length(debt.claims))
-		. += span_notice("No outstanding recoverable credits.")
+		. += span_notice("The trail has gone cold.")
 		return
-	. += span_notice("<b>Debt trail:</b>")
+	. += span_notice("<b>The money's trail:</b>")
 	for(var/datum/holder as anything in debt.claims)
 		var/mob/living/carrier = debt.carrier_of(holder)
 		var/holder_name = carrier ? carrier.real_name : "unattended cursed credits"
@@ -177,8 +177,21 @@
 	show_tooltip_title = FALSE
 
 /atom/movable/screen/alert/immortal_snail_debt/proc/set_debt(amount)
+	remove_filter("immortal_snail_marked")
 	name = "Immortal snail curse: [amount] cr"
 	desc = "You are responsible for [amount] cursed credit\s. An immortal snail is hunting its money."
+
+/// The buyer remains cursed even after every chip has changed hands. If their own
+/// reachable balance falls short, their eventual death is a gib instead of a husk.
+/atom/movable/screen/alert/immortal_snail_debt/proc/set_original_curse(contract_value, shortfall)
+	if(shortfall > 0)
+		add_filter("immortal_snail_marked", 1, outline_filter(1, "#D60000", OUTLINE_SHARP))
+		name = "MARKED FOR ERASURE: [shortfall] cr short"
+		desc = "The cursed money is gone. It can still be reclaimed. You cannot. When the snail reaches you, nothing will be left to revive."
+		return
+	remove_filter("immortal_snail_marked")
+	name = "Immortal snail curse: [contract_value] cr"
+	desc = "The deal is sealed. Keep [contract_value] credits recoverable, or the snail will erase you when it arrives."
 
 /mob/living/basic/immortal_snail/Destroy(force)
 	if(contract_value && !curse_fulfilled && !force)
@@ -210,6 +223,9 @@
 			qdel(curse)
 		debt = null // The independent curse keeps the ledger through body replacement.
 		curse = null
+	var/mob/living/target = original_target()
+	if(target)
+		target.clear_alert("immortal_snail_debt")
 	QDEL_NULL(pursuit_driver)
 	QDEL_LIST(slime_trail)
 	QDEL_NULL(debt)
@@ -362,6 +378,7 @@
 	contract_value = amount
 	// The distant spawn provides the head start; pursuit begins immediately.
 	next_step = world.time
+	update_original_curse_alert(target)
 
 /mob/living/basic/immortal_snail/proc/attach_ledger()
 	if(!debt && GLOB.snail_debt && !GLOB.snail_debt.collector_ref)
@@ -373,6 +390,12 @@
 	if(isliving(target_mind?.current))
 		return target_mind.current
 	return target_ref?.resolve()
+
+/mob/living/basic/immortal_snail/proc/update_original_curse_alert(mob/living/target = original_target())
+	if(!target || original_dead || curse_fulfilled)
+		return
+	var/atom/movable/screen/alert/immortal_snail_debt/alert = target.throw_alert("immortal_snail_debt", /atom/movable/screen/alert/immortal_snail_debt)
+	alert?.set_original_curse(contract_value, max(0, contract_value - available_credits(target)))
 
 /mob/living/basic/immortal_snail/proc/movement_interval(turf/destination)
 	return has_gravity(destination) ? move_interval : zero_gravity_move_interval
@@ -398,6 +421,7 @@
 	if(world.time < next_step)
 		return
 	debt?.refresh_carriers()
+	update_original_curse_alert(target)
 	if(original_dead)
 		if(!original_settled)
 			if(!corpse)
@@ -483,6 +507,10 @@
 	for(var/direction in GLOB.cardinals)
 		var/turf/candidate = get_step(src, direction)
 		if(!CAN_STEP(current_turf, candidate, FALSE, pass_info, null))
+			continue
+		// A side-step that cannot reduce distance causes an endless two-tile
+		// oscillation at sealed walls. With no route, chew through instead.
+		if(get_dist(candidate, destination) >= get_dist(current_turf, destination))
 			continue
 		if(!best_next || get_dist(candidate, destination) < get_dist(best_next, destination))
 			best_next = candidate
@@ -714,6 +742,7 @@
 	original_dead = TRUE
 	original_settled = TRUE
 	corpse_ref = WEAKREF(victim)
+	victim.clear_alert("immortal_snail_debt")
 	if(available_credits(victim) < contract_value)
 		ADD_TRAIT(victim, TRAIT_NO_SPECIAL_REVIVAL, REF(src))
 		victim.gib(no_brain = TRUE, no_organs = TRUE, no_bodyparts = TRUE)
