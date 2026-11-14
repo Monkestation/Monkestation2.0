@@ -121,3 +121,31 @@
 	hunter.UnarmedAttack(prey, proximity_flag = TRUE)
 	TEST_ASSERT(prey.health < prey.maxHealth, "A straight punch from a hunter boxer should hurt a carp")
 	TEST_ASSERT_EQUAL(prey.getStaminaLoss(), 0, "Hunter boxing should deal brute damage to wildlife, not stamina")
+
+/// CQC kicks only knock out a floored target that is already in stamina crit, and leg sweeps knock down instead of paralyzing.
+/datum/unit_test/cqc_kicks
+
+/datum/unit_test/cqc_kicks/Run()
+	var/mob/living/carbon/human/consistent/attacker = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/victim = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/sweep_victim = allocate(/mob/living/carbon/human/consistent)
+	attacker.mind_initialize()
+	var/datum/martial_art/cqc/style = allocate(/datum/martial_art/cqc)
+	style.teach(attacker)
+
+	style.Slam(attacker, victim)
+	TEST_ASSERT_EQUAL(victim.body_position, LYING_DOWN, "A CQC slam should put the victim on the floor")
+	style.Kick(attacker, victim)
+	TEST_ASSERT(!victim.IsUnconscious() && !victim.IsSleeping(), "A CQC kick right after a slam should not knock the victim out")
+	TEST_ASSERT_EQUAL(victim.getStaminaLoss(), 45, "A CQC kick on a floored victim should deal 45 stamina damage")
+
+	victim.setStaminaLoss(100)
+	style.Kick(attacker, victim)
+	TEST_ASSERT(victim.IsUnconscious(), "A CQC kick on a floored victim in stamina crit should knock them out")
+
+	attacker.set_resting(TRUE, silent = TRUE, instant = TRUE)
+	attacker.istate = ISTATE_HARM
+	attacker.UnarmedAttack(sweep_victim, proximity_flag = TRUE)
+	TEST_ASSERT(sweep_victim.IsKnockdown(), "A CQC leg sweep should knock the victim down")
+	TEST_ASSERT(!sweep_victim.IsParalyzed(), "A CQC leg sweep should not paralyze the victim")
+	TEST_ASSERT_EQUAL(sweep_victim.getBruteLoss(), 10, "A CQC leg sweep should deal 10 brute damage")
