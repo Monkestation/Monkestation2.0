@@ -5,13 +5,14 @@
  * * no_brain - Should the mob NOT drop a brain?
  * * no_organs - Should the mob NOT drop organs?
  * * no_bodyparts - Should the mob NOT drop bodyparts?
+ * * no_blood - Should the mob NOT drop blood (for "clean" gibs)?
 */
-/mob/living/proc/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
+/mob/living/proc/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE, no_blood = FALSE)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
 
-	if(!prev_lying)
+	if(!(prev_lying || no_blood))
 		gib_animation()
 
 	ghostize()
@@ -20,15 +21,16 @@
 	if(!no_bodyparts)
 		spread_bodyparts(no_brain, no_organs, TRUE)
 
-	spawn_gibs(no_bodyparts)
-	///lol I want it to be bloody as fuck
-	blood_particles(5, min_deviation = 70, max_deviation = 120, min_pixel_z = 4, max_pixel_z = 11)
-	blood_particles(6, min_deviation = -70, max_deviation = -30, min_pixel_z = 5, max_pixel_z = 7)
-	blood_particles(4, min_deviation = -190, max_deviation = -80, min_pixel_z = 0, max_pixel_z = 9)
-	blood_particles(7, min_deviation = 130, max_deviation = 160, min_pixel_z = 12, max_pixel_z = 16)
-	blood_particles(4, min_deviation = -200, max_deviation = -220, min_pixel_z = 4, max_pixel_z = 6)
-	blood_particles(2, min_deviation = 161, max_deviation = 200, min_pixel_z = 2, max_pixel_z = 12)
-	///lol
+	if(!no_blood)
+		spawn_gibs(no_bodyparts)
+		///lol I want it to be bloody as fuck
+		blood_particles(5, min_deviation = 70, max_deviation = 120, min_pixel_z = 4, max_pixel_z = 11)
+		blood_particles(6, min_deviation = -70, max_deviation = -30, min_pixel_z = 5, max_pixel_z = 7)
+		blood_particles(4, min_deviation = -190, max_deviation = -80, min_pixel_z = 0, max_pixel_z = 9)
+		blood_particles(7, min_deviation = 130, max_deviation = 160, min_pixel_z = 12, max_pixel_z = 16)
+		blood_particles(4, min_deviation = -200, max_deviation = -220, min_pixel_z = 4, max_pixel_z = 6)
+		blood_particles(2, min_deviation = 161, max_deviation = 200, min_pixel_z = 2, max_pixel_z = 12)
+		///lol
 	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, no_brain, no_organs, no_bodyparts)
 	qdel(src)
 

@@ -208,7 +208,8 @@
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message(span_danger("[smeared_mob] is penetrated by an immovable rod!") , span_userdanger("The rod penetrates you!") , span_danger("You hear a CLANG!"))
-
+	if(isipc(smeared_mob))
+		playsound(smeared_mob, 'sound/effects/fall_apart.ogg', vol = 40, vary = TRUE)
 	if(smeared_mob.stat != DEAD)
 		num_mobs_hit++
 		if(smeared_mob.client)

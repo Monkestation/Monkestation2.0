@@ -1,0 +1,6 @@
+author: "big-boss-crate"
+delete-after: True
+changes:
+  - rscadd: "added \"Disassemble\" admin smite (basically a bloodless gib)"
+  - sound: "added fall_apart.ogg"
+  - code_imp: "Added a new option in the gib() proc allowing for bloodless gibbing (no_blood), false by default"
