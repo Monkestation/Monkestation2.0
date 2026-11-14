@@ -25,6 +25,8 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 	var/employee_name
 	var/employee_role
 	var/employee_account_id
+	var/tasking_pda_notifications = FALSE
+	var/sector_pda_notifications = FALSE
 	/// Cached round-local ID headshot, never recomputed on UI polling.
 	var/portrait_base64
 	var/list/credited_orders = list()
@@ -139,7 +141,7 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 	roster[key] = record
 	return record
 
-/datum/ccpost_hr_service/proc/employee_for(mob/user)
+/datum/ccpost_hr_service/proc/employee_for(mob/user, require_id = TRUE)
 	var/mob/living/carbon/human/human = user
 	if(!istype(human) || !human.mind || human.stat == DEAD)
 		return null
@@ -148,15 +150,17 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 		return null
 	if(record.employee_account_id != human.account_id)
 		return null
-	var/obj/item/card/id/advanced/centcom/id_card = human.wear_id?.GetID()
-	if(!istype(id_card) || id_card.registered_name != record.employee_name)
-		return null
-	if(id_card.registered_account?.account_id != record.employee_account_id)
-		return null
-	if(record.employee_role == "Central Command Liaison")
-		return istype(id_card, /obj/item/card/id/advanced/centcom/ccpost_liaison) ? record : null
-	if(record.employee_role == "Outpost Security Officer")
-		return istype(id_card, /obj/item/card/id/advanced/centcom/ccpost_security) ? record : null
+	// A workstation may request the identity without re-presenting the card only
+	// after it has independently authenticated this mind and original body.
+	if(!require_id)
+		return record.original_body?.resolve() == human ? record : null
+	for(var/obj/item/card/id/id_card as anything in ccpost_presented_ids(human))
+		if(id_card.registered_name != record.employee_name || id_card.registered_account?.account_id != record.employee_account_id)
+			continue
+		if(record.employee_role == "Central Command Liaison" && istype(id_card, /obj/item/card/id/advanced/centcom/ccpost_liaison))
+			return record
+		if(record.employee_role == "Outpost Security Officer" && istype(id_card, /obj/item/card/id/advanced/centcom/ccpost_security))
+			return record
 	return null
 
 /datum/ccpost_hr_service/proc/active_case_for(mob/user)
@@ -354,6 +358,8 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 		)))
 		while(length(hr_case.owner.case_history) > 20)
 			hr_case.owner.case_history.Cut(length(hr_case.owner.case_history), length(hr_case.owner.case_history) + 1)
+	if(disposition == "Closed")
+		ccpost_record_admin_activity("hr:[hr_case.case_number]", 2)
 	hr_case.status = CCPOST_HR_CLOSED
 	active[hr_case.owner_key] = null
 	intake_cooldown[hr_case.owner_key] = world.time + 2 MINUTES
@@ -832,7 +838,7 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 	GLOB.ccpost_hr_service.note_task_completed(user, order)
 
 /datum/ccpost_hr_service/proc/note_task_completed(mob/user, datum/ccpost_tasking_order/order)
-	var/datum/ccpost_hr_employee/employee = employee_for(user)
+	var/datum/ccpost_hr_employee/employee = employee_for(user, FALSE)
 	if(!employee || employee.employee_role != "Central Command Liaison")
 		return
 	if(employee.credited_orders[order.order_code])
@@ -1011,7 +1017,14 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 	return !GLOB.ccpost_outpost_signal_lost && !QDELETED(src) && !(machine_stat & (NOPOWER | BROKEN)) && !jammed
 
 /// Open the dedicated outpost interface. The normal fax subtype continues to use "Fax".
+/obj/machinery/fax/ccpost_hr/ui_status(mob/user, datum/ui_state/state)
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
+		return UI_CLOSE
+	return ..()
+
 /obj/machinery/fax/ccpost_hr/ui_interact(mob/user, datum/tgui/ui)
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CCPostHRFax")
@@ -1025,6 +1038,8 @@ GLOBAL_LIST_EMPTY(ccpost_hr_delivery_markers)
 	return data
 
 /obj/machinery/fax/ccpost_hr/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(!ccpost_terminal_in_range(src, ui?.user) || isobserver(ui?.user))
+		return TRUE
 	if(GLOB.ccpost_outpost_signal_lost && action != "remove")
 		return TRUE
 	if(action == "hr_replace_form")

@@ -66,6 +66,7 @@ type SectorPaperwork = {
 };
 
 type Data = {
+  pda_notifications?: boolean | number;
   read_only?: boolean;
   authenticated?: boolean;
   admin_server_online?: boolean | number;
@@ -169,15 +170,16 @@ export const CCPostSectorComms = () => {
           <CCPostHeader title="Sector Communications" division="CENTRAL COMMAND" />
           <Layout.Content scrollable className="CCPostAdminBody">
           {!admin_server_online && <CCPostServerUnavailable status={admin_server_status} />}
-          <div className="CCPostIdentityStrip"><CCPostPersonnelPortrait portrait={identity_portrait} label="OFFICIAL ID RECORD" /><div><strong>{identity_detected ? 'Registered Liaison Identified' : 'Personnel Verification Required'}</strong><div>Encrypted correspondence access is linked to the registered employee.</div></div></div>
+          <div className="CCPostIdentityStrip"><CCPostPersonnelPortrait portrait={identity_portrait} label="OFFICIAL ID RECORD" /><div><strong>{identity_detected ? 'Registered Liaison Identified' : 'Identification Required'}</strong><div>Encrypted correspondence access is linked to the registered employee.</div></div></div>
           <div className="CCPostLogin">
           <Stack vertical fill>
             <Stack.Item>
               <Section title="Personnel Authentication">
                 <LabeledList>
-                  <LabeledList.Item label="Personnel record">{identity_detected ? 'HR roster record detected' : 'Registered Liaison ID required'}</LabeledList.Item>
+                  <LabeledList.Item label="Personnel record">{identity_detected ? 'HR roster record detected' : 'Not detected'}</LabeledList.Item>
                   <LabeledList.Item label="Current workstation">{session_owner || 'Not signed in'}</LabeledList.Item>
                 </LabeledList>
+                {!identity_detected && <NoticeBox>No authorized Central Command Liaison ID detected. Hold or equip your registered ID to authenticate.</NoticeBox>}
                 <Button icon="sign-in-alt" color="good" fluid mt={1.5} disabled={!identity_detected || read_only || !admin_server_online} onClick={() => act('login')}>Sign In</Button>
               </Section>
             </Stack.Item>
@@ -230,7 +232,8 @@ export const CCPostSectorComms = () => {
               <Button icon="question-circle" onClick={() => setHelpOpen(!helpOpen)}>
                 {helpOpen ? 'Close Manual' : 'Operating Manual'}
               </Button>
-              {!read_only && <Button icon="sign-out-alt" color="average" onClick={() => act('logout')}>Sign Out</Button>}
+              {!read_only && <Button icon="bell" selected={Boolean(data.pda_notifications)} onClick={() => act('toggle_pda_notifications')}>PDA Alerts: {data.pda_notifications ? 'ON' : 'OFF'}</Button>}
+                {!read_only && <Button icon="sign-out-alt" color="average" onClick={() => act('logout')}>Sign Out</Button>}
             </>
           }
         >

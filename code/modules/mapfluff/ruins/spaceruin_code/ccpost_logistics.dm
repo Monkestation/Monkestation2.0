@@ -1037,16 +1037,15 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 
 // TGUI
 
-/obj/machinery/computer/ccpost_logistics/ui_status(mob/user)
+/obj/machinery/computer/ccpost_logistics/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user))
 		return UI_INTERACTIVE
-	if(!ccpost_can_view_terminal(user))
+	if(!ccpost_terminal_view_in_range(src, user))
 		return UI_CLOSE
 	return ..()
 
 /obj/machinery/computer/ccpost_logistics/ui_interact(mob/user, datum/tgui/ui)
-	if(!ccpost_can_view_terminal(user))
-		balloon_alert(user, "central command ID required")
+	if(!ccpost_terminal_view_in_range(src, user))
 		return
 	. = ..()
 
@@ -1086,7 +1085,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 	return TRUE
 
 /obj/machinery/computer/ccpost_logistics/ui_data(mob/user)
-	if(!ccpost_can_view_terminal(user))
+	if(!ccpost_terminal_view_in_range(src, user))
 		return list()
 	var/list/data = list()
 	data["outpost_offline"] = GLOB.ccpost_outpost_signal_lost
@@ -1250,7 +1249,7 @@ GLOBAL_DATUM_INIT(ccpost_logistics_network, /datum/ccpost_logistics_network, new
 /obj/machinery/computer/ccpost_logistics/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(GLOB.ccpost_outpost_signal_lost)
 		return TRUE
-	if(!ccpost_has_centcom_id(ui?.user))
+	if(!ccpost_has_centcom_id(ui?.user) || !ccpost_terminal_in_range(src, ui?.user))
 		return TRUE
 	. = ..()
 
@@ -4237,6 +4236,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_logistics, 32)
 		clear_inspection("Dispatch unavailable")
 		qdel(crate)
 		return FALSE
+	GLOB.ccpost_tasking_network?.security_freight_dispatched(crate.shipment_code)
 	announce_freight_status("Regional inspection consignment [crate.shipment_code] dispatched for Security clearance.")
 	refresh_logistics_outputs()
 	return TRUE
@@ -4249,12 +4249,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ccpost_logistics, 32)
 	inbound_lane_busy = FALSE
 	crate.inspection_arrived = TRUE
 	inspection_due_at = world.time + 20 MINUTES
+	GLOB.ccpost_tasking_network?.security_freight_arrived(crate.shipment_code)
 	announce_freight_status("Inspection consignment [crate.shipment_code] has arrived. Security clearance required.")
 	refresh_logistics_outputs()
 
 /datum/ccpost_logistics_network/proc/clear_inspection(result)
 	var/obj/structure/closet/crate/ccpost_freight/inspection/crate = active_inspection?.resolve()
 	var/reference = crate?.shipment_code || "FI-[inspection_number]"
+	GLOB.ccpost_tasking_network?.security_freight_resolved(reference, result)
 	inspection_history.Insert(1, "[reference]: [result] ([station_time_timestamp()])")
 	if(length(inspection_history) > 20)
 		inspection_history.Cut(21)

@@ -56,6 +56,7 @@ type TaskingAuditEvent = {
 
 type TaskingOrder = {
   order_code: string;
+  allocation_reward?: number;
   category: string;
   subject: string;
   priority: string;
@@ -132,7 +133,12 @@ type TaskingServerLiaison = {
 };
 
 type Data = {
+  pda_notifications?: boolean | number;
   is_server?: boolean;
+  security_tasking?: boolean | number;
+  security_freight_reference?: string | null;
+  security_freight_arrived?: boolean | number;
+  security_can_report_compromise?: boolean | number;
   server_online?: boolean;
   server_status?: string;
   server_faulted?: boolean | number;
@@ -215,7 +221,7 @@ export const CCPostTasking = () => {
   const [documentsOpen, setDocumentsOpen] = useLocalState('ccpostTaskDocuments', false);
   const [helpOpen, setHelpOpen] = useLocalState('ccpostTaskHelp', false);
   const [serverTab, setServerTab] = useLocalState('ccpostServerTab', 'overview');
-  const [tab, setTab] = useLocalState('ccpostTaskMainTab', 'active');
+  const [tab, setTab] = useLocalState(data.security_tasking ? 'ccpostSecurityTaskMainTab' : 'ccpostTaskMainTab', 'active');
   const [deferOpen, setDeferOpen] = useLocalState('ccpostTaskDefer', false);
   const [expandedReportCode, setExpandedReportCode] = useLocalState(
     'ccpostTaskExpandedReportCode',
@@ -260,6 +266,7 @@ export const CCPostTasking = () => {
     routine_cooldown_seconds = 0,
   } = data;
 
+  const security = Boolean(data.security_tasking);
   const offerableTasks = [
     ...(current_order ? [{ ...current_order, origin: 'Active' }] : []),
     ...(standby_order ? [{ ...standby_order, origin: 'Standby' }] : []),
@@ -476,12 +483,12 @@ export const CCPostTasking = () => {
 
   if (!authenticated) {
     return (
-      <Window title="Central Command Tasking | Sign In" width={570} height={490} theme="ntos">
+      <Window title={security ? "Security Tasking | Sign In" : "Central Command Tasking | Sign In"} width={570} height={490} theme="ntos">
         <Window.Content className="ccpost-theme ccpost-theme--sage ccpost-admin-v2">
-          <CCPostHeader title="Personnel Tasking" division="CENTRAL COMMAND" />
+          <CCPostHeader title={security ? "Security Tasking" : "Personnel Tasking"} division="CENTRAL COMMAND" />
           <Layout.Content scrollable className="CCPostAdminBody">
           {!admin_server_online && <CCPostServerUnavailable status={admin_server_status} />}
-          <div className="CCPostIdentityStrip"><CCPostPersonnelPortrait portrait={identity_portrait} label="OFFICIAL ID RECORD" /><div><strong>{identity_detected ? 'Registered Liaison Identified' : 'Personnel Verification Required'}</strong><div>Authentication uses the Central Command Human Resources roster.</div><div className="CCPostIdentityStrip__meta">{session_owner || 'No active workstation session'}</div></div></div>
+          <div className="CCPostIdentityStrip"><CCPostPersonnelPortrait portrait={identity_portrait} label="OFFICIAL ID RECORD" /><div><strong>{identity_detected ? (security ? 'Registered Security Officer Identified' : 'Registered Liaison Identified') : 'Identification Required'}</strong><div>Authentication uses the Central Command Human Resources roster.</div><div className="CCPostIdentityStrip__meta">{session_owner || 'No active workstation session'}</div></div></div>
           <div className="CCPostLogin">
           <Stack vertical fill>
             <Stack.Item>
@@ -489,7 +496,7 @@ export const CCPostTasking = () => {
                 {session_owner ? (
                   <NoticeBox>
                     This workstation currently has a session for {session_owner}.
-                    Signing in with another authorized Liaison ID closes that local
+                    Signing in with another authorized personnel ID closes that local
                     session. Outstanding work is preserved on the network.
                   </NoticeBox>
                 ) : (
@@ -499,14 +506,14 @@ export const CCPostTasking = () => {
                 )}
                 <LabeledList>
                   <LabeledList.Item label="Personnel record">
-                    {identity_detected ? 'HR roster record detected' : 'Registered Liaison ID required'}
+                    {identity_detected ? 'HR roster record detected' : 'Not detected'}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Security">
-                    Authorized Central Command personnel only
+                  <LabeledList.Item label="Current session">
+                    Not signed in
                   </LabeledList.Item>
                 </LabeledList>
                 {!identity_detected && !!identity_issue && (
-                  <Box color="average" mt={1}>{identity_issue}</Box>
+                  <NoticeBox>{identity_issue}</NoticeBox>
                 )}
                 <Button
                   mt={1.5}
@@ -537,36 +544,37 @@ export const CCPostTasking = () => {
 
   return (
     <Window
-      title="Central Command Tasking"
+      title={security ? "Central Command Security Tasking" : "Central Command Tasking"}
       width={820}
       height={760}
       theme="ntos"
     >
       <Window.Content className="ccpost-theme ccpost-theme--sage ccpost-admin-v2">
-          <CCPostHeader title="Personnel Tasking" division="CENTRAL COMMAND" />
+          <CCPostHeader title={security ? "Security Tasking" : "Personnel Tasking"} division="CENTRAL COMMAND" />
           <div className="CCPostAdminNav"><Tabs fluid>
               <Tabs.Tab icon="clipboard-list" selected={tab === 'active'} onClick={() => setTab('active')}>
                 My Tasks
               </Tabs.Tab>
-              <Tabs.Tab icon="pause" selected={tab === 'deferred'} onClick={() => setTab('deferred')}>
+              {!security && <Tabs.Tab icon="pause" selected={tab === 'deferred'} onClick={() => setTab('deferred')}>
                 On Hold ({on_hold_orders.length + deferred_orders.length})
-              </Tabs.Tab>
+              </Tabs.Tab>}
               <Tabs.Tab icon="archive" selected={tab === 'archive'} onClick={() => setTab('archive')}>
                 History ({history.length})
               </Tabs.Tab>
-              <Tabs.Tab icon="sitemap" selected={tab === 'network'} onClick={() => setTab('network')}>
+              {!security && <Tabs.Tab icon="sitemap" selected={tab === 'network'} onClick={() => setTab('network')}>
                 Network
-              </Tabs.Tab>
+              </Tabs.Tab>}
             </Tabs></div>
           <Layout.Content scrollable className="CCPostAdminBody">
           {!admin_server_online && <CCPostServerUnavailable status={admin_server_status} />}
         <Stack vertical>
           <Stack.Item>
             <div className="CCPostWorkspaceToolbar">
-              <div><strong>Assignment Workspace</strong><span>Authenticated: {session_owner || 'Central Command Liaison'}</span></div>
+              <div><strong>Assignment Workspace</strong><span>Authenticated: {session_owner || (security ? 'Outpost Security Officer' : 'Central Command Liaison')}</span></div>
               <div className="CCPostWorkspaceToolbar__actions">
                 <Button icon="print" selected={documentsOpen} onClick={() => setDocumentsOpen(!documentsOpen)}>Documents</Button>
                 <Button icon="question-circle" onClick={() => setHelpOpen(!helpOpen)}>{helpOpen ? 'Close Manual' : 'Manual'}</Button>
+                {!read_only && <Button icon="bell" selected={Boolean(data.pda_notifications)} onClick={() => act('toggle_pda_notifications')}>PDA Alerts: {data.pda_notifications ? 'ON' : 'OFF'}</Button>}
                 {!read_only && <Button icon="sign-out-alt" color="average" onClick={() => act('logout')}>Sign Out</Button>}
               </div>
             </div>
@@ -601,9 +609,9 @@ export const CCPostTasking = () => {
 
             {helpOpen && (
               <Section title="Central Command Assignment Procedures">
-                <Box>Record acknowledgment, investigate the directive and submit a separate written report bearing an official Central Command stamp. Installation-record tasks require the original certified record printed from Remote Oversight.</Box>
-                <Box mt={1}>Consult existing records before contacting station personnel. One concise request is sufficient; avoid interrupting essential work. Record unavailable cooperation as Not Assessed. Assessments affect departmental grants, not Liaison CU rewards.</Box>
-                <Box mt={1}>Standby work preserves documentation when switched. Deferred work has its own deadlines, while emergency-suspended assignments retain progress. The Network tab handles voluntary reassignment and recovery.</Box>
+                <Box>{security ? "Acknowledge directives, perform the inspection, and submit a separate stamped report for prototype work. Regional freight clearance is recorded automatically by Logistics." : "Record acknowledgment, investigate the directive and submit a separate written report bearing an official Central Command stamp. Installation-record tasks require the original certified record printed from Remote Oversight."}</Box>
+                {security ? <Box mt={1}>Security directives cover prototype work. Freight appears as a priority notice; its clearance and CU reward are handled exclusively by Logistics. Submit stamped reports for prototype assignments.</Box> : <><Box mt={1}>Consult existing records before contacting station personnel. One concise request is sufficient; avoid interrupting essential work. Record unavailable cooperation as Not Assessed. Assessments affect departmental grants, not Liaison CU rewards.</Box>
+                <Box mt={1}>Standby work preserves documentation when switched. Deferred work has its own deadlines, while emergency-suspended assignments retain progress. The Network tab handles voluntary reassignment and recovery.</Box></>}
               </Section>
             )}
           </Stack.Item>
@@ -613,6 +621,14 @@ export const CCPostTasking = () => {
             </Stack.Item>
           )}
           
+          {security && data.security_freight_reference && (
+            <Stack.Item>
+              <NoticeBox>
+                <Box bold>PRIORITY NOTICE: REGIONAL FREIGHT INSPECTION</Box>
+                Consignment {data.security_freight_reference}: {data.security_freight_arrived ? 'Arrived at the cargo bay.' : 'Dispatched; awaiting arrival.'} Proceed to the cargo bay and use the Logistics Terminal for clearance and CU compensation. No Tasking report is required. This notice clears automatically when Logistics closes the inspection.
+              </NoticeBox>
+            </Stack.Item>
+          )}
           {tab === 'active' && (
             <div className="CCPostTaskWorkspace">
             <div className="CCPostTaskWorkspace__rail">
@@ -676,6 +692,7 @@ export const CCPostTasking = () => {
                   <span><b>{current_order.order_code}</b></span>
                   <span>{current_order.priority}</span>
                   <span>{current_order.status}</span>
+                  {security && <span>{current_order.allocation_reward || 0} CU reward</span>}
                   <span>Issued: {current_order.issued_at}</span>
                 </div>
                 <Collapsible title="Official Tasking Record">
@@ -705,7 +722,7 @@ export const CCPostTasking = () => {
                   <LabeledList.Item label="Dispatch Time">
                     {current_order.issued_at}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Designated Liaison">
+                  <LabeledList.Item label={security ? "Designated Officer" : "Designated Liaison"}>
                     {current_order.assigned_to || session_owner}
                   </LabeledList.Item>
 
@@ -758,7 +775,7 @@ export const CCPostTasking = () => {
                       </Button>
                     )}
 
-                    {current_order.status !== 'Completed' && (
+                    {!security && current_order.status !== 'Completed' && (
                       <Button
                         icon="clock"
                         disabled={
@@ -789,6 +806,7 @@ export const CCPostTasking = () => {
                         Mark Complete
                       </Button>
                     )}
+                    {security && Boolean(data.security_can_report_compromise) && current_order.status === 'Acknowledged' && <Button.Confirm icon="exclamation-triangle" color="average" disabled={Boolean(read_only) || !submitted_report?.valid} confirmContent="Submit this report and request a custody-discrepancy investigation?" onClick={() => act('complete_compromise')}>Report Asset Compromise</Button.Confirm>}
 
                     {Boolean(current_order.contact_reassignable) &&
                       current_order.status === 'Acknowledged' && (
@@ -1020,7 +1038,7 @@ export const CCPostTasking = () => {
             </div>
           </div>
           )}
-          {tab === 'deferred' && (
+          {!security && tab === 'deferred' && (
             <>
           {!on_hold_orders.length && !deferred_orders.length && !queued_incidents.length && !pending_followups.length && (
             <Section title="On-Hold & Deferred Assignments">
@@ -1139,7 +1157,7 @@ export const CCPostTasking = () => {
           </Stack.Item>}
             </>
           )}
-          {tab === 'network' && (
+          {!security && tab === 'network' && (
             <Stack.Item>
               <div className="CCPostDispatchStrip">
                 <Box bold>Dispatch</Box>

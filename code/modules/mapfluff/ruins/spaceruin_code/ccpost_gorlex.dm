@@ -8,18 +8,26 @@
 #define CCPOST_GORLEX_TC 5
 #define CCPOST_CYBERSUN_TC 12
 #define CCPOST_GORLEX_NEGLECT_WINDOW (5 MINUTES)
+#define CCPOST_GORLEX_NEGLECT_ESCALATION (20 MINUTES)
+#define CCPOST_GORLEX_NEGLECT_MAX (35 MINUTES)
+#define CCPOST_GORLEX_FIRST_GUARDED_CHECK (20 MINUTES)
+#define CCPOST_GORLEX_ROLL_COOLDOWN (15 MINUTES)
+#define CCPOST_GORLEX_MAX_GUARDED_ROLLS 3
 #define CCPOST_GORLEX_RECRUITMENT_RETRY_DELAY (5 MINUTES)
 #define CCPOST_GORLEX_PREPARATION_TIME (2 MINUTES)
 #define CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS 3
 #define CCPOST_GORLEX_PLASTIC_LIMIT 4
 #define CCPOST_CYBERSUN_RETRY_DELAY (5 MINUTES)
 #define CCPOST_GORLEX_SECURITY_POLL (5 SECONDS)
+#define CCPOST_GORLEX_PROTOTYPE_NEGLECT (5 MINUTES)
+#define CCPOST_GORLEX_PROTOTYPE_ESCALATION (15 MINUTES)
 
 GLOBAL_VAR_INIT(ccpost_gorlex_director, null)
 GLOBAL_LIST_EMPTY(ccpost_gorlex_disk_returns)
 GLOBAL_LIST_EMPTY(ccpost_gorlex_insertions)
 GLOBAL_LIST_EMPTY(ccpost_gorlex_extraction_landmarks)
 GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
+GLOBAL_LIST_EMPTY(ccpost_severance_prototypes)
 
 #define CCPOST_GORLEX_EXTRACTION_TIME (80 SECONDS)
 #define CCPOST_GORLEX_WARRANT_GRACE (15 SECONDS)
@@ -60,8 +68,21 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	name = "Operation Severance event director"
 	var/unsecured_since = 0
 	var/last_security_scan = 0
-	var/next_event_check = 1
-	/// A successful automatic roll consumes the remaining scheduled rolls.
+	/// Accumulated time with eligible staffing; pauses when prerequisites are lost.
+	var/eligible_staffing_time = 0
+	var/last_eligible_scan = 0
+	/// Guarded checks use eligible time, not round age.
+	var/next_guarded_check = CCPOST_GORLEX_FIRST_GUARDED_CHECK
+	var/guarded_rolls = 0
+	/// Hidden rolling administration history, bounded by the 20-minute lookback.
+	var/list/admin_activity = list()
+	var/admin_pending_since = 0
+	/// The original experimental asset, independent of the eventual contract selection.
+	var/datum/weakref/prototype_risk_ref
+	var/prototype_unsecured_since = 0
+	/// All automatic rolls share this real-time cooldown, including across custody changes.
+	var/next_deployment_roll = 0
+	/// A successful automatic roll permanently consumes further automatic deployment rolls.
 	var/automatic_deployment_authorized = FALSE
 	var/automatic_recruitment_attempts = 0
 	var/next_recruitment_retry = 0
@@ -75,6 +96,14 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/armed_by_gorlex = FALSE
 	/// Classified records were fully copied from the Central Command Tasking Server.
 	var/data_downloaded = FALSE
+	/// The contract is selected once, immediately before deployment.
+	var/contract_kind
+	var/contract_asset_name = "classified intelligence cartridge"
+	var/datum/weakref/contract_prototype_ref
+	var/asset_acquired = FALSE
+	var/turf/last_valid_prototype_turf
+	var/prototype_original_resistance
+	var/last_boundary_reminder = 0
 	/// The physical copy must still reach the Gorlex retrieval pod.
 	var/datum/weakref/data_cartridge_ref
 	/// Nuclear authorization is recorded separately from a later disarm.
@@ -135,6 +164,9 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/landmark/ccpost_gorlex_director/Destroy()
+	var/obj/item/prototype = contract_prototype_ref?.resolve()
+	if(prototype && !QDELETED(prototype))
+		prototype.resistance_flags = prototype_original_resistance
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(security_advisory_radio)
 	clear_warrant_warning()
@@ -207,11 +239,132 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		current_container = current_container.loc
 	return FALSE
 
-/// Reset neglect independently of the fixed deployment schedule.
+/// Reset continuous neglect without resetting staffing progress or the roll cooldown.
 /obj/effect/landmark/ccpost_gorlex_director/proc/reset_neglect()
 	unsecured_since = 0
 
-/// Shared predicate for the scheduled roll and the end of a recruitment poll.
+/// Custody is assessed from the original item's containment chain, not nearby players.
+/obj/effect/landmark/ccpost_gorlex_director/proc/prototype_is_secured(obj/item/prototype)
+	var/turf/location = get_turf(prototype)
+	var/turf/origin = get_turf(src)
+	if(!location || !origin || location.z != origin.z)
+		return FALSE
+	var/atom/current_container = prototype.loc
+	while(ismovable(current_container))
+		if(istype(current_container, /obj/structure/closet/secure_closet/ccpost_armory))
+			var/obj/structure/closet/secure_closet/ccpost_armory/armory = current_container
+			if(armory.locked && !armory.opened && istype(get_area(armory), /area/ruin/space/has_grav/ccpost))
+				return TRUE
+		if(ishuman(current_container))
+			var/mob/living/carbon/human/carrier = current_container
+			if(!carrier.client || carrier.stat == DEAD)
+				return FALSE
+			var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(carrier, FALSE)
+			return employee && (employee.employee_role == "Central Command Liaison" || employee.employee_role == "Outpost Security Officer")
+		current_container = current_container.loc
+	return FALSE
+
+/// Track one original armory-issued asset. Missing/destroyed assets give no bonus.
+/// A temporary drop is harmless; secure custody resets continuous neglect.
+/obj/effect/landmark/ccpost_gorlex_director/proc/update_prototype_risk()
+	var/obj/item/prototype = prototype_risk_ref?.resolve()
+	if(!prototype || QDELETED(prototype) || !(prototype_risk_ref in GLOB.ccpost_severance_prototypes))
+		prototype_risk_ref = null
+		prototype_unsecured_since = 0
+		prototype = null
+		for(var/datum/weakref/reference as anything in GLOB.ccpost_severance_prototypes)
+			var/obj/item/candidate = reference.resolve()
+			if(candidate && !QDELETED(candidate))
+				prototype = candidate
+				prototype_risk_ref = reference
+				break
+	if(!prototype || !get_turf(prototype) || prototype_is_secured(prototype))
+		prototype_unsecured_since = 0
+		return
+	if(!prototype_unsecured_since)
+		prototype_unsecured_since = world.time
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/prototype_risk_modifier()
+	if(!prototype_unsecured_since)
+		return 0
+	var/neglect_duration = world.time - prototype_unsecured_since
+	if(neglect_duration >= CCPOST_GORLEX_PROTOTYPE_ESCALATION)
+		return 10
+	if(neglect_duration >= CCPOST_GORLEX_PROTOTYPE_NEGLECT)
+		return 5
+	return 0
+
+/// Only original armory-spawned, still-present prototypes may enter a contract.
+/obj/effect/landmark/ccpost_gorlex_director/proc/eligible_prototypes()
+	var/list/eligible = list()
+	for(var/datum/weakref/reference as anything in GLOB.ccpost_severance_prototypes.Copy())
+		var/obj/item/prototype = reference.resolve()
+		if(!prototype || QDELETED(prototype))
+			GLOB.ccpost_severance_prototypes -= reference
+			continue
+		var/turf/location = get_turf(prototype)
+		if(location && istype(get_area(location), /area/ruin/space/has_grav/ccpost))
+			eligible += prototype
+	return eligible
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/data_contract_available()
+	var/obj/machinery/ccpost_tasking_server/server = GLOB.ccpost_tasking_network?.server
+	return server && !QDELETED(server) && server.operational() && istype(get_area(server), /area/ruin/space/has_grav/ccpost)
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/contract_available()
+	return data_contract_available() || length(eligible_prototypes())
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/select_contract()
+	var/list/choices = list()
+	var/list/prototypes = eligible_prototypes()
+	if(data_contract_available())
+		choices += "data"
+	if(length(prototypes))
+		choices += "prototype"
+	if(!length(choices))
+		return FALSE
+	contract_kind = pick(choices)
+	if(contract_kind == "prototype")
+		var/obj/item/prototype = pick(prototypes)
+		contract_prototype_ref = WEAKREF(prototype)
+		contract_asset_name = prototype.name
+		last_valid_prototype_turf = get_turf(prototype)
+		// Only the assigned original is protected during this contract, as with the cartridge.
+		prototype_original_resistance = prototype.resistance_flags
+		prototype.resistance_flags |= INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+	else
+		contract_asset_name = "classified intelligence cartridge"
+	log_game("CCPost Gorlex: selected contract [contract_kind], asset [contract_asset_name].")
+	return TRUE
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/contract_asset()
+	if(contract_kind == "prototype")
+		return contract_prototype_ref?.resolve()
+	return data_cartridge_ref?.resolve()
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/primary_target()
+	if(contract_kind == "data" && !data_downloaded)
+		return GLOB.ccpost_tasking_network?.server
+	return contract_asset()
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/primary_instruction()
+	if(contract_kind == "prototype")
+		return "Recover the original experimental prototype [contract_asset_name] from the Liaison Outpost."
+	return "Download classified Central Command Tasking Server records to the physical encrypted data cartridge."
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/get_contract_nuke()
+	var/turf/origin = get_turf(src)
+	if(!origin)
+		return null
+	for(var/obj/machinery/nuclearbomb/ccpost_nuke/device as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/ccpost_nuke))
+		if(QDELETED(device))
+			continue
+		var/turf/device_turf = get_turf(device)
+		if(device_turf && device_turf.z == origin.z)
+			return device
+	return null
+
+/// Shared predicate for automatic deployment rolls and recruitment revalidation.
 /obj/effect/landmark/ccpost_gorlex_director/proc/deployment_eligible(obj/item/disk/nuclear/ccpost_nuke/disk)
 	if(GLOB.ccpost_outpost_signal_lost || active_outpost_personnel() < 2 || !disk || QDELETED(disk))
 		return FALSE
@@ -225,6 +378,8 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		var/obj/item/ccpost_classified_cartridge/contract_cartridge = data_cartridge_ref?.resolve()
 		if(contract_cartridge)
 			secure_cartridge(contract_cartridge)
+		if(contract_kind == "prototype")
+			secure_prototype()
 	if(event_started)
 		process_contract()
 		if(!GLOB.ccpost_outpost_signal_lost && world.time >= last_security_scan + CCPOST_GORLEX_SECURITY_POLL)
@@ -250,37 +405,104 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		if(!start_gorlex_poll())
 			cancel_automatic_recruitment("retry could not start")
 		return
-	if(next_event_check > 3)
+	process_deployment_checks(disk, eligible)
+
+/// A validated completion is recorded once. No UI data or player-facing risk score.
+/obj/effect/landmark/ccpost_gorlex_director/proc/record_admin_activity(reference, weight = 1)
+	if(!reference || admin_activity[reference])
 		return
-	if(!eligible || disk_is_actively_guarded(disk))
+	admin_activity[reference] = list("at" = world.time, "weight" = clamp(weight, 1, 2))
+
+/obj/effect/landmark/ccpost_gorlex_director/proc/admin_activity_modifier()
+	var/score = 0
+	for(var/reference in admin_activity.Copy())
+		var/list/entry = admin_activity[reference]
+		if(world.time - entry["at"] >= 20 MINUTES)
+			admin_activity -= reference
+		else
+			score += entry["weight"]
+	if(score >= 3)
+		return -5
+	if(score > 0)
+		return 0
+	if(admin_pending_since && world.time - admin_pending_since >= 10 MINUTES)
+		return 5
+	return 0
+
+/proc/ccpost_record_admin_activity(reference, weight = 1)
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	if(director && !QDELETED(director))
+		director.record_admin_activity(reference, weight)
+
+/// Rolling, outpost-relative security checks. No catch-up bursts or round-age cutoffs.
+/obj/effect/landmark/ccpost_gorlex_director/proc/process_deployment_checks(obj/item/disk/nuclear/ccpost_nuke/disk, eligible)
+	if(!eligible)
+		last_eligible_scan = 0
+		admin_pending_since = 0
+		prototype_unsecured_since = 0
+		reset_neglect()
+		return
+
+	// Accumulate eligible staffing time, but never count the gap before staffing resumes.
+	if(last_eligible_scan)
+		eligible_staffing_time += world.time - last_eligible_scan
+	last_eligible_scan = world.time
+
+	// Only prolonged available work can count as neglect. A quiet, empty inbox is neutral.
+	var/pending_work = ccpost_has_pending_admin_work()
+	if(pending_work && !admin_pending_since)
+		admin_pending_since = world.time
+	else if(!pending_work)
+		admin_pending_since = 0
+
+	var/guarded = disk_is_actively_guarded(disk)
+	if(guarded)
 		reset_neglect()
 	else if(!unsecured_since)
 		unsecured_since = world.time
-	var/static/list/check_times = list(20 MINUTES, 35 MINUTES, 50 MINUTES)
-	var/static/list/neglect_chances = list(20, 30, 40)
-	var/elapsed = world.time - SSticker.round_start_time
-	while(next_event_check <= length(check_times) && elapsed >= check_times[next_event_check])
-		var/check_index = next_event_check
-		next_event_check++
-		// Never replay missed checks after lag, late loading or ineligible staffing.
-		var/check_minute = check_times[check_index] / (1 MINUTES)
-		if(elapsed > check_times[check_index] + CCPOST_GORLEX_SECURITY_POLL)
-			log_game("CCPost Gorlex: minute [check_minute] check expired; no catch-up roll.")
-			continue
-		if(!eligible || polling_ghosts || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE))
-			log_game("CCPost Gorlex: minute [check_minute] check skipped (deployment prerequisites not met or poll active).")
-			continue
-		var/neglected = unsecured_since && world.time - unsecured_since >= CCPOST_GORLEX_NEGLECT_WINDOW
-		var/chance = neglected ? neglect_chances[check_index] : 5
-		var/successful_roll = prob(chance)
-		log_game("CCPost Gorlex: minute [check_minute] check, neglect=[neglected], chance=[chance]%, success=[successful_roll].")
-		if(successful_roll)
-			automatic_deployment_authorized = TRUE
-			// This authorization owns all subsequent recruitment; no further random rolls.
-			next_event_check = length(check_times) + 1
-			if(!start_gorlex_poll())
-				cancel_automatic_recruitment("initial poll could not start")
+
+	// Sample on every eligible security scan, including grace period and cooldown.
+	update_prototype_risk()
+
+	// Custody changes, staffing changes and admin polls cannot reset the shared cooldown.
+	if(!SSticker.round_start_time || world.time < SSticker.round_start_time + 20 MINUTES || polling_ghosts || world.time < next_deployment_roll)
+		return
+	var/chance = 0
+	var/neglect_duration = unsecured_since ? world.time - unsecured_since : 0
+	if(!guarded)
+		// Even a fully staffed outpost must have five continuous minutes of neglect.
+		if(neglect_duration < CCPOST_GORLEX_NEGLECT_WINDOW)
 			return
+		if(neglect_duration >= CCPOST_GORLEX_NEGLECT_MAX)
+			chance = 40
+		else if(neglect_duration >= CCPOST_GORLEX_NEGLECT_ESCALATION)
+			chance = 30
+		else
+			chance = 20
+	else
+		if(guarded_rolls >= CCPOST_GORLEX_MAX_GUARDED_ROLLS || eligible_staffing_time < next_guarded_check)
+			return
+		chance = 5
+
+	var/staff_count = active_outpost_personnel()
+	var/staff_modifier = staff_count >= 4 ? 5 : (staff_count == 3 ? 3 : 0)
+	var/activity_modifier = admin_activity_modifier()
+	var/prototype_modifier = prototype_risk_modifier()
+	chance = clamp(chance + staff_modifier + activity_modifier + prototype_modifier, 2, 60)
+	// An unavailable insertion does not consume a roll or start its cooldown.
+	if(!pick_landing(GLOB.ccpost_gorlex_insertions, TRUE) || !contract_available())
+		return
+	if(guarded)
+		guarded_rolls++
+		next_guarded_check = eligible_staffing_time + CCPOST_GORLEX_ROLL_COOLDOWN
+	next_deployment_roll = world.time + CCPOST_GORLEX_ROLL_COOLDOWN
+	var/successful_roll = prob(chance)
+	log_game("CCPost Gorlex: rolling deployment check, guarded=[guarded], neglect_seconds=[round(neglect_duration / (1 SECONDS))], eligible_seconds=[round(eligible_staffing_time / (1 SECONDS))], guarded_rolls=[guarded_rolls]/[CCPOST_GORLEX_MAX_GUARDED_ROLLS], staff_modifier=[staff_modifier], activity_modifier=[activity_modifier], prototype_modifier=[prototype_modifier], chance=[chance]%, success=[successful_roll].")
+	if(successful_roll)
+		automatic_deployment_authorized = TRUE
+		// Authorization owns all subsequent recruitment; securing the disk cannot undo it.
+		if(!start_gorlex_poll())
+			cancel_automatic_recruitment("initial poll could not start")
 
 /// End automatic recruitment without reopening consumed deployment opportunities.
 /obj/effect/landmark/ccpost_gorlex_director/proc/cancel_automatic_recruitment(reason)
@@ -310,7 +532,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 
 /// Shared entry point; reserve recruitment before warning or polling.
 /obj/effect/landmark/ccpost_gorlex_director/proc/start_gorlex_poll(admin_forced = FALSE)
-	if(event_started || polling_ghosts || GLOB.ccpost_outpost_signal_lost || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE))
+	if(event_started || polling_ghosts || GLOB.ccpost_outpost_signal_lost || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE) || !contract_available())
 		return FALSE
 	if(!get_disk() || (!admin_forced && (!automatic_deployment_authorized || automatic_recruitment_attempts >= CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS || !SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
 		return FALSE
@@ -329,7 +551,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 /obj/effect/landmark/ccpost_gorlex_director/proc/begin_gorlex_recruitment(admin_forced = FALSE)
 	if(QDELETED(src) || !polling_ghosts)
 		return
-	if(event_started || GLOB.ccpost_outpost_signal_lost || !get_disk() || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE) || (!admin_forced && (!automatic_deployment_authorized || automatic_recruitment_attempts >= CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS || !SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
+	if(event_started || GLOB.ccpost_outpost_signal_lost || !get_disk() || !pick_landing(GLOB.ccpost_gorlex_insertions, TRUE) || !contract_available() || (!admin_forced && (!automatic_deployment_authorized || automatic_recruitment_attempts >= CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS || !SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
 		polling_ghosts = FALSE
 		if(!admin_forced)
 			cancel_automatic_recruitment("deployment prerequisites lost before recruitment")
@@ -357,7 +579,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	polling_ghosts = FALSE
 	if(event_started)
 		return
-	if(GLOB.ccpost_outpost_signal_lost || !get_disk() || (!admin_forced && (!SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
+	if(GLOB.ccpost_outpost_signal_lost || !get_disk() || !contract_available() || (!admin_forced && (!SSticker.IsRoundInProgress() || !deployment_eligible(get_disk()))))
 		if(!admin_forced)
 			cancel_automatic_recruitment("deployment prerequisites lost during poll")
 		return
@@ -387,6 +609,12 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	if(!operative.mind)
 		qdel(operative)
 		handle_failed_gorlex_recruitment(admin_forced, "operative mind transfer failed")
+		return
+	if(!select_contract())
+		// No objective is available: return the transferred volunteer to observer state.
+		operative.ghostize(FALSE)
+		qdel(operative)
+		handle_failed_gorlex_recruitment(admin_forced, "no valid recovery objective")
 		return
 	event_started = TRUE
 	next_recruitment_retry = 0
@@ -435,6 +663,26 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	cartridge.forceMove(safe)
 	log_game("CCPost Gorlex: classified cartridge containment returned item to off-station [AREACOORD(safe)].")
 
+/// The assigned original may travel between off-station levels, never to the main station.
+/obj/effect/landmark/ccpost_gorlex_director/proc/secure_prototype()
+	if(gorlex_victory || cybersun_recovered)
+		return
+	var/obj/item/prototype = contract_prototype_ref?.resolve()
+	if(!prototype || QDELETED(prototype))
+		return
+	var/turf/current = get_turf(prototype)
+	if(!current)
+		return
+	if(!is_station_level(current.z))
+		last_valid_prototype_turf = current
+		return
+	var/turf/safe = last_valid_prototype_turf
+	if(!safe || is_station_level(safe.z))
+		safe = get_return_turf()
+	if(safe && !is_station_level(safe.z))
+		prototype.forceMove(safe)
+		log_game("CCPost Gorlex: original prototype returned from the station to [AREACOORD(safe)].")
+
 /// Private feedback works in vacuum and never broadcasts the operative's position.
 /proc/ccpost_private_feedback(mob/recipient, sound_file, volume = 35)
 	if(!recipient?.client || QDELETED(recipient))
@@ -445,15 +693,16 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	ccpost_private_feedback(recipient, 'sound/effects/achievement/beeps_jingle.ogg', 50)
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/note_data_downloaded(datum/mind/downloader, obj/item/ccpost_classified_cartridge/cartridge)
-	if(data_downloaded || !downloader || !cartridge || data_cartridge_ref?.resolve() != cartridge)
+	if(contract_kind != "data" || data_downloaded || !downloader || !cartridge || data_cartridge_ref?.resolve() != cartridge)
 		return FALSE
 	var/mob/living/operative = operative_ref?.resolve()
 	if(!operative || operative.mind != downloader)
 		return FALSE
 	data_downloaded = TRUE
+	asset_acquired = TRUE
 	data_cartridge_ref = WEAKREF(cartridge)
 	ccpost_objective_feedback(operative)
-	to_chat(operative, span_boldnotice("GORLEX MARAUDERS: Classified tasking data acquired. Retain the physical cartridge and proceed with NT-ADP-7 authorization."))
+	to_chat(operative, span_boldnotice("GORLEX MARAUDERS: Classified tasking data acquired. Eject and retain the original cartridge. Proceed to NT-ADP-7, or deliberately abandon your contract by leaving the operational level with the asset without authorized retrieval. Desertion may trigger an irreversible Black Warrant and explosive implant countdown."))
 	log_game("CCPost Gorlex: Operation Severance classified Tasking Server records stolen by [key_name(operative)].")
 	return TRUE
 
@@ -549,12 +798,12 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 // Genuine objective datums power the antagonist HUD and the round-end report.
 // The four objectives are tracked independently by the event director.
 /datum/objective/ccpost_gorlex_data
-	name = "classified intelligence acquisition"
+	name = "assigned asset acquisition"
 	explanation_text = "Download classified Central Command Tasking Server records to the physical encrypted data cartridge."
 
 /datum/objective/ccpost_gorlex_data/check_completion()
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
-	return director && director.data_downloaded
+	return director && director.asset_acquired
 
 /datum/objective/ccpost_gorlex_arm
 	name = "NT-ADP-7 authorization"
@@ -583,14 +832,17 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 /datum/antagonist/ccpost_gorlex/forge_objectives()
 	if(length(objectives))
 		return
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
 	var/datum/objective/ccpost_gorlex_data/steal = new
 	steal.owner = owner
+	steal.explanation_text = director?.primary_instruction() || steal.explanation_text
 	objectives += steal
 	var/datum/objective/ccpost_gorlex_arm/arm = new
 	arm.owner = owner
 	objectives += arm
 	var/datum/objective/ccpost_gorlex_extract/escape = new
 	escape.owner = owner
+	escape.explanation_text = "Board your assigned Gorlex retrieval pod with the original [director?.contract_asset_name || "designated asset"] and escape the sector."
 	objectives += escape
 	var/datum/objective/ccpost_gorlex_sabotage/sabotage = new
 	sabotage.owner = owner
@@ -622,7 +874,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	if(director && director.operative_mind_ref?.resolve() == owner)
 		var/mob/living/operative = source
 		director.clear_warrant_warning()
-		director.release_contract_cartridge(operative)
+		director.release_contract_asset(operative)
 		if(director.black_warrant)
 			director.warrant_target_dead = TRUE
 
@@ -630,11 +882,11 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	. = ..() // Native antagonist greeting plays stinger_sound privately.
 	to_chat(owner.current, span_boldwarning("GORLEX MARAUDERS // OPERATION SEVERANCE"))
 	to_chat(owner.current, span_boldnotice("Cybersun Industries has authorized your deployment under Operation Severance."))
-	to_chat(owner.current, span_notice("Infiltrate the Liaison Outpost, recover its classified Tasking Server data, arm NT-ADP-7 and complete authorized retrieval."))
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	to_chat(owner.current, span_notice("[director?.primary_instruction() || "Recover the assigned asset."] Then arm NT-ADP-7 and complete authorized retrieval."))
 	if(director?.operative_mind_ref?.resolve() == owner)
 		to_chat(owner.current, span_boldnotice("GORLEX COMMAND: NT-ADP-7 authorization code: [ccpost_adp7_get_authorization_code()]. Recover the physical authentication disk. Your uplink retains a copy of the code."))
-	to_chat(owner.current, span_notice("Your contract requires extraction with the intelligence. Unauthorized withdrawal after data acquisition constitutes desertion."))
+	to_chat(owner.current, span_notice("Your contract requires extraction with the original assigned asset. You may go rogue by leaving the operational z-level carrying that asset without authorized retrieval. This can trigger an irreversible Black Warrant and a non-removable explosive implant countdown."))
 	to_chat(owner.current, span_boldnotice("Select your permanent loadout in Field Requisitions before approaching the outpost. Keep one hand free to receive your equipment bag. Your uplink also contains contract details and extraction instructions."))
 	to_chat(owner.current, span_notice("The primary Nanotrasen station is outside your authorized operational zone. Entry, interference and unrelated personnel engagement are prohibited."))
 	owner.announce_objectives()
@@ -660,9 +912,11 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/mob/living/carbon/human/operative = source
 	// Cancel immediately on return, even between director processing ticks.
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
-	if(director?.warrant_deadline && director.operative_ref?.resolve() == operative && director.is_authorized_contract_turf(get_turf(operative)))
-		director.rescind_warrant_warning(operative)
-	if(!operative || !get_turf(operative) || !is_station_level(operative.z))
+	if(!operative || !get_turf(operative))
+		return
+	if(!is_station_level(operative.z))
+		if(director?.operative_ref?.resolve() == operative)
+			director.check_contract_boundary(operative)
 		return
 	var/turf/return_turf = insertion_turf
 	if(!return_turf || is_station_level(return_turf.z))
@@ -742,12 +996,12 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	. = ..()
 	if(visualsOnly)
 		return
-	var/obj/item/ccpost_classified_cartridge/cartridge = new(operative)
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
-	if(director && operative.mind && director.operative_mind_ref?.resolve() == operative.mind && director.operative_ref?.resolve() == operative && !director.data_cartridge_ref)
+	if(director?.contract_kind == "data" && operative.mind && director.operative_mind_ref?.resolve() == operative.mind && director.operative_ref?.resolve() == operative && !director.data_cartridge_ref)
+		var/obj/item/ccpost_classified_cartridge/cartridge = new(operative)
 		director.data_cartridge_ref = WEAKREF(cartridge)
 		director.last_valid_cartridge_turf = get_turf(operative)
-	ccpost_issue_gear(operative, cartridge)
+		ccpost_issue_gear(operative, cartridge)
 	var/obj/item/ccpost_gorlex_uplink/uplink = new(operative)
 	uplink.owner_mind = operative.mind
 	ccpost_issue_gear(operative, uplink)
@@ -1076,6 +1330,14 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		sprites[id] = ccpost_requisition_sprite(entry[6])
 	return list("equipment_icons" = sprites)
 
+/// Cross-level status without inventing a direction across unrelated Z levels.
+/proc/ccpost_tracking_readout(atom/target, mob/user, label)
+	var/turf/current = get_turf(user)
+	var/turf/destination = QDELETED(target) ? null : get_turf(target)
+	if(!destination || is_station_level(destination.z))
+		return list("label" = label, "signal" = "UNAVAILABLE", "sector" = null, "current_sector" = current?.z, "same_level" = FALSE)
+	return list("label" = label, "signal" = "ACQUIRED", "sector" = destination.z, "current_sector" = current?.z, "same_level" = !!(current && current.z == destination.z))
+
 /obj/item/ccpost_gorlex_uplink/ui_data(mob/user)
 	if(!has_access(user))
 		return list("authorized" = FALSE)
@@ -1109,6 +1371,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/datum/antagonist/ccpost_cybersun/enforcer = user.mind?.has_antag_datum(/datum/antagonist/ccpost_cybersun)
 	var/list/stages = list(
 		"data" = !!director?.data_downloaded,
+		"asset_acquired" = !!director?.asset_acquired,
 		"armed" = !!director?.nuke_ever_armed,
 		"detonated" = !!director?.nuke_detonated,
 		"extracted" = !!director?.gorlex_victory,
@@ -1138,6 +1401,23 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 					else
 						medical_status = "STABLE"
 				personnel += list(list("name" = employee.employee_name, "role" = employee.employee_role, "portrait" = employee.portrait_base64, "medical" = medical_status))
+	var/list/tracking = list()
+	if(cybersun_brand)
+		if(director?.black_warrant && director.enforcer_mind == user.mind && !director.enforcer_recalled)
+			var/datum/mind/warrant_mind = director.operative_mind_ref?.resolve()
+			var/atom/subject = warrant_mind?.current
+			if(!isliving(subject))
+				subject = director.operative_ref?.resolve()
+			tracking += list(ccpost_tracking_readout(subject, user, "Warrant subject"))
+			tracking += list(ccpost_tracking_readout(director.contract_asset(), user, director.contract_asset_name))
+	else if(director?.operative_mind_ref?.resolve() == user.mind)
+		var/atom/asset = director.primary_target()
+		var/asset_label = director.contract_kind == "data" && !director.data_downloaded ? "Tasking Distribution Server" : director.contract_asset_name
+		tracking += list(ccpost_tracking_readout(asset, user, asset_label))
+		tracking += list(ccpost_tracking_readout(director.get_disk(), user, "NT-ADP-7 authentication disk"))
+		tracking += list(ccpost_tracking_readout(director.get_contract_nuke(), user, "NT-ADP-7 device"))
+		if(director.extraction_turf)
+			tracking += list(ccpost_tracking_readout(director.extraction_turf, user, "Retrieval site"))
 	var/requisitions_locked = director && ((!cybersun_brand && director.black_warrant) || (cybersun_brand && director.enforcer_mission_deadline && world.time >= director.enforcer_mission_deadline))
 	return list(
 		"requisitions_locked" = !!requisitions_locked,
@@ -1155,6 +1435,11 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		"catalogue" = requisitions_locked ? list() : items,
 		"history" = purchase_history,
 		"mission" = stages,
+		"tracking" = tracking,
+		"contract_kind" = director?.contract_kind,
+		"contract_asset_name" = director?.contract_asset_name,
+		"primary_instruction" = director?.primary_instruction(),
+		"asset_held" = !!director?.holds_contract_asset(user),
 		"personnel" = personnel,
 		"target" = list("name" = director?.warrant_target_name || "UNASSIGNED SUBJECT", "status" = director?.black_warrant ? (director.refresh_warrant_target() ? "DECEASED" : "ACTIVE WARRANT") : "NO WARRANT SUBJECT"),
 		"recall_implemented" = TRUE,
@@ -1165,7 +1450,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		"extraction_ready" = !cybersun_brand && !!director?.can_request_extraction(user),
 		"landing_available" = !!director?.pick_landing(GLOB.ccpost_gorlex_extraction_landmarks),
 		"warrant_seconds" = director ? CEILING(max(0, director.warrant_deadline - world.time) / 10, 1) : 0,
-		"cartridge_held" = !!director?.holds_contract_cartridge(user),
+		"cartridge_held" = !!director?.holds_contract_asset(user),
 		"recall_ready" = cybersun_brand && !!director?.can_recall(user),
 		"cybersun_recovered" = !!director?.cybersun_recovered,
 		"recalled" = !!(director && (user.mind == director.enforcer_mind && director.enforcer_recalled)),
@@ -1286,11 +1571,15 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 			eligible |= T
 	return length(eligible) ? pick(eligible) : null
 
-/obj/effect/landmark/ccpost_gorlex_director/proc/holds_contract_cartridge(mob/user)
-	var/obj/item/ccpost_classified_cartridge/cartridge = data_cartridge_ref?.resolve()
-	if(!user || !cartridge?.data_complete || QDELETED(cartridge))
+/obj/effect/landmark/ccpost_gorlex_director/proc/holds_contract_asset(mob/user)
+	var/obj/item/asset = contract_asset()
+	if(!user || !asset || QDELETED(asset))
 		return FALSE
-	var/atom/container = cartridge.loc
+	if(contract_kind == "data")
+		var/obj/item/ccpost_classified_cartridge/cartridge = asset
+		if(!istype(cartridge) || !cartridge.data_complete)
+			return FALSE
+	var/atom/container = asset.loc
 	while(container && !isturf(container))
 		if(container == user)
 			return TRUE
@@ -1298,6 +1587,15 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 			return FALSE
 		container = container.loc
 	return FALSE
+
+/// Latch completion only on real possession of the exact assigned prototype.
+/obj/effect/landmark/ccpost_gorlex_director/proc/check_asset_acquired(mob/living/operative)
+	if(asset_acquired || contract_kind != "prototype" || !operative || operative.mind != operative_mind_ref?.resolve() || !holds_contract_asset(operative))
+		return
+	asset_acquired = TRUE
+	ccpost_objective_feedback(operative)
+	to_chat(operative, span_boldnotice("GORLEX MARAUDERS: [contract_asset_name] recovered. Proceed to NT-ADP-7. You may instead abandon your contract by leaving the operational level with this asset without authorized retrieval. A Black Warrant permanently activates your explosive implant countdown."))
+	log_game("CCPost Gorlex: assigned prototype acquired by [key_name(operative)].")
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/is_operational_turf(turf/T)
 	if(!T || is_station_level(T.z))
@@ -1315,11 +1613,11 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	return FALSE
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/can_request_extraction(mob/user)
-	return event_started && !black_warrant && !gorlex_victory && !extraction_deadline && !extraction_pod_ref?.resolve() && user && get_turf(user) && user.stat == CONSCIOUS && !HAS_TRAIT(user, TRAIT_INCAPACITATED) && user == operative_ref?.resolve() && user.mind == operative_mind_ref?.resolve() && user.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) && data_downloaded && nuke_ever_armed && holds_contract_cartridge(user) && is_operational_turf(get_turf(user))
+	return event_started && !black_warrant && !gorlex_victory && !extraction_deadline && !extraction_pod_ref?.resolve() && user && get_turf(user) && user.stat == CONSCIOUS && !HAS_TRAIT(user, TRAIT_INCAPACITATED) && user == operative_ref?.resolve() && user.mind == operative_mind_ref?.resolve() && user.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) && asset_acquired && nuke_ever_armed && holds_contract_asset(user) && is_operational_turf(get_turf(user))
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/request_extraction(mob/user)
 	if(!can_request_extraction(user))
-		to_chat(user, span_warning("GORLEX COMMAND: Retrieval authorization denied. Complete data acquisition and NT-ADP-7 authorization; retain the original cartridge."))
+		to_chat(user, span_warning("GORLEX COMMAND: Retrieval authorization denied. Complete assigned asset acquisition and NT-ADP-7 authorization; retain the original asset."))
 		return FALSE
 	var/turf/landing = pick_landing(GLOB.ccpost_gorlex_extraction_landmarks)
 	if(!landing)
@@ -1373,33 +1671,46 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 			addtimer(CALLBACK(src, PROC_REF(finish_landing), pod), 10)
 			pod.visible_message(span_notice("[pod] descends onto the designated landing point."))
 			to_chat(operative, span_notice("GORLEX COMMAND: Retrieval pod on final approach. Stand clear."))
-	if(!data_downloaded || black_warrant || gorlex_victory || !operative || QDELETED(operative) || operative.stat == DEAD)
+	check_contract_boundary(operative)
+
+/// Called on movement and by the director as a fallback for nested storage/transport.
+/obj/effect/landmark/ccpost_gorlex_director/proc/check_contract_boundary(mob/living/operative)
+	if(black_warrant || gorlex_victory || !operative || QDELETED(operative) || operative.stat == DEAD || operative.mind != operative_mind_ref?.resolve())
 		if(warrant_deadline)
 			clear_warrant_warning()
 		return
+	check_asset_acquired(operative)
 	var/turf/current = get_turf(operative)
 	if(!current)
-		if(warrant_deadline)
-			clear_warrant_warning()
 		return
 	if(is_authorized_contract_turf(current))
 		if(warrant_deadline)
 			rescind_warrant_warning(operative)
 		return
-	if(!warrant_deadline)
-		start_warrant_warning(operative)
-	else if(world.time >= warrant_deadline)
-		issue_black_warrant(operative)
-
-/// The same operational area and retrieval transit rules govern the warning and its audio.
-/obj/effect/landmark/ccpost_gorlex_director/proc/is_authorized_contract_turf(turf/current)
-	if(!current)
-		return FALSE
-	if(is_operational_turf(current))
-		return TRUE
+	// Station entry is separately blocked by the antagonist movement handler.
 	if(is_station_level(current.z))
+		return
+	// Once a departure with the asset has started the warning, dropping the item
+	// cannot cancel it. Only a return to authorized space can restore compliance.
+	if(warrant_deadline)
+		if(world.time >= warrant_deadline)
+			issue_black_warrant(operative)
+		return
+	if(asset_acquired && holds_contract_asset(operative))
+		start_warrant_warning(operative)
+		return
+	if(!last_boundary_reminder || world.time >= last_boundary_reminder + 30 SECONDS)
+		last_boundary_reminder = world.time
+		to_chat(operative, span_notice("GORLEX COMMAND: You have left the operational level. Return to the Liaison Outpost and use your pinpointer or uplink tracking to locate your assigned objective."))
+
+/// The operational Z level is the outpost's level, not an arbitrary radius.
+/// Authorized retrieval adds its own designated landing zone; the station stays prohibited.
+/obj/effect/landmark/ccpost_gorlex_director/proc/is_authorized_contract_turf(turf/current)
+	if(!current || is_station_level(current.z))
 		return FALSE
-	// Retrieval extends authorization only to the selected landing area.
+	var/turf/origin = get_turf(src)
+	if(origin && current.z == origin.z)
+		return TRUE
 	return !!((extraction_deadline || extraction_pod_ref?.resolve()) && extraction_turf && current.z == extraction_turf.z && get_dist(current, extraction_turf) <= max(1, operational_radius))
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/start_warrant_warning(mob/living/operative)
@@ -1442,7 +1753,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		return
 	var/mob/living/operative = operative_ref?.resolve()
 	var/turf/current = get_turf(operative)
-	if(black_warrant || gorlex_victory || !data_downloaded || !operative || QDELETED(operative) || operative.stat == DEAD || !current)
+	if(black_warrant || gorlex_victory || !asset_acquired || !operative || QDELETED(operative) || operative.stat == DEAD || !current)
 		clear_warrant_warning()
 		return
 	if(is_authorized_contract_turf(current))
@@ -1465,7 +1776,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	addtimer(CALLBACK(src, PROC_REF(warrant_warning_beep), generation), min(interval, remaining))
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/issue_black_warrant(mob/living/operative)
-	if(black_warrant || gorlex_victory || !data_downloaded || !operative)
+	if(black_warrant || gorlex_victory || !asset_acquired || !operative)
 		return FALSE
 	black_warrant = TRUE
 	implant_deadline = world.time + CCPOST_GORLEX_FAILSAFE_TIME
@@ -1525,7 +1836,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	enforcer_poll_active = TRUE
 	var/icon/faction_icon = ccpost_poll_faction_icon(TRUE)
 	var/list/candidates = SSpolling.poll_ghost_candidates(
-		"Accept a Cybersun Black Warrant? Eliminate [warrant_target_name] and recover classified intelligence.",
+		"Accept a Cybersun Black Warrant? Eliminate [warrant_target_name] and recover [contract_asset_name].",
 		check_jobban = ROLE_OPERATIVE,
 		role = ROLE_LONE_OPERATIVE,
 		alert_pic = faction_icon,
@@ -1594,7 +1905,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	extraction_status = "LANDED - BOARD POD"
 	var/mob/living/operative = operative_ref?.resolve()
 	if(operative)
-		to_chat(operative, span_boldnotice("GORLEX COMMAND: Retrieval pod landed at [AREACOORD(landing)]. Board with the classified cartridge."))
+		to_chat(operative, span_boldnotice("GORLEX COMMAND: Retrieval pod landed at [AREACOORD(landing)]. Board with the original [contract_asset_name]."))
 
 /obj/effect/ccpost_retrieval_marker
 	name = "Landing Zone Indicator"
@@ -1659,7 +1970,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 
 /obj/structure/ccpost_gorlex_retrieval_pod/examine(mob/user)
 	. = ..()
-	. += span_notice("Use an empty hand on the boarding hatch to buckle in and depart. Only the designated Gorlex operative carrying the original completed cartridge may depart.")
+	. += span_notice("Use an empty hand on the boarding hatch to buckle in and depart. Only the designated Gorlex operative carrying the original designated asset may depart.")
 
 /obj/structure/ccpost_gorlex_retrieval_pod/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force || !hatch_open)
@@ -1676,8 +1987,8 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	return TRUE
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/board_retrieval(mob/living/user, obj/structure/ccpost_gorlex_retrieval_pod/pod)
-	if(!user || !get_turf(user) || user != operative_ref?.resolve() || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_INCAPACITATED) || user.mind != operative_mind_ref?.resolve() || !user.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) || !user.Adjacent(pod) || black_warrant || gorlex_victory || extraction_pod_ref?.resolve() != pod || !holds_contract_cartridge(user) || extraction_status != "LANDED - BOARD POD" || extraction_departing || !pod.hatch_open)
-		to_chat(user, span_warning("GORLEX RETRIEVAL: Boarding denied. Assigned operative and original completed cartridge required."))
+	if(!user || !get_turf(user) || user != operative_ref?.resolve() || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_INCAPACITATED) || user.mind != operative_mind_ref?.resolve() || !user.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) || !user.Adjacent(pod) || black_warrant || gorlex_victory || extraction_pod_ref?.resolve() != pod || !holds_contract_asset(user) || extraction_status != "LANDED - BOARD POD" || extraction_departing || !pod.hatch_open)
+		to_chat(user, span_warning("GORLEX RETRIEVAL: Boarding denied. Assigned operative and original designated asset required."))
 		return FALSE
 	if(!pod.buckle_mob(user, force = TRUE, check_loc = FALSE))
 		return FALSE
@@ -1687,7 +1998,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	return TRUE
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/depart_retrieval(mob/living/user, obj/structure/ccpost_gorlex_retrieval_pod/pod)
-	if(!do_after(user, 2 SECONDS, target = pod, timed_action_flags = IGNORE_HELD_ITEM|IGNORE_SLOWDOWNS) || QDELETED(pod) || QDELETED(user) || user.buckled != pod || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_INCAPACITATED) || black_warrant || gorlex_victory || GLOB.ccpost_gorlex_director != src || extraction_pod_ref?.resolve() != pod || user != operative_ref?.resolve() || user.mind != operative_mind_ref?.resolve() || !user.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) || !holds_contract_cartridge(user))
+	if(!do_after(user, 2 SECONDS, target = pod, timed_action_flags = IGNORE_HELD_ITEM|IGNORE_SLOWDOWNS) || QDELETED(pod) || QDELETED(user) || user.buckled != pod || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_INCAPACITATED) || black_warrant || gorlex_victory || GLOB.ccpost_gorlex_director != src || extraction_pod_ref?.resolve() != pod || user != operative_ref?.resolve() || user.mind != operative_mind_ref?.resolve() || !user.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex) || !holds_contract_asset(user))
 		extraction_departing = FALSE
 		if(!black_warrant && !gorlex_victory && !QDELETED(pod) && extraction_pod_ref?.resolve() == pod)
 			pod.set_hatch(TRUE)
@@ -1707,6 +2018,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	pod.set_departure_orientation()
 	playsound(get_turf(pod), 'sound/effects/podwoosh.ogg', 65, TRUE)
 	pod.unbuckle_mob(user)
+	qdel(contract_asset())
 	var/mob/dead/observer/withdrawn_ghost = ccpost_remove_withdrawn_body(user)
 	if(withdrawn_ghost)
 		gorlex_withdrawn_ghost_ref = WEAKREF(withdrawn_ghost)
@@ -1756,6 +2068,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	objectives += terminate
 	var/datum/objective/ccpost_cybersun_recover/recover = new
 	recover.owner = owner
+	recover.explanation_text = "Recover the original [director?.contract_asset_name || "designated asset"] and complete authorized recall."
 	objectives += recover
 	var/datum/objective/ccpost_cybersun_recall/recall = new
 	recall.owner = owner
@@ -1771,7 +2084,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	return !!director?.refresh_warrant_target()
 
 /datum/objective/ccpost_cybersun_recover
-	name = "corporate intelligence recovery"
+	name = "corporate asset recovery"
 	explanation_text = "Recover the classified data cartridge containing the downloaded Liaison Outpost records."
 /datum/objective/ccpost_cybersun_recover/check_completion()
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
@@ -1810,7 +2123,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
 	if(director && director.enforcer_mind == owner)
 		var/mob/living/enforcer = source
-		director.release_contract_cartridge(enforcer)
+		director.release_contract_asset(enforcer)
 		var/obj/effect/ccpost_recall_charge/manual_charge = director.manual_charge_ref?.resolve()
 		var/obj/effect/ccpost_recall_charge/forced_charge = director.forced_charge_ref?.resolve()
 		if(manual_charge)
@@ -1821,7 +2134,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 /datum/antagonist/ccpost_cybersun/greet()
 	. = ..() // Native antagonist greeting plays stinger_sound privately.
 	to_chat(owner.current, span_boldwarning("CYBERSUN INDUSTRIES // BLACK WARRANT ENFORCEMENT"))
-	to_chat(owner.current, span_notice("Terminate the designated rogue contractor and recover the original classified cartridge. Unrelated personnel are not valid targets. Consult your uplink for directive details and recall authorization. The main station and unrelated personnel are outside your jurisdiction."))
+	to_chat(owner.current, span_notice("Terminate the designated rogue contractor and recover the original assigned asset. Unrelated personnel are not valid targets. Consult your uplink for directive details and recall authorization. The main station and unrelated personnel are outside your jurisdiction."))
 	owner.announce_objectives()
 
 /datum/antagonist/ccpost_cybersun/roundend_report()
@@ -1908,12 +2221,13 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 
 /obj/item/pinpointer/ccpost_warrant
 	name = "Cybersun warrant tracker"
-	desc = "A secure tracker calibrated to the Black Warrant subject. Alt-click to switch between subject and intelligence recovery."
+	desc = "A secure tracker calibrated to the Black Warrant subject. Alt-click to switch between subject and assigned asset recovery."
 	icon_state = "pinpointer_syndicate"
 	worn_icon_state = "pinpointer_black"
 	minimum_range = 15
 	var/datum/mind/owner_mind
-	var/track_cartridge = FALSE
+	process_scan = TRUE
+	var/track_asset = FALSE
 
 /obj/item/pinpointer/ccpost_warrant/attack_self(mob/living/user)
 	if(user.mind != owner_mind)
@@ -1923,45 +2237,54 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 /obj/item/pinpointer/ccpost_warrant/click_alt(mob/user)
 	if(user.mind != owner_mind)
 		return CLICK_ACTION_BLOCKING
-	track_cartridge = !track_cartridge
+	track_asset = !track_asset
 	scan_for_target()
 	update_appearance()
-	to_chat(user, span_notice("Warrant tracker: [track_cartridge ? "Intelligence recovery" : "Warrant subject"] mode."))
+	to_chat(user, span_notice("Warrant tracker: [track_asset ? "Asset recovery" : "Warrant subject"] mode."))
 	return CLICK_ACTION_SUCCESS
+
+/obj/item/pinpointer/ccpost_warrant/proc/warrant_tracking_target()
+	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
+	if(!director?.black_warrant || director.enforcer_recalled || director.enforcer_forced_withdrawal || director.enforcer_mind != owner_mind)
+		return null
+	if(track_asset)
+		return director.contract_asset()
+	var/datum/mind/subject = director.operative_mind_ref?.resolve()
+	var/mob/living/body = subject?.current
+	return isliving(body) ? body : director.operative_ref?.resolve()
 
 /obj/item/pinpointer/ccpost_warrant/scan_for_target()
 	target = null
-	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
-	if(!director?.black_warrant || director.enforcer_recalled || director.enforcer_mind != owner_mind)
+	var/atom/signal_target = warrant_tracking_target()
+	var/turf/destination = get_turf(signal_target)
+	var/turf/origin = get_turf(src)
+	if(destination && origin && !is_station_level(destination.z) && destination.z == origin.z)
+		target = signal_target
+
+/obj/item/pinpointer/ccpost_warrant/examine(mob/user)
+	. = ..()
+	if(user.mind != owner_mind || !active)
 		return
-	if(track_cartridge)
-		target = director.data_cartridge_ref?.resolve()
+	var/list/readout = ccpost_tracking_readout(warrant_tracking_target(), user, track_asset ? "Assigned asset" : "Warrant subject")
+	if(readout["signal"] != "ACQUIRED")
+		. += span_warning("No authorized signal detected.")
+	else if(!readout["same_level"])
+		. += span_notice("Remote signal: [readout["label"]] is on z-level [readout["sector"]]. Consult your uplink for live tracking.")
 	else
-		var/datum/mind/subject = director.operative_mind_ref?.resolve()
-		var/mob/living/body = subject?.current
-		if(isliving(body))
-			target = body
-		else
-			target = director.operative_ref?.resolve()
-	if(QDELETED(target))
-		target = null
-		return
-	var/turf/target_turf = get_turf(target)
-	if(!target_turf || is_station_level(target_turf.z))
-		target = null
+		. += span_notice("[readout["label"]] signal acquired on this z-level.")
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/can_recall(mob/user, allow_pending = FALSE)
 	if(!black_warrant || !refresh_warrant_target() || !user || !get_turf(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_INCAPACITATED) || is_station_level(user.z) || user.mind != enforcer_mind || enforcer_recalled || enforcer_forced_pending || enforcer_forced_withdrawal || (enforcer_mission_deadline && world.time >= enforcer_mission_deadline))
 		return FALSE
 	var/datum/antagonist/ccpost_cybersun/enforcer = user.mind?.has_antag_datum(/datum/antagonist/ccpost_cybersun)
-	return enforcer && (allow_pending || !enforcer.recall_pending) && holds_contract_cartridge(user)
+	return enforcer && (allow_pending || !enforcer.recall_pending) && holds_contract_asset(user)
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/recall_still_valid(mob/living/user, turf/start_turf, atom/start_loc)
 	return !QDELETED(src) && !QDELETED(user) && get_turf(user) == start_turf && user.loc == start_loc && can_recall(user, TRUE)
 
 /obj/effect/landmark/ccpost_gorlex_director/proc/request_recall(mob/living/user)
 	if(!can_recall(user))
-		to_chat(user, span_warning("CYBERSUN: Recall denied. Terminate the warrant subject and secure the original classified cartridge."))
+		to_chat(user, span_warning("CYBERSUN: Recall denied. Terminate the warrant subject and secure the original assigned asset."))
 		return FALSE
 	var/datum/antagonist/ccpost_cybersun/enforcer = user.mind.has_antag_datum(/datum/antagonist/ccpost_cybersun)
 	enforcer.recall_pending = TRUE
@@ -1995,6 +2318,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	ccpost_objective_feedback(user)
 	to_chat(user, span_boldnotice("CYBERSUN: Authorized recall complete."))
 	log_game("Operation Severance: Cybersun recall complete for [key_name(user)].")
+	qdel(contract_asset())
 	ccpost_remove_withdrawn_body(user)
 
 /obj/effect/ccpost_recall_charge
@@ -2146,26 +2470,26 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	to_chat(enforcer, span_boldnotice("CYBERSUN: Operational authorization granted for [CCPOST_CYBERSUN_MISSION_TIME / (1 MINUTES)] minutes. Complete your directives and recall before expiration."))
 
 /// Retain the original object even when the carrier is gibbed or removed. No replacement cartridge is created.
-/obj/effect/landmark/ccpost_gorlex_director/proc/release_contract_cartridge(mob/living/carrier)
-	var/obj/item/ccpost_classified_cartridge/cartridge = data_cartridge_ref?.resolve()
-	if(!carrier || !cartridge || QDELETED(cartridge) || gorlex_victory || cybersun_recovered)
+/obj/effect/landmark/ccpost_gorlex_director/proc/release_contract_asset(mob/living/carrier)
+	var/obj/item/asset = contract_asset()
+	if(!carrier || !asset || QDELETED(asset) || gorlex_victory || cybersun_recovered)
 		return
-	var/atom/container = cartridge.loc
+	var/atom/container = asset.loc
 	while(container && !isturf(container) && container != carrier)
 		container = container.loc
 	if(container != carrier)
 		return
 	var/turf/drop_turf = get_turf(carrier)
 	if(!drop_turf || is_station_level(drop_turf.z))
-		drop_turf = last_valid_cartridge_turf
+		drop_turf = (contract_kind == "prototype" ? last_valid_prototype_turf : last_valid_cartridge_turf)
 	if(!drop_turf || is_station_level(drop_turf.z))
 		drop_turf = get_return_turf()
 	if(!drop_turf)
 		return
-	if(cartridge.loc == carrier)
-		carrier.dropItemToGround(cartridge, force = TRUE)
-	if(cartridge.loc != drop_turf)
-		cartridge.forceMove(drop_turf)
+	if(asset.loc == carrier)
+		carrier.dropItemToGround(asset, force = TRUE)
+	if(asset.loc != drop_turf)
+		asset.forceMove(drop_turf)
 
 /// Native microbomb behavior, with the contract's cartridge protected before its explosion.
 /obj/item/implant/explosive/ccpost
@@ -2191,7 +2515,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		cause = "confirmed manual activation"
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
 	if(director)
-		director.release_contract_cartridge(imp_in)
+		director.release_contract_asset(imp_in)
 	return ..(cause)
 
 /obj/item/implant/explosive/ccpost/gorlex
@@ -2273,7 +2597,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	warrant_target_dead = TRUE
 	microbomb.delay = 0
 	microbomb.instant_explosion = TRUE
-	release_contract_cartridge(operative)
+	release_contract_asset(operative)
 	to_chat(operative, span_bolddanger("CYBERSUN: Corporate failsafe detonation authorized."))
 	microbomb.activate("corporate failsafe")
 
@@ -2289,7 +2613,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 	if(enforcer_termination_at_withdrawal && !enforcer_termination_cue_sent)
 		enforcer_termination_cue_sent = TRUE
 		ccpost_objective_feedback(enforcer)
-	enforcer_recovery_at_expiry = enforcer_termination_at_withdrawal && holds_contract_cartridge(enforcer)
+	enforcer_recovery_at_expiry = enforcer_termination_at_withdrawal && holds_contract_asset(enforcer)
 	var/obj/effect/ccpost_recall_charge/old_charge = manual_charge_ref?.resolve()
 	if(old_charge)
 		qdel(old_charge)
@@ -2314,11 +2638,12 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 		return
 	var/turf/landing = get_turf(enforcer)
 	// Recovery can be credited only if both directives were met. Forced recall never fulfills recall itself.
-	if(enforcer_recovery_at_expiry && holds_contract_cartridge(enforcer))
+	if(enforcer_recovery_at_expiry && holds_contract_asset(enforcer))
 		cybersun_recovered = TRUE
 		ccpost_objective_feedback(enforcer)
+		qdel(contract_asset())
 	else
-		release_contract_cartridge(enforcer)
+		release_contract_asset(enforcer)
 	enforcer_forced_withdrawal = TRUE
 	antag.recall_pending = FALSE
 	antag.withdrawal_identity = "[ccpost_roundend_identity(enforcer.mind, "Cybersun Enforcer")] through compulsory bluespace withdrawal."
@@ -2338,10 +2663,17 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 #undef CCPOST_GORLEX_TC
 #undef CCPOST_CYBERSUN_TC
 #undef CCPOST_GORLEX_NEGLECT_WINDOW
+#undef CCPOST_GORLEX_NEGLECT_ESCALATION
+#undef CCPOST_GORLEX_NEGLECT_MAX
+#undef CCPOST_GORLEX_FIRST_GUARDED_CHECK
+#undef CCPOST_GORLEX_ROLL_COOLDOWN
+#undef CCPOST_GORLEX_MAX_GUARDED_ROLLS
 #undef CCPOST_GORLEX_RECRUITMENT_RETRY_DELAY
 #undef CCPOST_GORLEX_PREPARATION_TIME
 #undef CCPOST_GORLEX_MAX_RECRUITMENT_ATTEMPTS
 #undef CCPOST_GORLEX_SECURITY_POLL
+#undef CCPOST_GORLEX_PROTOTYPE_NEGLECT
+#undef CCPOST_GORLEX_PROTOTYPE_ESCALATION
 
 #undef CCPOST_GORLEX_PLASTIC_LIMIT
 #undef CCPOST_CYBERSUN_RETRY_DELAY
@@ -2349,7 +2681,7 @@ GLOBAL_LIST_EMPTY(ccpost_cybersun_insertions)
 // Admin-only native event controls. No storyteller track; natural recruitment remains director-owned.
 /datum/round_event_control/ccpost_gorlex_deployment
 	name = "Operation Severance: Gorlex Deployment"
-	description = "Initiates Gorlex recruitment at an operational Liaison Outpost after a two-minute security advisory window, bypassing scheduled deployment checks and staffing."
+	description = "Initiates Gorlex recruitment at an operational Liaison Outpost after a two-minute security advisory window, bypassing automatic deployment rolls and staffing."
 	typepath = /datum/round_event/ccpost_gorlex_deployment
 	track = null
 	max_occurrences = 0

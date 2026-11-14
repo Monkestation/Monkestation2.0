@@ -347,6 +347,61 @@
 	name = "Central Command outpost PDA"
 	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/heads/ccpost")
 	long_ranged = TRUE
+	var/datum/weakref/ccpost_registered_body
+	var/list/ccpost_system_alerts = list()
+
+/obj/item/modular_computer/pda/heads/ccpost/examine(mob/user)
+	. = ..()
+	if(user != ccpost_registered_body?.resolve() || !length(ccpost_system_alerts))
+		return
+	. += span_notice("Recent Central Command system alerts:")
+	for(var/reference in ccpost_system_alerts)
+		. += span_notice("[html_encode(ccpost_system_alerts[reference])]")
+
+/// Private alerts are delivered only to the registered employee carrying their issued PDA.
+/proc/ccpost_notify_liaison(datum/mind/recipient_mind, channel, reference, subject)
+	var/mob/living/carbon/human/person = recipient_mind?.current
+	if(!istype(person) || !person.client || person.stat == DEAD)
+		return
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(person, FALSE)
+	if(!employee || employee.original_body?.resolve() != person)
+		return
+	if(channel == "tasking" ? !employee.tasking_pda_notifications : !employee.sector_pda_notifications)
+		return
+	var/subscribed = FALSE
+	if(channel == "tasking")
+		var/list/tasking_terminals = employee.employee_role == "Outpost Security Officer" ? GLOB.ccpost_tasking_network.security_terminals : GLOB.ccpost_tasking_network.registered_terminals
+		for(var/obj/machinery/computer/ccpost_tasking/terminal as anything in tasking_terminals)
+			if(terminal.session_valid_for(person))
+				subscribed = TRUE
+				break
+	else
+		for(var/obj/machinery/computer/ccpost_sector_comms/terminal as anything in GLOB.ccpost_sector_network.registered_comms_terminals)
+			if(terminal.sector_session_valid_for(person))
+				subscribed = TRUE
+				break
+	if(!subscribed)
+		return
+	var/list/inventory = person.contents.Copy()
+	while(length(inventory))
+		var/atom/item = inventory[1]
+		inventory.Cut(1, 2)
+		if(ismob(item))
+			continue
+		if(istype(item, /obj/item/modular_computer/pda/heads/ccpost))
+			var/obj/item/modular_computer/pda/heads/ccpost/device = item
+			if(device.ccpost_registered_body?.resolve() == person)
+				var/alert_key = "[channel]:[reference]"
+				if(alert_key in device.ccpost_system_alerts)
+					return
+				var/alert_text = "[channel == "tasking" ? "Tasking" : "Sector Communications"]: [reference], [subject]"
+				device.ccpost_system_alerts[alert_key] = alert_text
+				while(length(device.ccpost_system_alerts) > 12)
+					device.ccpost_system_alerts.Cut(1, 2)
+				to_chat(person, span_notice("Your PDA receives a Central Command alert: [html_encode(alert_text)]"))
+				ccpost_private_feedback(person, 'sound/machines/terminal/terminal_alert.ogg', 35)
+				return
+		inventory += item.contents
 
 // Shared parent for all outpost ghost roles.
 /obj/effect/mob_spawn/ghost_role/human/ccpost
@@ -400,7 +455,11 @@
 		id_card.update_label()
 		id_card.update_icon()
 
-	return ..()
+	. = ..()
+	var/obj/item/modular_computer/pda/heads/ccpost/pda = equipped_human.belt
+	if(istype(pda))
+		pda.imprint_id(equipped_human.real_name, "Central Command Liaison")
+		pda.ccpost_registered_body = WEAKREF(equipped_human)
 
 /// Central Command Outpost Security Officer
 /obj/effect/mob_spawn/ghost_role/human/ccpost/security_officer
@@ -450,5 +509,9 @@
 		id_card.update_label()
 		id_card.update_icon()
 
-	return ..()
+	. = ..()
+	var/obj/item/modular_computer/pda/heads/ccpost/pda = equipped_human.r_store
+	if(istype(pda))
+		pda.imprint_id(equipped_human.real_name, "Outpost Security Officer")
+		pda.ccpost_registered_body = WEAKREF(equipped_human)
 

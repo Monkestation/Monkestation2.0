@@ -2232,6 +2232,9 @@
 	},
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/machinery/light/directional/east,
+/obj/machinery/computer/ccpost_tasking/security{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ccpost/secoffice)
 "kt" = (
@@ -2699,14 +2702,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/ccpost/secoffice)
-"nc" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 5
-	},
-/obj/effect/landmark/ccpost_gorlex_disk_return,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ccpost/asteroid)
 "ne" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -3541,9 +3536,6 @@
 "qW" = (
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ccpost/asteroid)
-"qX" = (
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/ccpost/engineering)
 "rc" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -4751,10 +4743,6 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ccpost/cargo)
-"xA" = (
-/obj/machinery/power/solar,
-/turf/open/floor/iron/solarpanel/airless,
-/area/ruin/space/solars/ccpost/solars/starboard)
 "xD" = (
 /obj/machinery/computer/ccpost_logistics{
 	dir = 8
@@ -10309,7 +10297,7 @@ JV
 JV
 JV
 JV
-JV
+KX
 JV
 JV
 JV
@@ -10458,7 +10446,7 @@ JV
 JV
 JV
 JV
-JV
+Jj
 JV
 JV
 JV
@@ -10821,7 +10809,7 @@ JV
 JV
 JV
 JV
-JV
+Jj
 JV
 JV
 KX
@@ -13333,7 +13321,7 @@ se
 bt
 Ub
 yo
-qX
+YV
 yX
 Ob
 PA
@@ -13483,7 +13471,7 @@ DV
 hy
 Ub
 ps
-qX
+YV
 om
 Bi
 sD
@@ -13556,9 +13544,9 @@ YV
 Tl
 cn
 dT
-qX
+YV
 FF
-qX
+YV
 xu
 Bi
 jA
@@ -13631,9 +13619,9 @@ YV
 Ub
 Xn
 Ub
-qX
-qX
-qX
+YV
+YV
+YV
 zh
 Bi
 PJ
@@ -13708,7 +13696,7 @@ Ru
 qO
 pL
 YN
-qX
+YV
 Pw
 Bi
 OT
@@ -13783,7 +13771,7 @@ rk
 DE
 li
 wl
-qX
+YV
 XT
 Bi
 HB
@@ -13858,7 +13846,7 @@ Fq
 YK
 sK
 YN
-qX
+YV
 FK
 Bi
 vt
@@ -14452,9 +14440,9 @@ hM
 JV
 tG
 JV
-xA
-xA
-xA
+hM
+hM
+hM
 JV
 hM
 hM
@@ -14602,9 +14590,9 @@ hM
 JV
 tG
 JV
-xA
-xA
-xA
+hM
+hM
+hM
 JV
 hM
 hM
@@ -14808,10 +14796,10 @@ JV
 JV
 JV
 JV
-nc
+RT
 mp
 mp
-pl
+Km
 JV
 JV
 JV
@@ -14881,12 +14869,12 @@ JV
 "}
 (63,1,1) = {"
 JV
+Jj
 JV
 JV
-OF
 mp
 mp
-OF
+JV
 JV
 JV
 JV
@@ -14958,10 +14946,10 @@ JV
 JV
 JV
 JV
-OF
 JV
 JV
-OF
+JV
+JV
 JV
 JV
 JV
@@ -15031,14 +15019,14 @@ JV
 "}
 (65,1,1) = {"
 JV
-Rt
-OF
-GF
-OF
-OF
-IG
-OF
-eo
+JV
+JV
+JV
+JV
+JV
+JV
+JV
+JV
 JV
 JV
 JV
@@ -15107,7 +15095,7 @@ JV
 (66,1,1) = {"
 JV
 JV
-JV
+KX
 JV
 JV
 JV
@@ -15173,7 +15161,7 @@ JV
 JV
 JV
 JV
-JV
+Jj
 JV
 JV
 JV
@@ -15626,7 +15614,7 @@ JV
 JV
 JV
 JV
-Jj
+JV
 JV
 "}
 (73,1,1) = {"

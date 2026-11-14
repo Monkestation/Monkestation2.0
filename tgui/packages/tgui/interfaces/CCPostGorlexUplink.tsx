@@ -28,6 +28,7 @@ type CatalogueItem = {
 type Personnel = { name: string; role: string; portrait?: string; medical: string };
 type Mission = {
   data: boolean;
+  asset_acquired?: boolean | number;
   armed: boolean;
   detonated: boolean;
   extracted: boolean;
@@ -55,6 +56,11 @@ type Data = {
   landing_available?: boolean | number;
   warrant_seconds?: number;
   cartridge_held?: boolean | number;
+  asset_held?: boolean | number;
+  contract_kind?: 'data' | 'prototype';
+  contract_asset_name?: string;
+  primary_instruction?: string;
+  tracking?: { label: string; signal: string; sector?: number | null; current_sector?: number | null; same_level?: boolean | number }[];
   recall_ready?: boolean | number;
   cybersun_recovered?: boolean | number;
   recalled?: boolean | number;
@@ -131,14 +137,16 @@ export const CCPostGorlexUplink = () => {
   const categories = ['All', ...Array.from(new Set(catalogue.map((item) => item.category)))];
   const items = category === 'All' ? catalogue : catalogue.filter((item) => item.category === category);
   const title = (id: string) => pages.find((page) => page.id === id)?.[cybersun ? 'cybersun' : 'gorlex'] || '';
+  const assetName = data.contract_asset_name || 'Designated asset';
+  const acquired = Boolean(mission?.asset_acquired);
   const missionItems = cybersun ? [
     { title: 'Contractor Termination', description: 'Locate and eliminate the single contractor designated by the Black Warrant.', done: data.target?.status === 'DECEASED' },
-    { title: 'Classified Intelligence Recovery', description: 'Recover the original encrypted Tasking Server cartridge and complete authorized withdrawal.', done: !!data.cybersun_recovered },
+    { title: 'Assigned Asset Recovery', description: `Recover the original ${assetName} and complete authorized withdrawal.`, done: !!data.cybersun_recovered },
     { title: 'Authorized Personnel Recall', description: 'Complete both directives, then request bluespace extraction.', done: !!data.recalled },
   ] : [
-    { title: 'Classified Data Acquisition', description: 'Download classified tasking records to your issued cartridge.', done: !!mission?.data },
+    { title: data.contract_kind === 'prototype' ? 'Experimental Technology Recovery' : 'Classified Data Acquisition', description: data.primary_instruction || `Acquire ${assetName}.`, done: acquired },
     { title: 'NT-ADP-7 Authorization', description: 'Acquire the authentication disk and arm the device using your issued code.', done: !!mission?.armed },
-    { title: 'Authorized Retrieval', description: 'Board the assigned Gorlex pod with classified intelligence.', done: !!mission?.extracted },
+    { title: 'Authorized Retrieval', description: `Board the assigned Gorlex pod with the original ${assetName}.`, done: !!mission?.extracted },
     { title: 'Asset Denial', description: 'Confirm NT-ADP-7 destroys the Liaison Outpost. Additional sabotage result.', done: !!mission?.detonated },
   ];
 
@@ -189,7 +197,7 @@ export const CCPostGorlexUplink = () => {
                   </div>
                   <div className="CCPostOpsStatus">
                     <div><small>ASSIGNMENT</small><strong>{cybersun ? (mission?.black_warrant ? 'BLACK WARRANT' : 'NO ACTIVE WARRANT') : terminated ? 'CONTRACT TERMINATED' : 'OPERATION SEVERANCE'}</strong></div>
-                    <div><small>INTELLIGENCE</small><strong>{cybersun ? (data.cybersun_recovered || data.cartridge_held ? 'SECURED' : 'RECOVERY PENDING') : mission?.data ? 'ACQUIRED' : 'NOT SECURED'}</strong></div>
+                    <div><small>CONTRACT ASSET</small><strong>{cybersun ? (data.cybersun_recovered || data.asset_held ? 'SECURED' : 'RECOVERY PENDING') : acquired ? 'ACQUIRED' : 'NOT SECURED'}</strong></div>
                     <div><small>RETRIEVAL</small><strong>{cybersun ? (data.recalled ? 'SUCCESS' : 'PENDING') : mission?.extracted ? 'SUCCESS' : terminated ? 'REVOKED' : 'PENDING'}</strong></div>
                   </div>
                 </>
@@ -209,7 +217,7 @@ export const CCPostGorlexUplink = () => {
                       <div className="CCPostOpsSubject">{data.target?.name || 'UNASSIGNED SUBJECT'}</div>
                       <Box color="label" mt={1}>Affiliation: Gorlex Marauders · Rogue contractor</Box>
                       <div className="CCPostOpsSignal"><span>◆</span> {data.target?.status || 'SIGNAL UNAVAILABLE'}</div>
-                      <Box mt={1} color="label">Use your Warrant Tracker for general vicinity. Alt-click switches between the subject and the original cartridge.</Box>
+                      <Box mt={1} color="label">Use your Warrant Tracker for general vicinity. Alt-click switches between the subject and the assigned asset.</Box>
                     </Section>
                   </div>}
                   {terminated ? (
@@ -221,7 +229,7 @@ export const CCPostGorlexUplink = () => {
                       </Section>
                     </>
                   ) : (
-                    <div className="CCPostOpsAlert"><b>{cybersun ? 'BLACK WARRANT AUTHORIZATION' : 'CONTRACT AUTHORIZATION'}</b><span>{cybersun ? 'Terminate the designated rogue contractor and recover corporate intelligence. Unrelated personnel are not valid targets.' : 'Retrieve the classified Tasking Server intelligence, arm NT-ADP-7, then use the assigned Gorlex pod. The main station is prohibited.'}</span></div>
+                    <div className="CCPostOpsAlert"><b>{cybersun ? 'BLACK WARRANT AUTHORIZATION' : 'CONTRACT AUTHORIZATION'}</b><span>{cybersun ? `Terminate the designated rogue contractor and recover ${assetName}. Unrelated personnel are not valid targets.` : `${data.primary_instruction || 'Acquire the assigned asset.'} Then arm NT-ADP-7 and use the assigned Gorlex pod. The main station is prohibited.`}</span></div>
                   )}
                   {!cybersun && data.adp7_authorization_code && (
                     <Section title="CLASSIFIED AUTHORIZATION INTELLIGENCE">
@@ -230,6 +238,16 @@ export const CCPostGorlexUplink = () => {
                       <Box mt={1}>Code acquired prior to deployment. Recover the physical authentication disk and enter this code to arm NT-ADP-7.</Box>
                     </Section>
                   )}
+                  <Section title="CROSS-SECTOR TRACKING">
+                    <Box color="label" mb={1}>Live assigned signals. For off-level targets, travel to the indicated sector and use the pinpointer for directional tracking. Primary station signals are excluded.</Box>
+                    {(data.tracking || []).map((signal) => (
+                      <Box key={signal.label} mb={1} p={1} backgroundColor="rgba(0,0,0,0.2)">
+                        <Box bold>{signal.label}</Box>
+                        <Box color="label">{signal.signal === 'ACQUIRED' ? `Target Z ${signal.sector} | Your Z ${signal.current_sector ?? '?'} | ${signal.same_level ? 'LOCAL SIGNAL' : 'REMOTE SIGNAL'}` : 'SIGNAL UNAVAILABLE'}</Box>
+                      </Box>
+                    ))}
+                    {!data.tracking?.length && <Box color="label">No authorized tracking signals.</Box>}
+                  </Section>
                   <Section title={cybersun ? 'MANDATORY ENFORCEMENT DIRECTIVES' : 'CONTRACT OBJECTIVES'}>
                     <div className="CCPostOpsObjectives">
                       {missionItems.map((item, index) => (
@@ -242,10 +260,10 @@ export const CCPostGorlexUplink = () => {
                     </div>
                   </Section>
                   <Section title={cybersun ? 'JURISDICTIONAL RESTRICTIONS' : 'OPERATIONAL RESTRICTIONS'}>
-                    <Box>{cybersun ? 'The primary station lies outside your authorized enforcement zone. Entry, interference with station operations and unrelated personnel engagement are prohibited. Only the designated subject and original intelligence are authorized.' : 'The primary station is outside your authorized operational zone. Entry, interference with station operations and engagement with personnel outside the mission area are prohibited. Unauthorized withdrawal after data acquisition may trigger a Black Warrant.'}</Box>
+                    <Box>{cybersun ? 'The primary station lies outside your authorized enforcement zone. Entry, interference with station operations and unrelated personnel engagement are prohibited. Only the designated subject and assigned asset are authorized.' : 'The primary station is outside your authorized operational zone. Entry, interference with station operations and engagement with personnel outside the mission area are prohibited. Leaving the operational z-level with the assigned asset without authorized retrieval starts a 15-second warning. Return before it expires or deliberately go rogue. A Black Warrant permanently activates the non-removable explosive implant countdown.'}</Box>
                   </Section>
                   {(cybersun || !terminated) && (
-                    <NoticeBox>{cybersun ? 'Recall requires confirmed termination and physical recovery of the original cartridge. Only the assigned Enforcer may complete recall.' : 'Successful authorized boarding with the original intelligence cartridge completes the contract. Nuclear detonation is tracked as a separate sabotage result.'}</NoticeBox>
+                    <NoticeBox>{cybersun ? `Recall requires confirmed termination and physical recovery of ${assetName}. Only the assigned Enforcer may complete recall.` : `Successful authorized boarding with the original ${assetName} completes the contract. Nuclear detonation is tracked as a separate sabotage result.`}</NoticeBox>
                   )}
                 </>
               )}
@@ -317,7 +335,7 @@ export const CCPostGorlexUplink = () => {
                       <div className="CCPostOpsSubject">{data.target?.name || 'UNASSIGNED SUBJECT'}</div>
                       <Box color="label" mt={1}>Affiliation: Rogue Gorlex Marauders Operative</Box>
                       <div className="CCPostOpsSignal"><span>◆</span> {data.target?.status || 'SIGNAL UNAVAILABLE'}</div>
-                      <Box mt={1} color="label">Use your Warrant Tracker for approximate direction and vicinity. Alt-click switches to the original cartridge. Pursuit is restricted to permitted off-station areas.</Box>
+                      <Box mt={1} color="label">Use your Warrant Tracker for approximate direction and vicinity. Alt-click switches to the assigned asset. Pursuit is restricted to permitted off-station areas.</Box>
                     </Section>
                 ) : (
                   <>
@@ -341,17 +359,17 @@ export const CCPostGorlexUplink = () => {
 
               {currentTab === 'extraction' && (
                 <>
-                  <div className="CCPostOpsAlert"><b>{cybersun ? 'PERSONNEL RECALL / BLUESPACE' : 'AUTHORIZED GORLEX RETRIEVAL'}</b><span>{cybersun ? 'Eliminate the rogue contractor and physically secure the stolen intelligence before personnel recall can be authorized.' : 'After arming NT-ADP-7, request an 80-second extraction. Only the assigned Gorlex operative may board the retrieval pod.'}</span></div>
+                  <div className="CCPostOpsAlert"><b>{cybersun ? 'PERSONNEL RECALL / BLUESPACE' : 'AUTHORIZED GORLEX RETRIEVAL'}</b><span>{cybersun ? `Eliminate the rogue contractor and physically secure ${assetName} before personnel recall can be authorized.` : 'After arming NT-ADP-7, request an 80-second extraction. Only the assigned Gorlex operative may board the retrieval pod.'}</span></div>
                   <Section title="EXTRACTION AUTHORIZATION">
                     <div className="CCPostOpsObjectives">
                       {(cybersun ? [
                         { name: 'Contractor termination', ready: data.target?.status === 'DECEASED' },
-                        { name: 'Intelligence secured', ready: !!data.cartridge_held || !!data.cybersun_recovered },
+                        { name: 'Assigned asset secured', ready: !!data.asset_held || !!data.cybersun_recovered },
                         { name: 'Bluespace recall ready', ready: !!data.recall_ready || !!data.recall_pending || !!data.recalled },
                       ] : [
-                        { name: 'Classified intelligence downloaded', ready: !!mission?.data },
+                        { name: 'Assigned asset acquired', ready: acquired },
                         { name: 'NT-ADP-7 armed', ready: !!mission?.armed },
-                        { name: 'Original cartridge in possession', ready: !!data.cartridge_held },
+                        { name: 'Original asset in possession', ready: !!data.asset_held },
                       ]).map((item, index) => (
                         <div className="CCPostOpsObjective" key={index}><div className="CCPostOpsObjective__num">0{index + 1}</div><div className="CCPostOpsObjective__body"><strong>{item.name}</strong></div><span className={`CCPostOpsObjective__status ${item.ready ? 'CCPostOpsObjective__status--complete' : ''}`}>{status(item.ready)}</span></div>
                       ))}
@@ -359,7 +377,7 @@ export const CCPostGorlexUplink = () => {
                   </Section>
                   {cybersun ? (
                     <Section title="BLUESPACE RECALL CONTROL">
-                      <Box mb={2}>{data.recalled ? 'Recall completed.' : data.forced_recall ? 'Compulsory withdrawal in progress.' : data.recall_pending ? 'Recall preparing. Remain stationary for 15 seconds; movement or incapacitation interrupts withdrawal.' : 'Recall becomes available after the warrant subject is dead and you possess the original encrypted cartridge.'}</Box>
+                      <Box mb={2}>{data.recalled ? 'Recall completed.' : data.forced_recall ? 'Compulsory withdrawal in progress.' : data.recall_pending ? 'Recall preparing. Remain stationary for 15 seconds; movement or incapacitation interrupts withdrawal.' : 'Recall becomes available after the warrant subject is dead and you possess the original assigned asset.'}</Box>
                       <Button.Confirm fluid icon="satellite-dish" disabled={!data.recall_ready || !!data.recall_pending || !!data.recalled || !!data.forced_recall} confirmContent="Begin 15-second bluespace recall?" onClick={() => act('request_recall')}>REQUEST RECALL</Button.Confirm>
                     </Section>
                   ) : (
@@ -370,7 +388,7 @@ export const CCPostGorlexUplink = () => {
                       <Box color="label" mb={2}>Landing availability: {data.landing_available ? 'AVAILABLE' : 'UNAVAILABLE'}</Box>
                       {!data.landing_available && <NoticeBox danger>No suitable landing zone identified. Contact command.</NoticeBox>}
                       <Button.Confirm fluid icon="satellite-dish" disabled={!data.extraction_ready || !data.landing_available} confirmContent="Dispatch your retrieval pod? Arrival in 80 seconds." onClick={() => act('request_extraction')}>REQUEST EXTRACTION</Button.Confirm>
-                      <Box mt={1} color="label">Use the boarding hatch to buckle into the landed pod while carrying the original completed cartridge. NT-ADP-7 detonation remains a separate sabotage result.</Box>
+                      <Box mt={1} color="label">Use the boarding hatch to buckle into the landed pod while carrying the original assigned asset. NT-ADP-7 detonation remains a separate sabotage result.</Box>
                     </Section>
                   )}
                 </>

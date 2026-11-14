@@ -1121,6 +1121,8 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 /// Task value is determined by its priority rather than being configured
 /// individually on every assignment template.
 /datum/ccpost_tasking_order/proc/get_allocation_reward()
+	if(template_id == "security_freight")
+		return 0
 	if(template_id in list("sector_communications_audit", "installation_performance_review", "logistics_expenditure_review", "records_reconciliation", "outpost_operational_readiness"))
 		return 5
 	if(submission_type == CCPOST_TASK_SUBMISSION_INSTALLATION_RECORD)
@@ -1247,6 +1249,14 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 // incident de-duplication are outpost-wide. No payroll data is owned here.
 /datum/ccpost_tasking_network
 	var/list/inboxes = list() // REF(mind) -> private nonphysical tasking board
+	var/obj/item/circuitboard/computer/ccpost_tasking/security_board
+	var/list/security_history = list()
+	var/list/security_terminals = list()
+	var/list/security_completed_templates = list()
+	var/security_next_routine_at = 0
+	var/security_freight_reference
+	var/security_freight_arrived_at_bay = FALSE
+	var/security_compromise_pending = FALSE
 	var/list/shared_history = list() // completed/expired task records
 	var/list/registered_terminals = list()
 	var/list/family_next_dispatch = list()
@@ -1298,6 +1308,8 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 		deltimer(routine_dispatch_timer)
 	QDEL_LIST(pending_requests)
 	QDEL_LIST_ASSOC_VAL(inboxes)
+	QDEL_NULL(security_board)
+	QDEL_LIST(security_history)
 	QDEL_LIST(shared_history)
 	return ..()
 
@@ -1365,7 +1377,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	return result
 
 /datum/ccpost_tasking_network/proc/claim_abandoned(mob/user, from_key, expected_code)
-	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
 	if(!employee || employee.employee_role != "Central Command Liaison")
 		return FALSE
 	var/obj/item/circuitboard/computer/ccpost_tasking/from_inbox = inboxes["[from_key]"]
@@ -1428,7 +1440,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	return TRUE
 
 /datum/ccpost_tasking_network/proc/offer_voluntary_order(mob/user, expected_code)
-	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
 	if(!employee || employee.employee_role != "Central Command Liaison")
 		return FALSE
 	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = get_inbox(employee.employee_mind)
@@ -1467,7 +1479,7 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	refresh_terminals()
 
 /datum/ccpost_tasking_network/proc/cancel_voluntary_offer(mob/user, expected_code)
-	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
 	if(!employee || employee.employee_role != "Central Command Liaison")
 		return FALSE
 	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = get_inbox(employee.employee_mind)
@@ -1506,8 +1518,8 @@ GLOBAL_LIST_INIT(ccpost_task_priority_weights, list(
 	return result
 
 /datum/ccpost_tasking_network/proc/claim_voluntary_order(obj/machinery/computer/ccpost_tasking/receiving_terminal, mob/user, from_key, expected_code)
-	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
-	if(!employee || employee.employee_role != "Central Command Liaison" || receiving_terminal.tasking_session_mind != employee.employee_mind || !receiving_terminal.session_valid_for(user))
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+	if(!employee || employee.employee_role != "Central Command Liaison" || receiving_terminal.tasking_session_mind != employee.employee_mind || !receiving_terminal.tasking_desk_access(user))
 		return FALSE
 	if(receiving_terminal.submitted_report)
 		return FALSE
@@ -2171,6 +2183,18 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 /// Protect a Liaison from immediately receiving new routine work after completing
 /// an assignment. Real emergency dispatch deliberately ignores this cooldown.
+/// Hidden Severance signal: available work, not mere online presence or clicking.
+/proc/ccpost_has_pending_admin_work()
+	if(GLOB.ccpost_tasking_network?.server_online())
+		var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+		for(var/key in network.inboxes)
+			var/obj/item/circuitboard/computer/ccpost_tasking/inbox = network.inboxes[key]
+			if(inbox?.current_order && (inbox.current_order.status in list(CCPOST_TASK_STATUS_PENDING, CCPOST_TASK_STATUS_ACKNOWLEDGED)))
+				return TRUE
+		if(network.routine_queue_count || length(network.pending_requests))
+			return TRUE
+	return GLOB.ccpost_sector_network?.has_pending_admin_work()
+
 /datum/ccpost_tasking_network/proc/note_task_completed(datum/mind/owner)
 	if(!owner)
 		return
@@ -2337,7 +2361,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		balloon_alert(user, "storage port unavailable")
 		return FALSE
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
-	if(!director || director.data_downloaded || director.data_cartridge_ref?.resolve() != cartridge)
+	if(!director || director.contract_kind != "data" || director.data_downloaded || director.data_cartridge_ref?.resolve() != cartridge)
 		balloon_alert(user, "cartridge not authorized for this contract")
 		return FALSE
 	cartridge.forceMove(src)
@@ -2357,6 +2381,9 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	var/obj/effect/landmark/ccpost_gorlex_director/director = GLOB.ccpost_gorlex_director
 	if(!director)
 		balloon_alert(user, "operation director not registered")
+		return FALSE
+	if(director.contract_kind != "data")
+		balloon_alert(user, "not assigned to this contract")
 		return FALSE
 	if(director.data_downloaded)
 		balloon_alert(user, "classified data already extracted")
@@ -2507,6 +2534,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 /obj/machinery/ccpost_tasking_server/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	var/mob/user = ui?.user
+	if(!ccpost_terminal_in_range(src, user))
+		return TRUE
 	var/is_liaison = ccpost_has_centcom_id(user)
 	var/is_breaching_gorlex = panel_open && !!user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)
 	if(action == "start_classified_export")
@@ -2547,7 +2576,14 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 /obj/machinery/ccpost_tasking_server/proc/queue_event_task(template_type, cooldown_duration = 12 MINUTES, observation = null, incident_key = null)
 	return GLOB.ccpost_tasking_network.queue_event_task(template_type, cooldown_duration, observation, incident_key)
 
+/obj/machinery/ccpost_tasking_server/ui_status(mob/user, datum/ui_state/state)
+	if(!isobserver(user) && (!ccpost_terminal_in_range(src, user) || (!ccpost_has_centcom_id(user) && !(panel_open && user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)))))
+		return UI_CLOSE
+	return ..()
+
 /obj/machinery/ccpost_tasking_server/ui_interact(mob/user, datum/tgui/ui)
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
+		return
 	if(!ccpost_can_view_terminal(user) && !(panel_open && user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)))
 		balloon_alert(user, "central command ID or breached maintenance access required")
 		return
@@ -2558,6 +2594,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		ui.open()
 
 /obj/machinery/ccpost_tasking_server/ui_data(mob/user)
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
+		return list()
 	if(!ccpost_can_view_terminal(user) && !(panel_open && user?.mind?.has_antag_datum(/datum/antagonist/ccpost_gorlex)))
 		return list()
 	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
@@ -2684,6 +2722,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	/// Sign-in is bound to the server-side HR identity, never client-submitted text.
 	var/datum/mind/tasking_session_mind
 	var/tasking_session_name
+	var/tasking_desk_unlocked = FALSE
+	var/datum/weakref/tasking_desk_body
 
 	/// Physical report currently inserted for task completion.
 	var/obj/item/paper/submitted_report
@@ -2705,8 +2745,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 )
 	if(!istype(tool, /obj/item/paper))
 		return NONE
-	if(!session_valid_for(user))
-		balloon_alert(user, "sign in as a Liaison first")
+	if(!tasking_desk_access(user))
+		balloon_alert(user, "sign in first")
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/paper/report = tool
@@ -2758,10 +2798,35 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 /obj/machinery/computer/ccpost_tasking/proc/session_valid_for(mob/user)
 	if(!tasking_session_mind || !user?.mind || user.mind != tasking_session_mind)
 		return FALSE
-	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
-	return employee && employee.employee_role == "Central Command Liaison" && employee.employee_mind == tasking_session_mind
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+	return employee && employee.employee_role == "Central Command Liaison" && employee.employee_mind == tasking_session_mind && employee.original_body?.resolve() == user && user.client
+
+/// The login remains a routing subscription; only the physical desk locks on departure.
+/obj/machinery/computer/ccpost_tasking/proc/tasking_desk_access(mob/user)
+	return tasking_desk_unlocked && tasking_desk_body?.resolve() == user && session_valid_for(user) && ccpost_terminal_in_range(src, user)
+
+/obj/machinery/computer/ccpost_tasking/proc/tasking_lock_desk()
+	tasking_desk_unlocked = FALSE
+	var/mob/old_body = tasking_desk_body?.resolve()
+	if(old_body)
+		UnregisterSignal(old_body, COMSIG_MOVABLE_MOVED)
+	tasking_desk_body = null
+
+/obj/machinery/computer/ccpost_tasking/proc/tasking_desk_moved(datum/source)
+	SIGNAL_HANDLER
+	var/mob/moving_user = source
+	if(!ccpost_terminal_in_range(src, moving_user))
+		tasking_lock_desk()
+		SStgui.close_user_uis(moving_user, src)
+
+/obj/machinery/computer/ccpost_tasking/proc/tasking_unlock_desk(mob/user)
+	tasking_lock_desk()
+	tasking_desk_body = WEAKREF(user)
+	tasking_desk_unlocked = TRUE
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(tasking_desk_moved))
 
 /obj/machinery/computer/ccpost_tasking/proc/logout_tasking_session()
+	tasking_lock_desk()
 	if(!tasking_session_mind)
 		return
 	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = get_tasking_board()
@@ -2781,6 +2846,8 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		GLOB.ccpost_tasking_network.schedule_routine()
 
 /obj/machinery/computer/ccpost_tasking/proc/login_tasking_session(mob/user)
+	if(!ccpost_terminal_in_range(src, user) || !user.client)
+		return FALSE
 	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
 	if(!employee || employee.employee_role != "Central Command Liaison")
 		return FALSE
@@ -2794,6 +2861,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			other.logout_tasking_session()
 	tasking_session_mind = employee.employee_mind
 	tasking_session_name = employee.employee_name
+	tasking_unlock_desk(user)
 	var/obj/item/circuitboard/computer/ccpost_tasking/inbox = network.get_inbox(tasking_session_mind, TRUE)
 	if(!inbox)
 		return FALSE
@@ -3385,6 +3453,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	board.event_task_context -= "[template_type]"
 	board.current_order = new_order
 	GLOB.ccpost_tasking_network.note_issued(new_order)
+	ccpost_notify_liaison(tasking_session_mind, "tasking", new_order.order_code, new_order.subject)
 	pause_deferred_expiration(board)
 	qdel(incident)
 	if(assignment_timer)
@@ -3849,6 +3918,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	else
 		board.current_order = new_order
 	GLOB.ccpost_tasking_network.note_issued(new_order)
+	ccpost_notify_liaison(tasking_session_mind, "tasking", new_order.order_code, new_order.subject)
 	pause_deferred_expiration(board)
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', vol = 45, vary = TRUE)
 	var/dispatch_message = reserve_standby ? "[src] chimes. A second investigation has been assigned to standby." : "[src] chimes. A Central Command tasking order is ready."
@@ -4141,16 +4211,17 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 // TGUI
 
-/obj/machinery/computer/ccpost_tasking/ui_status(mob/user)
+/obj/machinery/computer/ccpost_tasking/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user))
 		return UI_INTERACTIVE
-	if(!ccpost_can_view_terminal(user))
+	if(!ccpost_terminal_in_range(src, user))
+		if(tasking_session_mind == user?.mind)
+			tasking_lock_desk()
 		return UI_CLOSE
 	return ..()
 
 /obj/machinery/computer/ccpost_tasking/ui_interact(mob/user, datum/tgui/ui)
-	if(!ccpost_can_view_terminal(user))
-		balloon_alert(user, "central command ID required")
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
 		return
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -4159,20 +4230,22 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 		ui.open()
 
 /obj/machinery/computer/ccpost_tasking/ui_data(mob/user)
-	if(!ccpost_can_view_terminal(user))
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
 		return list()
 	var/list/data = list()
 	data["read_only"] = isobserver(user)
-	data["authenticated"] = isobserver(user) || !!session_valid_for(user)
-	data["session_owner"] = isobserver(user) ? "Observer" : (tasking_session_name || "")
+	data["authenticated"] = isobserver(user) || !!tasking_desk_access(user)
+	data["session_owner"] = isobserver(user) ? "Observer" : (data["authenticated"] ? (tasking_session_name || "") : "")
 	var/datum/ccpost_hr_employee/login_employee = GLOB.ccpost_hr_service?.employee_for(user)
 	data["identity_detected"] = !!(login_employee && login_employee.employee_role == "Central Command Liaison")
-	data["identity_portrait"] = login_employee?.portrait_base64
+	data["identity_portrait"] = data["identity_detected"] ? login_employee.portrait_base64 : null
 	data["admin_server_online"] = GLOB.ccpost_tasking_network.server_online() && !(machine_stat & (BROKEN | NOPOWER))
 	data["admin_server_status"] = GLOB.ccpost_tasking_network.server_status()
-	data["identity_issue"] = data["identity_detected"] ? "" : "No matching Liaison HR registration. Check that your original Central Command Liaison ID is equipped and registered to your bank account."
+	data["identity_issue"] = data["identity_detected"] ? "" : "No authorized Central Command Liaison ID detected. Hold or equip your registered ID to authenticate."
 	if(!data["authenticated"])
 		return data
+	var/datum/ccpost_hr_employee/session_employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+	data["pda_notifications"] = !!session_employee?.tasking_pda_notifications
 	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
 	data["network_terminals"] = length(network.registered_terminals)
 	data["network_inboxes"] = length(network.inboxes)
@@ -4305,6 +4378,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 	return list(
 		"order_code" = order.order_code,
+		"allocation_reward" = order.get_allocation_reward(),
 		"category" = order.category,
 		"subject" = order.subject,
 		"priority" = order.priority,
@@ -4347,7 +4421,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	datum/tgui/ui,
 	datum/ui_state/state
 )
-	if(!ccpost_has_centcom_id(ui?.user))
+	if(!ccpost_terminal_in_range(src, ui?.user) || isobserver(ui?.user))
 		return TRUE
 	. = ..()
 	if(.)
@@ -4358,13 +4432,19 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			balloon_alert(user, "local administrative server unavailable")
 			return TRUE
 		if(!login_tasking_session(user))
-			balloon_alert(user, "registered Liaison ID required")
+			balloon_alert(user, "registered personnel ID required")
 		return TRUE
 	if(action == "logout")
-		if(session_valid_for(user))
+		if(tasking_desk_access(user))
 			logout_tasking_session()
 		return TRUE
-	if(!session_valid_for(user))
+	if(!tasking_desk_access(user))
+		return TRUE
+	if(action == "toggle_pda_notifications")
+		var/datum/ccpost_hr_employee/session_employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+		if(session_employee)
+			session_employee.tasking_pda_notifications = !session_employee.tasking_pda_notifications
+			SStgui.update_uis(src)
 		return TRUE
 	if(!GLOB.ccpost_tasking_network.server_online())
 		balloon_alert(user, "local administrative server unavailable")
@@ -4626,6 +4706,7 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 			// CCPost HR: credit the submitting Liaison after rewards are issued.
 			ccpost_hr_note_task_completion(user, tasking_board.current_order)
 			// Publish immediately for other Liaisons instead of waiting for the next dispatch.
+			ccpost_record_admin_activity("task:[tasking_board.current_order.order_code]", 2)
 			GLOB.ccpost_tasking_network.note_task_completed(tasking_session_mind)
 			archive_finished_order()
 			// Freeing this inbox may permit a pending emergency to dispatch now,
@@ -4769,10 +4850,12 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 	assignment_text += ccpost_paper_value_field("Issued", order.issued_at)
 	assignment_text += ccpost_paper_value_field("Status", order.status)
 
-	assignment_text += ccpost_paper_section("Instructions to Liaison Personnel")
+	assignment_text += ccpost_paper_section(istype(src, /obj/machinery/computer/ccpost_tasking/security) ? "Instructions to Security Personnel" : "Instructions to Liaison Personnel")
 	assignment_text += replacetext(html_encode(order.instruction), "\n", "<br>")
 	assignment_text += "<br><br>Verify available information and record findings impartially for Central Command review.<br>"
-	if(order.submission_type == CCPOST_TASK_SUBMISSION_INSTALLATION_RECORD)
+	if(order.template_id == "security_freight")
+		assignment_text += "<br><b>Completion Requirement:</b> Clear and return the referenced consignment through Regional Logistics. Completion is recorded automatically.<br>"
+	else if(order.submission_type == CCPOST_TASK_SUBMISSION_INSTALLATION_RECORD)
 		assignment_text += "<br><b>Completion Requirement:</b> Submit the exact stamped Remote Oversight Network installation record.<br>"
 	else
 		assignment_text += "<br><b>Completion Requirement:</b> Submit a separate written report bearing an official Central Command stamp.<br>"
@@ -4787,6 +4870,341 @@ GLOBAL_DATUM_INIT(ccpost_tasking_network, /datum/ccpost_tasking_network, new)
 
 	assignment_paper.add_raw_text(assignment_text)
 	assignment_paper.update_appearance()
+
+// -------------------------------------------------------------------------
+// Dedicated installation Security tasking. Same UI and physical report workflow,
+// but no membership in the Liaison dispatch pool, inboxes, or archive.
+// -------------------------------------------------------------------------
+/obj/item/circuitboard/computer/ccpost_tasking/security
+	name = "Central Command Security Tasking Terminal"
+	build_path = /obj/machinery/computer/ccpost_tasking/security
+
+/obj/machinery/computer/ccpost_tasking/security
+	name = "Central Command security tasking terminal"
+	desc = "A secure workstation for installation Security directives, prototype inspections and regional freight clearance."
+	circuit = /obj/item/circuitboard/computer/ccpost_tasking/security
+	var/security_tick_timer
+
+/obj/machinery/computer/ccpost_tasking/security/Initialize(mapload)
+	. = ..()
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	network.registered_terminals -= src
+	network.security_terminals |= src
+	if(!network.security_board)
+		network.security_board = new /obj/item/circuitboard/computer/ccpost_tasking
+	security_tick_timer = addtimer(CALLBACK(src, PROC_REF(security_tick)), 30 SECONDS, TIMER_STOPPABLE)
+
+/obj/machinery/computer/ccpost_tasking/security/Destroy()
+	if(security_tick_timer)
+		deltimer(security_tick_timer)
+	GLOB.ccpost_tasking_network.security_terminals -= src
+	return ..()
+
+/obj/machinery/computer/ccpost_tasking/security/get_tasking_board()
+	return GLOB.ccpost_tasking_network.security_board
+
+/obj/machinery/computer/ccpost_tasking/security/session_valid_for(mob/user)
+	if(!tasking_session_mind || user?.mind != tasking_session_mind || !user.client)
+		return FALSE
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+	return employee && employee.employee_role == "Outpost Security Officer" && employee.employee_mind == tasking_session_mind && employee.original_body?.resolve() == user
+
+/obj/machinery/computer/ccpost_tasking/security/login_tasking_session(mob/user)
+	if(!ccpost_terminal_in_range(src, user) || !user.client)
+		return FALSE
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	if(!employee || employee.employee_role != "Outpost Security Officer")
+		return FALSE
+	if(tasking_session_mind && tasking_session_mind != employee.employee_mind)
+		logout_tasking_session()
+	for(var/obj/machinery/computer/ccpost_tasking/security/other as anything in GLOB.ccpost_tasking_network.security_terminals)
+		if(other != src && other.tasking_session_mind == employee.employee_mind)
+			other.logout_tasking_session()
+	tasking_session_mind = employee.employee_mind
+	tasking_session_name = employee.employee_name
+	tasking_unlock_desk(user)
+	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
+	if(board?.current_order)
+		board.current_order.assigned_to = employee.employee_name
+	if(board?.standby_order)
+		board.standby_order.assigned_to = employee.employee_name
+	GLOB.ccpost_tasking_network.security_sync_freight()
+	security_restore_report()
+	SStgui.update_uis(src)
+	return TRUE
+
+// Never enter the inherited Liaison dispatcher, even if a generic timer or
+// incident callback encounters this subtype.
+/obj/machinery/computer/ccpost_tasking/security/schedule_next_assignment(minimum_delay, maximum_delay)
+	return
+
+/obj/machinery/computer/ccpost_tasking/security/issue_assignment()
+	return
+
+/obj/machinery/computer/ccpost_tasking/security/queue_event_task(template_type, cooldown_duration, observation)
+	return
+
+/obj/machinery/computer/ccpost_tasking/security/proc/security_tick()
+	security_tick_timer = null
+	if(QDELETED(src))
+		return
+	security_tick_timer = addtimer(CALLBACK(src, PROC_REF(security_tick)), 30 SECONDS, TIMER_STOPPABLE)
+	if(GLOB.ccpost_outpost_signal_lost || !SSticker.IsRoundInProgress())
+		return
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	if(!network.server_online())
+		return
+	network.security_sync_freight()
+	if(!(machine_stat & (BROKEN | NOPOWER)))
+		network.security_issue_routine()
+	SStgui.update_uis(src)
+
+/datum/ccpost_tasking_network/proc/security_new_order(template_id, subject, instruction, priority = CCPOST_TASK_PRIORITY_ROUTINE)
+	var/datum/ccpost_task_template/template = new
+	template.template_id = template_id
+	template.category = "Installation Security"
+	template.subject = subject
+	template.instruction = instruction
+	template.priority = priority
+	var/round_identifier = GLOB.round_id ? GLOB.round_id : "LOCAL"
+	var/order_code = "SEC-[round_identifier]-[next_order_number]"
+	next_order_number++
+	var/datum/ccpost_tasking_order/order = new(order_code, template)
+	qdel(template)
+	order.assigned_to = "Outpost Security Officer"
+	for(var/obj/machinery/computer/ccpost_tasking/security/terminal as anything in security_terminals)
+		if(terminal.tasking_session_mind)
+			order.assigned_to = terminal.tasking_session_name
+			break
+	order.record_action("Issued", "CENTRAL COMMAND", "Installation Security directive")
+	return order
+
+/datum/ccpost_tasking_network/proc/security_notify(reference, subject, urgent = FALSE)
+	// Physical tasking alerts mirror Liaison terminals; the balloon is private
+	// and follows the registered Security Officer even when the desk is locked.
+	for(var/obj/machinery/computer/ccpost_tasking/security/terminal as anything in security_terminals)
+		if(QDELETED(terminal) || (terminal.machine_stat & (BROKEN | NOPOWER)))
+			continue
+		playsound(terminal, 'sound/machines/terminal/terminal_alert.ogg', vol = urgent ? 85 : 45, vary = !urgent)
+		terminal.visible_message(urgent ? span_warning("[terminal] sounds an urgent priority tasking alert.") : span_notice("[terminal] chimes. A Central Command security tasking order is ready."))
+	for(var/mob/living/carbon/human/officer as anything in GLOB.mob_living_list)
+		if(!ishuman(officer) || !officer.client || officer.stat == DEAD)
+			continue
+		var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(officer, FALSE)
+		if(employee?.employee_role != "Outpost Security Officer")
+			continue
+		officer.balloon_alert(officer, urgent ? "priority security notice!" : "new security assignment")
+		ccpost_notify_liaison(employee.employee_mind, "tasking", reference, subject)
+
+/datum/ccpost_tasking_network/proc/security_refresh()
+	for(var/obj/machinery/computer/ccpost_tasking/security/terminal as anything in security_terminals)
+		if(!QDELETED(terminal))
+			SStgui.update_uis(terminal)
+
+/datum/ccpost_tasking_network/proc/security_archive(datum/ccpost_tasking_order/order)
+	if(!order || order in security_history)
+		return
+	security_history.Insert(1, order)
+	while(length(security_history) > max_history)
+		var/datum/ccpost_tasking_order/oldest = security_history[length(security_history)]
+		security_history.Cut(length(security_history), length(security_history) + 1)
+		qdel(oldest)
+	security_refresh()
+
+/datum/ccpost_tasking_network/proc/security_freight_dispatched(reference)
+	if(!reference || GLOB.ccpost_outpost_signal_lost || security_freight_reference == reference)
+		return
+	security_freight_reference = reference
+	security_freight_arrived_at_bay = FALSE
+	security_notify("freight:[reference]", "Regional Freight Inspection: [reference]", TRUE)
+	security_refresh()
+
+/datum/ccpost_tasking_network/proc/security_freight_arrived(reference)
+	if(security_freight_reference != reference || security_freight_arrived_at_bay)
+		return
+	security_freight_arrived_at_bay = TRUE
+	security_refresh()
+
+/datum/ccpost_tasking_network/proc/security_freight_resolved(reference, result)
+	if(!reference || security_freight_reference != reference)
+		return
+	security_freight_reference = null
+	security_freight_arrived_at_bay = FALSE
+	// Logistics owns certification, the inspection record and the CU reward.
+	if(result == "Cleared")
+		ccpost_record_admin_activity("security-freight:[reference]", 2)
+	security_refresh()
+
+/datum/ccpost_tasking_network/proc/security_sync_freight()
+	var/obj/structure/closet/crate/ccpost_freight/inspection/crate = GLOB.ccpost_logistics_network?.active_inspection?.resolve()
+	if(crate && !QDELETED(crate))
+		security_freight_dispatched(crate.shipment_code)
+		if(crate.inspection_arrived)
+			security_freight_arrived(crate.shipment_code)
+	else if(security_freight_reference)
+		security_freight_resolved(security_freight_reference, "Unavailable")
+
+/datum/ccpost_tasking_network/proc/security_issue_routine()
+	if(!security_board || security_board.current_order || security_board.standby_order || !length(security_terminals))
+		return
+	// Security work is available only when a real registered officer is present.
+	var/mob/living/carbon/human/officer
+	for(var/mob/living/carbon/human/person as anything in GLOB.mob_living_list)
+		if(!ishuman(person) || !person.client || person.stat == DEAD || !istype(get_area(person), /area/ruin/space/has_grav/ccpost))
+			continue
+		var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(person, FALSE)
+		if(employee?.employee_role == "Outpost Security Officer")
+			officer = person
+			break
+	if(!officer)
+		return
+	if(!security_next_routine_at)
+		security_next_routine_at = world.time + 1 MINUTES
+		return
+	if(world.time < security_next_routine_at)
+		return
+	var/obj/item/prototype
+	for(var/datum/weakref/reference as anything in GLOB.ccpost_severance_prototypes)
+		var/obj/item/candidate = reference.resolve()
+		if(istype(candidate, /obj/item/gun/energy/modular_laser_rifle/ccpost_chimera))
+			prototype = candidate
+			break
+	if(!prototype && !security_compromise_pending)
+		return
+	var/datum/ccpost_tasking_order/order
+	if(security_compromise_pending)
+		security_compromise_pending = FALSE
+		order = security_new_order("security_compromise", "Experimental Asset Compromise", "Investigate the previously reported prototype custody discrepancy. Record the last confirmed custody, known circumstances, recovery efforts and any remaining security concerns. Do not pursue beyond authorized installation duties or invent information. Submit a stamped incident report.", CCPOST_TASK_PRIORITY_ELEVATED)
+	else
+		var/list/pool = list("security_inventory", "security_thermal", "security_discharge", "security_accountability")
+		pool -= security_completed_templates
+		if(!length(pool))
+			return
+		var/template_id = !("security_inventory" in security_completed_templates) ? "security_inventory" : pick(pool)
+		switch(template_id)
+			if("security_inventory")
+				order = security_new_order(template_id, "NT-X01 Experimental Asset Inventory", "Inspect the original NT-X01 Chimera prototype. Confirm its condition, authorized custody and storage arrangements. Record the weapon designation, observed condition, and any discrepancy. Return it to the secure armory when finished and submit a stamped report.")
+			if("security_thermal")
+				order = security_new_order(template_id, "NT-X01 Reactor and Thermal Safety Evaluation", "Inspect Chimera's charge, heat and manual venting procedure. Review the classified dossier. If an approved safe test area is available, conduct a controlled discharge and venting test; otherwise document a non-firing inspection and any limitations. Do not deliberately overheat the prototype. Submit a stamped report.")
+			if("security_discharge")
+				var/mode = pick("Pulse", "Lance", "Suppression", "Graviton", "Cataclysm")
+				order = security_new_order(template_id, "NT-X01 Configuration Evaluation: [mode]", "Evaluate the [mode] configuration using the dossier and, only if safe and authorized, a controlled test away from personnel and critical equipment. Record observed or documented behavior, risks and suitability for installation defense. Do not discharge Graviton or Cataclysm inside occupied spaces. Return the weapon and submit a stamped report.")
+			if("security_accountability")
+				order = security_new_order(template_id, "NT-X01 Classified Technology Accountability", "Review the prototype dossier, access controls, custody procedures and armory arrangements. Verify that authorized handling and return procedures are understood. Document actual discrepancies or explicitly record none. Submit a stamped report.")
+	if(!order)
+		return
+	order.assigned_to = officer.real_name
+	security_board.current_order = order
+	security_notify(order.order_code, order.subject, order.priority != CCPOST_TASK_PRIORITY_ROUTINE)
+	security_refresh()
+
+/obj/machinery/computer/ccpost_tasking/security/proc/security_restore_report()
+	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
+	var/datum/ccpost_tasking_order/order = board?.current_order
+	if(order?.standby_report && !submitted_report)
+		submitted_report = order.standby_report
+		order.standby_report = null
+		submitted_report.forceMove(src)
+
+/obj/machinery/computer/ccpost_tasking/security/ui_data(mob/user)
+	var/list/data = list("security_tasking" = TRUE)
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
+		return data
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
+	data["read_only"] = isobserver(user)
+	data["authenticated"] = isobserver(user) || !!tasking_desk_access(user)
+	data["identity_detected"] = !!(employee && employee.employee_role == "Outpost Security Officer")
+	data["identity_portrait"] = data["identity_detected"] ? employee.portrait_base64 : null
+	data["identity_issue"] = data["identity_detected"] ? "" : "No authorized Outpost Security ID detected. Hold or equip your registered ID to authenticate."
+	data["session_owner"] = isobserver(user) ? "Observer" : (data["authenticated"] ? (tasking_session_name || "") : "")
+	data["admin_server_online"] = network.server_online() && !(machine_stat & (BROKEN | NOPOWER))
+	data["admin_server_status"] = network.server_status()
+	if(!data["authenticated"])
+		return data
+	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
+	data["current_order"] = order_to_ui_data(board?.current_order)
+	data["standby_order"] = order_to_ui_data(board?.standby_order)
+	var/datum/ccpost_hr_employee/session_employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+	data["pda_notifications"] = !!session_employee?.tasking_pda_notifications
+	data["security_freight_reference"] = network.security_freight_reference
+	data["security_freight_arrived"] = network.security_freight_arrived_at_bay
+	data["security_can_report_compromise"] = (board?.current_order?.template_id in list("security_inventory", "security_accountability"))
+	data["can_switch_investigation"] = FALSE
+	data["submitted_report"] = isobserver(user) ? null : report_to_ui_data(submitted_report)
+	var/list/history = list()
+	for(var/datum/ccpost_tasking_order/order as anything in network.security_history)
+		history += list(order_to_ui_data(order))
+	data["history"] = history
+	data["deferred_orders"] = list()
+	data["on_hold_orders"] = list()
+	data["queued_incidents"] = list()
+	data["pending_followups"] = list()
+	return data
+
+/obj/machinery/computer/ccpost_tasking/security/find_order(order_code)
+	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
+	if(board?.current_order?.order_code == order_code)
+		return board.current_order
+	if(board?.standby_order?.order_code == order_code)
+		return board.standby_order
+	for(var/datum/ccpost_tasking_order/order as anything in GLOB.ccpost_tasking_network.security_history)
+		if(order.order_code == order_code)
+			return order
+	return null
+
+/obj/machinery/computer/ccpost_tasking/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	// Reuse existing acknowledgement, printing and report ejection, but never
+	// invoke the Liaison completion, transfer, deferral or grant handlers.
+	if(action in list("login", "logout", "acknowledge", "eject_report", "print_order", "print_template", "print_archived_report", "toggle_pda_notifications"))
+		return ..()
+	if(action != "complete" && action != "complete_compromise")
+		return TRUE
+	var/mob/user = ui?.user
+	if(!tasking_desk_access(user) || !GLOB.ccpost_tasking_network.server_online() || (machine_stat & (BROKEN | NOPOWER)))
+		return TRUE
+	var/datum/ccpost_tasking_network/network = GLOB.ccpost_tasking_network
+	var/obj/item/circuitboard/computer/ccpost_tasking/board = get_tasking_board()
+	var/datum/ccpost_tasking_order/order = board?.current_order
+	if(!order || order.template_id == "security_freight" || order.status != CCPOST_TASK_STATUS_ACKNOWLEDGED)
+		return TRUE
+	if(action == "complete_compromise" && !(order.template_id in list("security_inventory", "security_accountability")))
+		return TRUE
+	var/rejection = report_validation_issue(submitted_report)
+	if(rejection)
+		balloon_alert(user, rejection)
+		return TRUE
+	var/obj/item/paper/report = submitted_report
+	submitted_report = null
+	archive_submitted_report(order, report)
+	order.status = CCPOST_TASK_STATUS_COMPLETED
+	order.completed_by = user.name
+	order.completed_at = station_time_timestamp()
+	order.record_action("Completed", user.name, "Stamped Security report accepted")
+	if(action == "complete_compromise")
+		network.security_compromise_pending = TRUE
+		order.record_action("Discrepancy reported", user.name, "Security requested follow-up investigation")
+	if(order.template_id != "security_compromise")
+		network.security_completed_templates |= order.template_id
+	// Use the same priority-based CU rewards as Liaison tasking, but no departmental grants.
+	if(!order.rewards_issued)
+		order.rewards_issued = TRUE
+		var/datum/ccpost_logistics_network/logistics = GLOB.ccpost_logistics_network
+		if(logistics)
+			var/credited = logistics.credit_allocation(order.get_allocation_reward(), "Completed security order [order.order_code]: [order.subject]", user.name)
+			if(credited > 0)
+				logistics.refresh_registered_terminals()
+				say("Security tasking compensation authorized. [credited] CU has been credited to this installation's Operational Allocation.")
+			else
+				say("Security tasking compensation processed. Operational Allocation is already at maximum capacity.")
+	ccpost_record_admin_activity("security-task:[order.order_code]", 2)
+	board.current_order = null
+	network.security_archive(order)
+	network.security_next_routine_at = world.time + (network.security_compromise_pending ? 30 SECONDS : rand(12 MINUTES, 18 MINUTES))
+	qdel(report)
+	balloon_alert(user, "security report accepted")
+	network.security_refresh()
+	return TRUE
 
 #undef CCPOST_TASK_STATUS_PENDING
 #undef CCPOST_TASK_STATUS_ACKNOWLEDGED

@@ -3044,6 +3044,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		message.assigned_name = new_terminal.sector_session_name
 		message.assigned_at = world.time
 		record_sector_assignment(message.assigned_mind)
+		ccpost_notify_liaison(message.assigned_mind, "sector", message.message_code, message.title)
 		moved = TRUE
 	if(moved)
 		refresh_comms_terminals()
@@ -3067,6 +3068,14 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			best_score = score
 			best = terminal
 	return best
+
+/datum/ccpost_sector_network/proc/has_pending_admin_work()
+	if(!administrative_server_online())
+		return FALSE
+	for(var/datum/ccpost_sector_message/message as anything in sector_messages)
+		if(message.resolution_status == CCPOST_MESSAGE_PENDING)
+			return TRUE
+	return active_sector_paperwork?.status == CCPOST_PAPERWORK_AWAITING_REVIEW
 
 /datum/ccpost_sector_network/proc/dispatch_sector_work()
 	if(!administrative_server_online())
@@ -3094,6 +3103,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		message.assigned_name = terminal.sector_session_name
 		message.assigned_at = world.time
 		record_sector_assignment(terminal.sector_session_mind)
+		ccpost_notify_liaison(message.assigned_mind, "sector", message.message_code, message.title)
 		message.review_started_at = 0
 		if(!(terminal in notified_terminals))
 			notified_terminals += terminal
@@ -3122,6 +3132,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 				paperwork.assigned_name = new_owner_terminal.sector_session_name
 				paperwork.assigned_at = world.time
 				record_sector_assignment(new_owner_terminal.sector_session_mind, TRUE)
+				ccpost_notify_liaison(paperwork.assigned_mind, "sector", paperwork.paperwork_code, paperwork.title)
 		if(paperwork.assigned_mind && !paperwork.initial_copy_printed)
 			var/obj/machinery/computer/ccpost_sector_comms/recipient_terminal = active_sector_terminal(paperwork.assigned_mind)
 			if(recipient_terminal && recipient_terminal.print_sector_paperwork(paperwork))
@@ -3472,6 +3483,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	else
 		reward_text = "Administrative processing compensation was approved, but local Operational Allocation is already at maximum capacity."
 
+	ccpost_record_admin_activity("paperwork:[completed_paperwork.paperwork_code]", 2)
 	var/paperwork_processor = completed_paperwork.submitted_by ? completed_paperwork.submitted_by : "UNKNOWN LIAISON"
 
 	adjust_installation_trust(
@@ -4416,6 +4428,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 		message.review_clarification_reply = "[message.sender_role] [message.sender_name] confirms receipt of Central Command's inquiry. Current reported status: [installation.status]. [installation.condition_details] Requested allocation: [message.allocation_cost] CU. No additional documentary evidence has been transmitted."
 	message.review_clarification_pending = FALSE
 	message.review_clarification_received = TRUE
+	ccpost_notify_liaison(message.assigned_mind, "sector", "clarification:[message.message_code]", message.title)
 	refresh_comms_terminals()
 
 
@@ -4593,13 +4606,42 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 /proc/ccpost_can_view_terminal(mob/user)
 	return isobserver(user) || ccpost_has_centcom_id(user)
 
-/proc/ccpost_has_centcom_id(mob/user)
-	var/mob/living/carbon/human/human_user = user
-	if(!istype(human_user))
-		return FALSE
+/// Present an ID in the ID slot or either hand (including ID-bearing items).
+/proc/ccpost_presented_ids(mob/user)
+	var/list/cards = list()
+	var/mob/living/carbon/human/person = user
+	if(!istype(person))
+		return cards
+	var/obj/item/card/id/worn_card = person.wear_id?.GetID()
+	if(worn_card)
+		cards |= worn_card
+	for(var/obj/item/held as anything in person.held_items)
+		var/obj/item/card/id/card = held?.GetID()
+		if(card)
+			cards |= card
+	return cards
 
-	var/obj/item/card/id/identification = human_user.wear_id?.GetID()
-	return istype(identification, /obj/item/card/id/advanced/centcom)
+/proc/ccpost_has_centcom_id(mob/user)
+	for(var/obj/item/card/id/card as anything in ccpost_presented_ids(user))
+		if(istype(card, /obj/item/card/id/advanced/centcom))
+			return TRUE
+	return FALSE
+
+/// Explicit physical workstation range: never use a cross-level distance.
+/proc/ccpost_terminal_in_range(atom/terminal, mob/user)
+	var/turf/a = get_turf(terminal)
+	var/turf/b = get_turf(user)
+	return a && b && a.z == b.z && get_dist(a, b) <= 1
+
+/// Shared physical access for consoles without persistent personal sign-in.
+/proc/ccpost_terminal_view_in_range(atom/terminal, mob/user)
+	return isobserver(user) || (ccpost_has_centcom_id(user) && ccpost_terminal_in_range(terminal, user))
+
+/proc/ccpost_broadcast_id(mob/user)
+	for(var/obj/item/card/id/card as anything in ccpost_presented_ids(user))
+		if(istype(card, /obj/item/card/id/advanced/centcom) && (ACCESS_NT_REPRESENTATVE in card.GetAccess()))
+			return card
+	return null
 
 
 
@@ -4616,6 +4658,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	/// Personnel login is independent of Tasking and follows a mind, not the desk.
 	var/datum/mind/sector_session_mind
 	var/sector_session_name
+	var/sector_desk_unlocked = FALSE
+	var/datum/weakref/sector_desk_body
 
 	/// Single physical slot used for the one active administrative document.
 	var/obj/item/paper/ccpost_sector_paperwork/submitted_paperwork
@@ -4626,10 +4670,35 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 /obj/machinery/computer/ccpost_sector_comms/proc/sector_session_valid_for(mob/user)
 	if(!sector_session_mind || !user?.mind || user.mind != sector_session_mind)
 		return FALSE
-	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
-	return employee && employee.employee_role == "Central Command Liaison" && employee.employee_mind == sector_session_mind
+	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+	return employee && employee.employee_role == "Central Command Liaison" && employee.employee_mind == sector_session_mind && employee.original_body?.resolve() == user && user.client
+
+/// The login remains a routing subscription; only the physical desk locks on departure.
+/obj/machinery/computer/ccpost_sector_comms/proc/sector_desk_access(mob/user)
+	return sector_desk_unlocked && sector_desk_body?.resolve() == user && sector_session_valid_for(user) && ccpost_terminal_in_range(src, user)
+
+/obj/machinery/computer/ccpost_sector_comms/proc/sector_lock_desk()
+	sector_desk_unlocked = FALSE
+	var/mob/old_body = sector_desk_body?.resolve()
+	if(old_body)
+		UnregisterSignal(old_body, COMSIG_MOVABLE_MOVED)
+	sector_desk_body = null
+
+/obj/machinery/computer/ccpost_sector_comms/proc/sector_desk_moved(datum/source)
+	SIGNAL_HANDLER
+	var/mob/moving_user = source
+	if(!ccpost_terminal_in_range(src, moving_user))
+		sector_lock_desk()
+		SStgui.close_user_uis(moving_user, src)
+
+/obj/machinery/computer/ccpost_sector_comms/proc/sector_unlock_desk(mob/user)
+	sector_lock_desk()
+	sector_desk_body = WEAKREF(user)
+	sector_desk_unlocked = TRUE
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(sector_desk_moved))
 
 /obj/machinery/computer/ccpost_sector_comms/proc/clear_sector_session()
+	sector_lock_desk()
 	if(!sector_session_mind)
 		return
 	GLOB.ccpost_sector_network.comms_last_active_at[REF(sector_session_mind)] = world.time
@@ -4648,6 +4717,8 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	SStgui.update_uis(src)
 
 /obj/machinery/computer/ccpost_sector_comms/proc/login_sector_session(mob/user)
+	if(!ccpost_terminal_in_range(src, user) || !user.client)
+		return FALSE
 	var/datum/ccpost_hr_employee/employee = GLOB.ccpost_hr_service?.employee_for(user)
 	if(!employee || employee.employee_role != "Central Command Liaison")
 		return FALSE
@@ -4659,6 +4730,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			other.logout_sector_session()
 	sector_session_mind = employee.employee_mind
 	sector_session_name = employee.employee_name
+	sector_unlock_desk(user)
 	network.comms_last_active_at[REF(sector_session_mind)] = world.time
 	network.comms_unavailable_since -= REF(sector_session_mind)
 	network.update_sector_staffing()
@@ -4692,7 +4764,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 )
 	if(!istype(tool, /obj/item/paper/ccpost_sector_paperwork))
 		return NONE
-	if(!sector_session_valid_for(user))
+	if(!sector_desk_access(user))
 		balloon_alert(user, "sector sign-in required")
 		return ITEM_INTERACT_BLOCKING
 
@@ -4850,10 +4922,12 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	)
 
 
-/obj/machinery/computer/ccpost_sector_comms/ui_status(mob/user)
+/obj/machinery/computer/ccpost_sector_comms/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user))
 		return UI_INTERACTIVE
-	if(!ccpost_can_view_terminal(user))
+	if(!ccpost_terminal_in_range(src, user))
+		if(sector_session_mind == user?.mind)
+			sector_lock_desk()
 		return UI_CLOSE
 	return ..()
 
@@ -4861,8 +4935,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	mob/user,
 	datum/tgui/ui
 )
-	if(!ccpost_can_view_terminal(user))
-		balloon_alert(user, "central command ID required")
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
 		return
 	. = ..()
 
@@ -5053,21 +5126,23 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 
 /obj/machinery/computer/ccpost_sector_comms/ui_data(mob/user)
-	if(!ccpost_can_view_terminal(user))
+	if(!isobserver(user) && !ccpost_terminal_in_range(src, user))
 		return list()
 	GLOB.ccpost_sector_network.ensure_started()
 
 	var/list/data = list()
 	data["read_only"] = isobserver(user)
-	data["authenticated"] = isobserver(user) || !!sector_session_valid_for(user)
-	data["session_owner"] = isobserver(user) ? "Observer" : (sector_session_name || "")
+	data["authenticated"] = isobserver(user) || !!sector_desk_access(user)
+	data["session_owner"] = isobserver(user) ? "Observer" : (data["authenticated"] ? (sector_session_name || "") : "")
 	var/datum/ccpost_hr_employee/login_employee = GLOB.ccpost_hr_service?.employee_for(user)
 	data["identity_detected"] = !!(login_employee && login_employee.employee_role == "Central Command Liaison")
-	data["identity_portrait"] = login_employee?.portrait_base64
+	data["identity_portrait"] = data["identity_detected"] ? login_employee.portrait_base64 : null
 	data["admin_server_online"] = GLOB.ccpost_tasking_network.server_online() && !(machine_stat & (BROKEN | NOPOWER))
 	data["admin_server_status"] = GLOB.ccpost_tasking_network.server_status()
 	if(!data["authenticated"])
 		return data
+	var/datum/ccpost_hr_employee/session_employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+	data["pda_notifications"] = !!session_employee?.sector_pda_notifications
 
 	var/datum/ccpost_logistics_network/logistics_network = GLOB.ccpost_logistics_network
 
@@ -5141,7 +5216,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	datum/tgui/ui,
 	datum/ui_state/state
 )
-	if(!ccpost_has_centcom_id(ui?.user))
+	if(!ccpost_terminal_in_range(src, ui?.user) || isobserver(ui?.user))
 		return TRUE
 	. = ..()
 
@@ -5157,10 +5232,16 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			balloon_alert(user, "registered liaison ID required")
 		return TRUE
 	if(action == "logout")
-		if(sector_session_valid_for(user))
+		if(sector_desk_access(user))
 			logout_sector_session()
 		return TRUE
-	if(!sector_session_valid_for(user))
+	if(!sector_desk_access(user))
+		return TRUE
+	if(action == "toggle_pda_notifications")
+		var/datum/ccpost_hr_employee/session_employee = GLOB.ccpost_hr_service?.employee_for(user, FALSE)
+		if(session_employee)
+			session_employee.sector_pda_notifications = !session_employee.sector_pda_notifications
+			SStgui.update_uis(src)
 		return TRUE
 	if(!GLOB.ccpost_tasking_network.server_online())
 		balloon_alert(user, "local administrative server unavailable")
@@ -5173,7 +5254,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			var/mob/living/living_user = user
 			if(!istype(living_user))
 				return TRUE
-			var/obj/item/card/id/user_id = living_user.get_idcard(TRUE)
+			var/obj/item/card/id/user_id = ccpost_broadcast_id(living_user)
 			var/list/user_access = user_id?.GetAccess()
 			if(!(ACCESS_NT_REPRESENTATVE in user_access))
 				balloon_alert(user, "liaison authorization required")
@@ -5193,12 +5274,12 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 			if(!length(announcement_text) || length_char(announcement_text) > 250)
 				balloon_alert(user, "invalid broadcast length")
 				return TRUE
-			if(!user.can_perform_action(src) || (machine_stat & (NOPOWER | BROKEN)) || !sector_session_valid_for(user))
+			if(!user.can_perform_action(src) || (machine_stat & (NOPOWER | BROKEN)) || !sector_desk_access(user))
 				return TRUE
 			if(!GLOB.ccpost_tasking_network.server_online())
 				balloon_alert(user, "local administrative server unavailable")
 				return TRUE
-			user_id = living_user.get_idcard(TRUE)
+			user_id = ccpost_broadcast_id(living_user)
 			user_access = user_id?.GetAccess()
 			if(!(ACCESS_NT_REPRESENTATVE in user_access) || !COOLDOWN_FINISHED(network, station_broadcast_cooldown))
 				balloon_alert(user, "broadcast no longer authorized")
@@ -5428,6 +5509,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 					balloon_alert(user, "[credited_amount] CU received")
 
 			message.resolution_status = CCPOST_MESSAGE_ACKNOWLEDGED
+			ccpost_record_admin_activity("sector:[message.message_code]")
 			message.responded_by = user.name
 			message.responded_at = station_time_timestamp()
 			message.response = acknowledgement_response
@@ -5460,6 +5542,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 				GLOB.ccpost_logistics_network.refresh_logistics_outputs()
 
 			message.resolution_status = CCPOST_MESSAGE_AUTHORIZED
+			ccpost_record_admin_activity("sector:[message.message_code]")
 			message.responded_by = user.name
 			message.responded_at = station_time_timestamp()
 
@@ -5485,6 +5568,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 				return TRUE
 
 			message.resolution_status = CCPOST_MESSAGE_DENIED
+			ccpost_record_admin_activity("sector:[message.message_code]")
 			message.responded_by = user.name
 			message.responded_at = station_time_timestamp()
 
@@ -6659,17 +6743,16 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 // The shared outpost credential check accepts all CentCom ID subtypes.
 // Close an already-open UI if the user removes or changes their credentials.
-/obj/machinery/status_display/ccpost_remote_status/ui_status(mob/user)
+/obj/machinery/status_display/ccpost_remote_status/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user))
 		return UI_INTERACTIVE
-	if(!ccpost_can_view_terminal(user))
+	if(!ccpost_terminal_view_in_range(src, user))
 		return UI_CLOSE
 	return ..()
 
 
 /obj/machinery/status_display/ccpost_remote_status/ui_interact(mob/user, datum/tgui/ui)
-	if(!ccpost_can_view_terminal(user))
-		balloon_alert(user, "central command ID required")
+	if(!ccpost_terminal_view_in_range(src, user))
 		return
 
 	. = ..()
@@ -6690,7 +6773,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 	if(GLOB.ccpost_outpost_signal_lost)
 		return TRUE
 	// Enforce authorization server-side, including on stale/open TGUI sessions.
-	if(!ccpost_has_centcom_id(ui?.user))
+	if(!ccpost_has_centcom_id(ui?.user) || !ccpost_terminal_in_range(src, ui?.user))
 		return TRUE
 
 	. = ..()
@@ -6736,7 +6819,7 @@ GLOBAL_DATUM_INIT(ccpost_sector_network, /datum/ccpost_sector_network, new)
 
 /obj/machinery/status_display/ccpost_remote_status/ui_data(mob/user)
 	// Do not send station and sector network details to unauthorized clients.
-	if(!ccpost_can_view_terminal(user))
+	if(!ccpost_terminal_view_in_range(src, user))
 		return list()
 
 	GLOB.ccpost_sector_network.ensure_started()
