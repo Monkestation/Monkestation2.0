@@ -113,6 +113,7 @@
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"
 	icon_state = "goliath_cloak"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	desc = "A staunch, practical cape made out of numerous monster materials, it is coveted amongst exiles & hermits."
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath

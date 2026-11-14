@@ -20,6 +20,10 @@
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, src)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/stars(null, src)
+		if(SSparallax.nebula_layer)
+			C.parallax_layers_cached += new SSparallax.nebula_layer(null, src)
+		/* monkestation removal
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, src)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, src)
 		if(SSparallax.random_layer)
 			C.parallax_layers_cached += new SSparallax.random_layer(null, src)
@@ -333,6 +337,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	icon_state = "stars"
 	blend_mode = BLEND_OVERLAY
 	speed = 0.5
+//monkestation edit end
+/* monkestation removal start
+	icon_state = "layer1"
+	speed = 0.6
 	layer = 1
 
 /atom/movable/screen/parallax_layer/layer_2

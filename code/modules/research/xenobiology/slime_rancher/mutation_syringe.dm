@@ -4,6 +4,7 @@
 	desc = "Infuses a mutation into a slime."
 	icon = 'icons/obj/science/mutation_syringe.dmi'
 	icon_state = "mutation_syringe"
+	abstract_type = /obj/item/slime_mutation_syringe
 	w_class = WEIGHT_CLASS_SMALL
 	var/used = FALSE
 

@@ -1,4 +1,0 @@
-author: "V2LenKagamine"
-delete-after: True
-changes:
-  - bugfix: "missing discover text on powergen type artifacts"

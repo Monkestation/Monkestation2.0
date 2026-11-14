@@ -196,6 +196,9 @@
 
 ///LEGACY HELPER
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
+	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK))
+		return
+
 	if(!client?.imode.set_combat_mode(new_mode, silent))
 		istate = ISTATE_HARM|ISTATE_BLOCKING
 

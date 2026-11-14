@@ -9,7 +9,7 @@
 	limb_id = SPECIES_MOTH
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR
+	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR | HEAD_EYECOLOR
 	bodypart_traits = list(TRAIT_ANTENNAE)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
@@ -200,7 +200,7 @@
 
 // TODO: should be mutant overlay at some point?
 /datum/bodypart_overlay/simple/moth_arms
-	layers = EXTERNAL_FRONT
+	layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER)
 	icon = 'icons/mob/human/species/moth/moth_arms.dmi'
 	icon_state = "m_moth_arms_generic_FRONT"
 	/// Icon state used when the chest is greyscaled (mutant colors), so the arms get the same color as the body
@@ -208,13 +208,13 @@
 	/// Icon states used for each limb style, so the arms match the rest of the body
 	var/static/list/style_icon_states = list(LIMB_STYLE_TUNDRA = "m_moth_arms_tundra_FRONT")
 
-/datum/bodypart_overlay/simple/moth_arms/get_image(layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/simple/moth_arms/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	if(limb?.should_draw_greyscale)
-		return image(icon, greyscale_icon_state, layer = layer)
+		return image(icon, greyscale_icon_state, layer = layer_real)
 	var/style = limb?.get_drawn_limb_style()
-	return image(icon, (style && style_icon_states[style]) || icon_state, layer = layer)
+	return image(icon, (style && style_icon_states[style]) || icon_state, layer = layer_real)
 
-/datum/bodypart_overlay/simple/moth_arms/color_image(image/overlay, layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/simple/moth_arms/color_image(image/overlay, obj/item/bodypart/limb, layer_index)
 	overlay.color = limb?.should_draw_greyscale ? limb.draw_color : null
 
 #undef BRUTE_MOD

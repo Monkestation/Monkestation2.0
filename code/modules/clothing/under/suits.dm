@@ -167,3 +167,12 @@
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	icon_state = "starsuit"
 	can_adjust = FALSE
+
+
+/obj/item/clothing/under/suit/tuxedo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+
+/obj/item/clothing/under/suit/carpskin/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)

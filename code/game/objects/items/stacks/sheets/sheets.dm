@@ -1,4 +1,5 @@
 /obj/item/stack/sheet
+	abstract_type = /obj/item/stack/sheet
 	name = "sheet"
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'

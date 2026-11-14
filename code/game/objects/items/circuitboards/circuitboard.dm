@@ -4,6 +4,7 @@
 // Circuitboard
 
 /obj/item/circuitboard
+	abstract_type = /obj/item/circuitboard
 	name = "circuit board"
 	/// extension that is applied after the initial name AKA (Computer/Machine Board)
 	var/name_extension = null
@@ -67,6 +68,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 */
 
 /obj/item/circuitboard/machine
+	abstract_type = /obj/item/circuitboard/machine
 	name_extension = "(Machine Board)"
 	var/needs_anchored = TRUE // Whether this machine must be anchored to be constructed.
 	var/list/req_components // Components required by the machine.

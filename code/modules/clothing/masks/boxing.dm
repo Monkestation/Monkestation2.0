@@ -68,6 +68,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 		user.update_worn_mask()
 		if(iscarbon(user))
 			var/mob/living/carbon/carbon_user = user
+			carbon_user.refresh_obscured()
 			carbon_user.update_body_parts()
 		return TRUE
 
@@ -82,6 +83,10 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
+
+/obj/item/clothing/mask/floortilebalaclava/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
 
 /obj/item/clothing/mask/floortilebalaclava/attack_self(mob/user)
 	adjust_visor(user)

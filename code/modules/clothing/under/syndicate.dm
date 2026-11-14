@@ -186,3 +186,16 @@
 	greyscale_colors = "#61423f#61423f#b22c20#61423f#61423f#1c070e"
 	has_sensor = NO_SENSORS
 	resistance_flags = FIRE_PROOF
+
+
+/obj/item/clothing/under/syndicate/bloodred/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //extra-tactical
+
+/obj/item/clothing/under/syndicate/floortilecamo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
+
+/obj/item/clothing/under/syndicate/scrubs/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!

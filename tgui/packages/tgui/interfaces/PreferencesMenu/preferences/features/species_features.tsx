@@ -261,6 +261,16 @@ export const feature_lizard_tail: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
+export const feature_shadekin_tail: FeatureChoiced = {
+  name: 'Tail',
+  component: FeatureDropdownInput,
+};
+
+export const feature_shadekin_ears: FeatureChoiced = {
+  name: 'Protruding Ears',
+  component: FeatureDropdownInput,
+};
+
 export const feature_mcolor: Feature<string> = {
   name: 'Mutant color',
   component: FeatureColorInput,
@@ -268,6 +278,18 @@ export const feature_mcolor: Feature<string> = {
 
 export const feature_mcolor_secondary: Feature<string> = {
   name: 'Mutant Secondary color',
+  component: FeatureColorInput,
+};
+
+export const wing_color: Feature<string> = {
+  name: 'Wing Color',
+  small_supplemental: true,
+  component: FeatureColorInput,
+};
+
+export const antennae_color: Feature<string> = {
+  name: 'Antennae Color',
+  small_supplemental: true,
   component: FeatureColorInput,
 };
 
