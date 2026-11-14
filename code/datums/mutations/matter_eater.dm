@@ -308,6 +308,11 @@
 		to_chat(hungry_boy, span_danger("You were interrupted before you could eat [src]!"))
 		return EAT_FAILED
 
+	for(var/atom/object as anything in contents)
+		if(isliving(object) || isbrain(object) || istype(object, /obj/item/mmi) || object.resistance_flags & INDESTRUCTIBLE)
+			to_chat(hungry_boy, span_danger("What was that..?"))
+			return EAT_VOMIT
+
 	hungry_boy.visible_message(span_danger("[hungry_boy] eats [src]."))
 	return EAT_SUCCESS
 
@@ -382,12 +387,35 @@
 
 	var/list/things_to_vomit = list()
 	for(var/atom/object as anything in contents)
-		if(isliving(object) || istype(object, /obj/item/organ/internal/brain) || istype(object, /obj/item/mmi) || object.resistance_flags & INDESTRUCTIBLE)
+		if(isliving(object) || isbrain(object) || istype(object, /obj/item/mmi) || object.resistance_flags & INDESTRUCTIBLE)
 			things_to_vomit += object
 
 	if(length(things_to_vomit))
 		return things_to_vomit
 
+	hungry_boy.visible_message(span_danger("[hungry_boy] consumes [src] whole!"))
+	return EAT_SUCCESS
+
+/obj/structure/filingcabinet/get_eaten(mob/living/carbon/human/hungry_boy, datum/action/cooldown/spell/pointed/consumption/ability)
+	hungry_boy.visible_message(span_danger("[hungry_boy] begins stuffing [src] into [hungry_boy.p_their()] gaping maw!"))
+	var/eat_time = 20 SECONDS
+	if(anchored)
+		eat_time *= 1.5
+
+	ability.start_biting_animation(src, eat_time)
+	if(!do_after(hungry_boy, eat_time, src))
+		to_chat(hungry_boy, span_danger("You were interrupted before you could eat [src]!"))
+		return EAT_FAILED
+
+	var/list/things_to_vomit = list()
+	for(var/atom/object as anything in contents)
+		if(ispickedupmob(object) || isbrain(object) || object.resistance_flags & INDESTRUCTIBLE) // Picked up small mobs & brains can fit
+			things_to_vomit += object
+
+	if(length(things_to_vomit))
+		return things_to_vomit
+
+	hungry_boy.visible_message(span_danger("[hungry_boy] consumes [src] whole!"))
 	return EAT_SUCCESS
 
 /obj/machinery/dna_vault/get_eaten(mob/living/carbon/human/hungry_boy, datum/action/cooldown/spell/pointed/consumption/ability)
