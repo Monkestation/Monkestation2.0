@@ -13,6 +13,9 @@
 
 	skillchips = list(/obj/item/skillchip/disk_verifier, /obj/item/skillchip/gorlex)
 	box = /obj/item/storage/box/survival/syndie
+	implants = list(
+		/obj/item/implant/tacmap/nuclear,
+	)
 	/// Amount of TC to automatically store in this outfit's uplink.
 	var/tc = 25
 	/// Enables big voice on this outfit's headset, used for nukie leaders.
@@ -34,6 +37,10 @@
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
 	command_radio = TRUE
+
+	implants = list(
+		/obj/item/implant/tacmap/nuclear/leader,
+	)
 
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 

@@ -20,3 +20,4 @@
 		/obj/item/borg/apparatus/organ_storage,
 	)
 	traits = list(TRAIT_PUSHIMMUNE)
+	minimap_blip_state = "mediborg"

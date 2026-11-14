@@ -27,6 +27,8 @@
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
+	tacmap_color = TACMAP_DOOR
+
 	/// Do we need to keep track of a filler panel with the airlock
 	var/multi_tile
 	/// A filler object used to fill the space of multi-tile airlocks

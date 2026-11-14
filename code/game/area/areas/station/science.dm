@@ -3,6 +3,7 @@
 	icon_state = "science"
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_SCIENCE
 
 /area/station/science/lobby
 	name = "\improper Science Lobby"
@@ -129,4 +130,5 @@
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
+	skip_minimap_rendering = TRUE
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED

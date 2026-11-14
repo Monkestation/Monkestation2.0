@@ -27,6 +27,7 @@
 		/obj/item/borg/charger,
 	)
 	traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY, TRAIT_KNOW_ENGI_WIRES, TRAIT_KNOW_ROBO_WIRES, TRAIT_CAN_CLIMB_DISPOSALS)
+	minimap_blip_state = "engiborg"
 
 /obj/item/robot_model/syndicate/saboteur/Initialize(mapload)
 	. = ..()

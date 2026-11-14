@@ -32,6 +32,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 
 	force_no_gravity = TRUE
 	astar_weight = 200
+	skip_minimap_rendering = TRUE
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)

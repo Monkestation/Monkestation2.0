@@ -15,7 +15,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "au" = (
-/turf/open/floor/circuit/red,
+/turf/open/floor/circuit/red/no_power,
 /area/centcom/syndicate_mothership/control)
 "ay" = (
 /obj/structure/table/reinforced,
@@ -2672,8 +2672,8 @@
 /turf/open/misc/ice/icemoon,
 /area/centcom/syndicate_mothership/control)
 "Hs" = (
-/obj/machinery/shuttle_manipulator,
-/turf/open/floor/circuit/red,
+/obj/machinery/minimap_table,
+/turf/open/floor/circuit/red/no_power,
 /area/centcom/syndicate_mothership/control)
 "Hw" = (
 /obj/effect/turf_decal/stripes/line{
