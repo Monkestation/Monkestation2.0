@@ -10,11 +10,16 @@
 	minimum_living_happiness = -2000
 	liked_foods = list(/obj/item/food/grown/banana  = 3)
 
-	targeted_ability_planning_tree = /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/clown
-
 	targeted_ability = /datum/action/cooldown/mob_cooldown/chicken/honk
 
 	book_desc = "Tries very hard to be funny and occasionally honks."
+
+/// Pranks whoever's around
+/mob/living/basic/chicken/clown/pick_ability_target(datum/ai_controller/controller)
+	var/list/pick_me = list()
+	for(var/mob/living/carbon/human/target in view(src, CHICKEN_ENEMY_VISION))
+		pick_me |= target
+	return length(pick_me) ? pick(pick_me) : null
 
 /obj/item/food/egg/clown
 	name = "Clown Egg?"
@@ -57,7 +62,7 @@
 	cooldown_time = 30 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
+	ai_range = 1
 
 /datum/action/cooldown/mob_cooldown/chicken/honk/Activate(mob/living/target)
 	target.slip(5 SECONDS, FALSE)

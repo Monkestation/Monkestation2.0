@@ -10,7 +10,7 @@
 	cooldown_time = 15 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/on_top
+	ai_range = 0
 
 /datum/action/cooldown/mob_cooldown/chicken/lay_egg/PreActivate(atom/target)
 	var/mob/living/basic/chicken/chicken_owner = owner
@@ -45,7 +45,7 @@
 	cooldown_time = 20 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/on_top
+	ai_range = 0
 
 /datum/action/cooldown/mob_cooldown/chicken/feed/PreActivate(atom/target)
 	if(!istype(target, /obj/effect/chicken_feed))
@@ -63,10 +63,12 @@
 
 /datum/action/cooldown/mob_cooldown/chicken
 	melee_cooldown_time =  1 // dumb
-	var/datum/ai_behavior/targeted_mob_ability/min_range/chicken/what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
+	/// How close the AI walks up to its target before using this
+	var/ai_range = 1
 
-/datum/pet_command/point_targeting/attack/chicken
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack/chicken
+/// Chicken attack command
+/datum/pet_command/attack/chicken
 
-/datum/pet_command/point_targeting/attack/chicken/ranged
-	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/chicken
+/// Shoots the target instead of pecking it
+/datum/pet_command/attack/chicken/ranged
+	attack_subtree = /datum/bt_node/subtree/pet_command/attack/chicken_ranged

@@ -16,7 +16,6 @@
 	gender = NEUTER
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = NO_SPAWN
-	can_be_held = FALSE
 	density = FALSE
 	melee_damage_lower = 3
 	melee_damage_upper = 3
@@ -40,9 +39,5 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/pets/pineapplecreacher.bt.json"
 

@@ -10,6 +10,7 @@
 #define BB_SLIME_REPRODUCE "BB_slime_reproduce"
 ///Target to try and eat, separate from retaliation because they use different strats
 #define BB_SLIME_EAT_TARGET "BB_slime_eat_target"
+
 ///Item a slime is currently walking towards to eat
 #define BB_SLIME_ITEM_TARGET "BB_slime_item_target"
 ///Typecache of item types the slime still wants to eat
@@ -28,6 +29,5 @@
 #define BB_SLIME_ROAM_TARGET "BB_slime_roam_target"
 ///Player a cleaner slime is wandering towards, getting as close as it can
 #define BB_SLIME_ROAM_PLAYER "BB_slime_roam_player"
-
 /// Set on a monkey that wandered into a slime pen, so it screeches less
 #define BB_MONKEY_PENNED "BB_monkey_penned"

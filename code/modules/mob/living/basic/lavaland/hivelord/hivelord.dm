@@ -61,7 +61,7 @@
 /mob/living/basic/mining/hivelord/proc/complete_spawn(turf/spawn_turf)
 	var/mob/living/brood = new death_spawn_type(spawn_turf)
 	brood.faction = faction
-	brood.ai_controller?.set_blackboard_key(ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	brood.ai_controller?.set_blackboard_key(ai_controller.blackboard[BB_CURRENT_TARGET])
 	brood.dir = get_dir(src, spawn_turf)
 
 /mob/living/basic/mining/hivelord/RangedAttack(atom/atom_target, modifiers)
@@ -98,7 +98,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	density = FALSE
-	ai_controller = /datum/ai_controller/basic_controller/simple_hostile
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile
 
 /mob/living/basic/hivelord_brood/Initialize(mapload)
 	. = ..()

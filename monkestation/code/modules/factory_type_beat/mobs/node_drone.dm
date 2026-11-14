@@ -173,77 +173,55 @@
 /// The node drone AI controller
 //	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.
 /datum/ai_controller/basic_controller/node_drone
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/node_drone/node_drone.bt.json"
 	blackboard = list(
-		BB_CURRENT_HUNTING_TARGET = null, // Hunts for vents.
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find vents to run away from assailants.
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = null // Should be mining or trying to do something. No idling.
-	planning_subtrees = list(
-		// Priority is see if lavaland mobs are attacking us to flee from them.
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		// Fly you fool
-		/datum/ai_planning_subtree/flee_target/node_drone,
-		// Otherwise, look for and execute hunts for vents to latch onto.
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent,
-	)
 
-// Node subtree to hunt down ore vents. Should focus on the one it is parented to first. (Until extended behavior is added later.)
-/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent
-	hunting_behavior = /datum/ai_behavior/hunt_target/latch_onto/node_drone
-	hunt_targets = list(/obj/structure/ore_vent) // What it will look for if it doesn't have a target.
-	hunt_range = 7 // Hunt vents to the end of the earth.
+/// Finds a vent to latch onto. Should focus on the one it is parented to first.
+/datum/bt_node/ai_behavior/node_drone_find_vent
+	time_between_perform = 2 SECONDS
+	/// Blackboard key the vent we found goes in
+	var/target_key = BB_CURRENT_HUNTING_TARGET
+	/// How far we look for vents
+	var/hunt_range = 7
 
-/datum/ai_behavior/find_hunt_target/look_for_vent/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, types_to_hunt, hunt_range)
-	controller.behavior_cooldowns[src] = world.time + get_cooldown(controller) // Put here since cannot call parent.
+/datum/bt_node/ai_behavior/node_drone_find_vent/perform(seconds_per_tick, datum/ai_controller/controller)
+	if(controller.blackboard_key_exists(target_key))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	var/mob/living/basic/node_drone/drone = controller.pawn
+	var/obj/structure/ore_vent/parent_vent = drone.attached_vent
+	if(istype(parent_vent) && !QDELETED(parent_vent))
+		controller.set_blackboard_key(target_key, parent_vent)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	for(var/obj/structure/ore_vent/vent in range(hunt_range, drone))
+		controller.set_blackboard_key(target_key, vent)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/mob/living/living_mob = controller.pawn
-	if(istype(living_mob, /mob/living/basic/node_drone)) // Knows where its vent is and will prioritize it.
-		var/mob/living/basic/node_drone/drone = living_mob
-		var/obj/structure/ore_vent/parent_vent = drone.attached_vent
-		if(istype(parent_vent) && !QDELETED(parent_vent))
-			controller.set_blackboard_key(hunting_target_key, parent_vent)
-			finish_action(controller, TRUE)
-			return
+/// Lets go of the vent so we can run
+/datum/bt_node/ai_behavior/node_drone_unlatch
 
-	for(var/atom/possible_dinner as anything in typecache_filter_list(range(hunt_range, living_mob), types_to_hunt))
-		if(!valid_dinner(living_mob, possible_dinner, hunt_range))
-			continue
-		controller.set_blackboard_key(hunting_target_key, possible_dinner)
-		finish_action(controller, TRUE)
-		return
-
-	finish_action(controller, FALSE)
-
-// Finish override to make the drone return to hunting behavior sooner.
-/datum/ai_behavior/run_away_from_target/drone/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
-	if(succeeded)
-		var/list/shitlist = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
-		var/atom/existing_target = controller.blackboard[target_key]
-		if(length(shitlist) && (existing_target in shitlist)) // Drone is dumb and forgets all assualts when it gets away.
-			controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
-	return ..() // Must be done after as target_key gets cleared by parent.
-
-// node drone behavior for buckling down on a vent.
-/datum/ai_behavior/hunt_target/latch_onto/node_drone
-	hunt_cooldown = 5 SECONDS
-
-// Evasion behavior.
-/datum/ai_planning_subtree/flee_target/node_drone
-	flee_behaviour = /datum/ai_behavior/run_away_from_target/drone
-
-/datum/ai_behavior/run_away_from_target/drone
-	action_cooldown = 1 SECONDS
-	run_distance = 3
-
-/datum/ai_behavior/run_away_from_target/drone/setup(datum/ai_controller/controller, target_key, hiding_location_key)
-	. = ..()
-
+/datum/bt_node/ai_behavior/node_drone_unlatch/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/coward = controller.pawn
-	if(istype(coward) && coward.buckled)
-		coward.buckled.unbuckle_mob(coward)
+	coward.buckled?.unbuckle_mob(coward)
+	return AI_BEHAVIOR_SUCCEEDED
+
+/// Drone is dumb and forgets all assaults once it gets away
+/datum/bt_node/ai_behavior/node_drone_forget_attackers
+	/// How far we need to get before we feel safe
+	var/safe_distance = 3
+
+/datum/bt_node/ai_behavior/node_drone_forget_attackers/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/atom/attacker = controller.blackboard[BB_CURRENT_TARGET]
+	if(isnull(attacker) || get_dist(controller.pawn, attacker) <= safe_distance)
+		return AI_BEHAVIOR_FAILED
+	controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+	controller.clear_blackboard_key(BB_CURRENT_TARGET)
+	return AI_BEHAVIOR_SUCCEEDED
 
 #undef FLY_IN_STATE
 #undef FLY_OUT_STATE

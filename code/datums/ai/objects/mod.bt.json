@@ -1,0 +1,34 @@
+{
+	"dm_type": "/datum/ai_controller/mod",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_MOD_TARGET"
+	},
+	"child": {
+		"type": "selector",
+		"children": [
+			{
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_MOD_TARGET"
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/mod_attach"
+					}
+				]
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/mod_give_up"
+			}
+		]
+	}
+}

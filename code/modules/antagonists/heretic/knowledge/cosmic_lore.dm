@@ -247,7 +247,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/protect_owner,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/star_gazer,
+		/datum/pet_command/attack/star_gazer,
 	)
 	/// List of traits given once ascended
 	var/static/list/ascended_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTCOLD, TRAIT_RESISTHEAT, TRAIT_XRAY_VISION)

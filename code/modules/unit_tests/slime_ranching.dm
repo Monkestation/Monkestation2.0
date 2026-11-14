@@ -88,7 +88,7 @@
 	SEND_SIGNAL(rancher, COMSIG_SLIME_LATCH_DRAINED, lunch, SLIME_RANCH_EXTRACT_COST)
 
 	var/datum/targeting_strategy/slime_food/appetite = GET_TARGETING_STRATEGY(/datum/targeting_strategy/slime_food)
-	TEST_ASSERT(appetite.can_attack(rancher, lunch, 7), "a drained-out iceroach stopped counting as slime food")
+	TEST_ASSERT(appetite.is_valid_target(rancher, lunch, 7), "a drained-out iceroach stopped counting as slime food")
 
 /datum/unit_test/slime_ranch_finished_quota_critter_stays_food/Destroy()
 	SSmobs.ignite()

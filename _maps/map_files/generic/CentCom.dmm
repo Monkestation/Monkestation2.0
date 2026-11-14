@@ -22045,7 +22045,7 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
 "fgN" = (
-/mob/living/simple_animal/pet/cat/kitten{
+/mob/living/basic/pet/cat/kitten{
 	name = "Kbity :3";
 	desc = "D'aaawwww. Fortune's best friend"
 	},

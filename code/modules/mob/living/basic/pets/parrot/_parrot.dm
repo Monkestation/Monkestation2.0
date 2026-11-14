@@ -82,6 +82,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held) //monkestation edit
 	setup_headset()
 	update_speech_blackboards()
 	ai_controller.set_blackboard_key(BB_PARROT_PERCH_TYPES, desired_perches)

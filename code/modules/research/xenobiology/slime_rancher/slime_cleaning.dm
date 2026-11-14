@@ -44,7 +44,7 @@
 	cleaner_slime = !!enabled
 	if(isnull(ai_controller))
 		return
-	ai_controller.CancelActions()
+	ai_controller.cancel_current_plan()
 	ai_controller.clear_blackboard_key(BB_SLIME_CLEAN_TARGET)
 	ai_controller.clear_blackboard_key(BB_SLIME_ROAM_TARGET)
 	ai_controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)

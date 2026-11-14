@@ -106,3 +106,17 @@
 /// MONKESTATION ADDITIONS
 // Apids and Bees!!
 #define FACTION_HIVE "hive"
+
+#define FAST_FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
+( \
+	!(exact_match) ? \
+		(LAZYLEN((faction_A) & (faction_B)) || LAZYLEN((allies_A) & (allies_B))) \
+	: \
+		((LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A)) && LAZYLEN((allies_A) & (allies_B))) \
+)
+
+#define SET_FACTION_AND_ALLIES_FROM(destination, source) \
+	do { \
+		(destination).set_faction((source).get_faction()); \
+		(destination).set_allies(LAZYLISTDUPLICATE((source).allies)); \
+	} while(FALSE)

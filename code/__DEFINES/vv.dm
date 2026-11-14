@@ -182,3 +182,9 @@
 
 /// ALWAYS render a reduced list, useful for fuckoff big datums that need to be condensed for the sake of client load
 #define VV_ALWAYS_CONTRACT_LIST (1<<0)
+
+#define VV_HK_GIVE_AI "give_ai"
+
+#define VV_HK_GIVE_MOB_ACTION "give_mob_action"
+
+#define VV_HK_REMOVE_MOB_ACTION "remove_mob_action"

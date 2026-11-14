@@ -221,7 +221,7 @@
 			hostile_victim.LoseTarget()
 	else if(isbasicmob(victim))
 		var/mob/living/basic/basic_victim = victim
-		basic_victim.ai_controller?.set_ai_status(AI_STATUS_OFF)
+		basic_victim.ai_controller?.force_ai_off()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/victim)
 	victim.remove_status_effect(/datum/status_effect/time_stopped)
@@ -231,7 +231,7 @@
 		animal_victim.toggle_ai(initial(animal_victim.AIStatus))
 	else if(isbasicmob(victim))
 		var/mob/living/basic/basic_victim = victim
-		basic_victim.ai_controller?.reset_ai_status()
+		basic_victim.ai_controller?.clear_forced_off()
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)

@@ -1,0 +1,1 @@
+{"type":"/datum/bt_node/composite/selector","children":[{"type":"/datum/bt_node/decorator/bb_key_set","children":[{"type":"/datum/bt_node/ai_behavior/slime_chase/hunt/pet"}],"key":"BB_current_pet_target","observer_abort":3}]}

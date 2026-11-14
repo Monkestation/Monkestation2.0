@@ -29,7 +29,6 @@
 	childtype = list(/mob/living/simple_animal/pet/hamster = 1)
 	animal_species = /mob/living/simple_animal/pet/hamster
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	head_icon = 'icons/mob/pets_held.dmi'
 	held_lh = 'icons/mob/pets_held_lh.dmi'
@@ -37,4 +36,5 @@
 
 /mob/living/simple_animal/pet/hamster/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

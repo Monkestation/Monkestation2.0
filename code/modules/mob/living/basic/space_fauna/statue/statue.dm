@@ -72,6 +72,7 @@
 	// Set creator
 	if(creator)
 		src.creator = creator
+	ai_controller.set_blackboard_key(BB_HUNT_TARGET_LIST, typecacheof(list(/obj/machinery/light)))
 
 /mob/living/basic/statue/med_hud_set_health()
 	return //we're a statue we're invincible
@@ -144,23 +145,13 @@
 	victim.adjust_temp_blindness(8 SECONDS)
 
 /datum/ai_controller/basic_controller/statue
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/statue/statue.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 
-	ai_movement = /datum/ai_movement/basic_avoidance
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
-	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/statue
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/statue
-
-/datum/ai_behavior/basic_melee_attack/statue
-	action_cooldown = 1 SECONDS
+	ai_movement = /datum/ai_movement/jps
 
 /mob/living/basic/statue/frosty
 	name = "Frosty"

@@ -48,7 +48,6 @@
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 25
 
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	/// `TRUE` if we have picked our visual appearance, `FALSE` otherwise (default)
 	var/picked = FALSE
@@ -179,6 +178,7 @@
 
 /mob/living/basic/drone/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	GLOB.drones_list += src
 	AddElement(/datum/element/dextrous, hud_type = hud_type)
 	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())

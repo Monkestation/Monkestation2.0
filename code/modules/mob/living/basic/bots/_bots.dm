@@ -145,6 +145,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 	ai_controller.set_blackboard_key(BB_RADIO_CHANNEL, radio_channel)
 	update_appearance()
 
+/mob/living/basic/bot/proc/set_mode_flags(mode_flags)
+	SHOULD_CALL_PARENT(TRUE)
+	bot_mode_flags = mode_flags
+	SEND_SIGNAL(src, COMSIG_BOT_MODE_FLAGS_SET, mode_flags)
+
 /mob/living/basic/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		return span_bold("[paicard ? "pAI Controlled" : "Autonomous"]")
@@ -175,7 +180,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/turn_on()
 	if(stat == DEAD)
 		return FALSE
-	bot_mode_flags |= BOT_MODE_ON
+	set_mode_flags(bot_mode_flags | BOT_MODE_ON)
 	remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	update_appearance()
@@ -184,7 +189,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return TRUE
 
 /mob/living/basic/bot/proc/turn_off()
-	bot_mode_flags &= ~BOT_MODE_ON
+	set_mode_flags(bot_mode_flags & ~BOT_MODE_ON)
 	add_traits(on_toggle_traits, POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	bot_reset() //Resets an AI's call, should it exist.
@@ -297,7 +302,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return FALSE
 	bot_access_flags |= BOT_COVER_EMAGGED
 	bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN
-	bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
+	set_mode_flags(bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED) //Manually emagging the bot also locks the AI from controlling it.
 	bot_reset()
 	turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
@@ -547,9 +552,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 	switch(command)
 		if("patroloff")
 			bot_reset() //HOLD IT!! //OBJECTION!!
-			bot_mode_flags &= ~BOT_MODE_AUTOPATROL
+			set_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 		if("patrolon")
-			bot_mode_flags |= BOT_MODE_AUTOPATROL
+			set_mode_flags(bot_mode_flags | BOT_MODE_AUTOPATROL)
 		if("summon")
 			summon_bot(user, user_access = user_access)
 		if("ejectpai")
@@ -601,10 +606,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if("maintenance")
 			bot_access_flags ^= BOT_MAINTS_PANEL_OPEN
 		if("patrol")
-			bot_mode_flags ^= BOT_MODE_AUTOPATROL
+			set_mode_flags(bot_mode_flags ^ BOT_MODE_AUTOPATROL)
 			bot_reset()
 		if("airplane")
-			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
+			set_mode_flags(bot_mode_flags ^ BOT_MODE_REMOTE_ENABLED)
 		if("hack")
 			if(!(issilicon(the_user) || isAdminGhostAI(the_user)))
 				return

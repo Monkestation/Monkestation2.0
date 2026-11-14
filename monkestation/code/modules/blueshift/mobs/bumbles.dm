@@ -57,16 +57,10 @@
 	if (resting)
 		icon_state = "[icon_living]_rest"
 
-		ai_controller.idle_behavior = null
-
 		manual_emote(pick("curls up on the surface below.", "is looking very sleepy.", "buzzes happily.", "looks around for a flower nap."))
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 	else
 		icon_state = "[icon_living]"
-
-		var/idle_behavior_type = initial(ai_controller.idle_behavior)
-		if(idle_behavior_type)
-			ai_controller.idle_behavior = new idle_behavior_type()
 
 		manual_emote(pick("wakes up with a smiling buzz.", "rolls upside down before waking up.", "stops resting."))
 		ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
@@ -100,7 +94,7 @@
 	manual_emote(pick("smells [target].", "sniffs [target].", "collects some nectar."))
 
 	// Clear the target, if any or we'll stunlock on a flower.
-	ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+	ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
 
 	return TRUE
 
@@ -116,61 +110,42 @@
 
 // Bumble AI controller that adds find flowers, resting, and buzzing subtrees.
 /datum/ai_controller/basic_controller/bumbles
+	behavior_tree_json = "monkestation/code/modules/blueshift/mobs/bumbles.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("buzzes.", "makes a loud buzz.", "buzzes happily."),
+			BB_EMOTE_SEE = list("rolls several times."),
+			BB_SPEAK_CHANCE = 1,
+		),
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/bumbles,
-		/datum/ai_planning_subtree/bumbles_rest,
-		/datum/ai_planning_subtree/random_speech/bumbles,
-	)
+/// Sniffs the flower, then leaves it alone for 30 seconds
+/datum/bt_node/ai_behavior/hunt_target/bumbles_smell
+	hunt_cooldown = 30 SECONDS
+	always_reset_target = TRUE
 
-/// Attack with a 30 second cooldown.
-/datum/ai_planning_subtree/basic_melee_attack_subtree/bumbles
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/bumbles
+/datum/bt_node/ai_behavior/hunt_target/bumbles_smell/target_caught(mob/living/basic/pet/bumbles/hunter, atom/hunted)
+	hunter.smell_flower(hunter, hunted)
 
-/// Attack with a 30 second cooldown.
-/datum/ai_behavior/basic_melee_attack/bumbles
-	action_cooldown = 30 SECONDS
+/// Passes while the pawn is lying down for a rest
+/datum/bt_node/decorator/pawn_resting
 
-/// Plan to rest or sit up.
-/datum/ai_planning_subtree/bumbles_rest
-	var/chance = 0.5
-
-/datum/ai_planning_subtree/bumbles_rest/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	. = ..()
-
+/datum/bt_node/decorator/pawn_resting/check_condition(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	if(!istype(living_pawn))
-		return
-
-	if(living_pawn.buckled || !SPT_PROB(chance, seconds_per_tick))
-		return
-
-	controller.queue_behavior(/datum/ai_behavior/bumbles_rest)
+	return isliving(living_pawn) && living_pawn.resting
 
 /// Bumbles rests or sits up.
-/datum/ai_behavior/bumbles_rest
+/datum/bt_node/ai_behavior/bumbles_rest
+	/// Chance per second to flip between resting and not
+	var/chance = 0.5
 
-/datum/ai_behavior/bumbles_rest/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
-
+/datum/bt_node/ai_behavior/bumbles_rest/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	if(!istype(living_pawn))
-		return
-
+	if(!istype(living_pawn) || living_pawn.buckled || !SPT_PROB(chance, seconds_per_tick))
+		return AI_BEHAVIOR_FAILED
 	living_pawn.set_resting(!living_pawn.resting)
-	finish_action(controller, TRUE)
-
-/// Buzz
-/datum/ai_planning_subtree/random_speech/bumbles
-	speech_chance = 1
-
-	emote_hear = list("buzzes.", "makes a loud buzz.", "buzzes happily.")
-	emote_see = list("rolls several times.")
+	return AI_BEHAVIOR_SUCCEEDED

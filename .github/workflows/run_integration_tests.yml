@@ -38,6 +38,7 @@ jobs:
           sparse-checkout: |
             _maps
             .github
+            build/behavior_trees
             code/datums/greyscale/json_configs
             data/cassette_storage
             goon/icons

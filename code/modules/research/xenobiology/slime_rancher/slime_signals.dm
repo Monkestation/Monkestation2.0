@@ -36,5 +36,5 @@
 	if(isnull(ai_controller))
 		return
 	ai_controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
-	ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
-	ai_controller.CancelActions()
+	ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
+	ai_controller.cancel_current_plan()

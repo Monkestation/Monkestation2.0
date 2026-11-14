@@ -1679,6 +1679,7 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
 	. = grab_state
 	grab_state = newstate
+	SEND_SIGNAL(pulling, COMSIG_MOVABLE_CHANGED_GRABBED_STATE, grab_state)
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
 			pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
@@ -1786,3 +1787,42 @@
 	if(!("[REF(target)]" in faction_src))
 		faction_target -= "[REF(target)]" //same thing here.
 	return faction_check(faction_src, faction_target, TRUE)
+
+/// Returns TRUE if the ally (an atom or its REF) or allies in the list are in our faction list. If match_all is set, all of them have to be there.
+/atom/movable/proc/has_ally(ally_or_allies, match_all)
+	if(!LAZYLEN(faction))
+		return FALSE
+	if(!islist(ally_or_allies))
+		ally_or_allies = list(ally_or_allies)
+	for(var/ally in ally_or_allies)
+		var/ally_ref = isdatum(ally) ? REF(ally) : ally
+		var/found = (ally_ref in faction)
+		if(found != match_all)
+			return found
+	return match_all
+
+/// Returns TRUE if the faction or factions in the list are in our faction list. If match_all is set, all of them have to be there.
+/**
+ * Replaces the atom's faction list with the given list of factions, or clears it if the list is empty or null.
+ */
+/atom/movable/proc/set_faction(factions)
+	if (factions == faction) // Same list in memory - early return
+		return TRUE
+	if (!islist(factions) && !isnull(factions))
+		stack_trace("Tried to call set_faction on [src] with a non-list arg.")
+		return FALSE
+
+	if (!LAZYLEN(factions)) // empty list, should just null it in that case
+		LAZYNULL(faction)
+		return TRUE
+
+	faction = string_list(factions)
+	return TRUE
+
+/atom/movable/proc/has_faction(faction_or_factions, match_all)
+	if(!LAZYLEN(faction))
+		return FALSE
+	if(!islist(faction_or_factions))
+		return faction_or_factions in faction
+	var/match_count = length(faction & faction_or_factions)
+	return match_all ? (match_count == length(faction_or_factions)) : (match_count > 0)

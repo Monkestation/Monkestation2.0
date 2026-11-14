@@ -22,7 +22,6 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 15
 	can_buckle_to = FALSE
-	can_be_held = TRUE
 
 	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1) //Healed by fire
 	unsuitable_cold_damage = 15
@@ -127,7 +126,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/slime,
+		/datum/pet_command/attack/slime,
 		/datum/pet_command/slime_split,
 	)
 
@@ -138,6 +137,7 @@
 
 /mob/living/basic/slime/Initialize(mapload, new_type = /datum/slime_type/grey, new_life_stage = SLIME_LIFE_STAGE_BABY)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 
 	evolve_action = new (src)
 	evolve_action.Grant(src)
@@ -299,7 +299,7 @@
 /mob/living/basic/slime/proc/is_calm()
 	if(is_latched() || (istate & ISTATE_HARM) || was_recently_attacked())
 		return FALSE
-	return !ai_controller?.blackboard[BB_SLIME_RABID] && !ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET] && !ai_controller?.blackboard[BB_SLIME_EAT_TARGET]
+	return !ai_controller?.blackboard[BB_SLIME_RABID] && !ai_controller?.blackboard[BB_CURRENT_TARGET] && !ai_controller?.blackboard[BB_SLIME_EAT_TARGET]
 
 /// Whether we and other can share a tile, which takes both sides being out of combat.
 /mob/living/basic/slime/proc/can_slip_past(atom/movable/other)

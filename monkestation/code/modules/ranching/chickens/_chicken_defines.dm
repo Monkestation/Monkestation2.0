@@ -105,16 +105,12 @@
 	var/book_desc = "White Chickens lay White Eggs, however, if they are happy they will lay Brown Eggs instead. "
 	///if this chicken is marked, will add a sigil above it to show its marked
 	var/is_marked = FALSE
-	///the self ability planning tree
-	var/ability_planning_tree = /datum/ai_planning_subtree/use_mob_ability/chicken
-	///the targeted ability planning tree
-	var/targeted_ability_planning_tree = /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/chicken,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/attack/chicken,
+		/datum/pet_command/fetch,
 		/datum/pet_command/play_dead,
 	)
 	///how much extra fertile we are

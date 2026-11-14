@@ -42,21 +42,12 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/attack_obstacle_in_path
-	)
-
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/plague_doc/plague_doc.bt.json"
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/use_mob_ability/wizard_summon_minions,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
-/datum/ai_planning_subtree/use_mob_ability/plague_summon_minions
+/// Summons minions whenever it can while fighting
+/datum/bt_node/ai_behavior/use_mob_ability/plague_summon_minions
 	ability_key = BB_WIZARD_SUMMON_MINIONS
-	finish_planning = FALSE
 
 
 
