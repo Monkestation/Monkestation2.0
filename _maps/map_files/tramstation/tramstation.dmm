@@ -79583,7 +79583,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/glass,
-/obj/item/fish_feed,
+/obj/item/reagent_containers/cup/fish_feed,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/chicken)
 "xwd" = (

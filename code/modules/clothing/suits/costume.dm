@@ -835,3 +835,20 @@
 	icon_state = "thekiller_robe"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+
+
+/obj/item/clothing/suit/hooded/carp_costume/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
+/obj/item/clothing/head/hooded/carp_hood/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+
+/obj/item/clothing/suit/costume/hawaiian/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+
+/obj/item/clothing/suit/apron/overalls/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)

@@ -16,16 +16,56 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 	astar_weight = 75
+	/// Whether we can dig a fishing hole on this turf
+	var/can_make_hole = TRUE
+	/// Screentips for the tools that can dig a fishing hole
+	var/static/list/tool_screentips = list(
+		TOOL_SHOVEL = list(
+			SCREENTIP_CONTEXT_LMB = "Dig fishing hole",
+		),
+		TOOL_MINING = list(
+			SCREENTIP_CONTEXT_LMB = "Dig fishing hole",
+		),
+	)
 
 /turf/open/misc/ice/Initialize(mapload)
 	. = ..()
 	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
+	if(can_make_hole)
+		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 
 /turf/open/misc/ice/break_tile()
 	return
 
 /turf/open/misc/ice/burn_tile()
 	return
+
+/turf/open/misc/ice/examine(mob/user)
+	. = ..()
+	if(can_make_hole)
+		. += span_info("You could use a [EXAMINE_HINT("shovel")] or a [EXAMINE_HINT("pick")] to dig a fishing hole here.")
+
+/turf/open/misc/ice/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!can_make_hole)
+		return NONE
+	if(tool.tool_behaviour != TOOL_SHOVEL && tool.tool_behaviour != TOOL_MINING)
+		return NONE
+	balloon_alert(user, "digging...")
+	playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
+	if(!do_after(user, 5 SECONDS, src))
+		return NONE
+	balloon_alert(user, "dug hole")
+	spawn_hole()
+	return ITEM_INTERACT_SUCCESS
+
+/// Makes a fishing hole on the ice
+/turf/open/misc/ice/proc/spawn_hole()
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/ice_fishing])
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
+	add_overlay(mutable_appearance('icons/turf/overlays.dmi', "ice_hole"))
+	can_make_hole = FALSE
+	RemoveElement(/datum/element/contextual_screentip_tools, tool_screentips)
+	flags_1 &= ~HAS_CONTEXTUAL_SCREENTIPS_1
 
 /turf/open/misc/ice/smooth
 	icon_state = "ice_turf-255"
@@ -41,6 +81,13 @@
 
 /turf/open/misc/ice/icemoon/no_planet_atmos
 	planetary_atmos = FALSE
+
+///Ice turf with a fishing spot already dug
+/turf/open/misc/ice/icemoon/no_planet_atmos/holed
+
+/turf/open/misc/ice/icemoon/no_planet_atmos/holed/Initialize(mapload)
+	. = ..()
+	spawn_hole()
 
 /turf/open/misc/ice/temperate
 	baseturfs = /turf/open/misc/ice/temperate

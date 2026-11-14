@@ -162,7 +162,7 @@
 	. = ..()
 	SetInvisibility(INVISIBILITY_ABSTRACT, id = type)
 	addtimer(CALLBACK(src, PROC_REF(show_presence)), 1 MINUTES)
-	/* AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift]) */
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
 
 	var/image/silicon_image = image('icons/effects/eldritch.dmi', src, null, OBJ_LAYER)
 	silicon_image.override = TRUE
@@ -198,8 +198,8 @@
 			their_poor_arm.receive_damage(brute = 50, wound_bonus = 100) // guaranteed to wound
 		else
 			to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
-			their_poor_arm.dismember()
-			qdel(their_poor_arm)
+			if(their_poor_arm.dismember())
+				their_poor_arm.forceMove(src) // stored for later fishage
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
 	return TRUE
@@ -225,7 +225,9 @@
 	// A very elaborate way to suicide
 	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
 	var/obj/item/bodypart/head/head = human_user.get_bodypart(BODY_ZONE_HEAD)
-	if(!head?.dismember())
+	if(head?.dismember())
+		head.forceMove(src) // stored for later fishage
+	else
 		human_user.gib(/* DROP_ALL_REMAINS */)
 	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)
 	var/datum/effect_system/reagents_explosion/explosion = new(get_turf(human_user), 1, 1, 1)
@@ -265,7 +267,7 @@
 
 	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
-	/* AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift]) */
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
 	monitor = new(src, 7)
 
 	if(isnull(loc))
