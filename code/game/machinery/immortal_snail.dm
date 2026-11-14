@@ -122,6 +122,8 @@
 	var/datum/immortal_snail_pursuit/pursuit_driver
 	var/datum/snail_debt/debt
 	var/datum/immortal_snail_curse/curse
+	/// Optional admin-only VV escape hatch. Admin deletion commands bypass the watchdog automatically.
+	var/admin_watchdog_bypass = FALSE
 
 /mob/living/basic/immortal_snail/Initialize(mapload)
 	. = ..()
@@ -143,7 +145,7 @@
 
 /mob/living/basic/immortal_snail/proc/prevent_premature_deletion(datum/source, force)
 	SIGNAL_HANDLER
-	return contract_value && !curse_fulfilled && !force
+	return contract_value && !curse_fulfilled && !admin_watchdog_bypass && !force
 
 /mob/living/basic/immortal_snail/examine(mob/user)
 	. = ..()
@@ -196,7 +198,12 @@
 		new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 	if(curse)
 		curse.capture_state(src)
-		if(!curse_fulfilled)
+		var/admin_delete = usr?.client?.holder
+		if(admin_watchdog_bypass || admin_delete)
+			log_admin("[key_name(usr)] ended an immortal snail curse through the admin watchdog bypass at [AREACOORD(src)].")
+			curse.admin_cancelled = TRUE
+			qdel(curse)
+		else if(!curse_fulfilled)
 			curse.report_loss(src, "body deleted; force=[force]; usr context=[key_name(usr)]")
 		else
 			log_admin("Immortal snail curse fulfilled at [AREACOORD(src)]; reclaimed [debt?.recovered] credits.")
@@ -225,6 +232,7 @@
 	var/datum/weakref/corpse_ref
 	var/turf/last_turf
 	var/recoveries = 0
+	var/admin_cancelled = FALSE
 
 /datum/immortal_snail_curse/New(mob/living/basic/immortal_snail/snail)
 	. = ..()
@@ -269,6 +277,9 @@
 	message_admins(message)
 
 /datum/immortal_snail_curse/process(seconds_per_tick)
+	if(admin_cancelled)
+		qdel(src)
+		return PROCESS_KILL
 	var/mob/living/basic/immortal_snail/snail = snail_ref?.resolve()
 	if(!QDELETED(snail))
 		if(snail.curse_fulfilled)
