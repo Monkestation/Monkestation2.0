@@ -10,6 +10,9 @@ SUBSYSTEM_DEF(air)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
+	var/next_active_turf_log = 0
+	var/activation_count = 0
+	var/list/activation_sources = list()
 
 	var/cost_atoms = 0
 	var/cost_turfs = 0
@@ -162,6 +165,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(cached_cost))
+		log_active_turf_spread()
 		resumed = FALSE
 		currentpart = SSAIR_HOTSPOTS
 
@@ -380,6 +384,63 @@ SUBSYSTEM_DEF(air)
 		if (MC_TICK_CHECK)
 			return
 
+/datum/controller/subsystem/air/proc/log_active_turf_spread()
+	if(length(active_turfs) < 1500 || world.time < next_active_turf_log)
+		return
+	next_active_turf_log = world.time + 30 SECONDS
+	var/list/turfs_per_area = list()
+	var/list/sample_turfs = list()
+	for(var/turf/open/active_turf as anything in active_turfs)
+		var/area/turf_area = active_turf.loc
+		var/count = ++turfs_per_area[turf_area]
+		if((count == 1 || !(count % 100)) && length(sample_turfs[turf_area]) < 3)
+			LAZYADD(sample_turfs[turf_area], active_turf)
+	var/list/busiest_areas = list()
+	for(var/area/turf_area as anything in turfs_per_area)
+		var/count = turfs_per_area[turf_area]
+		var/index = 1
+		while(index <= length(busiest_areas) && turfs_per_area[busiest_areas[index]] >= count)
+			index++
+		if(index > 8)
+			continue
+		busiest_areas.Insert(index, turf_area)
+		busiest_areas.len = min(length(busiest_areas), 8)
+	var/list/busiest_details = list()
+	for(var/area/turf_area as anything in busiest_areas)
+		var/list/samples = list()
+		for(var/turf/open/sample as anything in sample_turfs[turf_area])
+			var/near_vacuum = 0
+			for(var/turf/open/neighbor as anything in sample.atmos_adjacent_turfs)
+				if(neighbor.air && neighbor.air.return_pressure() < 1)
+					near_vacuum++
+			samples += list(list(
+				"turf" = "[sample.x],[sample.y],[sample.z]",
+				"pressure" = sample.air?.return_pressure(),
+				"temperature" = sample.air?.return_temperature(),
+				"gases" = sample.air ? print_gas_mixture(sample.air) : null,
+				"excited group turfs" = length(sample.excited_group?.turf_list),
+				"neighbors near vacuum" = near_vacuum,
+			))
+		busiest_details["[turf_area.name]"] = list(
+			"active turfs" = turfs_per_area[turf_area],
+			"samples" = samples,
+		)
+	log_game(
+		"SSair has [length(active_turfs)] active turfs in [length(turfs_per_area)] areas, [length(excited_groups)] excited groups and [length(networks)] pipenets",
+		data = list(
+			"busiest areas" = busiest_details,
+			"activated by, 1 in 8 sampled" = activation_sources,
+			"excited groups" = length(excited_groups),
+			"pipenets" = length(networks),
+			"rebuild queue" = length(rebuild_queue),
+		),
+	)
+	activation_sources = list()
+
+/datum/controller/subsystem/air/proc/note_activation_source()
+	var/callee/source = caller.caller
+	activation_sources["[source?.proc] line [source?.line]"]++
+
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = excited_groups.Copy()
@@ -503,6 +564,8 @@ SUBSYSTEM_DEF(air)
 		#endif
 		activate.excited = TRUE
 		active_turfs += activate
+		if(length(active_turfs) >= 1000 && !(++activation_count % 8))
+			note_activation_source()
 	else if(activate.flags_1 & INITIALIZED_1)
 		for(var/turf/neighbor as anything in activate.atmos_adjacent_turfs)
 			add_to_active(neighbor, TRUE)
