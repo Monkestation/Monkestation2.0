@@ -97,7 +97,8 @@ GLOBAL_DATUM(snail_debt, /datum/snail_debt)
 		else if(spender?.stat == DEAD)
 			settled_by_death = TRUE
 		else if(last_carrier)
-			var/mob/living/basic/immortal_snail/collector = collector_ref?.resolve()
+			var/datum/weakref/collector_weakref = collector_ref
+	var/mob/living/basic/immortal_snail/collector = collector_weakref?.resolve()
 			if(collector && (collector.original_dead || !collector.original_target()) && (last_carrier == collector.target_ref || last_carrier == collector.corpse_ref))
 				settled_by_death = TRUE
 	if(settled_by_death)
