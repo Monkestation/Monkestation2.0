@@ -29,7 +29,7 @@
 
 	// What is allowed to be mimicked. Allowing everything is extremely dangerous.
 	var/static/list/allowed_objects = typecacheof(list(
-		/obj/item/storage/backpack,
+		//obj/item/storage/backpack,
 		/obj/item/trash
 	))
 	// What is blocked. Used when using the whitelist allows a problematic subtype
@@ -123,6 +123,18 @@
 		return
 
 	var/mob/living/mimic = parent
+	mimic.reset_perspective(get_turf(mimicked_object))
+	addtimer(CALLBACK(src, PROC_REF(restore_mimic_perspective)), 1)
+
+/// Fix for keeping camera on the mimic disguise for clients < 516.1684
+/datum/component/perfect_mimicry/proc/restore_mimic_perspective()
+	if(QDELETED(src) || QDELETED(mimicked_object))
+		return
+
+	var/mob/living/mimic = parent
+	if(QDELETED(mimic) || !mimic.client || mimic.loc != mimicked_object)
+		return
+
 	mimic.reset_perspective()
 
 /datum/component/perfect_mimicry/proc/override_examine_flags(datum/source, mob/user)
