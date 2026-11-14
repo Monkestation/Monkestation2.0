@@ -257,8 +257,6 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isstructure(A) (istype(A, /obj/structure))
 
-#define isaquarium(A) (istype(A, /obj/structure/aquarium))
-
 #define ismachinery(A) (istype(A, /obj/machinery))
 
 #define istramwall(A) (istype(A, /obj/structure/tram))
@@ -366,3 +364,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define isslugcat(A) (istype(A, /mob/living/basic/slugcat))
 
 #define isvirusdish(A) (istype(A, /obj/item/weapon/virusdish))
+
+#define is_area_virtual(checked_area) (GLOB.virtual_areas && GLOB.virtual_areas[(checked_area).type])

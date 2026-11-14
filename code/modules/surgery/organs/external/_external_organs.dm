@@ -357,6 +357,8 @@
 		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
 	)
 	feature_key = "moth_antennae"
+	palette = /datum/color_palette/generic_colors
+	palette_key = "antennae_color"
 	offset_location = UPPER_BODY
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
@@ -401,6 +403,7 @@
 	// layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT monkestation edit - original
 	layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER)
 	feature_key = "pod_hair"
+	overlay_flags = NONE
 
 	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something
 	var/color_swapped_layer = EXTERNAL_FRONT

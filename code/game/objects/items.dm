@@ -889,7 +889,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 
 	else
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
-	return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
+	var/caught = hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_IMPACT, hit_atom, throwingdatum, caught)
+	return caught
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -1705,3 +1707,88 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 	var/old_w_class = w_class
 	w_class = clamp(w_class + amt, min_weight, max_weight)
 	return w_class != old_w_class
+
+/obj/item/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(material_flags & MATERIAL_GREYSCALE)
+		var/main_mat_type = main_material.type
+		var/worn_path = get_material_greyscale_config(main_mat_type, greyscale_config_worn)
+		var/lefthand_path = get_material_greyscale_config(main_mat_type, greyscale_config_inhand_left)
+		var/righthand_path = get_material_greyscale_config(main_mat_type, greyscale_config_inhand_right)
+		set_greyscale(
+			new_worn_config = worn_path,
+			new_inhand_left = lefthand_path,
+			new_inhand_right = righthand_path
+		)
+	if(!main_material.item_sound_override)
+		return
+	hitsound = main_material.item_sound_override
+	usesound = main_material.item_sound_override
+	mob_throw_hit_sound = main_material.item_sound_override
+	equip_sound = main_material.item_sound_override
+	pickup_sound = main_material.item_sound_override
+	drop_sound = main_material.item_sound_override
+
+/obj/item/remove_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(material_flags & MATERIAL_GREYSCALE)
+		set_greyscale(
+			new_worn_config = initial(greyscale_config_worn),
+			new_inhand_left = initial(greyscale_config_inhand_left),
+			new_inhand_right = initial(greyscale_config_inhand_right)
+		)
+	if(!main_material.item_sound_override)
+		return
+	hitsound = initial(hitsound)
+	usesound = initial(usesound)
+	mob_throw_hit_sound = initial(mob_throw_hit_sound)
+	equip_sound = initial(equip_sound)
+	pickup_sound = initial(pickup_sound)
+	drop_sound = initial(drop_sound)
+
+/obj/item/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
+		return
+	slowdown += GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
+
+/obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
+		return
+	slowdown -= GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
+
+/// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
+/obj/item/proc/check_bait(obj/item/fish/fish)
+	if(HAS_TRAIT(src, TRAIT_OMNI_BAIT))
+		return 1
+	var/catch_multiplier = 1
+
+	var/list/properties = SSfishing.fish_properties[isfish(fish) ? fish.type : fish]
+	//Bait matching likes doubles the chance
+	var/list/fav_bait = properties[FISH_PROPERTIES_FAV_BAIT]
+	for(var/bait_identifer in fav_bait)
+		if(is_matching_bait(src, bait_identifer))
+			catch_multiplier *= 2
+	//Bait matching dislikes
+	var/list/disliked_bait = properties[FISH_PROPERTIES_BAD_BAIT]
+	for(var/bait_identifer in disliked_bait)
+		if(is_matching_bait(src, bait_identifer))
+			catch_multiplier *= 0.5
+	return catch_multiplier
+
+/// Helper proc that checks if a bait matches identifier from fav/disliked bait list
+/proc/is_matching_bait(obj/item/bait, identifier)
+	if(ispath(identifier)) //Just a path
+		return istype(bait, identifier)
+	if(!islist(identifier))
+		return HAS_TRAIT(bait, identifier)
+	var/list/special_identifier = identifier
+	switch(special_identifier[FISH_BAIT_TYPE])
+		if(FISH_BAIT_FOODTYPE)
+			var/datum/component/edible/edible = bait.GetComponent(/datum/component/edible)
+			return edible?.foodtypes & special_identifier[FISH_BAIT_VALUE]
+		if(FISH_BAIT_REAGENT)
+			return bait.reagents?.has_reagent(special_identifier[FISH_BAIT_VALUE], special_identifier[FISH_BAIT_AMOUNT], check_subtypes = TRUE)
+		else
+			CRASH("Unknown bait identifier in fish favourite/disliked list")

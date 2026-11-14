@@ -107,6 +107,8 @@
 #define MOB_MINING (1 << 13)
 ///The mob is a crustacean. Like crabs. Or lobsters.
 #define MOB_CRUSTACEAN (1 << 14)
+/// Mob is fish or water-related.
+#define MOB_AQUATIC (1 << 12)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -497,6 +499,8 @@
 #define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
 ///light of this intensity suppresses healing and causes very slow burn damage
 #define SHADOW_SPECIES_DIM_LIGHT 0.2
+/// Same as SHADOW_SPECIES_DIM_LIGHT, named like on tg
+#define SHADOW_SPECIES_LIGHT_THRESHOLD SHADOW_SPECIES_DIM_LIGHT
 ///light of this intensity causes rapid burn damage (high number because movable lights are weird)
 /**so the problem is that movable lights ALWAYS have a luminosity of 0.5, regardless of power or distance, so even at the edge of the overlay they still do damage
 * at 0.6 being bright they'll still do damage and disable some abilities, but it won't be weaponized

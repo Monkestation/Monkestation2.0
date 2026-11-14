@@ -12,6 +12,7 @@
 
 /obj/item/clothing/gloves/cargo_gauntlet/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_glove_equip))
 	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_glove_unequip))
 
@@ -58,6 +59,7 @@
 
 /obj/item/clothing/gloves/rapid/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -9)
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 
 /obj/item/clothing/gloves/radio
@@ -196,3 +198,110 @@
 	worn_icon = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::worn_icon
 	icon_state = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::icon_state
 	alternate_worn_layer = /obj/item/clothing/gloves/tackler/combat/insulated/admiral::alternate_worn_layer
+///A pair of gloves that both allow the user to fish without the need of a held fishing rod and provides athletics experience.
+/obj/item/clothing/gloves/fishing
+	name = "athletic fishing gloves"
+	desc = "A pair of gloves to fish without a fishing rod but your raw <b>athletics</b> strength. It doubles as a good workout device. <i><b>WARNING</b>: May cause injuries when catching bigger fish.</i>"
+	icon_state = "fishing_gloves"
+	///The current fishing minigame datum the wearer is engaged in.
+	var/datum/fishing_challenge/challenge
+
+/obj/item/clothing/gloves/fishing/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/athletic(src))
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //on top of the extra that you get from the athletics skill.
+
+/obj/item/clothing/gloves/fishing/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_GLOVES)
+		RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING_MINIGAME, PROC_REF(begin_workout))
+
+/obj/item/clothing/gloves/fishing/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING_MINIGAME)
+	if(challenge)
+		stop_workout(user)
+	return ..()
+
+/// Starts draining stamina while the wearer is in the minigame phase with the gloves
+/obj/item/clothing/gloves/fishing/proc/begin_workout(datum/source, datum/fishing_challenge/challenge)
+	SIGNAL_HANDLER
+	RegisterSignal(source, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_workout))
+	if(HAS_TRAIT(source, TRAIT_PROFOUND_FISHER)) //Only begin working out if we're fishing with these gloves and not some other fishing rod..
+		START_PROCESSING(SSprocessing, src)
+		src.challenge = challenge
+
+/// Stops the workout once the fishing is over
+/obj/item/clothing/gloves/fishing/proc/stop_workout(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_MOB_COMPLETE_FISHING)
+	challenge = null
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/gloves/fishing/process(seconds_per_tick)
+	var/mob/living/wearer = loc
+	var/stamina_exhaustion = 2 + challenge.difficulty * 0.02
+	var/is_heavy_gravity = wearer.has_gravity() > STANDARD_GRAVITY
+	// MONKESTATION EDIT: no athletics skill (yet), so no spine implant/strength bonuses or athletics experience
+	if(is_heavy_gravity)
+		stamina_exhaustion *= 1.5
+
+	wearer.stamina?.adjust(-stamina_exhaustion)
+	wearer.apply_status_effect(/datum/status_effect/exercised)
+
+///The internal fishing rod of the athletic fishing gloves. The more athletic you're, the easier the minigame will be.
+/obj/item/fishing_rod/mob_fisher/athletic
+	name = "athletics fishing gloves"
+	icon = /obj/item/clothing/gloves/fishing::icon
+	icon_state = /obj/item/clothing/gloves/fishing::icon_state
+	frame_state = "frame_athletic"
+	line = null
+	bait = null
+	ui_description = "A pair of gloves to fish without a fishing rod while training your athletics."
+	wiki_description = "<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b> It may hurt the user when catching larger fish."
+	show_in_wiki = TRUE //Show this cool pair of gloves in the wiki.
+
+/obj/item/fishing_rod/mob_fisher/athletic/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(noodling_is_dangerous))
+
+/obj/item/fishing_rod/mob_fisher/athletic/get_fishing_overlays()
+	return list()
+
+/// Hurts the fisher if they caught a dangerous fish with their bare hands
+/obj/item/fishing_rod/mob_fisher/athletic/proc/noodling_is_dangerous(datum/source, atom/movable/reward, mob/living/user)
+	SIGNAL_HANDLER
+	if(!isfish(reward))
+		return
+	var/damage = 0
+	var/obj/item/fish/fishe = reward
+	switch(fishe.w_class)
+		if(WEIGHT_CLASS_BULKY)
+			damage = 10
+		if(WEIGHT_CLASS_HUGE)
+			damage = 14
+		if(WEIGHT_CLASS_GIGANTIC)
+			damage = 18
+	if(!damage && fishe.weight >= 2000)
+		damage = 5
+	damage = round(damage * fishe.weight * 0.0005)
+	if(damage)
+		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
+		user.apply_damage(damage, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
+		playsound(src,'sound/items/weapons/bite.ogg', damage * 2, TRUE)
+
+
+/obj/item/clothing/gloves/race/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -9)
+
+/obj/item/clothing/gloves/captain/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
+
+/obj/item/clothing/gloves/latex/nitrile/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
+
+/obj/item/clothing/gloves/atmos/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 6)

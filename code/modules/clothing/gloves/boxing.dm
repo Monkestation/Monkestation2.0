@@ -14,6 +14,7 @@
 /obj/item/clothing/gloves/boxing/Initialize(mapload)
 	. = ..()
 	style = new style_to_give()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
 
 /obj/item/clothing/gloves/boxing/Destroy()
 	QDEL_NULL(style)

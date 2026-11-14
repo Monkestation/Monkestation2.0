@@ -15,7 +15,7 @@
 	var/total_amount = 0
 	var/alpha_sum = 0
 	for(var/datum/material/material as anything in custom_materials)
-		var/color = material.greyscale_colors
+		var/color = material.greyscale_color || material.color
 		var/amount = custom_materials[material]
 		var/mat_alpha = material.alpha
 		color_amounts[color] += amount // Accumulate if same color appears

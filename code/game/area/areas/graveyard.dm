@@ -3,7 +3,8 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
+	area_flags = VALID_TERRITORY
+	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_LAVALAND
 	outdoors = TRUE
 	power_environ = FALSE
@@ -48,7 +49,8 @@
 /area/graveyard/tunnels
 	name = "Tunnels"
 	ambience_index = AMBIENCE_MINING
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	area_flags = VALID_TERRITORY
+	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 	always_unpowered = TRUE
 	outdoors = FALSE
 	sound_environment = SOUND_AREA_LAVALAND
@@ -57,7 +59,8 @@
 
 /area/graveyard/tunnels/safe
 	icon_state = "explored"
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
+	area_flags = VALID_TERRITORY
+	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED
 
 /area/graveyard/tunnels/structures
 	always_unpowered = FALSE

@@ -191,10 +191,10 @@
 	return TRUE
 
 /// Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
-/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null, _no_react = FALSE, temperature = DEFAULT_REAGENT_TEMPERATURE)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null, _no_react = FALSE, temperature = DEFAULT_REAGENT_TEMPERATURE, added_purity = null)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
-		add_reagent(r_id, amt, data, temperature, no_react = _no_react)
+		add_reagent(r_id, amt, data, temperature, no_react = _no_react, added_purity = added_purity)
 
 
 /// Remove a specific reagent
@@ -565,17 +565,35 @@
 ///Multiplies the reagents inside this holder by a specific amount
 /datum/reagents/proc/multiply_reagents(multiplier=1)
 	var/list/cached_reagents = reagent_list
-	if(!total_volume)
+	if(!total_volume || multiplier == 1)
 		return
 	var/change = (multiplier - 1) //Get the % change
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(change > 0)
-			add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
-		else
-			remove_reagent(reagent.type, abs(reagent.volume * change)) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
-
+		_multiply_reagent(reagent, change)
 	update_total()
 	handle_reactions()
+
+/**
+ * Multiplies a single inside this holder by a specific amount
+ * Arguments
+ * * reagent_path - The path of the reagent we want to multiply the volume of.
+ * * multiplier - the amount to multiply each reagent by
+ */
+/datum/reagents/proc/multiply_single_reagent(reagent_path, multiplier = 1)
+	var/datum/reagent/reagent = locate(reagent_path) in reagent_list
+	if(!reagent || multiplier == 1)
+		return
+	var/change = (multiplier - 1) //Get the % change
+	_multiply_reagent(reagent, change)
+	update_total()
+	handle_reactions()
+
+///Proc containing the operations called by both multiply_reagents() and multiply_single_reagent()
+/datum/reagents/proc/_multiply_reagent(datum/reagent/reagent, change)
+	if(change > 0)
+		add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+	else
+		remove_reagent(reagent.type, abs(reagent.volume * change)) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
 
 
 /// Get the name of the reagent there is the most of in this holder
@@ -673,14 +691,14 @@
 
 	if(!owner)
 		owner = reagent.holder.my_atom
-
-	if(!owner || !reagent || (dead && !(reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
+	var/allow_deadprocess = !(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
+	if(!owner || !reagent || dead && allow_deadprocess)
 		return FALSE
 
 	if(owner.reagent_tick(reagent, seconds_per_tick, times_fired))
 		return FALSE
 
-	if(liverless && !reagent.self_consuming) //need to be metabolized
+	if(liverless && !reagent.self_consuming && !dead && !allow_deadprocess) //need to be metabolized,unless we are dead and allow deadprocess.
 		return FALSE
 
 	var/need_mob_update = FALSE
@@ -959,7 +977,7 @@
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, seconds_per_tick)
 
-	if(length(mix_message) && my_atom) //This is only at the end
+	if(length(mix_message) && my_atom && !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS)) //This is only at the end
 		my_atom.audible_message(span_notice("<img class='icon' src='\ref[my_atom]'> [mix_message.Join()]"), push_appearance = my_atom)
 
 	if(!LAZYLEN(reaction_list))
@@ -987,9 +1005,12 @@
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
 
-	var/reaction_message = equilibrium.reaction.mix_message
-	if(equilibrium.reaction.mix_sound)
-		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
+	var/reaction_message = null
+
+	if (isnull(my_atom) || !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
+		reaction_message = equilibrium.reaction.mix_message
+		if(equilibrium.reaction.mix_sound)
+			playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
 
 	if(equilibrium.reaction.pollutant_type && my_atom)
 		var/turf/my_turf = get_turf(my_atom)
@@ -1026,7 +1047,7 @@
 	var/list/mix_message = list()
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
-	if(my_atom && length(mix_message))
+	if(my_atom && length(mix_message) && !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
 		my_atom.audible_message(span_notice("<img class='icon' src='\ref[my_atom]'> [mix_message.Join()]"), push_appearance = my_atom)
 	finish_reacting()
 
@@ -1140,7 +1161,7 @@
 
 	var/iconhtml = "<img class='icon' src='\ref[cached_my_atom]'>"
 	if(cached_my_atom)
-		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component)) // No bubbling mobs
+		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component) && !HAS_TRAIT(cached_my_atom, TRAIT_SILENT_REACTIONS)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 

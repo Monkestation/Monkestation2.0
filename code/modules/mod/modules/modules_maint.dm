@@ -16,9 +16,11 @@
 	var/step_change = 0.5
 
 /obj/item/mod/module/springlock/on_install()
+	. = ..()
 	mod.activation_step_time *= step_change
 
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
+	. = ..()
 	mod.activation_step_time /= step_change
 
 /obj/item/mod/module/springlock/on_part_activation()
@@ -186,7 +188,7 @@
 			return
 		SEND_SOUND(mod.wearer, sound('sound/machines/terminal/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
-/obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/visor/rave/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	. = ..()
 	for(var/mutable_appearance/appearance as anything in .)
 		appearance.color = active ? rainbow_order[rave_number] : null
@@ -195,7 +197,7 @@
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
-	mod.wearer.update_clothing(mod.slot_flags)
+	update_clothing_slots()
 	rave_screen.update_colour(rainbow_order[rave_number])
 
 /obj/item/mod/module/visor/rave/get_configuration()

@@ -63,6 +63,10 @@
 	caliber = CALIBER_45L
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/shot/single
+	name = "single-barrel shotgun internal magazine"
+	max_ammo = 1
+
 /obj/item/ammo_box/magazine/internal/shot/six
 	name = "six-barrel shotgun internal magazine"
 	max_ammo = 1

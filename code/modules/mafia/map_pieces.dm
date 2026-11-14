@@ -35,7 +35,7 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
+	area_flags = BLOCK_SUICIDE
 
 /datum/map_template/mafia
 	should_place_on_top = FALSE

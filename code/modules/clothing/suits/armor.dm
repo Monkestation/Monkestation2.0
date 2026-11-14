@@ -270,6 +270,7 @@
 	name = "syndicate captain's vest"
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade coat"
@@ -471,6 +472,7 @@
 
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 
 	create_storage(storage_type = /datum/storage/pockets/armor)
 
@@ -757,3 +759,8 @@
 /obj/item/clothing/suit/armor/centcom_admiral/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
