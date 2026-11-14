@@ -120,7 +120,9 @@
 			refresh_servers()
 			return TRUE
 		if("toggle_code_execution")
-			var/obj/machinery/telecomms/server/selected_server = locate(params["selected_server"])
+			var/obj/machinery/telecomms/server/selected_server = locate(params["selected_server"]) in servers
+			if(!selected_server)
+				return
 			selected_server.autoruncode = !selected_server.autoruncode
 			return TRUE
 		if("save_code")

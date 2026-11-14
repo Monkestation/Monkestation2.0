@@ -75,7 +75,7 @@
 	if(on_crew)
 		new_citation.alert_owner(user, src, victim.name, "You have been issued a [fine]cr citation for [citation_name] by [issuer_name]. Fines are payable at Security.")
 		victim.citations += new_citation
-		investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [victim.name] by [key_name(user)]", INVESTIGATE_RECORDS)
+		investigate_log("New Citation: <strong>[html_encode(citation_name)]</strong> Fine: [fine] | Added to [victim.name] by [key_name(user)]", INVESTIGATE_RECORDS)
 		SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, victim.name, citation_name, fine)
 
 	var/final_paper_text = "# <u>SECURITY CITATION</u>\n"
