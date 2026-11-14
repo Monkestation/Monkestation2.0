@@ -62,3 +62,16 @@
 	icon_state = "durrcell"
 	squeak_override = list('sound/voice/durrcell-squeak.ogg'=1)
 
+/obj/item/toy/plush/argemia
+	name = "strange plushie"
+	desc = "Voiding..."
+	icon_state = "argemia"
+	icon = 'icons/obj/plushes.dmi'
+
+/obj/item/toy/plush/argemia/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
+	. = ..()
+	playsound(microwave_source.loc, 'sound/voice/aeaeae.ogg', 100, FALSE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/plush/argemia, microwave_explode), microwave_source), 5 SECONDS)
+
+/obj/item/toy/plush/argemia/proc/microwave_explode(obj/machinery/microwave/microwave_source)
+	explosion(microwave_source.loc, 0, 1, 2)
