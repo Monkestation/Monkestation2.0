@@ -151,8 +151,6 @@
 	var/turf/current = get_turf(moved_source)
 	if(!istype(next) || !istype(current))
 		return COMSIG_BLOCK_RELAYMOVE
-	if(next.density)
-		return COMSIG_BLOCK_RELAYMOVE
 	if(!isturf(moved_source.loc))
 		return COMSIG_BLOCK_RELAYMOVE
 
