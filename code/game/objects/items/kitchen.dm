@@ -322,4 +322,21 @@
 	. = ..()
 	create_reagents(SOUP_SERVING_SIZE + 5, INJECTABLE|OPENCONTAINER)
 
+/obj/item/kitchen/chopstick
+	name = "chopsticks"
+	desc = "You use this to hold sushi, and maybe other things. These appear to be made out of traditional bamboo"
+	icon_state = "chopsticks"
+	worn_icon_state = "chopsticks"
+	inhand_icon_state = "chopsticks"
+	force = 2
+	throwforce = 2
+	throw_speed = 4
+	throw_range = 3
+	custom_materials = list(datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 1.5)
+	w_class = WEIGHT_CLASS_TINY
+	attack_verb_continuous = list("pokes", "jabs", "sticks", "whacks")
+	attack_verb_simple = list("poke", "jab", "stick", "whack")
+	custom_price = PAYCHECK_CREW * 0.1
+	tool_behaviour = TOOL_CHOPSTICK
+
 #undef PLASTIC_BREAK_PROBABILITY
