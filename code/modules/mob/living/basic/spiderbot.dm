@@ -60,6 +60,9 @@
 
 	if(emagged)
 		emagged = FALSE
+		if(gibbed)
+			bakoom(gibbed)
+			return
 		balloon_alert_to_viewers("tick tick tick...",vision_distance = 5)
 		audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
 		playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
