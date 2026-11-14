@@ -40,11 +40,13 @@
  */
 /datum/ai_controller/basic_controller/carp/passive
 	blackboard = list(
-		BB_BASIC_MOB_STOP_FLEEING = TRUE,
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/require_traits,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_CARPS_FEAR_FISHERMAN = TRUE,
+		BB_TARGET_ONLY_WITH_TRAITS = list(TRAIT_SCARY_FISHERMAN),
 	)
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_passive.bt.json"
 
 
