@@ -60,6 +60,5 @@
 
 	switch(action)
 		if("sign")
-			var/datum/weakref/user_ref = WEAKREF(user)
-			signed_by = user_ref
-			log_admin("[user_ref] has signed an admin bargain! The terms: [admin_offers] for [admin_receives]")
+			signed_by = WEAKREF(user)
+			log_admin("[key_name(user)] has signed an admin bargain! The terms: [admin_offers] for [admin_receives]")
