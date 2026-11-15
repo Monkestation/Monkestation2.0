@@ -106,6 +106,7 @@
 #define SECHUD_BITRUNNER "hudbitrunner"
 #define SECHUD_BOTANIST "hudbotanist"
 #define SECHUD_BRIG_PHYSICIAN "hudbrigphysician"
+#define SECHUD_BUSSER "hudbusser"
 #define SECHUD_CAPTAIN "hudcaptain"
 #define SECHUD_CARGO_TECHNICIAN "hudcargotechnician"
 #define SECHUD_CHAPLAIN "hudchaplain"

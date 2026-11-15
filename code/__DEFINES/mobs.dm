@@ -107,6 +107,8 @@
 #define MOB_MINING (1 << 13)
 ///The mob is a crustacean. Like crabs. Or lobsters.
 #define MOB_CRUSTACEAN (1 << 14)
+/// Mob is fish or water-related.
+#define MOB_AQUATIC (1 << 12)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -129,6 +131,8 @@
 #define BODYTYPE_LARVA_PLACEHOLDER (1<<2)
 ///The limb is from a xenomorph.
 #define BODYTYPE_ALIEN (1<<3)
+/// Analagous to BODYSHAPE_DIGITIGRADE, though this one is not removed if the mob's shape changed
+#define BODYTYPE_DIGITIGRADE (1<<4)
 
 // Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
@@ -495,6 +499,8 @@
 #define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
 ///light of this intensity suppresses healing and causes very slow burn damage
 #define SHADOW_SPECIES_DIM_LIGHT 0.2
+/// Same as SHADOW_SPECIES_DIM_LIGHT, named like on tg
+#define SHADOW_SPECIES_LIGHT_THRESHOLD SHADOW_SPECIES_DIM_LIGHT
 ///light of this intensity causes rapid burn damage (high number because movable lights are weird)
 /**so the problem is that movable lights ALWAYS have a luminosity of 0.5, regardless of power or distance, so even at the edge of the overlay they still do damage
 * at 0.6 being bright they'll still do damage and disable some abilities, but it won't be weaponized
@@ -919,15 +925,11 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 /// (You ONLY need to update this if you add a standing overlay, adding an integer.)
 #define TOTAL_LAYERS 45
 
-//Bitflags for the layers a bodypart overlay can draw on (can be drawn on multiple layers)
-/// Draws overlay on the BODY_FRONT_LAYER
-#define EXTERNAL_FRONT (1 << 0)
-/// Draws overlay on the BODY_ADJ_LAYER
-#define EXTERNAL_ADJACENT (1 << 1)
-/// Draws overlay on the BODY_BEHIND_LAYER
-#define EXTERNAL_BEHIND (1 << 2)
-/// Draws organ on all EXTERNAL layers
-#define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+// Legacy mutant bodypart layering defines for icon states
+// Don't change these without updating all relevant icon states
+#define EXTERNAL_FRONT "FRONT"
+#define EXTERNAL_ADJACENT "ADJ"
+#define EXTERNAL_BEHIND "BEHIND"
 
 // Bitflags for external organs restylability
 /// This organ allows restyle through plant restyling (like secateurs)

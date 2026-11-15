@@ -167,7 +167,6 @@ GLOBAL_LIST_INIT(silk_recipes, list ( \
 	name = "silk"
 	desc = "Arachnid silk, for web development."
 	color = "#ffffff"
-	greyscale_colors = "#ffffff"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/silk
 	value_per_unit = 45 / SHEET_MATERIAL_AMOUNT

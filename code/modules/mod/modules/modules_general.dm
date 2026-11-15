@@ -25,6 +25,7 @@
 	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 /obj/item/mod/module/storage/on_install()
+	. = ..()
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
 	modstorage.allow_big_nesting = big_nesting
@@ -35,6 +36,7 @@
 		RegisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_suit_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
+	. = ..()
 	var/datum/storage/modstorage = mod.atom_storage
 	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 	qdel(modstorage)
@@ -321,6 +323,7 @@
 	var/former_visor_mask_flags = NONE
 
 /obj/item/mod/module/mouthhole/on_install()
+	. = ..()
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(helmet))
 		former_helmet_flags = helmet.flags_cover
@@ -335,6 +338,7 @@
 		mask.visor_flags_cover &= ~(MASKCOVERSMOUTH |PEPPERPROOF)
 
 /obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(deleting)
 		return
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
@@ -359,9 +363,11 @@
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 
 /obj/item/mod/module/emp_shield/on_install()
+	. = ..()
 	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
 
 /obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
+	. = ..()
 	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
 
 /obj/item/mod/module/emp_shield/advanced
@@ -422,7 +428,7 @@
 	active_power_cost = base_power * light_outer_range
 	return ..()
 
-/obj/item/mod/module/flashlight/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/flashlight/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	. = ..()
 	if(!active)
 		return
@@ -446,7 +452,7 @@
 				balloon_alert(mod.wearer, "too dark!")
 				return
 			set_light_color(value)
-			mod.wearer.update_clothing(mod.slot_flags)
+			update_clothing_slots()
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
 
@@ -570,12 +576,14 @@
 	var/dna = null
 
 /obj/item/mod/module/dna_lock/on_install()
+	. = ..()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
 	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
 	RegisterSignal(mod, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
 	RegisterSignal(mod, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag))
 
 /obj/item/mod/module/dna_lock/on_uninstall(deleting = FALSE)
+	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 	UnregisterSignal(mod, COMSIG_ATOM_EMP_ACT)
@@ -643,7 +651,7 @@
 	overlay_state_inactive = "module_plasma"
 	required_slots = list(ITEM_SLOT_HEAD)
 
-/obj/item/mod/module/plasma_stabilizer/generate_worn_overlay()
+/obj/item/mod/module/plasma_stabilizer/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	if(locate(/obj/item/mod/module/infiltrator) in mod.modules)
 		return list()
 	return ..()
@@ -720,9 +728,9 @@
 			helmet.flags_cover |= attached_hat.flags_cover
 			helmet.visor_flags_cover |= attached_hat.visor_flags_cover
 		balloon_alert(user, "hat attached, right-click to remove")
-		mod.wearer.update_clothing(mod.slot_flags)
+		update_clothing_slots()
 
-/obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
+/obj/item/mod/module/hat_stabilizer/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	. = ..()
 	if(attached_hat)
 		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
@@ -742,7 +750,7 @@
 	if(istype(helmet))
 		helmet.flags_cover = former_flags
 		helmet.visor_flags_cover = former_visor_flags
-	mod.wearer.update_clothing(mod.slot_flags)
+	update_clothing_slots()
 
 /// Hat stabilizer for syndicate suits.
 /obj/item/mod/module/hat_stabilizer/syndicate
@@ -808,6 +816,79 @@
 	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || CHECK_MOVE_LOOP_FLAGS(wearer, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 	mod.core.add_charge(power_per_step)
+
+/obj/item/mod/module/fishing_glove
+	name = "MOD fishing glove module"
+	desc = "A MOD module that takes in an external fishing rod to enable the user to fish without having to hold one, while also making it slightly easier."
+	icon_state = "fishing_glove"
+	complexity = 1
+	overlay_state_inactive = "fishing_glove"
+	incompatible_modules = list(/obj/item/mod/module/fishing_glove)
+	/// The fishing rod integrated in the module
+	var/obj/item/fishing_rod/equipped
+
+/obj/item/mod/module/fishing_glove/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/mod/module/fishing_glove/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item && equipped)
+		context[SCREENTIP_CONTEXT_RMB] = "Remove rod"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/fishing_rod))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert rod"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/mod/module/fishing_glove/examine(mob/user)
+	. = ..()
+	. += span_info("You can [EXAMINE_HINT("right-click")] the modsuit gloves to open the fishing rod interface once attached and activated.")
+	if(equipped)
+		. += span_info("it has a [icon2html(equipped, user)] installed. [EXAMINE_HINT("Right-Click")] to remove it.")
+
+/obj/item/mod/module/fishing_glove/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/fishing_rod))
+		return ..()
+	if(equipped)
+		balloon_alert(user, "remove current rod first!")
+	if(!user.transferItemToLoc(tool, src))
+		user.balloon_alert(user, "it's stuck!")
+	equipped = tool
+	balloon_alert(user, "rod inserted")
+	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/mod/module/fishing_glove/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!equipped)
+		return
+	user.put_in_hands(equipped)
+	balloon_alert(user, "rod removed")
+	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/mod/module/fishing_glove/Exited(atom/movable/gone)
+	if(gone == equipped)
+		equipped = null
+		var/obj/item/gloves = mod?.get_part_from_slot(ITEM_SLOT_GLOVES)
+		if(gloves && !QDELETED(mod))
+			qdel(gloves.GetComponent(/datum/component/profound_fisher))
+	return ..()
+
+/obj/item/mod/module/fishing_glove/on_part_activation()
+	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
+	if(!gloves)
+		return
+	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	if(equipped)
+		gloves.AddComponent(/datum/component/profound_fisher, equipped, delete_rod_when_deleted = FALSE)
+
+/obj/item/mod/module/fishing_glove/on_part_deactivation(deleting = FALSE)
+	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
+	if(gloves && !deleting)
+		qdel(gloves.GetComponent(/datum/component/adjust_fishing_difficulty))
+		qdel(gloves.GetComponent(/datum/component/profound_fisher))
 
 /obj/item/mod/module/shock_absorber
 	name = "MOD shock absorption module"

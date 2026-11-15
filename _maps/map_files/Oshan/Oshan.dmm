@@ -28554,6 +28554,7 @@
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 8
 	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "iQC" = (
@@ -43754,6 +43755,7 @@
 	codes_txt = "patrol;next_patrol=Hall-5";
 	location = "Hall-4"
 	},
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "ntw" = (
@@ -76750,12 +76752,12 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/digital_clock/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/machinery/computer/extract_orders/directional/west,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "xsn" = (

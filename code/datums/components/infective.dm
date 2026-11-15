@@ -2,9 +2,13 @@
 	var/list/datum/disease/diseases //make sure these are the static, non-processing versions!
 	var/expire_time
 	var/required_clean_types = CLEAN_TYPE_DISEASE
+	/// The infection is weak and can only infect on consumption with small chance
+	var/is_weak = FALSE
+	/// Chance of weak infection on consumption
+	var/weak_infection_chance = 10
 
 
-/datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
+/datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in, weak = FALSE, weak_infection_chance = 10)
 	if(islist(_diseases))
 		diseases = _diseases
 	else
@@ -15,6 +19,12 @@
 
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	is_weak = weak
+	src.weak_infection_chance = weak_infection_chance
+	if(is_weak && isitem(parent))
+		RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(try_infect_eat))
+		return
 
 	var/static/list/disease_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
@@ -51,12 +61,15 @@
 	for(var/datum/disease/acute/disease in diseases)
 		if(HAS_TRAIT(eater, TRAIT_STRONG_STOMACH))
 			break
+		if(is_weak && !prob(weak_infection_chance))
+			continue
 		if(!disease.has_required_infectious_organ(eater, ORGAN_SLOT_STOMACH))
 			continue
 
 		eater.infect_disease(disease, TRUE, "Consumption of infected food")
 
-	try_infect(feeder, BODY_ZONE_L_ARM)
+	if(!is_weak)
+		try_infect(feeder, BODY_ZONE_L_ARM)
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER

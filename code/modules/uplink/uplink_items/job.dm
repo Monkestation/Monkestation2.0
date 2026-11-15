@@ -361,7 +361,7 @@
 		Please note that these are free-range monkeys that don't react with Mutadone."
 	item = /obj/item/antag_spawner/loadout/monkey_man
 	cost = 6
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
 	refundable = TRUE
 
 /datum/uplink_item/role_restricted/monkey_supplies
@@ -372,7 +372,7 @@
 	cost = 4
 	limited_stock = 3
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
-	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
 	refundable = FALSE
 
 /datum/uplink_item/role_restricted/velvetfu

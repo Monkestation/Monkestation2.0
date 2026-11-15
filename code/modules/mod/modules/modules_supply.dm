@@ -421,7 +421,7 @@
 		mod.wearer.update_equipment_speed_mods()
 	traveled_tiles = 0
 
-/obj/item/mod/module/ash_accretion/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/ash_accretion/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	return ..()
 
