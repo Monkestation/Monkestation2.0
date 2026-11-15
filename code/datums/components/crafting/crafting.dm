@@ -286,7 +286,6 @@
 							RGNT.volume += RG.volume
 							RGNT.data += RG.data
 							qdel(RG)
-						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
 			else if(ispath(path_key, /obj/item/stack))

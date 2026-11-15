@@ -173,6 +173,7 @@
 	name = "tanned hide"
 	desc = "The tanned hide of some brown furred creature."
 	icon_state = "mantle_liz"
+	body_parts_covered = CHEST
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/ashwalkermantle/cape
@@ -181,6 +182,7 @@
 	name = "brown leather cape"
 	desc = "An ash coated cloak."
 	icon_state = "desertcloak"
+	body_parts_covered = CHEST|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/neck/cloak/tribalmantle
@@ -229,6 +231,7 @@
 	name = "ash covered leaves"
 	desc = "Green leaves coated with a thick layer of ash. Praise the Nercopolis."
 	icon_state = "tribal_m"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/under/costume/gladiator/ash_walker/yellow
 	icon = 'monkestation/code/modules/blueshift/icons/uniforms.dmi'
@@ -250,6 +253,7 @@
 	name = "decorated ash walker rags"
 	desc = "Rags from Lavaland, drenched with ash, it has fine jewel coated bones sewn around the neck. This one seems to be for the shaman of a tribe. Praise the Nercopolis."
 	icon_state = "shamanrags"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/under/costume/gladiator/ash_walker/robe
 	icon = 'monkestation/code/modules/blueshift/icons/uniforms.dmi'
@@ -257,6 +261,7 @@
 	name = "ash walker robes"
 	desc = "A robe from the ashlands. This one seems to be for ...Everyone, really. Praise the Nercopolis."
 	icon_state = "robe_liz"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/under/costume/gladiator/ash_walker/tribal
 	icon = 'monkestation/code/modules/blueshift/icons/uniforms.dmi'
@@ -264,6 +269,7 @@
 	name = "ash walker tin"
 	desc = "Thin tin bolted over poorly tanned leather."
 	icon_state = "tribal"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/under/costume/gladiator/ash_walker/white
 	icon = 'monkestation/code/modules/blueshift/icons/uniforms.dmi'

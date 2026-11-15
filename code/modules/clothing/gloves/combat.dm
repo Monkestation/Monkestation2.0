@@ -39,3 +39,8 @@
 	worn_icon_state = "ftc_gloves"
 	greyscale_colors = null
 	inhand_icon_state = null
+
+
+/obj/item/clothing/gloves/combat/wizard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //something something wizard casting

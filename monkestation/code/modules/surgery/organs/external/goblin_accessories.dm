@@ -12,7 +12,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/goblin_ears
 
 /datum/bodypart_overlay/mutant/goblin_ears
-	layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "goblin_ears"
 
 /datum/bodypart_overlay/mutant/goblin_ears/get_global_feature_list()
@@ -41,7 +44,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/goblin_nose
 
 /datum/bodypart_overlay/mutant/goblin_nose
-	layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
 	feature_key = "goblin_nose"
 
 /datum/bodypart_overlay/mutant/goblin_nose/get_global_feature_list()

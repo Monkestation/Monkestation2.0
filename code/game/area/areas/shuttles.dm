@@ -10,6 +10,7 @@
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	area_flags = NONE
+	area_flags_mapping = NONE
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
@@ -30,6 +31,7 @@
 
 /area/shuttle/custom
 	requires_power = TRUE
+	area_flags = parent_type::area_flags | ALWAYS_VALID_BLOODSUCKER_LAIR
 
 ////////////////////////////Multi-area shuttles////////////////////////////
 
@@ -121,7 +123,8 @@
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
-	area_flags = UNIQUE_AREA// SSjob refers to this area for latejoiners
+	area_flags = NONE // SSjob refers to this area for latejoiners
+	area_flags_mapping = UNIQUE_AREA
 
 
 /area/shuttle/arrival/on_joining_game(mob/living/boarder)
@@ -165,9 +168,11 @@
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 	area_flags = BLOBS_ALLOWED
+	area_flags_mapping = NONE
 	area_limited_icon_smoothing = /area/shuttle/escape
 	flags_1 = CAN_BE_DIRTY_1
 	area_flags = CULT_PERMITTED
+	area_flags_mapping = NONE
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"

@@ -2402,6 +2402,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/module/fishing_glove
+	name = "MOD Fishing Glove Module"
+	id = "mod_fishing"
+	materials = list(
+		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/fishing_glove
+
 // MONKE END - changed/added lots of department_flags
 
 /datum/design/module/mod_stomper

@@ -36,8 +36,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	var/required_jobtitle
 
 /obj/effect/landmark/start/proc/after_round_start()
+	// We'd like to keep these around for unit tests, so we can check that they exist.
+#if !defined(UNIT_TESTS) && !defined(MAP_TEST)
 	if(delete_after_roundstart)
 		qdel(src)
+#endif
 
 /obj/effect/landmark/start/Initialize(mapload)
 	. = ..()
@@ -198,6 +201,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/psychologist
 	name = "Psychologist"
 	icon_state = "Psychologist"
+
+/obj/effect/landmark/start/pun_pun
+	name = JOB_PUN_PUN
+	icon = 'icons/mob/human/human.dmi'
+	icon_state = "monkey"
 
 /obj/effect/landmark/start/barber
 	name = "Barber"

@@ -16,7 +16,10 @@
 
 /// Draws the IPC antennae, coloured from the chassis secondary palette.
 /datum/bodypart_overlay/mutant/antennae_ipc
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "ipc_antenna"
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR_SECONDARY
@@ -57,7 +60,7 @@
 
 /// Draws the IPC face display. Keeps its own stored colour instead of following the chassis palette.
 /datum/bodypart_overlay/mutant/ipc_screen
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = "ipc_screen"
 	palette = /datum/color_palette/generic_colors
 
@@ -69,13 +72,12 @@
 
 // IPC screen sprites have their own stored color. Do not inherit the chassis
 // palette, or paint-kit chassis changes will overwrite the display color.
-/datum/bodypart_overlay/mutant/ipc_screen/get_extended_overlay(layer, obj/item/bodypart/limb)
-	layer = bitflag_to_layer(layer)
-	var/mob/living/carbon/human/owner = limb.owner
+/datum/bodypart_overlay/mutant/ipc_screen/get_extended_overlay(obj/item/bodypart/limb, layer_index, layer_real)
+	var/mob/living/carbon/human/owner = limb?.owner
 	if(!owner)
 		return
 	var/passed_color = sprite_datum.color_src ? draw_color : null
-	return owner.dna.species.return_accessory_layer(-layer, sprite_datum, owner, passed_color)
+	return owner.dna.species.return_accessory_layer(-layer_real, sprite_datum, owner, passed_color)
 
 /obj/item/organ/external/ipc_screen/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()

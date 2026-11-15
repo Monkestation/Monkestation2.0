@@ -31,7 +31,10 @@
 
 ///Bodypart overlay for spines (wagging gets updated by tail)
 /datum/bodypart_overlay/mutant/spines
-	layers = EXTERNAL_ADJACENT|EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "spines"
 	///Spines moth with the tail, so track it
 	var/wagging = FALSE

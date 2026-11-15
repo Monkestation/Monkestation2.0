@@ -161,6 +161,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	armour_penetration = 60
 
+/obj/item/claymore/cutlass/old
+	name = "old cutlass"
+	desc = parent_type::desc + " This one seems a tad old."
+	force = 24
+	throwforce = 17
+	armour_penetration = 20
+	block_chance = 30
+
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	flags_1 = CONDUCT_1

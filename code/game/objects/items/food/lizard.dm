@@ -116,7 +116,8 @@
 
 /obj/item/food/moonfish_eggs
 	name = "moonfish eggs"
-	desc = "The moonfish lays large, transparent white eggs which are prized in lizard cooking. Their flavour is similar to caviar, but generally is described as deeper and more complex."
+	gender = PLURAL
+	desc = "The moonfish lays large, translucent blue eggs which are prized in lizard cooking. Their flavour is similar to caviar, but generally is described as deeper and more complex."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "moonfish_eggs"
 	food_reagents = list(
@@ -126,6 +127,38 @@
 	tastes = list("caviar" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/moonfish_eggs/Initialize(mapload)
+	. = ..()
+	//Moonfish can lay eggs inside aquariums (unaffected by breeding, so think of them as unfertilizard)
+	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
+	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
+	AddComponent(/datum/component/aquarium_content)
+	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
+
+/// Makes the aquarium visual of the eggs use their aquarium icon state and lie on the bottom
+/obj/item/food/moonfish_eggs/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
+	SIGNAL_HANDLER
+	visual.icon = icon
+	visual.icon_state = "moonfish_eggs_aquarium"
+	visual.layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
+
+/// Places the aquarium visual of the eggs in a random spot on the bottom of the aquarium
+/obj/item/food/moonfish_eggs/proc/randomize_aquarium_position(datum/source, obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
+	SIGNAL_HANDLER
+	var/sprite_width = 5
+	var/sprite_height = 4
+	var/pw_min = visual.aquarium_zone_min_pw
+	var/pw_max = visual.aquarium_zone_max_pw - sprite_width
+	var/pz_min = visual.aquarium_zone_min_pz - sprite_height
+
+	visual.pixel_w = rand(pw_min, pw_max)
+	visual.pixel_z = pz_min + rand(-1, 1)
+
+/// Adds some beauty to the aquarium the eggs are in
+/obj/item/food/moonfish_eggs/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
+	SIGNAL_HANDLER
+	beauty_holder += 100 //moonfish eggs are kinda eye candy
 
 /obj/item/food/moonfish_caviar
 	name = "moonfish caviar paste"
