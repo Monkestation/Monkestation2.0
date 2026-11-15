@@ -1057,133 +1057,31 @@ generate/load female uniform sprites matching all previously decided variables
 	// Move the filter up if the image has been moved down, and vice versa
 	var/adjust_y = -appearance.pixel_y - parent_adjust_y
 
+	var/static/alist/height_mask_states = alist(
+		MONKEY_HEIGHT_DWARF = "monkey_dwarf",
+		MONKEY_HEIGHT_MEDIUM = "monkey_medium",
+		HUMAN_HEIGHT_DWARF = "dwarf",
+		HUMAN_HEIGHT_SHORTEST = "shortest",
+		HUMAN_HEIGHT_SHORT = "short",
+		HUMAN_HEIGHT_TALL = "tall",
+		HUMAN_HEIGHT_TALLER = "taller",
+		HUMAN_HEIGHT_TALLEST = "tallest",
+	)
 	var/static/alist/cached_masks = alist()
-	var/list/masks = cached_masks[mask_icon]
+	var/alist/masks = cached_masks[mask_icon]
 	if(isnull(masks))
-		cached_masks[mask_icon] = masks = list(
-			icon(mask_icon, "Cut1"),
-			icon(mask_icon, "Cut2"),
-			icon(mask_icon, "Cut3"),
-			icon(mask_icon, "Cut4"),
-			icon(mask_icon, "Cut5"),
-		)
-	var/icon/cut_torso_mask = masks[1]
-	var/icon/cut_legs_mask = masks[2]
-	var/icon/lengthen_torso_mask = masks[3]
-	var/icon/lengthen_legs_mask = masks[4]
-	var/icon/lengthen_ankles_mask = masks[5]
+		cached_masks[mask_icon] = masks = alist()
 //MONKESTATION EDIT END
 
-	var/should_update = appearance.remove_filter(list(
-		"Cut_Torso",
-		"Cut_Legs",
-		"Lengthen_Ankles", // MONKESTATION ADDITION
-		"Lengthen_Legs",
-		"Lengthen_Torso",
-		"Gnome_Cut_Torso",
-		"Gnome_Cut_Legs",
-		"Monkey_Torso",
-		"Monkey_Legs",
-		"Monkey_Gnome_Cut_Torso",
-		"Monkey_Gnome_Cut_Legs",
-	), update = FALSE) // note: the add_filter(s) calls after this will call update_filters on their own. so by not calling it here, we avoid calling it twice.
-
-	switch(mob_height)
-		// Don't set this one directly, use TRAIT_DWARF
-		if(MONKEY_HEIGHT_DWARF)
-			appearance.add_filters(list(
-				list(
-					"name" = "Monkey_Gnome_Cut_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = adjust_y, size = 3),
-				),
-				list(
-					"name" = "Monkey_Gnome_Cut_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 4),
-				),
-			))
-		if(MONKEY_HEIGHT_MEDIUM)
-			appearance.add_filters(list(
-				list(
-					"name" = "Monkey_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = adjust_y, size = 2),
-				),
-				list(
-					"name" = "Monkey_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 4),
-				),
-			))
-		// Don't set this one directly, use TRAIT_DWARF
-		if(HUMAN_HEIGHT_DWARF)
-			appearance.add_filters(list(
-				list(
-					"name" = "Gnome_Cut_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = adjust_y, size = 2),
-				),
-				list(
-					"name" = "Gnome_Cut_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 3),
-				),
-			))
-		if(HUMAN_HEIGHT_SHORTEST)
-			appearance.add_filters(list(
-				list(
-					"name" = "Cut_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = adjust_y, size = 1),
-				),
-				list(
-					"name" = "Cut_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 1),
-				),
-			))
-		if(HUMAN_HEIGHT_SHORT)
-			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = adjust_y, size = 1))
-		if(HUMAN_HEIGHT_TALL)
-			appearance.add_filter("Lengthen_Legs", 1, displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1))
-		if(HUMAN_HEIGHT_TALLER)
-			appearance.add_filters(list(
-				list(
-					"name" = "Lengthen_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(lengthen_torso_mask, x = 0, y = adjust_y, size = 1),
-				),
-				list(
-					"name" = "Lengthen_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1),
-				),
-			))
-		if(HUMAN_HEIGHT_TALLEST)
-			appearance.add_filters(list(
-				list(
-					"name" = "Lengthen_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(lengthen_torso_mask, x = 0, y = adjust_y, size = 1),
-				),
-				list(
-					"name" = "Lengthen_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(lengthen_legs_mask, x = 0, y = adjust_y, size = 1 /* monke edit: 2 -> 1 */),
-				),
-				// MONKESTATION EDIT START
-				list(
-					"name" = "Lengthen_Ankles",
-					"priority" = 1,
-					"params" = displacement_map_filter(lengthen_ankles_mask, x = 0, y = adjust_y, size = 1),
-				),
-				// MONKESTATION EDIT END
-			))
-		else
-			// as we don't add any filters - we need to make sure to run update_filters ourselves, as we didn't update during our previous remove_filter, and any other case would've ran it at the end of add_filter(s)
-			if(should_update)
-				appearance.update_filters()
+	var/mask_state = height_mask_states[mob_height]
+	if(isnull(mask_state))
+		appearance.remove_filter("height_displacement")
+	else
+		var/icon/height_mask = masks[mob_height]
+		if(isnull(height_mask))
+			masks[mob_height] = height_mask = icon(mask_icon, mask_state)
+		// 127 is the filter's full scale, so mask green 128 + n moves n pixels
+		appearance.add_filter("height_displacement", 1, displacement_map_filter(height_mask, x = 0, y = adjust_y, size = 127))
 
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
