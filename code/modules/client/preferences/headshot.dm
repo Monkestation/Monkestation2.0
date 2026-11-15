@@ -31,6 +31,36 @@
 		return FALSE
 
 	if(usr)
-		log_game("[key_name(usr)] set their headshot to: [value]")
+		var/static/list/last_logged = list()
+		var/ckey = usr.ckey
+		if(last_logged[ckey] != value)
+			log_game("[key_name(usr)] set their headshot to: [value]")
+			last_logged[ckey] = value
 
 	return TRUE
+
+/datum/preference/text/headshot/deserialize(input, datum/preferences/preferences)
+	. = ..(input, preferences)
+
+	if(!.)
+		return
+
+	var/configured_pattern = CONFIG_GET(string/headshot_link_regex)
+	if(!configured_pattern)
+		return ""
+
+	var/static/regex/compiled_link_regex
+	var/static/compiled_pattern
+	if(compiled_pattern != configured_pattern)
+		compiled_link_regex = regex(configured_pattern, "i")
+		compiled_pattern = configured_pattern
+
+	if(!compiled_link_regex.Find(.))
+		return ""
+
+
+/datum/preference/toggle/see_headshots
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "see_headshots"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = TRUE

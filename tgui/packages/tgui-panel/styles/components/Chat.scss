@@ -88,16 +88,7 @@
   z-index: 1;
 }
 
-.ChatMessage .examine-headshot__image {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 56px;
-  height: 56px;
-}
-
-.ChatMessage .examine-headshot__image img {
+.ChatMessage .examine-headshot img {
   display: block;
   position: absolute;
   top: 0;
@@ -113,17 +104,13 @@
     height 150ms ease;
 }
 
-.ChatMessage .examine-headshot__image:hover {
-  z-index: 2;
-}
-
-.ChatMessage .examine-headshot__image:hover img {
-  width: 240px;
-  height: 240px;
-}
-
 .ChatMessage .examine-headshot:hover {
   z-index: 2;
+}
+
+.ChatMessage .examine-headshot:hover img {
+  width: 240px;
+  height: 240px;
 }
 
 .ChatMessage--highlighted {

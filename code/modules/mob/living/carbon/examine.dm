@@ -19,6 +19,9 @@
 	return null
 
 /mob/living/carbon/human/proc/get_examine_headshot(mob/user)
+	if(user?.client && !user.client.prefs.read_preference(/datum/preference/toggle/see_headshots))
+		return ""
+
 	var/headshot_url = dna?.features?["headshot"]
 	if(!length(headshot_url) || !get_face_name(""))
 		return ""
