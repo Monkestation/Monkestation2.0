@@ -112,7 +112,6 @@
 				continue
 		. += AM
 
-
 /datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
 	.["tool_behaviour"] = list()
