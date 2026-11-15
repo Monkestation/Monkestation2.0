@@ -534,6 +534,151 @@
   tattax:
   - qol: handcuff sprites for each ui
 2026-11-13:
+  ? Ghommie, carlarctg, SmArtKar, Ben10Omintrix, 00-Steven, Rhials, grungussuss, deathrobotpunch,
+    DaCoolBoss, necromanceranne, Time-Green, MrMelbert, ninjanomnom, zoomachina, SyncIt21,
+    vinylspiders, Aniantan, Jacquerel, OrbisAnima, ArcaneMusic, TealSeer, Aliceee2ch,
+    Y0SH1M4S73R, lelandkemble, timothymtorres, soulware1, btcbuster, TymSha, QuiteLiterallyAnything,
+    Stonetear, san7890
+  : - rscadd: Chasm chrabs can grow into lobstrosities inside aquariums with breeding
+        on. Juvenile lobstrosities can be tamed with arms and lavaloops, and keep
+        some of the traits they had as fish.
+    - rscadd: Tadpoles, scooped from puddles with right click. They grow into frogs.
+    - rscadd: 'Lots of new fish: twelve from the fishing expansion plus perch, two
+        pikes, monkfish, plaice, squid, zagoskian moonfish (lays eggs) and sacabambaspis.
+        Some of them are straight up weapons.'
+    - rscadd: 'New fishing spots: sand, ice holes, rivers, the cursed spring, deep
+        fryers, toilets, hot springs, aquariums, the carp rift and people in the middle
+        of organ manipulation surgery.'
+    - rscadd: Fishing lures. They don't get used up like bait and catch specific kinds
+        of fish, but you have to spin them every few seconds. The whole set can be
+        ordered from cargo.
+    - rscadd: Material fishing rods can be printed from the autolathe. Each material
+        changes difficulty, cast range, experience and more.
+    - rscadd: Fishing bluespace capsules that deploy a small fishing spot (freshwater,
+        saltwater, tizira, ice, hot spring, and lava or plasma if emagged). Found
+        in maints, the black market and as fishing loot.
+    - rscadd: Portable fish tanks, crafted with an aquarium kit and plastic. A bluespace
+        fish tank kit removes their limits. The lawyer's pet goldfish lives in one
+        now.
+    - rscadd: Hot springs wash you, heal you a bit, warm you up and make you happy.
+        Felinids hate them.
+    - rscadd: Athletic fishing gloves and the fishing MOD module let you fish without
+        holding a rod.
+    - rscadd: Messages in a bottle. Put papers, photos or cash in a bottle and toss
+        it in the ocean so someone can fish it up in a future round.
+    - rscadd: A treasure chest can be fished from the ocean and beach.
+    - rscadd: Whole fish is edible. Cook it first.
+    - rscadd: You can release fish after catching them for a good mood, which also
+        repopulates the spot.
+    - rscadd: Your clothes and the chair you sit on change fishing difficulty.
+    - rscadd: Fishing portal generators can be linked to other fishing spots with
+        a multitool.
+    - rscadd: You can pet fish while holding them. Careful with the aggressive ones.
+    - rscadd: Fish grow in aquariums if you feed them regularly. Feeding them mutagen,
+        growth serum or teslium has some effects.
+    - rscadd: Space carps and space dragons can fish. Dragons can eat fish and unlock
+        a shark form.
+    - rscadd: A score that tracks every fish species you've caught across rounds.
+    - rscadd: Aquatic mob biotype for carps, lobstrosities and fire sharks. Aquatic
+        mobs can be hooked without a jawed hook, and fish and carp infusions make
+        you aquatic.
+    - rscadd: Fishy reagent (strange reagent for fish) and the lifish reaction that
+        makes fish.
+    - rscadd: Stethoscopes can check a fish's pulse.
+    - rscadd: Fishing toolboxes and maints have paper slips with fishing tips.
+    - rscadd: Fishing category in the games vendor, fish feed in the library vendor,
+        a rescue hook rod in the mining order console and a rescue hook heirloom for
+        paramedics.
+    - rscadd: Gills give you fish puns.
+    - rscadd: Cleric maces can be made of two materials.
+    - rscadd: Water, lava and plasma make you look immersed in them. Water also puts
+        out fires and gets you wet.
+    - rscadd: Fish have suicides now. A lot of them, almost all unique.
+    - rscadd: Fish mounts for trophy fish, crafted with wood. Trophies from previous
+        rounds can be taken off the mount, if you are skilled enough to not turn them
+        into dust.
+    - rscadd: Rift fishing. Drained and undrained heretic influences can be fished
+        in (the undrained ones only by heretics), with new wacky fish like the mossglob
+        and the babbelfish. Heretics can infuse their rod and fish for knowledge.
+    - rscadd: Failing the minigame in a rift costs you an arm. Arms, heads and other
+        things lost to rifts can be fished back up.
+    - rscadd: You can try to fish random products out of vending machines with a fishing
+        rod and a few bucks.
+    - rscadd: Fishing bags, found in fun vendors or made from carpskin.
+    - rscadd: Aquariums have three modes (Manual/Assisted/Stasis) instead of the safe
+        mode toggle.
+    - rscadd: Fish gene-gun and bluespace fishing reel in the Marine Utility node.
+    - rscadd: Anomalous lure hook in the new Anomalous Fishing node. It takes an anomaly
+        core and does something different for each one. Material fish now need a dimensional
+        core in it.
+    - rscadd: Skeleton keys and tendril chests can be fished from lava and plasma
+        rivers, but they're rare.
+    - rscadd: Mining mob parts and some mining mobs can be fished out of lava.
+    - rscadd: Chrabs with the territorial trait are hostile when they grow up.
+    - rscadd: Fish have their own log file.
+    - admin: objectify() works with instances of objects.
+    - balance: Fish cases stop hunger and breeding and heal fish up to 65%. Added
+        a bluespace fish case to the advanced fishing node.
+    - balance: Heavy fish slow you down and big ones need two hands.
+    - balance: With good enough skill and gear you can skip the minigame. The fishing
+        skill also affects cast range, reeling and completion speed.
+    - balance: Fish scanning experiments need fewer fish. The ocean and chasm portal
+        rewards were swapped.
+    - balance: Fish selling price is soft capped past 6k credits.
+    - balance: Limited fishing loot like tendril chests and mystery boxes comes back
+        after 30 minutes.
+    - balance: The aggressive fish trait was replaced with territorial.
+    - balance: Aquarium kits are printed now instead of ordered from cargo.
+    - balance: Fishing difficulty of every fishing spot is back to its intended values.
+    - balance: Explosions and NPCs no longer get you unique fishing loot.
+    - balance: Fish trait inheritability is easier, both parents having a trait guarantees
+        it.
+    - balance: Rods with higher or lower bait speed are a bit easier to control. Autoreel
+        lines nudge the bait towards the fish, cloaked lines are more transparent.
+    - balance: Shooting or hitting a fish damages it like any other object. Fish health
+        is integrity now.
+    - balance: Monocloning jumpercables export for less and are lighter.
+    - balance: Killing yourself with a tadpole only bursts your chest. Suicides that
+        gib or dust you don't delete your items anymore.
+    - balance: Chasm chrabs eat and grow every 10 minutes instead of 12 and 15.
+    - balance: Reinforced and sinew fishing lines are fire and lava proof.
+    - balance: The generator aquarium upgrade can be printed in service and science
+        lathes too.
+    - balance: Psychic resistance stops the rift from tearing your head off when you
+        use telekinesis on it.
+    - qol: New aquarium UI with screentips.
+    - qol: Fishing rods and fish cases can be printed from cargo and science lathes
+        too.
+    - qol: Fish weight is measured in kiloclam now.
+    - qol: Fishing capsules only need a 3x3 space to deploy.
+    - qol: The fishing minigame is smoother and the fish analyzer UI updates more
+        reliably.
+    - sound: New fish sounds, and reeling is less noisy.
+    - image: New icons for fish sources, linkable fishing spots, plasmaloops and fish
+        tanks.
+    - image: Resprited the fishing UI, reels, bobber and the mansus rift portal.
+    - refactor: Refactored how materials apply their effects and turned aquariums
+        into a component. Report any weird material or aquarium bug.
+    - refactor: Components count subtypes as duplicates now, and surgery steps are
+        shared instead of created on every click.
+    - bugfix: The fishing rod difficulty modifier was being added twice.
+    - bugfix: Fish analyzers and fish scanning experiments work again.
+    - bugfix: 'Fixed a bunch of fishing bugs: bait, lures, auto-reel catching, fish
+        reproduction and hunger in aquariums, explosive fishing, the randomizer portal,
+        squid and pufferfish infusions, rod duping with poly belts, fish overlays
+        in aquariums, flipped hooks and more.'
+    - bugfix: Fish no longer drown half-submerged in their own native turf, and they
+        die on dry land again.
+    - bugfix: You can't fish things in storages or things you can't see anymore, and
+        fishing an adjacent spot doesn't hit other things on the turf.
+    - bugfix: 'Fixed lots of other fishing bugs: lobstrosities fishing lobstrosities,
+        bluespace rods, auto reel ripping off anchored stuff, bait cans, achievement
+        cheese, fish reproduction and overlays, random portals, the gene gun, fish
+        suicides and more.'
+    - bugfix: Mythril fished up from plasma rivers regenerates now.
+    - bugfix: Uranium structures are radioactive again.
+    - server: Added the fish_progress table, database version 6.2. The query is in
+        SQL/database_changelog.md.
   V2LenKagamine:
   - rscadd: Med-x, it stops pain. thats it. wow.
   - balance: ALL SMITHING WEAPONS NERFED AND CLAMPED STOP BREAKING THINGS
@@ -547,3 +692,8 @@
       DANM YOU
   - bugfix: reagents with allow deadprocess now can actually work when you're dead!
   - admin: more lone larp
+2026-11-14:
+  AitorLogedo:
+  - balance: fireproof helmets now protect your mask, glasses, neck item and headset
+      from burning while you're on fire
+  - balance: masks can burn again if you're on fire without a fireproof helmet
