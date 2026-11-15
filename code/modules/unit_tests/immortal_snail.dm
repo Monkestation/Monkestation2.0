@@ -1,8 +1,27 @@
 /// Runtime Station is not guaranteed to leave the generic unit-test coordinates open.
 /// Build the small pursuit arena explicitly so these tests remain map-independent.
 /datum/unit_test/proc/immortal_snail_test_floor(turf/tile)
+	for(var/datum/immortal_snail_test_turf_restore/saved in allocated)
+		if(saved.tile == tile)
+			return tile.ChangeTurf(/turf/open/floor/plating)
+	allocate(/datum/immortal_snail_test_turf_restore, tile)
 	tile.ChangeTurf(/turf/open/floor/plating)
 	return tile
+
+/// Restore the shared test map, including its boundary walls, during teardown.
+/datum/immortal_snail_test_turf_restore
+	var/turf/tile
+	var/original_type
+
+/datum/immortal_snail_test_turf_restore/New(turf/tile)
+	src.tile = tile
+	original_type = tile.type
+	return ..()
+
+/datum/immortal_snail_test_turf_restore/Destroy()
+	tile.ChangeTurf(original_type)
+	tile = null
+	return ..()
 
 /datum/unit_test/immortal_snail_money
 	var/datum/snail_debt/previous_ledger
