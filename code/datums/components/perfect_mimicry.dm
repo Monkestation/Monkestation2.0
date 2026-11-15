@@ -271,6 +271,26 @@
 		var/mob/living/living_owner = parent
 		living_owner.apply_damage(damage_amount, damage_type, null, 0, FALSE, TRUE, 0, 0, NONE, attack_dir)
 
+/// Prey reference and maybe stun effect later. Or special revealing alternatives.
+/datum/component/perfect_mimicry/proc/on_hit_projectile(obj/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
+	if(source != mimicked_object)
+		return
+	if(!istype(projectile, /obj/projectile/bullet/foam_dart))
+		return
+
+	var/obj/projectile/bullet/foam_dart/dart = projectile
+	if(!istype(dart.fired_from, /obj/item/gun/ballistic/shotgun/toy/crossbow))
+		return
+
+	var/obj/item/gun/ballistic/shotgun/toy/crossbow/crossbow = dart.fired_from
+	if(crossbow.name == initial(crossbow.name))
+		crossbow.name = "huntress boltcaster"
+		crossbow.desc = "An ordinary toy crossbow that fires harmless foam darts. Yet somehow, they have a peculiar way of revealing the truth."
+
+	addtimer(CALLBACK(src, PROC_REF(on_object_qdel), source), 1)
+
 /datum/component/perfect_mimicry/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
@@ -401,6 +421,7 @@
 	new_object.obj_flags |= CAN_BE_HIT | NO_CRAFTING_USE
 	RegisterSignal(new_object, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, PROC_REF(override_examine_flags))
 	RegisterSignal(new_object, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(transder_damage))
+	RegisterSignal(new_object, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_hit_projectile))
 	RegisterSignal(new_object, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	RegisterSignal(new_object, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
@@ -434,7 +455,8 @@
 		COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS,
 		COMSIG_ATOM_RELAYMOVE,
 		COMSIG_ATOM_ITEM_INTERACTION,
-		COMSIG_ATOM_TAKE_DAMAGE
+		COMSIG_ATOM_TAKE_DAMAGE,
+		COMSIG_PROJECTILE_PREHIT
 		))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
