@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "Mourning poultices work on dead bodies again."

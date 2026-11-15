@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "venomous fish keep their venom when they die instead of runtiming"
