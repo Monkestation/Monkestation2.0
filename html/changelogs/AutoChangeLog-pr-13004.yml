@@ -1,0 +1,8 @@
+author: "V2LenKagamine"
+delete-after: True
+changes:
+  - qol: "Free golems now move faster"
+  - qol: "Free golems now can expand their power range with the blueprints to new rooms."
+  - qol: "The wumpa now starts silent."
+  - code_imp: "The golem blueprints check if the person is a free golem[job] or nuke immune, because that means they're probably an admin."
+  - code_imp: "Create Area proc now accepts the type of area it should be making as an input, defaulting to just /area"
