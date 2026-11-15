@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Lowered the weight of the skub station trait to 1. I really do not care about this meme, and I regret porting it at all."

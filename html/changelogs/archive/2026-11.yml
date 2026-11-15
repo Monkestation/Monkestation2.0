@@ -697,3 +697,27 @@
   - balance: fireproof helmets now protect your mask, glasses, neck item and headset
       from burning while you're on fire
   - balance: masks can burn again if you're on fire without a fireproof helmet
+2026-11-15:
+  AitorLogedo:
+  - bugfix: venomous fish keep their venom when they die instead of runtiming
+  - rscdel: removed the Disassemble smite and the IPC rod hit sound for now, they'll
+      be back
+  - bugfix: Fishing organs out of patients during organ manipulation surgery actually
+      works now.
+  - bugfix: Patients no longer stay fishable after the surgery is cancelled.
+  - balance: Vital organs like the brain can't be fished out.
+  - bugfix: athletic fishing gloves actually let you fish with your bare hands now
+  - balance: station engineers start with an RCD again
+  HoggyHart:
+  - rscdel: Removed references to nanite trigger and signal codes
+  - qol: Simplified nanite sensor usage
+  - bugfix: Nanite sensors now use the results of the automatic checks they perform
+  - code_imp: (hopefully) tiny efficiency + readability increases
+  Tractor-Maam:
+  - rscadd: Frontier Kitchen supply crates now come with a oven tray, cutting board,
+      knife, rolling pin, and wrench.
+  big-boss-crate:
+  - rscadd: added "Disassemble" admin smite (basically a bloodless gib)
+  - sound: added fall_apart.ogg
+  - code_imp: Added a new option in the gib() proc allowing for bloodless gibbing
+      (no_blood), false by default
