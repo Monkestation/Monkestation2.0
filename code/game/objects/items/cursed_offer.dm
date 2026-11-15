@@ -40,9 +40,7 @@
 
 /obj/item/cursed_offer/ui_data(mob/user)
 	var/list/data = list()
-	var/mob/living/carbon/human/right_partner
-	if(signed_by)
-		right_partner = signed_by.resolve()
+	var/mob/living/carbon/human/right_partner = signed_by?.resolve()
 	data["left_sign"] = admin_sign_name
 	data["right_sign"] = right_partner?.real_name || "none"
 	data["our_offer"] = admin_offers
