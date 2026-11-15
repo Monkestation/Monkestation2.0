@@ -111,72 +111,72 @@
 
 /// Register action restrictions when entering disguise.
 /datum/component/perfect_mimicry/proc/block_actions()
-    var/mob/living/mimic = parent
+	var/mob/living/mimic = parent
 
-    // Cancel any previously selected ability, except our own Mimic action.
-    var/datum/action/cooldown/selected_action = mimic.click_intercept
-    if(selected_action && selected_action != mimic_ability)
-        selected_action.unset_click_ability(mimic, refund_cooldown = FALSE)
+	// Cancel any previously selected ability, except our own Mimic action.
+	var/datum/action/cooldown/selected_action = mimic.click_intercept
+	if(selected_action && selected_action != mimic_ability)
+		selected_action.unset_click_ability(mimic, refund_cooldown = FALSE)
 
-    RegisterSignal(mimic, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_action_granted))
-    RegisterSignal(mimic, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_action_removed))
+	RegisterSignal(mimic, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_action_granted))
+	RegisterSignal(mimic, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_action_removed))
 
-    for(var/datum/action/action as anything in mimic.actions)
-        on_action_granted(mimic, action)
+	for(var/datum/action/action as anything in mimic.actions)
+		on_action_granted(mimic, action)
 
 /// Remove action restrictions when leaving disguise.
 /datum/component/perfect_mimicry/proc/unblock_actions()
-    var/mob/living/mimic = parent
+	var/mob/living/mimic = parent
 
-    UnregisterSignal(mimic, list(
-        COMSIG_MOB_GRANTED_ACTION,
-        COMSIG_MOB_REMOVED_ACTION
-    ))
+	UnregisterSignal(mimic, list(
+		COMSIG_MOB_GRANTED_ACTION,
+		COMSIG_MOB_REMOVED_ACTION
+	))
 
-    for(var/datum/action/action as anything in blocked_actions)
-        UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
+	for(var/datum/action/action as anything in blocked_actions)
+		UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
 
-    LAZYNULL(blocked_actions)
+	LAZYNULL(blocked_actions)
 
 /// Register a newly granted action for blocking.
 /datum/component/perfect_mimicry/proc/on_action_granted(datum/source, datum/action/action)
-    SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-    if(!mimicked_object || QDELETED(action))
-        return
-    if(action.owner != parent)
-        return
+	if(!mimicked_object || QDELETED(action))
+		return
+	if(action.owner != parent)
+		return
 
-    // Never block our own Reveal action.
-    if(action == mimic_ability || (istype(action, /datum/action/cooldown/mimic_object) && action.target == src))
-        return
+	// Never block our own Reveal action.
+	if(action == mimic_ability || (istype(action, /datum/action/cooldown/mimic_object) && action.target == src))
+		return
 
-    if(action in blocked_actions)
-        return
+	if(action in blocked_actions)
+		return
 
-    RegisterSignal(action, COMSIG_ACTION_TRIGGER, PROC_REF(on_action_triggered))
-    LAZYADD(blocked_actions, action)
+	RegisterSignal(action, COMSIG_ACTION_TRIGGER, PROC_REF(on_action_triggered))
+	LAZYADD(blocked_actions, action)
 
 /// Stop tracking actions that are removed from the mob.
 /datum/component/perfect_mimicry/proc/on_action_removed(datum/source, datum/action/action)
-    SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-    if(!(action in blocked_actions))
-        return
+	if(!(action in blocked_actions))
+		return
 
-    UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
-    LAZYREMOVE(blocked_actions, action)
+	UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
+	LAZYREMOVE(blocked_actions, action)
 
 /// Prevent other actions from activating while disguised.
 /datum/component/perfect_mimicry/proc/on_action_triggered(datum/source, datum/action/action)
-    SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-    if(!mimicked_object)
-        return
+	if(!mimicked_object)
+		return
 
-    var/mob/living/mimic = parent
-    mimic.balloon_alert(mimic, "can't use abilities while disguised!")
-    return COMPONENT_ACTION_BLOCK_TRIGGER
+	var/mob/living/mimic = parent
+	mimic.balloon_alert(mimic, "can't use abilities while disguised!")
+	return COMPONENT_ACTION_BLOCK_TRIGGER
 
 /// Called when the current disguise is deleted externally.
 /datum/component/perfect_mimicry/proc/on_object_qdel(datum/source, force)
