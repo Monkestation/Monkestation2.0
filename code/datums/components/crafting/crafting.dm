@@ -106,6 +106,10 @@
 	for(var/atom/movable/AM in range(radius_range, a))
 		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
 			continue
+		if(isobj(AM))
+    		var/obj/object = AM
+    		if(object.obj_flags & CRAFT_NO_USE)
+        		continue
 		. += AM
 
 

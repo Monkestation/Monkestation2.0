@@ -33,11 +33,30 @@
 	var/static/list/allowed_objects = typecacheof(list(
 		//obj/item/storage/backpack,
 		/obj/item/trash,
-		/obj/item/disk/nuclear
+		/obj/item/disk/nuclear,
+		/obj/item/pen,
+		/obj/item/dice,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/glass,
+		/obj/item/bikehorn,
+		/obj/item/soap,
 	))
 	// What is blocked. Used when using the whitelist blocks a problematic subtype.
 	var/static/list/blocked_objects = typecacheof(list(
-		/obj/item/trash/bee
+		/obj/item/trash/bee,
+		/obj/item/pen/edagger,
+		/obj/item/pen/destroyer,
+		/obj/item/pen/survival,
+		/obj/item/pen/screwdriver,
+		/obj/item/pen/red/security,
+		/obj/item/pen/fountain/captain,
+		/obj/item/dice/d20/fate,
+		/obj/item/soap/omega,
+		/obj/item/toy/crayon/spraycan,
+		/obj/item/toy/crayon/mime,
+		/obj/item/toy/crayon/rainbow,
+		/obj/item/reagent_containers/cup/glass/bottle,
 	))
 	// Traits applied to mob during disguise.
 	var/list/applied_mob_traits = list(
@@ -339,6 +358,7 @@
 		var/obj/item/new_item = new_object
 		new_object.remove_filter(HOVER_OUTLINE_FILTER)
 		new_item.item_flags &= ~(IN_INVENTORY | IN_STORAGE) // Remove inherited inventory flags. Prevents selection borders from mimicking inventory items.
+		new_item.item_flags |= NO_MAT_REDEMPTION
 
 		// Set item plane to undo possible inventory fullbrightness in the world plane.
 		new_item.layer = initial(new_item.layer)
@@ -350,6 +370,11 @@
 			new_item.pixel_x = new_item.base_pixel_x + rand(-5, 5)
 			new_item.pixel_y = new_item.base_pixel_y + rand(-5, 5)
 
+		new_item.grind_results = null
+		new_item.juice_results = null
+		if(istype(new_item, /obj/item/reagent_containers/cup/glass))
+			var/obj/item/reagent_containers/cup/glass/glass_item = new_item
+			glass_item.isGlass = FALSE
 		if(istype(new_item, /obj/item/storage)) // For storage specific items like clearing out preloading iventories.
 			var/obj/item/storage/box_item = new_item
 			if(box_item.atom_storage)
@@ -365,11 +390,14 @@
 			var/weight_multiplier = max(1, new_item.w_class)
 			var/adjusted_integrity = 5 + (weight_multiplier * INTEGRITY_PER_WCLASS)
 			new_item.modify_max_integrity(clamp(adjusted_integrity, 10, 60))
+		var/atom/made_item = new_item
+		if(made_item.reagents)
+			made_item.reagents.clear_reagents()
 
 	// Store the original resistance flags before adjusting the disguise.
 	spoofed_flags = new_object.resistance_flags
 	new_object.resistance_flags &= ~MIMIC_SPOOF_RESIST_MASK
-	new_object.obj_flags |= CAN_BE_HIT
+	new_object.obj_flags |= CAN_BE_HIT | NO_CRAFTING_USE
 	RegisterSignal(new_object, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, PROC_REF(override_examine_flags))
 	RegisterSignal(new_object, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(transder_damage))
 	RegisterSignal(new_object, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
@@ -416,6 +444,11 @@
 		mimicked_object.atom_storage.remove_all(mimicked_object.drop_location())
 	if(fake_storage)
 		QDEL_NULL(fake_storage)
+	var/atom/reagent_holder = mimicked_object
+	if(reagent_holder?.reagents?.total_volume > 0)
+		var/turf/splash_zone = get_turf(reagent_holder)
+		if(splash_zone)
+			splash_zone.add_liquid_from_reagents(reagent_holder.reagents, chem_temp = reagent_holder.reagents.chem_temp)
 	if(QDELETED(mimicked_object))
 		mimicked_object = null
 	else

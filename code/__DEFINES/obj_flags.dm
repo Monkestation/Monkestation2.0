@@ -14,7 +14,7 @@
 #define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
 #define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
 #define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
-
+#define NO_CRAFTING_USE (1<<13) // Prevents its obj from use in crafting.
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
 // Flags for the item_flags var on /obj/item
