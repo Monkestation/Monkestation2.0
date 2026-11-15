@@ -108,7 +108,7 @@
 			continue
 		if(isobj(AM))
 			var/obj/object = AM
-			if(object.obj_flags & CRAFT_NO_USE)
+			if(object.obj_flags & NO_CRAFTING_USE)
 				continue
 		. += AM
 

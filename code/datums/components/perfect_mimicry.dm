@@ -41,6 +41,7 @@
 		/obj/item/reagent_containers/cup/glass,
 		/obj/item/bikehorn,
 		/obj/item/soap,
+		/obj/item/toy/crayon,
 	))
 	// What is blocked. Used when using the whitelist blocks a problematic subtype.
 	var/static/list/blocked_objects = typecacheof(list(
