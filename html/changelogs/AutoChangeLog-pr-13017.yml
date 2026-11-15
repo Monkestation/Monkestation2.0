@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - rscdel: "removed the Disassemble smite and the IPC rod hit sound for now, they'll be back"
