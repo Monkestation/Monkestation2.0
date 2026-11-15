@@ -346,9 +346,9 @@
 /**
  * Adds context sensitivy directly to the surgery initator file for screentips
  * Arguments:
- * * source - the surgery drapes, cloak, or bedsheet calling surgery initator
+ * * source - The surgery drapes, cloak, or bedsheet calling surgery initator
  * * context - Preparing Surgery, the component has a lot of ballon alerts to deal with most contexts
- * * target - the living target mob you are doing surgery on
+ * * target - The living target mob you are doing surgery on
  * * user - refers to user who will see the screentip when the drapes are on a living target
  */
 /datum/component/surgery_initiator/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)

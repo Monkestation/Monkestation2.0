@@ -6,7 +6,7 @@
 	var/alist/reactions_by_extract = reactions_by_extract()
 	var/alist/colors = alist()
 	var/alist/source_by_effect = alist()
-	for(var/datum/slime_type/slime_type as anything in subtypesof(/datum/slime_type))
+	for(var/datum/slime_type/slime_type as anything in valid_subtypesof(/datum/slime_type))
 		var/id = slime_icon_prefix(slime_type)
 		var/obj/item/slime_extract/extract = slime_type::core_type
 		colors[id] = list(
@@ -14,6 +14,7 @@
 			"name" = slime_type::color,
 			"hex" = slime_type::rgb_code,
 			"transparent" = slime_type::transparent,
+			"tier" = slime_type::tier,
 			"mutations" = mutation_data(slime_type),
 			"parents" = list(),
 			"effect" = extract::effectmod,
@@ -41,6 +42,7 @@
 		family_crossbreeds += list(list(
 			"color" = slime_icon_prefix(cross_path::slime_type),
 			"desc" = cross_path::effect_desc,
+			"orderable" = extract_request_orderable(cross_path),
 		))
 
 	var/list/color_list = list()

@@ -187,6 +187,9 @@
 		flags_cover |= HEADCOVERSEYES
 		flags_inv |= HIDEEYES
 		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.refresh_obscured()
 	user.update_worn_glasses()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
@@ -265,6 +268,9 @@
 		flags_cover |= (HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF)
 		flags_inv |= (HIDEEARS|HIDEHAIR)
 		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.refresh_obscured()
 	user.update_worn_glasses()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
@@ -740,6 +746,7 @@
 
 /obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 2)
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
 /obj/item/clothing/head/helmet/toggleable/justice
@@ -911,3 +918,12 @@
 #undef MEDICAL_HELMET_SHOUTING
 #undef MEDICAL_HELMET_YELLING
 #undef MEDICAL_HELMET_EXTREME
+
+
+/obj/item/clothing/head/helmet/swat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+
+/obj/item/clothing/head/helmet/knight/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 3)

@@ -72,6 +72,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	var/safety = TRUE
 	///Wheter the hailer will hail pointed targets
 	var/auto_hail = TRUE
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/sechailer/item_ctrl_click(mob/user)
 	var/mob/living/carbon/human/wearer = get(loc, /mob/living)
@@ -99,6 +100,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	fishing_modifier = 2
 
 /obj/item/clothing/mask/gas/sechailer/swat/alt
 	icon_state = "swat1"
@@ -123,6 +125,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	slot_flags = null
 	aggressiveness = AGGR_GOOD_COP // Borgs are nicecurity!
 	actions_types = list(/datum/action/item_action/halt)
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()

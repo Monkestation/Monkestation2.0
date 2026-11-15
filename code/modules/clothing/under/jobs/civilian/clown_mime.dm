@@ -20,7 +20,7 @@
 	desc = "Pretty inappropriate for a circus."
 	icon_state = "sexymime"
 	inhand_icon_state = null
-	body_parts_covered = CHEST|GROIN|LEGS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 

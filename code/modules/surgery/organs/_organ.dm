@@ -1,5 +1,6 @@
 
 /obj/item/organ
+	abstract_type = /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	w_class = WEIGHT_CLASS_SMALL

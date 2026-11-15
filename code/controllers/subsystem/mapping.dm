@@ -602,7 +602,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /// Generates the global station area list, filling it with typepaths of unique areas found on the station Z.
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	for(var/area/station/station_area in GLOB.areas)
-		if (!(station_area.area_flags & UNIQUE_AREA) || istype(station_area, /area/ruin))
+		if (!(station_area.area_flags_mapping & UNIQUE_AREA) || istype(station_area, /area/ruin))
 			continue
 		if (is_station_level(station_area.z))
 			GLOB.the_station_areas += station_area.type
@@ -623,9 +623,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/preloadTemplates() //see master controller setup
 	if(IsAdminAdvancedProcCall())
 		return
-	var/list/filelist = flist("[MAP_DIRECTORY_MAPS]/templates/")
+	var/list/filelist = flist("_maps/templates/")
 	for(var/map in filelist)
-		var/datum/map_template/T = new(path = "[MAP_DIRECTORY_MAPS]/templates/[map]", rename = "[map]")
+		var/datum/map_template/T = new(path = "_maps/templates/[map]", rename = "[map]")
 		map_templates[T.name] = T
 
 	preloadRuinTemplates()

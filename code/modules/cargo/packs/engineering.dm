@@ -306,6 +306,28 @@
 					/obj/machinery/power/rad_collector)
 	crate_name = "collector crate"
 
+/datum/supply_pack/engineering/rad_protection_modules
+	name = "Radiation Protection Modules"
+	desc = "Contains multiple radiation protections modules for MODsuits."
+	hidden = TRUE
+	contains = list(/obj/item/mod/module/rad_protection = 3)
+	crate_name = "modsuit radiation modules"
+	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/rad_nebula_shielding_kit
+	name = "Radioactive Nebula Shielding"
+	desc = "Contains circuitboards and radiation modules for constructing radioactive nebula shielding."
+	cost = CARGO_CRATE_VALUE * 2
+
+	special = TRUE
+	contains = list(
+		/obj/item/mod/module/rad_protection = 5,
+		/obj/item/circuitboard/machine/radioactive_nebula_shielding = 5,
+		/obj/item/paper/fluff/radiation_nebula = 1,
+	)
+	crate_name = "radioactive nebula shielding (IMPORTANT)"
+	crate_type = /obj/structure/closet/crate/engineering
+
 /datum/supply_pack/engineering/portagrav
 	name = "Portable Gravity Unit Crate"
 	desc = "Contains a portable gravity unit, to make the clown float into the ceiling."

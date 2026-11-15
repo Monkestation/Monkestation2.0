@@ -3640,7 +3640,7 @@
 	dir = 1
 	},
 /obj/structure/aquarium/prefilled,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_x = 1;
 	pixel_y = 19
 	},
@@ -28642,7 +28642,7 @@
 /area/station/engineering/supermatter/room)
 "ikl" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/fish_feed{
+/obj/item/reagent_containers/cup/fish_feed{
 	pixel_x = 1;
 	pixel_y = 19
 	},
@@ -48636,6 +48636,7 @@
 "nJx" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/computer/extract_requests,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -51293,7 +51294,6 @@
 "owp" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/bot_red,
-/obj/structure/sign/poster/contraband/arc_slimes/directional/south,
 /obj/structure/rack,
 /obj/item/vacuum_pack{
 	pixel_x = -8
@@ -51307,6 +51307,7 @@
 /obj/item/disk/vacuum_upgrade/printer{
 	pixel_x = 4
 	},
+/obj/machinery/computer/extract_orders/directional/south,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -62707,7 +62708,7 @@
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
 /turf/open/floor/carpet/grimey,
 /area/station/service/lawoffice)
 "rAU" = (

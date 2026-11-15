@@ -45,7 +45,8 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living = target
-		living.adjust_fire_stacks(2)
+		// Each stack is about 20 seconds of burning, so this adds up fast on repeated hits
+		living.adjust_fire_stacks(0.5)
 		living.ignite_mob()
 
 /obj/projectile/beam/laser/microfusion/hellfire

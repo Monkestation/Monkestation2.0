@@ -2,6 +2,7 @@
 	name = "ghost sheet"
 	desc = "The hands float by themselves, so it's extra spooky."
 	icon_state = "ghost_sheet"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	inhand_icon_state = null
 	throwforce = 0
 	throw_speed = 1
@@ -15,6 +16,7 @@
 	. = ..()
 	if(check_holidays(HALLOWEEN))
 		update_icon(UPDATE_OVERLAYS)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
 
 /obj/item/clothing/suit/costume/ghost_sheet/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()

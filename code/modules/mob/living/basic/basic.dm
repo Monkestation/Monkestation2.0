@@ -1,5 +1,6 @@
 ///Simple animals 2.0, This time, let's really try to keep it simple. This basetype should purely be used as a base-level for implementing simplified behaviours for things such as damage and attacks. Everything else should be in components or AI behaviours.
 /mob/living/basic
+	abstract_type = /mob/living/basic
 	name = "basic mob"
 	icon = 'icons/mob/simple/animal.dmi'
 	health = 20
@@ -341,3 +342,9 @@
 	return
 //MONKESTATION EDIT STOP
 
+///Makes the mob hop onto a random adjacent turf
+/mob/living/basic/proc/hop_on_nearby_turf()
+	var/dir = pick(GLOB.cardinals)
+	Move(get_step(src, dir), dir)
+	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
+	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)

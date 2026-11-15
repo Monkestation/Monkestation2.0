@@ -3,6 +3,7 @@
 // ********************************************************
 
 /obj/item/seeds
+	abstract_type = /obj/item/seeds
 	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	icon_state = "seed" // Unknown plant seed - these shouldn't exist in-game.
 	worn_icon_state = "seed"

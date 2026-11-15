@@ -10,7 +10,7 @@
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
-//	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
+	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
 	var/order_cost = 0
 	var/order_id = 0
 	var/errors = 0
@@ -18,6 +18,9 @@
 
 /obj/item/paper/requisition
 //	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
+
+/obj/item/paper/requisition
+	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
 
 /obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost, manifest_can_fail = TRUE)
 	. = ..()

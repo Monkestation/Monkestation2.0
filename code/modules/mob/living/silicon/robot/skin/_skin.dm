@@ -1,6 +1,6 @@
 /datum/robot_skin
 	/// The abstract type. Not used anywhere at the moment.
-	var/abstract_type = /datum/robot_skin
+	abstract_type = /datum/robot_skin
 	/// The name of the skin.
 	var/name = "Unknown"
 	/// The icon of the sprite.

@@ -1,5 +1,6 @@
 //Boxes of ammo
 /obj/item/ammo_box
+	abstract_type = /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
@@ -227,6 +228,7 @@
 
 
 /obj/item/ammo_box/magazine
+	abstract_type = /obj/item/ammo_box/magazine
 	w_class = WEIGHT_CLASS_SMALL
 
 ///Count of number of bullets in the magazine

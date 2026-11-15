@@ -73,6 +73,7 @@
 	desc = "A coat built for urban life."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("urban_coat", "/obj/item/clothing/suit/urban")
+	body_parts_covered = CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/urban_coat
 	greyscale_config_worn = /datum/greyscale_config/urban_coat/worn
 	greyscale_colors = "#252e5a#938060#66562b"
@@ -116,6 +117,7 @@
 	desc = "This station ain't big enough for the both of us."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("duster", "/obj/item/clothing/suit/duster")
+	body_parts_covered = CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/duster
 	greyscale_config_worn = /datum/greyscale_config/duster/worn
 	greyscale_colors = "#954b21"
@@ -127,6 +129,7 @@
 	desc = "The way you guys are blending in with the local colour. I mean, Flag Girl was bad enough, but U-Boat Captain?"
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("peacoat", "/obj/item/clothing/suit/toggle/peacoat")
+	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	greyscale_config = /datum/greyscale_config/peacoat
 	greyscale_config_worn = /datum/greyscale_config/peacoat/worn
