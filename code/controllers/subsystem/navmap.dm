@@ -303,7 +303,11 @@ SUBSYSTEM_DEF(navmap)
 /// Reports the number of turfs waiting to bake.
 /datum/controller/subsystem/navmap/stat_entry(msg)
 	var/pending = length(bake_queue) + max(length(currentrun) - currentrun_index + 1, 0)
-	msg = "Dirty:[pending]"
+	msg = "Dirty:[pending] | using "
+	if(navmap_pathfinder_available())
+		msg += "native DLL v[GLOB.navmap_pathfinder_version]"
+	else
+		msg += "DM fallback: [GLOB.navmap_pathfinder_error]"
 	return ..()
 
 /// Bakes queued turfs until the tick budget is exhausted.
