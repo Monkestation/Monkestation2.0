@@ -267,6 +267,8 @@
 		"Eating organs or meat now heals you, gain the voracious and gluttonous trait and being fat doesn't slow you down.",
 		"Gain a flat 25% damage and stamina damage reduction when fat as well as baton resistance."
 	)
+	/// Whether we have applied the fat bonus yet
+	var/fat_bonus_applied = FALSE
 
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
@@ -301,6 +303,7 @@
 		heal_glutton() // Heal the owner if they eat meat
 
 /datum/status_effect/heretic_passive/flesh/proc/heal_glutton()
+	owner.overeatduration = min(owner.overeatduration + 20 SECONDS, 20 MINUTES) // Feasting on flesh fattens you up quickly
 	var/healed_amount = owner.heal_overall_damage(2, 2, updating_health = FALSE)
 	healed_amount += owner.adjustOxyLoss(-2, FALSE)
 	healed_amount += owner.adjustToxLoss(-2, FALSE, TRUE)
@@ -321,20 +324,25 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/fat_human = owner
-	RegisterSignals(fat_human, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat))
+	RegisterSignals(fat_human, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat), override = TRUE)
 	on_fat()
 
 /// Gives/Removes damage resistance when we become/lose fatness
 /datum/status_effect/heretic_passive/flesh/proc/on_fat(datum/source)
+	SIGNAL_HANDLER
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/heretic = owner
 	if(HAS_TRAIT(heretic, TRAIT_FAT))
+		if(fat_bonus_applied)
+			return
 		heretic.physiology.damage_resistance += 25
 		ADD_TRAIT(heretic, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
-	else
+		fat_bonus_applied = TRUE
+	else if(fat_bonus_applied)
 		heretic.physiology.damage_resistance -= 25
 		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+		fat_bonus_applied = FALSE
 
 /datum/status_effect/heretic_passive/flesh/on_remove()
 	. = ..()
@@ -343,9 +351,10 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/heretic = owner
-	if(!HAS_TRAIT(heretic, TRAIT_FAT))
+	if(!fat_bonus_applied)
 		return
 	heretic.physiology.damage_resistance -= 25
+	fat_bonus_applied = FALSE
 	heretic.on_fat()
 
 //---- Lock Passive
