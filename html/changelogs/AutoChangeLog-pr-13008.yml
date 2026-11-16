@@ -1,5 +1,0 @@
-author: "V2LenKagamine"
-delete-after: True
-changes:
-  - balance: "Emaged spiderbots now have explosion of (-1 -1 2 4) from (-1 -1 3 5)"
-  - qol: "exploding spiderbots now wait 2.5 seconds and beep and shake before doing so."
