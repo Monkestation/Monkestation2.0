@@ -76,7 +76,8 @@
 	if (!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
-	if (new_value >= FISH_INFUSION_ALL_ORGANS)
+	// ceruleans are humans underneath, so they keep their scales even when missing some of the set
+	if (new_value >= FISH_INFUSION_ALL_ORGANS || (new_value && iscerulean(carbon_owner)))
 		if (!color_active)
 			for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
 				if (limb.bodytype & BODYTYPE_ORGANIC)
