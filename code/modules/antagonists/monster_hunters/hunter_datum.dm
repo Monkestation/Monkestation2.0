@@ -147,6 +147,7 @@
 		/area/station/service/library = TRUE,
 		/area/station/service/library/abandoned = FALSE,
 		/area/station/service/library/private = FALSE,
+		/area/station/service/library/upper = FALSE,
 		/area/station/service/theater = TRUE,
 		/area/station/service/theater/abandoned = FALSE,
 		/area/station/medical/medbay/lobby = TRUE,
