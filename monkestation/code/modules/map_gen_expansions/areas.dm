@@ -3,7 +3,8 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = UNIQUE_AREA | FLORA_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED
 	//ambience_index = AMBIENCE_ICEMOON
 	sound_environment = SOUND_ENVIRONMENT_PLAIN
 	ambient_buzz = 'sound/ambience/forest_ambience.ogg'
@@ -14,8 +15,6 @@
 	power_equip = FALSE
 	power_light = FALSE
 	requires_power = TRUE
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/forestplanet/outdoors // parent that defines if something is on the exterior of the station.
 	name = "Woodlands"
@@ -25,7 +24,8 @@
 
 /area/forestplanet/outdoors/unexplored
 	icon_state = "unexplored"
-	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
 	map_generator = /datum/map_generator/cave_generator/forest
 
 /area/forestplanet/outdoors/unexplored/deep

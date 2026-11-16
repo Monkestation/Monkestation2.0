@@ -109,6 +109,7 @@
 	name = "funny prank"
 	desc = "The little kid who couldn't leave her friends behind came up with a brilliant idea."
 	icon_state = "prank"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES
 
 /obj/item/clothing/suit/egosuits/he/solemnlament
@@ -443,6 +444,7 @@
 	name = "LCB armored shortcoat"
 	desc = "It says Limbus Company on the tag."
 	icon_state = "shortcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
 	flags_inv = NONE
 
 /obj/item/clothing/suit/egosuits/limbus/durante
@@ -459,6 +461,7 @@
 	worn_icon = 'icons/mob/clothing/egosuits/suit.dmi'
 	flags_inv = NONE
 	icon_state = "w_corp"
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/head/egosuits/wcorp
 	name = "W Corp cap"

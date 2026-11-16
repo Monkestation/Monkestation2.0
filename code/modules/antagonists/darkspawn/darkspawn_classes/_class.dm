@@ -88,20 +88,20 @@
 	//draw both the overlay itself and the emissive overlay
 	var/mutable_appearance/eyes = mutable_appearance(icon_file, eye_icon, -HANDCUFF_LAYER)
 	eyes.color = class_color
-	human_source.apply_height_filters(eyes)
+	human_source.apply_height(eyes, ENTIRE_BODY)
 	overlays += eyes
 
 	var/mutable_appearance/eyes_e = emissive_appearance(icon_file, eye_icon, source) //the emissive overlay for the eyes
-	human_source.apply_height_filters(eyes_e)
+	human_source.apply_height(eyes_e, ENTIRE_BODY)
 	overlays += eyes_e
 
 	var/mutable_appearance/class_sigil = mutable_appearance(icon_file, class_icon, -HANDCUFF_LAYER)
 	class_sigil.color = class_color
-	human_source.apply_height_filters(class_sigil)
+	human_source.apply_height(class_sigil, ENTIRE_BODY)
 	overlays += class_sigil
 
 	var/mutable_appearance/class_sigil_e = emissive_appearance(icon_file, class_icon, source) //the emissive overlay for the sigil
-	human_source.apply_height_filters(class_sigil_e)
+	human_source.apply_height(class_sigil_e, ENTIRE_BODY)
 	overlays += class_sigil_e
 
 //////////////////////////////////////////////////////////////////////////

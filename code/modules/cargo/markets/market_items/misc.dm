@@ -123,6 +123,17 @@
 	stock_max = 1
 	availability_prob = 15
 
+/datum/market_item/misc/fishing_capsule
+	name = "Fishing Spot Capsule"
+	//IUU stands for Illegal Unreported and Unregulated fishing. Ironic.
+	desc = "A repurposed mining capsule connected to a selection of exclusive fishing spots. Approved by the Intergalactic IUU Fishing Association."
+	price_min = CARGO_CRATE_VALUE * 1.125
+	price_max = CARGO_CRATE_VALUE * 2.125
+	item = /obj/item/survivalcapsule/fishing
+	stock_min = 1
+	stock_max = 4
+	availability_prob = 80
+
 /datum/market_item/misc/fish
 	name = "Fish"
 	desc = "Fish! Fresh fish! Fish you can cut, grind and even keep in aquarium if you want to! Get some before the next fight at my village breaks out!"
@@ -168,3 +179,13 @@
 	price_max = PAYCHECK_CREW * 3
 	stock_max = 3
 	availability_prob = 25
+
+/datum/market_item/misc/jazz_tape
+	name = "Boombox tape (Jazz)"
+	desc = "Due to the interstellar regulations on freeform jazz, it's hard to find any of the good stuff these days.\
+		This, my friend, is real jazz, performed by the infamous 'Franky Boomer'. Boombox not included."
+	item = /obj/item/music_tape/jazz
+	price_min = PAYCHECK_CREW * 2
+	price_max = PAYCHECK_CREW * 10 //The price is also freeform.
+	stock_max = 1
+	availability_prob = 30

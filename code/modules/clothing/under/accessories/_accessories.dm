@@ -9,6 +9,7 @@
  * The rest are still shown on examine, but this may create unfair circumstances when you can't examine someone.
  */
 /obj/item/clothing/accessory
+	abstract_type = /obj/item/clothing/accessory
 	name = "Accessory"
 	desc = "Something has gone wrong!"
 	icon = 'icons/obj/clothing/accessories.dmi'

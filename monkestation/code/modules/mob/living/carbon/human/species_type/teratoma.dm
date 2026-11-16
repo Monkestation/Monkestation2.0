@@ -1,7 +1,6 @@
 /datum/species/teratoma
 	name = "Teratoma"
 	id = SPECIES_TERATOMA
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 
 	inherent_traits = list(
 		TRAIT_BADDNA,

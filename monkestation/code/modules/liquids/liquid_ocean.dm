@@ -32,16 +32,16 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	has_gravity = TRUE
 
 /area/ruin/ocean/listening_outpost
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/bunker
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/bioweapon_research
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/mining_site
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ocean/near_station_powered
 	requires_power = FALSE
@@ -154,7 +154,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 		if(RCD_CATWALK)
 			to_chat(user, span_notice("You build a catwalk."))
@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 		else
 			to_chat(user, span_notice("You reinforce \the [src]."))
 			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	else if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
 		to_chat(user, span_notice("You begin constructing a ladder..."))
@@ -614,13 +614,15 @@ GLOBAL_LIST_EMPTY(the_lever)
 	base_lighting_alpha = 0
 	//map_generator = /datum/map_generator/ocean_generator
 	map_generator = /datum/map_generator/cave_generator/trench
-	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 
 /area/ocean/generated_above
 	icon_state = "ocean_gen_above"
 	map_generator = /datum/map_generator/ocean_generator
-	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /turf/open/floor/plating/ocean/pit
 	name = "pit"
@@ -738,7 +740,7 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 
 /// Creates a regrowth material turf ontop of an another turf.
 /proc/regrow_mineral(turf/location)
-	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.PlaceOnTop(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.place_on_top(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
 	if(GLOB.lavaland_points_generated <= LAVALAND_POINTS_CHANCE_THRESHOLD)
 		return
 	var/mineral_increase = (GLOB.lavaland_points_generated - LAVALAND_POINTS_CHANCE_THRESHOLD) / LAVALAND_POINTS_PER_CHANCE

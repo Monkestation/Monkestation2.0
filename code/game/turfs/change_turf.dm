@@ -25,6 +25,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)
 		copy_to_turf.icon = icon
+	if(length(custom_materials))
+		copy_to_turf.set_custom_materials(custom_materials)
 	if(color)
 		copy_to_turf.atom_colours = atom_colours.Copy()
 		copy_to_turf.update_atom_colour()
@@ -85,7 +87,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_opacity = opacity
 	// I'm so sorry brother
 	// This is used for a starlight optimization
-	var/old_light_range = light_outer_range
+	var/old_light = !isnull(light)
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
 	var/old_lattice_underneath = lattice_underneath
@@ -135,6 +137,16 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		new_turf.AfterChange(flags, old_type)
 
+	if(flags & CHANGETURF_GENERATE_SHUTTLE_CEILING)
+		var/turf/above = get_step_multiz(src, UP)
+		if(above)
+			if(!(istype(above, /turf/open/floor/engine/hull/ceiling) || above.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
+				if(istype(above, /turf/open/openspace) || istype(above, /turf/open/space/openspace))
+					above.place_on_top(/turf/open/floor/engine/hull/ceiling)
+				else
+					above.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
+					above.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
+
 	new_turf.blueprint_data = old_bp
 	new_turf.rcd_memory = old_rcd_memory
 	new_turf.explosion_throw_details = old_explosion_throw_details
@@ -174,7 +186,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			lit_turf.update_starlight()
 			for(var/turf/open/space/space_tile in RANGE_TURFS(1, src) - src)
 				space_tile.update_starlight()
-		else if(old_light_range)
+		else if(old_light)
 			lit_turf.enable_starlight()
 
 	// If we're a cordon we count against a light, but also don't produce any ourselves
@@ -303,8 +315,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /// Attempts to replace a tile with lattice. Amount is the amount of tiles to scrape away.
 /turf/proc/attempt_lattice_replacement(amount = 2)
 	if(lattice_underneath)
+		var/list/successful_replacement_callbacks = list()
+		SEND_SIGNAL(src, COMSIG_TURF_ATTEMPT_LATTICE_REPLACEMENT, successful_replacement_callbacks)
 		var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
 		if(!istype(new_turf, /turf/open/floor))
-			new /obj/structure/lattice(src)
+			var/new_lattice = new /obj/structure/lattice(src)
+			for(var/datum/callback/callback as anything in successful_replacement_callbacks)
+				callback.Invoke(new_lattice)
 	else
 		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)

@@ -10,6 +10,7 @@
  */
 
 /obj/item/clothing/under/rank/security
+	abstract_type = /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	armor_type = /datum/armor/rank_security
@@ -379,3 +380,11 @@
 
 /obj/item/clothing/under/rank/security/officer/tactical/blue
 	icon_state = "security_tactical_blue"
+
+/obj/item/clothing/under/rank/security/officer/tactical/red
+	desc = "A red security uniform with cargo pants, complete with Nanotrasen belt buckle."
+	icon_state = "security_tactical_red"
+
+/obj/item/clothing/under/rank/security/officer/tactical/white
+	desc = "A white security uniform with cargo pants, complete with Nanotrasen belt buckle."
+	icon_state = "security_tactical_white"

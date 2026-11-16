@@ -4,6 +4,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	icon_state = "mantle"
+	body_parts_covered = NECK|CHEST|ARMS
 
 /obj/item/clothing/neck/mantle/regal
 	name = "regal mantle"
@@ -91,6 +92,9 @@
 		flags_inv = HIDEFACIALHAIR | HIDESNOUT
 	else
 		flags_inv = HIDEFACIALHAIR
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.refresh_obscured()
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/neck/maid_neck_cover
@@ -137,6 +141,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	icon_state = "bishopcloak"
+	body_parts_covered = NECK|CHEST|ARMS
 
 /obj/item/clothing/neck/chaplain/black
 	name = "black bishop's cloak"
@@ -149,11 +154,12 @@
 /obj/item/clothing/neck/cowboylea
 	name = "green cowboy poncho"
 	desc = "A sand covered cloak, there seems to be a small deer head with antlers embroidered inside."
-	body_parts_covered = NECK
+	body_parts_covered = NECK|CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_NECK
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	icon_state = "cowboy_poncho"
+	heat_protection = CHEST
 
 
 /obj/item/clothing/neck/cowboylea/Initialize(mapload)
@@ -170,6 +176,7 @@
 	greyscale_config_worn = /datum/greyscale_config/ranger_poncho/worn
 	greyscale_colors = "#917A57#858585"	//Roughly the same color as the original non-greyscale item was
 	flags_1 = IS_PLAYER_COLORABLE_1
+	heat_protection = CHEST
 
 /obj/item/clothing/neck/ranger_poncho/Initialize(mapload)
 	. = ..()

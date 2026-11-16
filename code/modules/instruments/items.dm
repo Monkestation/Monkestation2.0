@@ -1,5 +1,6 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/instrument
+	abstract_type = /obj/item/instrument
 	name = "generic instrument"
 	force = 10
 	max_integrity = 100
@@ -125,14 +126,19 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "trumpets", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trumpet", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
+	var/single_use = FALSE
 
 /obj/item/instrument/trumpet/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
 /obj/item/instrument/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/trombone/En4.mid', 100,1,-1)
 	..()
+
+/obj/item/instrument/trumpet/spectral/one_doot
+	single_use = TRUE
 
 /obj/item/instrument/saxophone
 	name = "saxophone"
@@ -149,14 +155,19 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "saxxes", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "sax", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
+	var/single_use = FALSE
 
 /obj/item/instrument/saxophone/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
 /obj/item/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/saxophone/En4.mid', 100,1,-1)
 	..()
+
+/obj/item/instrument/saxophone/spectral/one_doot
+	single_use = TRUE
 
 /obj/item/instrument/trombone
 	name = "trombone"
@@ -173,10 +184,15 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "trombones", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trombone", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
+	var/single_use = FALSE
 
 /obj/item/instrument/trombone/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
+
+/obj/item/instrument/trombone/spectral/one_doot
+	single_use = TRUE
 
 /obj/item/instrument/trombone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/trombone/Cn4.mid', 100,1,-1)

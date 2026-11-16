@@ -283,7 +283,7 @@
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
-	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
+	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separetely."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/storage/toolbox/fishing)
 
@@ -298,6 +298,12 @@
 	desc = "Set of various fishing lines."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/storage/box/fishing_lines)
+
+/datum/supply_pack/goody/fishing_lure_set
+	name = "Fishing Lures Set"
+	desc = "A set of bite-resistant fishing lures to fish all (most) sort of fish. Beat randomness to a curb today!"
+	cost = PAYCHECK_CREW * 8
+	contains = list(/obj/item/storage/box/fishing_lures)
 
 /datum/supply_pack/goody/fishing_hook_rescue
 	name = "Rescue Fishing Hook"
@@ -316,6 +322,24 @@
 	desc = "A collapsible fishing rod that can fit within a backpack."
 	cost = PAYCHECK_CREW * 8
 	contains = list(/obj/item/fishing_rod/telescopic)
+
+/datum/supply_pack/goody/fish_analyzer
+	name = "Fish Analyzer"
+	desc = "A single analyzer to monitor fish's status and traits with, in case you don't have the technology to print one."
+	cost = PAYCHECK_CREW * 2.5
+	contains = list(/obj/item/fish_analyzer)
+
+/datum/supply_pack/goody/fish_catalog
+	name = "Fishing Catalog"
+	desc = "A catalog containing all the fishy info you'll ever need."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/book/manual/fish_catalog)
+
+/datum/supply_pack/goody/aquarium_props
+	name = "Aquarium Props Single-Pack"
+	desc = "A box containing generic aquarium props. You'll still need an aquarium or fish tank for these."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/storage/box/aquarium_props)
 
 /datum/supply_pack/goody/coffee_mug
 	name = "Coffee Mug"
@@ -359,6 +383,19 @@
 	cost = PAYCHECK_CREW * 1.5
 	contains = list(/obj/item/pet_carrier/small/mouse)
 
+/datum/supply_pack/goody/shuttle_construction_kit
+	name = "Shuttle Construction Starter Kit"
+	desc = "Contains a set of shuttle blueprints, and the circuitboards necessary for constructing your own shuttle. \
+			Well at least the ones you can't source yourself without Science's help."
+	cost = PAYCHECK_COMMAND * 12 //You assistants with shipwrighting ambitions can do a couple bounties, can't you?
+	access_view = ACCESS_AUX_BASE //Engineers have it, QM can give it to whoever, and scientists can just research the tech.
+	contains = list(
+		/obj/item/shuttle_blueprints,
+		/obj/item/circuitboard/computer/shuttle/flight_control,
+		/obj/item/circuitboard/computer/shuttle/docker,
+		/obj/item/circuitboard/machine/engine/propulsion = 2,
+	)
+
 /datum/supply_pack/goody/summoner_nifsoft
 	name = "Grimoire Caeruleam NIFSoft"
 	desc = "Contains a single Grimoire Caeruleam NIFSoft uploader disk."
@@ -387,3 +424,15 @@
 	cost = PAYCHECK_COMMAND * 2.5
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/mod/module/megaphone)
+
+/datum/supply_pack/goody/rock_tape
+	name = "Boombox tape (Rock)"
+	desc = "A classic rock track by George Patel, 'Bainrock'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/rock)
+
+/datum/supply_pack/goody/hiphop_tape
+	name = "Boombox tape (HipHop)"
+	desc = "A trendy hiphop track by F'norkiz Gamma, 'Groovepad'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/hiphop)

@@ -34,7 +34,7 @@
 	max_occurrences = 1
 	checks_antag_cap = FALSE
 
-/datum/round_event_control/antagonist/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/antagonist/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE, list/candidate_pool)
 	. = ..()
 	if(!.)
 		return

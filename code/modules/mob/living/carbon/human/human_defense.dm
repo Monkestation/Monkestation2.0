@@ -79,8 +79,8 @@
 	if(head)
 		if(head.IsReflect(def_zone))
 			return TRUE
-	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone))
+	for(var/obj/item/item as anything in get_held_items())
+		if(item.IsReflect(def_zone))
 			return TRUE
 	return FALSE
 
@@ -90,13 +90,13 @@
 		return SUCCESSFUL_BLOCK
 
 	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
+	for(var/obj/item/worn_thing as anything in get_equipped_items() | get_active_handset_items())
 		// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
-			if(worn_thing in held_items)
+			if(is_holding(worn_thing))
 				continue
 		// Things that are supposed to be held, being worn = cannot block
-		else if(!(worn_thing in held_items))
+		else if(!is_holding(worn_thing))
 			continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
@@ -395,7 +395,7 @@
 				to_chat(src, span_notice("You feel your heart beating again!"))
 	electrocution_animation(40)
 
-/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots() //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
+/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize obscured_slots //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
 	var/acidity = acidpwr * min(acid_volume*0.005, 0.1)
@@ -530,9 +530,9 @@
 		if(belt)
 			inventory_items_to_kill += belt
 
-		inventory_items_to_kill += held_items
+		inventory_items_to_kill += get_held_items()
 
-	for(var/obj/item/inventory_item in inventory_items_to_kill)
+	for(var/obj/item/inventory_item as anything in inventory_items_to_kill)
 		inventory_item.acid_act(acidpwr, acid_volume)
 	return TRUE
 
@@ -756,29 +756,31 @@
 
 /mob/living/carbon/human/proc/burn_clothing(seconds_per_tick, times_fired, stacks)
 	var/list/burning_items = list()
-	var/obscured = check_obscured_slots(TRUE)
 	//HEAD//
 
-	if(glasses && !(obscured & ITEM_SLOT_EYES))
-		burning_items += glasses
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
-		burning_items += wear_mask
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
-		burning_items += wear_neck
-	if(ears && !(obscured & ITEM_SLOT_EARS))
-		burning_items += ears
+	// monkestation edit: a fireproof helmet keeps your face gear from burning off
+	var/obj/item/clothing/head_clothes = head
+	if(!istype(head_clothes) || !(head_clothes.heat_protection & HEAD) || head_clothes.max_heat_protection_temperature < FIRE_HELM_MAX_TEMP_PROTECT)
+		if(glasses && !(covered_slots & HIDEEYES))
+			burning_items += glasses
+		if(wear_mask && !(covered_slots & HIDEMASK))
+			burning_items += wear_mask
+		if(wear_neck && !(covered_slots & HIDENECK))
+			burning_items += wear_neck
+		if(ears && !(covered_slots & HIDEEARS))
+			burning_items += ears
 	if(head)
 		burning_items += head
 
 	//CHEST//
-	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
+	if(w_uniform && !(covered_slots & HIDEJUMPSUIT))
 		burning_items += w_uniform
 	if(wear_suit)
 		burning_items += wear_suit
 
 	//ARMS & HANDS//
 	var/obj/item/clothing/arm_clothes = null
-	if(gloves && !(obscured & ITEM_SLOT_GLOVES))
+	if(gloves && !(covered_slots & HIDEGLOVES))
 		arm_clothes = gloves
 	else if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
 		arm_clothes = wear_suit
@@ -789,7 +791,7 @@
 
 	//LEGS & FEET//
 	var/obj/item/clothing/leg_clothes = null
-	if(shoes && !(obscured & ITEM_SLOT_FEET))
+	if(shoes && !(covered_slots & HIDESHOES))
 		leg_clothes = shoes
 	else if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
 		leg_clothes = wear_suit
@@ -804,34 +806,9 @@
 /mob/living/carbon/human/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
 	if(sigreturn & BURNING_HANDLED)
-		return 0
-
-	burn_clothing(seconds_per_tick, fire_handler.stacks)
-	if(HAS_TRAIT(src, TRAIT_RESISTHEAT))
 		return
-
-	if(!(sigreturn & BURNING_SKIP_PROTECTION))
-		if(get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
-			return 0
-		if(get_insulation(FIRE_SUIT_MAX_TEMP_PROTECT) >= 0.9)
-			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * 0.25 * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
-
-		adjust_bodytemperature(HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
-
-		var/fire_armor = (100 - src.getarmor(null, FIRE)) * 0.01
-
-		switch(times_fired)
-			if(0 to 3)
-				apply_damage((0.20 * fire_handler.stacks * fire_armor), BURN)
-			if(4 to 6)
-				apply_damage((0.30 * fire_handler.stacks * fire_armor), BURN)
-			if(7 to 9)
-				apply_damage((0.40 * fire_handler.stacks * fire_armor), BURN)
-			if(10 to INFINITY)
-				apply_damage((0.50 * fire_handler.stacks * fire_armor), BURN)
-
-	. = ..()
-	if(.)
-		add_mood_event("on_fire", /datum/mood_event/on_fire)
-		add_mob_memory(/datum/memory/was_burning)
-	return .
+	burn_clothing(seconds_per_tick, times_fired, fire_handler.stacks)
+	var/no_protection = FALSE
+	if(sigreturn & BURNING_SKIP_PROTECTION)
+		no_protection = TRUE
+	fire_handler.harm_human(seconds_per_tick, times_fired, no_protection)

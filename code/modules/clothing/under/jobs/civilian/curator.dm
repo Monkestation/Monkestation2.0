@@ -28,6 +28,10 @@
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
+/obj/item/clothing/under/rank/civilian/curator/treasure_hunter/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
@@ -43,9 +47,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/curator_nasa
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
+	cold_protection = CHEST | GROIN | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = FALSE
 	resistance_flags = NONE

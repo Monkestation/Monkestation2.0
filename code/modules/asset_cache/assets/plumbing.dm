@@ -35,13 +35,6 @@
 			"synthesizer_booze",
 			"tap_output",
 		),
-		'monkestation/code/modules/slimecore/icons/machinery.dmi' = list(
-			"cross_compressor",
-			"ooze_sucker",
-		),
-		'monkestation/code/modules/slimecore/icons/slime_grinder.dmi' = list(
-			"slime_grinder_backdrop",
-		),
 		'icons/obj/structures/drains.dmi' = list(
 			"active_input",
 			"active_output",

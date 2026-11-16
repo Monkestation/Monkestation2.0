@@ -1,5 +1,6 @@
 //Glasses
 /obj/item/clothing/glasses
+	abstract_type = /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/glasses_lefthand.dmi'
@@ -44,20 +45,17 @@
 		. += span_notice("Alt-click to toggle [p_their()] colors.")
 
 /obj/item/clothing/glasses/visor_toggling()
-	..()
+	. = ..()
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)
 		vision_flags ^= initial(vision_flags)
 	if(visor_vars_to_toggle & VISOR_INVISVIEW)
 		invis_view ^= initial(invis_view)
 
-/obj/item/clothing/glasses/weldingvisortoggle(mob/user)
+/obj/item/clothing/glasses/adjust_visor(mob/living/user)
 	. = ..()
-	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
-	if(. && user)
+	if(. && !user.is_holding(src) && (visor_vars_to_toggle & (VISOR_VISIONFLAGS|VISOR_INVISVIEW)))
 		user.update_sight()
-		if(iscarbon(user))
-			var/mob/living/carbon/carbon_user = user
-			carbon_user.head_update(src, forced = TRUE)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
@@ -436,7 +434,11 @@
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
 /obj/item/clothing/glasses/welding/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
+
+/obj/item/clothing/glasses/welding/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/glasses/welding/up/Initialize(mapload)
 	. = ..()
@@ -690,3 +692,31 @@
 	name = "CS inactive vision augmenter"
 	desc = "A pair of glasses usually designed to identify targets for execution, although this mechanic has been removed for civilian casual use."
 	icon_state = "crueltysquad_glasses"
+
+
+/obj/item/clothing/glasses/sunglasses/Initialize(mapload)
+	. = ..()
+
+/obj/item/clothing/glasses/welding/Initialize(mapload)
+	. = ..()
+	if(!up)
+		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
+/obj/item/clothing/glasses/welding/adjust_visor(mob/living/user)
+	. = ..()
+	if(up)
+		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+	else
+		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
+/obj/item/clothing/glasses/blindfold/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
+/obj/item/clothing/glasses/debug/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -15)
+
+/obj/item/clothing/glasses/nightmare_vision/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 13)

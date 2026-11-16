@@ -1,6 +1,7 @@
 //Alphabetical order of civilian jobs.
 
 /obj/item/clothing/under/rank/civilian
+	abstract_type = /obj/item/clothing/under/rank/civilian
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
@@ -143,11 +144,12 @@
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 	icon_state = "janimaid"
 	inhand_icon_state = "janimaid"
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/lawyer
+	abstract_type = /obj/item/clothing/under/rank/civilian/lawyer
 	desc = "Slick threads."
 	name = "Lawyer suit"
 	can_adjust = FALSE

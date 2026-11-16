@@ -42,17 +42,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /proc/init_preference_entries()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
-		if (initial(preference_type.abstract_type) == preference_type)
-			continue
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[preference_type] = new preference_type
 	return output
 
 /proc/init_preference_entries_by_key()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
-		if (initial(preference_type.abstract_type) == preference_type)
-			continue
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[initial(preference_type.savefile_key)] = GLOB.preference_entries[preference_type]
 	return output
 
@@ -82,7 +78,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/category = "misc"
 
 	/// Do not instantiate if type matches this.
-	var/abstract_type = /datum/preference
+	abstract_type = /datum/preference
 
 	/// What savefile should this preference be read from?
 	/// Valid values are PREFERENCE_CHARACTER and PREFERENCE_PLAYER.

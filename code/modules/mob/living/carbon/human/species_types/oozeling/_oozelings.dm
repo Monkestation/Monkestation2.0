@@ -1,6 +1,5 @@
 #define DAMAGE_WATER_STACKS 5
 #define REGEN_WATER_STACKS 1
-#define HEALTH_HEALED 2.5
 
 /datum/species/oozeling
 	name = "\improper Oozeling"
@@ -48,7 +47,6 @@
 	/// Typepaths of the default oozeling actions to give.
 	var/static/list/default_actions = list(
 		/datum/action/cooldown/slime_washing,
-		/datum/action/innate/core_signal,
 	)
 	/// Typepaths of extra actions to give to all oozelings.
 	var/list/extra_actions = list()
@@ -70,6 +68,7 @@
 /datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species, pref_load)
 	. = ..()
 	RegisterSignal(slime, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_reagent_expose))
+	RegisterSignal(slime, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	for(var/action_type in default_actions + extra_actions)
 		var/datum/action/action = new action_type(src)
 		action.Grant(slime)
@@ -79,7 +78,7 @@
 		slime.set_nutrition(rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_START_MAX))
 
 /datum/species/oozeling/on_species_loss(mob/living/carbon/human/former_slime, datum/species/new_species, pref_load)
-	UnregisterSignal(former_slime, COMSIG_ATOM_EXPOSE_REAGENTS)
+	UnregisterSignal(former_slime, list(COMSIG_ATOM_EXPOSE_REAGENTS, COMSIG_ATOM_ITEM_INTERACTION))
 	QDEL_LIST(actions_given)
 	. = ..()
 	former_slime.blood_volume = clamp(former_slime.blood_volume, BLOOD_VOLUME_SAFE, BLOOD_VOLUME_NORMAL)
@@ -99,10 +98,6 @@
 		if(findname(.))
 			. = .(gender, TRUE, lastname, ++attempts)
 
-//////
-/// HEALING SECTION
-/// Handles passive healing and water damage.
-
 /datum/species/oozeling/spec_life(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	. = ..()
 	if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
@@ -111,20 +106,10 @@
 		spec_slime_hunger(slime, seconds_per_tick)
 	spec_slime_wetness(slime, seconds_per_tick)
 
-/// Checks if the oozeling is hydrophobic due to having 10 oozeling wet stacks.
+/// Checks if the oozeling is hydrophobic due to having 20 oozeling wet stacks.
 /datum/species/oozeling/proc/is_slime_hydrophobic(mob/living/carbon/human/slime)
-	if(!slime)
-		return FALSE
-
 	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
-
-	if(!slime_wetness)
-		return FALSE
-
-	if(slime_wetness.stacks >= HYDROPHOBIA_WETNESS_STACKS)
-		return TRUE
-
-	return FALSE
+	return slime_wetness?.stacks >= HYDROPHOBIA_WETNESS_STACKS
 
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
@@ -138,11 +123,12 @@
 
 	if(wetness.stacks >= DAMAGE_WATER_STACKS)
 		remove_blood_volume(slime, 10 * seconds_per_tick)
-		slime.balloon_alert(slime, "too wet, dry off!")
-		if(SPT_PROB(25, seconds_per_tick))
+		if(COOLDOWN_FINISHED(src, wet_alert_cooldown))
+			slime.balloon_alert(slime, "too wet, dry off!")
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
+			COOLDOWN_START(src, wet_alert_cooldown, 2 SECONDS)
 
-	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
+	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick))
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
 		remove_blood_volume(slime, seconds_per_tick)
 		slime.balloon_alert(slime, "you're dripping wet!")
@@ -181,10 +167,6 @@
 		slimesucker.AddBloodVolume(-amount)
 	else
 		slime.blood_volume = max(slime.blood_volume - amount, 0)
-
-///////
-/// CHEMICAL HANDLING
-/// Here's where slimes heal off plasma and where they hate drinking water.
 
 // values shamelessly stolen from `get_insulation()`
 #define WATER_PROTECTION_HEAD 0.3
@@ -242,6 +224,46 @@
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	return NONE
 
+/datum/species/oozeling/proc/on_item_interaction(mob/living/carbon/human/slime, mob/living/user, obj/item/tool, list/modifiers)
+	SIGNAL_HANDLER
+	if(!istype(tool, /obj/item/coin) || (user.istate & ISTATE_HARM))
+		return NONE
+	if(DOING_INTERACTION_WITH_TARGET(user, slime))
+		return ITEM_INTERACT_BLOCKING
+	INVOKE_ASYNC(src, PROC_REF(absorb_coin), slime, user, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/datum/species/oozeling/proc/absorb_coin(mob/living/carbon/human/slime, mob/living/user, obj/item/coin/coin)
+	if(slime.nutrition >= NUTRITION_LEVEL_FULL)
+		user.balloon_alert(user, "too full!")
+		return
+	if(SEND_SIGNAL(slime, COMSIG_CARBON_ATTEMPT_EAT, coin) & COMSIG_CARBON_BLOCK_EAT)
+		return
+
+	var/membrane_zones = CHEST|HEAD|ARMS|HANDS|LEGS|FEET
+	var/covered_zones = NONE
+	for(var/obj/item/clothing/worn in slime.get_equipped_items())
+		covered_zones |= worn.body_parts_covered
+	if((covered_zones & membrane_zones) == membrane_zones && slime.is_mouth_covered())
+		to_chat(user, span_warning("You have to expose the membrane on [user == slime ? "your" : slime.p_their()] body."))
+		return
+
+	if(user != slime)
+		slime.visible_message(
+			span_danger("[user] attempts to feed [slime] [coin]."),
+			span_userdanger("[user] attempts to feed you [coin]."),
+		)
+		if(!do_after(user, 3 SECONDS, slime))
+			return
+
+	slime.adjust_nutrition(10 * sqrt(max(coin.value, 1))) // yumy
+	playsound(slime, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
+	slime.visible_message(
+		span_notice("[slime] absorbs [coin] into [slime.p_their()] body."),
+		span_notice("You absorb [coin] into your body."),
+	)
+	qdel(coin)
+
 /datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
 	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
 		return FALSE
@@ -256,7 +278,7 @@
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
 
-	slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+	slime.adjust_wet_stacks(-HYDROPHOBIA_WATER_EXPOSURE_COST, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 
 	if(is_slime_hydrophobic(slime))
 		if(!quiet_if_protected)
@@ -303,6 +325,12 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "coins",
+			SPECIES_PERK_NAME = "Coin Absorption",
+			SPECIES_PERK_DESC = "[plural_form] can absorb coins for nourishment. The more a coin is worth, the more filling it is.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "wind",
 			SPECIES_PERK_NAME = "Anaerobic Lineage",
 			SPECIES_PERK_DESC = "[plural_form] don't require much oxygen to live."
@@ -330,3 +358,6 @@
 	)
 
 	return to_add
+
+#undef REGEN_WATER_STACKS
+#undef DAMAGE_WATER_STACKS

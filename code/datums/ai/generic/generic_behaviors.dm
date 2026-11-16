@@ -198,8 +198,8 @@
 	if(QDELETED(target))
 		return
 
-	if(!(target in living_pawn.held_items))
-		if(!living_pawn.get_empty_held_indexes() || !living_pawn.put_in_hands(target))
+	if(!living_pawn.is_holding(target))
+		if(!length(living_pawn.get_empty_held_indexes()) || !living_pawn.put_in_hands(target))
 			finish_action(controller, FALSE, target, hunger_timer_key)
 			return
 
@@ -221,8 +221,8 @@
 /datum/ai_behavior/drop_item/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
-	var/obj/item/best_held = GetBestWeapon(controller, null, living_pawn.held_items)
-	for(var/obj/item/held as anything in living_pawn.held_items)
+	var/obj/item/best_held = GetBestWeapon(controller, null, living_pawn.get_held_items())
+	for(var/obj/item/held as anything in living_pawn.get_held_items())
 		if(!held || held == best_held)
 			continue
 		living_pawn.dropItemToGround(held)

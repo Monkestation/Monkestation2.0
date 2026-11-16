@@ -109,7 +109,7 @@
 /turf/open/openspace/proc/CanCoverUp()
 	return can_cover_up
 
-/turf/open/openspace/proc/CanBuildHere()
+/turf/open/openspace/CanBuildHere()
 	return can_build_on
 
 /turf/open/openspace/attackby(obj/item/C, mob/user, params)
@@ -131,9 +131,6 @@
 	return ..()
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -147,7 +144,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
 
@@ -171,8 +168,8 @@
 		ChangeTurf(new_floor_path, flags = flags)
 		return
 	// Create plating under tiled floor we try to create directly onto the air
-	PlaceOnTop(/turf/open/floor/plating, flags = flags)
-	PlaceOnTop(new_floor_path, flags = flags)
+	place_on_top(/turf/open/floor/plating, flags = flags)
+	place_on_top(new_floor_path, flags = flags)
 
 /turf/open/openspace/can_cross_safely(atom/movable/crossing)
 	if(HAS_TRAIT(crossing, TRAIT_MOVE_FLYING) || (locate(/obj/structure/lattice) in src))

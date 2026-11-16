@@ -70,7 +70,7 @@ export const OreSilo = (props: any) => {
           </Stack.Item>
           <Stack.Item grow>
             {currentTab === 0 ? (
-              !!machines && machines.length > 0 ? (
+              machines && machines.length > 0 ? (
                 <Section fill scrollable>
                   {machines.map((machine, index) => (
                     <MachineDisplay
@@ -86,7 +86,7 @@ export const OreSilo = (props: any) => {
               )
             ) : null}
             {currentTab === 1 ? (
-              !!logs && logs.length > 0 ? (
+              logs && logs.length > 0 ? (
                 <Section fill scrollable pr={1} height="100%">
                   {logs.map((log, index) => (
                     <LogEntry key={index} log={log} />

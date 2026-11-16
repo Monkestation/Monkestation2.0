@@ -52,7 +52,6 @@
 	set_density(FALSE)
 	if(!isnull(filler))
 		filler.set_density(FALSE)
-	update_freelook_sight()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
 	sleep(TRAM_DOOR_WARNING_TIME)
@@ -111,7 +110,6 @@
 	set_density(TRUE)
 	if(!isnull(filler))
 		filler.set_density(TRUE)
-	update_freelook_sight()
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, TRUE)
 	crush()

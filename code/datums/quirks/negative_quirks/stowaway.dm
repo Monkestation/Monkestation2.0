@@ -2,7 +2,7 @@
 	name = "Stowaway"
 	desc = "You wake up inside a random locker with only a crude fake for an ID card."
 	value = -2
-	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_HIDE_FROM_SCAN
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_HIDE_FROM_SCAN | QUIRK_OOZELING_SKIP
 	icon = FA_ICON_SUITCASE
 
 /datum/quirk/stowaway/add_unique()

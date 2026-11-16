@@ -15,6 +15,7 @@ const BASEICONS = {
   'Brig Physician': 'heart',
   Captain: 'crown',
   'Candy Salesman': 'cookie-bite',
+  'Cargo Gorilla': 'paw',
   'Cargo Technician': 'box',
   'CentCom Commander': 'star',
   'CentCom Head Intern': 'pen-fancy',
@@ -49,6 +50,7 @@ const BASEICONS = {
   'Personal AI': 'mobile-alt',
   Prisoner: 'lock',
   Psychologist: 'brain',
+  'Pun Pun': 'paw',
   Quartermaster: 'sack-dollar',
   'Research Director': 'user-graduate',
   Roboticist: 'battery-half',
@@ -330,6 +332,7 @@ const ALTTITLES = {
   Cytologist: BASEICONS.Xenobiologist,
   Cryptozoologist: BASEICONS.Xenobiologist,
   'Slime Mage': BASEICONS.Xenobiologist,
+  'Slime Rancher': BASEICONS.Xenobiologist,
 } as const;
 
 // Combine the Base icons and ALt titles

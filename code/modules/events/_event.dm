@@ -62,7 +62,7 @@
 	/// Tags of the event
 	var/tags = list()
 	/// List of the shared occurence types.
-	var/list/shared_occurences = list()
+	var/static/list/shared_occurences = list()
 	/// Whether a roundstart event can happen post roundstart. Very important for events which override job assignments.
 	var/can_run_post_roundstart = TRUE
 	/// If set then the type or list of types of storytellers we are restricted to being trigged by
@@ -257,7 +257,7 @@ Runs the event
 	SEND_SIGNAL(src, COMSIG_CREATED_ROUND_EVENT, round_event)
 	round_event.setup()
 	round_event.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
-	occurrences++
+	add_occurrence()
 
 	if(announce_chance_override != null)
 		round_event.announce_chance = announce_chance_override
@@ -295,21 +295,24 @@ Runs the event
 
 ///Adds an occurence. Has to use the setter to properly handle shared occurences
 /datum/round_event_control/proc/add_occurrence()
-	if(shared_occurence_type)
-		if(!shared_occurences[shared_occurence_type])
-			shared_occurences[shared_occurence_type] = 0
-		shared_occurences[shared_occurence_type]++
+	adjust_shared_occurrences(1)
 	occurrences++
 	calculated_weight = null //flag our calculated_weight as needing to be recalculated
 
 ///Subtracts an occurence. Has to use the setter to properly handle shared occurences
 /datum/round_event_control/proc/subtract_occurrence()
-	if(shared_occurence_type)
-		if(!shared_occurences[shared_occurence_type])
-			shared_occurences[shared_occurence_type] = 0
-		shared_occurences[shared_occurence_type]--
+	adjust_shared_occurrences(-1)
 	occurrences--
 	calculated_weight = null
+
+///Changes the count for our shared occurence type, if we have one, and flags every event sharing it as needing its weight recalculated.
+/datum/round_event_control/proc/adjust_shared_occurrences(amount)
+	if(!shared_occurence_type)
+		return
+	shared_occurences[shared_occurence_type] += amount
+	for(var/datum/round_event_control/event as anything in SSevents.control)
+		if(event.shared_occurence_type == shared_occurence_type)
+			event.calculated_weight = null
 
 ///Gets occurences. Has to use the getter to properly handle shared occurences
 /datum/round_event_control/proc/get_occurrences()
@@ -366,12 +369,12 @@ Runs the event
 		if(roundstart)
 			if(!can_run_post_roundstart)
 				return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a>"
-			return "<a href='byond://?src=[REF(src)];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];action=schedule'>Schedule</a>"
+			return "<a href='byond://?src=[REF(src)];[HrefToken()];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=schedule'>Schedule</a>"
 		else
-			return "<a href='byond://?src=[REF(src)];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];action=schedule'>Schedule</a> <a href='byond://?src=[REF(src)];action=force_next'>Force Next</a>"
+			return "<a href='byond://?src=[REF(src)];[HrefToken()];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=schedule'>Schedule</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=force_next'>Force Next</a>"
 	else
 		if(roundstart)
-			return "<a href='byond://?src=[REF(src)];action=schedule'>Add Roundstart</a> <a href='byond://?src=[REF(src)];action=force_next'>Force Roundstart</a>"
+			return "<a href='byond://?src=[REF(src)];[HrefToken()];action=schedule'>Add Roundstart</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=force_next'>Force Roundstart</a>"
 		else
 			return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a> <a class='linkOff'>Force Next</a>"
 
@@ -381,7 +384,7 @@ Runs the event
 	if(QDELETED(src))
 		return
 
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 
 	switch(href_list["action"])

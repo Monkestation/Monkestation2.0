@@ -15,8 +15,8 @@
 	maxHealth = 100
 	health = 100
 	habitable_atmos = null
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = INFINITY
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = INFINITY
 
 	obj_damage = 70
 	melee_damage_lower = 5

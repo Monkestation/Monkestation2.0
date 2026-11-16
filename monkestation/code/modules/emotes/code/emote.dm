@@ -519,7 +519,7 @@
 	message_param = "breathes in at %t."
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
-	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
+	falloff_exponent = 1
 
 /datum/emote/living/breathein/get_sound(mob/living/user)
 	return 'sound/mobs/humanoids/breathing/breathein.ogg'
@@ -535,7 +535,7 @@
 	message_param = "breathes out at %t."
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
-	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
+	falloff_exponent = 1
 
 /datum/emote/living/breatheout/get_sound(mob/living/user)
 	return 'sound/mobs/humanoids/breathing/breatheout.ogg'
@@ -556,3 +556,14 @@
 /datum/emote/living/alert/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	user.do_alert_animation()
+
+/datum/emote/living/plink
+	key = "plink"
+	key_third_person = "plinks"
+	message = "plinks."
+
+/datum/emote/living/plink/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/plink.ogg',
+		'sound/mobs/plonk.ogg',
+	)

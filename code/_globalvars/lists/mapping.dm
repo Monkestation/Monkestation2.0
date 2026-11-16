@@ -114,6 +114,7 @@ GLOBAL_LIST_EMPTY(generic_event_spawns)
 /// essentially allowing a user to override generic job spawnpoints with a specific one
 GLOBAL_LIST_EMPTY(jobspawn_overrides)
 
+GLOBAL_LIST_EMPTY(gorilla_start)
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)
 GLOBAL_LIST_EMPTY(nukeop_leader_start)
@@ -150,6 +151,8 @@ GLOBAL_LIST_EMPTY(areas)
 GLOBAL_LIST_EMPTY(sortedAreas)
 /// An association from typepath to area instance. Only includes areas with `unique` set.
 GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)
+/// A list of player-created areas.
+GLOBAL_LIST_EMPTY_TYPED(custom_areas, /area)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
 

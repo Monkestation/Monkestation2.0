@@ -111,6 +111,7 @@
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/signal_commander,
 		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/slimepedia,
 	)
 
 /obj/item/modular_computer/pda/heads/ntrep
@@ -245,6 +246,7 @@
 		/datum/computer_file/program/signal_commander,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/slimepedia,
 	)
 
 /obj/item/modular_computer/pda/roboticist
@@ -271,6 +273,9 @@
 	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/xenobiologist")
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#FF66CC"
+	starting_programs = list(
+		/datum/computer_file/program/slimepedia,
+	)
 
 /**
  * Medical
@@ -427,6 +432,15 @@
 	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/bar")
 	greyscale_colors = "#333333#C7C7C7"
 	inserted_item = /obj/item/pen/fountain
+
+/obj/item/modular_computer/pda/pun_pun
+	name = "monkey PDA"
+	SETUP_MAP_ICONS("pda", "/obj/item/modular_computer/pda/pun_pun")
+	greyscale_colors = "#ffcc66#914800"
+	starting_programs = list(
+		/datum/computer_file/program/bounty_board,
+		/datum/computer_file/program/emojipedia,
+	)
 
 /obj/item/modular_computer/pda/clown
 	name = "clown PDA"

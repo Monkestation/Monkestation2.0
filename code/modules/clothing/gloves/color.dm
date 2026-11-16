@@ -3,9 +3,9 @@
 	name = "black gloves"
 	icon_state = "black"
 	greyscale_colors = "#2f2e31"
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-
+	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
@@ -79,11 +79,15 @@
 	greyscale_colors = "#2f2e31"
 	strip_delay = 40
 	equip_delay_other = 20
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	custom_price = PAYCHECK_CREW * 1.5
 	undyeable = TRUE
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
+
+/obj/item/clothing/gloves/fingerless/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
@@ -144,7 +148,7 @@
 	name = "\proper Endotherm gloves"
 	desc = "A pair of thick grey gloves, lined to protect the wearer from freezing cold."
 	w_class = WEIGHT_CLASS_NORMAL
-
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
 	clothing_flags = THICKMATERIAL

@@ -73,6 +73,7 @@
 			var/mob/living/carbon/human/H = owner
 			var/mutable_appearance/badtime = mutable_appearance('icons/mob/human/bodyparts.dmi', "b_golem_eyes", -HIGHEST_LAYER-0.5)
 			badtime.appearance_flags = RESET_COLOR
+			H.apply_height(badtime, ENTIRE_BODY)
 			H.overlays_standing[HIGHEST_LAYER+0.5] = badtime
 			H.apply_overlay(HIGHEST_LAYER+0.5)
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/, remove_overlay), HIGHEST_LAYER+0.5), 25)

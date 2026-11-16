@@ -373,6 +373,7 @@
 /obj/item/bodypart/head/golem
 	biological_state = BIO_BONE
 	bodytype = BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
@@ -382,6 +383,7 @@
 	biological_state = BIO_BONE
 	acceptable_bodytype = BODYTYPE_ORGANIC
 	bodytype =  BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
@@ -390,6 +392,7 @@
 /obj/item/bodypart/arm/left/golem
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	bodytype = BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	hand_traits = list(TRAIT_CHUNKYFINGERS)
@@ -411,6 +414,7 @@
 /obj/item/bodypart/arm/right/golem
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	bodytype =  BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	hand_traits = list(TRAIT_CHUNKYFINGERS)
@@ -432,6 +436,7 @@
 /obj/item/bodypart/leg/left/golem
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	bodytype = BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	unarmed_damage_low = 11
@@ -442,12 +447,19 @@
 /obj/item/bodypart/leg/right/golem
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	bodytype = BODYTYPE_ORGANIC
+	bodyshape = NONE
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	unarmed_damage_low = 11
 	unarmed_damage_high = 11
 	unarmed_stun_threshold = 11
 	speed_modifier = 1.5
+///Free golem legs [So they dont move at speed no]
+/obj/item/bodypart/leg/left/golem/free
+	speed_modifier = 1
+
+/obj/item/bodypart/leg/right/golem/free
+	speed_modifier = 1
 
 ///CULT GOLEM
 /obj/item/bodypart/head/golem/cult

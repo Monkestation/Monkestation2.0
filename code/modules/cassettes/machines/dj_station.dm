@@ -374,7 +374,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	INVOKE_ASYNC(src, PROC_REF(play_to_all_listeners))
 	SStgui.update_uis(src)
 	log_music("[key_name(user)] [force ? "forcefully ": ""]began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) at [AREACOORD(src)]")
-	message_admins("[ADMIN_LOOKUPFLW(user)] [force ? "forcefully ": ""]began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] [force ? "forcefully ": ""]began playing the track \"[html_encode(playing.name)]\" from [html_encode(inserted_tape.name)] ([inserted_tape.cassette_data?.id || "no cassette id"])")
 	begin_processing()
 	return TRUE
 

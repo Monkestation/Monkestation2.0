@@ -7,6 +7,7 @@
  * Has a lot of the creature game world logic, such as health etc
  */
 /mob
+	abstract_type = /mob
 	density = TRUE
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
@@ -101,6 +102,11 @@
 	  */
 	var/name_archive //For admin things like possession
 
+	/// Default body temperature
+	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
+	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
+	var/old_bodytemperature = 0
+
 	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	/// Satiation level of the mob
@@ -132,7 +138,7 @@
 	  * `held_items[active_hand_index]` is the actively held item, but please use
 	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
-	var/list/held_items = list()
+	VAR_PROTECTED/list/held_items = list()
 	/// How many hands this mob has by default, which we divide by to know what y offset to give open inventories.
 	var/default_hand_amount = 2
 
@@ -212,3 +218,7 @@
 
 	/// A ref of the area we're taking our ambient loop from.
 	var/area/ambience_tracked_area
+
+	/// Sound tokens currently playing for this mob.
+	/// Managed by /datum/sound_token and the soundtoken subsystem
+	var/list/datum/sound_token/sound_tokens

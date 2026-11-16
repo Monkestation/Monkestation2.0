@@ -177,6 +177,9 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 
+	if(panel_open)
+		. += "[initial(icon_state)]-panel"
+
 	var/list/shown_contents = contents - component_parts
 	if(visible_contents && shown_contents.len > 0)
 		var/contents_icon_state = "[initial(icon_state)]"
@@ -245,11 +248,7 @@
 
 /obj/machinery/smartfridge/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
-		cut_overlays()
-		if(panel_open)
-			add_overlay("[initial(icon_state)]-panel")
-		else
-			cut_overlay("[initial(icon_state)]-panel")
+		update_appearance()
 		SStgui.update_uis(src)
 		return
 
@@ -567,13 +566,44 @@
 	desc = "A refrigerated storage unit for slime extracts."
 	base_build_path = /obj/machinery/smartfridge/extract
 
+/obj/machinery/smartfridge/extract/post_machine_initialize()
+	. = ..()
+	for(var/obj/machinery/extract_compressor/compressor in range(COMPRESSOR_LINK_RANGE, src))
+		compressor.link_nearest_recycler()
+
+/obj/machinery/smartfridge/extract/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return
+	for(var/obj/machinery/extract_compressor/compressor in range(COMPRESSOR_LINK_RANGE, src))
+		compressor.link_nearest_recycler()
+
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
-	if(istype(O, /obj/item/slime_extract))
+	if(istype(O, /obj/item/slime_extract) || istype(O, /obj/item/slime_rancher_scanner))
 		return TRUE
 	return FALSE
 
+// vacuum packs dump into it, and anything it takes can be thrown in
+/obj/machinery/smartfridge/extract/proc/can_take(obj/item/thing)
+	return !machine_stat && accept_check(thing) && length(contents - component_parts) < max_n_of_items
+
+/// Loads the item if the fridge can take it. Returns TRUE if it did.
+/obj/machinery/smartfridge/extract/proc/take(obj/item/thing)
+	if(!can_take(thing) || !load(thing))
+		return FALSE
+	SStgui.update_uis(src)
+	if(visible_contents)
+		update_appearance()
+	return TRUE
+
+/obj/machinery/smartfridge/extract/hitby(atom/movable/hitting_atom, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(isitem(hitting_atom) && take(hitting_atom))
+		playsound(src, 'sound/items/vacuum/vacuum_ploop.ogg', vol = 40, vary = TRUE)
+		return
+	return ..()
+
 /obj/machinery/smartfridge/extract/preloaded
-	initial_contents = list(/obj/item/slime_extract/grey = 2)
+	initial_contents = list(/obj/item/slime_extract/grey = 2, /obj/item/slime_rancher_scanner = 2)
 
 // -------------------------------------
 // Cytology Petri Dish Smartfridge

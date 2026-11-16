@@ -1,5 +1,5 @@
 /obj/item/bodypart/leg/get_bodypart_damage_state()
-	if(!(bodytype & BODYTYPE_DIGITIGRADE))
+	if(!(bodyshape & BODYSHAPE_DIGITIGRADE))
 		return ..()
 	. = ..()
 	for(var/mutable_appearance/appearance in .)
@@ -8,7 +8,7 @@
 
 
 /obj/item/proc/apply_digitigrade_filters(mutable_appearance/appearance, mob/living/carbon/wearer = loc)
-	if(!istype(wearer) || !(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE))
+	if(!istype(wearer) || !(wearer.bodyshape & BODYSHAPE_DIGITIGRADE))
 		return
 
 	var/static/list/masks_and_shading

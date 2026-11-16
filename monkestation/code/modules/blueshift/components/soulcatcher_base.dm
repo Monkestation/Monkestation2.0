@@ -621,7 +621,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 					if(istype(nifsoft_soulcatcher))
 						available_rooms.Add(nifsoft_soulcatcher.soulcatcher_rooms)
 
-				for(var/obj/item/held_item in human_user.held_items)
+				for(var/obj/item/held_item as anything in human_user.get_held_items())
 					if(parent == held_item)
 						continue
 

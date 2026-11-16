@@ -29,6 +29,11 @@
 	)
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+
+/obj/item/clothing/suit/apron/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
+	return replace_icon_legs(base_icon, legs)
 
 /datum/armor/suit_apron
 	bio = 50
@@ -106,6 +111,8 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/jacket_det_suit
+	heat_protection = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 
 
 
@@ -149,6 +156,7 @@
 	name = "hazard vest"
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
+	body_parts_covered = CHEST|GROIN
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = null
@@ -268,6 +276,7 @@
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
+	body_parts_covered = CHEST|GROIN|LEGS
 	allowed = list(
 		/obj/item/bonesetter,
 		/obj/item/cautery,
@@ -302,6 +311,8 @@
 		/obj/item/tank/internals,
 	)
 	armor_type = /datum/armor/jacket_curator
+	heat_protection = CHEST|ARMS
+	cold_protection = CHEST|ARMS
 
 
 
@@ -350,3 +361,8 @@
 /obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/xeno
+
+
+/obj/item/clothing/suit/apron/surgical/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) // FISH DOCTOR?!

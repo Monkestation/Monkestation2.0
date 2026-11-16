@@ -169,8 +169,8 @@
 
 	if(screenmob.hud_used)
 		if(screenmob.hud_used.hud_shown)
-			for(var/i in 1 to R.held_items.len)
-				var/obj/item/I = R.held_items[i]
+			for(var/i in 1 to R.get_num_hand_slots())
+				var/obj/item/I = R.get_item_for_held_index(i)
 				if(I)
 					switch(i)
 						if(BORG_CHOOSE_MODULE_ONE)
@@ -183,7 +183,7 @@
 							return
 					screenmob.client.screen += I
 		else
-			for(var/obj/item/I in R.held_items)
+			for(var/obj/item/I as anything in R.get_held_items())
 				screenmob.client.screen -= I
 
 /atom/movable/screen/robot/lamp

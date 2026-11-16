@@ -31,11 +31,13 @@
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	target.faction |= FACTION_CARP //:D
+	target.grant_language(/datum/language/carptongue, ALL, type)
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
 	REMOVE_TRAITS_IN(target, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(target, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT))
 	target.faction -= FACTION_CARP //:(
+	target.remove_language(/datum/language/carptongue, ALL, type)
 	. = ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)
@@ -379,7 +381,9 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 	desc = "This gloves are capable of making people use The Sleeping Carp."
 	icon_state = "black"
 	greyscale_colors = "#000000"
+	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	var/datum/martial_art/the_sleeping_carp/style

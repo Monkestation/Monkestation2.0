@@ -142,7 +142,7 @@
 	if (!issilicon(user))
 		return
 	var/mob/living/silicon/robot/as_cyborg = user
-	if (!(src in as_cyborg.held_items))
+	if (!as_cyborg.is_holding(src))
 		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -231,7 +231,7 @@
 	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !iscyborg(usr))
 		return ..()
 	var/mob/living/silicon/robot/user = usr
-	if (!(src in user.held_items))
+	if (!user.is_holding(src))
 		attack_self(user)
 	return ..()
 

@@ -107,10 +107,10 @@
 		if(ispath(possible_module))
 			continue
 		add_module(possible_module)
-	for(var/module_slot in 1 to length(cyborg_owner.held_items))
-		if(!cyborg_owner.held_items[module_slot] || (cyborg_owner.held_items[module_slot] in usable_modules))
+	for(var/obj/item/held_module as anything in cyborg_owner.get_held_items())
+		if(held_module in usable_modules)
 			continue
-		cyborg_owner.deactivate_module(cyborg_owner.held_items[module_slot])
+		cyborg_owner.deactivate_module(held_module)
 	atom_storage.refresh_views()
 
 /// Gets all modules regardless of their availability.
@@ -126,7 +126,7 @@
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
-	if(!(locate(module_to_add) in cyborg_owner.held_items))
+	if(!cyborg_owner.is_holding(module_to_add))
 		module_to_add.forceMove(src)
 	module_to_add.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	module_to_add.obj_flags |= ABSTRACT
@@ -139,7 +139,7 @@
 
 /// Removes a module.
 /obj/item/robot_model/proc/remove_module(obj/item/removed_module)
-	if(locate(removed_module) in cyborg_owner.held_items)
+	if(cyborg_owner.is_holding(removed_module))
 		cyborg_owner.deactivate_module(removed_module)
 	basic_modules -= removed_module
 	emagged_modules -= removed_module
