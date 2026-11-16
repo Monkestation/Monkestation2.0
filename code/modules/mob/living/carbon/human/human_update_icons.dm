@@ -1027,6 +1027,22 @@ generate/load female uniform sprites matching all previously decided variables
 
 	stack_trace("Invalid height body_area specified ([body_area || "null"])")
 
+/// Returns a copy of this icon file with our height filter already baked in, or null if we have to use the filter
+/mob/living/carbon/proc/get_squashed_icon(icon_file)
+	return
+
+/mob/living/carbon/human/get_squashed_icon(icon_file)
+	if(mob_height != MONKEY_HEIGHT_MEDIUM)
+		return null
+	// tools/squash_monkey_icons.py makes these, rerun it when the monkey art changes
+	if(icon_file == 'icons/mob/human/species/monkey/bodyparts.dmi')
+		return 'icons/mob/human/species/monkey/bodyparts_squashed.dmi'
+	if(icon_file == 'icons/mob/human/species/monkey/monkey_tail.dmi')
+		return 'icons/mob/human/species/monkey/monkey_tail_squashed.dmi'
+	if(icon_file == 'icons/mob/effects/dam_mob.dmi')
+		return 'icons/mob/effects/dam_mob_squashed.dmi'
+	return null
+
 /**
  * Applies a filter to an appearance according to mob height
  */
@@ -1056,6 +1072,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	// Move the filter up if the image has been moved down, and vice versa
 	var/adjust_y = -appearance.pixel_y - parent_adjust_y
+	var/squashed_icon = adjust_y ? null : get_squashed_icon(appearance.icon)
 
 	var/static/alist/height_mask_states = alist(
 		MONKEY_HEIGHT_DWARF = "monkey_dwarf",
@@ -1074,7 +1091,9 @@ generate/load female uniform sprites matching all previously decided variables
 //MONKESTATION EDIT END
 
 	var/mask_state = height_mask_states[mob_height]
-	if(isnull(mask_state))
+	if(squashed_icon)
+		appearance.icon = squashed_icon
+	else if(isnull(mask_state))
 		appearance.remove_filter("height_displacement")
 	else
 		var/icon/height_mask = masks[mob_height]

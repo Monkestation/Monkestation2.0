@@ -388,23 +388,23 @@
 		check_list += span_notice("\t There is some <a href='byond://?src=[REF(examiner)];gauze_limb=[REF(src)]'>[current_gauze.name]</a> wrapped around your [name].")
 
 /// Gets overlays to apply to the mob when damaged.
-/obj/item/bodypart/proc/get_bodypart_damage_state()
+/obj/item/bodypart/proc/get_bodypart_damage_state(damage_icon)
 	if(!dmg_overlay_type)
 		return
 
 	var/list/overlays
 	if(brutestate)
 		// divided into two overlays: one that gets colored and one that doesn't.
-		var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
+		var/image/brute_blood_overlay = image(damage_icon, "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
 		brute_blood_overlay.color = get_color_from_blood_list(blood_dna_info)
-		var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
+		var/mutable_appearance/brute_damage_overlay = mutable_appearance(damage_icon, "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 		if(brute_damage_overlay)
 			brute_blood_overlay.overlays += brute_damage_overlay
 		LAZYADD(overlays, brute_blood_overlay)
 
 	if(burnstate)
 		var/mutable_appearance/burn_overlay = mutable_appearance(
-			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon = damage_icon,
 			icon_state = "[dmg_overlay_type]_[body_zone]_0[burnstate]",
 			layer = -DAMAGE_LAYER,
 		)
@@ -1162,6 +1162,13 @@
 	if(!should_draw_greyscale || !icon_greyscale)
 		limb.icon = icon_static
 
+	var/icon_squashed = FALSE
+	if(!dropped && !is_husked && owner)
+		var/squashed_icon = owner.get_squashed_icon(limb.icon)
+		if(squashed_icon)
+			limb.icon = squashed_icon
+			icon_squashed = TRUE
+
 	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
 		limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
 	else
@@ -1229,7 +1236,7 @@
 	var/has_height = !dropped && !isnull(owner)
 	// Apply height to the overlays we generated so far
 	// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
-	if(has_height)
+	if(has_height && !icon_squashed)
 		for(var/image/generated_overlay in .)
 			// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
 			// it's more important to keep it consistent for things like getflaticon

@@ -299,9 +299,11 @@
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
 
+	var/damage_icon = 'icons/mob/effects/dam_mob.dmi'
+	var/squashed_icon = (bodyshape & BODYSHAPE_DIGITIGRADE) ? null : get_squashed_icon(damage_icon)
 	var/mutable_appearance/damage_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		var/list/part_overlays = iter_part.get_bodypart_damage_state()
+		var/list/part_overlays = iter_part.get_bodypart_damage_state(squashed_icon || damage_icon)
 		if(!LAZYLEN(part_overlays))
 			continue
 
@@ -314,7 +316,8 @@
 	if(isnull(damage_overlay))
 		return
 
-	apply_height(damage_overlay, ENTIRE_BODY)
+	if(!squashed_icon)
+		apply_height(damage_overlay, ENTIRE_BODY)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
