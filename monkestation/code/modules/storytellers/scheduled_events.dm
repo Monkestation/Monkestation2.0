@@ -40,9 +40,9 @@
 /datum/scheduled_event/proc/get_href_actions()
 	var/round_started = SSticker.HasRoundStarted()
 	if(round_started)
-		return "<a href='byond://?src=[REF(src)];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];action=reschedule'>Reschedule</a> <a href='byond://?src=[REF(src)];action=cancel'>Cancel</a> <a href='byond://?src=[REF(src)];action=refund'>Refund</a></td>"
+		return "<a href='byond://?src=[REF(src)];[HrefToken()];action=fire'>Fire</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=reschedule'>Reschedule</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=cancel'>Cancel</a> <a href='byond://?src=[REF(src)];[HrefToken()];action=refund'>Refund</a></td>"
 	else
-		return "<a href='byond://?src=[REF(src)];action=cancel'>Cancel</a>"
+		return "<a href='byond://?src=[REF(src)];[HrefToken()];action=cancel'>Cancel</a>"
 
 /// Try and fire off the scheduled event
 /datum/scheduled_event/proc/try_fire()
@@ -79,7 +79,7 @@
 
 /datum/scheduled_event/Topic(href, href_list)
 	. = ..()
-	if(QDELETED(src))
+	if(QDELETED(src) || !check_rights(R_ADMIN) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 	var/round_started = SSticker.HasRoundStarted()
 	switch(href_list["action"])

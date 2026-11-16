@@ -68,7 +68,7 @@ export const AtmosControlConsole = (props) => {
             )
           }
         >
-          {!!selectedChamber && !!selectedChamber.gasmix ? (
+          {selectedChamber && selectedChamber.gasmix ? (
             <GasmixParser
               gasmix={selectedChamber.gasmix}
               gasesOnClick={setActiveGasId}

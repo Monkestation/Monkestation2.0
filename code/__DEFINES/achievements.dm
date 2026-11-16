@@ -57,6 +57,7 @@
 #define MEDAL_GODS_WRATH "God's Wrath"
 #define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
 #define MEDAL_ARCHMAGE "Archmage"
+#define MEDAL_SHARKDRAGON "Sharkdragon"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
 #define MEDAL_JARED_LETO "Jared Leto"
 #define MEDAL_GOOD_BIRD "Embrace The Bird"
@@ -138,6 +139,9 @@
 
 /// DB ID for the amount of achievements unlocked by the player.
 #define ACHIEVEMENTS_SCORE "Achievements Score"
+
+///DB ID for all the different kinds of fish that you've caught so far.
+#define FISH_SCORE "Fish Score"
 
 // Tourist related achievements and scores
 

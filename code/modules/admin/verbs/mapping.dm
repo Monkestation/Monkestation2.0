@@ -251,7 +251,7 @@ ADMIN_VERB(debug_z_levels, R_DEBUG, FALSE, "Debug Z-Levels", "Displays a list of
 				linkage = "no linkage"
 			if (SELFLOOPING)
 				linkage = "self-looping"
-			if (CROSSLINKED)
+			if (CROSSLINKED, GRIDLINKED)
 				linkage = "linked at ([level.xi], [level.yi])"
 				linked_levels += level
 				min_x = min(min_x, level.xi)

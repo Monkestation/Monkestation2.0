@@ -43,6 +43,7 @@
 /obj/item/clothing/suit/utility/fire/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/firesuit)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 7)
 
 /datum/armor/utility_fire
 	melee = 15
@@ -111,6 +112,7 @@
 /obj/item/clothing/head/utility/bomb_hood/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, texture_type)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
 
 /datum/armor/utility_bomb_hood
 	melee = 20
@@ -145,6 +147,7 @@
 /obj/item/clothing/suit/utility/bomb_suit/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
 
 /datum/armor/utility_bomb_suit
 	melee = 20
@@ -200,6 +203,7 @@
 /obj/item/clothing/head/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 7)
 	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/black)
 
 /obj/item/clothing/suit/utility/radiation
@@ -226,4 +230,5 @@
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 7)
 	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/black)

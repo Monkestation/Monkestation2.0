@@ -226,7 +226,10 @@ class StorageProxy {
           ).some((settings) => settings !== undefined);
 
           if (!iframeHasPersistedStorage) {
-            this.log('info', 'No existing iframe data, migrating from byondstorage');
+            this.log(
+              'info',
+              'No existing iframe data, migrating from byondstorage',
+            );
             const hubStorageWasEnabled = testHubStorage();
             if (!hubStorageWasEnabled) {
               Byond.winset(null, 'browser-options', '+byondstorage');
@@ -258,7 +261,10 @@ class StorageProxy {
                     this.log('info', `Migrated '${setting}' from byondstorage`);
                   }
                 } catch {
-                  this.log('warn', `Failed to migrate '${setting}' from byondstorage`);
+                  this.log(
+                    'warn',
+                    `Failed to migrate '${setting}' from byondstorage`,
+                  );
                 }
               }),
             );
@@ -273,7 +279,10 @@ class StorageProxy {
           return iframe;
         }
 
-        this.log('warn', `Iframe storage failed to load from ${Byond.storageCdn}`);
+        this.log(
+          'warn',
+          `Iframe storage failed to load from ${Byond.storageCdn}`,
+        );
         iframe.destroy();
       } else {
         this.log('info', 'No storage CDN configured');

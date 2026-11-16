@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 			else
 				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, new_area)
 
-/proc/create_area(mob/creator)
+/proc/create_area(mob/creator,area/new_area_type = /area)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
 		/turf/open/space,
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		return
 
 	var/list/apc_map = list()
-	var/list/areas = list("New Area" = /area)
+	var/list/areas = list("New Area" = new_area_type)
 	for(var/i in 1 to turf_count)
 		var/turf/the_turf = turfs[i]
 		var/area/place = get_area(the_turf)
@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		var/str = tgui_input_text(creator, "New area name", "Blueprint Editing", max_length = MAX_NAME_LEN)
 		if(!str)
 			return
-		newA = new area_choice
+		newA = new new_area_type
 		newA.AddComponent(/datum/component/custom_area)
 		newA.setup(str)
 		newA.has_gravity = oldA.has_gravity

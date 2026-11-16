@@ -836,11 +836,44 @@
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
+	owner.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id)) //I believe I can fly!
 
 /datum/status_effect/go_away/tick()
 	owner.AdjustStun(1, ignore_canstun = TRUE)
-	var/turf/T = get_step(owner, direction)
-	owner.forceMove(T)
+	var/turf/turf = get_step(owner, direction)
+	if(!turf)
+		qdel(src)
+		return
+	owner.forceMove(turf)
+
+/datum/status_effect/go_away/on_remove()
+	. = ..()
+	owner.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id))
+
+///Subtype of the go away effect (phases the mob in one direction) that deletes the owner on z-level change or when the time's up.
+/datum/status_effect/go_away/deletes_mob
+	id = "go_away_deletes_mob"
+	duration = 30 SECONDS
+	/// Timer that tracks when we should vanish
+	var/deletion_timer
+
+/datum/status_effect/go_away/deletes_mob/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	deletion_timer = addtimer(CALLBACK(src, PROC_REF(wipe_bozo)), duration - 5 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	RegisterSignals(new_owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH), PROC_REF(wipe_bozo))
+
+/// Fades out and deletes the owner
+/datum/status_effect/go_away/deletes_mob/proc/wipe_bozo()
+	deltimer(deletion_timer)
+	owner.fade_into_nothing()
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
+
+/datum/status_effect/go_away/deletes_mob/on_remove()
+	. = ..()
+	deltimer(deletion_timer)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"

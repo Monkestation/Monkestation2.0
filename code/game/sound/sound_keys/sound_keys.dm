@@ -693,3 +693,10 @@
 		'sound/items/generic_device/generic_device_drop4.ogg',
 		'sound/items/generic_device/generic_device_drop5.ogg',
 	)
+/datum/sound_effect/default_fish_slap
+	key = SFX_DEFAULT_FISH_SLAP
+	file_paths = list('sound/mobs/non-humanoids/fish/fish_slap1.ogg')
+
+/datum/sound_effect/alt_fish_slap
+	key = SFX_ALT_FISH_SLAP
+	file_paths = list('sound/mobs/non-humanoids/fish/fish_slap2.ogg')
