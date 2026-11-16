@@ -19,6 +19,9 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/shipbreaker_templates = list()
 
+	///Ordered list of ruins that have been reserved. Each entry is list(ruin template, central turf, clear_below). Populated by seedRuins(), consumed by load_reserved_ruins().
+	var/list/reserved_ruins = list()
+
 	///List of ruins, separated by their theme
 	var/list/themed_ruins = list()
 
@@ -54,7 +57,6 @@ SUBSYSTEM_DEF(mapping)
 	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
-	var/loading_ruins = FALSE
 	var/list/turf/unused_turfs = list() //Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
 	var/list/datum/turf_reservations //list of turf reservations
 	var/list/used_turfs = list() //list of turf = datum/turf_reservation
@@ -156,6 +158,14 @@ SUBSYSTEM_DEF(mapping)
 		++space_levels_so_far
 	SStitle.add_init_text("Empty Space", "> Space", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
+	if(current_map.wilderness_levels)
+		var/list/FailedZs = list()
+
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.wilderness_maps_to_spawn, default_traits = current_map.wilderness_z_traits, height_autosetup = FALSE)
+
+		if(LAZYLEN(FailedZs))
+			CRASH("Ice wilds failed to load!")
+
 	start_time = REALTIMEOFDAY
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
@@ -168,16 +178,19 @@ SUBSYSTEM_DEF(mapping)
 
 	start_time = REALTIMEOFDAY
 	SStitle.add_init_text("Ruins", "> Ruins", "<font color='yellow'>LOADING...</font>")
-	loading_ruins = TRUE
 	setup_ruins()
-	loading_ruins = FALSE
 	SStitle.add_init_text("Ruins", "> Ruins", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
 #endif
-	// Run map generation after ruin generation to prevent issues
+	// Run map generation after ruin space is reserved, since this space is used for the cave gen.
 	run_map_terrain_generation()
 	// Generate our rivers, we do this here so the map doesn't load on top of them
 	setup_rivers()
+	// Now that terrain generation is done, actually load the ruin maps in.
+	var/ruin_load_start = REALTIMEOFDAY
+	SStitle.add_init_text("Ruin Loading", "> Ruin Loading", "<font color='yellow'>LOADING...</font>")
+	load_reserved_ruins()
+	SStitle.add_init_text("Ruin Loading", "> Ruin Loading", "<font color='green'>DONE</font>", (REALTIMEOFDAY - ruin_load_start) / (1 SECONDS))
 	// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
 	run_map_terrain_population()
 	// Add the first transit level
@@ -277,7 +290,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	if (length(ice_ruins))
 		// needs to be whitelisted for underground too so place_below ruins work
-		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE, mineral_budget = 4, mineral_budget_update = OREGEN_PRESET_TRIPLE_Z)
+		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/surface/outdoors/rocky, /area/icemoon/surface/outdoors/always_forested, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE, mineral_budget = 4, mineral_budget_update = OREGEN_PRESET_TRIPLE_Z)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (length(ice_ruins_underground))
@@ -293,6 +306,26 @@ SUBSYSTEM_DEF(mapping)
 	if (length(oshan_ruins))
 		seedRuins(oshan_ruins, CONFIG_GET(number/oshan_budget), list(/area/ocean/generated, /area/ocean/dark), themed_ruins[ZTRAIT_OSHAN_MINING], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_OSHAN)
 
+///loads all of the ruins we previously reserved space for
+/datum/controller/subsystem/mapping/proc/load_reserved_ruins()
+	for(var/list/reservation in reserved_ruins)
+		var/datum/map_template/ruin/reserved_ruin = reservation[1]
+		var/turf/central_turf = reservation[2]
+		var/clear_below = reservation[3]
+		load_ruin_now(reserved_ruin, central_turf, clear_below)
+	reserved_ruins.Cut()
+
+/**
+ * Immediately loads a single reserved ruin's map, and runs terrain generation for any
+ * of the areas, since they get spawned AFTER normal terrain gen runs its pass
+ */
+/datum/controller/subsystem/mapping/proc/load_ruin_now(datum/map_template/ruin/reserved_ruin, turf/central_turf, clear_below)
+	var/starting_area_count = length(GLOB.areas)
+	reserved_ruin.load_reserved(central_turf, clear_below)
+	for(var/i in starting_area_count + 1 to length(GLOB.areas))
+		var/area/ruin_area = GLOB.areas[i]
+		ruin_area.RunTerrainGeneration()
+
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
 /datum/controller/subsystem/mapping/proc/setup_rivers()
@@ -303,7 +336,12 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
-		spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+		// the wilderness levels have nothing below them to fall into
+		if(!level_trait(ice_z, ZTRAIT_DOWN))
+			spawn_rivers(ice_z, 6, /turf/open/lava/plasma/ice_moon, /area/icemoon/surface/outdoors/unexplored/rivers)
+			continue
+		var/river_type = HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED) ? /turf/open/lava/plasma/ice_moon : /turf/open/openspace/icemoon
+		spawn_rivers(ice_z, 4, river_type, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	for (var/ice_z in ice_ruins_underground)
@@ -402,7 +440,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	loaded_lazy_templates = SSmapping.loaded_lazy_templates
 
 #define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]")); log_world(X)
-/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
+/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE, height_autosetup = TRUE)
 	. = list()
 	var/start_time = REALTIMEOFDAY
 	if(!silent)
@@ -427,12 +465,22 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	if (!length(traits))  // null or empty - default
 		for (var/i in 1 to total_z)
-			traits += list(default_traits)
+			traits += list(default_traits.Copy())
 	else if (total_z != traits.len)  // mismatch
 		if (total_z < traits.len)  // ignore extra traits
 			traits.Cut(total_z + 1)
 		while (total_z > traits.len)  // fall back to defaults on extra levels
-			traits += list(default_traits)
+			traits += list(default_traits.Copy())
+
+	if(total_z > 1 && height_autosetup) // it's a multi z map, and we haven't opted out of trait autosetup
+		for(var/z in 1 to total_z)
+			if(z == 1) // bottom z-level
+				traits[z]["Up"] = TRUE
+			else if(z == total_z) // top z-level
+				traits[z]["Down"] = TRUE
+			else
+				traits[z]["Down"] = TRUE
+				traits[z]["Up"] = TRUE
 
 	// preload the relevant space_level datums
 	var/start_z = world.maxz + 1
@@ -551,7 +599,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	// load the station
 	station_start = world.maxz + 1
-	LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.traits, ZTRAITS_STATION)
+	LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.traits, ZTRAITS_STATION, height_autosetup = current_map.height_autosetup)
 
 	LoadStationRoomTemplates()
 	LoadStationRooms()
