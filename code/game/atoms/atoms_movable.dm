@@ -122,9 +122,6 @@
 	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
 	var/can_language_malfunction = TRUE
 
-	/// The weight for A* pathfinding added to turfs this atom is on.
-	var/astar_weight
-
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -194,11 +191,28 @@
 		if(MOVABLE_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
-	if(astar_weight && isturf(loc))
-		var/turf/turf_loc = loc
-		turf_loc.astar_weight += astar_weight
+	if(NAV_RELEVANT(src))
+		var/turf/spawn_turf = get_turf(src)
+		if(spawn_turf)
+			spawn_turf.nav_dirty()
+
+/atom/movable/set_density(new_value)
+	. = ..()
+	if(isnull(.)) //no change
+		return
+
+	if(!(flags_1 & (NAV_IRRELEVANT_1 | NAV_ALWAYS_CONDITIONAL_1)))
+		if(isturf(loc))
+			var/turf/our_turf = loc
+			our_turf.nav_dirty()
 
 /atom/movable/Destroy(force)
+	//Update the navmap if the destroyed thing was nav relevant : )
+	if(NAV_RELEVANT(src))
+		var/turf/our_turf = get_turf(src)
+		if(our_turf)
+			our_turf.nav_dirty()
+
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
 
@@ -878,12 +892,6 @@
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
 
-	if(astar_weight)
-		if(old_turf)
-			old_turf.astar_weight -= astar_weight
-		if(new_turf)
-			new_turf.astar_weight += astar_weight
-
 	if (old_turf?.z != new_turf?.z)
 		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))
 		on_changed_z_level(old_turf, new_turf, same_z_layer)
@@ -901,6 +909,13 @@
 
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
+
+	// Shit moving; mark em dirty if relevant
+	if(NAV_RELEVANT(src))
+		if(old_turf)
+			old_turf.nav_dirty()
+		if(new_turf && new_turf != old_turf)
+			new_turf.nav_dirty()
 
 	return TRUE
 
