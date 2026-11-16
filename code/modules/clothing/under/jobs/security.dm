@@ -355,6 +355,7 @@
 //////////////////////
 
 /obj/item/clothing/under/rank/security/private
+	can_adjust = FALSE
 	name = "private security turtleneck"
 	desc = "A tactical turtleneck for the privates of Nanotrasen's private security force."
 	icon_state = "private"
