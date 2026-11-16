@@ -1,4 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - admin: "The Tunnel Arts will now properly list the name of the move used in combat logs."
