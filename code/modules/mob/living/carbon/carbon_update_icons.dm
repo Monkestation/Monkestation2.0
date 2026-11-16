@@ -332,10 +332,10 @@
 	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
-			blood_overlay.color = blood_type.get_wound_color(src)
-			wound_overlay ||= blood_overlay
-			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
+			if(isnull(wound_overlay))
+				wound_overlay = mutable_appearance(layer = -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+				wound_overlay.color = blood_type.get_wound_color(src)
+			wound_overlay.add_overlay(mutable_appearance('icons/mob/effects/bleed_overlays.dmi', iter_part.bleed_overlay_icon))
 
 	if(isnull(wound_overlay))
 		return

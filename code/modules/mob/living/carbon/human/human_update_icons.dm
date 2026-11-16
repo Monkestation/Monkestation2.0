@@ -1047,15 +1047,19 @@ generate/load female uniform sprites matching all previously decided variables
  * Applies a filter to an appearance according to mob height
  */
 /mob/living/carbon/human/proc/apply_height_filter(image/appearance, parent_adjust_y=0)
+	// Move the filter up if the image has been moved down, and vice versa
+	var/adjust_y = parent_adjust_y - appearance.pixel_y
+
+	// the client draws a KEEP_TOGETHER holder cropped to its drawn pixels and centers the mask on that, so the rows land wherever. filter the stuff inside instead
+	if(isnull(appearance.icon) && (appearance.appearance_flags & KEEP_TOGETHER))
+		for(var/image/overlay in list() + appearance.underlays + appearance.overlays)
+			apply_height_filter(overlay, parent_adjust_y = adjust_y)
+		return appearance
+
 //MONKESTATION EDIT START
 	// Pick a displacement mask depending on the height of the icon, ?x48 icons are used for features which would otherwise get clipped when tall players use them
 	// Note: Due to how this system works it's okay to use a mask which is wider than the appearence but NOT okay if the mask is thinner, taller or shorter
-	// Worn items with separate overlays are an empty KEEP_TOGETHER holder (see build_worn_icon), so size the mask off what's drawn inside it
-	var/sized_icon = appearance.icon
-	if(isnull(sized_icon) && length(appearance.overlays))
-		var/mutable_appearance/drawn = appearance.overlays[1]
-		sized_icon = drawn.icon
-	var/alist/dims = isnull(sized_icon) ? alist("width" = 0, "height" = 0) : get_icon_dimensions(sized_icon)
+	var/alist/dims = isnull(appearance.icon) ? alist("width" = 0, "height" = 0) : get_icon_dimensions(appearance.icon)
 	var/icon_width = dims["width"]
 	var/icon_height = dims["height"]
 
@@ -1070,8 +1074,6 @@ generate/load female uniform sprites matching all previously decided variables
 		else if(icon_height != 32 || icon_width > 32)
 			stack_trace("Bad dimensions (w[icon_width],h[icon_height]) for icon '[appearance.icon]'")
 
-	// Move the filter up if the image has been moved down, and vice versa
-	var/adjust_y = -appearance.pixel_y - parent_adjust_y
 	var/squashed_icon = adjust_y ? null : get_squashed_icon(appearance.icon)
 
 	var/static/alist/height_mask_states = alist(
