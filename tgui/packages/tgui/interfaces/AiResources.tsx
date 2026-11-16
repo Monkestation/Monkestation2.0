@@ -93,7 +93,7 @@ export const AiResources = (props) => {
                 maxValue={total_cpu}
               >
                 {toFixed(remaining_cpu)}/{toFixed(total_cpu)} THz (
-                {toFixed(remaining_cpu/total_cpu * 100)}%)
+                {toFixed((remaining_cpu / total_cpu) * 100)}%)
               </ProgressBar>
             </Section>
             <Section my={-2} title="Cloud RAM Resources">
@@ -107,7 +107,7 @@ export const AiResources = (props) => {
                 maxValue={total_ram}
               >
                 {toFixed(remaining_ram)}/{toFixed(total_ram)} TB (
-                {toFixed(remaining_ram/total_ram * 100)}%)
+                {toFixed((remaining_ram / total_ram) * 100)}%)
               </ProgressBar>
             </Section>
             <Section
