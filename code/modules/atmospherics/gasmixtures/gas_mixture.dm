@@ -431,7 +431,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	if(length(only_in_sharer + only_in_cached)) //if all gases were present in both mixtures, we know that no gases are 0
+	if(length(only_in_sharer) || length(only_in_cached)) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(only_in_cached) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(only_in_sharer) //the reverse is equally true
 	else if (initial(sharer.gc_share))
