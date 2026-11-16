@@ -439,7 +439,7 @@
 	name = "The Great Skub Contention"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = FALSE
-	weight = 2
+	weight = 1
 	sign_up_button = TRUE
 	/// List of people signed up to be either pro_skub or anti_skub
 	var/list/skubbers = list()

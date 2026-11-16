@@ -74,15 +74,15 @@ export type Design = {
  * The static and dynamic data made available to a fabricator UI.
  */
 export type FabricatorData = {
-	/**
-	 * Current machine mode for dual-purpose fabricators.
-	 */
-	machine_mode?: 'lathe' | 'ammo';
+  /**
+   * Current machine mode for dual-purpose fabricators.
+   */
+  machine_mode?: 'lathe' | 'ammo';
 
-	/**
-	 * Label for the mode-toggle button.
-	 */
-	mode_toggle_label?: string;
+  /**
+   * Label for the mode-toggle button.
+   */
+  mode_toggle_label?: string;
 
   /**
    * Label for the currently active lathe recipe set.
@@ -107,10 +107,10 @@ export type FabricatorData = {
    */
   lathe_recipe_can_switch?: BooleanLike;
 
-	/**
-	 * Optional tgui theme name for this fabricator window.
-	 */
-	ui_theme?: string;
+  /**
+   * Optional tgui theme name for this fabricator window.
+   */
+  ui_theme?: string;
 
   /**
    * Ammo-mode: whether an ammo container is inserted.

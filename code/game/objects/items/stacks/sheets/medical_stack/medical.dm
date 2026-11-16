@@ -33,6 +33,8 @@
 	var/sanitization
 	/// How much we add to flesh_healing for burn wounds on application
 	var/flesh_regeneration
+	/// Whether this item can be used on dead bodies
+	var/works_on_dead = FALSE
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -238,7 +240,7 @@
 	if(!can_heal(patient, user, healed_zone, silent))
 		// has its own feedback
 		return FALSE
-	if(patient.stat == DEAD)
+	if(!works_on_dead && patient.stat == DEAD)
 		if(!silent)
 			patient.balloon_alert(user, "[patient.p_theyre()] dead!")
 		return FALSE
@@ -580,6 +582,7 @@
 	mob_throw_hit_sound = 'sound/misc/moist_impact.ogg'
 	hitsound = 'sound/misc/moist_impact.ogg'
 	merge_type = /obj/item/stack/medical/poultice
+	works_on_dead = TRUE
 
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/living/user)
 	. = ..()

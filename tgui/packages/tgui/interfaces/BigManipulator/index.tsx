@@ -1,4 +1,6 @@
+import type { BooleanLike } from 'common/react';
 import { useEffect, useState } from 'react';
+import { useBackend } from '../../backend';
 import {
   BlockQuote,
   Box,
@@ -11,9 +13,6 @@ import {
   Stack,
   Table,
 } from '../../components';
-import type { BooleanLike } from 'common/react';
-
-import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import type { ManipulatorData, ManipulatorTask } from './types';
 
