@@ -9,7 +9,7 @@
 	. = list()
 	for(var/accessory_name in accessory_list)
 		var/datum/sprite_accessory/accessory = accessory_list[accessory_name]
-		if(!istype(accessory)) // "Nude" has no datum
+		if(!istype(accessory) || !accessory.icon_state || accessory.icon_state == SPRITE_ACCESSORY_NONE) // "Nude" has nothing to draw
 			. += accessory_name
 		else if(!accessory.locked && icon_exists(icon_file, accessory.icon_state))
 			. += accessory_name
@@ -19,7 +19,7 @@
 	var/datum/universal_icon/final_icon = uni_icon('icons/blanks/32x32.dmi', "nothing")
 	for(var/zone in body_zones)
 		final_icon.blend_icon(uni_icon('icons/mob/human/species/vox/bodyparts_lime.dmi', "vox_[zone]"), ICON_OVERLAY)
-	if(istype(accessory))
+	if(istype(accessory) && accessory.icon_state && accessory.icon_state != SPRITE_ACCESSORY_NONE)
 		final_icon.blend_icon(uni_icon(icon_file, accessory.icon_state), ICON_OVERLAY)
 	return final_icon
 

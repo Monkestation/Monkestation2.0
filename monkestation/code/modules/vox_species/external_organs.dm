@@ -178,14 +178,26 @@ GLOBAL_LIST_EMPTY(vox_body_markings_list)
 	var/gradient_color
 
 /datum/bodypart_overlay/mutant/vox_quills/get_extended_overlay(obj/item/bodypart/limb, layer_index, layer_real)
+	return null
+
+/// The gradient is drawn inside the quills, the same way Yogstation does it: an inset overlay on top of the (additively colored) quills.
+/datum/bodypart_overlay/mutant/vox_quills/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
+	. = ..()
 	var/datum/sprite_accessory/gradient = GLOB.hair_gradients_list[gradient_style]
-	if(!istype(gradient) || gradient.name == SPRITE_ACCESSORY_NONE || !gradient_color)
-		return null
-	var/icon/gradient_icon = icon(gradient.icon, gradient.icon_state)
-	gradient_icon.Blend(icon(sprite_datum.icon, "m_[feature_key]_[sprite_datum.icon_state]_[layer_index]"), ICON_ADD)
-	var/mutable_appearance/overlay = mutable_appearance(gradient_icon, layer = layer_real)
-	overlay.color = gradient_color
-	return list(overlay)
+	if(!istype(gradient) || gradient.name == SPRITE_ACCESSORY_NONE || !gradient.icon_state || !gradient_color)
+		return
+	var/mutable_appearance/quills_base = .
+	if(!istype(quills_base))
+		return
+	var/mutable_appearance/quills_overlay = mutable_appearance(layer = layer_real)
+	quills_overlay.appearance_flags |= KEEP_TOGETHER
+	quills_base.layer = FLOAT_LAYER
+	quills_overlay.overlays += quills_base
+	var/mutable_appearance/gradient_quills = mutable_appearance(gradient.icon, gradient.icon_state)
+	gradient_quills.color = list(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, sanitize_hexcolor(gradient_color, include_crunch = TRUE))
+	gradient_quills.blend_mode = BLEND_INSET_OVERLAY
+	quills_overlay.overlays += gradient_quills
+	return quills_overlay
 
 /datum/bodypart_overlay/mutant/vox_quills/generate_icon_cache()
 	. = ..()

@@ -15,6 +15,25 @@
 	icon_static = GLOB.vox_skin_tones[features["vox_skin_tone"]] || initial(icon_static)
 	vox_markings = features["vox_body_markings"]
 	vox_markings_color = features["vox_body_markings_color"]
+	// Our tail and quills follow the owner's features too, which is what lets the character preview show changes to them.
+	for(var/datum/bodypart_overlay/mutant/overlay in bodypart_overlays)
+		var/datum/bodypart_overlay/mutant/tail/vox/tail_overlay = overlay
+		var/datum/bodypart_overlay/mutant/vox_quills/quills_overlay = overlay
+		if(istype(tail_overlay))
+			tail_overlay.markings = features["vox_tail_markings"]
+			tail_overlay.markings_color = features["vox_tail_markings_color"]
+		else if(istype(quills_overlay))
+			if(quills_overlay.gradient_feature)
+				quills_overlay.gradient_style = features[quills_overlay.gradient_feature]
+				quills_overlay.gradient_color = features["[quills_overlay.gradient_feature]_color"]
+			quills_overlay.inherit_color(src, force = TRUE)
+		else
+			continue
+		var/feature_name = features[overlay.feature_key]
+		if(feature_name in overlay.get_global_feature_list())
+			overlay.set_appearance_from_name(feature_name)
+		else
+			overlay.cache_key = jointext(overlay.generate_icon_cache(), "_")
 
 /// Returns a list with the body marking overlay of this limb.
 /obj/item/bodypart/proc/vox_marking_overlays(dropped)
