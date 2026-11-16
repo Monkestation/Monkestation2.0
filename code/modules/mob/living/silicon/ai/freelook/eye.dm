@@ -142,6 +142,12 @@
 	if(user.client.eye == src && ishuman(source) && !ai.canExamineHumans)
 		return COMSIG_MOB_CANCEL_CLICKON
 
+// monkestation edit: the examine verb never goes through the shift click, so check it here too
+/mob/living/silicon/ai/run_examinate(atom/examinify)
+	if(ishuman(examinify) && !canExamineHumans && eyeobj && client?.eye == eyeobj)
+		return
+	return ..()
+
 /atom/proc/move_camera_by_click()
 	if(!isAI(usr))
 		return
