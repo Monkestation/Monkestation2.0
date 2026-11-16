@@ -18,6 +18,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(emp_burst))
 
+/// EMPs whatever we just hit
 /mob/living/basic/chicken/robot/proc/emp_burst(datum/source, atom/target, success)
 	SIGNAL_HANDLER
 	if(!success)
