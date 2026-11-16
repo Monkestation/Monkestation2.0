@@ -159,7 +159,7 @@
 /datum/round_event_control/antagonist/get_href_actions()
 	// firing or scheduling one of these with no latejoiner would just grab someone already aboard, unprompted
 	if(track == EVENT_TRACK_LATEJOIN)
-		return "<a href='byond://?src=[REF(src)];action=force_next'>Force Next</a>"
+		return "<a href='byond://?src=[REF(src)];[HrefToken()];action=force_next'>Force Next</a>"
 	return ..()
 
 /datum/round_event_control/antagonist/get_weight()
