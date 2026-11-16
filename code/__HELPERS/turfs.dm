@@ -474,58 +474,65 @@ Turf and target are separate in case you want to teleport some distance from a t
 			LAZYADD(filtered_points[area_subtype], turf)
 	return flatten_list(filtered_points)
 
+GLOBAL_LIST_INIT(noise_turf_forbidden_areas, typecacheof(list(
+	/area/graveyard,
+	/area/station/ai_monitored,
+	/area/station/command/secure_bunker,
+	/area/station/engineering/atmospherics_engine,
+	/area/station/engineering/shipbreaker_hut,
+	/area/station/engineering/supermatter,
+	/area/station/maintenance,
+	/area/station/science/ordnance/bomb,
+	/area/station/science/ordnance/burnchamber,
+	/area/station/science/ordnance/freezerchamber,
+	/area/station/science/xenobiology/cell,
+	/area/station/solars,
+)))
+
 /// Picks up to `amount` open station turfs spread out with poisson noise, each department weighted equally.
 /// Skips turfs within 1 tile of anything in `avoid_types`.
 /proc/pick_noise_station_turfs(amount, radius, list/avoid_types)
-	var/static/list/forbidden_area_typecache
-	if(isnull(forbidden_area_typecache))
-		forbidden_area_typecache = typecacheof(list(
-			/area/graveyard,
-			/area/station/ai_monitored,
-			/area/station/command/secure_bunker,
-			/area/station/engineering/atmospherics_engine,
-			/area/station/engineering/shipbreaker_hut,
-			/area/station/engineering/supermatter,
-			/area/station/maintenance,
-			/area/station/science/ordnance/bomb,
-			/area/station/science/ordnance/burnchamber,
-			/area/station/science/ordnance/freezerchamber,
-			/area/station/science/xenobiology/cell,
-			/area/station/solars,
-		))
-
 	var/list/picked_turfs = list()
-	var/list/turf_groups = noise_turfs_station_equal_weight(radius, forbidden_area_typecache)
-	main_loop:
-		while(length(picked_turfs) < amount && length(turf_groups))
-			var/idx = rand(1, length(turf_groups))
-			var/list/chosen_group = turf_groups[idx]
-			var/turf/chosen_location = pick_n_take(chosen_group)
-			if(!length(chosen_group))
-				turf_groups.Cut(idx, idx + 1)
-
-			if(chosen_location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS) // no
-				continue
-
-			// gotta make sure we're an open, floor turf
-			if(chosen_location.density || isgroundlessturf(chosen_location))
-				continue
-
-			// make sure it's got at least 3x3 open space
-			for(var/turf/nearby_turf as anything in RANGE_TURFS(1, chosen_location))
-				if(!isopenturf(nearby_turf))
-					continue main_loop
-
-			// ensure there's no dense objects on the turf
-			for(var/obj/checked_object in chosen_location)
-				if(checked_object.density)
-					continue main_loop
-
-			// We don't want them close to each other - at least 1 tile of seperation
-			var/list/nearby_things = range(1, chosen_location)
-			for(var/avoid_type in avoid_types)
-				if(locate(avoid_type) in nearby_things)
-					continue main_loop
-
+	var/list/turf_groups = noise_turfs_station_equal_weight(radius, GLOB.noise_turf_forbidden_areas)
+	while(length(picked_turfs) < amount && length(turf_groups))
+		var/idx = rand(1, length(turf_groups))
+		var/list/chosen_group = turf_groups[idx]
+		var/turf/chosen_location = pick_n_take(chosen_group)
+		if(!length(chosen_group))
+			turf_groups.Cut(idx, idx + 1)
+		if(is_valid_noise_turf(chosen_location, avoid_types))
 			picked_turfs += chosen_location
 	return picked_turfs
+
+/proc/is_near_turfs(turf/candidate, list/turfs, distance)
+	for(var/turf/other as anything in turfs)
+		if(other.z == candidate.z && get_dist(other, candidate) < distance)
+			return TRUE
+	return FALSE
+
+/// Whether something can spawn on this noise turf: open floor with normal air, 3x3 open space, nothing dense on it, and nothing in `avoid_types` within 1 tile.
+/proc/is_valid_noise_turf(turf/chosen_location, list/avoid_types)
+	if(chosen_location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS) // no
+		return FALSE
+
+	// gotta make sure we're an open, floor turf
+	if(chosen_location.density || isgroundlessturf(chosen_location))
+		return FALSE
+
+	// make sure it's got at least 3x3 open space
+	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, chosen_location))
+		if(!isopenturf(nearby_turf))
+			return FALSE
+
+	// ensure there's no dense objects on the turf
+	for(var/obj/checked_object in chosen_location)
+		if(checked_object.density)
+			return FALSE
+
+	// We don't want them close to each other - at least 1 tile of seperation
+	var/list/nearby_things = range(1, chosen_location)
+	for(var/avoid_type in avoid_types)
+		if(locate(avoid_type) in nearby_things)
+			return FALSE
+
+	return TRUE

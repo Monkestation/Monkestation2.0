@@ -96,8 +96,33 @@
 
 /obj/effect/bnnuy/proc/spawn_wonderland_rabbits()
 	var/opened = hunter_antag.rabbits_spotted
-	for(var/turf/rabbit_turf as anything in pick_noise_station_turfs(max(rand(opened, opened + 2), 2), 4))
+	var/amount = max(rand(opened, opened + 2), 2)
+	var/list/rabbit_turfs = pick_turfs_near_people(amount)
+	if(length(rabbit_turfs) < amount)
+		rabbit_turfs += pick_hunter_spawn_turfs(amount - length(rabbit_turfs), rabbit_turfs)
+	for(var/turf/rabbit_turf as anything in rabbit_turfs)
 		new /obj/effect/wonderland_rabbit_enter(rabbit_turf, hunter_antag)
+
+/// Picks a spot within sight of a different random player for each rabbit, so they show up where somebody is to watch, hehe
+/obj/effect/bnnuy/proc/pick_turfs_near_people(amount)
+	var/list/picked = list()
+	for(var/mob/living/person as anything in shuffle(GLOB.alive_player_list))
+		if(length(picked) >= amount)
+			break
+		var/turf/person_turf = get_turf(person)
+		if(!person_turf || !is_station_level(person_turf.z) || person.mind == hunter_mind)
+			continue
+		var/list/nearby = RANGE_TURFS(7, person_turf) - RANGE_TURFS(2, person_turf)
+		while(length(nearby))
+			var/turf/candidate = pick_n_take(nearby)
+			var/area/candidate_area = get_area(candidate)
+			if(!(candidate_area.type in GLOB.the_station_areas) || is_type_in_typecache(candidate_area, GLOB.noise_turf_forbidden_areas))
+				continue
+			if(!can_see(person_turf, candidate, 7) || is_near_turfs(candidate, picked, 15) || !is_valid_noise_turf(candidate, list(/obj/effect/bnnuy)))
+				continue
+			picked += candidate
+			break
+	return picked
 
 /// makes the image that sits on the rabbit itself, the one you can actually click
 /obj/effect/bnnuy/proc/create_bnnuy_image() as /image

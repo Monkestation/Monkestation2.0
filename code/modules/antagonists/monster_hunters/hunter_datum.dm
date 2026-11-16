@@ -109,7 +109,10 @@
 	return ..()
 
 /datum/antagonist/monsterhunter/proc/spawn_rabbits(amount = 5)
-	for(var/turf/chosen_location as anything in pick_noise_station_turfs(amount - length(rabbits), 4, list(/obj/effect/bnnuy)))
+	var/list/rift_turfs = list()
+	for(var/obj/effect/bnnuy/rift as anything in rabbits)
+		rift_turfs += get_turf(rift)
+	for(var/turf/chosen_location as anything in pick_hunter_spawn_turfs(amount - length(rabbits), rift_turfs))
 		log_game("Generated monster hunter rabbit at [AREACOORD(chosen_location)]")
 		testing("Generated monster hunter rabbit at [AREACOORD(chosen_location)]")
 		rabbits += new /obj/effect/bnnuy(chosen_location, src)
@@ -118,6 +121,79 @@
 	if(rabbit_count < amount)
 		message_admins("WARNING: there may not be enough monster hunter rabbits (there should be [amount], but there's only [rabbit_count])")
 		CRASH("WARNING: there may not be enough monster hunter rabbits (there should be [amount], but there's only [rabbit_count])")
+
+/// Picks where new rifts or rabbits go - biased towards spawning in "public" areas, otherwise kinda spread between departments
+/proc/pick_hunter_spawn_turfs(amount, list/avoid_turfs = list())
+	var/list/public_areas = zebra_typecacheof(list(
+		/area/station/hallway = TRUE,
+		/area/station/hallway/secondary/construction = FALSE,
+		/area/station/commons = TRUE,
+		/area/station/commons/dorms = FALSE,
+		/area/station/commons/dorms/laundry = TRUE,
+		/area/station/commons/storage = FALSE,
+		/area/station/commons/storage/primary = TRUE,
+		/area/station/commons/toilet = FALSE,
+		/area/station/commons/vacant_room = FALSE,
+		/area/station/service/bar = TRUE,
+		/area/station/service/bar/backroom = FALSE,
+		/area/station/service/barber = TRUE,
+		/area/station/service/cafeteria = TRUE,
+		/area/station/service/chapel = TRUE,
+		/area/station/service/chapel/office = FALSE,
+		/area/station/service/chapel/storage = FALSE,
+		/area/station/service/hydroponics/garden = TRUE,
+		/area/station/service/hydroponics/garden/abandoned = FALSE,
+		/area/station/service/kitchen/diner = TRUE,
+		/area/station/service/library = TRUE,
+		/area/station/service/library/abandoned = FALSE,
+		/area/station/service/library/private = FALSE,
+		/area/station/service/theater = TRUE,
+		/area/station/service/theater/abandoned = FALSE,
+		/area/station/medical/medbay/lobby = TRUE,
+		/area/station/cargo/lobby = TRUE,
+		/area/station/science/lobby = TRUE,
+	))
+
+	var/list/public_turfs = list()
+	var/list/department_groups = list()
+	for(var/list/group as anything in noise_turfs_station_equal_weight(4, GLOB.noise_turf_forbidden_areas))
+		var/list/department_turfs = list()
+		for(var/turf/candidate as anything in group)
+			var/area/candidate_area = get_area(candidate)
+			if(is_type_in_typecache(candidate_area, public_areas))
+				public_turfs += candidate
+			else
+				department_turfs += candidate
+		if(length(department_turfs))
+			department_groups += list(department_turfs)
+
+	var/list/taken = avoid_turfs.Copy()
+	var/list/picked = list()
+	var/list/leftovers = list()
+	while(length(picked) < amount && (length(public_turfs) || length(department_groups)))
+		var/list/pool = public_turfs
+		if(!length(public_turfs) || (length(department_groups) && !prob(70)))
+			pool = pick_n_take(department_groups)
+		while(length(pool))
+			var/turf/candidate = pick_n_take(pool)
+			if(!is_valid_noise_turf(candidate, list(/obj/effect/bnnuy)))
+				continue
+			if(is_near_turfs(candidate, taken, 15))
+				leftovers += candidate
+				continue
+			picked += candidate
+			taken += candidate
+			break
+		if(pool != public_turfs)
+			leftovers += pool
+
+	// small maps might not fit them all spaced out, so squeeze the rest in closer
+	while(length(picked) < amount && length(leftovers))
+		var/turf/candidate = pick_n_take(leftovers)
+		if(is_valid_noise_turf(candidate, list(/obj/effect/bnnuy)) && !is_near_turfs(candidate, taken, 2))
+			picked += candidate
+			taken += candidate
+	return picked
 
 /datum/antagonist/monsterhunter/proc/setup_bnuuy_images()
 	SIGNAL_HANDLER
