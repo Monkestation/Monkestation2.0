@@ -509,6 +509,7 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/goblin = list(LANGUAGE_ATOM),
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 		/datum/language/yangyu = list(LANGUAGE_ATOM),
+		/datum/language/vox = list(LANGUAGE_ATOM), // monkestation edit
 	)
 	spoken_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
@@ -526,6 +527,7 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/goblin = list(LANGUAGE_ATOM),
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 		/datum/language/yangyu = list(LANGUAGE_ATOM),
+		/datum/language/vox = list(LANGUAGE_ATOM), // monkestation edit
 	)
 
 /datum/language_holder/moth

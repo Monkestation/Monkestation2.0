@@ -325,6 +325,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//tools
 		/obj/item/assembly/flash/memorizer = 1,
+		/obj/item/stack/sheet/animalhide/vox = 1, // monkestation edit
 		/obj/item/flashlight/flashdark = 1,
 		/obj/item/knife/kitchen = 1,
 		/obj/item/melee/baton/security/cattleprod/teleprod = 1,
@@ -392,6 +393,8 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 
 GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/clothing/head/helmet/abductor = 1,
+		/obj/item/tank/internals/emergency_oxygen/vox = 1, // monkestation edit
+		/obj/item/food/meat/slab/human/mutant/vox = 1, // monkestation edit
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,
 		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.

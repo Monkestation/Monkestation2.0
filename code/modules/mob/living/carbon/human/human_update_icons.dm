@@ -126,6 +126,14 @@ There are several things that need to be remembered:
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
 			icon_file = DEFAULT_UNIFORM_FILE
 			handled_by_bodyshape = FALSE
+		// monkestation edit start: BODYSHAPE_CUSTOM uniforms
+		if(bodyshape & BODYSHAPE_CUSTOM)
+			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_UNIFORM, uniform)
+			if(species_icon_file && (istype(species_icon_file, /icon) || icon_exists(species_icon_file, target_overlay)))
+				icon_file = species_icon_file
+				handled_by_bodyshape = TRUE
+				woman = FALSE
+		// monkestation edit end
 
 		//END SPECIES HANDLING
 		uniform_overlay = uniform.build_worn_icon(
@@ -211,7 +219,16 @@ There are several things that need to be remembered:
 
 	var/icon_file = 'icons/mob/clothing/hands.dmi'
 
-	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+	// monkestation edit start: BODYSHAPE_CUSTOM gloves
+	var/mutant_override = FALSE
+	if(bodyshape & BODYSHAPE_CUSTOM)
+		var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_GLOVES, gloves)
+		if(species_icon_file)
+			icon_file = species_icon_file
+			mutant_override = TRUE
+
+	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
+	// monkestation edit end
 
 	var/feature_y_offset = 0
 	//needs to be typed, hand_bodyparts can have nulls

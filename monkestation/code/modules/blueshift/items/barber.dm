@@ -570,7 +570,9 @@
 	return BRUTELOSS
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/target_human, location = BODY_ZONE_PRECISE_MOUTH)
-	if(location == BODY_ZONE_PRECISE_MOUTH)
+	if(isvox(target_human)) // vox have quills
+		target_human.set_vox_quills(SPRITE_ACCESSORY_NONE, facial = (location == BODY_ZONE_PRECISE_MOUTH))
+	else if(location == BODY_ZONE_PRECISE_MOUTH)
 		target_human.set_facial_hairstyle("Shaved", update = TRUE)
 	else
 		target_human.set_hairstyle("Bald", update = TRUE)
@@ -602,7 +604,7 @@
 			to_chat(user, span_warning("The mask is in the way!"))
 			return
 
-		if(!(noggin.head_flags & HEAD_FACIAL_HAIR))
+		if(!(noggin.head_flags & HEAD_FACIAL_HAIR) && !target_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_FACIAL_QUILLS))
 			to_chat(user, span_warning("There is no facial hair to style!"))
 			return
 
@@ -610,7 +612,7 @@
 			to_chat(user, span_warning("[target_human] is just way too shaved. Like, really really shaved."))
 			return
 
-		if(target_human.facial_hairstyle == "Shaved")
+		if(target_human.facial_hairstyle == "Shaved" && !isvox(target_human))
 			to_chat(user, span_warning("Already clean-shaven!"))
 			return
 
@@ -630,11 +632,11 @@
 			to_chat(user, span_warning("The headgear is in the way!"))
 			return
 
-		if(!(noggin.head_flags & HEAD_HAIR))
+		if(!(noggin.head_flags & HEAD_HAIR) && !target_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_QUILLS))
 			to_chat(user, span_warning("There is no hair to shave!"))
 			return
 
-		if(target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead")
+		if(!isvox(target_human) && (target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead"))
 			to_chat(user, span_warning("There is not enough hair left to shave!"))
 			return
 

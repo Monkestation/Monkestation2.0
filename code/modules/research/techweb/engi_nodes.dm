@@ -42,6 +42,7 @@
 		"pacman",
 		"plasma_tank",
 		"plasmaman_tank_belt",
+		"vox_tank", // monkestation edit
 		"pump",
 		"scrubber",
 		"pipe_scrubber",
