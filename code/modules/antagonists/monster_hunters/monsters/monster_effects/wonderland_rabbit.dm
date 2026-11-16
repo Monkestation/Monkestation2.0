@@ -84,7 +84,11 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
+#ifdef NAVMAP_PATHFINDER
+	ai_movement = /datum/ai_movement/navmap_astar
+#else
 	ai_movement = /datum/ai_movement/jps
+#endif
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
