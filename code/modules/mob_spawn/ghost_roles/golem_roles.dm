@@ -79,6 +79,10 @@
 			to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! \
 				You are generally a peaceful group unless provoked.")
 			try_keep_home(new_spawn)
+			if(iscarbon(new_spawn) && golem_species == /datum/species/golem/adamantine)
+				var/mob/living/carbon/really = new_spawn
+				really.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/golem/free(src))
+				really.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/golem/free(src))
 
 	else if(new_spawn.mind)
 		new_spawn.mind.enslave_mind_to_creator(real_owner)

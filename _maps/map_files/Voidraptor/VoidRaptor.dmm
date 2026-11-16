@@ -2932,6 +2932,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine,
 /area/station/science/auxlab/firing_range)
+"aSj" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "aSp" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
 /turf/open/floor/iron/textured_edge{
@@ -3635,18 +3641,6 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/command/cc_dock)
-"baK" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/aquarium/prefilled,
-/obj/item/reagent_containers/cup/fish_feed{
-	pixel_x = 1;
-	pixel_y = 19
-	},
-/obj/structure/sign/calendar/directional/north,
-/turf/open/floor/wood/large,
-/area/station/command/heads_quarters/nt_rep)
 "baU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -7985,10 +7979,6 @@
 /obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
 /turf/open/floor/iron/white/diagonal,
 /area/station/science/research)
-"cvG" = (
-/obj/structure/sign/warning/biohazard/directional/east,
-/turf/open/space/basic,
-/area/space)
 "cvH" = (
 /turf/closed/wall,
 /area/station/medical/psychology)
@@ -10864,6 +10854,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/small,
 /area/station/security/prison/garden)
+"dmL" = (
+/obj/structure/sign/warning/biohazard/directional/east,
+/turf/open/space/basic,
+/area/space/nearstation)
 "dmU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -15195,6 +15189,10 @@
 /obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/carpet/grimey,
 /area/station/commons/lounge)
+"euU" = (
+/obj/structure/sign/warning/biohazard/directional/south,
+/turf/open/space/basic,
+/area/space/nearstation)
 "evd" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/segment{
@@ -20682,10 +20680,6 @@
 /obj/machinery/meter,
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/atmos)
-"fYK" = (
-/obj/structure/sign/warning/biohazard/directional/south,
-/turf/open/space/basic,
-/area/space)
 "fYR" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -23021,6 +23015,10 @@
 /obj/structure/trash_pile,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/starboard/fore)
+"gHg" = (
+/obj/machinery/power/shuttle_engine/huge,
+/turf/open/space/basic,
+/area/space/nearstation)
 "gHl" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -28640,16 +28638,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"ikl" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/item/reagent_containers/cup/fish_feed{
-	pixel_x = 1;
-	pixel_y = 19
-	},
-/obj/structure/aquarium/prefilled,
-/obj/machinery/digital_clock/directional/south,
-/turf/open/floor/wood/large,
-/area/station/command/heads_quarters/captain)
 "ikp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -29620,12 +29608,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/blueshield)
-"iuX" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/space/basic,
-/area/space)
 "iuZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30579,6 +30561,16 @@
 	dir = 1
 	},
 /area/station/security/prison)
+"iIH" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/reagent_containers/cup/fish_feed{
+	pixel_x = 1;
+	pixel_y = 19
+	},
+/obj/structure/aquarium/prefilled,
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/captain)
 "iIO" = (
 /obj/effect/spawner/liquids_spawner{
 	reagent_list = list(/datum/reagent/water = 600)
@@ -39066,10 +39058,6 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/cargo/office)
-"kXK" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "kXW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -45996,6 +45984,13 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/auxlab/firing_range)
+"mUX" = (
+/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/newscaster/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/item/fish_tank/lawyer,
+/turf/open/floor/carpet/grimey,
+/area/station/service/lawoffice)
 "mVb" = (
 /obj/machinery/photocopier,
 /obj/machinery/light/warm/directional/north,
@@ -55631,11 +55626,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/fore)
-"pDv" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/teal,
-/turf/open/space/basic,
-/area/space)
 "pDx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59222,6 +59212,18 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/command)
+"qCb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/aquarium/prefilled,
+/obj/item/reagent_containers/cup/fish_feed{
+	pixel_x = 1;
+	pixel_y = 19
+	},
+/obj/structure/sign/calendar/directional/north,
+/turf/open/floor/wood/large,
+/area/station/command/heads_quarters/nt_rep)
 "qCd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -62704,13 +62706,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hop)
-"rAD" = (
-/obj/machinery/status_display/evac/directional/east,
-/obj/machinery/newscaster/directional/south,
-/obj/effect/turf_decal/bot,
-/obj/item/fish_tank/lawyer,
-/turf/open/floor/carpet/grimey,
-/area/station/service/lawoffice)
 "rAU" = (
 /turf/closed/wall,
 /area/station/engineering/main)
@@ -69104,12 +69099,6 @@
 /obj/machinery/cell_charger,
 /turf/open/floor/iron/textured,
 /area/station/security/checkpoint/engineering)
-"tlW" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/open/space/basic,
-/area/space)
 "tmb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/light/small/directional/west,
@@ -70611,6 +70600,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/aft)
+"tFa" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "tFf" = (
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
@@ -86547,10 +86542,6 @@
 	dir = 8
 	},
 /area/station/security/brig)
-"ycM" = (
-/obj/machinery/power/shuttle_engine/huge,
-/turf/open/space/basic,
-/area/space)
 "ycQ" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -99516,7 +99507,7 @@ ttw
 gPJ
 kbK
 ttw
-iuX
+tFa
 xMq
 xMq
 xMq
@@ -99786,7 +99777,7 @@ xMq
 xMq
 ttw
 odJ
-iuX
+tFa
 gPJ
 gPJ
 gPJ
@@ -103218,7 +103209,7 @@ giG
 jgz
 xMq
 ttw
-cvG
+dmL
 ttw
 ttw
 ttw
@@ -103410,7 +103401,7 @@ ttw
 ttw
 ttw
 ttw
-cvG
+dmL
 ttw
 ttw
 ttw
@@ -103898,7 +103889,7 @@ xMq
 xMq
 ttw
 odJ
-tlW
+aSj
 gPJ
 gPJ
 ttw
@@ -104142,7 +104133,7 @@ ttw
 gPJ
 kbK
 ttw
-tlW
+aSj
 xMq
 xMq
 xMq
@@ -106213,7 +106204,7 @@ ttw
 ttw
 ttw
 ttw
-fYK
+euU
 dWX
 qLu
 ajP
@@ -106880,8 +106871,8 @@ mnM
 uUU
 oVO
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -107137,8 +107128,8 @@ rzh
 uUU
 jwC
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -107394,8 +107385,8 @@ oOK
 uUU
 rmo
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -107909,8 +107900,8 @@ spp
 uUU
 oVO
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -108166,8 +108157,8 @@ iaq
 uUU
 jwC
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -108423,8 +108414,8 @@ eMd
 uUU
 rmo
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -109036,7 +109027,7 @@ hdF
 hdF
 hdF
 hdF
-kXK
+xMq
 gPJ
 ttw
 ttw
@@ -109297,7 +109288,7 @@ ttw
 gPJ
 gPJ
 ttw
-fYK
+euU
 dWX
 qLu
 ajP
@@ -111078,7 +111069,7 @@ ttw
 ttw
 ttw
 gPJ
-kXK
+xMq
 hdF
 hdF
 hdF
@@ -111092,7 +111083,7 @@ hdF
 hdF
 hdF
 hdF
-kXK
+xMq
 gPJ
 ttw
 ttw
@@ -111512,8 +111503,8 @@ tot
 deE
 wTj
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -111769,8 +111760,8 @@ urO
 deE
 mwR
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -112026,8 +112017,8 @@ fon
 deE
 gyG
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -114847,8 +114838,8 @@ cwa
 brI
 gAd
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -114950,7 +114941,7 @@ iCZ
 ffN
 ntF
 sfj
-ikl
+iIH
 hIA
 ahe
 dcr
@@ -115104,8 +115095,8 @@ cwa
 brI
 ngt
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -115361,8 +115352,8 @@ cwa
 brI
 wNk
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -116902,8 +116893,8 @@ tSH
 gmz
 gAd
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -117159,8 +117150,8 @@ sLM
 gmz
 ngt
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -117416,8 +117407,8 @@ sBr
 gmz
 ngt
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -117673,8 +117664,8 @@ pqO
 gmz
 ngt
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -117930,8 +117921,8 @@ aZH
 gmz
 ngt
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -118187,8 +118178,8 @@ hUm
 gmz
 wNk
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -118697,8 +118688,8 @@ lhE
 qbp
 oWM
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -118954,8 +118945,8 @@ jfq
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -119211,8 +119202,8 @@ awv
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -119468,8 +119459,8 @@ czs
 qbp
 nIl
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -119725,8 +119716,8 @@ xgK
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -119982,8 +119973,8 @@ dyl
 qbp
 rTG
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -120497,8 +120488,8 @@ rYy
 qbp
 oWM
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -120754,8 +120745,8 @@ avz
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -121011,8 +121002,8 @@ vau
 qbp
 rTG
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -121524,8 +121515,8 @@ veD
 qbp
 oWM
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -121781,8 +121772,8 @@ ceN
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -122038,8 +122029,8 @@ koQ
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -122295,8 +122286,8 @@ rfk
 qbp
 nIl
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -122420,7 +122411,7 @@ wDO
 ryN
 kNJ
 uLI
-rAD
+mUX
 hjW
 pzG
 qnC
@@ -122552,8 +122543,8 @@ eRP
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -122809,8 +122800,8 @@ xgK
 qbp
 rTG
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -123325,8 +123316,8 @@ dyl
 qbp
 oWM
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -123419,7 +123410,7 @@ usB
 usB
 usB
 xlE
-baK
+qCb
 fgd
 pIk
 wMB
@@ -123582,8 +123573,8 @@ evE
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -123839,8 +123830,8 @@ kvZ
 qbp
 nIl
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -124096,8 +124087,8 @@ qbp
 qbp
 nIl
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -124353,8 +124344,8 @@ aXG
 xGA
 gdu
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -124610,8 +124601,8 @@ aXG
 xGA
 myC
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -127444,8 +127435,8 @@ xAr
 sJd
 gUC
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -127701,8 +127692,8 @@ oxH
 sJd
 ykC
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -127958,8 +127949,8 @@ bOP
 sJd
 wuU
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -130528,8 +130519,8 @@ gIT
 unI
 otq
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -130785,8 +130776,8 @@ ayt
 unI
 hqJ
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -131042,8 +131033,8 @@ sUV
 unI
 vag
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -131551,8 +131542,8 @@ wsc
 lAi
 jBK
 pkp
-ttw
-ycM
+xXo
+gHg
 ttw
 ttw
 ttw
@@ -131808,8 +131799,8 @@ ajL
 lAi
 uLA
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -132065,8 +132056,8 @@ ajL
 lAi
 ftr
 pkp
-ttw
-ttw
+xXo
+xXo
 ttw
 ttw
 ttw
@@ -132223,7 +132214,7 @@ kUb
 kUb
 ttw
 ttw
-kXK
+xMq
 ttw
 ttw
 skC
@@ -132473,14 +132464,14 @@ xMq
 ttw
 ttw
 ttw
-kXK
+xMq
 ttw
 ttw
-kXK
+xMq
 ttw
 ttw
 ttw
-pDv
+smE
 ttw
 ttw
 skC
@@ -132730,10 +132721,10 @@ xMq
 ttw
 ttw
 ttw
-pDv
+smE
 ttw
 ttw
-pDv
+smE
 ttw
 ttw
 ttw
