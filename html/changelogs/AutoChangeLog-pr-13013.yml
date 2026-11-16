@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "gave most jackets, labcoats, wintercoats, and coats two small item slot pockets."
+  - rscadd: "added a keybind for removing items from your suit slot (Shift+R)."
