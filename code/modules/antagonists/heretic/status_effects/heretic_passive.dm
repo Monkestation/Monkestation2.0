@@ -276,7 +276,6 @@
 	/// assoc list of embedded item to list(pixel_x, pixel_y, rotation)
 	var/list/embed_visuals
 
-
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), TRAIT_STATUS_EFFECT(id))
@@ -350,10 +349,12 @@
 		return
 	var/mob/living/carbon/human/heretic = owner
 	if(HAS_TRAIT(heretic, TRAIT_FAT))
-		heretic.balloon_alert("your flesh feels dense")
+		if(source)
+			heretic.balloon_alert(heretic, "your flesh feels dense")
 		ADD_TRAIT(heretic, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 	else
-		heretic.balloon_alert("your flesh feels thinner")
+		if(source)
+			heretic.balloon_alert(heretic, "your flesh feels thinner")
 		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/heretic_passive/flesh/proc/is_physical_projectile(obj/projectile/proj)
@@ -361,7 +362,7 @@
 
 /datum/status_effect/heretic_passive/flesh/proc/on_pre_bullet_act(mob/living/carbon/human/source, obj/projectile/proj, def_zone, piercing_hit, blocked)
 	SIGNAL_HANDLER
-	if(!HAS_TRAIT(owner, TRAIT_FAT) || piercing_hit || !is_physical_projectile(proj))
+	if(!HAS_TRAIT(source, TRAIT_FAT) || piercing_hit || !is_physical_projectile(proj))
 		return NONE
 	proj.damage *= FLESH_PROJECTILE_DAMAGE_MULT
 	proj.stamina *= FLESH_PROJECTILE_DAMAGE_MULT
@@ -381,7 +382,7 @@
 // too thick to get a bola around you
 /datum/status_effect/heretic_passive/flesh/proc/on_pre_hitby(mob/living/carbon/human/source, obj/item/restraints/legcuffs/bola/bola, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if(!HAS_TRAIT(owner, TRAIT_FAT) || !istype(bola))
+	if(!HAS_TRAIT(source, TRAIT_FAT) || !istype(bola))
 		return NONE
 	var/datum/embedding/heretic_flesh/bola/bola_embed = new()
 	bola_embed.register_on(bola)
@@ -391,34 +392,28 @@
 
 /datum/status_effect/heretic_passive/flesh/proc/on_damage_modifiers(mob/living/carbon/human/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
-	if(!HAS_TRAIT(owner, TRAIT_FAT) || !istype(attacking_item))
+	if(!HAS_TRAIT(source, TRAIT_FAT) || !istype(attacking_item))
 		return
-	if(attacking_item.get_embed()?.owner == owner)
+	if(attacking_item.get_embed()?.owner == source)
 		damage_mods += FLESH_PROJECTILE_DAMAGE_MULT
 
 /datum/status_effect/heretic_passive/flesh/proc/on_embed_added(mob/living/carbon/source, obj/item/embedded, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 	add_embed_visual(embedded)
-	owner.update_appearance(UPDATE_OVERLAYS)
-	if(!HAS_TRAIT(owner, TRAIT_FAT) || count_embedded() < FLESH_EMBED_BURST_THRESHOLD)
+	source.update_appearance(UPDATE_OVERLAYS)
+	if(!HAS_TRAIT(source, TRAIT_FAT) || LAZYLEN(embed_visuals) < FLESH_EMBED_BURST_THRESHOLD)
 		return
 	addtimer(CALLBACK(src, PROC_REF(expel_embeds)), 0.1 SECONDS, TIMER_UNIQUE)
 
 /datum/status_effect/heretic_passive/flesh/proc/on_embed_removed(mob/living/carbon/source, obj/item/embedded, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 	LAZYREMOVE(embed_visuals, embedded)
-	owner.update_appearance(UPDATE_OVERLAYS)
+	source.update_appearance(UPDATE_OVERLAYS)
 
 /datum/status_effect/heretic_passive/flesh/proc/add_embed_visual(obj/item/embedded)
 	if(LAZYACCESS(embed_visuals, embedded))
 		return
 	LAZYSET(embed_visuals, embedded, list(rand(-7, 7), rand(-9, 7), rand(0, 359)))
-
-/datum/status_effect/heretic_passive/flesh/proc/count_embedded()
-	var/mob/living/carbon/carbon_owner = owner
-	. = 0
-	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
-		. += length(limb.embedded_objects)
 
 /datum/status_effect/heretic_passive/flesh/proc/on_update_overlays(atom/source, list/overlays)
 	SIGNAL_HANDLER
@@ -427,18 +422,20 @@
 		var/overlay_icon = embedded.icon
 		var/overlay_state = embedded.icon_state
 		var/overlay_scale = 0.5
+		var/overlay_angle = visual[3]
 		var/datum/embedding/heretic_flesh/flesh_embed = embedded.get_embed()
 		if(istype(flesh_embed) && flesh_embed.projectile_type)
 			overlay_icon = initial(flesh_embed.projectile_type.icon)
 			overlay_state = initial(flesh_embed.projectile_type.icon_state)
 			overlay_scale = 1 // Projectile sprites are already tiny (usually)
+			overlay_angle = flesh_embed.hit_angle
 		var/mutable_appearance/embed_overlay = mutable_appearance(overlay_icon, overlay_state, -HIGHEST_LAYER)
 		embed_overlay.pixel_x = visual[1]
 		embed_overlay.pixel_y = visual[2]
 		var/matrix/embed_matrix = matrix()
 		embed_matrix.Scale(overlay_scale, overlay_scale)
 		// looks cute if it points at the source
-		embed_matrix.Turn(istype(flesh_embed) && flesh_embed.projectile_type ? flesh_embed.hit_angle : visual[3])
+		embed_matrix.Turn(overlay_angle)
 		embed_overlay.transform = embed_matrix
 		overlays += embed_overlay
 
@@ -446,9 +443,7 @@
 	var/mob/living/carbon/carbon_owner = owner
 	if(QDELETED(carbon_owner))
 		return
-	var/list/to_expel = list()
-	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
-		to_expel += limb.embedded_objects
+	var/list/to_expel = LAZYCOPY(embed_visuals)
 	if(!length(to_expel))
 		return
 
