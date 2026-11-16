@@ -13,6 +13,7 @@
 	custom_price = PAYCHECK_CREW * 3
 	can_be_tied = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	/// How much wearing these galoshes affects fishing difficulty
 	var/fishing_modifier = -3
 

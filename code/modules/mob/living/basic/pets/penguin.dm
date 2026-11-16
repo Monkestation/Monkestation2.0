@@ -127,6 +127,12 @@
 /mob/living/basic/pet/penguin/emperor/neuter
 	can_lay_eggs = FALSE
 
+/// Cold resistant and doesn't need to breathe, so it can live out on the icemoon
+/mob/living/basic/pet/penguin/emperor/icemoon
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
+	can_lay_eggs = FALSE
+
 /mob/living/basic/pet/penguin/emperor/shamebrero
 	name = "shamebrero penguin"
 	icon_state = "penguin_shamebrero"

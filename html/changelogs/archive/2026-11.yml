@@ -721,3 +721,66 @@
   - sound: added fall_apart.ogg
   - code_imp: Added a new option in the gib() proc allowing for bloodless gibbing
       (no_blood), false by default
+2026-11-16:
+  Absolucy:
+  - qol: Lowered the weight of the skub station trait to 1. I really do not care about
+      this meme, and I regret porting it at all.
+  - rscadd: (Time-Green, vinylspiders, timothymtorres, Iajret, SmArtKar) Icebox's
+      surface now connects to 2 wilderness levels. Walk off any edge to explore, keep
+      going to loop back to the station.
+  - rscadd: '(Time-Green) Added the Forested station trait for Icebox: lots of trees,
+      and deer.'
+  - rscadd: '(Ghommie) Added the Bright Day station trait for Icebox: a brighter surface.'
+  - rscadd: (Melbert) Walking in snow leaves footprints. Snowstorms clear them, and
+      you can fill them in with snow.
+  - sound: (tommysalami3, JohnFulpWillard) Added outdoor ambience music to Icebox.
+  - balance: (Time-Green) Icebox surface rivers are now plasma instead of holes to
+      the level below.
+  - balance: (Time-Green) The map edge transition band is one tile wider, and any
+      walkable ground in it now moves you to the next level.
+  - map: Cleaned up walkable tiles near the map edge on Heliostation, Theseus and
+      Tramstation, and moved the Tramstation clown planet exit chute.
+  - map: Lots of decorations floating in space near stations are now properly lit.
+  - bugfix: Icebox snowstorms actually happen again.
+  - bugfix: You can't build floors on map edge tiles anymore, which used to break
+      the edge teleport.
+  - bugfix: (Time-Green) Random trees and plants no longer block light in the wrong
+      shape.
+  - bugfix: (CabinetOnFire) Ruins no longer leave unfinished placeholder ground around
+      them.
+  - bugfix: (LemonInTheDark) Leftover placeholder ground can no longer mess up a planet's
+      air at round start.
+  - bugfix: (Sealed101) Ash storms reset dug-up basalt properly.
+  - bugfix: The MOD drill no longer drains power when it fails to dig.
+  - bugfix: Trying to dig icy snow now tells you it's too hard instead of wasting
+      4 seconds.
+  - bugfix: (SmArtKar) Mirages at the map edge now cover the full widescreen view.
+  - admin: The z-level list shows grid-linked levels properly.
+  - code_imp: (itsmeow) Map edge mirages are an element now, which is cheaper at round
+      start.
+  - code_imp: (timothymtorres, unit0016) Multi-z maps get their up/down level links
+      set automatically.
+  - code_imp: (ShizCalev) Added a unit test for things accidentally left in unlit
+      space.
+  AitorLogedo:
+  - bugfix: fixed some bad stuff
+  - bugfix: Mourning poultices work on dead bodies again.
+  EnterTheJake:
+  - bugfix: Moon robes once again grant the wearer immunity to slowdowns.
+  SirNightKnight:
+  - bugfix: made radios fireproof.
+  Tractor-Maam:
+  - admin: The Tunnel Arts will now properly list the name of the move used in combat
+      logs.
+  V2LenKagamine:
+  - qol: Free golems now move faster
+  - qol: Free golems now can expand their power range with the blueprints to new rooms.
+  - qol: The wumpa now starts silent.
+  - code_imp: The golem blueprints check if the person is a free golem[job] or nuke
+      immune, because that means they're probably an admin.
+  - code_imp: Create Area proc now accepts the type of area it should be making as
+      an input, defaulting to just /area
+  - rscadd: Strange Contract, for IC admin-bus permissions!
+  - balance: Emaged spiderbots now have explosion of (-1 -1 2 4) from (-1 -1 3 5)
+  - qol: exploding spiderbots now wait 2.5 seconds and beep and shake before doing
+      so.
