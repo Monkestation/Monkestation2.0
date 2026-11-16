@@ -1090,7 +1090,7 @@
 	CACHE_PLANETARY_ATMOS(LAVALAND_DEFAULT_ATMOS)
 	var/datum/gas_mixture/immutable/planetary/mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
 
-	if(!mix?.total_moles()) // this typically means we didn't load lavaland, like if we're using the LOWMEMORYMODE define
+	if(!mix?.total_moles()) // this typically means we didn't load lavaland, like if we're using the SKIP_LAVALAND define
 		return ..()
 
 	// Take a "breath" of the air
