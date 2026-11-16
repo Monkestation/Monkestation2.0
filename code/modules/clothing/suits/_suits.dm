@@ -23,10 +23,19 @@
 	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	/// what color will be given to the flippers of fem physique ceruleans? FLIPPERS autogenerates
 	var/cerulean_flipper_palette = NO_FLIPPERS
+	/// has coat pockets, neat if true. two small item slots. added on intialize
+	var/has_coat_pockets = FALSE
+	var/coat_pocket_storage_datum = /datum/storage/pockets/coat
 
 /obj/item/clothing/suit/Initialize(mapload)
 	. = ..()
 	setup_shielding()
+	if(has_coat_pockets)
+		var/obj/item/magical_pocket_item = new /obj/item/food/donut/chaos(src)
+		var/datum/storage/magic_pocket = create_storage(storage_type = coat_pocket_storage_datum)
+		magic_pocket.set_real_location(magical_pocket_item)
+		magic_pocket.locked = STORAGE_NOT_LOCKED
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 
 /obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()

@@ -179,6 +179,7 @@
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 	bodyshapes_with_variations = NONE
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
@@ -201,6 +202,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	species_exception = list(/datum/species/golem)
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"

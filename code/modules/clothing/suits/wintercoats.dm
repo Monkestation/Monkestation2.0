@@ -13,6 +13,7 @@
 	armor_type = /datum/armor/hooded_wintercoat
 	// hood_down_overlay_suffix = "_hood"
 	bodyshapes_with_variations = NONE
+	has_coat_pockets = TRUE
 
 /datum/armor/hooded_wintercoat
 	bio = 10
