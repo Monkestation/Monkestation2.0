@@ -270,7 +270,8 @@
 	passive_descriptions = list(
 		"Immunity to Diseases, Disgust and space ants.",
 		"Eating organs or meat now heals you, gain the voracious and gluttonous trait and being fat doesn't slow you down.",
-		"When fat you gain baton resistance, ballistic projectiles always embed in your flesh and only deal 15% of their damage, as does anything embedded in you. \
+		"When fat you gain baton resistance and bolas sink harmlessly into your flesh instead of tangling your legs. \
+		Ballistic projectiles always embed in your flesh and only deal 15% of their damage, as does anything embedded in you. \
 		Once enough is lodged in you, your flesh violently expels it all in a ring around you."
 	)
 	/// assoc list of embedded item to list(pixel_x, pixel_y, rotation)
