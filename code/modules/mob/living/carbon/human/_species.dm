@@ -699,7 +699,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						standing += markings_l_leg_overlay
 
 	//Underwear, Undershirts & Socks
-	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
+	if(fitted_underwear_icons) // monkestation edit: species with their own underwear sprites
+		standing += get_fitted_underwear_overlays(species_human)
+	else if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		if(species_human.underwear && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE)) //MONKESTATION EDIT
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay

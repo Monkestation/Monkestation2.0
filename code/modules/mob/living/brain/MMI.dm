@@ -53,9 +53,16 @@
 	return ..()
 
 /obj/item/mmi/update_icon_state()
+	icon = initial(icon) // monkestation edit: vox cortical stacks have their own sprite
 	if(!brain)
 		icon_state = "[base_icon_state]_off"
 		return ..()
+	// monkestation edit start: vox cortical stacks have their own sprite
+	if(istype(brain, /obj/item/organ/internal/brain/vox))
+		icon = 'icons/obj/species/vox/items.dmi'
+		icon_state = "mmi_cortical_stack"
+		return ..()
+	// monkestation edit end
 	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/internal/brain/alien) ? "_alien" : null]"
 	return ..()
 

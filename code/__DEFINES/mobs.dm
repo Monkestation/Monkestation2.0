@@ -53,6 +53,7 @@
 #define BLOOD_TYPE_H2O "H2O"
 #define BLOOD_TYPE_SNAIL "S"
 #define BLOOD_TYPE_HEMOLYMPH "H"
+#define BLOOD_TYPE_VOX "VOX"
 
 // Blood exposure behavior flag defines
 /// Add our DNA to turfs/mobs/items, does not correlate with adding decals/overlays
@@ -210,6 +211,7 @@
 #define SPECIES_WEREWOLF "werewolf"
 #define SPECIES_ORNITHID "ornithid"
 #define SPECIES_SHADEKIN "shadekin"
+#define SPECIES_VOX "vox"
 
 
 // Like species IDs, but not specifically attached a species.

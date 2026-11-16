@@ -105,6 +105,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	return display_radial_menu(user)
 
 /obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
+	if(isvox(beard_dresser)) // monkestation edit: vox have quills
+		return change_vox_quills(beard_dresser, facial = TRUE)
 	if(beard_dresser.physique != FEMALE && !magical_mirror)
 		var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 		if(isnull(new_style))
@@ -121,6 +123,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 		beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
+	if(isvox(hairdresser)) // monkestation edit: vox have quills
+		return change_vox_quills(hairdresser, facial = FALSE)
 	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 	if(isnull(new_style))
 		return TRUE

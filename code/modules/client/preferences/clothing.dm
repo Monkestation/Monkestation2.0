@@ -116,7 +116,7 @@
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
-	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
+	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits) && !species.fitted_underwear_icons // monkestation edit: fitted underwear has its own preferences
 
 /datum/preference/choiced/socks/compile_constant_data()
 	var/list/data = ..()
@@ -167,7 +167,7 @@
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
-	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
+	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits) && !species.fitted_underwear_icons // monkestation edit: fitted underwear has its own preferences
 
 /// Underwear preference
 /datum/preference/choiced/underwear
@@ -200,7 +200,7 @@
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
-	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
+	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits) && !species.fitted_underwear_icons // monkestation edit: fitted underwear has its own preferences
 
 /datum/preference/choiced/underwear/compile_constant_data()
 	var/list/data = ..()

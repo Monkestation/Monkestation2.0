@@ -60,6 +60,10 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
+	if(isvox(H)) // monkestation edit: vox still need to breathe
+		H.equip_to_slot_or_del(new /obj/item/tank/internals/emergency_oxygen/vox(H), ITEM_SLOT_BELT)
+		H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(H), ITEM_SLOT_MASK)
+		H.open_internals(H.get_item_by_slot(ITEM_SLOT_BELT))
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), ITEM_SLOT_FEET)
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), ITEM_SLOT_LPOCKET)
 	for(var/obj/item/pinpointer/nuke/P in H)
