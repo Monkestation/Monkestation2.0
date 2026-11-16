@@ -465,7 +465,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if((external_organ in external_organs) || istype(external_organ, /obj/item/organ/external/wings/functional)) // monkestation edit: don't delete wings
 			continue // Don't remove external organs this species is supposed to have.
 
-		external_organ.Remove(organ_holder)
+		external_organ.Remove(organ_holder, special = TRUE)
 		QDEL_NULL(external_organ)
 
 	var/list/species_organs = mutant_organs + external_organs
@@ -474,7 +474,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ispath(organ_path, /obj/item/organ/external) && !should_external_organ_apply_to(organ_path, organ_holder))
 			if(!isnull(current_organ) && replace_current)
 				// if we have an organ here and we're replacing organs, remove it
-				current_organ.Remove(organ_holder)
+				current_organ.Remove(organ_holder, special = TRUE)
 				QDEL_NULL(current_organ)
 			continue
 
@@ -607,7 +607,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 	for(var/obj/item/organ/external/organ in C.organs)
-		organ.Remove(C)
+		organ.Remove(C, special = TRUE)
 		qdel(organ)
 
 	//If their inert mutation is not the same, swap it out
