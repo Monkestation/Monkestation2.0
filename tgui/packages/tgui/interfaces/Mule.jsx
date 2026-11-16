@@ -34,10 +34,10 @@ export const Mule = (props) => {
   } = data;
   const locked = data.locked && !data.siliconUser;
   const gearStates = {
-    0 : { label: 'Halted', color: 'label', icon: 'fa-thermometer-empty' },
-    1 : { label: '!MAXIMUM!', color: 'red', icon: 'fa-thermometer-full' },
-    2 : { label: 'FAST', color: 'orange', icon: 'fa-thermometer-half' },
-    3 : { label: 'Normal', color: 'green', icon: 'fa-thermometer-quarter' },
+    0: { label: 'Halted', color: 'label', icon: 'fa-thermometer-empty' },
+    1: { label: '!MAXIMUM!', color: 'red', icon: 'fa-thermometer-full' },
+    2: { label: 'FAST', color: 'orange', icon: 'fa-thermometer-half' },
+    3: { label: 'Normal', color: 'green', icon: 'fa-thermometer-quarter' },
   };
   const gearState = speed !== undefined ? gearStates[speed] : null;
   return (
@@ -140,7 +140,11 @@ export const Mule = (props) => {
                     content={gearState.label}
                     color={gearState.color}
                     icon={gearState.icon}
-                    tooltip={speed ? 'Overrides current speed.' : 'Bot is unable to move.'}
+                    tooltip={
+                      speed
+                        ? 'Overrides current speed.'
+                        : 'Bot is unable to move.'
+                    }
                     onClick={() => act('gear')}
                   />
                 )}

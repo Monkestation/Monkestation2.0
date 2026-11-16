@@ -131,10 +131,7 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#ifdef LOWMEMORYMODE
-#define FORCE_MAP "runtimestation"
 #define FORCE_MAP_DIRECTORY MAP_DIRECTORY_MAPS
-#endif
 
 //Additional code for the above flags.
 #ifdef TESTING
