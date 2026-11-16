@@ -38,14 +38,28 @@
 
 /datum/action/cooldown/spell/huntsman_attire/Grant(mob/grant_to)
 	. = ..()
-	if(owner)
-		RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
+	if(!owner)
+		return
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
+	// not on Remove, else you lose the armor after using paradox rabbit or whatever
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/wearer = find_wearer()
+	if(wearer && wearer != owner)
+		dismiss(wearer)
 
 /datum/action/cooldown/spell/huntsman_attire/Remove(mob/living/remove_from)
 	UnregisterSignal(remove_from, COMSIG_LIVING_DEATH)
-	if(ishuman(remove_from))
-		dismiss(remove_from)
+	if(QDELING(src))
+		var/mob/living/carbon/human/wearer = find_wearer()
+		if(wearer)
+			dismiss(wearer)
 	return ..()
+
+/datum/action/cooldown/spell/huntsman_attire/proc/find_wearer()
+	for(var/obj/item/clothing/piece as anything in pieces)
+		if(ishuman(piece.loc))
+			return piece.loc
 
 /datum/action/cooldown/spell/huntsman_attire/cast(mob/living/carbon/human/cast_on)
 	. = ..()
