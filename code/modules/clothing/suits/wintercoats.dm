@@ -12,6 +12,7 @@
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
 	// hood_down_overlay_suffix = "_hood"
+	has_coat_pockets = TRUE
 
 /datum/armor/hooded_wintercoat
 	bio = 10
