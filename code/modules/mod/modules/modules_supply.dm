@@ -144,8 +144,8 @@
 		var/turf/open/misc/asteroid/sand_turf = target
 		if(!sand_turf.can_dig(mod.wearer))
 			return
-		sand_turf.getDug()
-		drain_power(use_energy_cost)
+		if(sand_turf.getDug())
+			drain_power(use_energy_cost)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER

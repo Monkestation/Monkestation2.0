@@ -338,12 +338,6 @@
 /datum/nanite_program/proc/send_code_inverted()
 	send_code_any(NES_SENT_CODE_INVERTED)
 
-/datum/nanite_program/proc/send_trigger_code()
-	send_code_any(NES_SENT_CODE_TRIGGER)
-
-/datum/nanite_program/proc/send_trigger_code_inverted()
-	send_code_any(NES_SENT_CODE_TRIGGER_INVERTED)
-
 ///A nanite program containing a behaviour protocol. Only one protocol of each class can be active at once.
 /datum/nanite_program/protocol
 	name = "Nanite Protocol"

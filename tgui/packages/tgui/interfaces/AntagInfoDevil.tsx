@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type Info = {
   antag_name: string;
@@ -29,15 +29,12 @@ export const AntagInfoDevil = (props) => {
             </Stack.Item>
             <Stack.Item>
               You start with the following abilities:
-              <br />
-              - Devilish revival: On a cooldown of 5 minutes, you can fully
-              revive.
-              <br />
-              - Demonic Phase Shift: On a cooldown of 1 minute, you can go
+              <br />- Devilish revival: On a cooldown of 5 minutes, you can
+              fully revive.
+              <br />- Demonic Phase Shift: On a cooldown of 1 minute, you can go
               incorporeal for 5 seconds, use may be stopped by holy magic.
-              <br />
-              - Summon devilish contract: Summons a contract, you can edit its
-              clauses with a pen before a person signs it. Making these and
+              <br />- Summon devilish contract: Summons a contract, you can edit
+              its clauses with a pen before a person signs it. Making these and
               handing them out is your primary objective, use may be stopped by
               holy magic.
               <br />
