@@ -551,6 +551,7 @@
 		TRAIT_NOHUNGER,
 		TRAIT_NO_SLIP_ALL,
 		TRAIT_PACIFISM,
+		TRAIT_IGNORESLOWDOWN,
 		TRAIT_STUNIMMUNE,
 	)
 	/// Hud that gets shown to the wearer, gives a rough estimate of their current brain damage

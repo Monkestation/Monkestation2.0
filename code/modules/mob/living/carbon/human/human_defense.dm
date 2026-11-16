@@ -758,13 +758,17 @@
 	var/list/burning_items = list()
 	//HEAD//
 
-	if(glasses && !(covered_slots & HIDEEYES))
-		burning_items += glasses
-	// monkestation edit: masks don't burn while you're on fire
-	if(wear_neck && !(covered_slots & HIDENECK))
-		burning_items += wear_neck
-	if(ears && !(covered_slots & HIDEEARS))
-		burning_items += ears
+	// monkestation edit: a fireproof helmet keeps your face gear from burning off
+	var/obj/item/clothing/head_clothes = head
+	if(!istype(head_clothes) || !(head_clothes.heat_protection & HEAD) || head_clothes.max_heat_protection_temperature < FIRE_HELM_MAX_TEMP_PROTECT)
+		if(glasses && !(covered_slots & HIDEEYES))
+			burning_items += glasses
+		if(wear_mask && !(covered_slots & HIDEMASK))
+			burning_items += wear_mask
+		if(wear_neck && !(covered_slots & HIDENECK))
+			burning_items += wear_neck
+		if(ears && !(covered_slots & HIDEEARS))
+			burning_items += ears
 	if(head)
 		burning_items += head
 

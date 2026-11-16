@@ -29,6 +29,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 	) //narnar doesnt need power
 
 	valid_type_paths = list(/obj/machinery/power/generator_artifact)
+	examine_hint = span_danger("Is it... sparking?")
 	examine_discovered = "Looks like it generates power, somehow."
 	research_value = TECHWEB_TIER_4_POINTS //Holy moly lucky you!
 	activation_message = "begins emitting a faint, droning hum."
@@ -39,11 +40,8 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 	///does the power output fluctuate
 	var/unstable_generation = FALSE
 
-/datum/artifact_effect/generator/setup() //TODO: Make this use some weird scaling math to have it pick higher numbers at lower odds
-	if(prob(65))
-		power_gen = rand(1 KW, MAX_POSSIBLE_GEN / 2)
-	else
-		power_gen = rand(1 KW, MAX_POSSIBLE_GEN)
+/datum/artifact_effect/generator/setup()
+	power_gen = gaussian(1 MW, MAX_POSSIBLE_GEN - 100 MW) //Avg around 300MW,
 	unstable_generation = prob(40)
 	potency = power_gen / (6 MW) // 100 potency at 600MW generation
 
@@ -51,7 +49,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 	var/obj/machinery/power/generator_artifact/powerholder = our_artifact.holder
 	//if on cable and not setup, connect and setup
 	if(!powerholder.anchored && locate(/obj/structure/cable) in get_turf(powerholder))
-		powerholder.visible_message(span_warning("[our_artifact.holder] seems to snap to the cable!"))
+		powerholder.visible_message(span_danger("[our_artifact.holder] seems to snap to the cable!"))
 		playsound(get_turf(powerholder), 'sound/items/deconstruct.ogg', 50, TRUE)
 		powerholder.anchored = TRUE
 		powerholder.connect_to_network()
@@ -59,17 +57,18 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 
 	our_artifact.holder.Beam(user, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 	playsound(get_turf(powerholder), 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-	var/damage = user.electrocute_act(power_gen / 2 KW, powerholder, flags = SHOCK_NOSTUN)
+	var/damage = user.electrocute_act(power_gen / 1 MW, powerholder, flags = SHOCK_NOSTUN)
 	to_chat(user, span_userdanger("You are hit by a burst of electricity from [our_artifact.holder]!"))
 	if(damage > 80)
 		var/turf/owner_turf = get_turf(our_artifact.holder)
 		var/throwtarget = get_edge_target_turf(get_turf(user), get_dir(owner_turf, get_step_away(user, owner_turf)))
-		user.safe_throw_at(throwtarget, power_gen / 38 KW, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
+		user.safe_throw_at(throwtarget, power_gen / 10 MW, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 	if(damage > 400 && prob(50))
 		user.death(FALSE)
 		our_artifact.artifact_deactivate() //shortcircuit
 
-	if(prob(20)) //try to get yourself shocked with insuls many times to shortcircuit it (in retrospect this sucks)
+	if(user.istate & ISTATE_HARM) //percussive maintinence
+		to_chat(user, span_warning("You violently slap [our_artifact.holder] in a show of dominance!"))
 		our_artifact.artifact_deactivate()
 
 /datum/artifact_effect/generator/effect_process() //todo add more

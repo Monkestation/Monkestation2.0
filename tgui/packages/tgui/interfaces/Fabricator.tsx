@@ -52,11 +52,7 @@ export const Fabricator = (props) => {
           {!!machine_mode && (
             <Stack.Item>
               <Section
-                title={
-                  ammoMode
-                    ? 'Ammo Workbench Mode'
-                    : 'Fabricator Mode'
-                }
+                title={ammoMode ? 'Ammo Workbench Mode' : 'Fabricator Mode'}
                 buttons={
                   <Stack>
                     {latheMode && (
@@ -188,8 +184,11 @@ const AmmoWorkbenchPanel = () => {
                   p={1}
                   pb={2}
                 >
-                    <Stack.Item>
-                      <Tooltip content={available_round.mats_list} position="right">
+                  <Stack.Item>
+                    <Tooltip
+                      content={available_round.mats_list}
+                      position="right"
+                    >
                       <Button
                         content={available_round.name}
                         disabled={!!system_busy}
@@ -199,8 +198,8 @@ const AmmoWorkbenchPanel = () => {
                           })
                         }
                       />
-                      </Tooltip>
-                    </Stack.Item>
+                    </Tooltip>
+                  </Stack.Item>
                 </Box>
               ))}
             </Flex.Item>

@@ -77,6 +77,11 @@
 		mytray.mutatespecie_new()
 */
 
+/datum/reagent/mutagen/used_on_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_MUTAGENIC, type)
+	addtimer(TRAIT_CALLBACK_REMOVE(fish, TRAIT_FISH_MUTAGENIC, type), fish.feeding_frequency * 0.8, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return TRUE
+
 #define LIQUID_PLASMA_BP (50+T0C)
 #define LIQUID_PLASMA_IG (325+T0C)
 
@@ -337,6 +342,20 @@
 		metabolizer.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 
 	return ..()
+
+/datum/reagent/toxin/mindbreaker/fish
+	name = "Jellyfish Hallucinogen"
+	description = "A hallucinogen structurally similar to the mindbreaker toxin, but with weaker molecular bonds, making it easily degradeable by heat."
+
+/datum/reagent/toxin/mindbreaker/fish/on_new(data)
+	. = ..()
+	if(holder?.my_atom)
+		RegisterSignals(holder.my_atom, list(COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED), PROC_REF(on_atom_cooked))
+
+/// Removes the reagent once the food it's in is cooked
+/datum/reagent/toxin/mindbreaker/fish/proc/on_atom_cooked(datum/source, cooking_time)
+	SIGNAL_HANDLER
+	holder.del_reagent(type)
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
@@ -1199,6 +1218,11 @@
 			affected_mob.say("NOW WE'RE MORBIN", forced = /datum/reagent/toxin/morbital)
 			transform = 0
 	return ..()
+
+/datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
+	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
+		fish.damage_fish(30)
+		return TRUE
 
 /datum/reagent/toxin/bungotoxin
 	name = "Bungotoxin"

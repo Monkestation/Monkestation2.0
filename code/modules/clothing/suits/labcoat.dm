@@ -39,6 +39,10 @@
 	icon_state = "labcoat_cmo"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/toggle/labcoat/cmo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+
 /datum/armor/toggle_labcoat
 	bio = 50
 	fire = 50
@@ -56,6 +60,10 @@
 	icon_state = "labcoat_paramedic"
 	inhand_icon_state = null
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/toggle/labcoat/paramedic/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/suit/toggle/labcoat/mad
 	name = "\proper The Mad's labcoat"

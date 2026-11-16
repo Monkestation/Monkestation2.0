@@ -44,7 +44,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SPACERUIN_MAP_EDGE_PAD 15
 
 /// Distance from edge to move to another z-level
-#define TRANSITIONEDGE 7
+#define TRANSITIONEDGE 8
 
 // Maploader bounds indices
 /// The maploader index for the maps minimum x
@@ -119,6 +119,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 	#define SELFLOOPING "Self"
 	// CROSSLINKED - mixed in with the cross-linked space pool
 	#define CROSSLINKED "Cross"
+	// GRIDLINKED - connected in a consistent grid
+	#define GRIDLINKED "Grid"
 
 // string - type path of the z-level's baseturf (defaults to space)
 #define ZTRAIT_BASETURF "Baseturf"
@@ -133,6 +135,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE, ZTRAIT_STARLIGHT = TRUE)
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+///Z level traits for
+#define ZTRAITS_ICY_WILDS list(\
+	ZTRAIT_LINKAGE = GRIDLINKED, \
+	ZTRAIT_ICE_RUINS = TRUE, \
+	ZTRAIT_SNOWSTORM = FALSE, \
+	ZTRAIT_BASETURF = /turf/open/misc/asteroid/snow/icemoon)
+
 ///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
 	ZTRAIT_MINING = TRUE, \
@@ -207,8 +216,16 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 /// Shelter spot has anchored objects that restrict deployment
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+/// Sheter spot has banned objects that restrict deployment
+#define SHELTER_DEPLOY_BANNED_OBJECTS "banned objects"
 /// Shelter spot is out of bounds from the maps x/y coordinates
 #define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"
+
+//Flags for survival capsules to ignore some deploy checks
+///Ignore anchored, dense objects in the area
+#define CAPSULE_IGNORE_ANCHORED_OBJECTS (1<<0)
+///Ignore banned objects in the area
+#define CAPSULE_IGNORE_BANNED_OBJECTS (1<<1)
 
 /// A map key that corresponds to being one exclusively for Space.
 #define SPACE_KEY "space"
