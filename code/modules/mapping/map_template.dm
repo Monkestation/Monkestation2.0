@@ -161,6 +161,11 @@
 		return
 	var/datum/parsed_map/parsed = new(file(mappath))
 	parsed.load(T.x, T.y, T.z, crop_map=TRUE, no_changeturf=TRUE, place_on_top=should_place_on_top)
+	var/list/bounds = parsed.bounds
+	if(!bounds)
+		return
+	for(var/turf/changed_turf as anything in block(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ], bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
+		changed_turf.nav_dirty()
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
@@ -209,12 +214,8 @@
 
 	if(no_changeturf)
 		// This load skips ChangeTurf, so dirty its region directly.
-		for(var/z_level in bounds[MAP_MINZ] to bounds[MAP_MAXZ])
-			for(var/y in bounds[MAP_MINY] to bounds[MAP_MAXY])
-				for(var/x in bounds[MAP_MINX] to bounds[MAP_MAXX])
-					var/turf/changed_turf = locate(x, y, z_level)
-					if(changed_turf)
-						changed_turf.nav_dirty()
+		for(var/turf/changed_turf as anything in block(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ], bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
+			changed_turf.nav_dirty()
 			CHECK_TICK
 
 	require_area_resort()

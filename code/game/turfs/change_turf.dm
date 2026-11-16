@@ -132,7 +132,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	else
 		new_turf.baseturfs = baseturfs_string_list(old_baseturfs, new_turf) //Just to be safe
 
-	if(!(flags & CHANGETURF_DEFER_CHANGE))
+	if(flags & CHANGETURF_DEFER_CHANGE)
+		// AfterChange is what normally dirties the navmap, and a deferred one may never run
+		new_turf.nav_dirty()
+	else
 		new_turf.AfterChange(flags, old_type)
 
 	if(flags & CHANGETURF_GENERATE_SHUTTLE_CEILING)

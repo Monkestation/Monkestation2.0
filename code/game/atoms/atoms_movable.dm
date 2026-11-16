@@ -192,9 +192,12 @@
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
 	if(NAV_RELEVANT(src))
-		var/turf/spawn_turf = get_turf(src)
-		if(spawn_turf)
-			spawn_turf.nav_dirty()
+		nav_dirty_footprint()
+
+/// Dirties every turf this covers, since a multi-tile movable spans more than its loc.
+/atom/movable/proc/nav_dirty_footprint()
+	for(var/turf/covered_turf in (isturf(loc) ? locs : list(get_turf(src))))
+		covered_turf.nav_dirty()
 
 /atom/movable/set_density(new_value)
 	. = ..()
@@ -203,15 +206,12 @@
 
 	if(!(flags_1 & (NAV_IRRELEVANT_1 | NAV_ALWAYS_CONDITIONAL_1)))
 		if(isturf(loc))
-			var/turf/our_turf = loc
-			our_turf.nav_dirty()
+			nav_dirty_footprint()
 
 /atom/movable/Destroy(force)
 	//Update the navmap if the destroyed thing was nav relevant : )
 	if(NAV_RELEVANT(src))
-		var/turf/our_turf = get_turf(src)
-		if(our_turf)
-			our_turf.nav_dirty()
+		nav_dirty_footprint()
 
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
@@ -914,8 +914,13 @@
 	if(NAV_RELEVANT(src))
 		if(old_turf)
 			old_turf.nav_dirty()
+			if(new_turf && old_turf.z == new_turf.z && length(locs) > 1)
+				// the old footprint is the new one shifted back by how far we moved
+				for(var/turf/covered_turf in locs)
+					var/turf/old_covered_turf = locate(covered_turf.x + old_turf.x - new_turf.x, covered_turf.y + old_turf.y - new_turf.y, old_turf.z)
+					old_covered_turf?.nav_dirty()
 		if(new_turf && new_turf != old_turf)
-			new_turf.nav_dirty()
+			nav_dirty_footprint()
 
 	return TRUE
 
