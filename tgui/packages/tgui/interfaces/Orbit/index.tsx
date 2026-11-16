@@ -276,7 +276,7 @@ const ObservableTooltip = (props: { item: Observable | Antagonist }) => {
   }
 
   const extraInfo = extra?.split(':');
-  const displayHealth = !!health && health >= 0 ? `${health}%` : 'Critical';
+  const displayHealth = health && health >= 0 ? `${health}%` : 'Critical';
 
   return (
     <>
