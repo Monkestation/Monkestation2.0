@@ -441,7 +441,7 @@
 
 //Weapon
 /obj/item/light_eater
-	name = "light eater" //as opposed to heavy eater
+	name = "arm blade" //as opposed to heavy eater
 	icon = 'icons/obj/darkspawn_items.dmi'
 	icon_state = "light_eater"
 	inhand_icon_state  = "light_eater"
