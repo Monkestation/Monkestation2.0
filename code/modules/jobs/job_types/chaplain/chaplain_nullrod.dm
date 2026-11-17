@@ -511,7 +511,7 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/armblade
-	name = "dark blessing"
+	name = "dark arm blade"
 	desc = "Particularly twisted deities grant gifts of dubious value."
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
@@ -535,7 +535,7 @@
 	)
 
 /obj/item/nullrod/armblade/tentacle
-	name = "unholy blessing"
+	name = "unholy arm blade"
 	icon_state = "tentacle"
 	inhand_icon_state = "tentacle"
 	menu_description = "An undroppable sharp tentacle capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."

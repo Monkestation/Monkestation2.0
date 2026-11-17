@@ -441,7 +441,8 @@
 
 //Weapon
 /obj/item/light_eater
-	name = "arm blade" //as opposed to heavy eater
+	name = "light eater" //as opposed to heavy eater
+	desc = "Light snuffs itself out at its wave."
 	icon = 'icons/obj/darkspawn_items.dmi'
 	icon_state = "light_eater"
 	inhand_icon_state  = "light_eater"
