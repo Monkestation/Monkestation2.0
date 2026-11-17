@@ -1896,17 +1896,20 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	if(!ishuman(user))
 		return
+	if(IS_DEAD_OR_INCAP(user))
+		to_chat(src, span_warning("[user] is unable to hold on to you!"))
+		return
 	if(!length(user.get_empty_held_indexes()))
-		to_chat(user, span_warning("[src]'s hands are full!"))
+		to_chat(src, span_warning("[src]'s hands are full!"))
 		return FALSE
 	if(buckled)
-		to_chat(user, span_warning("You are buckled to something!"))
+		to_chat(src, span_warning("You are buckled to something!"))
 		return FALSE
 	if(!instant)
 		user.visible_message(span_warning("[src] starts trying to crawl into [user]'s hands!"), \
 						span_danger("[src] starts trying to crawl into your hands..."), null, null, src)
 		to_chat(src, span_userdanger("You start trying to crawl into [user]'s hands!"))
-		if(!do_after(src, 2 SECONDS, target = user))
+		if(!do_after(src, 5 SECONDS, target = user))
 			return FALSE
 	mob_pickup(user)
 	return TRUE
