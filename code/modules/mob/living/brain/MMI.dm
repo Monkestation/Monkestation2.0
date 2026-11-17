@@ -76,11 +76,12 @@
 	return ..()
 
 /obj/item/mmi/proc/add_mmi_overlay()
+	// monkestation edit: drawn from the normal MMI icon, as a vox cortical stack swaps our icon for one without these
 	if(brainmob && brainmob.stat != DEAD)
-		. += "mmi_alive"
+		. += mutable_appearance(initial(icon), "mmi_alive")
 		return
 	if(brain)
-		. += "mmi_dead"
+		. += mutable_appearance(initial(icon), "mmi_dead")
 
 /obj/item/mmi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE

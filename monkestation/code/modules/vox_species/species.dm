@@ -200,6 +200,10 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 // Fitted clothing. Vox limbs are BODYSHAPE_CUSTOM, anything without a fitted sprite falls back to the human one.
 // Like on Yogstation, it's the limbs an item covers that decide if it's drawn vox-fitted, not the wearer's species.
 
+/obj/item
+	/// If set, the vox-fitted worn sprite of this item comes from this file instead of the shared vox files.
+	var/worn_icon_vox
+
 /// TRUE if the wearer's limb in that zone is a vox limb.
 /proc/is_vox_limb(mob/living/carbon/human/wearer, zone)
 	var/obj/item/bodypart/limb = wearer.get_bodypart(zone)
@@ -266,6 +270,8 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 			if((istype(item, /obj/item/storage/backpack) || istype(item, /obj/item/defibrillator)) && is_vox_limb(wearer, BODY_ZONE_CHEST))
 				icon_file = 'icons/mob/clothing/species/vox/back.dmi'
 		// Neck and belt items are never fitted.
+	if(icon_file && item.worn_icon_vox && icon_exists(item.worn_icon_vox, worn_state))
+		return item.worn_icon_vox
 	if(!icon_file || !icon_exists(icon_file, worn_state))
 		return null
 	return icon_file
