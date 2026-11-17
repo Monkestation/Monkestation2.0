@@ -1892,6 +1892,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 ///Attempts to stash the mob into a human's hands if able.
 /mob/living/proc/mob_try_stash(mob/living/user, instant=FALSE)
+	if(!(src in range(1, user)))
+		return
 	if(!ishuman(user))
 		return
 	if(!length(user.get_empty_held_indexes()))
