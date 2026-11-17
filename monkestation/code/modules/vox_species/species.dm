@@ -197,24 +197,25 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 /mob/living/carbon/human/species/vox
 	race = /datum/species/vox
 
-// Fitted clothing. Vox are BODYSHAPE_CUSTOM, anything without a fitted sprite falls back to the human one.
+// Fitted clothing. Vox limbs are BODYSHAPE_CUSTOM, anything without a fitted sprite falls back to the human one.
+// Like on Yogstation, it's the limbs an item covers that decide if it's drawn vox-fitted, not the wearer's species.
 
-/// Loadout slot -> list of icon files with vox-fitted worn sprites.
-GLOBAL_LIST_INIT(vox_worn_icons, list(
-	LOADOUT_ITEM_HEAD = list('icons/mob/clothing/species/vox/head.dmi', 'icons/mob/clothing/species/vox/helmet.dmi'),
-	LOADOUT_ITEM_MASK = list('icons/mob/clothing/species/vox/mask.dmi'),
-	LOADOUT_ITEM_GLASSES = list('icons/mob/clothing/species/vox/eyes.dmi'),
-	LOADOUT_ITEM_EARS = list('icons/mob/clothing/species/vox/ears.dmi'),
-	LOADOUT_ITEM_NECK = list('icons/mob/clothing/species/vox/collar.dmi'),
-	LOADOUT_ITEM_GLOVES = list('icons/mob/clothing/species/vox/gloves.dmi'),
-	LOADOUT_ITEM_SHOES = list('icons/mob/clothing/species/vox/shoes.dmi'),
-	LOADOUT_ITEM_SUIT = list('icons/mob/clothing/species/vox/suit.dmi'),
-	LOADOUT_ITEM_UNIFORM = list('icons/mob/clothing/species/vox/uniform.dmi'),
-	LOADOUT_ITEM_MISC = list('icons/mob/clothing/species/vox/back.dmi'),
-))
+/// TRUE if the wearer's limb in that zone is a vox limb.
+/proc/is_vox_limb(mob/living/carbon/human/wearer, zone)
+	var/obj/item/bodypart/limb = wearer.get_bodypart(zone)
+	return limb?.limb_id == SPECIES_VOX
 
-/datum/species/vox/generate_custom_worn_icon(item_slot, obj/item/item)
-	// Greyscale items generate their own worn icon. A few of them have a vox shaped config, the rest fall back to the human shape.
+/**
+ * Returns the vox-fitted worn icon for an item, or null to use the normal one.
+ * Follows Yogstation's rules: which limbs decide it, and which item types have fitted sprites at all.
+ */
+/proc/get_vox_fitted_worn_icon(item_slot, obj/item/item)
+	var/mob/living/carbon/human/wearer = item.loc
+	if(!ishuman(wearer))
+		return null
+	var/vox_legs = is_vox_limb(wearer, BODY_ZONE_L_LEG) && is_vox_limb(wearer, BODY_ZONE_R_LEG)
+
+	// Greyscale items generate their own worn icon. Jumpsuits and sneakers have a vox shaped config, used with vox legs.
 	if(item.greyscale_config_worn)
 		var/static/list/fitted_configs = list(
 			/datum/greyscale_config/jumpsuit/worn = /datum/greyscale_config/jumpsuit/worn/vox,
@@ -222,12 +223,52 @@ GLOBAL_LIST_INIT(vox_worn_icons, list(
 			/datum/greyscale_config/sneakers/worn = /datum/greyscale_config/sneakers/worn/vox,
 			/datum/greyscale_config/sneakers_orange/worn = /datum/greyscale_config/sneakers_orange/worn/vox,
 		)
+		if(!(item_slot in list(LOADOUT_ITEM_UNIFORM, LOADOUT_ITEM_SHOES)) || !vox_legs)
+			return null
 		var/fitted_config = fitted_configs[item.greyscale_config_worn]
 		if(!fitted_config || !item.greyscale_colors)
 			return null
 		return SSgreyscale.GetColoredIconByType(fitted_config, item.greyscale_colors)
+
 	var/worn_state = item.worn_icon_state || item.icon_state
-	for(var/icon_file in GLOB.vox_worn_icons[item_slot])
-		if(icon_exists(icon_file, worn_state))
-			return icon_file
-	return null
+	var/icon_file
+	switch(item_slot)
+		if(LOADOUT_ITEM_UNIFORM) // the legs make regular uniforms not fit, else the chest decides
+			if(istype(item, /obj/item/clothing/under) && (vox_legs || is_vox_limb(wearer, BODY_ZONE_CHEST)))
+				icon_file = 'icons/mob/clothing/species/vox/uniform.dmi'
+		if(LOADOUT_ITEM_SUIT) // like uniforms: the legs make regular suits not fit, else the chest decides
+			if(istype(item, /obj/item/clothing/suit) && (vox_legs || is_vox_limb(wearer, BODY_ZONE_CHEST)))
+				icon_file = 'icons/mob/clothing/species/vox/suit.dmi'
+		if(LOADOUT_ITEM_SHOES)
+			if(istype(item, /obj/item/clothing/shoes) && vox_legs)
+				icon_file = 'icons/mob/clothing/species/vox/shoes.dmi'
+		if(LOADOUT_ITEM_GLOVES)
+			if(istype(item, /obj/item/clothing/gloves) && is_vox_limb(wearer, BODY_ZONE_L_ARM) && is_vox_limb(wearer, BODY_ZONE_R_ARM))
+				icon_file = 'icons/mob/clothing/species/vox/gloves.dmi'
+		if(LOADOUT_ITEM_HEAD)
+			if(istype(item, /obj/item/clothing/head) && is_vox_limb(wearer, BODY_ZONE_HEAD))
+				// As on Yogstation, helmets use helmet.dmi and other headwear (vox space helmets too) head.dmi.
+				// Unlike Yogstation, each falls back to the other file, so sprites drawn in the "wrong" file still get used.
+				var/helmet_first = istype(item, /obj/item/clothing/head/helmet) && !istype(item, /obj/item/clothing/head/helmet/space/vox)
+				icon_file = helmet_first ? 'icons/mob/clothing/species/vox/helmet.dmi' : 'icons/mob/clothing/species/vox/head.dmi'
+				if(!icon_exists(icon_file, worn_state))
+					icon_file = helmet_first ? 'icons/mob/clothing/species/vox/head.dmi' : 'icons/mob/clothing/species/vox/helmet.dmi'
+		if(LOADOUT_ITEM_MASK)
+			if(istype(item, /obj/item/clothing/mask) && is_vox_limb(wearer, BODY_ZONE_HEAD))
+				icon_file = 'icons/mob/clothing/species/vox/mask.dmi'
+		if(LOADOUT_ITEM_GLASSES)
+			if(istype(item, /obj/item/clothing/glasses) && is_vox_limb(wearer, BODY_ZONE_HEAD))
+				icon_file = 'icons/mob/clothing/species/vox/eyes.dmi'
+		if(LOADOUT_ITEM_EARS)
+			if(istype(item, /obj/item/clothing/ears) && is_vox_limb(wearer, BODY_ZONE_HEAD))
+				icon_file = 'icons/mob/clothing/species/vox/ears.dmi'
+		if(LOADOUT_ITEM_MISC) // the back slot: only backpacks have fitted sprites on Yogstation. Defibrillator units have them too, so they are fitted here as well.
+			if((istype(item, /obj/item/storage/backpack) || istype(item, /obj/item/defibrillator)) && is_vox_limb(wearer, BODY_ZONE_CHEST))
+				icon_file = 'icons/mob/clothing/species/vox/back.dmi'
+		// Neck and belt items are never fitted.
+	if(!icon_file || !icon_exists(icon_file, worn_state))
+		return null
+	return icon_file
+
+/datum/species/vox/generate_custom_worn_icon(item_slot, obj/item/item)
+	return get_vox_fitted_worn_icon(item_slot, item)
