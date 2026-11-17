@@ -1890,6 +1890,25 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	mob_pickup(user)
 	return TRUE
 
+///Attempts to stash the mob into a human's hands if able.
+/mob/living/proc/mob_try_stash(mob/living/user, instant=FALSE)
+	if(!ishuman(user))
+		return
+	if(!length(user.get_empty_held_indexes()))
+		to_chat(user, span_warning("[src]'s hands are full!"))
+		return FALSE
+	if(buckled)
+		to_chat(user, span_warning("You are buckled to something!"))
+		return FALSE
+	if(!instant)
+		user.visible_message(span_warning("[src] starts trying to crawl into [user]'s hands!"), \
+						span_danger("[src] starts trying to crawl into your hands..."), null, null, src)
+		to_chat(src, span_userdanger("You start trying to crawl into [user]'s hands!"))
+		if(!do_after(src, 2 SECONDS, target = user))
+			return FALSE
+	mob_pickup(user)
+	return TRUE
+
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))
 		return

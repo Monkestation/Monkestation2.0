@@ -348,3 +348,10 @@
 	Move(get_step(src, dir), dir)
 	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
 	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
+
+/mob/living/basic/mouse_drop_dragged(atom/target_atom, mob/user)
+	if(ishuman(target_atom) && target_atom != src && user == src)
+		var/mob/living/M = target_atom
+		if(src.can_be_held)
+			src.mob_try_stash(M)
+			return
