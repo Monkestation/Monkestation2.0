@@ -74,8 +74,15 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	species_language_holder = /datum/language_holder/vox
 	outfit_important_for_life = /datum/outfit/vox
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
+	breathid = "n2" // picks the "not enough nitrogen" alert when a vox has no lungs
+	inherent_respiration_type = RESPIRATION_N2 // what a vox breathes when it has no lungs, for breathing medicines and oxygen damage
 	// Yogstation's scent description, read only by its bloodsucker scent tracking power. Monkestation has nothing that reads one yet.
 	// smells_like = "musty quills"
+	// Not on Yogstation, left here as ideas:
+	// species_cookie = /obj/item/food/meat/slab // vox like meat, like lizards
+	// death_sound = 'sound/voice/vox_species/shriek1.ogg' // would want a proper death shriek
+	// family_heirlooms = list(/obj/item/flag/species/vox) // for the Family Heirloom quirk
+	// inert_mutation = /datum/mutation/... // the dormant mutation in the vox genome, dwarfism by default
 
 /datum/species/vox/random_name(gender, unique, last_name)
 	if(unique)
