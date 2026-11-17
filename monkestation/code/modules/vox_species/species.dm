@@ -103,6 +103,14 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	regenerate_organs(human, src, visual_only = TRUE)
 	human.update_body(is_creating = TRUE)
 
+/// Vox lose their quills instead of hair, like on Yogstation.
+/datum/species/vox/go_bald(mob/living/carbon/human/target)
+	if(QDELETED(target)) //may be called from a timer
+		return
+	..()
+	target.set_vox_quills(SPRITE_ACCESSORY_NONE, facial = TRUE)
+	target.set_vox_quills(SPRITE_ACCESSORY_NONE, facial = FALSE)
+
 /// Don't forget your voxygen tank. Runs after the job outfit, like on Yogstation.
 /datum/species/vox/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE, datum/preferences/used_pref)
 	// A mask we can't breathe through goes into the bag. Breathable job masks (clown, mime) stay on.

@@ -392,6 +392,17 @@
 	greyscale_config = null
 	greyscale_colors = null
 
+/obj/item/encryptionkey/vox
+	name = "\improper Vox translation key"
+	desc = "An encryption key that automatically encodes Vox heard through the radio into common. The signal's rather scratchy."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "translation_cypherkey"
+	language_data = list(
+		/datum/language/vox = 100,
+	)
+	greyscale_config = null
+	greyscale_colors = null
+
 /obj/item/encryptionkey/headset_uncommon
 	name = "dusty encryption key"
 	channels = list(RADIO_CHANNEL_UNCOMMON = 1)

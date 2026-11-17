@@ -16,6 +16,7 @@
 #define GOBLIN 13
 #define FELINID 14
 #define SLIME 15
+#define VOX 16
 
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
@@ -157,6 +158,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			"goblin" = GOBLIN,
 			"nekomimetic" = FELINID,
 			"slime" = SLIME,
+			"voxpidgin" = VOX,
 		))
 	)
 
@@ -212,6 +214,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			oldlangbits = FELINID
 		if(/datum/language/slime)
 			oldlangbits = SLIME
+		if(/datum/language/vox)
+			oldlangbits = VOX
 
 	// Signal data
 	var/datum/n_struct/signal/script_signal = new(list(
@@ -361,6 +365,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			return /datum/language/nekomimetic
 		if(SLIME)
 			return /datum/language/slime
+		if(VOX)
+			return /datum/language/vox
 
 ///Stores data from the script to use between radio messages.
 /datum/n_function/default/mem
@@ -546,3 +552,4 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 #undef GOBLIN
 #undef FELINID
 #undef SLIME
+#undef VOX

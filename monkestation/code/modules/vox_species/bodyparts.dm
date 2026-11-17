@@ -7,6 +7,16 @@
 	/// Color of the vox body marking.
 	var/vox_markings_color
 
+/// Returns the verb for a single unarmed attack with this limb. Lets a limb pick from several verbs, like Yogstation's attack_verbs.
+/obj/item/bodypart/proc/get_unarmed_attack_verb()
+	return unarmed_attack_verb
+
+/obj/item/bodypart/arm/left/vox/get_unarmed_attack_verb()
+	return pick("scratch", "claw")
+
+/obj/item/bodypart/arm/right/vox/get_unarmed_attack_verb()
+	return pick("scratch", "claw")
+
 /// Takes skin tone and markings from the owner, if they are a vox.
 /obj/item/bodypart/proc/vox_update_limb(is_creating)
 	if(!owner?.dna || !isvox(owner))
