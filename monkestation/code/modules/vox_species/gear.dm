@@ -44,7 +44,7 @@
 	icon = 'icons/obj/species/vox/hats.dmi'
 	worn_icon = 'icons/mob/clothing/species/vox/head.dmi'
 	armor_type = /datum/armor/vox_space
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | HEADINTERNALS
+	clothing_flags = STOPSPRESSUREDAMAGE // as on Yogstation: not syringe-proof, and vox breathe through their own masks
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/helmet/space/vox/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
@@ -101,6 +101,7 @@
 	icon_state = "boots-vox"
 	base_icon_state = "boots-vox"
 	supports_variations_flags = NONE
+	slowdown_active = 0 // like on Yogstation, gripping with claws doesn't slow you down
 
 /obj/item/clothing/shoes/magboots/vox/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	return vox_only_equip_check(src, M, slot, disable_warning) && ..()

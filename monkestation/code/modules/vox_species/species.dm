@@ -74,6 +74,8 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	species_language_holder = /datum/language_holder/vox
 	outfit_important_for_life = /datum/outfit/vox
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
+	// Yogstation's scent description, read only by its bloodsucker scent tracking power. Monkestation has nothing that reads one yet.
+	// smells_like = "musty quills"
 
 /datum/species/vox/random_name(gender, unique, last_name)
 	if(unique)

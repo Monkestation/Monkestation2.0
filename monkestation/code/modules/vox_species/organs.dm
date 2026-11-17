@@ -114,6 +114,7 @@
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/vox)
 	liked_foodtypes = MEAT | FRIED
+	disliked_foodtypes = GROSS // as on Yogstation, scavengers aren't picky
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues", "skrees")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue", "skree")
 

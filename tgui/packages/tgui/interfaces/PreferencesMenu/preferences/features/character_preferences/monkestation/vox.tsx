@@ -54,7 +54,7 @@ export const feature_vox_skin_tone: Feature<
 };
 
 export const feature_vox_quills: FeatureChoiced = {
-  name: 'Quills',
+  name: 'Quillstyle',
   small_supplemental: false,
   component: FeatureDropdownInput,
 };
@@ -67,7 +67,7 @@ export const feature_vox_quills_color: Feature<string> = {
 };
 
 export const feature_vox_facial_quills: FeatureChoiced = {
-  name: 'Facial Quills',
+  name: 'Facial Quillstyle',
   small_supplemental: false,
   component: FeatureDropdownInput,
 };
@@ -110,13 +110,13 @@ export const feature_quill_gradientcolor: Feature<string> = {
 };
 
 export const feature_vox_tank_type: FeatureChoiced = {
-  name: 'Nitrogen Tank',
+  name: 'N² Tank',
   description: 'The nitrogen tank your character starts the shift with.',
   component: FeatureDropdownInput,
 };
 
 export const feature_vox_mask: FeatureChoiced = {
-  name: 'Breath Mask',
+  name: 'Mask',
   description: 'The breath mask your character starts the shift with.',
   component: FeatureDropdownInput,
 };
