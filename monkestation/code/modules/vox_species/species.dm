@@ -272,6 +272,20 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 		// Neck and belt items are never fitted.
 	if(icon_file && item.worn_icon_vox && icon_exists(item.worn_icon_vox, worn_state))
 		return item.worn_icon_vox
+	// Items whose sprite name matches a vox sprite drawn for a different item. They keep their human sprite.
+	var/static/list/wrong_item_sprites = typecacheof(list(
+		/obj/item/clothing/glasses/godeye, // the vox "godeye" is Yogstation's eldritch eye
+		/obj/item/clothing/head/helmet/surplus, // grey surplus helmet, the vox "helmet" is the security helmet
+		/obj/item/clothing/mask/luchador/enzo, // red mask, the vox "luchador" is the gold one
+		/obj/item/clothing/suit/armor/hos_tailcoat, // costume tailcoat, the vox "hos" is the HoS armored coat
+		/obj/item/clothing/suit/armor/vest/blueshield/jacket, // jacket, the vox "blueshield" is a vest
+		/obj/item/clothing/suit/armor/vest/secjacket, // red plaid jacket, the vox "secjacket" is a black one
+		/obj/item/clothing/under/rank/cargo/qm/nova, // alternate brown and black designs, the vox sprites are the classic ones
+		/obj/item/clothing/under/rank/cargo/tech/nova,
+		/obj/item/storage/backpack/deforest_medkit, // medkit pouch, the vox "satchel" is a satchel
+	))
+	if(is_type_in_typecache(item, wrong_item_sprites))
+		return null
 	if(!icon_file || !icon_exists(icon_file, worn_state))
 		return null
 	return icon_file
