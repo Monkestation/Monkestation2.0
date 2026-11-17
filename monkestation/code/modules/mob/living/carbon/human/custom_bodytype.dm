@@ -61,6 +61,11 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
  * * item: The item being rendered.
  */
 /datum/species/proc/generate_custom_worn_icon(item_slot, obj/item/item)
+	// Vox limbs on another species still wear vox-fitted clothing, like on Yogstation.
+	var/vox_icon = get_vox_fitted_worn_icon(item_slot, item)
+	if(vox_icon)
+		return vox_icon
+
 	// If already set (possibly by us, or manually, use it.)
 	var/icon/final_icon = get_custom_worn_icon(item_slot, item)
 	if(final_icon && icon_exists(final_icon, item.worn_icon_state || item.icon_state))
