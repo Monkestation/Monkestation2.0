@@ -313,20 +313,20 @@
 
 /datum/heretic_knowledge/blade_upgrade/flesh
 	name = "Bleeding Steel"
-	desc = "Your Bloody Blade now causes enemies to bleed heavily on attack."
+	desc = "Your Bloody Blade now tears deep gashes into whichever limb you strike, making enemies bleed heavily and leaving their limbs easy to sever."
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_flesh"
 	///What type of wound do we apply on hit
-	var/wound_type = /datum/wound/slash/flesh/severe
+	var/wound_type = /datum/wound/slash/flesh/critical
 
 /datum/heretic_knowledge/blade_upgrade/flesh/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!iscarbon(target) || source == target)
 		return
 
 	var/mob/living/carbon/carbon_target = target
-	var/obj/item/bodypart/bodypart = pick(carbon_target.get_bodyparts())
+	var/obj/item/bodypart/bodypart = carbon_target.get_bodypart(check_zone(source.zone_selected)) || pick(carbon_target.get_bodyparts())
 	var/datum/wound/crit_wound = new wound_type()
 	crit_wound.apply_wound(bodypart, attack_direction = get_dir(source, target))
 

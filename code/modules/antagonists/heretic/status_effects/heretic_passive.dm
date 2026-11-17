@@ -261,14 +261,14 @@
 #define FLESH_EMBED_BURST_THRESHOLD 8
 
 //---- Flesh Passive
-// Makes you never get disgust, virus immune and immune to damage from space ants
+// Makes you never get disgust, virus immune, immune to damage from space ants and halves your hunger rate
 // Level 2, organs and raw meat heals you. You also become a voracious glutton who likes all food. No slowdown from being fat
 // Level 3, being fat gives baton resistance, makes ballistic projectiles embed for reduced damage, and expels them all at a threshold
 /datum/status_effect/heretic_passive/flesh
 	name = "Ravenous Hunger"
 	id = "flesh_passive"
 	passive_descriptions = list(
-		"Immunity to Diseases, Disgust and space ants.",
+		"Immunity to Diseases, Disgust and space ants. You get hungry half as fast.",
 		"Eating organs or meat now heals you, gain the voracious and gluttonous trait and being fat doesn't slow you down.",
 		"When fat you gain baton resistance and bolas sink harmlessly into your flesh instead of tangling your legs. \
 		Ballistic projectiles always embed in your flesh and only deal 15% of their damage, as does anything embedded in you. \
@@ -280,6 +280,9 @@
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), TRAIT_STATUS_EFFECT(id))
+	if(ishuman(owner))
+		var/mob/living/carbon/human/heretic = owner
+		heretic.physiology.hunger_mod *= 0.5 // the flesh hoards everything it's fed
 
 /datum/status_effect/heretic_passive/flesh/tick(seconds_between_ticks)
 	. = ..()
@@ -496,6 +499,7 @@
 	owner.update_appearance(UPDATE_OVERLAYS)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/heretic = owner
+		heretic.physiology.hunger_mod *= 2
 		heretic.on_fat()
 
 /datum/embedding/heretic_flesh
