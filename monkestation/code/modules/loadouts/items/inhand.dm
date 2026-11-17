@@ -43,6 +43,10 @@ GLOBAL_LIST_INIT(loadout_inhand_items, generate_loadout_items(/datum/loadout_ite
 	name = "Skub"
 	item_path = /obj/item/skub
 
+/datum/loadout_item/inhand/vox_flag
+	name = "Vox Flag"
+	item_path = /obj/item/flag/species/vox
+
 /datum/loadout_item/inhand/skateboard
 	name = "Skateboard"
 	item_path = /obj/item/melee/skateboard
