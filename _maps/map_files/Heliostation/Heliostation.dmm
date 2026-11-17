@@ -18612,12 +18612,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/station/service/library)
-"bOi" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space)
 "bOk" = (
 /obj/structure/chair/comfy,
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -43083,7 +43077,7 @@
 "jxu" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "jxx" = (
 /obj/structure/table{
 	color = "#B392CB"
@@ -51857,10 +51851,6 @@
 /obj/machinery/oven/range,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
-"mPZ" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "mQq" = (
 /turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
@@ -52125,7 +52115,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "mUy" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -60275,7 +60265,7 @@
 	network = list("minisat")
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "pQx" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -63563,12 +63553,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
-"rdm" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
-/turf/open/space/basic,
-/area/space)
 "rdq" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64890,8 +64874,9 @@
 	c_tag = "AI Sat - Exterior Port";
 	network = list("minisat")
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/station/solars/starboard/aft)
 "rzF" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -65287,6 +65272,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
+"rIG" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/rods{
+	amount = 4
+	},
+/turf/open/space/basic,
+/area/station/solars/starboard/aft)
 "rIU" = (
 /obj/structure/chair{
 	dir = 8
@@ -75391,6 +75383,13 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"vFi" = (
+/obj/structure/lattice,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "vFk" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/requests_console/directional/south{
@@ -78590,6 +78589,13 @@
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
+"wPZ" = (
+/obj/item/stack/cable_coil,
+/obj/item/stack/rods{
+	amount = 4
+	},
+/turf/open/space/basic,
+/area/station/solars/starboard/aft)
 "wQe" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -81424,12 +81430,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
-"xUX" = (
-/obj/item/stack/rods{
-	amount = 4
-	},
-/turf/open/space/basic,
-/area/space)
 "xUY" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -100732,7 +100732,7 @@ aaa
 aaa
 aak
 aaa
-mPZ
+aak
 aaa
 aaa
 aaa
@@ -100988,7 +100988,7 @@ aaa
 aaa
 xRU
 aak
-mPZ
+aak
 mUf
 aaa
 aaa
@@ -105641,8 +105641,8 @@ vff
 aOd
 xHL
 aak
-mPZ
-mPZ
+aak
+aak
 aDH
 aaa
 aaa
@@ -110014,7 +110014,7 @@ sPv
 wGB
 nEf
 cyo
-aak
+vFi
 aak
 aak
 aak
@@ -110528,7 +110528,7 @@ cyo
 cyo
 cyo
 cyo
-rdm
+aaa
 aaa
 aDH
 aaa
@@ -121064,7 +121064,7 @@ cTK
 shu
 aaa
 iGq
-xUX
+aaa
 cTK
 cTK
 cTK
@@ -121320,7 +121320,7 @@ aaa
 aaa
 aaa
 aaa
-ltN
+wPZ
 aaa
 aaa
 aaa
@@ -122091,13 +122091,13 @@ cAR
 cAR
 cAR
 iGq
+rIG
 cAR
 cAR
 cAR
 cAR
 cAR
-cAR
-mPZ
+aak
 aaR
 aaa
 aaa
@@ -122347,7 +122347,7 @@ cTK
 cTK
 cTK
 cTK
-xUX
+aaa
 cAR
 aaa
 shu
@@ -123127,7 +123127,7 @@ shu
 shu
 aaa
 cUC
-bOi
+aaa
 aaa
 aaa
 aaa
@@ -123382,7 +123382,7 @@ sOT
 cAR
 cAR
 cAR
-mPZ
+aak
 aOd
 aaa
 aaa
@@ -123641,7 +123641,7 @@ shu
 shu
 aaa
 cUC
-bOi
+aaa
 aaa
 aaa
 aaa
