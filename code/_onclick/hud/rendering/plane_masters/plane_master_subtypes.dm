@@ -87,11 +87,6 @@
 		critical = PLANE_CRITICAL_FUCKO_PARALLAX
 		return
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
-/*
-	RegisterSignal(SSdcs, COMSIG_NARSIE_SUMMON_UPDATE, PROC_REF(narsie_modified))
-	if(GLOB.narsie_summon_count >= 1)
-		narsie_start_midway(GLOB.narsie_effect_last_modified) // We assume we're on the start, so we can use this number
-*/
 	RegisterSignal(SSdcs, COMSIG_DARKSPAWN_ASCENSION, PROC_REF(darkspawn_ascension))
 	if(GLOB.sacrament_done) //so no runtimes prior to the round starting
 		darkspawn_ascension(0)
@@ -138,35 +133,6 @@
 /atom/movable/screen/plane_master/parallax/check_outside_bounds()
 	// If we're outside bounds AND we're the 0th plane, we need to show cause parallax is hacked to hell
 	return offset != 0 && is_outside_bounds
-
-/*
-/// Starts the narsie animation midway, so we can catch up to everyone else quickly
-/atom/movable/screen/plane_master/parallax/proc/narsie_start_midway(start_time)
-	var/time_elapsed = world.time - start_time
-	narsie_summoned_effect(max(16 SECONDS - time_elapsed, 0))
-
-/// Starts the narsie animation, make us grey, then red
-/atom/movable/screen/plane_master/parallax/proc/narsie_modified(datum/source, new_count)
-	SIGNAL_HANDLER
-	if(new_count >= 1)
-		narsie_summoned_effect(16 SECONDS)
-	else
-		narsie_unsummoned()
-
-/atom/movable/screen/plane_master/parallax/proc/narsie_summoned_effect(animate_time)
-	if(GLOB.narsie_summon_count >= 2)
-		var/static/list/nightmare_parallax = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0)
-		animate(src, color = nightmare_parallax, time = animate_time)
-		return
-
-	var/static/list/grey_parallax = list(0.4,0.4,0.4,0, 0.4,0.4,0.4,0, 0.4,0.4,0.4,0, 0,0,0,1, -0.1,-0.1,-0.1,0)
-	// We're gonna animate ourselves grey
-	// Then, once it's done, about 40 seconds into the event itself, we're gonna start doin some shit. see below
-	animate(src, color = grey_parallax, time = animate_time)
-
-/atom/movable/screen/plane_master/parallax/proc/narsie_unsummoned()
-	animate(src, color = null, time = 8 SECONDS)
-*/
 
 /atom/movable/screen/plane_master/parallax/proc/darkspawn_ascension(delay = 15 SECONDS)
 	animate(src, color = "#555555", time = delay) //greatly dimmed stars
@@ -419,7 +385,7 @@
 	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		// We use outlines instead of drop shadow due to how extremely expensive it is, and there's no reason to use it for runechat
 		// which already has high drop shadow transparency at just 32 alpha, so outline does the job good enough
-		add_filter("AO", 1, outline_filter(size = 3, color = "#04080F20", flags = OUTLINE_SQUARE))
+		add_filter("AO", 1, outline_filter(size = 2, color = "#04080F20", flags = OUTLINE_SQUARE))
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"

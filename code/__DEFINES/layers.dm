@@ -8,9 +8,6 @@
 #define FIELD_OF_VISION_BLOCKER_PLANE -90
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
-#define PLANE_NAME_TAGS_BLOCKER -89
-#define NAME_TAG_RENDER_TARGET "*NAME_TAG_RENDER_TARGET"
-
 #define CLICKCATCHER_PLANE -80
 
 #define PLANE_SPACE -25
@@ -41,15 +38,8 @@
 #define MASSIVE_OBJ_PLANE 3
 #define GHOST_PLANE 4
 #define POINT_PLANE 5
-#define PLANE_NAME_TAGS 6
 
 //---------- LIGHTING -------------
-//monkestation begin
-// This is not rendered, a fullscreen effect uses the render_target as a layer filter to display on the lighting plane
-#define SUNLIGHTING_PLANE 9
-#define SUNLIGHTING_RENDER_TARGET "*SUNLIGHT_PLANE"
-//monkestation end
-
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
 
