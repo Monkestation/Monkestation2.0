@@ -97,6 +97,8 @@
 /obj/item/storage/box/survival/engineer/give_internals()
 	if(isplasmaman(loc))
 		return new /obj/item/tank/internals/plasmaman/belt(src)
+	if(isvox(loc)) // monkestation edit: vox breathe nitrogen
+		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi(src)
 
 	return new internal_type(src)
 
@@ -117,6 +119,8 @@
 /obj/item/storage/box/survival/syndie/give_internals()
 	if(isplasmaman(loc))
 		return new /obj/item/tank/internals/plasmaman/belt(src)
+	if(isvox(loc)) // monkestation edit: vox breathe nitrogen
+		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi(src)
 
 	return new internal_type(src)
 

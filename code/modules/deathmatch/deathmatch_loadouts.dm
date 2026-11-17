@@ -21,7 +21,7 @@
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
-	else if(!isnull(user.dna.species.outfit_important_for_life) && plasmaman_outfit) //plasmamen get lit on fire and die
+	else if(isplasmaman(user) && plasmaman_outfit) //plasmamen get lit on fire and die // monkestation edit: was any species with an important outfit, which gave vox plasma tanks
 		if(isnull(l_hand) || isnull(r_hand))
 			uniform = plasmaman_outfit::uniform
 			gloves = plasmaman_outfit::gloves
@@ -35,6 +35,19 @@
 
 		else // If both hands are taken, just turn them human
 			user.set_species(/datum/species/human)
+	// monkestation edit start: other species that need gear to breathe (vox) get their own mask and tank
+	else if(!isplasmaman(user) && !isnull(user.dna.species.outfit_important_for_life))
+		var/datum/outfit/important = user.dna.species.outfit_important_for_life
+		if(isnull(l_hand) || isnull(r_hand))
+			mask = important::mask
+			internals_slot = ITEM_SLOT_HANDS
+			if(isnull(l_hand))
+				l_hand = important::r_hand
+			else
+				r_hand = important::r_hand
+		else
+			user.set_species(/datum/species/human)
+	// monkestation edit end
 
 	for(var/datum/action/act as anything in spells_to_add)
 		var/datum/action/new_ability = new act(user)
