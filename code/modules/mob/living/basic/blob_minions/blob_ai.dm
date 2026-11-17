@@ -8,7 +8,7 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/navmap_astar
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
@@ -25,7 +25,7 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/navmap_astar
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/travel_to_point/and_clear_target,
@@ -43,7 +43,7 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/navmap_astar
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_and_hunt_target/corpses,

@@ -5,7 +5,7 @@
 		)
 
 
-	ai_movement = /datum/ai_movement/jps/gary
+	ai_movement = /datum/ai_movement/navmap_astar/gary
 	max_target_distance = 250
 
 	idle_behavior = /datum/idle_behavior/chicken/gary
@@ -45,7 +45,7 @@
 	blackboard[BB_GARY_COME_HOME] = TRUE
 	queue_behavior(/datum/ai_behavior/travel_towards/head_to_hideout, BB_TRAVEL_DESTINATION)
 
-/datum/ai_movement/jps/gary
+/datum/ai_movement/navmap_astar/gary
 	max_pathing_attempts = 25
 	maximum_length = 175
 	diagonal_flags = DIAGONAL_REMOVE_ALL

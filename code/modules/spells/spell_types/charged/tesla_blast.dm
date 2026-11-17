@@ -51,7 +51,7 @@
 	for(var/mob/living/carbon/to_check in view(target_radius, center))
 		if(to_check == center || to_check == owner)
 			continue
-		if(!length(get_path_to(center, to_check, max_distance = target_radius, simulated_only = FALSE)))
+		if(!length(get_path_to(center, to_check, max_distance = target_radius, simulated_only = FALSE, max_path_cost = target_radius * 14)))
 			continue
 
 		possibles += to_check

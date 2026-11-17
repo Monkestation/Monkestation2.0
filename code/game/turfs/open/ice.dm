@@ -15,7 +15,6 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_ORGANIC
-	astar_weight = 75
 	/// Whether we can dig a fishing hole on this turf
 	var/can_make_hole = TRUE
 	/// Screentips for the tools that can dig a fishing hole
