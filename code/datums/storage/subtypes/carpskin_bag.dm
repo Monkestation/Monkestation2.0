@@ -7,6 +7,8 @@
 	var/list/toreturn = list()
 
 	for(var/obj/item/thing in real_location)
+		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+			continue
 		var/total_amnt = 1
 
 		if (isstack(thing))

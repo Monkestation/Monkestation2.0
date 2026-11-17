@@ -434,11 +434,15 @@
 		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
-	if(!storage.real_location.contents.len) // nothing to take out
+	var/obj/item/stored
+	for(var/obj/item/candidate in storage.real_location)
+		if(candidate.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+			continue
+		stored = candidate
+	if(!stored) // nothing to take out
 		to_chat(src, span_warning("There's nothing in your [equipped_item.name] to take out!"))
 		return
-	var/obj/item/stored = storage.real_location.contents[storage.real_location.contents.len]
-	if(!stored || stored.on_found(src))
+	if(stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot
 	return
