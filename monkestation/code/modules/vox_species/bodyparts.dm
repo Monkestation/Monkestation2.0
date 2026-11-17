@@ -9,7 +9,12 @@
 
 /// Takes skin tone and markings from the owner, if they are a vox.
 /obj/item/bodypart/proc/vox_update_limb(is_creating)
-	if(!is_creating || !owner?.dna || !isvox(owner))
+	if(!owner?.dna || !isvox(owner))
+		return
+	// Quill colors and gradients are hair colors and gradients, as on Yogstation, so they follow the head on every update (dye and all).
+	for(var/datum/bodypart_overlay/mutant/vox_quills/quills_overlay in bodypart_overlays)
+		quills_overlay.update_from_head(src)
+	if(!is_creating)
 		return
 	var/list/features = owner.dna.features
 	icon_static = GLOB.vox_skin_tones[features["vox_skin_tone"]] || initial(icon_static)
@@ -20,14 +25,9 @@
 		var/datum/bodypart_overlay/mutant/tail/vox/tail_overlay = overlay
 		var/datum/bodypart_overlay/mutant/vox_quills/quills_overlay = overlay
 		if(istype(tail_overlay))
-			tail_overlay.markings = features["vox_tail_markings"]
-			tail_overlay.markings_color = features["vox_tail_markings_color"]
-		else if(istype(quills_overlay))
-			if(quills_overlay.gradient_feature)
-				quills_overlay.gradient_style = features[quills_overlay.gradient_feature]
-				quills_overlay.gradient_color = features["[quills_overlay.gradient_feature]_color"]
-			quills_overlay.inherit_color(src, force = TRUE)
-		else
+			tail_overlay.update_from_owner(owner) // does nothing for a transplanted tail
+			continue
+		if(!istype(quills_overlay))
 			continue
 		var/feature_name = features[overlay.feature_key]
 		if(feature_name in overlay.get_global_feature_list())

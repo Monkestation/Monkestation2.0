@@ -79,19 +79,12 @@
 /obj/item/tank/internals/emergency_oxygen/vox/empty/populate_gas()
 	return
 
-/// What a vox needs to not choke on the station's air. The mask and tank follow the character's preferences.
+/// What a vox needs to not choke on the station's air. Jobs instead give the mask and tank from the player's preferences.
 /datum/outfit/vox
 	name = "Vox Internals"
 	mask = /obj/item/clothing/mask/breath/vox
 	r_hand = /obj/item/tank/internals/emergency_oxygen/vox
 	internals_slot = ITEM_SLOT_HANDS
-
-/datum/outfit/vox/pre_equip(mob/living/carbon/human/equipping, visualsOnly = FALSE)
-	var/list/features = equipping.dna?.features
-	if(mask == /obj/item/clothing/mask/breath/vox && features?["vox_mask"] == "Respirator")
-		mask = /obj/item/clothing/mask/breath/vox/respirator
-	if(features?["vox_tank"] == "Large")
-		r_hand = /obj/item/tank/internals/nitrogen
 
 // Butchery results
 

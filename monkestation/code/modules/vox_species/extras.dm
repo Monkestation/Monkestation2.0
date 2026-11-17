@@ -66,23 +66,29 @@
 		"socks" = 'icons/mob/clothing/species/vox/socks.dmi',
 	)
 
+/// Returns the fitted version of an underwear sprite if there is one, or the normal one like on Yogstation.
+/datum/species/proc/get_fitted_underwear_icon(datum/sprite_accessory/accessory, kind)
+	var/fitted_icon = fitted_underwear_icons[kind]
+	if(fitted_icon && icon_exists(fitted_icon, accessory.icon_state))
+		return fitted_icon
+	return accessory.icon
+
 /datum/species/proc/get_fitted_underwear_overlays(mob/living/carbon/human/species_human)
 	. = list()
 	if(HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		return
-	var/list/features = species_human.dna.features
-	var/datum/sprite_accessory/underwear = GLOB.underwear_list[features["vox_underwear"]]
-	if(underwear && icon_exists(fitted_underwear_icons["underwear"], underwear.icon_state))
-		var/mutable_appearance/underwear_overlay = mutable_appearance(fitted_underwear_icons["underwear"], underwear.icon_state, -BODY_LAYER)
+	var/datum/sprite_accessory/underwear = GLOB.underwear_list[species_human.underwear]
+	if(underwear)
+		var/mutable_appearance/underwear_overlay = mutable_appearance(get_fitted_underwear_icon(underwear, "underwear"), underwear.icon_state, -BODY_LAYER)
 		if(!underwear.use_static)
 			underwear_overlay.color = species_human.underwear_color
 		. += underwear_overlay
-	var/datum/sprite_accessory/undershirt = GLOB.undershirt_list[features["vox_undershirt"]]
-	if(undershirt && icon_exists(fitted_underwear_icons["undershirt"], undershirt.icon_state))
-		. += mutable_appearance(fitted_underwear_icons["undershirt"], undershirt.icon_state, -BODY_LAYER)
-	var/datum/sprite_accessory/socks = GLOB.socks_list[features["vox_socks"]]
-	if(socks && species_human.num_legs >= 2 && icon_exists(fitted_underwear_icons["socks"], socks.icon_state))
-		var/mutable_appearance/socks_overlay = mutable_appearance(fitted_underwear_icons["socks"], socks.icon_state, -BODY_LAYER)
+	var/datum/sprite_accessory/undershirt = GLOB.undershirt_list[species_human.undershirt]
+	if(undershirt)
+		. += mutable_appearance(get_fitted_underwear_icon(undershirt, "undershirt"), undershirt.icon_state, -BODY_LAYER)
+	var/datum/sprite_accessory/socks = GLOB.socks_list[species_human.socks]
+	if(socks && species_human.num_legs >= 2)
+		var/mutable_appearance/socks_overlay = mutable_appearance(get_fitted_underwear_icon(socks, "socks"), socks.icon_state, -BODY_LAYER)
 		if(!socks.use_static)
 			socks_overlay.color = species_human.socks_color
 		. += socks_overlay

@@ -16,22 +16,42 @@ GLOBAL_LIST_EMPTY(vox_body_markings_list)
 
 /obj/item/organ/external/tail/vox/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	var/datum/bodypart_overlay/mutant/tail/vox/overlay = bodypart_overlay
-	if(overlay.imprint_on_next_insertion && receiver?.dna)
-		overlay.markings = receiver.dna.features["vox_tail_markings"]
-		overlay.markings_color = receiver.dna.features["vox_tail_markings_color"]
+	if(receiver?.dna)
+		// Like on Yogstation, the first one to wear a tail (or anyone, once they are gone) becomes its original owner.
+		if(!overlay.original_owner?.resolve())
+			overlay.original_owner = WEAKREF(receiver)
+		overlay.update_from_owner(receiver)
+		overlay.imprint_on_next_insertion = FALSE // the sprite comes from the skin tone, not a tail feature
 	return ..()
 
 /obj/item/organ/external/tail/vox/mutate_feature(features, mob/living/carbon/human/human)
-	. = ..()
 	var/datum/bodypart_overlay/mutant/tail/vox/overlay = bodypart_overlay
+	if(overlay.original_owner?.resolve() != human)
+		return // someone else's tail keeps looking like theirs
+	. = ..()
 	overlay.markings = human.dna.features["vox_tail_markings"]
 
 /datum/bodypart_overlay/mutant/tail/vox
-	feature_key = "tail_vox"
+	feature_key = "tail_vox" // only names the icon states, the sprite is picked by the "vox_skin_tone" feature
 	/// Name of the tail markings accessory drawn over the tail.
 	var/markings
 	/// Color of the tail markings.
 	var/markings_color
+	/// Weakref to the mob this tail grew on. The tail only follows the looks of its original owner, so a transplanted tail keeps its own (as on Yogstation).
+	var/datum/weakref/original_owner
+
+/// Takes skin tone and tail markings from the given mob, if this tail grew on them.
+/datum/bodypart_overlay/mutant/tail/vox/proc/update_from_owner(mob/living/carbon/tail_owner)
+	if(!tail_owner?.dna || original_owner?.resolve() != tail_owner)
+		return FALSE
+	var/list/features = tail_owner.dna.features
+	var/skin_tone = features["vox_skin_tone"]
+	if(!(skin_tone in GLOB.tails_list_vox))
+		skin_tone = "lime" // a non-vox growing a vox tail
+	markings = features["vox_tail_markings"]
+	markings_color = features["vox_tail_markings_color"]
+	set_appearance_from_name(skin_tone)
+	return TRUE
 
 /datum/bodypart_overlay/mutant/tail/vox/get_global_feature_list()
 	return GLOB.tails_list_vox
@@ -154,24 +174,15 @@ GLOBAL_LIST_EMPTY(vox_body_markings_list)
 	dna_block = DNA_VOX_QUILLS_BLOCK
 	bodypart_overlay = /datum/bodypart_overlay/mutant/vox_quills
 
-/obj/item/organ/external/vox_quills/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	var/datum/bodypart_overlay/mutant/vox_quills/overlay = bodypart_overlay
-	if(overlay.imprint_on_next_insertion && overlay.gradient_feature && receiver?.dna)
-		overlay.gradient_style = receiver.dna.features[overlay.gradient_feature]
-		overlay.gradient_color = receiver.dna.features["[overlay.gradient_feature]_color"]
-	return ..()
-
 /datum/bodypart_overlay/mutant/vox_quills
 	layers = list(EXTERNAL_ADJACENT = HAIR_LAYER)
 	feature_key = "vox_quills"
 	color_source = ORGAN_COLOR_OVERRIDE
 	offset_location = UPPER_BODY
-	/// The dna feature we take our color from.
-	var/color_feature = "vox_quills_color"
 	/// If the owner has this slot obscured, we do not draw.
 	var/hidden_by = HIDEHAIR
-	/// The dna feature we take our gradient style from, its color is in "[this]_color". Null for no gradients.
-	var/gradient_feature = "vox_quills_gradient"
+	/// Whether the hair gradient is drawn over us. Like on Yogstation, only the head quills get it.
+	var/uses_gradient = TRUE
 	/// Name of the hair gradient drawn over the quills.
 	var/gradient_style
 	/// Color of the gradient.
@@ -207,8 +218,31 @@ GLOBAL_LIST_EMPTY(vox_body_markings_list)
 /datum/bodypart_overlay/mutant/vox_quills/get_global_feature_list()
 	return GLOB.vox_quills_list
 
+/// Takes the hair color and hair gradient of the head we are drawn on.
+/datum/bodypart_overlay/mutant/vox_quills/proc/update_from_head(obj/item/bodypart/head/head)
+	var/old_color = draw_color
+	inherit_color(head, force = TRUE)
+	var/new_style
+	var/new_color
+	if(uses_gradient && istype(head))
+		new_style = LAZYACCESS(head.gradient_styles, GRADIENT_HAIR_KEY)
+		new_color = LAZYACCESS(head.gradient_colors, GRADIENT_HAIR_KEY)
+	if(old_color == draw_color && new_style == gradient_style && new_color == gradient_color)
+		return
+	gradient_style = new_style
+	gradient_color = new_color
+	cache_key = jointext(generate_icon_cache(), "_")
+
+/// Quills are colored by hair color, as on Yogstation, so hair dye, dye sprays and DNA all work on them.
 /datum/bodypart_overlay/mutant/vox_quills/override_color(obj/item/bodypart/bodypart_owner)
-	return bodypart_owner?.owner?.dna?.features[color_feature] || draw_color || COLOR_DARKER_BROWN
+	var/obj/item/bodypart/head/head = bodypart_owner
+	if(!istype(head))
+		return draw_color || COLOR_DARKER_BROWN
+	return head.override_hair_color || head.fixed_hair_color || get_quill_color(head) || COLOR_DARKER_BROWN
+
+/// The color of the hair these quills take after.
+/datum/bodypart_overlay/mutant/vox_quills/proc/get_quill_color(obj/item/bodypart/head/head)
+	return head.hair_color
 
 /datum/bodypart_overlay/mutant/vox_quills/color_image(image/overlay, obj/item/bodypart/limb, layer_index, key_name)
 	overlay.color = vox_additive_color(draw_color)
@@ -229,9 +263,11 @@ GLOBAL_LIST_EMPTY(vox_body_markings_list)
 
 /datum/bodypart_overlay/mutant/vox_quills/facial
 	feature_key = "vox_facial_quills"
-	color_feature = "vox_facial_quills_color"
-	gradient_feature = null
+	uses_gradient = FALSE
 	hidden_by = HIDEFACIALHAIR
+
+/datum/bodypart_overlay/mutant/vox_quills/facial/get_quill_color(obj/item/bodypart/head/head)
+	return head.facial_hair_color
 
 /datum/bodypart_overlay/mutant/vox_quills/facial/get_global_feature_list()
 	return GLOB.vox_facial_quills_list

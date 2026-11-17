@@ -773,7 +773,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["vox_body_markings"] = GLOB.vox_body_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_VOX_BODY_MARKINGS_BLOCK), GLOB.vox_body_markings_list.len)]
 	if(dna.features["vox_skin_tone"]) // monkestation edit: vox
 		dna.features["vox_skin_tone"] = GLOB.vox_skin_tones[deconstruct_block(get_uni_feature_block(features, DNA_VOX_SKIN_TONE_BLOCK), GLOB.vox_skin_tones.len)]
-		dna.features["tail_vox"] = dna.features["vox_skin_tone"]
 
 	for(var/obj/item/organ/external/external_organ in organs)
 		external_organ.mutate_feature(features, src)
