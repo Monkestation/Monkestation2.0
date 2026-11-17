@@ -54,7 +54,6 @@
 		unset_click_ability(user, FALSE)
 		return
 
-
 	var/modifiers = params2list(params)
 	user.visible_message(
 		span_danger("[user] spits ink!"),
