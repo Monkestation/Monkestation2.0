@@ -16554,7 +16554,7 @@
 "bzi" = (
 /obj/structure/girder/displaced,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "bzl" = (
 /obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/plating,
@@ -21288,7 +21288,7 @@
 	network = list("ss13","security")
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cnq" = (
 /obj/structure/rack,
 /obj/item/wrench,
@@ -34051,7 +34051,7 @@
 	pixel_y = -32
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "geF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -34978,7 +34978,7 @@
 	pixel_y = 32
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "gCj" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -35231,7 +35231,7 @@
 	network = list("minisat")
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "gHx" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -35473,9 +35473,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/commons/toilet/restrooms)
-"gLQ" = (
-/turf/closed/wall,
-/area/space)
 "gLW" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -37972,7 +37969,7 @@
 	dir = 8
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "hDw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -51245,7 +51242,7 @@
 	pixel_y = -32
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "mDp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54092,7 +54089,7 @@
 "nFP" = (
 /obj/structure/shipping_container/donk_co,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "nGa" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -56756,7 +56753,7 @@
 	network = list("ss13","security")
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "oBw" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58547,7 +58544,7 @@
 	pixel_x = -32
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "piJ" = (
 /obj/machinery/door/airlock/medical/glass{
 	color = "#B392CB";
@@ -61242,7 +61239,7 @@
 	network = list("ss13","command")
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "qlJ" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
@@ -61899,14 +61896,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
-"qxg" = (
-/obj/machinery/power/solar{
-	id = "aftport";
-	name = "Aft-Port Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel/airless,
-/area/space)
 "qxm" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
@@ -65690,6 +65679,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"rRz" = (
+/obj/structure/lattice/catwalk,
+/obj/item/toy/plush/carpplushie,
+/turf/open/space/basic,
+/area/space/nearstation)
 "rRD" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -69069,10 +69063,6 @@
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"tin" = (
-/obj/item/toy/plush/carpplushie,
-/turf/open/space/basic,
-/area/space)
 "tis" = (
 /obj/item/beacon,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -72844,7 +72834,7 @@
 	network = list("ss13","command")
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "uFv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -78784,11 +78774,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"wTV" = (
-/obj/effect/spawner/random/structure/grille,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "wTZ" = (
 /obj/structure/chair/office/light,
 /obj/effect/turf_decal/tile/yellow{
@@ -92477,15 +92462,15 @@ aaa
 aaa
 aae
 aak
-qxg
+ceV
 tKM
 tKM
 tKM
 tKM
 tKM
-aOd
 cgj
-aOd
+cgj
+cgj
 tKM
 tKM
 tKM
@@ -93248,15 +93233,15 @@ aaa
 aaa
 aae
 aak
-qxg
+ceV
 tKM
 tKM
 tKM
 tKM
 tKM
-aOd
 cgj
-aOd
+cgj
+cgj
 tKM
 tKM
 tKM
@@ -111546,7 +111531,7 @@ xwa
 esU
 gDM
 srp
-gLQ
+kHY
 aak
 aaa
 aaa
@@ -111803,7 +111788,7 @@ gDM
 gDM
 gDM
 bkB
-gLQ
+kHY
 aak
 aaa
 aaa
@@ -112060,7 +112045,7 @@ gDM
 srp
 srp
 svn
-gLQ
+kHY
 aak
 aak
 aak
@@ -112317,7 +112302,7 @@ srp
 gDM
 srp
 vkB
-gLQ
+kHY
 aak
 aaa
 aaa
@@ -112574,7 +112559,7 @@ kEK
 gDM
 srp
 fTf
-gLQ
+kHY
 aak
 aaa
 aaa
@@ -112831,7 +112816,7 @@ msy
 uXl
 gDM
 mFh
-gLQ
+kHY
 aak
 aaa
 aaa
@@ -113088,7 +113073,7 @@ kHY
 kHY
 xxY
 kHY
-gLQ
+kHY
 aak
 aaa
 aaa
@@ -116674,7 +116659,7 @@ rbT
 nyk
 kHY
 aaa
-mJA
+cUW
 aaa
 aaa
 aaa
@@ -116936,7 +116921,7 @@ aaa
 aaa
 nFP
 aaa
-mJA
+cUW
 aak
 aaa
 aaa
@@ -117191,7 +117176,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aDq
 aaa
 aaa
 aak
@@ -117448,7 +117433,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aDq
 aaa
 aaa
 aak
@@ -117703,7 +117688,7 @@ uql
 kHY
 aak
 aak
-mJA
+cUW
 aaa
 aaa
 aaa
@@ -120688,8 +120673,8 @@ iXK
 kku
 toy
 aMM
-aOd
-tin
+rRz
+aaa
 aaa
 aOn
 aOr
@@ -136944,7 +136929,7 @@ aOd
 aOd
 aOd
 fUq
-wTV
+xcV
 aaa
 aak
 aaa
@@ -137201,7 +137186,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aak
 aak
 aaa
@@ -137458,7 +137443,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 fUq
 aaa
 aaa
@@ -137715,7 +137700,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aak
 aaa
 aaa
@@ -137972,7 +137957,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aak
 aaa
 aaa
@@ -138229,7 +138214,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 fUq
 aaa
 aaa
@@ -138486,7 +138471,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aak
 aak
 aaa
@@ -138743,7 +138728,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aaa
 aak
 aaa
@@ -139000,7 +138985,7 @@ wTw
 wTw
 wTw
 fUq
-wTV
+xcV
 aaa
 aOd
 aak
@@ -139257,7 +139242,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aaa
 aak
 aaa
@@ -139514,7 +139499,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aak
 aak
 aaa
@@ -139771,7 +139756,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 fUq
 aaa
 aaa
@@ -140028,7 +140013,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aak
 aaa
 aaa
@@ -140285,7 +140270,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aak
 aaa
 aaa
@@ -140542,7 +140527,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 fUq
 aaa
 aaa
@@ -140799,7 +140784,7 @@ wTw
 wTw
 wTw
 aOd
-wTV
+xcV
 aak
 aaa
 aaa
@@ -141056,7 +141041,7 @@ aOd
 aOd
 aOd
 fUq
-wTV
+xcV
 bZD
 bZD
 aaa
