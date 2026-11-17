@@ -812,7 +812,7 @@ SUBSYSTEM_DEF(ticker)
 	var/client/player_client = player?.client
 	if(!player_client)
 		return
-	var/volume = clamp(calculate_mixed_volume(player_client, 100, CHANNEL_LOBBYMUSIC), 25, 100)
+	var/volume = clamp(calculate_mixed_volume(player_client, 100, CHANNEL_LOBBYMUSIC), 15, 100)
 	SEND_SOUND(player_client, sound(round_end_sound, wait = 0, channel = CHANNEL_LOBBYMUSIC, volume = volume))
 
 /datum/controller/subsystem/ticker/proc/Reboot(reason, end_string, delay)
