@@ -648,12 +648,18 @@
 	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \
 		humankind. The jewelry he kept for himself. Seems this one is actually a hologram though...."
 	heat = 0 //its a hologram
+	icon_state = "holo_candle1"
 	anchored = TRUE
 	trash_type = null
 	fuel = INFINITY
 	on = TRUE
 	randomize_fuel = FALSE
 	can_be_extinguished = FALSE
+
+/obj/item/flashlight/flare/candle/holo_candle/update_icon_state()
+	. = ..()
+	icon_state = "holo_candle[current_wax_level][on ? "_lit" : ""]"
+	inhand_icon_state = "holo_candle[on ? "_lit" : ""]"
 
 /obj/item/flashlight/flare/torch
 	name = "torch"
