@@ -10,6 +10,7 @@
 	abstract_type = /mob
 	density = TRUE
 	layer = MOB_LAYER
+	flags_1 = NAV_IRRELEVANT_1 //Mobs move too much and are really not relevant for navigation
 	plane = GAME_PLANE_FOV_HIDDEN
 	animate_movement = SLIDE_STEPS
 	hud_possible = list(ANTAG_HUD)
