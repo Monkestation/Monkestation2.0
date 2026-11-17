@@ -408,6 +408,8 @@
 		qdel(held_item)
 	for(var/obj/item/organ/internal/cyberimp/cybernetic in organs)
 		qdel(cybernetic)
+	for(var/obj/item/implant/imp in implants)
+		qdel(imp)
 
 /// take the most recent item out of a slot or place held item in a slot
 /mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt")

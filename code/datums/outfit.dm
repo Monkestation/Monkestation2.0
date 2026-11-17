@@ -257,15 +257,16 @@
 					H.open_internals(internals)
 			else
 				H.open_internals(H.get_item_by_slot(internals_slot))
-		if(implants)
-			for(var/implant_type in implants)
-				var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)
-				I.implant(H, null, TRUE)
-		if(cybernetics)
-			for(var/cyber_type in cybernetics)
-				var/obj/item/organ/internal/cyberimp/Cyb = SSwardrobe.provide_type(cyber_type,H)
-				for(var/datum/action/action as anything in Cyb.actions)
-					action.Grant(H)
+		for(var/implant_type in implants)
+			var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)
+			I.implant(H, null, TRUE)
+
+		for(var/cyber_type in cybernetics)
+			var/obj/item/organ/internal/cyberimp/Cyb = SSwardrobe.provide_type(cyber_type,H)
+			//So because SSwardrobe.provide_type puts it in the mob, its already "inserted"
+			//So we have to do this instead of just calling Cyb.Insert()
+			for(var/datum/action/action as anything in Cyb.actions)
+				action.Grant(H)
 		// Insert the skillchips associated with this outfit into the target.
 		if(skillchips)
 			for(var/skillchip_path in skillchips)
