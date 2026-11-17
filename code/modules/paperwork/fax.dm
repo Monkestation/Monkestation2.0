@@ -549,3 +549,14 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	recieve_notifies_admins = TRUE
 
 //Monkestation edit end
+
+/obj/machinery/fax/ai
+	desc = "You should frankly not see this."
+	use_power = FALSE
+
+/obj/machinery/fax/ai/Initialize(mapload, ai_name)
+	. = ..()
+	fax_name = ai_name
+
+/obj/machinery/fax/ai/ui_status(mob/user)
+	return UI_INTERACTIVE
