@@ -1128,7 +1128,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(time_since_irradiated > RAD_MOB_HAIRLOSS && SPT_PROB(RAD_MOB_HAIRLOSS_PROB, seconds_per_tick))
 		var/obj/item/bodypart/head/head = source.get_bodypart(BODY_ZONE_HEAD)
-		if(!(source.hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)))
+		if(!(source.hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)) && !isvox(source)) // monkestation edit: vox quills are not lost to radiation, like on Yogstation
 			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
 			addtimer(CALLBACK(src, PROC_REF(go_bald), source), 5 SECONDS)
 
@@ -1184,7 +1184,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 		var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
-		var/atk_verb = attacking_bodypart.unarmed_attack_verb
+		var/atk_verb = attacking_bodypart.get_unarmed_attack_verb() // monkestation edit: limbs can have several attack verbs
 		var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 		if(atk_effect == ATTACK_EFFECT_BITE)

@@ -17,6 +17,18 @@
 	if(isvox(user) && . == message)
 		return "shrieks!"
 
+// Suicide messages
+
+/// Extra bare-handed (combat mode) suicide messages for this species, already formatted for the suicider.
+/datum/species/proc/get_suicide_messages(mob/living/carbon/human/suicider)
+	return list()
+
+/datum/species/vox/get_suicide_messages(mob/living/carbon/human/suicider)
+	return list(
+		"[suicider] is jamming [suicider.p_their()] claws into [suicider.p_their()] eye sockets!",
+		"[suicider] is deeply inhaling oxygen!",
+	)
+
 // Quills in place of hair: mirrors and razors
 
 /**
@@ -229,18 +241,91 @@
 	taste_description = "dust and quills"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/// Oxygen is as toxic to a vox in the blood as it is in the lungs.
-/datum/reagent/oxygen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/mutationtoxin/vox/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+	var/about_to_turn = current_cycle >= cycles_to_turn
 	. = ..()
-	if(!isvox(affected_mob))
-		return
-	affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE)
-	. = TRUE
-	holder?.remove_reagent(type, metabolization_rate * seconds_per_tick)
+	if(about_to_turn && isvox(affected_mob))
+		to_chat(affected_mob, span_danger("The pain subsides. You feel... beaked."))
+
+/datum/chemical_reaction/slime/slimevox
+	desc = "Makes 1u of vox mutation toxin."
+	results = list(/datum/reagent/mutationtoxin/vox = 1)
+	required_reagents = list(/datum/reagent/nitrogen = 1)
+	required_container = /obj/item/slime_extract/green
+
+/// Oxygen is as toxic to a vox in the blood as it is in the lungs. Like Yogstation, this replaces oxygen's normal metabolism.
+/datum/species/vox/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+	. = ..()
+	RegisterSignal(human_who_gained_species, COMSIG_MOB_REAGENT_TICK, PROC_REF(on_reagent_tick))
+
+/datum/species/vox/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
+	UnregisterSignal(human, COMSIG_MOB_REAGENT_TICK)
+	return ..()
+
+/datum/species/vox/proc/on_reagent_tick(mob/living/carbon/human/source, datum/reagent/chem, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+	if(chem.type != /datum/reagent/oxygen)
+		return NONE
+	// Yogstation: 1 toxin damage and 0.2u removed per 2 second tick.
+	source.adjustToxLoss(0.5 * seconds_per_tick)
+	source.reagents.remove_reagent(chem.type, 0.1 * seconds_per_tick)
+	return COMSIG_MOB_STOP_REAGENT_TICK
 
 /obj/item/organ/external/tail/vox/fake
 	name = "fabricated vox tail"
 	desc = "A fabricated severed vox tail. This one's made of synthflesh."
+
+// Limbgrower organs, on a design disk researched with the other xeno-organ disks.
+
+/datum/design/vox_tail
+	name = "Vox Tail"
+	id = "voxtail"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
+	build_path = /obj/item/organ/external/tail/vox/fake
+	category = list(SPECIES_VOX)
+
+/datum/design/vox_tongue
+	name = "Vox Tongue"
+	id = "voxtongue"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/tongue/vox
+	category = list(SPECIES_VOX)
+
+/datum/design/vox_eyes
+	name = "Vox Eyes"
+	id = "voxeyes"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/eyes/vox
+	category = list(SPECIES_VOX)
+
+/datum/design/vox_liver
+	name = "Vox Liver"
+	id = "voxliver"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/liver/vox
+	category = list(SPECIES_VOX)
+
+/datum/design/vox_lungs
+	name = "Vox Lungs"
+	id = "voxlungs"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/lungs/vox
+	category = list(SPECIES_VOX)
+
+/obj/item/disk/design_disk/limbs/vox
+	name = "Vox Limb Design Disk"
+	limb_designs = list(/datum/design/vox_tail, /datum/design/vox_tongue, /datum/design/vox_eyes, /datum/design/vox_liver, /datum/design/vox_lungs)
+
+/datum/design/limb_disk/vox
+	name = "Vox Limb Design Disk"
+	desc = "Contains designs for vox organs for the limbgrower - Vox tail, tongue, eyes, liver, and lungs."
+	id = "limbdesign_vox"
+	build_path = /obj/item/disk/design_disk/limbs/vox
 
 // Research and cargo
 

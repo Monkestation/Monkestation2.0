@@ -67,6 +67,11 @@
 	description = "An ancient language from the distant Beach Planet. People magically learn to speak it under the influence of space drugs."
 	language = /datum/language/beachbum
 
+/datum/opposing_force_equipment/language/vox
+	name = "Vox-pidgin language"
+	description = "The common tongue of the various Vox ships making up the Shoal. It sounds like chaotic shrieking to everyone else."
+	language = /datum/language/vox
+
 
 /datum/opposing_force_equipment/organs
 	category = OPFOR_EQUIPMENT_CATEGORY_ORGANS

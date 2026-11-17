@@ -56,6 +56,9 @@
 	actions_types = null
 	adjustable = FALSE
 
+/obj/item/clothing/mask/breath/vox/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+	return vox_only_equip_check(src, M, slot, disable_warning) && ..()
+
 /obj/item/clothing/mask/breath/vox/respirator
 	name = "vox respirator"
 	desc = "A weirdly-shaped breath mask, this one seems to be designed for a vox beak."

@@ -101,7 +101,7 @@
 
 	. = TRUE
 
-	var/atk_verb = attacking_bodypart.unarmed_attack_verb
+	var/atk_verb = attacking_bodypart.get_unarmed_attack_verb() // monkestation edit: limbs can have several attack verbs
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE && attacker.is_mouth_covered(ITEM_SLOT_MASK))

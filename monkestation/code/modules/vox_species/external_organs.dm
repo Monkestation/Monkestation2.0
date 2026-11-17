@@ -9,6 +9,8 @@ GLOBAL_LIST_EMPTY(vox_body_markings_list)
 /obj/item/organ/external/tail/vox
 	name = "vox tail"
 	desc = "A severed vox tail. Somewhere, no doubt, a vox hater is very pleased with themselves."
+	icon = 'icons/mob/human/species/vox/tails.dmi'
+	icon_state = "m_tail_vox_lime_BEHIND"
 	preference = "feature_vox_skin_tone"
 	dna_block = DNA_VOX_SKIN_TONE_BLOCK
 	wag_flags = WAG_ABLE
@@ -23,6 +25,36 @@ GLOBAL_LIST_EMPTY(vox_body_markings_list)
 		overlay.update_from_owner(receiver)
 		overlay.imprint_on_next_insertion = FALSE // the sprite comes from the skin tone, not a tail feature
 	return ..()
+
+/obj/item/organ/external/tail/vox/Initialize(mapload, accessory_type)
+	. = ..()
+	if(!accessory_type && loc) // spawned on its own (loot, limbgrower): lime until someone wears it, like on Yogstation
+		bodypart_overlay.set_appearance_from_name("lime")
+	update_appearance()
+
+/obj/item/organ/external/tail/vox/Remove(mob/living/carbon/organ_owner, special, moving)
+	. = ..()
+	update_appearance()
+
+/obj/item/organ/external/tail/vox/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	color = null // the sprite already has its colors, see update_overlays()
+
+/// Like on Yogstation, a severed tail looks like the tail it was: skin tone and markings.
+/obj/item/organ/external/tail/vox/update_icon_state()
+	. = ..()
+	var/datum/sprite_accessory/tail_sprite = bodypart_overlay.sprite_datum
+	icon_state = "m_tail_vox_[tail_sprite?.icon_state || "lime"]_BEHIND"
+
+/obj/item/organ/external/tail/vox/update_overlays()
+	. = ..()
+	var/datum/bodypart_overlay/mutant/tail/vox/overlay = bodypart_overlay
+	var/datum/sprite_accessory/vox_tail_markings/markings_datum = GLOB.vox_tail_markings_list[overlay.markings]
+	if(!istype(markings_datum) || markings_datum.name == SPRITE_ACCESSORY_NONE)
+		return
+	var/mutable_appearance/markings_overlay = mutable_appearance(markings_datum.icon, "m_vox_tail_markings_[markings_datum.icon_state]_BEHIND")
+	markings_overlay.color = vox_additive_color(overlay.markings_color)
+	. += markings_overlay
 
 /obj/item/organ/external/tail/vox/mutate_feature(features, mob/living/carbon/human/human)
 	var/datum/bodypart_overlay/mutant/tail/vox/overlay = bodypart_overlay

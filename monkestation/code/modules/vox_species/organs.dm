@@ -12,7 +12,7 @@
 	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 	to_chat(owner, span_warning("Your head hurts."))
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, severity == EMP_HEAVY ? 20 : 10)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, severity == EMP_HEAVY ? 50 : 25) // Yogstation's clamp(severity * 5, 5, 50) on its 5/10 EMP scale
 
 /obj/item/organ/internal/heart/vox
 	name = "vox heart"
@@ -58,7 +58,17 @@
 	. = ..()
 	if((. & EMP_PROTECT_SELF) || !owner)
 		return
-	deaf = 10 // very brief deafness
+	// Very brief, but full, deafness: 10 ticks on Yogstation. Monke's deaf counter alone only makes undamaged ears hard of hearing.
+	ADD_TRAIT(owner, TRAIT_DEAF, "vox_ears_emp")
+	addtimer(CALLBACK(src, PROC_REF(end_emp_deafness), owner), 20 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/item/organ/internal/ears/vox/proc/end_emp_deafness(mob/living/carbon/deafened)
+	if(!QDELETED(deafened))
+		REMOVE_TRAIT(deafened, TRAIT_DEAF, "vox_ears_emp")
+
+/obj/item/organ/internal/ears/vox/Remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, "vox_ears_emp")
 
 /obj/item/organ/internal/eyes/vox
 	name = "vox eyes"
@@ -83,6 +93,11 @@
 	safe_nitro_min = 16
 	oxy_damage_type = TOX
 
+/obj/item/organ/internal/lungs/vox/Initialize(mapload)
+	. = ..()
+	// Like Yogstation's vox breathing class: carbon dioxide counts against the nitrogen we breathe.
+	add_gas_relationship(/datum/gas/carbon_dioxide, /datum/gas/nitrogen, -0.7)
+
 /obj/item/organ/internal/lungs/vox/emp_act(severity)
 	. = ..()
 	if((. & EMP_PROTECT_SELF) || !owner)
@@ -95,7 +110,6 @@
 	icon = 'icons/obj/species/vox/organs.dmi'
 	icon_state = "tongue-vox"
 	decay_factor = 0
-	say_mod = "shrieks"
 	taste_sensitivity = 50 // There's not much need for taste when you're a scavenger.
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/vox)
