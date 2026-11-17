@@ -136,9 +136,8 @@ SUBSYSTEM_DEF(admin_verbs)
 		admin = mob.client
 
 	var/verb_permissions = initial(verb_type.permissions)
-	var/has_rights = initial(verb_type.match_exact_permissions) ? check_exact_rights_for(admin, verb_permissions) : check_rights_for(admin, verb_permissions)
-	if(!has_rights)
-		to_chat(admin, span_red("Error: You do not have sufficient rights to do that. You require [initial(verb_type.match_exact_permissions) ? "all" : "one"] of the following flags:[rights2text(verb_permissions," ")]."), confidential = TRUE)
+	if(!check_rights_for(admin, verb_permissions))
+		to_chat(admin, span_red("Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(verb_permissions," ")]."), confidential = TRUE)
 		return
 
 	if(!ispath(verb_type, /datum/admin_verb) || verb_type == /datum/admin_verb)
