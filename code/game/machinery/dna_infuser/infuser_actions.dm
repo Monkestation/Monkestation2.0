@@ -42,6 +42,19 @@
 		return
 	. = ..()
 
+	if(!IsAvailable()) //such as, arming the ability, and then putting on a mask.
+		user.visible_message(
+			span_danger("[user] spits ink all over [user.p_themselves()]!"),
+			span_userdanger("You spit ink all over yourself! It's everywhere!")
+		)
+		user.adjust_temp_blindness_up_to(6 SECONDS, 10 SECONDS)
+		user.adjust_confusion_up_to(3 SECONDS, 6 SECONDS)
+		playsound(user, SFX_DESECRATION, 20, TRUE)
+		StartCooldown()
+		unset_click_ability(user, FALSE)
+		return
+
+
 	var/modifiers = params2list(params)
 	user.visible_message(
 		span_danger("[user] spits ink!"),
