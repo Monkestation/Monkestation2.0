@@ -144,7 +144,7 @@
 
 /obj/structure/signboard/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(!same_z_layer)
-		SET_PLANE_EXPLICIT(text_holder, GAME_PLANE_UPPER_FOV_HIDDEN, src)
+		SET_PLANE_EXPLICIT(text_holder, GAME_PLANE, src)
 	return ..()
 
 /obj/structure/signboard/set_anchored(anchorvalue)
@@ -176,7 +176,7 @@
 	var/bwidth = src.bound_width || world.icon_size
 	var/bheight = src.bound_height || world.icon_size
 	var/text_html = MAPTEXT_GRAND9K("<span style='text-align: center; line-height: 1'>[html_encode(sign_text)]</span>")
-	SET_PLANE_EXPLICIT(text_holder, GAME_PLANE_UPPER_FOV_HIDDEN, src)
+	SET_PLANE_EXPLICIT(text_holder, GAME_PLANE, src)
 	text_holder.layer = ABOVE_ALL_MOB_LAYER
 	text_holder.alpha = 192
 	text_holder.maptext = text_html
@@ -201,6 +201,7 @@
 	icon = null
 	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = SPACEVINE_LAYER
 
 /obj/effect/abstract/signboard_holder/Initialize(mapload)
 	. = ..()

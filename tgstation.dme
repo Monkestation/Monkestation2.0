@@ -4463,7 +4463,6 @@
 #include "code\modules\client\preferences\default_scryer_label.dm"
 #include "code\modules\client\preferences\flash_visuals.dm"
 #include "code\modules\client\preferences\food_allergy.dm"
-#include "code\modules\client\preferences\fov_darkness.dm"
 #include "code\modules\client\preferences\fps.dm"
 #include "code\modules\client\preferences\gender.dm"
 #include "code\modules\client\preferences\ghost.dm"

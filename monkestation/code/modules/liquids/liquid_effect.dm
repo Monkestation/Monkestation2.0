@@ -144,7 +144,7 @@
 	var/list/stage_overlays = depth_overlays[cache_key]
 	if(!stage_overlays)
 		stage_overlays = list(
-			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_const = offset, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER),
+			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_const = offset, plane = GAME_PLANE, layer = ABOVE_MOB_LAYER),
 			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_top", offset_const = offset, plane = GAME_PLANE, layer = GATEWAY_UNDERLAY_LAYER),
 		)
 		depth_overlays[cache_key] = stage_overlays

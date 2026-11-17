@@ -130,7 +130,7 @@
 	// the whole pen sits 2px up off the tile line - dipping below it would draw the post's base over a wall to the south
 	pixel_z = (dir & NORTH) ? 32 : 0
 	layer = ABOVE_MOB_LAYER + 0.01
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+	SET_PLANE_IMPLICIT(src, GAME_PLANE)
 	anchor?.setDir(dir)
 	guide?.setDir(dir)
 	guide?.update_appearance(UPDATE_OVERLAYS)

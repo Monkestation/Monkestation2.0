@@ -5,7 +5,6 @@
 	icon_state = "punchingbag"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	var/list/hit_sounds = list('sound/items/weapons/genhit1.ogg', 'sound/items/weapons/genhit2.ogg', 'sound/items/weapons/genhit3.ogg',\
 	'sound/items/weapons/punch1.ogg', 'sound/items/weapons/punch2.ogg', 'sound/items/weapons/punch3.ogg', 'sound/items/weapons/punch4.ogg')
 
@@ -101,7 +100,7 @@
 	. = ..()
 
 	if(obj_flags & IN_USE)
-		. += mutable_appearance(icon, "[base_icon_state]-o", offset_spokesman = src, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-o", offset_spokesman = src, plane = GAME_PLANE, layer = ABOVE_MOB_LAYER, alpha = src.alpha)
 
 /obj/structure/weightmachine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

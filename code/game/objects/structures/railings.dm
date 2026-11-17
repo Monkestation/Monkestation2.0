@@ -166,15 +166,11 @@
 		check_neighbors(update_neighbors)
 		overlays.Cut()
 
-		var/turf/turf = get_turf(src)
 		if(dir == SOUTH)
-			SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
-			layer = ABOVE_MOB_LAYER + 0.01
-
+			layer = HITSCAN_PROJECTILE_LAYER
 		else if(dir != NORTH)
-			SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
+			layer = LOW_MOB_LAYER
 		else
-			SET_PLANE(src, GAME_PLANE, turf)
 			layer = initial(layer)
 
 		if(!neighbor_status || !anchored)
@@ -269,8 +265,8 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
-	plane = GAME_PLANE_FOV_HIDDEN
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
 	standard_smoothing = FALSE
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)

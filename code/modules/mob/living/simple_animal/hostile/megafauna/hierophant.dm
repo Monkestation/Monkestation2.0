@@ -803,8 +803,7 @@ Difficulty: Hard
 /obj/effect/hierophant_rays_holder
 	icon = null
 	pixel_y = 16
-	layer = BELOW_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
+	layer = SPACEVINE_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/hierophant_rays_holder/Initialize(mapload)
