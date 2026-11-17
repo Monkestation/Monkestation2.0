@@ -54,6 +54,7 @@
 	playsound(user, 'sound/items/weapons/pierce.ogg', 20, TRUE, -1)
 	user.newtonian_move(get_angle(target, user))
 	StartCooldown()
+	unset_click_ability(user, FALSE)
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.
