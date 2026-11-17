@@ -23,7 +23,6 @@
 
 	COOLDOWN_DECLARE(move_cooldown)
 	var/obj/mimicked_object
-	var/obj/fake_storage
 	var/datum/action/cooldown/mimic_object/mimic_ability
 	var/spoofed_flags = 0
 
@@ -403,10 +402,6 @@
 				box_item.atom_storage.remove_all(update_storage = FALSE)
 				for(var/obj/item/contained_item in contents)
 					qdel(contained_item, TRUE)
-		if(new_item.atom_storage)
-			fake_storage = new(src)
-			fake_storage.clone_storage(new_item.atom_storage)
-			new_item.atom_storage.set_real_location(fake_storage)
 		if(new_item.uses_integrity) // Mimicked items can break easier.
 			var/weight_multiplier = max(1, new_item.w_class)
 			var/adjusted_integrity = 5 + (weight_multiplier * INTEGRITY_PER_WCLASS)
@@ -440,6 +435,7 @@
 	if(length(applied_mob_traits))
 		mimic.add_traits(applied_mob_traits, REF(src))
 	block_actions()
+	mimic.flags_1 |= IGNORE_STORAGE_INVENTORY_1
 	RegisterSignal(mimic, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(mimic, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_RELAYMOVE, PROC_REF(on_user_move))
@@ -460,13 +456,12 @@
 		))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
+	mimic.flags_1 &= ~IGNORE_STORAGE_INVENTORY_1
 	UnregisterSignal(mimic, list(COMSIG_MOB_SAY, COMSIG_MOB_STATCHANGE))
 	if(length(applied_mob_traits))
 		mimic.remove_traits(applied_mob_traits, REF(src))
 	if(mimicked_object.atom_storage)
 		mimicked_object.atom_storage.remove_all(mimicked_object.drop_location())
-	if(fake_storage)
-		QDEL_NULL(fake_storage)
 	var/atom/reagent_holder = mimicked_object
 	if(reagent_holder?.reagents?.total_volume > 0)
 		var/turf/splash_zone = get_turf(reagent_holder)
