@@ -58,7 +58,6 @@
 
 /datum/preference/choiced/vox_skin_tone/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_skin_tone"] = value
-	target.dna.features["tail_vox"] = value // the tail always matches the skin
 
 /datum/preference/choiced/vox_quills
 	savefile_key = "feature_vox_quills"
@@ -82,7 +81,10 @@
 	data[SUPPLEMENTAL_FEATURE_KEY] = "feature_vox_quills_color"
 	return data
 
+/// The hair color, which vox wear on their quills. On Yogstation this is a subtype of the hair color preference.
+/// Applied after the (hidden) normal hair color preference, so it wins for vox.
 /datum/preference/color/vox_quills_color
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	savefile_key = "feature_vox_quills_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
@@ -92,7 +94,8 @@
 	return COLOR_DARKER_BROWN
 
 /datum/preference/color/vox_quills_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_quills_color"] = value
+	if(isvox(target))
+		target.set_haircolor(value, update = FALSE)
 
 /datum/preference/choiced/vox_facial_quills
 	savefile_key = "feature_vox_facial_quills"
@@ -119,7 +122,9 @@
 	data[SUPPLEMENTAL_FEATURE_KEY] = "feature_vox_facial_quills_color"
 	return data
 
+/// The facial hair color, which vox wear on their facial quills. On Yogstation this is a subtype of the facial hair color preference.
 /datum/preference/color/vox_facial_quills_color
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	savefile_key = "feature_vox_facial_quills_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
@@ -129,7 +134,8 @@
 	return COLOR_DARKER_BROWN
 
 /datum/preference/color/vox_facial_quills_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_facial_quills_color"] = value
+	if(isvox(target))
+		target.set_facial_haircolor(value, update = FALSE)
 
 /datum/preference/choiced/vox_body_markings
 	savefile_key = "feature_vox_body_markings"
@@ -194,7 +200,7 @@
 	return "Specialized"
 
 /datum/preference/choiced/vox_tank_type/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_tank"] = value
+	return // read straight from the preferences when equipping a job, as on Yogstation
 
 /// Which breath mask a vox spawns with.
 /datum/preference/choiced/vox_mask
@@ -211,10 +217,12 @@
 	return "Breath Mask"
 
 /datum/preference/choiced/vox_mask/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_mask"] = value
+	return // read straight from the preferences when equipping a job, as on Yogstation
 
-/// Hair gradients, but on quills.
+/// The hair gradient, which vox wear on their quills. On Yogstation this is a subtype of the hair gradient preference.
+/// Applied after the (hidden) normal hair gradient preference, so it wins for vox.
 /datum/preference/choiced/vox_quills_gradient
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	savefile_key = "feature_quill_gradientstyle"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
@@ -227,16 +235,19 @@
 	return SPRITE_ACCESSORY_NONE
 
 /datum/preference/choiced/vox_quills_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_quills_gradient"] = value
+	if(isvox(target))
+		target.set_hair_gradient_style(value, update = FALSE)
 
 /datum/preference/color/vox_quills_gradient
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	savefile_key = "feature_quill_gradientcolor"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_external_organ = /obj/item/organ/external/vox_quills
 
 /datum/preference/color/vox_quills_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_quills_gradient_color"] = value
+	if(isvox(target))
+		target.set_hair_gradient_color(value, update = FALSE)
 
 /datum/preference/color/vox_quills_gradient/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))

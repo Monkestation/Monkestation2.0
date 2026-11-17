@@ -1,7 +1,7 @@
-// Vox wear underwear cut for vox. They get their own preferences, listing only what actually has a fitted sprite.
+// Vox wear underwear cut for vox. Their underwear preferences list only what actually has a fitted sprite.
 
 /// Species hook that runs after the job outfit and loadout were equipped.
-/datum/species/proc/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+/datum/species/proc/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE, datum/preferences/used_pref)
 	return
 
 /// Returns the names in an underwear-like accessory list that have a sprite in the given fitted icon file.
@@ -23,84 +23,79 @@
 		final_icon.blend_icon(uni_icon(icon_file, accessory.icon_state), ICON_OVERLAY)
 	return final_icon
 
-/datum/preference/choiced/vox_underwear
+/datum/preference/choiced
+	/// Underwear preferences: TRUE for the ones shown to species with fitted underwear (vox), FALSE for the normal ones.
+	var/for_fitted_underwear = FALSE
+
+// Like Yogstation, these are subtypes of the normal underwear preferences and set the same underwear vars.
+// Only the choices and previews differ, so dressers, outfits, cloning and the like all work on vox too.
+// They apply after the normal ones, which are hidden for vox but still saved.
+
+/datum/preference/choiced/underwear/vox
 	savefile_key = "feature_vox_underwear"
-	savefile_identifier = PREFERENCE_CHARACTER
-	main_feature_name = "Underwear"
-	category = PREFERENCE_CATEGORY_CLOTHING
-	should_generate_icons = TRUE
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	for_fitted_underwear = TRUE
 	relevant_external_organ = /obj/item/organ/external/tail/vox
 
-/datum/preference/choiced/vox_underwear/init_possible_values()
+/datum/preference/choiced/underwear/vox/init_possible_values()
 	return get_fitted_underwear_names(GLOB.underwear_list, 'icons/mob/clothing/species/vox/underwear.dmi')
 
-/datum/preference/choiced/vox_underwear/icon_for(value)
+/datum/preference/choiced/underwear/vox/icon_for(value)
 	var/datum/universal_icon/final_icon = generate_vox_underwear_icon(GLOB.underwear_list[value], 'icons/mob/clothing/species/vox/underwear.dmi', list("chest", "r_leg", "l_leg"))
 	final_icon.crop(10, 1, 22, 13)
 	final_icon.scale(32, 32)
 	return final_icon
 
-/datum/preference/choiced/vox_underwear/create_default_value()
+/datum/preference/choiced/underwear/vox/create_default_value()
 	return "Nude"
 
-/datum/preference/choiced/vox_underwear/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_underwear"] = value
+/datum/preference/choiced/underwear/vox/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna?.species?.fitted_underwear_icons)
+		return ..()
 
-/datum/preference/choiced/vox_underwear/compile_constant_data()
-	var/list/data = ..()
-	data[SUPPLEMENTAL_FEATURE_KEY] = "underwear_color"
-	return data
-
-/datum/preference/choiced/vox_socks
+/datum/preference/choiced/socks/vox
 	savefile_key = "feature_vox_socks"
-	savefile_identifier = PREFERENCE_CHARACTER
-	main_feature_name = "Socks"
-	category = PREFERENCE_CATEGORY_CLOTHING
-	should_generate_icons = TRUE
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	for_fitted_underwear = TRUE
 	relevant_external_organ = /obj/item/organ/external/tail/vox
 
-/datum/preference/choiced/vox_socks/init_possible_values()
+/datum/preference/choiced/socks/vox/init_possible_values()
 	return get_fitted_underwear_names(GLOB.socks_list, 'icons/mob/clothing/species/vox/socks.dmi')
 
-/datum/preference/choiced/vox_socks/icon_for(value)
+/datum/preference/choiced/socks/vox/icon_for(value)
 	var/datum/universal_icon/final_icon = generate_vox_underwear_icon(GLOB.socks_list[value], 'icons/mob/clothing/species/vox/socks.dmi', list("r_leg", "l_leg"))
 	final_icon.crop(10, 1, 22, 13)
 	final_icon.scale(32, 32)
 	return final_icon
 
-/datum/preference/choiced/vox_socks/create_default_value()
+/datum/preference/choiced/socks/vox/create_default_value()
 	return "Nude"
 
-/datum/preference/choiced/vox_socks/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_socks"] = value
+/datum/preference/choiced/socks/vox/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna?.species?.fitted_underwear_icons)
+		return ..()
 
-/datum/preference/choiced/vox_socks/compile_constant_data()
-	var/list/data = ..()
-	data[SUPPLEMENTAL_FEATURE_KEY] = "socks_color"
-	return data
-
-/datum/preference/choiced/vox_undershirt
+/datum/preference/choiced/undershirt/vox
 	savefile_key = "feature_vox_undershirt"
-	savefile_identifier = PREFERENCE_CHARACTER
-	main_feature_name = "Undershirt"
-	category = PREFERENCE_CATEGORY_CLOTHING
-	should_generate_icons = TRUE
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	for_fitted_underwear = TRUE
 	relevant_external_organ = /obj/item/organ/external/tail/vox
 
-/datum/preference/choiced/vox_undershirt/init_possible_values()
+/datum/preference/choiced/undershirt/vox/init_possible_values()
 	return get_fitted_underwear_names(GLOB.undershirt_list, 'icons/mob/clothing/species/vox/undershirt.dmi')
 
-/datum/preference/choiced/vox_undershirt/icon_for(value)
+/datum/preference/choiced/undershirt/vox/icon_for(value)
 	var/datum/universal_icon/final_icon = generate_vox_underwear_icon(GLOB.undershirt_list[value], 'icons/mob/clothing/species/vox/undershirt.dmi', list("r_leg", "l_leg", "r_arm", "l_arm", "r_hand", "l_hand", "chest"))
 	final_icon.crop(9, 9, 23, 23)
 	final_icon.scale(32, 32)
 	return final_icon
 
-/datum/preference/choiced/vox_undershirt/create_default_value()
+/datum/preference/choiced/undershirt/vox/create_default_value()
 	return "Nude"
 
-/datum/preference/choiced/vox_undershirt/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_undershirt"] = value
+/datum/preference/choiced/undershirt/vox/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna?.species?.fitted_underwear_icons)
+		return ..()
 
 // The Smooth-Headed quirk plucks a vox clean.
 

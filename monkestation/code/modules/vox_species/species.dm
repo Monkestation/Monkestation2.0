@@ -83,22 +83,18 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 /datum/species/vox/randomize_features()
 	var/list/features = ..()
 	var/skin_tone = pick(GLOB.vox_skin_tones)
+	features -= "tail_vox" // picked for every external organ by the parent, but the tail follows the skin tone
 	features["vox_skin_tone"] = skin_tone
-	features["tail_vox"] = skin_tone
 	features["vox_body_markings"] = pick(GLOB.vox_body_markings_list)
 	features["vox_tail_markings"] = pick(GLOB.vox_tail_markings_list)
-	features["vox_quills_color"] = "#[random_color()]"
-	features["vox_facial_quills_color"] = features["vox_quills_color"]
 	features["vox_body_markings_color"] = "#[random_color()]"
 	features["vox_tail_markings_color"] = features["vox_body_markings_color"]
-	features["vox_quills_gradient"] = SPRITE_ACCESSORY_NONE
 	return features
 
 /datum/species/vox/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.dna.features["vox_skin_tone"] = "lime"
-	human.dna.features["tail_vox"] = "lime"
 	human.dna.features["vox_quills"] = "Kingly"
-	human.dna.features["vox_quills_color"] = COLOR_DARKER_BROWN
+	human.set_haircolor(COLOR_DARKER_BROWN, update = FALSE)
 	human.dna.features["vox_facial_quills"] = "None"
 	human.dna.features["vox_body_markings"] = "None"
 	human.dna.features["vox_tail_markings"] = "None"
@@ -108,17 +104,16 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	human.update_body(is_creating = TRUE)
 
 /// Don't forget your voxygen tank. Runs after the job outfit, like on Yogstation.
-/datum/species/vox/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
-	var/list/features = equipping.dna.features
+/datum/species/vox/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE, datum/preferences/used_pref)
 	// A mask we can't breathe through goes into the bag. Breathable job masks (clown, mime) stay on.
 	var/obj/item/current_mask = equipping.wear_mask
 	if(current_mask && !equipping.can_breathe_mask())
 		equipping.temporarilyRemoveItemFromInventory(current_mask, force = TRUE)
 		if(!equipping.equip_to_slot_if_possible(current_mask, ITEM_SLOT_BACKPACK, disable_warning = TRUE))
 			equipping.put_in_hands(current_mask)
-	var/mask_type = (features["vox_mask"] == "Respirator") ? /obj/item/clothing/mask/breath/vox/respirator : /obj/item/clothing/mask/breath/vox
+	var/mask_type = (used_pref?.read_preference(/datum/preference/choiced/vox_mask) == "Respirator") ? /obj/item/clothing/mask/breath/vox/respirator : /obj/item/clothing/mask/breath/vox
 	equipping.equip_to_slot_or_del(new mask_type(equipping), ITEM_SLOT_MASK)
-	var/tank_type = (features["vox_tank"] == "Large") ? /obj/item/tank/internals/nitrogen : /obj/item/tank/internals/emergency_oxygen/vox
+	var/tank_type = (used_pref?.read_preference(/datum/preference/choiced/vox_tank_type) == "Large") ? /obj/item/tank/internals/nitrogen : /obj/item/tank/internals/emergency_oxygen/vox
 	var/obj/item/tank/internals/internals_tank = new tank_type(equipping)
 	if(!equipping.equip_to_appropriate_slot(internals_tank))
 		equipping.put_in_hands(internals_tank)
