@@ -11735,7 +11735,7 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dzp" = (
 /obj/structure/window/spawner/directional/south,
-/mob/living/simple_animal/pet/cat/cak,
+/mob/living/basic/pet/cat/cak,
 /turf/open/floor/iron/textured_large,
 /area/station/maintenance/starboard/greater)
 "dzx" = (
@@ -12377,7 +12377,7 @@
 	anchored = 1;
 	name = "Jerry's bed"
 	},
-/mob/living/simple_animal/pet/cat/jerry,
+/mob/living/basic/pet/cat/jerry,
 /turf/open/floor/wood,
 /area/station/security/prison/garden)
 "dIf" = (
@@ -39089,7 +39089,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/pet/gondola/funky,
+/mob/living/basic/pet/gondola/funky,
 /turf/open/floor/iron/herringbone,
 /area/station/service/theater)
 "kYC" = (
@@ -56750,7 +56750,7 @@
 /turf/open/floor/pod/dark,
 /area/station/service/chapel)
 "pVK" = (
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
+/mob/living/basic/bot/secbot/beepsky/armsky,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/holopad/secure,
 /obj/effect/turf_decal/bot,
@@ -67551,7 +67551,7 @@
 /area/station/security/prison/mess)
 "sPT" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70579,7 +70579,7 @@
 	location = "QM #4"
 	},
 /obj/effect/turf_decal/box,
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron/textured_edge,
 /area/station/cargo/storage)
 "tEK" = (
@@ -71077,7 +71077,7 @@
 /area/station/engineering/atmos)
 "tLD" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime{
+/mob/living/basic/pet/cat/runtime{
 	icon_dead = "original_dead";
 	icon_living = "original";
 	icon_state = "original"
@@ -71244,7 +71244,7 @@
 /turf/closed/wall,
 /area/station/commons/lounge)
 "tOI" = (
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /obj/structure/railing,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
@@ -72224,7 +72224,7 @@
 /area/station/hallway/secondary/command)
 "ueg" = (
 /obj/machinery/airalarm/directional/south,
-/mob/living/simple_animal/bot/secbot/pingsky,
+/mob/living/basic/bot/secbot/pingsky,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -76648,7 +76648,7 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/pathology)
 "vnv" = (
-/mob/living/simple_animal/bot/secbot/beepsky/officer,
+/mob/living/basic/bot/secbot/beepsky/officer,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/office)
 "vnQ" = (
@@ -82602,7 +82602,7 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/box,
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron/textured_edge,
 /area/station/cargo/storage)
 "wVY" = (

@@ -3338,10 +3338,7 @@
 	location = "QM #2"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #2";
-	suffix = "#2"
-	},
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bdm" = (
@@ -8205,7 +8202,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ctP" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear{
+/mob/living/basic/mining/polarbear{
 	move_force = 999;
 	name = "Huey"
 	},
@@ -9412,7 +9409,7 @@
 /area/mine/eva)
 "cKn" = (
 /obj/effect/mapping_helpers/broken_floor,
-/mob/living/simple_animal/bot/secbot/beepsky,
+/mob/living/basic/bot/secbot/beepsky,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "cKp" = (
@@ -36023,7 +36020,7 @@
 /area/station/engineering/supermatter/room)
 "kYF" = (
 /obj/structure/light_construct/directional/west,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "kYI" = (
@@ -42344,7 +42341,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable/layer3,
-/mob/living/simple_animal/bot/secbot/pingsky,
+/mob/living/basic/bot/secbot/pingsky,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "mXl" = (
@@ -57473,7 +57470,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/mob/living/simple_animal/bot/secbot/beepsky{
+/mob/living/basic/bot/secbot/beepsky{
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
@@ -61942,7 +61939,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
 "sUE" = (
@@ -62665,7 +62662,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "tgP" = (
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
+/mob/living/basic/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "thA" = (
@@ -73392,7 +73389,7 @@
 /obj/structure/bed/dogbed/runtime,
 /obj/item/toy/cattoy,
 /obj/machinery/newscaster/directional/north,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "wwo" = (
@@ -74512,7 +74509,7 @@
 /turf/open/floor/plating,
 /area/station/commons/storage/mining)
 "wMA" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear{
+/mob/living/basic/mining/polarbear{
 	move_force = 999;
 	name = "Dewey"
 	},
@@ -75542,10 +75539,7 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #1";
-	suffix = "#1"
-	},
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "xaH" = (
@@ -78112,7 +78106,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "xQi" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear{
+/mob/living/basic/mining/polarbear{
 	move_force = 999;
 	name = "Louie"
 	},

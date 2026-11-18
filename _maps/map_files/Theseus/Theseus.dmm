@@ -17013,7 +17013,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/hfr_room)
 "fcG" = (
-/mob/living/simple_animal/bot/secbot/beepsky/officer,
+/mob/living/basic/bot/secbot/beepsky/officer,
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/landmark/start/hangover,
 /obj/machinery/camera/autoname/directional/north,
@@ -18012,7 +18012,7 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/storage)
 "frr" = (
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -28416,10 +28416,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #2";
-	suffix = "#2"
-	},
+/mob/living/basic/bot/mulebot,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	location = "QM #2"
@@ -32213,7 +32210,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/central)
 "jxI" = (
-/mob/living/simple_animal/bot/secbot/pingsky,
+/mob/living/basic/bot/secbot/pingsky,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/structure/cable/layer3,
@@ -41714,7 +41711,7 @@
 /obj/machinery/light/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -8
@@ -46896,7 +46893,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
+/mob/living/basic/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "nFs" = (
@@ -70365,10 +70362,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #1";
-	suffix = "#1"
-	},
+/mob/living/basic/bot/mulebot,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	location = "QM #1"
@@ -71285,7 +71279,7 @@
 /area/station/engineering/atmos)
 "uFM" = (
 /obj/effect/landmark/start/hangover,
-/mob/living/simple_animal/bot/secbot/honkbot{
+/mob/living/basic/bot/secbot/honkbot{
 	name = "Jonkler"
 	},
 /turf/open/floor/plating,

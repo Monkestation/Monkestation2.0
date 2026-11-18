@@ -1,4 +1,3 @@
-#define CALL_BOT_COOLDOWN 900
 #define MAX_SPRINT 50
 
 //Not sure why this is necessary...
@@ -79,7 +78,6 @@
 	var/can_shunt = TRUE
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/call_bot_cooldown = 0 //time of next call bot command
 	var/obj/machinery/power/apc/apc_override //Ref of the AI's APC, used when the AI has no power in order to access their APC.
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
@@ -669,15 +667,8 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wi
 	var/mob/living/bot = bot_ref?.resolve()
 	if(!bot)
 		return
-	var/summon_success
-	if(isbasicbot(bot))
-		var/mob/living/basic/bot/basic_bot = bot
-		summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
-	else
-		var/mob/living/simple_animal/bot/simple_bot = bot
-		call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
-		summon_success = simple_bot.call_bot(src, waypoint)
-		call_bot_cooldown = 0
+	var/mob/living/basic/bot/basic_bot = bot
+	var/summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
 
 	var/chat_message = summon_success ? "Sending command to bot..." : "Interface error. Unit is already in use."
 	to_chat(src, span_notice("[chat_message]"))
@@ -1304,7 +1295,6 @@ GAME_VERB(/mob/living/silicon/ai, jobtitles, "Toggle Jobtitle Display", "AI Comm
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual)
 	return TRUE
 
-#undef CALL_BOT_COOLDOWN
 #undef MAX_SPRINT
 
 /mob/living/silicon/ai/proc/partytime()

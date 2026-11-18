@@ -1397,6 +1397,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOB_BREEDER "mob_breeder"
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
+///trait given to food that can be baked by /datum/component/bakeable
+#define TRAIT_BAKEABLE "bakeable"
 
 /// Trait determines if this mob has examined an eldritch painting
 #define TRAIT_ELDRITCH_PAINTING_EXAMINE "eldritch_painting_examine"
@@ -1571,3 +1573,36 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
 
 
+
+/// Whether bots will salute this mob.
+#define TRAIT_COMMISSIONED "commissioned"
+
+/// Object is dangerous to mobs buckled to it
+#define TRAIT_DANGEROUS_BUCKLE "dangerous_buckle"
+
+///Trait granted by the miner skillchip, allows communication with minebots
+#define TRAIT_ROCK_STONER "rock_stoner"
+
+/// Has this mob been tamed?
+#define TRAIT_TAMED "tamed"
+
+/// Mobs with this trait will always have be a priority target for mining mobs
+#define TRAIT_MINING_AGGRO "mining_aggro"
+
+///Trait given to the birthday boy
+#define TRAIT_BIRTHDAY_BOY "birthday_boy"
+
+#define TRAIT_FIREDOOR_OPENER "firedoor_opener"
+
+///Mob that can merge stacks in its contents
+#define TRAIT_MOB_MERGE_STACKS "mob_merge_stacks"
+
+///Trait given when a mob has been tipped
+#define TRAIT_MOB_TIPPED "mob_tipped"
+
+/// Trait given to mobs wearing the clown mask
+#define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
+
+
+/// From [/datum/component/defaceable] marks that something has been... marked
+#define TRAIT_DEFACED "defaced"

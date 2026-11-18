@@ -1398,23 +1398,18 @@ Striking a noncultist, however, will tear their flesh."}
 				illusions--
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
 				if(prob(60))
-					var/mob/living/simple_animal/hostile/illusion/clone = new(get_turf(owner))
-					clone.faction = list(FACTION_CULT)
-					clone.copy_parent(owner, 70, 10, 5)
-					clone.move_to_delay = owner.cached_multiplicative_slowdown
+					var/mob/living/basic/illusion/clone = new(get_turf(owner))
+					clone.full_setup(owner, faction_override = list(FACTION_CULT), life = 7 SECONDS, hp = 10, damage = 5)
+					clone.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
 				else
-					var/mob/living/simple_animal/hostile/illusion/escape/clone = new(get_turf(owner))
-					clone.copy_parent(owner, 70, 10)
-					clone.GiveTarget(owner)
-					clone.Goto(owner, owner.cached_multiplicative_slowdown, clone.minimum_distance)
+					var/mob/living/basic/illusion/escape/clone = new(get_turf(owner))
+					clone.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 7 SECONDS, hp = 10)
 			return TRUE
 	else
 		if(prob(50))
-			var/mob/living/simple_animal/hostile/illusion/clone = new(owner.loc)
-			clone.copy_parent(owner, 100, 20, 5)
-			clone.faction = list(FACTION_CULT)
-			clone.GiveTarget(owner)
-			clone.move_to_delay = owner.cached_multiplicative_slowdown
+			var/mob/living/basic/illusion/clone = new(owner.loc)
+			clone.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 10 SECONDS, hp = 20, damage = 5)
+			clone.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
 			to_chat(owner, span_danger("<b>[src] betrays you!</b>"))
 		return FALSE
 

@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isrevenant(A) (istype(A, /mob/living/basic/revenant))
 
-#define isbot(A) (istype(A, /mob/living/simple_animal/bot) || istype(A, /mob/living/basic/bot))
+#define isbot(A) istype(A, /mob/living/basic/bot)
 
 #define isbasicbot(A) (istype(A, /mob/living/basic/bot))
 
@@ -192,10 +192,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isdrone(A) (istype(A, /mob/living/basic/drone))
 
 GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
-	/mob/living/simple_animal/pet/cat,
-	/mob/living/simple_animal/hostile/syndicat,
-	/mob/living/simple_animal/hostile/feral,
-	/mob/living/simple_animal/hostile/feraltabby,
+	/mob/living/basic/pet/cat,
 )))
 
 #define iscat(A) (is_type_in_typecache(A, GLOB.cat_typecache))
@@ -210,7 +207,7 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isguardian(A) (istype(A, /mob/living/basic/guardian))
 
-#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
+#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna) || istype(A, /mob/living/basic/boss))
 
 #define isclown(A) (istype(A, /mob/living/basic/clown))
 

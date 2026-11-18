@@ -1,6 +1,8 @@
 
 /// list of weakrefs to mobs OR minds that have been sacrificed
 GLOBAL_LIST(sacrificed)
+/// how many sacrifices have been spent on revives, starts negative so the cult gets one free revive
+GLOBAL_VAR_INIT(sacrifices_used, -SOULS_TO_REVIVE)
 /// List of all teleport runes
 GLOBAL_LIST(teleport_runes)
 /// Assoc list of every rune that can be drawn by ritual daggers. [rune_name] = [typepath]
@@ -100,7 +102,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	if(.)
 		return
 //	if(!IS_CULTIST(user)) // monkestation change, original code
-	if(!IS_CULTIST(user) && !cult_override) // monkestation change, cult override added
+	if(!IS_CULTIST_OR_CULTIST_MOB(user) && !cult_override) // monkestation change, cult override added
 		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
 		return
 	var/list/invokers = can_invoke(user)
@@ -671,12 +673,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
-	var/static/sacrifices_used = -SOULS_TO_REVIVE // Cultists get one "free" revive
 
 /obj/effect/rune/raise_dead/examine(mob/user)
 	. = ..()
 	if(IS_CULTIST(user) || user.stat == DEAD)
-		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - sacrifices_used]"
+		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - GLOB.sacrifices_used]"
 
 /obj/effect/rune/raise_dead/invoke(list/invokers)
 	if(rune_in_use)
@@ -722,12 +723,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		mob_to_revive = revive_target
 
 	if(istype(core_to_revive) || mob_to_revive.stat == DEAD)
-		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - sacrifices_used
+		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used
 		if(diff < 0)
 			to_chat(user, span_warning("Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!"))
 			fail_invoke()
 			return
-		sacrifices_used += SOULS_TO_REVIVE
+		GLOB.sacrifices_used += SOULS_TO_REVIVE
 		if(istype(core_to_revive))
 			mob_to_revive = core_to_revive.rebuild_body(user, FALSE, POLICY_ANTAGONISTIC_REVIVAL)
 		else

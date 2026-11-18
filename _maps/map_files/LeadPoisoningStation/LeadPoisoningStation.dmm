@@ -19308,7 +19308,7 @@
 "jkk" = (
 /obj/effect/spawner/liquids_spawner,
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/simple_animal/fish/goldfish,
+/mob/living/basic/fish/goldfish,
 /turf/open/floor/plating/ocean,
 /area/station/hallway/floor2/fore)
 "jkl" = (
@@ -27923,7 +27923,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/iron/smooth_corner{
 	dir = 8
 	},
@@ -34892,7 +34892,7 @@
 "qPR" = (
 /obj/effect/spawner/liquids_spawner,
 /obj/structure/window/reinforced/spawner/directional/south,
-/mob/living/simple_animal/fish/dwarf_moonfish,
+/mob/living/basic/fish/dwarf_moonfish,
 /turf/open/floor/plating/ocean/dark/rock/heavy,
 /area/station/hallway/floor2/fore)
 "qPT" = (
@@ -39417,7 +39417,7 @@
 "sSv" = (
 /obj/effect/spawner/liquids_spawner,
 /obj/structure/flora/ocean/seaweed,
-/mob/living/simple_animal/fish/catfish,
+/mob/living/basic/fish/catfish,
 /turf/open/floor/plating/ocean/dark/rock/medium,
 /area/station/hallway/floor2/fore)
 "sSC" = (
@@ -48813,7 +48813,7 @@
 /obj/effect/spawner/liquids_spawner,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/flora/ocean/glowweed,
-/mob/living/simple_animal/fish/guppy,
+/mob/living/basic/fish/guppy,
 /turf/open/floor/plating/ocean,
 /area/station/hallway/floor2/fore)
 "xst" = (

@@ -114,10 +114,8 @@
 	if(!defender.mind || defender.stat != CONSCIOUS || prob(50))
 		return TRUE
 
-	var/mob/living/simple_animal/hostile/illusion/khan_warrior/khan = new(attacker.loc)
-	khan.faction = attacker.faction.Copy()
-	khan.copy_parent(attacker, 100, attacker.health / 2.5, 12, 30)
-	khan.GiveTarget(defender)
+	var/mob/living/basic/illusion/khan_warrior/khan = new(attacker.loc)
+	khan.full_setup(attacker, target_mob = defender, life = 10 SECONDS, hp = attacker.health / 2.5, damage = 12, replicate = 30)
 	attacker.visible_message(
 		span_danger("[attacker] seems to duplicate before your very eyes!"),
 		span_userdanger("[attacker] seems to duplicate before your eyes!"),
@@ -223,7 +221,7 @@ GAME_VERB_PROC_DESC(/mob/living, tunnel_arts_help, "Remember the Arts", "Remembe
 	[span_notice("Space Wind God Fist")]: Punch Shove. Send the target spinning helplessly through the air with this vicious uppercut.\n\
 	<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can block various attacks against you in melee with your bare hands!</span>")
 
-/mob/living/simple_animal/hostile/illusion/khan_warrior
+/mob/living/basic/illusion/khan_warrior
 	speed = 0
 
 #undef SPACE_WIND_GOD_FIST_COMBO

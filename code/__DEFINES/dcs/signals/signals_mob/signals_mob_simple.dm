@@ -19,3 +19,6 @@
 
 
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
+
+///Called when a /mob/living/simple_animal/hostile fines a new target: (atom/source, new_target)
+#define COMSIG_HOSTILE_FOUND_TARGET "comsig_hostile_found_target"

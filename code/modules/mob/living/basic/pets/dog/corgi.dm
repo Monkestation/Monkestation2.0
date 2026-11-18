@@ -11,6 +11,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "corgi"
+	cult_icon_state = "narsian"
 	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
 	///Access card for the corgi.
 	var/obj/item/card/id/access_card = null
@@ -138,16 +139,23 @@
 
 	return  ..()
 
-/mob/living/basic/pet/dog/corgi/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+/mob/living/basic/pet/dog/corgi/update_dog_speech(list/speech_data)
 	. = ..()
-
 	if(inventory_head?.dog_fashion)
 		var/datum/dog_fashion/equipped_head_fashion_item = new inventory_head.dog_fashion(src)
-		equipped_head_fashion_item.apply_to_speech(speech)
+		equipped_head_fashion_item.apply_to_speech(speech_data)
 
 	if(inventory_back?.dog_fashion)
 		var/datum/dog_fashion/equipped_back_fashion_item = new inventory_back.dog_fashion(src)
-		equipped_back_fashion_item.apply_to_speech(speech)
+		equipped_back_fashion_item.apply_to_speech(speech_data)
+
+/// Applies corgi fashion to the BT blackboard speech data by routing through the planning stub.
+/mob/living/basic/pet/dog/corgi/update_dog_speak_blackboard(datum/ai_controller/controller)
+	var/list/speech_data = list()
+	update_dog_speech(speech_data)
+	if(!speech_data[BB_SPEAK_CHANCE])
+		speech_data[BB_SPEAK_CHANCE] = 1
+	controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, speech_data)
 
 /mob/living/basic/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
@@ -484,16 +492,6 @@
 //this could maybe be turned into an element
 /mob/living/basic/pet/dog/corgi/narsie/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	//consume simple_animal pets
-	for(var/mob/living/simple_animal/pet/simple_pet in range(1, src))
-		if(simple_pet != src && !istype(simple_pet, /mob/living/basic/pet/dog/corgi/narsie))
-			visible_message(span_warning("Dark magic resonating from [src] devours [simple_pet]!"), \
-			"<span class='cult big bold'>DELICIOUS SOULS</span>")
-			playsound(src, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
-			new /obj/effect/temp_visual/cult/sac(get_turf(simple_pet))
-			narsie_act()
-			simple_pet.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			simple_pet.gib()
 	//consume basic pets
 	for(var/mob/living/basic/pet/basic_pet in range(1, src))
 		if(basic_pet != src && !istype(basic_pet, /mob/living/basic/pet/dog/corgi/narsie))
@@ -509,10 +507,10 @@
 	. = ..()
 	speak_emote = list("growls", "barks ominously")
 
-/mob/living/basic/pet/dog/corgi/narsie/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
-	speech.speak = string_list(list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR"))
-	speech.emote_hear = string_list(list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable."))
-	speech.emote_see = string_list(list("communes with the unnameable.", "ponders devouring some souls.", "shakes."))
+/mob/living/basic/pet/dog/corgi/narsie/update_dog_speech(list/speech_data)
+	speech_data[BB_EMOTE_SAY] = string_list(list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR"))
+	speech_data[BB_EMOTE_HEAR] = string_list(list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable."))
+	speech_data[BB_EMOTE_SEE] = string_list(list("communes with the unnameable.", "ponders devouring some souls.", "shakes."))
 
 /mob/living/basic/pet/dog/corgi/narsie/narsie_act()
 	if(stat == DEAD) //Nar'Sie loves her doggy

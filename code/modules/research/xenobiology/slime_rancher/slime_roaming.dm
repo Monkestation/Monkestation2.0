@@ -5,34 +5,71 @@
 	nav_cost_modifiers = alist(NAV_COST_LAVA = 99999)
 
 /// Cleaners with no mess in reach go wander somewhere else to look for one
-/datum/ai_planning_subtree/slime_target/roam
-	target_key = BB_SLIME_ROAM_TARGET
-	finding_behavior = /datum/ai_behavior/slime_find_target/roam
-	acting_behavior = /datum/ai_behavior/slime_chase/roam
+/datum/bt_node/decorator/slime_should_roam
 
-/datum/ai_planning_subtree/slime_target/roam/should_scan(datum/ai_controller/controller)
+/datum/bt_node/decorator/slime_should_roam/check_condition(datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	if(!slime_pawn.cleaner_slime || !isnull(slime_pawn.pen) || slime_pawn.is_latched() || slime_pawn.stat != CONSCIOUS)
-		return FALSE
-	var/datum/ai_behavior/slime_find_target/mess_finder = GET_AI_BEHAVIOR(/datum/ai_behavior/slime_find_target/mess)
-	if(mess_finder.has_candidates(controller))
-		controller.clear_blackboard_key(target_key)
-		return FALSE
-	return TRUE
+	return istype(slime_pawn) && slime_pawn.cleaner_slime && isnull(slime_pawn.pen) && !slime_pawn.is_latched() && !IS_UNCONSCIOUS_OR_CRIT(slime_pawn)
 
 /// Picks the next spot to wander to. Usually somewhere we haven't been lately, now and then towards a player.
-/datum/ai_behavior/slime_find_target/roam
-	action_cooldown = 4 SECONDS
-	scan_range = 40
-	must_be_reachable = TRUE
+/datum/bt_node/ai_behavior/find_slime_roam_spot
+	time_between_perform = 4 SECONDS
+	/// How far away a random spot can be
+	var/scan_range = 40
+	/// The spot the async path search is checking
+	VAR_PRIVATE/turf/picked_spot
 
-/datum/ai_behavior/slime_find_target/roam/perform(seconds_per_tick, datum/ai_controller/basic_controller/slime/controller, target_key)
-	if(!controller.blackboard_key_exists(target_key))
-		update_player_seek(controller)
-	return ..()
+/datum/bt_node/ai_behavior/find_slime_roam_spot/perform(seconds_per_tick, datum/ai_controller/basic_controller/slime/controller)
+	var/async_flags = handle_async()
+	if(async_flags)
+		return async_flags
+	if(controller.blackboard_key_exists(BB_SLIME_ROAM_TARGET))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	// setting the roam key replans the whole tree, which would restart whatever chase we're on
+	for(var/busy_key in list(BB_SLIME_EAT_TARGET, BB_CURRENT_TARGET, BB_SLIME_ITEM_TARGET, BB_SLIME_CLEAN_TARGET, BB_SLIME_NUZZLE_TARGET, BB_SLIME_BOUNCE_TARGET, BB_SLIME_STACK_TARGET))
+		if(controller.blackboard_key_exists(busy_key))
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	update_player_seek(controller)
+	var/list/candidates = list()
+	for(var/turf/candidate as anything in get_candidates(controller))
+		if(is_valid_spot(controller, candidate))
+			candidates += candidate
+	if(!length(candidates))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	picked_spot = pick(candidates)
+	return start_async()
+
+/datum/bt_node/ai_behavior/find_slime_roam_spot/perform_async(datum/ai_controller/basic_controller/slime/controller)
+	var/turf/spot = picked_spot
+	picked_spot = null
+	// every way this can fail still ends up in on_path_found(), with an empty path
+	SSpathfinder.pathfind(controller.pawn, spot, max_distance = SLIME_SEEK_PATH_LENGTH, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, spot)), allow_multiz = TRUE, max_path_cost = SLIME_SEEK_PATH_LENGTH * 10, allow_nav_links = TRUE, nav_cost_modifiers = alist(NAV_COST_LAVA = 99999))
+
+/// our pathfinder is async, so the rest of the old synchronous search lives here
+/datum/bt_node/ai_behavior/find_slime_roam_spot/proc/on_path_found(datum/ai_controller/basic_controller/slime/controller, turf/spot, list/path, list/actions)
+	if(QDELETED(controller) || !async_still_valid())
+		return
+	if(!length(path))
+		controller.ignore_target(spot, SLIME_CHASE_GIVE_UP_TIME)
+		// a failed search goes through every tile in reach, so don't keep picking spots in the same locked room
+		if(!controller.blackboard_key_exists(BB_SLIME_ROAM_PLAYER))
+			controller.ignore_target(get_area(spot), 1 MINUTES)
+		// no path means they're out of reach, so we stop looking instead of standing around for the rest of the minute
+		controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
+		finish_async(AI_BEHAVIOR_FAILED)
+		return
+	controller.override_blackboard_key(BB_PATH_TO_USE, path)
+	controller.override_blackboard_key(BB_PATH_ACTIONS_TO_USE, actions)
+	controller.set_blackboard_key(BB_SLIME_ROAM_TARGET, spot)
+	finish_async(AI_BEHAVIOR_SUCCEEDED)
+
+/datum/bt_node/ai_behavior/find_slime_roam_spot/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	picked_spot = null
 
 /// Starts, keeps or drops the player we're drifting towards.
-/datum/ai_behavior/slime_find_target/roam/proc/update_player_seek(datum/ai_controller/basic_controller/slime/controller)
+/datum/bt_node/ai_behavior/find_slime_roam_spot/proc/update_player_seek(datum/ai_controller/basic_controller/slime/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	var/mob/living/sought = controller.blackboard[BB_SLIME_ROAM_PLAYER]
 	if(sought)
@@ -51,6 +88,59 @@
 	controller.set_blackboard_key(BB_SLIME_ROAM_PLAYER, pick(players))
 	// we give up after a minute, or straight away if there's no path to them
 	COOLDOWN_START(slime_pawn, player_seek_timeout, 1 MINUTES)
+
+/datum/bt_node/ai_behavior/find_slime_roam_spot/proc/get_candidates(datum/ai_controller/controller)
+	. = list()
+	var/turf/sought_turf = get_turf(controller.blackboard[BB_SLIME_ROAM_PLAYER])
+	if(sought_turf)
+		for(var/direction in GLOB.cardinals)
+			var/turf/next_to_them = get_step(sought_turf, direction)
+			if(next_to_them)
+				. += next_to_them
+		return
+
+	var/turf/here = get_turf(controller.pawn)
+	for(var/i in 1 to 20)
+		var/turf/candidate = locate(here.x + rand(-scan_range, scan_range), here.y + rand(-scan_range, scan_range), here.z)
+		if(isnull(candidate) || get_dist(here, candidate) < 8)
+			continue
+		if(prob(33))
+			candidate = pick(GET_TURF_ABOVE(candidate), GET_TURF_BELOW(candidate)) || candidate
+		. += candidate
+
+/datum/bt_node/ai_behavior/find_slime_roam_spot/proc/is_valid_spot(datum/ai_controller/controller, turf/open/destination)
+	var/list/ignored = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
+	if(LAZYACCESS(ignored, destination))
+		return FALSE
+	if(!isopenturf(destination) || destination.is_blocked_turf(exclude_mobs = TRUE) || !destination.can_cross_safely(controller.pawn))
+		return FALSE
+	// heading for someone means doubling back through places we've already been
+	if(controller.blackboard_key_exists(BB_SLIME_ROAM_PLAYER))
+		return TRUE
+	return !LAZYACCESS(ignored, get_area(destination))
+
+/// Remembers the area for a bit so the next few hops go somewhere new, and flumps whoever we were out looking for
+/datum/bt_node/ai_behavior/arrive_at_roam_spot
+
+/datum/bt_node/ai_behavior/arrive_at_roam_spot/perform(seconds_per_tick, datum/ai_controller/basic_controller/slime/controller)
+	var/turf/destination = controller.blackboard[BB_SLIME_ROAM_TARGET]
+	controller.clear_blackboard_key(BB_SLIME_ROAM_TARGET)
+	if(destination)
+		controller.ignore_target(get_area(destination), 2 MINUTES)
+
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	var/mob/living/sought = controller.blackboard[BB_SLIME_ROAM_PLAYER]
+	if(isnull(sought) || !slime_pawn.Adjacent(sought))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
+	slime_pawn.set_temporary_mood(SLIME_MOOD_SMILE)
+	slime_pawn.manual_emote(pick(
+		"flumps against [sought]. found you!",
+		"wobbles up to [sought] and flumps right into [sought.p_them()].",
+		"boops into [sought] and jiggles proudly.",
+	))
+	slime_pawn.flump_against(sought)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 // the AI shuts off on floors with no living players, but someone we're out looking for is somewhere else by definition.
 // roaming cleaners hop floors on their own too, and would get stuck on any floor nobody's on
@@ -73,74 +163,3 @@
 	SIGNAL_HANDLER
 	// shutting the AI off cancels every action, and this can fire from inside one of them
 	addtimer(CALLBACK(ai_controller, TYPE_PROC_REF(/datum/ai_controller, reset_ai_status)), 0.1 SECONDS, TIMER_UNIQUE)
-
-/datum/ai_behavior/slime_find_target/roam/get_candidates(datum/ai_controller/controller)
-	. = list()
-	var/turf/sought_turf = get_turf(controller.blackboard[BB_SLIME_ROAM_PLAYER])
-	if(sought_turf)
-		for(var/direction in GLOB.cardinals)
-			var/turf/next_to_them = get_step(sought_turf, direction)
-			if(next_to_them)
-				. += next_to_them
-		return
-
-	var/turf/here = get_turf(controller.pawn)
-	for(var/i in 1 to 20)
-		var/turf/candidate = locate(here.x + rand(-scan_range, scan_range), here.y + rand(-scan_range, scan_range), here.z)
-		if(isnull(candidate) || get_dist(here, candidate) < 8)
-			continue
-		if(prob(33))
-			candidate = pick(GET_TURF_ABOVE(candidate), GET_TURF_BELOW(candidate)) || candidate
-		. += candidate
-
-/datum/ai_behavior/slime_find_target/roam/is_valid_target(datum/ai_controller/basic_controller/slime/controller, atom/target)
-	var/turf/open/destination = target
-	if(!isopenturf(destination) || destination.is_blocked_turf(exclude_mobs = TRUE) || !destination.can_cross_safely(controller.pawn))
-		return FALSE
-	// heading for someone means doubling back through places we've already been
-	if(controller.blackboard_key_exists(BB_SLIME_ROAM_PLAYER))
-		return TRUE
-	return !controller.is_ignoring(get_area(destination))
-
-/datum/ai_behavior/slime_find_target/roam/request_path(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate)
-	// every way this can fail still ends up in on_path_found(), with an empty path
-	SSpathfinder.pathfind(controller.pawn, candidate, max_distance = SLIME_SEEK_PATH_LENGTH, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, candidate)), allow_multiz = TRUE, max_path_cost = SLIME_SEEK_PATH_LENGTH * 10, allow_nav_links = TRUE, nav_cost_modifiers = alist(NAV_COST_LAVA = 99999))
-
-/datum/ai_behavior/slime_find_target/roam/on_path_found(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate, list/path, list/actions)
-	if(QDELETED(controller))
-		return ..()
-	if(length(path))
-		controller.override_blackboard_key(BB_PATH_TO_USE, path)
-		controller.override_blackboard_key(BB_PATH_ACTIONS_TO_USE, actions)
-		return ..()
-	// a failed search goes through every tile in reach, so don't keep picking spots in the same locked room
-	if(!controller.blackboard_key_exists(BB_SLIME_ROAM_PLAYER))
-		controller.ignore_target(get_area(candidate), 1 MINUTES)
-	// no path means they're out of reach, so we stop looking instead of standing around for the rest of the minute
-	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
-	return ..()
-
-/// Walks to the spot, then remembers the area for a bit so the next few hops go somewhere new
-/datum/ai_behavior/slime_chase/roam
-	// the spot's next to whoever we're after, and anywhere within 1 of it includes their own tile, since calm slimes can slip under people
-	required_distance = 0
-
-/datum/ai_behavior/slime_chase/roam/perform(seconds_per_tick, datum/ai_controller/basic_controller/slime/controller, target_key)
-	. = ..()
-	var/turf/destination = controller.blackboard[target_key]
-	controller.ignore_target(get_area(destination), 2 MINUTES)
-	controller.clear_blackboard_key(target_key)
-	finish_action(controller, TRUE, target_key)
-
-	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	var/mob/living/sought = controller.blackboard[BB_SLIME_ROAM_PLAYER]
-	if(isnull(sought) || !slime_pawn.Adjacent(sought))
-		return
-	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
-	slime_pawn.set_temporary_mood(SLIME_MOOD_SMILE)
-	slime_pawn.manual_emote(pick(
-		"flumps against [sought]. found you!",
-		"wobbles up to [sought] and flumps right into [sought.p_them()].",
-		"boops into [sought] and jiggles proudly.",
-	))
-	slime_pawn.flump_against(sought)

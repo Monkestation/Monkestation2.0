@@ -85,7 +85,7 @@
 ///The Bot is currently allowed to be remote controlled by Silicon.
 #define BOT_MODE_REMOTE_ENABLED (1<<2)
 ///The Bot is allowed to have a ghost placed in control of it.
-#define BOT_MODE_GHOST_CONTROLLABLE (1<<3)
+#define BOT_MODE_CAN_BE_SAPIENT (1<<3)
 ///The Bot is allowed to be possessed if it is present on mapload.
 #define BOT_MODE_ROUNDSTART_POSSESSION (1<<4)
 
@@ -333,3 +333,57 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define MEDIBOT_VOICED_CHICKEN "LOOK AT ME?! i am a chicken."
 
 #define CYBORG_ICON_CARGO 'monkestation/code/modules/cargoborg/icons/robots_cargo.dmi'
+
+
+///if we will extinguish turfs on flames
+#define FIREBOT_EXTINGUISH_FLAMES (1<<2)
+
+///If we will extinguish people
+#define FIREBOT_EXTINGUISH_PEOPLE (1<<1)
+
+///Whether we are stationary or not
+#define FIREBOT_STATIONARY_MODE (1<<0)
+
+///can honkbots slip people?
+#define HONKBOT_MODE_SLIP (1<<6)
+
+///autopickups at beacons
+#define MULEBOT_AUTO_PICKUP_MODE (1<<1)
+
+#define MULEBOT_MOOD_ANNOYED "ANNOYED"
+
+#define MULEBOT_MOOD_CHIME "CHIME"
+
+#define MULEBOT_MOOD_DELIGHT "DELIGHT"
+
+#define MULEBOT_MOOD_SIGH "SIGH"
+
+///announce every delivery we make
+#define MULEBOT_REPORT_DELIVERY_MODE (1<<2)
+
+///auto return to home after delivery
+#define MULEBOT_RETURN_MODE (1<<0)
+
+///can we build girders
+#define REPAIRBOT_BUILD_GIRDERS (1<<4)
+
+///can we fix breaches
+#define REPAIRBOT_FIX_BREACHES (1<<0)
+
+///can we fix girders
+#define REPAIRBOT_FIX_GIRDERS (1<<3)
+
+///can we replace tiles
+#define REPAIRBOT_REPLACE_TILES (1<<2)
+
+///can we fix grilles
+#define REPAIRBOT_REPLACE_WINDOWS (1<<1)
+
+/// Repairbots
+#define REPAIR_BOT "Repairbot"
+
+/// Above this level of assessed threat, Beepsky will attack you
+#define THREAT_ASSESS_DANGEROUS 4
+
+/// Above this level of assessed threat, you are extremely threatening
+#define THREAT_ASSESS_MAXIMUM 10

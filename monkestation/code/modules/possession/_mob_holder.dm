@@ -18,7 +18,6 @@
 	set_dir_on_move = FALSE
 	gender = NEUTER
 	advanced_simple = TRUE
-	can_be_held = TRUE
 	uses_directional_offsets = FALSE
 	melee_damage_lower = 3
 	melee_damage_upper = 3
@@ -30,6 +29,10 @@
 	var/obj/item/id
 	///the held head item
 	var/obj/item/head
+
+/mob/living/basic/possession_holder/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/can_be_held)
 
 /mob/living/basic/possession_holder/Destroy()
 	. = ..()

@@ -42,7 +42,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	density = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	environment_smash  = ENVIRONMENT_SMASH_NONE
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -59,6 +58,7 @@
 
 /mob/living/basic/bee/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 	generate_bee_visuals()
 	AddElement(/datum/element/simple_flying)
