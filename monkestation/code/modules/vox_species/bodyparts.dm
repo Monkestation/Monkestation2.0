@@ -71,7 +71,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
-	head_flags = HEAD_EYESPRITES | HEAD_EYECOLOR | HEAD_DEBRAIN
+	head_flags = HEAD_EYESPRITES | HEAD_EYECOLOR | HEAD_EYEHOLES | HEAD_DEBRAIN
 
 /obj/item/bodypart/head/vox/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
@@ -79,7 +79,18 @@
 
 /obj/item/bodypart/head/vox/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
+	// A dropped eyeless head also gets the human empty sockets drawn by head.dm. Ours come from get_eyeless_overlay().
+	if(dropped)
+		for(var/image/overlay in .)
+			if(overlay.icon == 'icons/mob/species/human/human_face.dmi' && overlay.icon_state == "eyes_missing")
+				. -= overlay
 	. += vox_marking_overlays(dropped)
+
+/// Vox empty eye sockets, like on Yogstation. They also cover the eye static drawn into the head sprite.
+/obj/item/bodypart/head/vox/get_eyeless_overlay(can_rotate = TRUE)
+	var/image/eyeless_overlay = ..()
+	eyeless_overlay.icon = 'icons/mob/human/species/vox/eyes.dmi'
+	return eyeless_overlay
 
 /obj/item/bodypart/head/vox/generate_icon_key()
 	. = ..()

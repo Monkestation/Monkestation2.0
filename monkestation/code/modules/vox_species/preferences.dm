@@ -75,6 +75,22 @@
 
 /datum/preference/choiced/vox_quills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_quills"] = value
+	sync_vox_quills_organ(target, value, facial = FALSE)
+
+/**
+ * Feature preferences apply before the species one, and the species is only set when it changes.
+ * So a mob that is already a vox (the character preview dummy) never gets its quills organ added or removed
+ * by the species code when the style goes from or to "None". Do it here instead.
+ * A mob that isn't a vox yet gets its organs from the species, which reads the features set above.
+ */
+/proc/sync_vox_quills_organ(mob/living/carbon/human/target, value, facial)
+	if(!isvox(target))
+		return
+	var/slot = facial ? ORGAN_SLOT_EXTERNAL_VOX_FACIAL_QUILLS : ORGAN_SLOT_EXTERNAL_VOX_QUILLS
+	var/has_organ = !isnull(target.get_organ_slot(slot))
+	if(has_organ == (value != SPRITE_ACCESSORY_NONE))
+		return // the organ is already right, its sprite follows the features in vox_update_limb()
+	target.set_vox_quills(value, facial, update = FALSE)
 
 /datum/preference/choiced/vox_quills/compile_constant_data()
 	var/list/data = ..()
@@ -116,6 +132,7 @@
 
 /datum/preference/choiced/vox_facial_quills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_facial_quills"] = value
+	sync_vox_quills_organ(target, value, facial = TRUE)
 
 /datum/preference/choiced/vox_facial_quills/compile_constant_data()
 	var/list/data = ..()
