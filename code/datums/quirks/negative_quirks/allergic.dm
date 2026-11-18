@@ -1,3 +1,27 @@
+/// List of medicine reagents that we generally always want to be usable for a mob
+GLOBAL_LIST_INIT(allergy_reagent_blacklist, typecacheof(list(
+	/datum/reagent/medicine/adminordrazine,
+	/datum/reagent/medicine/antipathogenic/changeling,
+	/datum/reagent/medicine/antipathogenic/spaceacillin,
+	/datum/reagent/medicine/changelinghaste,
+	/datum/reagent/medicine/coagulant/banana_peel,
+	/datum/reagent/medicine/coagulant/seraka_extract,
+	/datum/reagent/medicine/cordiolis_hepatico,
+	/datum/reagent/medicine/diphenhydramine,
+	/datum/reagent/medicine/epinephrine,
+	/datum/reagent/medicine/insulin,
+	/datum/reagent/medicine/muscle_stimulant,
+	/datum/reagent/medicine/oculine/flumpuline,
+	/datum/reagent/medicine/omnizine/godblood,
+	/datum/reagent/medicine/omnizine/protozine,
+	/datum/reagent/medicine/regen_jelly,
+	/datum/reagent/medicine/salglu_solution,
+	/datum/reagent/medicine/strange_reagent,
+	/datum/reagent/medicine/synaphydramine,
+	/datum/reagent/medicine/synaptizine/synaptizinevirusfood,
+	/datum/reagent/medicine/syndicate_nanites,
+)))
+
 /datum/quirk/item_quirk/allergic
 	name = "Extreme Medicine Allergy"
 	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
@@ -11,23 +35,11 @@
 	mail_goodies = list(/obj/item/reagent_containers/medipen) // epinephrine medipen stops allergic reactions
 	no_process_traits = list(TRAIT_STASIS)
 	var/list/allergies = list()
-	var/list/blacklist = list(
-		/datum/reagent/medicine/c2,
-		/datum/reagent/medicine/epinephrine,
-		/datum/reagent/medicine/adminordrazine,
-		/datum/reagent/medicine/omnizine/godblood,
-		/datum/reagent/medicine/cordiolis_hepatico,
-		/datum/reagent/medicine/synaphydramine,
-		/datum/reagent/medicine/diphenhydramine,
-		/datum/reagent/medicine/antipathogenic/spaceacillin,
-		/datum/reagent/medicine/changelinghaste,
-		/datum/reagent/medicine/antipathogenic/changeling,
-	)
 	var/allergy_string
 	species_blacklist = list(SPECIES_IPC)
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
-	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist
+	var/list/chem_list = valid_subtypesof(/datum/reagent/medicine) - GLOB.allergy_reagent_blacklist
 	var/list/allergy_chem_names = list()
 	for(var/i in 0 to 5)
 		var/datum/reagent/medicine/chem_type = pick_n_take(chem_list)

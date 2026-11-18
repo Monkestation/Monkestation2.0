@@ -10,25 +10,56 @@ GLOBAL_LIST_INIT(nearsighted_glasses, list(
 	"Binoclard" = /obj/item/clothing/glasses/regular/kim,
 ))
 
-///Cigarette brands that can be selected at character selection with the Smoker quirk
-GLOBAL_LIST_INIT(smoker_cigarette_brands, list(
-	"Space Cigarettes" = /obj/item/storage/fancy/cigarettes,
-	"Midori Tabako" = /obj/item/storage/fancy/cigarettes/cigpack_midori,
-	"Uplift Smooth" = /obj/item/storage/fancy/cigarettes/cigpack_uplift,
-	"Robust" = /obj/item/storage/fancy/cigarettes/cigpack_robust,
-	"Robust Gold" = /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-	"Carp Classic" = /obj/item/storage/fancy/cigarettes/cigpack_carp,
-))
+///Options for the Junkie quirk to choose from
+GLOBAL_LIST_INIT(possible_junkie_addictions, setup_junkie_addictions(list(
+	/datum/reagent/drug/blastoff,
+	/datum/reagent/drug/krokodil,
+	/datum/reagent/medicine/painkiller/morphine,
+	/datum/reagent/drug/happiness,
+	/datum/reagent/drug/methamphetamine,
+)))
 
-///Alcoholic drinks that can be selected at character selection with the Alcoholic quirk
-GLOBAL_LIST_INIT(alcoholic_drinks, list(
-	"Uncle Git's Whiskey" = /obj/item/reagent_containers/cup/glass/bottle/whiskey,
-	"Tunguska Vodka" = /obj/item/reagent_containers/cup/glass/bottle/vodka,
-	"Magm-Ale" = /obj/item/reagent_containers/cup/glass/bottle/ale,
-	"Space Beer" = /obj/item/reagent_containers/cup/glass/bottle/beer,
-	"Jian Hard Cider" = /obj/item/reagent_containers/cup/glass/bottle/hcider,
-	"Doublebeard's Wine" = /obj/item/reagent_containers/cup/glass/bottle/wine,
-	"Ryo's Sake" = /obj/item/reagent_containers/cup/glass/bottle/sake,
+///Options for the Smoker quirk to choose from
+GLOBAL_LIST_INIT(possible_smoker_addictions, setup_smoker_addictions(list(
+	/obj/item/storage/fancy/cigarettes,
+	/obj/item/storage/fancy/cigarettes/cigpack_midori,
+	/obj/item/storage/fancy/cigarettes/cigpack_uplift,
+	/obj/item/storage/fancy/cigarettes/cigpack_robust,
+	/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
+	/obj/item/storage/fancy/cigarettes/cigpack_carp,
+	/obj/item/storage/fancy/cigarettes/cigars,
+	/obj/item/storage/fancy/cigarettes/cigars/cohiba,
+	/obj/item/storage/fancy/cigarettes/cigars/havana,
+)))
+
+///Options for the Alcoholic quirk to choose from
+GLOBAL_LIST_INIT(possible_alcoholic_addictions, list(
+	"Beekhof Blauw Curaçao" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/curacao, "reagent" = /datum/reagent/consumable/ethanol/curacao),
+	"Buckin' Bronco's Applejack" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/applejack, "reagent" = /datum/reagent/consumable/ethanol/applejack),
+	"Voltaic Yellow Wine" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic, "reagent" = /datum/reagent/consumable/ethanol/wine_voltaic),
+	"Caccavo Guaranteed Quality Tequila" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/tequila, "reagent" = /datum/reagent/consumable/ethanol/tequila),
+	"Captain Pete's Cuban Spiced Rum" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/rum, "reagent" = /datum/reagent/consumable/ethanol/rum),
+	"Chateau De Baton Premium Cognac" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/cognac, "reagent" = /datum/reagent/consumable/ethanol/cognac),
+	"Doublebeard's Bearded Special Wine" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/wine, "reagent" = /datum/reagent/consumable/ethanol/wine),
+	"Extra-strong Absinthe" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/absinthe, "reagent" = /datum/reagent/consumable/ethanol/absinthe),
+	"Goldeneye Vermouth" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/vermouth, "reagent" = /datum/reagent/consumable/ethanol/vermouth),
+	"Griffeater Gin" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/gin, "reagent" = /datum/reagent/consumable/ethanol/gin),
+	"Jian Hard Cider" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/hcider, "reagent" = /datum/reagent/consumable/ethanol/hcider),
+	"Luini Amaretto" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/amaretto, "reagent" = /datum/reagent/consumable/ethanol/amaretto),
+	"Magm-Ale" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/ale, "reagent" = /datum/reagent/consumable/ethanol/ale),
+	"Phillipes Well-aged Grappa" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/grappa, "reagent" = /datum/reagent/consumable/ethanol/grappa),
+	"Pride Of The Union Navy-Strength Rum" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/navy_rum, "reagent" = /datum/reagent/consumable/ethanol/navy_rum),
+	"Rabid Bear Malt Liquor" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/maltliquor, "reagent" = /datum/reagent/consumable/ethanol/beer/maltliquor),
+	"Robert Robust's Coffee Liqueur" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/kahlua, "reagent" = /datum/reagent/consumable/ethanol/kahlua),
+	"Ryo's Traditional Sake " = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/sake, "reagent" = /datum/reagent/consumable/ethanol/sake),
+	"Space Beer" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/beer, "reagent" = /datum/reagent/consumable/ethanol/beer),
+	"Tunguska Triple Distilled" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/vodka, "reagent" = /datum/reagent/consumable/ethanol/vodka),
+	"Uncle Git's Special Reserve" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/whiskey, "reagent" = /datum/reagent/consumable/ethanol/whiskey),
+	"Breezy Shoals Coconut Rum" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/coconut_rum, "reagent" = /datum/reagent/consumable/ethanol/coconut_rum),
+	"Moonlabor Yūyake" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/yuyake, "reagent" = /datum/reagent/consumable/ethanol/yuyake),
+	"Shu-Kouba Straight Shochu" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/shochu, "reagent" = /datum/reagent/consumable/ethanol/shochu),
+	"Camillo Aperitivo Rosso" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/aperitivo, "reagent" = /datum/reagent/consumable/ethanol/aperitivo),
+	"Dalmazia Originale Maraschino Liqueur" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/maraschino, "reagent" = /datum/reagent/consumable/ethanol/maraschino)
 ))
 
 ///Options for the prothetic limb quirk to choose from

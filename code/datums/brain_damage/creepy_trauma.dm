@@ -143,11 +143,11 @@
 		JOB_CURATOR = TRAIT_INTROVERT,
 		JOB_COOK = TRAIT_GOURMAND,
 		JOB_BOTANIST = TRAIT_SMOKER,
-		JOB_PSYCHOLOGIST = TRAIT_DEPRESSION,
+		JOB_PSYCHOLOGIST = /datum/quirk/depression,
 		JOB_LAWYER = TRAIT_JAILBIRD,
 		JOB_JANITOR = TRAIT_SNOB,
 		JOB_BARBER = TRAIT_BALD,
-	) // Jobs and their corresponding quirks
+	) // Jobs and their corresponding quirks, as a trait or a quirk typepath
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target
 
@@ -160,7 +160,8 @@
 	for(var/datum/mind/possible_target as anything in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))
 			var/job = possible_target.assigned_role.title
-			if (trait_obsessions[job] != null && HAS_TRAIT(owner, trait_obsessions[job]))
+			var/obsession = trait_obsessions[job]
+			if (obsession != null && (ispath(obsession, /datum/quirk) ? owner.has_quirk(obsession) : HAS_TRAIT(owner, obsession)))
 				special_pool += possible_target.current
 			possible_targets += possible_target.current
 
