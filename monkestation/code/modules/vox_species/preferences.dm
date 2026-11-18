@@ -210,7 +210,6 @@
 	savefile_key = "feature_vox_tank_type"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	can_randomize = FALSE
 	relevant_external_organ = /obj/item/organ/external/tail/vox
 
 /datum/preference/choiced/vox_tank_type/init_possible_values()
@@ -227,7 +226,6 @@
 	savefile_key = "feature_vox_mask"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	can_randomize = FALSE
 	relevant_external_organ = /obj/item/organ/external/tail/vox
 
 /datum/preference/choiced/vox_mask/init_possible_values()
