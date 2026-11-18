@@ -30,7 +30,6 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/carbon/human/species,
 	/mob/living/silicon,
 	/mob/living/simple_animal,
-	/mob/living/simple_animal/bot,
 	/mob/living/simple_animal/hostile,
 	/mob/living/simple_animal/hostile/asteroid,
 	/mob/living/simple_animal/hostile/asteroid/elite,

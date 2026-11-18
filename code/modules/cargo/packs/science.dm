@@ -112,7 +112,7 @@
 					/obj/item/bodypart/arm/left/robot = 4,
 					/obj/item/healthanalyzer = 2,
 					/obj/item/clothing/head/utility/hardhat = 2,
-					/obj/item/bot_assembly/floorbot = 2,
+					/obj/item/bot_assembly/repairbot = 2,
 					/obj/item/bot_assembly/firebot = 2,
 					/obj/item/bot_assembly/medbot = 2,
 					/obj/item/bot_assembly/cleanbot = 2)

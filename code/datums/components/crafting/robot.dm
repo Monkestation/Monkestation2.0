@@ -1,6 +1,6 @@
 /datum/crafting_recipe/ed209
 	name = "ED209"
-	result = /mob/living/simple_animal/bot/secbot/ed209
+	result = /mob/living/basic/bot/secbot/ed209
 	reqs = list(
 		/obj/item/robot_suit = 1,
 		/obj/item/clothing/head/helmet = 1,
@@ -22,7 +22,7 @@
 
 /datum/crafting_recipe/secbot
 	name = "Secbot"
-	result = /mob/living/simple_animal/bot/secbot
+	result = /mob/living/basic/bot/secbot
 	reqs = list(
 		/obj/item/assembly/signaler = 1,
 		/obj/item/clothing/head/helmet/sec = 1,
@@ -48,7 +48,7 @@
 
 /datum/crafting_recipe/floorbot
 	name = "Floorbot"
-	result = /mob/living/simple_animal/bot/floorbot
+	result = /mob/living/basic/bot/repairbot
 	reqs = list(
 		/obj/item/storage/toolbox = 1,
 		/obj/item/stack/tile/iron = 10,
@@ -96,7 +96,7 @@
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
-	result = /mob/living/simple_animal/bot/secbot/honkbot
+	result = /mob/living/basic/bot/secbot/honkbot
 	reqs = list(
 		/obj/item/storage/box/clown = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
@@ -108,7 +108,7 @@
 
 /datum/crafting_recipe/firebot
 	name = "Firebot"
-	result = /mob/living/simple_animal/bot/firebot
+	result = /mob/living/basic/bot/firebot
 	reqs = list(
 		/obj/item/extinguisher = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
@@ -120,7 +120,7 @@
 
 /datum/crafting_recipe/vibebot
 	name = "Vibebot"
-	result = /mob/living/simple_animal/bot/vibebot
+	result = /mob/living/basic/bot/vibebot
 	reqs = list(
 		/obj/item/light/bulb = 2,
 		/obj/item/bodypart/head/robot = 1,

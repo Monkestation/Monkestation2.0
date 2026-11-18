@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"conspiracies" = typecacheof(list(
 		/mob/living/basic/drone,
 		/mob/living/basic/pet/penguin,
-		/mob/living/simple_animal/bot/secbot,
+		/mob/living/basic/bot/secbot,
 	)),
 	"doctors" = typecacheof(list(/mob/living/basic/bot/medbot)),
 	"insects" = typecacheof(list(
@@ -80,9 +80,9 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/drone,
 		/mob/living/silicon/ai,
 		/mob/living/silicon/robot,
-		/mob/living/simple_animal/bot,
+		/mob/living/basic/bot,
 	)),
-	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
+	"security" = typecacheof(list(/mob/living/basic/bot/secbot)),
 	"spiders" = typecacheof(list(/mob/living/basic/spider/giant)),
 	"skeletons" = typecacheof(list(/mob/living/basic/skeleton)),
 	"snakes" = typecacheof(list(/mob/living/basic/snake)),
@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/shade,
 		/mob/living/basic/skeleton,
 		/mob/living/basic/wizard,
-		/mob/living/simple_animal/bot/mulebot/paranormal,
+		/mob/living/basic/bot/mulebot/paranormal,
 		/mob/living/simple_animal/hostile/dark_wizard,
 		/mob/living/basic/zombie,
 	)),
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/slime,
 	)),
 	"conspiracies" = typecacheof(list(
-		/mob/living/simple_animal/bot/secbot,
+		/mob/living/basic/bot/secbot,
 		/mob/living/basic/drone,
 		/mob/living/basic/pet/penguin,
 	)),

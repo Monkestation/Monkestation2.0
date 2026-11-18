@@ -106,3 +106,28 @@
 /datum/ai_movement/navmap_astar/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
 	max_pathing_attempts = 10
+
+/datum/ai_movement/navmap_astar/bot/mulebot
+	max_pathing_attempts = 10
+	maximum_length = AI_MULEBOT_PATH_LENGTH
+
+/datum/ai_movement/navmap_astar/bot/mulebot/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay, min_distance)
+	var/datum/move_loop/has_target/navmap_astar/frustrations/loop = GLOB.move_manager.navmap_frustrations_move(moving,
+		current_movement_target,
+		delay,
+		repath_delay = 0.5 SECONDS,
+		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
+		max_path_length = maximum_length,
+		minimum_distance = min_distance,
+		access = controller.get_access(),
+		subsystem = SSai_movement,
+		skip_first = TRUE,
+		diagonal_handling = diagonal_flags,
+		extra_info = controller,
+	)
+	return loop
+
+/datum/ai_movement/navmap_astar/bot/mulebot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
+	var/datum/move_loop/loop = ..()
+	var/atom/our_pawn = controller.pawn
+	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_NAVMAP_FRUSTRATION_INCREMENTED, TYPE_PROC_REF(/mob/living/basic/bot/mulebot, handle_buzzing))
