@@ -146,7 +146,7 @@
 	addtimer(CALLBACK(src, PROC_REF(vomit)), 5 SECONDS)
 
 /// Start making a mess
-/mob/living/basic/goose/vomit/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1, knockdown = FALSE) // monkestation edit: our vomit() is on /mob/living
+/mob/living/basic/goose/vomit/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1, knockdown = FALSE) // our vomit() is on /mob/living
 	vomit_action?.Trigger(target = src)
 	return TRUE
 

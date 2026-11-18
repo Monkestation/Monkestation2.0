@@ -50,7 +50,7 @@
 	try_replicate()
 
 /// Full setup for illusion mobs to lessen code duplication in the individual files.
-/mob/living/basic/illusion/proc/full_setup(mob/living/original, mob/living/target_mob = null, list/faction_override = null, life = 5 SECONDS, hp = null, damage = null, replicate = null) // monkestation edit: null keeps our own value
+/mob/living/basic/illusion/proc/full_setup(mob/living/original, mob/living/target_mob = null, list/faction_override = null, life = 5 SECONDS, hp = null, damage = null, replicate = null) // null keeps our own value
 	mock_as(original, life, hp, damage, replicate)
 	faction = original.faction.Copy()
 	if(faction_override)
@@ -72,7 +72,7 @@
 	appearance = original.appearance
 	setDir(original.dir)
 
-	// monkestation edit start: tg checks isnull() here, so these never applied
+	// the isnull() checks here were backwards, so these never applied
 	if (!isnull(hp))
 		maxHealth = hp
 		updatehealth() // re-cap health to new value
@@ -83,14 +83,13 @@
 
 	if (!isnull(replicate))
 		multiply_chance = replicate
-	// monkestation edit end
 
 	faction -= FACTION_NEUTRAL
 	transform = initial(transform)
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
 
-	if(life < INFINITY) // monkestation edit: darkspawn psyches don't expire
+	if(life < INFINITY) // darkspawn psyches don't expire
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, death)), life)
 
 /// See if we are able to replicate, and if so, do it.

@@ -5,7 +5,7 @@
 		BB_WEEDLEVEL_THRESHOLD = 3,
 		BB_WATERLEVEL_THRESHOLD = 90,
 	)
-	ai_movement = /datum/ai_movement/navmap_astar // monkestation edit: use navmap instead of basic avoidance
+	ai_movement = /datum/ai_movement/navmap_astar // use navmap instead of basic avoidance
 	behavior_tree_json = "code/modules/mob/living/basic/jungle/seedling/seedling.bt.json"
 
 /datum/ai_controller/basic_controller/seedling/meanie

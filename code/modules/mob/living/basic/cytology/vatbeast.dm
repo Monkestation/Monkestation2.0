@@ -43,7 +43,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/tameable, food_types = enjoyed_food, tame_chance = 30, bonus_tame_chance = 0)
-	AddElement(/datum/element/basic_eating, food_types = enjoyed_food) // monkestation edit: our tameable doesn't add it, the ai eats fries it finds
+	AddElement(/datum/element/basic_eating, food_types = enjoyed_food) // our tameable doesn't add it, the ai eats fries it finds
 
 	var/datum/action/cooldown/tentacle_slap/slapper = new (src)
 	slapper.Grant(src)

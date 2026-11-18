@@ -8,7 +8,7 @@
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_EPIC
 	faction = list(FACTION_MINING, FACTION_BOSS)
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // monkestation edit: same as our megafauna
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // same as our megafauna
 	obj_damage = 400
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
@@ -34,14 +34,13 @@
 	/// What memory to give to victor who have killed us, if any.
 	var/victor_memory_type = null
 
-	// monkestation edit start: megafauna roar at intruders before attacking them
+	// megafauna roar at intruders before attacking them
 	/// Sound played when we warn someone who got too close
 	var/rawr_sound = 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg'
 	/// Mobs we have warned already, by REF
 	var/list/warned_players
 	/// Cooldown between roars
 	COOLDOWN_DECLARE(rawr_cooldown)
-	// monkestation edit end
 
 /mob/living/basic/boss/Initialize(mapload)
 	. = ..()
@@ -137,7 +136,7 @@
 		drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 	)
 
-// monkestation edit start: megafauna roar at intruders before attacking them
+// megafauna roar at intruders before attacking them
 /// Roars at everyone in the list. Called by the AI the first time someone gets close.
 /mob/living/basic/boss/proc/warn_players(list/targets)
 	playsound(src, rawr_sound, 100, extrarange = 5, falloff_distance = 6)
@@ -145,4 +144,3 @@
 		visible_message(span_userdanger("[src] roars loudly, visibly being annoyed with your presence!"))
 		return
 	visible_message(span_userdanger("[src] roars loudly!"))
-// monkestation edit end

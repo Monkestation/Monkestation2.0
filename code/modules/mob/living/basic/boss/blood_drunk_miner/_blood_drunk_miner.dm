@@ -39,7 +39,7 @@ Difficulty: Medium
 	death_message = "falls to the ground, decaying into glowing particles."
 	death_sound = SFX_BODYFALL
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
-	rawr_sound = 'sound/effects/magic/demon_dies.ogg' // monkestation edit
+	rawr_sound = 'sound/effects/magic/demon_dies.ogg'
 
 	ai_controller = /datum/ai_controller/blood_drunk_miner
 
@@ -61,9 +61,9 @@ Difficulty: Medium
 	var/rapid_melee_hits = 5
 	/// How long must we wait between ranged attacks
 	var/ranged_attack_cooldown_duration = 1.6 SECONDS
-	/// monkestation edit: extra healing on devour, as a fraction of the victim's max health
+	/// extra healing on devour, as a fraction of the victim's max health
 	var/devour_heal_bonus = 0.5
-	/// monkestation edit: health restored on every saw hit
+	/// health restored on every saw hit
 	var/heal_per_hit = 0
 
 /mob/living/basic/boss/blood_drunk_miner/Initialize(mapload)
@@ -198,7 +198,7 @@ Difficulty: Medium
 		post_attack_effects(victim, modifiers)
 		return
 
-	// monkestation edit: same pace as our simple mob rapid melee, the whole combo takes two seconds
+	// the whole combo takes two seconds no matter how many hits it has
 	addtimer(CALLBACK(src, PROC_REF(do_chain_attack), victim, modifiers, sequence_hit + 1), 2 SECONDS / rapid_melee_hits)
 
 /// Hook for potential additional behaviors after attacking
