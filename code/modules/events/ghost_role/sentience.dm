@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/snake,
 	/mob/living/basic/spider/giant/sgt_araneus,
 	///mob/living/basic/bot/secbot/beepsky, kindly, no, no sentient validhunter beepsky thanks
-	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+	/mob/living/basic/goose/vomit,
 )))
 
 /datum/round_event_control/sentience

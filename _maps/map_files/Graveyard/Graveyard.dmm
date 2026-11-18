@@ -13074,7 +13074,7 @@
 "eQz" = (
 /obj/structure/sign/poster/contraband/random/directional/north,
 /obj/structure/bed/dogbed,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /turf/open/floor/wood,
 /area/station/maintenance/aft)
 "eQD" = (

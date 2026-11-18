@@ -34,7 +34,6 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/simple_animal/hostile/asteroid,
 	/mob/living/simple_animal/hostile/asteroid/elite,
 	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/simple_animal/hostile/retaliate,
 ))
 
 

@@ -444,7 +444,7 @@
 		/datum/reagent/medicine/c2/syriniver = -2)
 
 	virus_suspectibility = 0.5
-	resulting_atoms = list(/mob/living/simple_animal/hostile/vatbeast = 1)
+	resulting_atoms = list(/mob/living/basic/vatbeast = 1)
 
 /datum/micro_organism/cell_line/vat_beast/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
 	. = ..()
@@ -708,7 +708,7 @@
 		/datum/reagent/consumable/mold = -2,
 		/datum/reagent/toxin/spore = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/leaper = 1)
+	resulting_atoms = list(/mob/living/basic/leaper = 1)
 
 /datum/micro_organism/cell_line/mega_arachnid
 	desc = "pseudoarachnoid cells"

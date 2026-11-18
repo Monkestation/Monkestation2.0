@@ -30,7 +30,7 @@
 	//Mobs: Icemoon
 	/mob/living/basic/mining/legion/snow/ = list("Legion!", "It's a snowy legion!", "Kill it before it creates more!"),
 	/mob/living/basic/mining/wolf/ = list("Wolf!", "Winter wolf!", "It's hungry like the...", "Wolf pack!"),
-	/mob/living/simple_animal/hostile/asteroid/polarbear/ = list("Bear!", "Polar bear!", "I want the pelt!"),
+	/mob/living/basic/mining/polarbear/ = list("Bear!", "Polar bear!", "I want the pelt!"),
 	/mob/living/basic/mining/ice_demon/ = list("Frost demon!", "Slippery demon!", "Look up! Ice demon!", "Demon watching us!"),
 	/mob/living/basic/mining/ice_whelp/ = list("Ice whelp!", "Whelp above us!", "Bite-sized frost dragon!", "Watch out! It's small and it's dangerous!"),
 	/obj/structure/spawner/ice_moon/demonic_portal/ = list("Portal!", "Take out the portal!", "Beasts coming out of that portal!"),

@@ -81,6 +81,24 @@ monkestation end */
 /datum/bt_node/subtree/frog_engage_target
 	behavior_tree_json = "code/modules/mob/living/basic/vermin/frog_engage_target.bt.json"
 
+/// Frog spawned by leapers which explodes on attack
+/mob/living/basic/frog/suicide
+	name = "suicide frog"
+	desc = "Driven by sheer will."
+	icon_state = "frog_trash"
+	icon_living = "frog_trash"
+	icon_dead = "frog_trash_dead"
+	maxHealth = 5
+	health = 5
+	ai_controller = /datum/ai_controller/basic_controller/frog/suicide_frog
+	///how long do we exist for
+	var/existence_period = 15 SECONDS
+
+/mob/living/basic/frog/suicide/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/explode_on_attack, mob_type_dont_bomb = typecacheof(list(/mob/living/basic/frog, /mob/living/basic/leaper)))
+	addtimer(CALLBACK(src, PROC_REF(death)), existence_period)
+
 /datum/ai_controller/basic_controller/frog
 	behavior_tree_json = "code/modules/mob/living/basic/vermin/frog.bt.json"
 	blackboard = list(

@@ -71955,7 +71955,7 @@
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "qSa" = (

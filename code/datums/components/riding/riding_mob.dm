@@ -60,6 +60,8 @@
 	// for fireman carries, check if the ridden is stunned/restrained
 	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
 		. = FALSE
+	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.faction.Find(REF(rider))))
+		. = FALSE
 
 	if(. || !consequences)
 		return
@@ -446,6 +448,36 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/leaper
+	can_use_abilities = TRUE
+	ride_check_flags = JUST_FRIEND_RIDERS
+
+/datum/component/riding/creature/leaper/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 46), TEXT_SOUTH = list(0, 51), TEXT_EAST = list(-6, 46), TEXT_WEST = list(6, 46)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
+
+/datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+	. = ..()
+	RegisterSignal(riding_mob, COMSIG_MOVABLE_POINTED, PROC_REF(attack_pointed))
+
+/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed, obj/effect/temp_visual/point/point)
+	SIGNAL_HANDLER
+	if(!isclosedturf(pointed))
+		return
+	var/mob/living/basic/basic_parent = parent
+	if(!pointed.IsReachableBy(basic_parent))
+		return
+	basic_parent.melee_attack(pointed)
+
+/datum/component/riding/creature/leaper/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
+	SIGNAL_HANDLER
+	UnregisterSignal(rider, COMSIG_MOVABLE_POINTED)
+	return ..()
 
 /datum/component/riding/creature/goliath
 	vehicle_move_delay = 4

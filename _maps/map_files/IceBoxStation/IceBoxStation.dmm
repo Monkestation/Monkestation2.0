@@ -8202,7 +8202,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ctP" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear{
+/mob/living/basic/mining/polarbear{
 	move_force = 999;
 	name = "Huey"
 	},
@@ -36020,7 +36020,7 @@
 /area/station/engineering/supermatter/room)
 "kYF" = (
 /obj/structure/light_construct/directional/west,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "kYI" = (
@@ -74509,7 +74509,7 @@
 /turf/open/floor/plating,
 /area/station/commons/storage/mining)
 "wMA" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear{
+/mob/living/basic/mining/polarbear{
 	move_force = 999;
 	name = "Dewey"
 	},
@@ -78106,7 +78106,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "xQi" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear{
+/mob/living/basic/mining/polarbear{
 	move_force = 999;
 	name = "Louie"
 	},

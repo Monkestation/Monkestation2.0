@@ -54,7 +54,7 @@
 	if(prob(0.1))
 		playsound(altar_turf, 'sound/effects/bamf.ogg', 100, TRUE)
 		altar_turf.visible_message(span_boldwarning("A large form seems to be forcing its way into your reality via the portal [user] opened! RUN!!!"))
-		new /mob/living/simple_animal/hostile/jungle/leaper(altar_turf)
+		new /mob/living/basic/leaper(altar_turf)
 	return ..()
 
 /datum/religion_rites/create_sandstone
