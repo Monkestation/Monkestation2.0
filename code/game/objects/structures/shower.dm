@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
-	layer = ABOVE_WINDOW_LAYER
+	layer = ABOVE_MOB_LAYER
 	use_power = NO_POWER_USE
 	subsystem_type = /datum/controller/subsystem/processing/plumbing
 	///Does the user want the shower on or off?
@@ -191,6 +191,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	deconstruct()
 	return TRUE
 
+/obj/machinery/shower/setDir(newdir)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(!actually_on)
@@ -199,13 +203,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
 	switch(dir)
 		if(NORTH)
-			water_falling.pixel_y += pixel_shift
+			water_falling.pixel_z += pixel_shift
 		if(SOUTH)
-			water_falling.pixel_y -= pixel_shift
+			water_falling.pixel_z -= pixel_shift
 		if(EAST)
-			water_falling.pixel_x += pixel_shift
+			water_falling.pixel_w += pixel_shift
 		if(WEST)
-			water_falling.pixel_x -= pixel_shift
+			water_falling.pixel_w -= pixel_shift
 	. += water_falling
 
 /obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)

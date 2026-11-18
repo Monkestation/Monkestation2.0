@@ -154,6 +154,8 @@
 		return FALSE
 	if(!is_acceptable_storable(storing_item))
 		return FALSE
+	storing_item.pixel_x = 0
+	storing_item.pixel_y = 0
 	storing_item.forceMove(src)
 	stored = storing_item
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
