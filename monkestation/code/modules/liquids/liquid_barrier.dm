@@ -4,7 +4,7 @@
 	icon = 'icons/obj/structures/drains.dmi'
 	icon_state = "bigdrain"
 	plane = FLOOR_PLANE
-	layer = GAS_SCRUBBER_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	density = FALSE
 	anchored = TRUE
 	move_resist = INFINITY

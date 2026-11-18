@@ -8,7 +8,7 @@
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	plane = FLOOR_PLANE
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
@@ -253,7 +253,7 @@
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
 		return FALSE
 	for(var/atom/movable/thing in loc)
-		if(thing.flags_1 & PREVENT_CLICK_UNDER_1 && thing.density && thing.layer > layer)
+		if(thing.flags_1 & PREVENT_CLICK_UNDER_1 && thing.density && COMPARE_LAYERS(thing.layer, layer))
 			return TRUE
 	return FALSE
 
@@ -265,7 +265,7 @@
 	pixel_y = 18
 	pixel_z = -48
 	plane = FLOOR_PLANE
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune
 	/// We only set this state after setting the colour, otherwise the animation doesn't colour correctly
 	var/animation_state = "transmutation_rune_draw"

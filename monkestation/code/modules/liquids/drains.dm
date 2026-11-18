@@ -7,7 +7,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	density = FALSE
 	plane = FLOOR_PLANE
-	layer = GAS_SCRUBBER_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	anchored = TRUE
 	var/processing = FALSE
 	var/drain_flat = 5

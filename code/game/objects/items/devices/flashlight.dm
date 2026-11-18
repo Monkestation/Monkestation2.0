@@ -884,6 +884,7 @@
 	light_outer_range = 4
 	light_power = 10
 	alpha = 0
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	on = TRUE
 	anchored = TRUE

@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /proc/get_link_visual_generic(datum/mod_link/mod_link, atom/movable/visuals, proc_path)
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
 	playsound(mod_link.holder, 'sound/machines/terminal/terminal_processing.ogg', 50, vary = TRUE)
-	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "static_base", TURF_LAYER))
+	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "static_base", ABOVE_NORMAL_TURF_LAYER))
 	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "modlink", ABOVE_ALL_MOB_LAYER))
 	visuals.add_filter("crop_square", 1, alpha_mask_filter(icon = icon('icons/effects/effects.dmi', "modlink_filter")))
 	visuals.maptext_height = 6

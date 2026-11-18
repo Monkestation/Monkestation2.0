@@ -62,7 +62,6 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 
 /turf/open/floor/plating/ocean
 	plane = FLOOR_PLANE
-	layer = TURF_LAYER
 	force_no_gravity = FALSE
 	gender = PLURAL
 	name = "ocean sand"

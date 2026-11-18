@@ -1,6 +1,7 @@
 /obj/effect/decal/cleanable
 	abstract_type = /obj/effect/decal/cleanable
 	gender = PLURAL
+	plane = GAME_PLANE
 	layer = FLOOR_CLEAN_LAYER
 	flags_1 = UNPAINTABLE_1
 	var/list/random_icon_states = null

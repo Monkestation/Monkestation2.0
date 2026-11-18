@@ -528,6 +528,12 @@ world
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
+	// Expand our canvas to fit if we're too big
+	if(render_icon)
+		var/icon/active_icon = icon(curicon)
+		if(active_icon.Width() != 32 || active_icon.Height() != 32)
+			flat.Scale(active_icon.Width(), active_icon.Height())
+
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
