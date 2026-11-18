@@ -186,25 +186,30 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/proc/bless(mob/living/blessed, mob/living/user)
 	if(GLOB.religious_sect)
 		return GLOB.religious_sect.sect_bless(blessed,user)
+
 	if(!ishuman(blessed))
-		return
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/built_in_his_image = blessed
 	for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.bodyparts)
 		if(!IS_ORGANIC_LIMB(bodypart))
 			balloon_alert(user, "can't heal inorganic!")
-			return FALSE
+			return BLESSING_IGNORED
 
 	var/heal_amt = 10
 	var/list/hurt_limbs = built_in_his_image.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-	if(length(hurt_limbs))
-		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, BODYTYPE_ORGANIC))
-				built_in_his_image.update_damage_overlays()
-		built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
-		to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-		playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
-		built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	if(!length(hurt_limbs))
+		return BLESSING_IGNORED
+
+	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+		if(affecting.heal_damage(heal_amt, heal_amt, BODYTYPE_ORGANIC))
+			built_in_his_image.update_damage_overlays()
+
+	built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
+	to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
+	playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
+	built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 /obj/item/book/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
 	if(!ISADVANCEDTOOLUSER(user))
@@ -234,19 +239,21 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		balloon_alert(user, "can't heal yourself!")
 		return
 
-	var/smack = TRUE
-	if(prob(60) && bless(target_mob, user))
-		smack = FALSE
-	else if(iscarbon(target_mob))
+	if(prob(60))
+		var/bless_result = bless(target_mob, user)
+		if (bless_result != BLESSING_FAILED)
+			SEND_SIGNAL(target_mob, COMSIG_LIVING_BLESSED, user, src, bless_result)
+			return
+
+	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
 			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
-	if(smack)
-		target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
-				span_userdanger("[user] beats [target_mob] over the head with [src]!"))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
-		log_combat(user, target_mob, "attacked", src)
+	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
+			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
+	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
 	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user) & COMSIG_END_BIBLE_CHAIN)

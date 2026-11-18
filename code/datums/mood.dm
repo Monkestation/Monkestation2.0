@@ -32,10 +32,6 @@
 	/// List of mood events currently active on this datum
 	var/list/mood_events = list()
 
-	/// Tracks the last mob stat, updates on change
-	/// Used to stop processing SSmood
-	var/last_stat = CONSCIOUS
-
 /datum/mood/New(mob/living/mob_to_make_moody)
 	if (!istype(mob_to_make_moody))
 		stack_trace("Tried to apply mood to a non-living atom!")
@@ -75,40 +71,31 @@
 /datum/mood/process(seconds_per_tick)
 	switch(mood_level)
 		if(MOOD_LEVEL_SAD4)
-			set_sanity(sanity - 0.3 * seconds_per_tick, SANITY_INSANE)
+			adjust_sanity(-0.3 * seconds_per_tick, SANITY_INSANE)
 		if(MOOD_LEVEL_SAD3)
-			set_sanity(sanity - 0.15 * seconds_per_tick, SANITY_CRAZY)
+			adjust_sanity(-0.15 * seconds_per_tick, SANITY_CRAZY)
 		if(MOOD_LEVEL_SAD2)
-			set_sanity(sanity - 0.1 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(-0.1 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_SAD1)
-			set_sanity(sanity - 0.05 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(-0.05 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_NEUTRAL)
-			set_sanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
+			adjust_sanity(0, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
 		if(MOOD_LEVEL_HAPPY1)
-			set_sanity(sanity + 0.2 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(0.2 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_HAPPY2)
-			set_sanity(sanity + 0.3 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(0.3 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_HAPPY3)
-			set_sanity(sanity + 0.4 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			adjust_sanity(0.4 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(MOOD_LEVEL_HAPPY4)
-			set_sanity(sanity + 0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			adjust_sanity(0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 
-	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
-	// mood runtime, so 50% average uptime across the hour.
-	if(HAS_TRAIT(mob_parent, TRAIT_DEPRESSION) && SPT_PROB(0.416, seconds_per_tick))
-		add_mood_event("depression_mild", /datum/mood_event/depression_mild)
-
-	if(HAS_TRAIT(mob_parent, TRAIT_JOLLY) && SPT_PROB(0.416, seconds_per_tick))
-		add_mood_event("jolly", /datum/mood_event/jolly)
-
-/datum/mood/proc/handle_mob_death(datum/source)
+/datum/mood/proc/handle_mob_death(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 
-	if (last_stat == DEAD && mob_parent.stat != DEAD)
+	if (old_stat == DEAD && new_stat != DEAD)
 		START_PROCESSING(SSmood, src)
-	else if (last_stat != DEAD && mob_parent.stat == DEAD)
+	else if (old_stat != DEAD && new_stat == DEAD)
 		STOP_PROCESSING(SSmood, src)
-	last_stat = mob_parent.stat
 
 /// Handles mood given by nutrition
 /datum/mood/proc/update_nutrition_moodlets()
@@ -159,12 +146,12 @@
 	var/datum/mood_event/the_event
 	if (mood_events[category])
 		the_event = mood_events[category]
-		if (the_event.type != type)
-			clear_mood_event(category)
-		else
+		if (the_event.type == type)
 			if (the_event.timeout)
 				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 			return // Don't need to update the event.
+
+		clear_mood_event(category)
 	var/list/params = args.Copy(3)
 
 	params.Insert(1, mob_parent)
@@ -197,6 +184,10 @@
 	qdel(event)
 	update_mood()
 
+/// Returns the mood event in this category, if any
+/datum/mood/proc/get_mood_event(category)
+	return mood_events[category]
+
 /// Updates the mobs mood.
 /// Called after mood events have been added/removed.
 /datum/mood/proc/update_mood()
@@ -205,13 +196,12 @@
 	mood = 0
 	shown_mood = 0
 
-	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
-
 	for(var/category in mood_events)
 		var/datum/mood_event/the_event = mood_events[category]
 		mood += the_event.mood_change
 		if (!the_event.hidden)
 			shown_mood += the_event.mood_change
+
 	mood *= mood_modifier
 	shown_mood *= mood_modifier
 
@@ -236,6 +226,7 @@
 			mood_level = MOOD_LEVEL_HAPPY4
 
 	update_mood_icon()
+	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
 
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
@@ -462,10 +453,16 @@
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum && sanity < minimum)
 		amount = sanity + 0.7
-	if((!override && HAS_TRAIT(mob_parent, TRAIT_UNSTABLE)) || amount > maximum)
+
+	if(!override && HAS_TRAIT(mob_parent, TRAIT_UNSTABLE))
 		amount = min(sanity, amount)
+
+	if (amount > maximum)
+		amount = min(amount, maximum)
+
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
+
 	sanity = amount
 	SEND_SIGNAL(mob_parent, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
@@ -535,7 +532,7 @@
 
 /// Helper to forcefully drain sanity
 /datum/mood/proc/direct_sanity_drain(amount)
-	set_sanity(sanity + amount, override = TRUE)
+	adjust_sanity(amount, override = TRUE)
 
 /**
  * Returns true if you already have a mood from a provided category.

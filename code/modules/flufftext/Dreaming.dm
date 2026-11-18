@@ -23,7 +23,7 @@
 	set waitfor = FALSE
 	var/datum/dream/chosen_dream
 
-	var/can_heretic_dream = ((IS_HERETIC(src) || HAS_TRAIT(src, TRAIT_HERETICAL_DREAMS)) && !("mansus_dream_fatigue" in mob_mood?.mood_events))
+	var/can_heretic_dream = ((IS_HERETIC(src) || HAS_TRAIT(src, TRAIT_HERETICAL_DREAMS)) && !mob_mood?.get_mood_event("mansus_dream_fatigue"))
 
 	if(can_heretic_dream && GLOB.reality_smash_track.smashes.len)
 		/// If someone attempts to have a heretical dream and there is an avaliable influence, one is picked randomly for a dream

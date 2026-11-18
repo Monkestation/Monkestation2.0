@@ -317,9 +317,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGICALLY_GIFTED "magically_gifted"
 /// This object innately spawns with fantasy variables already applied (the magical component is given to it on initialize), and thus we never want to give it the component again.
 #define TRAIT_INNATELY_FANTASTICAL_ITEM "innately_fantastical_item"
-#define TRAIT_DEPRESSION "depression"
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
-#define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"

@@ -71,11 +71,11 @@
 /datum/component/omen/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_accident))
 	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, PROC_REF(check_slip))
-	RegisterSignal(parent, COMSIG_CARBON_MOOD_UPDATE, PROC_REF(check_bless))
+	RegisterSignal(parent, COMSIG_LIVING_BLESSED, PROC_REF(check_bless))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
 
 /datum/component/omen/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_BLESSED, COMSIG_LIVING_DEATH))
 
 /**
  * check_accident() is called each step we take
@@ -161,13 +161,10 @@
 	return
 
 /// Hijack the mood system to see if we get the blessing mood event to cancel the omen
-/datum/component/omen/proc/check_bless(mob/living/our_guy, category)
+/datum/component/omen/proc/check_bless(mob/living/our_guy, mob/living/priest, obj/item/book/bible/bible, bless_result)
 	SIGNAL_HANDLER
 
-	if(incidents_left == INFINITY)
-		return
-
-	if(!("blessing" in our_guy.mob_mood.mood_events))
+	if(incidents_left == INFINITY || bless_result != BLESSING_SUCCESS)
 		return
 
 	qdel(src)
