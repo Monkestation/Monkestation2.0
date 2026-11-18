@@ -436,7 +436,7 @@
 		return
 	var/obj/item/stored
 	for(var/obj/item/candidate in storage.real_location)
-		if(candidate.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(candidate.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		stored = candidate
 	if(!stored) // nothing to take out

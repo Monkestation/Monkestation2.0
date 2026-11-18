@@ -368,7 +368,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/used_slots = 0
 	for(var/atom/contained as anything in real_location)
-		if(contained.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(contained.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		used_slots++
 
@@ -416,7 +416,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/get_exception_count()
 	var/count = 0
 	for(var/obj/item/thing in real_location)
-		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		if(thing.w_class > max_specific_storage && is_type_in_typecache(thing, exception_hold))
 			count += 1
@@ -426,7 +426,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/get_total_weight()
 	var/total_weight = 0
 	for(var/obj/item/thing in real_location)
-		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		total_weight += thing.w_class
 	return total_weight
@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!attempt_insert(thing, user, TRUE)) // Note can_be_inserted still makes noise when the answer is no
 			var/used_slots = 0
 			for(var/atom/contained as anything in real_location)
-				if(contained.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+				if(contained.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 					continue
 				used_slots++
 			if(used_slots >= max_slots)
@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE, visual_updates = TRUE, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return
-	if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+	if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 		return
 
 	if(istype(thing))
@@ -611,7 +611,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  */
 /datum/storage/proc/remove_all(atom/drop_loc = parent.drop_location(), update_storage = TRUE)
 	for(var/obj/item/thing in real_location)
-		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		if(!attempt_remove(thing, drop_loc, silent = TRUE, visual_updates = update_storage))
 			continue
@@ -650,7 +650,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/list/taking = typecache_filter_list(real_location.contents, typecacheof(type))
 	for(var/atom/thing in taking.Copy())
-		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			taking -= thing
 	if(taking.len > amount)
 		taking.len = amount
@@ -684,7 +684,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/list/ret = list()
 
 	for(var/atom/found_thing as anything in real_location)
-		if(found_thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(found_thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		ret |= found_thing
 		if(recursive && found_thing.atom_storage)
@@ -850,7 +850,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			playsound(parent, sound, 50, sound_vary, -5)
 
 		for(var/obj/item/to_dump in real_location)
-			if(to_dump.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+			if(to_dump.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 				continue
 			dest_object.atom_storage.attempt_insert(to_dump, user)
 		parent.update_appearance()
@@ -921,7 +921,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/list/toreturn = list()
 
 	for(var/obj/item/thing in real_location.contents)
-		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		var/total_amnt = 1
 
@@ -976,7 +976,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(quickdraw && !to_show.get_active_held_item())
 		var/obj/item/to_remove
 		for(var/obj/item/thing in real_location)
-			if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+			if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 				continue
 			to_remove = thing
 			break
@@ -1070,7 +1070,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(to_show.active_storage != src && (to_show.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
-			if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+			if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 				continue
 			if(thing.on_found(to_show))
 				to_show.active_storage.hide_contents(to_show)
@@ -1104,7 +1104,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/get_contents_to_show()
 	var/list/visible_contents = list()
 	for(var/atom/thing as anything in real_location)
-		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		visible_contents += thing
 	return visible_contents
@@ -1146,7 +1146,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/orient_storage()
 	var/adjusted_contents = 0
 	for(var/atom/thing as anything in real_location)
-		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		adjusted_contents++
 	var/list/datum/numbered_display/numbered_contents
