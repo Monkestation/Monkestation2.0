@@ -39,6 +39,7 @@
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
 	ini_dir = dir
+	update_dir_layer()
 	if(climbable)
 		AddElement(/datum/element/climbable)
 
@@ -74,16 +75,37 @@
 		update_icon()
 
 /obj/structure/railing/Destroy()
+	// grab these before ..() shoves us into nullspace, or range() finds nothing
+	var/list/neighbors = list()
+	for(var/obj/structure/railing/R in range(1, src))
+		if(R != src)
+			neighbors += R
 	. = ..()
-	for(var/thing in range(1, src))
-		var/turf/T = thing
-		for(var/obj/structure/railing/R in T.contents)
-			R.update_icon()
+	for(var/obj/structure/railing/R as anything in neighbors)
+		if(!QDELETED(R))
+			R.update_icon(FALSE)
 
 /obj/structure/railing/setDir(newdir)
 	. = ..()
+	update_dir_layer()
 	if(anchored)
 		update_icon()
+
+// side map draws lower rows on top, so layer only sorts us against stuff in our own tile
+/obj/structure/railing/proc/update_dir_layer()
+	switch(dir)
+		if(NORTH)
+			layer = initial(layer)
+		if(SOUTH)
+			layer = ABOVE_ALL_MOB_LAYER
+		else
+			layer = LOW_MOB_LAYER
+
+/obj/structure/railing/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	update_icon()
 
 /obj/structure/railing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
@@ -166,33 +188,22 @@
 		check_neighbors(update_neighbors)
 		overlays.Cut()
 
-		if(dir == SOUTH)
-			layer = HITSCAN_PROJECTILE_LAYER
-		else if(dir != NORTH)
-			layer = LOW_MOB_LAYER
-		else
-			layer = initial(layer)
-
 		if(!neighbor_status || !anchored)
 			icon_state = "railing0-[density]"
 		else
 			icon_state = "railing1-[density]"
 
-			if(("corneroverlay_l" in neighbor_status) && ("corneroverlay_r" in neighbor_status))
-				icon_state = "blank"
-
-
 			var/turf/right_turf = get_step(src, turn(src.dir, -90))
 			var/turf/left_turf = get_step(src, turn(src.dir, 90))
 
-			if((!locate(/obj/structure/railing) in right_turf.contents))
+			if(!has_joining_railing(right_turf))
 				if(!("mcorneroverlay_l" in neighbor_status))
 					overlays += image(icon, "frontend_r[density]")
 				else
 					overlays += image(icon, "frontoverlay_r[density]")
 
 
-			if((!locate(/obj/structure/railing) in left_turf.contents))
+			if(!has_joining_railing(left_turf))
 				if(!("mcorneroverlay_l" in neighbor_status))
 					overlays += image(icon, "frontend_l[density]")
 				else
@@ -219,7 +230,16 @@
 						pix_offset_y = -32
 					if(WEST)
 						pix_offset_y = 32
-				overlays += image(icon, "mcorneroverlay_l[density]", pixel_x = pix_offset_x, pixel_y = pix_offset_y)
+				var/image/outer_corner = image(icon, "mcorneroverlay_l[density]")
+				outer_corner.pixel_w = pix_offset_x
+				outer_corner.pixel_z = pix_offset_y
+				overlays += outer_corner
+
+/obj/structure/railing/proc/has_joining_railing(turf/target)
+	for(var/obj/structure/railing/R in target)
+		if(R.anchored && R.dir == dir)
+			return TRUE
+	return FALSE
 
 /obj/structure/railing/proc/check_neighbors(updates = TRUE)
 	neighbor_status = list()
@@ -229,31 +249,25 @@
 	for(var/obj/structure/railing/R in get_turf(src))
 		if((R.dir == Lturn) && R.anchored)
 			neighbor_status |= "corneroverlay_l"
-			if(updates)
-				R.update_icon(FALSE)
 		if((R.dir == Rturn) && R.anchored)
 			neighbor_status |= "corneroverlay_r"
-			if(updates)
-				R.update_icon(FALSE)
 	for(var/obj/structure/railing/R in get_step(src, Lturn))
 		if((R.dir == src.dir) && R.anchored)
 			neighbor_status |= "frontoverlay_l"
-			if(updates)
-				R.update_icon(FALSE)
 	for(var/obj/structure/railing/R in get_step(src, Rturn))
 		if((R.dir == src.dir) && R.anchored)
 			neighbor_status |= "frontoverlay_r"
-			if (updates)
-				R.update_icon(FALSE)
 	for(var/obj/structure/railing/R in get_step(src, (Lturn + src.dir)))
 		if((R.dir == Rturn) && R.anchored)
 			neighbor_status |= "frontoverlay_l"
-			if (updates)
-				R.update_icon(FALSE)
 	for(var/obj/structure/railing/R in get_step(src, (Rturn + src.dir)))
 		if((R.dir == Lturn) && R.anchored)
 			neighbor_status |= "mcorneroverlay_l"
-			if (updates)
+
+	// everything nearby, not just what matches now, so a rail we just turned away from drops its old join
+	if(updates)
+		for(var/obj/structure/railing/R in range(1, src))
+			if(R != src)
 				R.update_icon(FALSE)
 
 	///corner hell
@@ -265,23 +279,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
-	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE
 	standard_smoothing = FALSE
-
-/obj/structure/railing/wooden_fence/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_change_layer))
-	adjust_dir_layer(dir)
-
-/obj/structure/railing/wooden_fence/proc/on_change_layer(datum/source, old_dir, new_dir)
-	SIGNAL_HANDLER
-	adjust_dir_layer(new_dir)
-
-/obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
-	var/new_layer = (direction & NORTH) ? MOB_LAYER : ABOVE_MOB_LAYER
-	layer = new_layer
-
 
 /obj/structure/railing/corner/end/wooden_fence
 	icon = 'icons/obj/structures.dmi'
