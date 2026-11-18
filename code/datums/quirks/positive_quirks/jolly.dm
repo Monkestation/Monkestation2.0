@@ -1,7 +1,7 @@
 /datum/quirk/jolly
 	name = "Jolly"
 	desc = "You sometimes just feel happy, for no reason at all."
-	icon = FA_ICON_FACE_GRIN
+	icon = FA_ICON_GRIN
 	value = 4
 	mob_trait = TRAIT_JOLLY
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_MOODLET_BASED
