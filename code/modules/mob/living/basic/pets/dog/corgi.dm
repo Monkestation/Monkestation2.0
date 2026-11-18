@@ -492,16 +492,6 @@
 //this could maybe be turned into an element
 /mob/living/basic/pet/dog/corgi/narsie/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	//consume simple_animal pets
-	for(var/mob/living/simple_animal/pet/simple_pet in range(1, src))
-		if(simple_pet != src && !istype(simple_pet, /mob/living/basic/pet/dog/corgi/narsie))
-			visible_message(span_warning("Dark magic resonating from [src] devours [simple_pet]!"), \
-			"<span class='cult big bold'>DELICIOUS SOULS</span>")
-			playsound(src, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
-			new /obj/effect/temp_visual/cult/sac(get_turf(simple_pet))
-			narsie_act()
-			simple_pet.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			simple_pet.gib()
 	//consume basic pets
 	for(var/mob/living/basic/pet/basic_pet in range(1, src))
 		if(basic_pet != src && !istype(basic_pet, /mob/living/basic/pet/dog/corgi/narsie))

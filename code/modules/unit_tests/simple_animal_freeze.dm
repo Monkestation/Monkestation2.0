@@ -75,7 +75,6 @@
 		/mob/living/simple_animal/hostile/retaliate/goose,
 		/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 		/mob/living/simple_animal/hostile/vatbeast,
-		/mob/living/simple_animal/pet,
 
 		//MONKESTATION-SPECIFIC ENTRIES START
 		/mob/living/simple_animal/bot/buttbot,
@@ -94,7 +93,6 @@
 		/mob/living/simple_animal/hostile/illusion/khan_warrior,
 		/mob/living/simple_animal/hostile/megafauna/wendigo/monkestation_override,
 		/mob/living/simple_animal/hostile/megafauna/wendigo/noportal,
-		/mob/living/simple_animal/pet/hamster,
 		//MONKESTATION-SPECIFIC ENTRIES END
 
 		// DO NOT ADD NEW ENTRIES TO THIS LIST
