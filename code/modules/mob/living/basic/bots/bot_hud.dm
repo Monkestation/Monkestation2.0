@@ -36,10 +36,10 @@
 			holder.icon_state = ""
 
 ///proc that handles drawing and transforming the bot's path onto diagnostic huds
-/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source)
+/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/navmap_astar/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(src, COMSIG_MOVELOOP_FINISHED_PATHING)
+	UnregisterSignal(src, COMSIG_MOVELOOP_NAVMAP_FINISHED_PATHING)
 
 	if(isnull(ai_controller))
 		return

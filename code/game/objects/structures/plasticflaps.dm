@@ -9,7 +9,6 @@
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
 	can_astar_pass = CANASTARPASS_ALWAYS_PROC
-	astar_weight = 15
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
@@ -27,6 +26,10 @@
 	. = ..()
 	alpha = 0
 	gen_overlay()
+
+/obj/structure/plasticflaps/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
@@ -129,10 +132,6 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/plastic/five(loc)
 	qdel(src)
-
-/obj/structure/plasticflaps/Initialize(mapload)
-	. = ..()
-	air_update_turf(TRUE, TRUE)
 
 /obj/structure/plasticflaps/Destroy()
 	var/atom/oldloc = loc
