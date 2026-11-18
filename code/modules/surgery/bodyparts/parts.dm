@@ -78,14 +78,6 @@
 	dmg_overlay_type = SPECIES_MONKEY
 */
 
-/obj/item/bodypart/chest/monkey/Initialize(mapload)
-	worn_neck_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_NECK,
-		offset_y = list("south" = 1),
-	)
-	return ..()
-
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'

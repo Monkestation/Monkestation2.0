@@ -14,15 +14,19 @@
 
 /datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
 	SHOULD_CALL_PARENT(TRUE)
-	buckled.layer = SPACEVINE_MOB_LAYER
+	if(buckled.buckled == holder)
+		buckled.layer = SPACEVINE_MOB_LAYER
 	RegisterSignal(buckled, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_unbuckle), override = TRUE)
 
 /datum/spacevine_mutation/proc/on_unbuckle(datum/source, new_buckled)
 	SHOULD_CALL_PARENT(TRUE)
 	SIGNAL_HANDLER
-	if(!isliving(source) || new_buckled)
+	if(!isliving(source))
 		return
 	var/mob/living/buckled = source
+	if(istype(new_buckled, /obj/structure/spacevine))
+		buckled.layer = SPACEVINE_MOB_LAYER
+		return
 	buckled.layer = initial(buckled.layer)
 	UnregisterSignal(buckled, COMSIG_LIVING_SET_BUCKLED)
 

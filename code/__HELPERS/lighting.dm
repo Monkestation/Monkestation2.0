@@ -38,6 +38,8 @@
 	appearance.color = GLOB.emissive_color
 	appearance.pixel_x = to_use.pixel_x
 	appearance.pixel_y = to_use.pixel_y
+	appearance.pixel_w = to_use.pixel_w
+	appearance.pixel_z = to_use.pixel_z
 	return appearance
 
 // This is a semi hot proc, so we micro it. saves maybe 150ms
