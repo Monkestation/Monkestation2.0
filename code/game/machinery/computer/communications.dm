@@ -490,7 +490,7 @@
 				deadchat_broadcast(" enabled emergency maintenance access at [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
 		// Request codes for the Captain's Spare ID safe.
 		if("requestSafeCodes")
-			if(syndicate || !is_station_level(z)) // monkestation edit: only station consoles can ask for the codes
+			if(syndicate || !is_station_level(z))
 				return
 			if(SSjob.assigned_captain)
 				to_chat(user, span_warning("There is already an assigned Captain or Acting Captain on deck!"))
@@ -573,7 +573,7 @@
 	var/has_connection = has_communication()
 	data["hasConnection"] = has_connection
 
-	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection && !syndicate && is_station_level(z)) // monkestation edit: only station consoles
+	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection && !syndicate && is_station_level(z))
 		data["canRequestSafeCode"] = TRUE
 		data["safeCodeDeliveryWait"] = 0
 	else

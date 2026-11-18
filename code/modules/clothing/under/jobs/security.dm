@@ -366,16 +366,19 @@
 	name = "private security jumpsuit"
 	desc = "A tactical security jumpsuit for the corporals of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
 	icon_state = "corporal"
+	can_adjust = TRUE
 
 /obj/item/clothing/under/rank/security/private/sergeant
 	name = "silver private security jumpsuit"
 	desc = "A tactical security jumpsuit for the sergeants of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
 	icon_state = "sergeant"
+	can_adjust = TRUE
 
 /obj/item/clothing/under/rank/security/private/lieutenant
 	name = "gold private security jumpsuit"
 	desc = "A tactical security jumpsuit for the lieutenants of Nanotrasen's private security force, complete with Nanotrasen belt buckle."
 	icon_state = "lieutenant"
+	can_adjust = TRUE
 
 /obj/item/clothing/under/rank/security/officer/tactical
 	name = "security officer's tactical uniform"

@@ -53,7 +53,7 @@
 		current_gauze.forceMove(remove_to)
 	else
 		QDEL_NULL(current_gauze)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED) // monkestation edit: wounds lose the splint bonus
+		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
 		if(!QDELETED(owner))
 			owner.update_bandage_overlays()
 		return
@@ -70,7 +70,7 @@
 	current_gauze.stored_heal_burn = 0
 	current_gauze.update_appearance(UPDATE_NAME)
 	current_gauze = null
-	SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED) // monkestation edit: wounds lose the splint bonus
+	SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
 	owner.update_bandage_overlays()
 	return .
 

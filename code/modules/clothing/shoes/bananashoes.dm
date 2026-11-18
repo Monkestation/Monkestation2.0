@@ -31,7 +31,6 @@
 	if(always_noslip)
 		LAZYOR(clothing_traits, TRAIT_NO_SLIP_WATER)
 
-// monkestation edit: the shoe pocket grabs the click before the material container ever sees it
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stack/sheet/mineral/bananium))
 		bananium.user_insert(tool, user)

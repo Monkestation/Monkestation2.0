@@ -60,7 +60,7 @@
 		new_direction = user.dir //Gets the direction for thing_to_be_deployed if there is a user
 		source.balloon_alert(user, "deploying...")
 		playsound(source, 'sound/items/tools/ratchet.ogg', 50, TRUE)
-		if(!do_after(user, deploy_time, interaction_key = source) || QDELETED(source)) // monkestation edit: no deploying the same pack twice at once
+		if(!do_after(user, deploy_time, interaction_key = source) || QDELETED(source))
 			return
 	else //If there is for some reason no user, then the location and direction are set here
 		deploy_location = location

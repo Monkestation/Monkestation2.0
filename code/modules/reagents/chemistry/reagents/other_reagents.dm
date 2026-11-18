@@ -206,7 +206,7 @@
 		return
 
 	var/mob/living/victim = exposed_mob
-	if(methods & VAPOR) // monkestation edit: only cats mind getting sprayed
+	if(methods & VAPOR)
 		victim.incapacitate(1) // startles the felinid, canceling any do_after
 	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof())
 		victim.apply_status_effect(/datum/status_effect/cat_water_sprayed)
