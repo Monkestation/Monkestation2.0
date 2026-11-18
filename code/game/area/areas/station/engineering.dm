@@ -13,6 +13,7 @@
 	icon_state = "engine"
 
 /area/station/engineering/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Engineering Hallway"
 	icon_state = "engine_hallway"
 

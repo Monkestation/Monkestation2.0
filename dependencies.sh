@@ -30,3 +30,9 @@ export DREAMLUAU_REPO="tgstation/dreamluau"
 
 #dreamluau git tag
 export DREAMLUAU_VERSION=0.1.3
+
+#navmap-pathfinder repo
+export NAVMAP_PATHFINDER_REPO="CabinetOnFire/navmap-pathfinder"
+
+#navmap-pathfinder release, must match NAVMAP_PATHFINDER_VERSION in code/__DEFINES/navmap_pathfinder.dm
+export NAVMAP_PATHFINDER_VERSION=1.0.14
