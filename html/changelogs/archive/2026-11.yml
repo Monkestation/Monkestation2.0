@@ -792,3 +792,18 @@
   - rscadd: gave most jackets, labcoats, wintercoats, and coats two small item slot
       pockets.
   - rscadd: added a keybind for removing items from your suit slot (Shift+R).
+2026-11-18:
+  Absolucy, CabinetOnFire:
+  - refactor: Pathfinding now makes use of a more optimized rust-g A* algorithm
+  - bugfix: Bots now should reliably be summonable
+  SirNightKnight:
+  - balance: buffed .38 less lethal rounds to do 35 stamina damage instead of 25.
+  Tractor-Maam:
+  - bugfix: fixed Spit Ink bypassing the ability cooldown.
+  - rscadd: Spit Ink will backfire when attempting to fire it when unusable.
+  V2LenKagamine:
+  - code_imp: ' /datum/outift now has [cybernetics] list for cyber implants.'
+  - code_imp: human proc [delete_equipment] now accounts for cybernetics and implants.
+  - code_imp: vv copy_outfit now disallows null name outfits, and copies cybernetics
+  flleeppyy:
+  - rscadd: Ariral plush, mapped in to a few locations on select maps
