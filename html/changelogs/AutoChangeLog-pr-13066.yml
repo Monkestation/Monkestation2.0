@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Reverse bear trap victims now see who's trapping them, not their own name.\n## Pre-Merge Checklist\n- [ x] You tested this on a local server.\n- [x ] This code did not runtime during testing.\n- [x ] You documented all of your changes."
