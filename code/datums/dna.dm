@@ -22,6 +22,8 @@ GLOBAL_LIST_INIT(identity_block_lengths, list(
 GLOBAL_LIST_INIT(features_block_lengths, list(
 		"[DNA_ETHEREAL_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
 		"[DNA_FISH_TAIL_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
+		"[DNA_VOX_BODY_MARKINGS_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR, // monkestation edit: vox
+		"[DNA_VOX_TAIL_MARKINGS_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR, // monkestation edit: vox
 	))
 
 /**
@@ -304,6 +306,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_VOX_BODY_MARKINGS_BLOCK] = construct_block(GLOB.vox_body_markings_list.Find(features["vox_body_markings"]), GLOB.vox_body_markings_list.len)
 	if(features["vox_skin_tone"]) // monkestation edit: vox
 		L[DNA_VOX_SKIN_TONE_BLOCK] = construct_block(GLOB.vox_skin_tones.Find(features["vox_skin_tone"]), GLOB.vox_skin_tones.len)
+	if(features["vox_body_markings_color"]) // monkestation edit: vox
+		L[DNA_VOX_BODY_MARKINGS_COLOR_BLOCK] = sanitize_hexcolor(features["vox_body_markings_color"], include_crunch = FALSE)
+	if(features["vox_tail_markings_color"]) // monkestation edit: vox
+		L[DNA_VOX_TAIL_MARKINGS_COLOR_BLOCK] = sanitize_hexcolor(features["vox_tail_markings_color"], include_crunch = FALSE)
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 		. += L[blocknum] || random_string(GET_UF_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
@@ -468,6 +474,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(GLOB.vox_body_markings_list.Find(features["vox_body_markings"]), GLOB.vox_body_markings_list.len))
 		if(DNA_VOX_SKIN_TONE_BLOCK) // monkestation edit: vox
 			set_uni_feature_block(blocknumber, construct_block(GLOB.vox_skin_tones.Find(features["vox_skin_tone"]), GLOB.vox_skin_tones.len))
+		if(DNA_VOX_BODY_MARKINGS_COLOR_BLOCK) // monkestation edit: vox
+			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["vox_body_markings_color"], include_crunch = FALSE))
+		if(DNA_VOX_TAIL_MARKINGS_COLOR_BLOCK) // monkestation edit: vox
+			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["vox_tail_markings_color"], include_crunch = FALSE))
 
 /**
  * Checks if two DNAs are practically the same by comparing their most defining features
@@ -773,6 +783,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["vox_body_markings"] = GLOB.vox_body_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_VOX_BODY_MARKINGS_BLOCK), GLOB.vox_body_markings_list.len)]
 	if(dna.features["vox_skin_tone"]) // monkestation edit: vox
 		dna.features["vox_skin_tone"] = GLOB.vox_skin_tones[deconstruct_block(get_uni_feature_block(features, DNA_VOX_SKIN_TONE_BLOCK), GLOB.vox_skin_tones.len)]
+	if(dna.features["vox_body_markings_color"]) // monkestation edit: vox
+		dna.features["vox_body_markings_color"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_VOX_BODY_MARKINGS_COLOR_BLOCK))
+	if(dna.features["vox_tail_markings_color"]) // monkestation edit: vox
+		dna.features["vox_tail_markings_color"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_VOX_TAIL_MARKINGS_COLOR_BLOCK))
 
 	for(var/obj/item/organ/external/external_organ in organs)
 		external_organ.mutate_feature(features, src)

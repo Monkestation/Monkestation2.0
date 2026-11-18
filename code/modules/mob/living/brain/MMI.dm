@@ -95,7 +95,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/organ/internal/brain/new_brain = tool
 		if(brain)
-			to_chat(user, span_warning("There's already a brain in the MMI!"))
+			to_chat(user, span_warning("There's already a [brain.brain_name] in the MMI!")) // monkestation edit: brain_name
 			return ITEM_INTERACT_BLOCKING
 		if(new_brain.suicided)
 			to_chat(user, span_warning("[new_brain] is completely useless."))
@@ -112,13 +112,13 @@
 			user.visible_message(span_notice("[user] sticks [new_brain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [new_brain]. Its brainwave activity alarm buzzes."))
 			brain = new_brain
 			brain.organ_flags |= ORGAN_FROZEN
-			name = "[initial(name)]: [copytext(new_brain.name, 1, -8)]"
+			name = "[initial(name)]: [replacetext(new_brain.name, "'s [initial(new_brain.name)]", "")]" // monkestation edit: was copytext(-8), which cut "'s cortical stack" short
 			update_appearance()
 			return ITEM_INTERACT_SUCCESS
 
 		var/mob/living/brain/brain_mob = new_brain.brainmob
 		if(!brain_mob.key)
-			brain_mob.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
+			brain_mob.notify_ghost_cloning("Someone has put your [new_brain.brain_name] in an MMI!", source = src) // monkestation edit: brain_name
 		user.visible_message(span_notice("[user] sticks \a [new_brain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [new_brain]."))
 		set_brainmob(new_brain.brainmob)
 		new_brain.brainmob = null
@@ -162,10 +162,11 @@
 		radio.set_on(!radio.is_on())
 		to_chat(user, span_notice("You toggle [src]'s radio system [radio.is_on() == TRUE ? "on" : "off"]."))
 	else
+		var/brain_name = brain.brain_name // monkestation edit: brain_name
 		eject_brain(user)
 		update_appearance()
 		name = initial(name)
-		to_chat(user, span_notice("You unlock and upend [src], spilling the brain onto the floor."))
+		to_chat(user, span_notice("You unlock and upend [src], spilling the [brain_name] onto the floor.")) // monkestation edit: brain_name
 
 /obj/item/mmi/proc/eject_brain(mob/user)
 	if(brainmob)
@@ -285,12 +286,13 @@ GAME_VERB_SRC_DESC(/obj/item/mmi, Toggle_Listening, usr.loc, "Toggle Listening",
 		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
+		var/brain_name = brain?.brain_name || "brain" // monkestation edit: brain_name
 		if(!B.key || !B.mind || B.stat == DEAD)
-			. += span_warning("\The [src] indicates that the brain is completely unresponsive.")
+			. += span_warning("\The [src] indicates that the [brain_name] is completely unresponsive.")
 		else if(!B.client)
-			. += span_warning("\The [src] indicates that the brain is currently inactive; it might change.")
+			. += span_warning("\The [src] indicates that the [brain_name] is currently inactive; it might change.")
 		else
-			. += span_notice("\The [src] indicates that the brain is active.")
+			. += span_notice("\The [src] indicates that the [brain_name] is active.")
 
 /obj/item/mmi/examine_more(mob/user)
 	. = ..()
@@ -326,11 +328,11 @@ GAME_VERB_SRC_DESC(/obj/item/mmi, Toggle_Listening, usr.loc, "Toggle Listening",
 		return FALSE
 	if(B.stat == DEAD)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that the brain is dead!"))
+			to_chat(user, span_warning("\The [src] indicates that the [brain?.brain_name || "brain"] is dead!")) // monkestation edit: brain_name
 		return FALSE
 	if(brain?.organ_flags & ORGAN_FAILING)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that the brain is damaged!"))
+			to_chat(user, span_warning("\The [src] indicates that the [brain.brain_name] is damaged!")) // monkestation edit: brain_name
 		return FALSE
 	return TRUE
 

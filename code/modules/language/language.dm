@@ -67,6 +67,14 @@
 
 	/// The language that an atom knows with the highest "default_priority" is selected by default.
 	var/default_priority = 0
+	// monkestation edit start: language speech verbs, like on Yogstation. Null uses the speaker's own verbs.
+	/// Verb used for statements in this language. "shrieks"
+	var/speech_verb
+	/// Verb used for questions in this language. "creels"
+	var/ask_verb
+	/// Verb used for exclamations in this language. "loudly skrees"
+	var/exclaim_verb
+	// monkestation edit end
 	/// Icon displayed in the chat window when speaking this language.
 	/// if you are seeing someone speak popcorn language, then something is wrong.
 	var/icon = 'icons/ui/chat/language.dmi'

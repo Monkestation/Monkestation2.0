@@ -227,7 +227,7 @@
 		// eyes
 		// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
 		if(eyes?.eye_icon_state && (head_flags & HEAD_EYESPRITES))
-			var/eye_icon = owner?.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species.
+			var/eye_icon = eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species. // monkestation edit: the head decides its eye icon, not the species
 			var/image/eye_left = image(eye_icon, "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)
 			var/image/eye_right = image(eye_icon, "[eyes.eye_icon_state]_r", -BODY_LAYER, SOUTH)
 			if(head_flags & HEAD_EYECOLOR)
@@ -247,6 +247,7 @@
 				worn_face_offset.apply_offset(eye_right)
 			. += eye_left
 			. += eye_right
+			. += get_eye_static_overlays(dropped = TRUE) // monkestation edit: uncolored eye parts (vox eye static)
 		else if(!eyes && (head_flags & HEAD_EYEHOLES))
 			var/image/no_eyes = image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 			worn_face_offset?.apply_offset(no_eyes)

@@ -199,10 +199,14 @@ There are several things that need to be remembered:
 		var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
 		if(has_left_hand(check_disabled = FALSE))
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+			if(is_vox_limb(src, BODY_ZONE_L_ARM)) // monkestation edit: vox claws
+				blood_overlay = mutable_appearance('icons/mob/clothing/species/vox/blood.dmi', "bloodyhands_vox_left")
 			blood_overlay.color = get_blood_dna_color()
 			hands_combined.overlays += blood_overlay
 		if(has_right_hand(check_disabled = FALSE))
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+			if(is_vox_limb(src, BODY_ZONE_R_ARM)) // monkestation edit: vox claws
+				blood_overlay = mutable_appearance('icons/mob/clothing/species/vox/blood.dmi', "bloodyhands_vox_right")
 			blood_overlay.color = get_blood_dna_color()
 			hands_combined.overlays += blood_overlay
 

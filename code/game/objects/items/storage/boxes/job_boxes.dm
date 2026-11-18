@@ -27,11 +27,13 @@
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)
 		return
-	if(isvox(loc)) // monkestation edit: vox get a mask that fits their beak
+	// monkestation edit start: vox get a mask that fits their beak. Like on Yogstation it replaces only breath masks, so other masks (explorer gas masks) stay.
+	if(isvox(loc))
 		var/vox_mask_type = pick(/obj/item/clothing/mask/breath/vox, /obj/item/clothing/mask/breath/vox/respirator)
 		new vox_mask_type(src)
-	else if(!isnull(mask_type))
+	if(!isnull(mask_type) && !(isvox(loc) && ispath(mask_type, /obj/item/clothing/mask/breath)))
 		new mask_type(src)
+	// monkestation edit end
 
 	give_internals()
 

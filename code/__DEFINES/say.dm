@@ -5,6 +5,8 @@
 #define RADIO_EXTENSION "department specific"
 #define RADIO_KEY "department specific key"
 #define LANGUAGE_EXTENSION "language specific"
+/// Message mod holding the language a living mob actually spoke in, picked or default. Lets languages have their own speech verbs. // monkestation edit
+#define LANGUAGE_SPOKEN "language spoken"
 /// Message mod which contains a list of bonus "mutual understanding" to allow arbitrary understanding of any speech
 #define LANGUAGE_MUTUAL_BONUS "language mutual bonus"
 

@@ -238,8 +238,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/maxhealthmod = 1
 	///Path to BODYSHAPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
 	var/list/custom_worn_icons = list()
-	///Override of the eyes icon file, used for Monkeys.
-	var/eyes_icon
+	// monkestation edit: the eyes icon override moved to heads (/obj/item/bodypart/head/var/eyes_icon), so transplanted heads keep their own eyes
 	///our color palette
 	var/datum/color_palette/color_palette
 
