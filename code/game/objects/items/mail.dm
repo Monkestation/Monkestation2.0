@@ -82,9 +82,7 @@
 	for(var/stamp in stamps)
 		var/image/stamp_image = image(
 			icon = icon,
-			icon_state = stamp,
-			pixel_x = stamp_offset_x,
-			pixel_y = stamp_offset_y + bonus_stamp_offset
+			icon_state = stamp
 		)
 		stamp_image.appearance_flags |= RESET_COLOR
 		add_overlay(stamp_image)
@@ -93,9 +91,7 @@
 	if(postmarked == TRUE)
 		var/image/postmark_image = image(
 			icon = icon,
-			icon_state = "postmark",
-			pixel_x = stamp_offset_x + rand(-3, 1),
-			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+			icon_state = "postmark"
 		)
 		postmark_image.appearance_flags |= RESET_COLOR
 		add_overlay(postmark_image)
@@ -226,8 +222,8 @@
 	base_icon_state = "mail"
 	can_install_electronics = FALSE
 	lid_icon_state = "maillid"
-	lid_x = -26
-	lid_y = 2
+	lid_w = -26
+	lid_z = 2
 	paint_jobs = null
 	can_weld_shut = FALSE
 

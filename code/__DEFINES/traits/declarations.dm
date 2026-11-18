@@ -830,11 +830,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IMMERSE_STOPPED "immerse_stopped"
 /// If this movable is currently treading in a turf with the immerse element.
 #define TRAIT_IMMERSED "immersed"
-/**
- * With this, the immerse overlay will give the target its own unique visual overlay,
- * instead of one that's also shared with other movables, thus making editing its appearance possible.
- */
-#define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 ///Chasms will be safe to cross while they've this trait.
 #define TRAIT_CHASM_STOPPED "chasm_stopped"
 ///Chasms will be safe to cross if there is something with this trait on it

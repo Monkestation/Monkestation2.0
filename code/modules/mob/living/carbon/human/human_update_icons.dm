@@ -391,7 +391,7 @@ There are several things that need to be remembered:
 				if (foot_offset && foot_offset["y"] > feature_y_offset)
 					feature_y_offset = foot_offset["y"]
 
-			shoes_overlay.pixel_y += feature_y_offset
+			shoes_overlay.pixel_z += feature_y_offset
 		apply_height(shoes_overlay, ENTIRE_BODY)
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
@@ -925,8 +925,8 @@ generate/load female uniform sprites matching all previously decided variables
 
 	//Worn offsets
 	var/list/offsets = get_worn_offsets(isinhands)
-	standing.pixel_x += offsets[1]
-	standing.pixel_y += offsets[2]
+	standing.pixel_w += offsets[1]
+	standing.pixel_z += offsets[2]
 
 	standing.alpha = alpha
 
@@ -1023,7 +1023,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	switch(body_area)
 		if(LOWER_BODY, UPPER_BODY)
-			appearance.pixel_y += GLOB.human_heights_to_offsets[mob_height][body_area]
+			appearance.pixel_z += GLOB.human_heights_to_offsets[mob_height][body_area]
 			return
 		if(ENTIRE_BODY)
 			apply_height_filter(appearance)

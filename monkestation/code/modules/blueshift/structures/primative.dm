@@ -246,7 +246,8 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	cut_overlays()
 	if(!length(contents))
 		return
-	var/image/overlayed_item = image(icon = contents[1].icon, icon_state = contents[1].icon_state, pixel_y = 2)
+	var/image/overlayed_item = image(icon = contents[1].icon, icon_state = contents[1].icon_state)
+	overlayed_item.pixel_z = 2
 	add_overlay(overlayed_item)
 
 /obj/item/cutting_board/examine(mob/user)

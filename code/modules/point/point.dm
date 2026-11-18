@@ -44,8 +44,8 @@
 	thought_bubble.overlays += pointed_atom_appearance
 	pointed_atom_appearance.remove_filter(HOVER_OUTLINE_FILTER)
 
-	thought_bubble.pixel_x = 16
-	thought_bubble.pixel_y = 32
+	thought_bubble.pixel_w = 16
+	thought_bubble.pixel_z = 32
 	thought_bubble.alpha = 200
 
 	var/mutable_appearance/point_visual = mutable_appearance(

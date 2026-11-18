@@ -45,8 +45,8 @@
 		return
 
 	if(pipe_state == PIPE_STATE_FINE)
-		var/mutable_appearance/pipe_connector = mutable_appearance(icon, "pipe-connector", src, plane)
-		pipe_connector.pixel_y += 7
+		var/mutable_appearance/pipe_connector = mutable_appearance(icon, "pipe-connector", offset_spokesman = src)
+		pipe_connector.pixel_z += 7
 		. += pipe_connector
 
 	switch(pipe_status)
