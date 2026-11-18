@@ -74,8 +74,7 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	// user.AddComponentFrom(REF(src), /datum/component/empathy, seen_it = TRUE, visible_info = ALL, self_empath = FALSE, sense_dead = FALSE, sense_whisper = TRUE, smite_target = FALSE)
-	ADD_TRAIT(user, TRAIT_EMPATH, REF(src))
+	user.AddComponentFrom(REF(src), /datum/component/empathy)
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()

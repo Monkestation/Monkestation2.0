@@ -89,6 +89,7 @@
 		if(MOOD_LEVEL_HAPPY4)
 			adjust_sanity(0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 
+/// Stops mood processing while dead and starts it again on revival
 /datum/mood/proc/handle_mob_death(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 
