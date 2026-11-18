@@ -72,10 +72,10 @@
 	advanced_print_req = TRUE
 	custom_materials = AMMO_MATS_SHOTGUN_PLASMA
 
-/obj/item/ammo_casing/shotgun/incendiary/no_trail
-	name = "precision incendiary slug"
-	desc = "An incendiary-coated shotgun slug, specially treated to only ignite on impact."
-	projectile_type = /obj/projectile/bullet/incendiary/shotgun/no_trail
+/obj/item/ammo_casing/shotgun/incendiary/milspec
+	name = "milspec incendiary slug"
+	desc = "An incendiary-coated shotgun slug, of an improved quality."
+	projectile_type = /obj/projectile/bullet/incendiary/shotgun/milspec
 
 
 /obj/item/ammo_casing/shotgun/buckshot
@@ -126,12 +126,12 @@
 
 /obj/item/ammo_casing/shotgun/dragonsbreath
 	name = "dragonsbreath shell"
-	desc = "A shotgun shell which fires a spread of incendiary pellets."
+	desc = "A shotgun shell which fires a cloud of incendiary pellets."
 	icon_state = "ishell2"
 	projectile_type = /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	pellets = 4
 	variance = 35
-	can_be_printed = FALSE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/ammo_casing/shotgun/stunslug
 	name = "taser slug"
@@ -156,7 +156,7 @@
 	energy blast. While the heat and power drain limit it to one use, it can still allow an operator to engage targets that ballistic ammunition \
 	would have difficulty with."
 	icon_state = "pshell"
-	projectile_type = /obj/projectile/beam/pulse/shotgun
+	projectile_type = /obj/projectile/beam/laser/pulse/shotgun
 	can_be_printed = FALSE
 
 /obj/item/ammo_casing/shotgun/frag12

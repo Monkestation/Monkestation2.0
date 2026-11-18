@@ -106,13 +106,18 @@
 		processing[id] = TRUE
 	for(var/id in available_nodes)
 		processing[id] = TRUE
+	var/list/old_designs
 	if(recalculate_designs)
+		old_designs = researched_designs.Copy()
 		researched_designs = custom_designs.Copy()
 		if(wipe_custom_designs)
 			custom_designs = list()
 	for(var/id in processing)
 		update_node_status(SSresearch.techweb_node_by_id(id))
 		CHECK_TICK
+	// Rebuilding the designs skips remove_design(), so let anything that no longer made the cut know it was removed.
+	for(var/id in old_designs - researched_designs)
+		design_removed(SSresearch.techweb_design_by_id(id))
 
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
@@ -222,7 +227,12 @@
 
 	hidden_nodes -= design.id
 
+	design_added(design)
 	return TRUE
+
+/// A design was added to this techweb
+/datum/techweb/proc/design_added(datum/design/design)
+	return
 
 /datum/techweb/proc/remove_design_by_id(id, custom = FALSE)
 	return remove_design(SSresearch.techweb_design_by_id(id), custom)
@@ -235,7 +245,12 @@
 	SEND_SIGNAL(src, COMSIG_TECHWEB_REMOVE_DESIGN, design, custom)
 	custom_designs -= design.id
 	researched_designs -= design.id
+	design_removed(design)
 	return TRUE
+
+/// A design was removed from this techweb
+/datum/techweb/proc/design_removed(datum/design/design)
+	return
 
 /datum/techweb/proc/get_point_total(list/pointlist)
 	for(var/i in pointlist)

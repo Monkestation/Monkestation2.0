@@ -194,6 +194,46 @@
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/buckshot(src)
 
+/obj/item/storage/box/pulseslug
+	name = "box of shotgun shells (Lethal/Highly Destructive - Pulse Slug)"
+	desc = "A box full of pulse slug shotgun shells, designed for shotguns."
+	icon_state = "lethalshot_box"
+	illustration = null
+
+/obj/item/storage/box/pulseslug/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/ammo_casing/shotgun/pulseslug(src)
+
+/obj/item/storage/box/ionslug
+	name = "box of shotgun shells (Nonlethal/Highly Destructive/Very Lethal (Silicons) - Ion Scatter)"
+	desc = "A box full of ion scatter shotgun shells, designed for shotguns."
+	icon_state = "lethalshot_box"
+	illustration = null
+
+/obj/item/storage/box/ionslug/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/ammo_casing/shotgun/ion(src)
+
+/obj/item/storage/box/meteorslug
+	name = "box of shotgun shells (Lethal/Highly Destructive - Meteorslug)"
+	desc = "A box full of meteorslug shotgun shells, designed for shotguns."
+	icon_state = "lethalshot_box"
+	illustration = null
+
+/obj/item/storage/box/meteorslug/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/ammo_casing/shotgun/meteorslug(src)
+
+/obj/item/storage/box/frag12
+	name = "box of shotgun shells (Lethal/Highly Destructive - FRAG-12)"
+	desc = "A box full of FRAG-12 shotgun shells, designed for shotguns."
+	icon_state = "lethalshot_box"
+	illustration = null
+
+/obj/item/storage/box/frag12/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/ammo_casing/shotgun/frag12(src)
+
 /obj/item/storage/box/beanbag
 	name = "box of shotgun shells (Less Lethal - Beanbag)"
 	desc = "A box full of beanbag shotgun shells, designed for shotguns."

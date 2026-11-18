@@ -11,6 +11,7 @@
 // Mech FNX-99
 
 /obj/projectile/bullet/incendiary/fnx99
+	fireblast_radius = 3
 	damage = 20
 
 // Turrets
@@ -50,7 +51,7 @@
 
 /obj/projectile/bullet/incendiary/mm712x82
 	name = "7.12x82mm incendiary bullet"
-	damage = 15
+	damage = 25
 	fire_stacks = 3
 	speed = 1.25 //monke edit
 

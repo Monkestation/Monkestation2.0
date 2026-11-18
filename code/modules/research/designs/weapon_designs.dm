@@ -162,32 +162,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/stunrevolver
-	name = "Tesla Cannon Part Kit (Lethal)"
-	desc = "The kit for a high-tech cannon that fires internal, reusable bolt cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	id = "stunrevolver"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 5)
-	build_path = /obj/item/weaponcrafting/gunkit/tesla
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
-
-/datum/design/nuclear_gun
-	name = "Advanced Energy Gun Part Kit (Lethal/Nonlethal)"
-	desc = "The kit for an energy gun with an experimental miniaturized reactor."
-	id = "nuclear_gun"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/weaponcrafting/gunkit/nuclear
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
-
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
@@ -214,19 +188,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
-/datum/design/decloner
-	name = "Decloner Part Kit (Lethal)"
-	desc = "Your opponent will bubble into a messy pile of goop."
-	id = "decloner"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 5)
-	build_path = /obj/item/weaponcrafting/gunkit/decloner
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
-
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
 	desc = "A gun that fires many syringes."
@@ -238,19 +199,6 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL //uwu
-
-/datum/design/temp_gun
-	name = "Temperature Gun Part Kit (Less Lethal/Very Lethal (Lizardpeople))"
-	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
-	id = "temp_gun"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5)
-	build_path = /obj/item/weaponcrafting/gunkit/temperature
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/flora_gun
 	name = "Floral Somatoray"
@@ -324,45 +272,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/xray
-	name = "X-ray Laser Gun Part Kit (Lethal)"
-	desc = "Not quite as menacing as it sounds"
-	id = "xray_laser"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/weaponcrafting/gunkit/xray
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
-
-/datum/design/ioncarbine
-	name = "Ion Carbine Part Kit (Nonlethal/Highly Destructive/Lethal (Silicons))"
-	desc = "How to Dismantle a Cyborg: The Gun."
-	id = "ioncarbine"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/weaponcrafting/gunkit/ion
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
-
-/datum/design/lasercannon
-	name = "Laser Cannon Part Kit (Lethal)"
-	desc = "Big lasers for big targets."
-	id = "lasercannon"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/weaponcrafting/gunkit/lasercannon
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
-
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
@@ -396,6 +305,18 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_casing/shotgun/scatterlaser
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/dragonshell
+	name = "Dragonsbreath Shotgun Shell (Lethal)"
+	desc = "A shotgun shell that fires a high volume of incendiary pellets"
+	id = "dragonshell"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2)
+	build_path = /obj/item/ammo_casing/shotgun/dragonsbreath
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
@@ -438,19 +359,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/largecrossbow
-	name = "Energy Crossbow Part Kit (Less Lethal/Contraband)"
-	desc = "A kit to reverse-engineer a proto-kinetic accelerator into an energy crossbow, favored by syndicate infiltration teams and carp hunters."
-	id = "largecrossbow"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
-	build_path = /obj/item/weaponcrafting/gunkit/ebow
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
-
 /datum/design/cleric_mace
 	name = "Cleric Mace"
 	desc = "A mace fit for a cleric. Useful for bypassing plate armor, but too bulky for much else."
@@ -471,3 +379,128 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_RANGED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+// Dummy designs that don't print anything, but unlock the matching weapon for requisition from Cargo when researched.
+/datum/design/cargo_weapon
+	desc = "Uploads a set of schematics to Central Command, unlocking the ability for you to requisition one from Cargo."
+	/// The supply packs this design unlocks
+	var/list/datum/supply_pack/pack_types
+
+/datum/design/cargo_weapon/on_station_research()
+	for(var/datum/supply_pack/pack_type as anything in pack_types)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_type]
+		if(isnull(pack))
+			CRASH("Couldn't find supply pack [pack_type] for design [type]")
+		if(!pack.special)
+			CRASH("Supply pack [pack_type] for design [type] isn't a special pack, so it can't be unlocked")
+		pack.special_enabled = TRUE
+
+/datum/design/cargo_weapon/on_station_unresearch()
+	for(var/datum/supply_pack/pack_type as anything in pack_types)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_type]
+		pack?.special_enabled = FALSE
+
+/datum/design/cargo_weapon/advanced_egun
+	name = "Advanced Energy Gun Schematics"
+	id = "cargo_advanced_egun"
+	pack_types = list(
+		/datum/supply_pack/security/armory/requisition/aeg,
+		/datum/supply_pack/security/armory/requisition/aeg/three_pack,
+	)
+	research_icon = /obj/item/gun/energy/e_gun/nuclear::icon
+	research_icon_state = /obj/item/gun/energy/e_gun/nuclear::icon_state
+
+/datum/design/cargo_weapon/xray_laser
+	name = "X-ray Laser Gun Schematics"
+	id = "cargo_xray_laser"
+	pack_types = list(
+		/datum/supply_pack/security/armory/requisition/xray,
+		/datum/supply_pack/security/armory/requisition/xray/three_pack,
+	)
+	research_icon = /obj/item/gun/energy/xray::icon
+	research_icon_state = /obj/item/gun/energy/xray::icon_state
+
+/datum/design/cargo_weapon/temp_gun
+	name = "Temperature Gun Schematics"
+	id = "cargo_temp_gun"
+	pack_types = list(
+		/datum/supply_pack/security/armory/requisition/tempgun,
+		/datum/supply_pack/security/armory/requisition/tempgun/three_pack,
+	)
+	research_icon = /obj/item/gun/energy/temperature::icon
+	research_icon_state = /obj/item/gun/energy/temperature::icon_state
+
+/datum/design/cargo_weapon/tesla_cannon
+	name = "Tesla Cannon Schematics"
+	id = "cargo_tesla_cannon"
+	pack_types = list(/datum/supply_pack/security/armory/requisition/tesla)
+	research_icon = /obj/item/gun/energy/tesla_cannon::icon
+	research_icon_state = /obj/item/gun/energy/tesla_cannon::icon_state
+
+/datum/design/cargo_weapon/ion_carbine
+	name = "Ion Carbine Schematics"
+	id = "cargo_ion_carbine"
+	pack_types = list(
+		/datum/supply_pack/security/armory/requisition/ion,
+		/datum/supply_pack/security/armory/requisition/ion/three_pack,
+	)
+	research_icon = /obj/item/gun/energy/ionrifle/carbine::icon
+	research_icon_state = /obj/item/gun/energy/ionrifle/carbine::icon_state
+
+/datum/design/cargo_weapon/ebow
+	name = "Energy Crossbow Schematics"
+	id = "cargo_ebow"
+	pack_types = list(
+		/datum/supply_pack/security/armory/requisition/ebow,
+		/datum/supply_pack/security/armory/requisition/ebow/three_pack,
+	)
+	research_icon = /obj/item/gun/energy/recharge/ebow/large::icon
+	research_icon_state = /obj/item/gun/energy/recharge/ebow/large::icon_state
+
+/datum/design/cargo_weapon/laser_cannon
+	name = "Laser Cannon Schematics"
+	id = "cargo_laser_cannon"
+	pack_types = list(
+		/datum/supply_pack/security/armory/requisition/laser_cannon,
+		/datum/supply_pack/security/armory/requisition/laser_cannon/three_pack,
+	)
+	research_icon = /obj/item/gun/energy/laser/cannon::icon
+	research_icon_state = /obj/item/gun/energy/laser/cannon::icon_state
+
+/datum/design/cargo_weapon/decloner
+	name = "Decloner Schematics"
+	id = "cargo_decloner"
+	pack_types = list(
+		/datum/supply_pack/security/armory/requisition/decloner,
+		/datum/supply_pack/security/armory/requisition/decloner/three_pack,
+	)
+	research_icon = /obj/item/gun/energy/decloner::icon
+	research_icon_state = /obj/item/gun/energy/decloner::icon_state
+
+/datum/design/cargo_weapon/pulse_shells
+	name = "Pulse Slug Schematics"
+	id = "cargo_pulse_shells"
+	pack_types = list(/datum/supply_pack/security/armory/requisition/pulse_shells)
+	research_icon = /obj/item/ammo_casing/shotgun/pulseslug::icon
+	research_icon_state = /obj/item/ammo_casing/shotgun/pulseslug::icon_state
+
+/datum/design/cargo_weapon/ion_shells
+	name = "Ion Scatter Schematics"
+	id = "cargo_ion_shells"
+	pack_types = list(/datum/supply_pack/security/armory/requisition/ion_shells)
+	research_icon = /obj/item/ammo_casing/shotgun/ion::icon
+	research_icon_state = /obj/item/ammo_casing/shotgun/ion::icon_state
+
+/datum/design/cargo_weapon/meteor_shells
+	name = "Meteorslug Schematics"
+	id = "cargo_meteor_shells"
+	pack_types = list(/datum/supply_pack/security/armory/requisition/meteor_shells)
+	research_icon = /obj/item/ammo_casing/shotgun/meteorslug::icon
+	research_icon_state = /obj/item/ammo_casing/shotgun/meteorslug::icon_state
+
+/datum/design/cargo_weapon/frag_shells
+	name = "FRAG-12 Schematics"
+	id = "cargo_frag_shells"
+	pack_types = list(/datum/supply_pack/security/armory/requisition/frag_shells)
+	research_icon = /obj/item/ammo_casing/shotgun/frag12::icon
+	research_icon_state = /obj/item/ammo_casing/shotgun/frag12::icon_state

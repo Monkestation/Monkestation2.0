@@ -72,6 +72,31 @@
 		"c38_hotshot",
 		"c38_iceblox",
 		"techshotshell",
+		"dragonshell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
+
+/datum/techweb_node/energy_shells
+	id = "energy_shells"
+	display_name = "Energy Based Shotshells"
+	description = "Shotgun shells that fire rounds similar to conventional energy weapons."
+	prereq_ids = list("exotic_ammo")
+	design_ids = list(
+		"cargo_pulse_shells",
+		"cargo_ion_shells",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
+
+/datum/techweb_node/destructive_shells
+	id = "destructive_shells"
+	display_name = "Highly Destructive Shotshells"
+	description = "Shotgun shells that are capable of damaging the station's hull and equipment. Use with caution."
+	prereq_ids = list("exotic_ammo", "adv_weaponry")
+	design_ids = list(
+		"cargo_meteor_shells",
+		"cargo_frag_shells",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)
@@ -82,8 +107,8 @@
 	description = "Weapons using electric technology"
 	prereq_ids = list("weaponry", "adv_power", "emp_basic")
 	design_ids = list(
-		"ioncarbine",
-		"stunrevolver",
+		"cargo_ion_carbine",
+		"cargo_tesla_cannon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)
@@ -94,8 +119,8 @@
 	description = "Various basic beam weapons"
 	prereq_ids = list("adv_weaponry")
 	design_ids = list(
-		"temp_gun",
-		"lasercannon",
+		"cargo_temp_gun",
+		"cargo_laser_cannon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)
@@ -106,8 +131,8 @@
 	description = "Weapons using radioactive technology."
 	prereq_ids = list("adv_engi", "adv_weaponry")
 	design_ids = list(
-		"nuclear_gun",
-		"xray_laser",
+		"cargo_advanced_egun",
+		"cargo_xray_laser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)

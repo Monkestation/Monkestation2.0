@@ -41,6 +41,8 @@
 	var/goody = FALSE
 	/// Is this supply pack considered unpredictable for the purposes of testing unit testing? Examples include the stock market, or miner supply crates. If true, exempts from unit testing
 	var/test_ignored = FALSE
+	/// If TRUE, this pack can't be ordered from departmental order consoles, only from cargo.
+	var/no_departmental_order = FALSE
 
 /datum/supply_pack/New()
 	id = type

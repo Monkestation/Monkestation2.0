@@ -140,7 +140,7 @@
 	// higher means more likely
 	var/list/weighted_projectile_types = list(/obj/projectile/meteor = 1,
 											  /obj/projectile/energy/nuclear_particle = 1,
-											  /obj/projectile/beam/pulse = 1,
+											  /obj/projectile/beam/laser/pulse = 1,
 											  /obj/projectile/bullet/honker = 15,
 											  /obj/projectile/temp = 15,
 											  /obj/projectile/ion = 15,

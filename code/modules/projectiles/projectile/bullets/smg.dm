@@ -25,7 +25,7 @@
 
 /obj/projectile/bullet/incendiary/c45
 	name = ".45 incendiary bullet"
-	damage = 15
+	damage = 25
 	fire_stacks = 2
 
 /obj/projectile/bullet/c45/hp
@@ -54,7 +54,7 @@
 
 /obj/projectile/bullet/incendiary/c46x30mm
 	name = "4.6x30mm incendiary bullet"
-	damage = 10
+	damage = 15
 	fire_stacks = 1
 
 /obj/projectile/bullet/c46x30mm/salt
