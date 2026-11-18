@@ -4,6 +4,7 @@
 	/// What mood event to apply when seeing NT propaganda
 	var/mood_event_type
 
+/// Whether a Nanotrasen sign or logo poster is within 5 tiles of view of the subject.
 /datum/personality/nt/proc/can_see_nt_propaganda(mob/living/subject)
 	for(var/obj/structure/sign/nearby in view(subject, 5))
 		if(istype(nearby, /obj/structure/sign/nanotrasen))

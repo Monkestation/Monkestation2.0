@@ -720,6 +720,7 @@
 	owner.lose_area_sensitivity("[id]_[moodlet_type]")
 	owner.clear_mood_event("[id]_[moodlet_type]")
 
+/// Adds the moodlet when entering an allowed area and clears it otherwise.
 /datum/status_effect/moodlet_in_area/proc/check_area(datum/source, area/new_area)
 	SIGNAL_HANDLER
 

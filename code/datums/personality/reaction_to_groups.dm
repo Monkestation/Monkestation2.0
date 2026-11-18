@@ -46,6 +46,7 @@
 		else
 			subject.add_mood_event("paranoia_personality", /datum/mood_event/paranoid/large_group)
 
+/// Whether target counts as a threat to a paranoid subject: awake and visible to them.
 /datum/personality/paranoid/proc/is_dangerous_mob(mob/living/subject, mob/living/carbon/human/target)
 	if(target.stat >= UNCONSCIOUS)
 		return FALSE

@@ -4,9 +4,11 @@
 		"clear_personalities" = PROC_REF(clear_personalities),
 	)
 
+/// Toggles the personality sent by the menu, if it exists, fits under the limit and doesn't clash with the ones already picked.
 /datum/preference_middleware/personality/proc/handle_personality(list/params, mob/user)
 	var/datum/personality/personality_type = text2path(params["personality_type"])
-	if(!ispath(personality_type, /datum/personality))
+	// only real personalities, abstract parents have no savefile_key and would save a null
+	if(!SSpersonalities.personalities_by_type[personality_type])
 		return FALSE
 
 	var/personality_key = initial(personality_type.savefile_key)
@@ -25,6 +27,7 @@
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], personalities)
 	return TRUE
 
+/// Removes every selected personality.
 /datum/preference_middleware/personality/proc/clear_personalities(list/params, mob/user)
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], null)
 	return TRUE

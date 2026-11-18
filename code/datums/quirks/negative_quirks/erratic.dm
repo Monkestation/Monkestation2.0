@@ -34,6 +34,7 @@
 	COOLDOWN_START(src, randomize_cooldown, rand(6, 12) MINUTES)
 	randomize_personalities()
 
+/// Alternates between a random set of personalities and the holder's original ones.
 /datum/quirk/erratic/proc/randomize_personalities()
 	random_index += 1
 	if(random_index % 2 == 0)
@@ -49,10 +50,12 @@
 	to_chat(quirk_holder, span_notice("You feel... different."))
 	announce_personality_change()
 
+/// Swaps every personality of the holder for new_personalities.
 /datum/quirk/erratic/proc/replace_personalities(list/new_personalities)
 	quirk_holder.clear_personalities()
 	quirk_holder.add_personalities(new_personalities)
 
+/// Tells the holder which personalities they have now.
 /datum/quirk/erratic/proc/announce_personality_change()
 	var/list/new_personality = list()
 	for(var/datum/personality/personality_type as anything in quirk_holder.personalities)

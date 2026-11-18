@@ -102,6 +102,7 @@
 	AddElement(/datum/element/noticable_organ, "teeth are oddly shaped and yellowing.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
+/// Whether this speech gets the rat squeaks: always on April Fools or for whimsical people, else 1% of the time.
 /obj/item/organ/internal/tongue/rat/proc/whimsy_check(mob/living/checking)
 	if(check_holidays(APRIL_FOOLS))
 		return TRUE
