@@ -12,9 +12,10 @@
 		return 'sound/voice/vox_species/shrieksneeze.ogg'
 	return ..()
 
-/datum/emote/living/carbon/human/scream/select_message_type(mob/user, msg, intentional)
+// Monkestation moved the human scream to /datum/emote/living/scream (the human one is commented out), so hook that.
+/datum/emote/living/scream/select_message_type(mob/user, msg, intentional)
 	. = ..()
-	if(isvox(user) && . == message)
+	if(isvox(user) && . == message && !istype(src, /datum/emote/living/scream/screech))
 		return "shrieks!"
 
 // Suicide messages
@@ -35,7 +36,7 @@
  * Changes the (facial) quills of a vox.
  * Quills are external organs, so this adds, restyles or removes the organ as needed.
  */
-/mob/living/carbon/human/proc/set_vox_quills(new_style, facial = FALSE)
+/mob/living/carbon/human/proc/set_vox_quills(new_style, facial = FALSE, update = TRUE)
 	var/feature = facial ? "vox_facial_quills" : "vox_quills"
 	var/slot = facial ? ORGAN_SLOT_EXTERNAL_VOX_FACIAL_QUILLS : ORGAN_SLOT_EXTERNAL_VOX_QUILLS
 	var/obj/item/organ/external/vox_quills/quills = get_organ_slot(slot)
@@ -51,7 +52,8 @@
 		var/quills_type = facial ? /obj/item/organ/external/vox_quills/facial : /obj/item/organ/external/vox_quills
 		quills = new quills_type()
 		quills.Insert(src, special = TRUE, drop_if_replaced = FALSE)
-	update_body_parts()
+	if(update)
+		update_body_parts()
 
 /// Vox version of changing hair or beard at a mirror.
 /obj/structure/mirror/proc/change_vox_quills(mob/living/carbon/human/vox, facial = FALSE)
