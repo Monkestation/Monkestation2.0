@@ -9,6 +9,7 @@ have ways of interacting with a specific mob and control it.
 	movement_delay = 0.4 SECONDS
 	behavior_tree_json = "code/datums/ai/monkey/monkey.bt.json"
 	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/monkey,
 		BB_MONKEY_AGGRESSIVE = FALSE,
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
 		BB_MONKEY_ENEMIES = list(),
