@@ -59,7 +59,7 @@
 	/obj/structure/spawner/lavaland/ = list("Tendril!", "Don't let it take you with it!", "We got a tendril!", "Watch for beasties coming out!"),
 
 	//Mobs: Megafauna
-	/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/ = list("BLOOD-DRUNK MINER! WATCH YOURSELVES!!", "THAT MINER WENT BLOOD-DRUNK!!", "WATCH THE BLOOD-DRUNK MINER!!", "BLOOD-DRUNK MINER! THAT'S WHAT HAPPENS WHEN YOU DRINK LEAFLOVERS!!"),
+	/mob/living/basic/boss/blood_drunk_miner/ = list("BLOOD-DRUNK MINER! WATCH YOURSELVES!!", "THAT MINER WENT BLOOD-DRUNK!!", "WATCH THE BLOOD-DRUNK MINER!!", "BLOOD-DRUNK MINER! THAT'S WHAT HAPPENS WHEN YOU DRINK LEAFLOVERS!!"),
 	/mob/living/simple_animal/hostile/megafauna/colossus/ = list("COLOSSUS!!", "COLOSSUS SPOTTED!!", "DON'T GET JUDGED BY THE COLOSSUS!!", "COLOSSUS, DODGE THE SHOTS!!", "WE'VE GOT A COLOSSUS, BULLET HELL TIME!!"),
 	/mob/living/simple_animal/hostile/megafauna/clockwork_defender/ = list("CLOCKWORK DEFENDER!!", "CLOCKWORK! TICK TOCK, HEAVY LIKE AN AFTERSHOCK!!", "RATVARIAN KNIGHT! WATCH IT!!", "DAMN, BRASS BEAST IN SIGHT!!"),
 	/mob/living/simple_animal/hostile/megafauna/bubblegum/ = list("BUBBLEGUM, WATCH THE BLOOD!!", "KEEP YOUR DISTANCE, BUBBLEGUM IS LETHAL UP CLOSE!!", "BLOODY HELL, BUBBLEGUM SPOTTED!!", "STAY OUT OF THE BLOOD POOLS, BUBBLEGUM!!"),

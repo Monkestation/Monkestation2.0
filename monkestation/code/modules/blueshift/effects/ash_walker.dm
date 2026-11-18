@@ -258,7 +258,7 @@
 		flash_color(select_mob, flash_color = "#FF0000", flash_time = 3 SECONDS)
 
 	var/megafauna_choice = pick(
-		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
+		/mob/living/basic/boss/blood_drunk_miner,
 		/mob/living/simple_animal/hostile/megafauna/dragon,
 		/mob/living/simple_animal/hostile/megafauna/hierophant,
 	)

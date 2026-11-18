@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isguardian(A) (istype(A, /mob/living/basic/guardian))
 
-#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
+#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna) || istype(A, /mob/living/basic/boss))
 
 #define isclown(A) (istype(A, /mob/living/basic/clown))
 
