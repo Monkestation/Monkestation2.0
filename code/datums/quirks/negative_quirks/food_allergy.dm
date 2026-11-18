@@ -26,6 +26,10 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	var/target_foodtypes = NONE
 	species_blacklist = list(SPECIES_IPC)
 
+/datum/quirk_constant_data/food_allergy
+	associated_typepath = /datum/quirk/item_quirk/food_allergic
+	customization_options = list(/datum/preference/choiced/food_allergy)
+
 /datum/quirk/item_quirk/food_allergic/add(client/client_source)
 	if(target_foodtypes != NONE) // Already set, don't care
 		return

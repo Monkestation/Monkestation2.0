@@ -8,6 +8,10 @@
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
 	var/color
 
+/datum/quirk_constant_data/heterochromatic
+	associated_typepath = /datum/quirk/heterochromatic
+	customization_options = list(/datum/preference/color/heterochromatic)
+
 // Only your first eyes are heterochromatic
 // If someone comes and says "well mr coder you can have DNA bound heterochromia so it's not unrealistic
 // to allow all inserted replacement eyes to become heterochromatic or for it to transfer between mobs"

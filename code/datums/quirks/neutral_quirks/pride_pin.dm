@@ -10,6 +10,10 @@
 	lose_text = span_danger("You decide to repress your feelings.")
 	//MONKESTATION EDIT END
 
+/datum/quirk_constant_data/pride_pin
+	associated_typepath = /datum/quirk/item_quirk/pride_pin
+	customization_options = list(/datum/preference/choiced/pride_pin)
+
 /datum/quirk/item_quirk/pride_pin/add_unique(client/client_source)
 	var/obj/item/clothing/accessory/pride/pin = new(get_turf(quirk_holder))
 

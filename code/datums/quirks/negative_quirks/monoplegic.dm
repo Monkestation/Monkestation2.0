@@ -5,6 +5,10 @@
 	value = QUIRK_COST_MONOPLEGIC
 	hardcore_value = QUIRK_HARDCORE_MONOPLEGIC
 
+/datum/quirk_constant_data/monoplegic
+	associated_typepath = /datum/quirk/monoplegic
+	customization_options = list(/datum/preference/choiced/limb/monoplegic)
+
 /datum/quirk/monoplegic/add_unique(client/client_source)
 	var/body_zone = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/limb/monoplegic)]
 	if(isnull(body_zone))  //Client gone or they chose a random limb

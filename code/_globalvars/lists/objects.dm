@@ -95,9 +95,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas)
 /// List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
 
-/// Associative list of alcoholic container typepath to instances, currently used by the alcoholic quirk
-GLOBAL_LIST_INIT(alcohol_containers, init_alcohol_containers())
-
 // List of organ typepaths that are not unit test-able, and shouldn't be spawned by some things, such as certain class prototypes.
 GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ,
