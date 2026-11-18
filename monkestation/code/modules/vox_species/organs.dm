@@ -129,4 +129,4 @@
 		playsound(owner, 'sound/voice/vox_species/shriek1.ogg', 25, TRUE, 1)
 
 /obj/item/organ/internal/tongue/vox/get_scream_sound()
-	return 'sound/voice/vox_species/shriek1.ogg'
+	return pick('sound/voice/vox_species/shriek1.ogg'/*, 'sound/voice/vox_species/ashriek.ogg'*/) // ashriek commented out, as on Yogstation

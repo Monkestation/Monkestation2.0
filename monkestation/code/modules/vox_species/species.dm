@@ -99,16 +99,17 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	features["vox_tail_markings_color"] = "#[random_color()]" // picked on its own, like Yogstation's secondary mutant color
 	return features
 
+/// Builds the species list sprite Yogstation shows: a bare lime vox, no quills or markings, cyan eyes.
+/// Yogstation uses a premade copy of it, since it could not render vox here.
 /datum/species/vox/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.delete_equipment() // the assistant outfit
 	human.dna.features["vox_skin_tone"] = "lime"
-	human.dna.features["vox_quills"] = "Kingly"
-	human.set_haircolor(COLOR_DARKER_BROWN, update = FALSE)
-	human.dna.features["vox_facial_quills"] = "None"
-	human.dna.features["vox_body_markings"] = "None"
-	human.dna.features["vox_tail_markings"] = "None"
-	human.eye_color_left = COLOR_CYAN
-	human.eye_color_right = COLOR_CYAN
-	regenerate_organs(human, src, visual_only = TRUE)
+	human.dna.features["vox_quills"] = SPRITE_ACCESSORY_NONE
+	human.dna.features["vox_facial_quills"] = SPRITE_ACCESSORY_NONE
+	human.dna.features["vox_body_markings"] = SPRITE_ACCESSORY_NONE
+	human.dna.features["vox_tail_markings"] = SPRITE_ACCESSORY_NONE
+	regenerate_organs(human, src, visual_only = TRUE) // drops the quills, as their features are now "None"
+	human.set_eye_color("#17fdfb") // the exact cyan of Yogstation's sprite. Goes through the eye organ, setting the mob's eye color vars alone does nothing.
 	human.update_body(is_creating = TRUE)
 
 /// Vox lose their quills instead of hair, like on Yogstation.
@@ -278,6 +279,9 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 			if((istype(item, /obj/item/storage/backpack) || istype(item, /obj/item/defibrillator)) && is_vox_limb(wearer, BODY_ZONE_CHEST))
 				icon_file = 'icons/mob/clothing/species/vox/back.dmi'
 		// Neck and belt items are never fitted.
+		// Held items aren't either. 'icons/mob/clothing/species/vox/held.dmi' has vox-shaped in-hand sprites from Paradise, unused here and on Yogstation:
+		// toxgun_l/r (Paradise's plasma pistol and vox spike thrower), v1_arm_l/r (vortex feedback arm implant),
+		// vamp_claws_l/r (vampiric, zombie and hardplasma pyro claws). Kept for when those items, or vox in-hands, get ported.
 	if(icon_file && item.worn_icon_vox && icon_exists(item.worn_icon_vox, worn_state))
 		return item.worn_icon_vox
 	// Items whose sprite name matches a vox sprite drawn for a different item. They keep their human sprite.
