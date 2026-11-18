@@ -308,8 +308,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
 	ignore += typesof(/mob/eye/imaginary_friend)
-	//No pod to gondola
-	ignore += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
 	//No heart to give
 	ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console

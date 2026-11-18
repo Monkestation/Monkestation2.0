@@ -39089,7 +39089,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/pet/gondola/funky,
+/mob/living/basic/pet/gondola/funky,
 /turf/open/floor/iron/herringbone,
 /area/station/service/theater)
 "kYC" = (

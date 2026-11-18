@@ -21963,7 +21963,7 @@
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
 "fbd" = (
-/mob/living/simple_animal/pet/gondola,
+/mob/living/basic/pet/gondola,
 /turf/open/floor/eighties/red,
 /area/centcom/central_command_areas/admin)
 "fbx" = (
@@ -30078,7 +30078,7 @@
 /turf/open/floor/pod/dark,
 /area/centcom/central_command_areas/prison/cells)
 "shW" = (
-/mob/living/simple_animal/pet/gondola/funky,
+/mob/living/basic/pet/gondola/funky,
 /turf/open/floor/eighties/red,
 /area/centcom/central_command_areas/admin)
 "shZ" = (

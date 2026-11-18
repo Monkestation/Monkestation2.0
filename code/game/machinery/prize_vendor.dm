@@ -150,7 +150,7 @@
 		/mob/living/basic/sloth = 3,
 		/mob/living/basic/pet/cat = 3,
 		/mob/living/basic/pet/fox = 3,
-		/mob/living/simple_animal/pet/gondola = 1,
+		/mob/living/basic/pet/gondola = 1,
 		/mob/living/basic/pet/penguin/emperor = 2,
 		/mob/living/basic/crab = 2,
 		/mob/living/basic/axolotl = 2,
