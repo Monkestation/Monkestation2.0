@@ -71,6 +71,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 /// This atom does not need to generate its own preview icon for GAGS
 #define NO_NEW_GAGS_PREVIEW_1 (1<<21)
+/// This atom does not affect navmap baking.
+#define NAV_IRRELEVANT_1 (1<<22)
+/// This atom is always a live navmap blocker, regardless of density.
+#define NAV_ALWAYS_CONDITIONAL_1 (1<<23)
 
 /// This is for flags_2
 /// Whether this atom should be ignored when enumerating storage inventory contents.
@@ -117,6 +121,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 /// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
 #define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
+/// This turf is queued for navmap baking.
+#define NAV_QUEUED (1<<9)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
