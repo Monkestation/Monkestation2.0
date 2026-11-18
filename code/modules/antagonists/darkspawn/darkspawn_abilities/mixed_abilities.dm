@@ -157,8 +157,8 @@
 	owner.visible_message(span_warning("[owner] breaks away from [owner]'s shadow!"), span_velvet("You create an illusion of yourself."))
 	playsound(owner, 'sound/effects/magic/darkspawn/devour_will_form.ogg', 50, 1)
 
-	var/mob/living/simple_animal/hostile/illusion/darkspawn/clone = new(get_turf(owner))
-	clone.copy_parent(owner, duration, 100, 10) //closely follows regular player stats so it's not painfully obvious (still sorta is)
+	var/mob/living/basic/illusion/darkspawn/clone = new(get_turf(owner))
+	clone.full_setup(owner, faction_override = list(FACTION_DARKSPAWN), life = duration, hp = 100, damage = 10) //closely follows regular player stats so it's not painfully obvious (still sorta is)
 	clone.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
 
 //////////////////////////////////////////////////////////////////////////
@@ -179,7 +179,7 @@
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 100)
 	cooldown_time = 3 MINUTES
 	///mob summoned by the spell
-	var/mob/living/simple_animal/hostile/illusion/darkspawn/psyche/frayed
+	var/mob/living/basic/illusion/darkspawn/psyche/frayed
 	///health of the mob summoned by the spell
 	var/health = 100
 	///punch damage of the mob summoned by the spell
@@ -240,7 +240,7 @@
 	frayed = new(get_turf(caster))
 	player_mind.active = TRUE
 
-	frayed.copy_parent(caster, 100, health, damage)
+	frayed.full_setup(caster, faction_override = list(FACTION_DARKSPAWN), life = INFINITY, hp = health, damage = damage)
 	frayed.name = caster.name
 	frayed.real_name = caster.real_name
 	player_mind.transfer_to(frayed)
