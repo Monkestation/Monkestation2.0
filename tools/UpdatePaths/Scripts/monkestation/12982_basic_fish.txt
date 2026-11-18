@@ -1,0 +1,1 @@
+/mob/living/simple_animal/fish/@SUBTYPES : /mob/living/basic/fish/@SUBTYPES{@OLD}
