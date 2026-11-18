@@ -47,7 +47,7 @@
 	AddComponent(/datum/component/slippery,\
 		knockdown = 6 SECONDS,\
 		paralyze = 3 SECONDS,\
-		on_slip_callback = CALLBACK(src, PROC_REF(post_slip)),\
+		callback = CALLBACK(src, PROC_REF(post_slip)),\
 		can_slip_callback = CALLBACK(src, PROC_REF(pre_slip)),\
 	)
 
