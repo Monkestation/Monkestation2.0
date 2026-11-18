@@ -578,6 +578,16 @@ CREATE TABLE `SS13_metacoin_item_purchases` (
 	PRIMARY KEY (`ckey`,`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
+-- Table structure for table 'SS13_x_progress'
+
+DROP TABLE IF EXISTS `SS13_fish_progress`;
+CREATE TABLE `SS13_fish_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`progress_entry`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Table structure for table `SS13_ticket`
 --

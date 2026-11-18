@@ -25,7 +25,7 @@
 		/datum/job_department/medical,
 		)
 
-	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/clothing/neck/stethoscope, /obj/item/clothing/mask/surgical, /obj/item/flashlight/pen)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/clothing/neck/stethoscope, /obj/item/clothing/mask/surgical, /obj/item/flashlight/pen, /obj/item/fishing_hook/rescue)
 
 	mail_goodies = list(
 		/obj/item/reagent_containers/medipen = 20,

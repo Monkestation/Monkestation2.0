@@ -51,6 +51,11 @@
 	timeout = 3 MINUTES
 	event_flags = MOOD_EVENT_WHIMSY // if whimsical, no penalty
 
+/datum/mood_event/inked
+	description = "I've been splashed with squid ink. Tastes like salt."
+	mood_change = -3
+	timeout = 3 MINUTES
+
 /datum/mood_event/slipped
 	description = "I slipped. I should be more careful next time..."
 	mood_change = -2

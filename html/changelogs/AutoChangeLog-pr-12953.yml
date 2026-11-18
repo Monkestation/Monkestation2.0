@@ -1,9 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "Job XP actually saves now, so you can level up your jobs."
-  - bugfix: "Roundend job XP doesn't drop when the round goes over an hour."
-  - bugfix: "Claiming job rewards doesn't eat your saved rewards and reconnecting doesn't let you claim them again."
-  - bugfix: "Reload Job Rewards doesn't duplicate per round rewards."
-  - bugfix: "Rolling rollies only gives botanist XP to botanists."
-  - qol: "The XP menu only shows station jobs and shows how much XP you have."

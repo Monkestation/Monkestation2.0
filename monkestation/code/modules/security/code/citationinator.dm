@@ -50,7 +50,7 @@
 	switch(tgui_alert(user, "Fine recipient", "Make some sod's life worse", list("On crew manifest", "Off crew manifest / non-living recipient")))
 		if("Off crew manifest / non-living recipient")
 			on_crew = FALSE
-			victim_name = trim(tgui_input_text(user, "Name", "", encode = FALSE, timeout = 1 MINUTES))
+			victim_name = trim(tgui_input_text(user, "Name", "", timeout = 1 MINUTES))
 		if("On crew manifest")
 			var/list/choices = list()
 			for(var/datum/record/crew/person in GLOB.manifest.general)
@@ -66,10 +66,10 @@
 	var/fine = tgui_input_number(user, "How many credits to fine?", "Civil Asset Forfeiture", default = 50, max_value = CONFIG_GET(number/maxfine), timeout = 1 MINUTES, round_value = 1)
 	if(!fine)
 		return
-	var/citation_name = trim(tgui_input_text(user, "What crime are they being fined for?", "Handling a fish in suspicious circumstances", max_length = MAX_NAME_LEN, encode = FALSE, timeout = 1 MINUTES))
+	var/citation_name = trim(tgui_input_text(user, "What crime are they being fined for?", "Handling a fish in suspicious circumstances", max_length = MAX_NAME_LEN, timeout = 1 MINUTES))
 	if(!citation_name)
 		return
-	var/reason = trim(tgui_input_text(user, "Provide details about the citation.", "Handling a fish in suspicious circumstances", multiline = TRUE, encode = FALSE, timeout = 1 MINUTES))
+	var/reason = trim(tgui_input_text(user, "Provide details about the citation.", "Handling a fish in suspicious circumstances", multiline = TRUE, timeout = 1 MINUTES))
 	var/issuer_name = using_id.assignment + " " + using_id.registered_name
 	var/datum/crime/citation/new_citation = new(name = citation_name, details = reason, author = issuer_name, fine = fine)
 	if(on_crew)
@@ -81,18 +81,18 @@
 	var/final_paper_text = "# <u>SECURITY CITATION</u>\n"
 	final_paper_text += "You have been issued a citation by the on-board station security department for the following offense:<br>"
 	final_paper_text += {"<table style="text-align:left;" border="1" cellspacing="0" width="100%">"}
-	final_paper_text += "<tr><th>Details: </th><td>[length(new_citation.details) > 0 ? sanitize(new_citation.details) : "None provided."]</td></tr>"
-	final_paper_text += "<tr><th>Cited By: </th><td>[sanitize(new_citation.author)]</td></tr>"
+	final_paper_text += "<tr><th>Details: </th><td>[length(new_citation.details) > 0 ? new_citation.details : "None provided."]</td></tr>"
+	final_paper_text += "<tr><th>Cited By: </th><td>[html_encode(new_citation.author)]</td></tr>"
 	final_paper_text += "<tr><th>Time: </th><td>[new_citation.time]</td></tr>"
 	final_paper_text += "<tr><th>Fine Amount: </th><td>[new_citation.fine]</td></tr>"
-	final_paper_text += "<center><b>[sanitize(new_citation.name)]</b></center><br>"
+	final_paper_text += "<center><b>[new_citation.name]</b></center><br>"
 	final_paper_text += "</table><br>"
 	final_paper_text += "Citations are payable at the Security Warrant Console at the front of the station brig.<br><br>"
 	final_paper_text += "<i>Accepting this ticket does not indicate an admission of guilt. If you wish to dispute this citation, please contact the Captain, Head of Security, or the onboard legal counsel.</i><br><br>"
 	final_paper_text += "<i>Refusing to accept this ticket, or failure to pay/dispute this citation within a reasonable timeframe, may result in you being charged with Fine Evasion (code 111) and serving time in the station brig.</i><br>"
 
 	var/obj/item/paper/slip = new(drop_location())
-	slip.name = "Citation - [victim_name] for [sanitize(new_citation.name)]"
+	slip.name = "Citation - [victim_name] for [new_citation.name]"
 	slip.color = COLOR_FADED_PINK
 
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)

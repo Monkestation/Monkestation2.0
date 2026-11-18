@@ -33,7 +33,7 @@
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
+	area_flags = NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
 
 /datum/map_template/basketball
 	should_place_on_top = FALSE

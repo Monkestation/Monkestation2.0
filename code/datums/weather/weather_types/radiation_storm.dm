@@ -35,6 +35,8 @@
 	target_trait = ZTRAIT_STATION
 
 	immunity_type = TRAIT_RADSTORM_IMMUNE
+	/// Chance we mutate
+	var/mutate_chance = 40
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -49,7 +51,7 @@
 		affected_roach.romchifize()
 		return
 
-	if(!prob(40))
+	if(!prob(mutate_chance))
 		return
 
 	if(!ishuman(L))
@@ -101,3 +103,36 @@
 
 	var/atom/movable/virtualspeaker/virt = new(null)
 	frequency.post_signal(virt, signal)
+
+/// Used by the radioactive nebula when the station doesnt have enough shielding
+/datum/weather/rad_storm/nebula
+	protected_areas = list(/area/shuttle, /area/station/maintenance/radshelter)
+
+	weather_overlay = "nebula_radstorm"
+	end_message = null
+	perpetual = TRUE
+
+	mutate_chance = 0.1
+	///Chance we pulse a living during the storm
+	var/radiation_chance = 5
+
+/datum/weather/rad_storm/nebula/weather_act(mob/living/living)
+	..()
+
+	if(!prob(radiation_chance))
+		return
+
+	if(!SSradiation.can_irradiate_basic(living) || SSradiation.wearing_rad_protected_clothing(living))
+		return
+
+	radiation_pulse(
+		source = living,
+		max_range = 0,
+		threshold = RAD_LIGHT_INSULATION,
+		chance = URANIUM_IRRADIATION_CHANCE,
+	)
+
+/datum/weather/rad_storm/nebula/status_alarm(active)
+	if(!active) //we stay on
+		return
+	..()

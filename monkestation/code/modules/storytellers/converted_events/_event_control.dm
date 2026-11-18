@@ -105,7 +105,10 @@
 /datum/round_event_control/antagonist/New()
 	. = ..()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		restricted_roles |= protected_roles
+		LAZYOR(restricted_roles, protected_roles)
+	for(var/datum/job/job_type as anything in subtypesof(/datum/job))
+		if(job_type::job_flags & JOB_ANTAG_BLACKLISTED)
+			LAZYOR(restricted_roles, job_type::title)
 
 /datum/round_event_control/antagonist/return_failure_string(players_amt)
 	. =..()
@@ -156,7 +159,7 @@
 /datum/round_event_control/antagonist/get_href_actions()
 	// firing or scheduling one of these with no latejoiner would just grab someone already aboard, unprompted
 	if(track == EVENT_TRACK_LATEJOIN)
-		return "<a href='byond://?src=[REF(src)];action=force_next'>Force Next</a>"
+		return "<a href='byond://?src=[REF(src)];[HrefToken()];action=force_next'>Force Next</a>"
 	return ..()
 
 /datum/round_event_control/antagonist/get_weight()

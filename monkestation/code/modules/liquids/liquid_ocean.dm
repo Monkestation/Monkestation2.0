@@ -32,16 +32,16 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	has_gravity = TRUE
 
 /area/ruin/ocean/listening_outpost
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/bunker
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/bioweapon_research
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/mining_site
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ocean/near_station_powered
 	requires_power = FALSE
@@ -84,8 +84,6 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	resistance_flags = INDESTRUCTIBLE
 
 	overwrites_attack_by = TRUE
-
-	astar_weight = 50
 
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
@@ -614,13 +612,15 @@ GLOBAL_LIST_EMPTY(the_lever)
 	base_lighting_alpha = 0
 	//map_generator = /datum/map_generator/ocean_generator
 	map_generator = /datum/map_generator/cave_generator/trench
-	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 
 /area/ocean/generated_above
 	icon_state = "ocean_gen_above"
 	map_generator = /datum/map_generator/ocean_generator
-	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /turf/open/floor/plating/ocean/pit
 	name = "pit"

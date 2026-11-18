@@ -251,7 +251,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	icon_state = "blutigen_kimono"
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/gloves/ring/hypno
 	var/list/spans = list()
@@ -583,6 +583,7 @@
 	name = "starlight singer jacket"
 	desc = " "
 	icon_state = "mikujacket"
+	body_parts_covered = CHEST|GROIN
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	worn_icon_state = "mikujacket"
@@ -677,7 +678,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "labcoat_xc"
-	body_parts_covered = CHEST|ARMS|LEGS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor_type = /datum/armor/rd_jax
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -721,7 +722,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "chernocoat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
@@ -946,6 +947,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "occultcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/occult
 
 // Donation reward for Octus
@@ -1110,6 +1112,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "rainbowcoat"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	base_icon_state = "rainbowcoat"
 
 // Donation reward for M97screwsyourparents
@@ -1128,6 +1131,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "officerjacket"
+	body_parts_covered = CHEST|GROIN|ARMS
 	base_icon_state = "officerjacket"
 
 // Donation reward for M97screwsyourparents
@@ -1244,6 +1248,7 @@
 	name = "Short Purple Coat"
 	desc = "A short black and purple coat, mostly used for asthetics then insulating the person wearing it."
 	icon_state = "short_coat"
+	body_parts_covered = CHEST|ARMS
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 
@@ -1278,6 +1283,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "long-coat"
+	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/sigmarcoat
 
 //reward for SomeRandomOwl
@@ -1303,6 +1309,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "razurath_coat"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 // Donation reward for MaSvedish
 /obj/item/clothing/mask/holocigarette/masvedishcigar
@@ -1323,6 +1330,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "lt3_jacket"
+	body_parts_covered = CHEST|ARMS
 	inhand_icon_state = "syndicate-black"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -1343,6 +1351,7 @@
 	lefthand_file = 'icons/mob/inhands/donator/donator_left.dmi'
 	righthand_file = 'icons/mob/inhands/donator/donator_right.dmi'
 	icon_state = "lt3_jeans"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	inhand_icon_state = "lt3_jeans"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -1360,6 +1369,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "colorblockhoodie"
+	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/colorblockhoodie
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -1376,6 +1386,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	body_parts_covered = CHEST|GROIN|ARMS
 
 //Public version of Razurath's donation reward
 /obj/item/clothing/suit/toggle/digicoat/glitched

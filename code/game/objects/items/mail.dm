@@ -126,20 +126,25 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
 		user.put_in_hands(contents[1])
-	user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
+	if(postmarked) // dead mail from the strike isn't ours to pay out on
+		user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/mail/examine_more(mob/user)
 	. = ..()
-	var/list/msg = list(span_notice("<i>You notice the postmarking on the front of the mail...</i>"))
-	var/datum/mind/recipient = recipient_ref.resolve()
-	if(recipient)
-		msg += "\t[span_info("Certified NT mail for [recipient].")]"
+	if(!postmarked)
+		. += span_info("This mail has no postmarking of any sort...")
 	else
-		msg += "\t[span_info("Certified mail for [GLOB.station_name].")]"
-	msg += "\t[span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")]"
-	return msg
+		. += span_notice("<i>You notice the postmarking on the front of the mail...</i>")
+	var/datum/mind/recipient = recipient_ref?.resolve()
+	if(recipient)
+		. += span_info("[postmarked ? "Certified NT" : "Uncertified"] mail for [recipient].")
+	else if(postmarked)
+		. += span_info("Certified mail for [GLOB.station_name].")
+	else
+		. += span_info("This is a dead letter mail with no recipient.")
+	. += span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
@@ -279,6 +284,46 @@
 /obj/structure/closet/crate/mail/full/Initialize(mapload)
 	. = ..()
 	populate(INFINITY)
+
+///Used in the mail strike shuttle loan event
+/obj/structure/closet/crate/mail/full/mail_strike
+	desc = "A post crate from somewhere else."
+
+/obj/structure/closet/crate/mail/full/mail_strike/populate(amount)
+	var/strike_mail_to_spawn = rand(1, storage_capacity-1)
+	for(var/i in 1 to strike_mail_to_spawn)
+		new /obj/item/mail/mail_strike(src)
+	return ..(storage_capacity - strike_mail_to_spawn)
+
+///Generic mail used in the mail strike shuttle loan event
+/obj/item/mail/mail_strike
+	name = "dead mail"
+	desc = "An unmarked parcel of unknown origins, effectively undeliverable."
+	postmarked = FALSE
+	generic_goodies = list(
+		/obj/effect/spawner/random/entertainment/money_medium = 2,
+		/obj/effect/spawner/random/contraband = 2,
+		/obj/effect/spawner/random/entertainment/money_large = 1,
+		/obj/effect/spawner/random/entertainment/coin = 1,
+		/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage = 1,
+		/obj/effect/spawner/random/entertainment/drugs = 1,
+		/obj/effect/spawner/random/contraband/grenades = 1,
+	)
+
+/obj/item/mail/mail_strike/Initialize(mapload)
+	if(prob(35))
+		stamped = FALSE
+	if(prob(35))
+		name = "dead envelope"
+		icon_state = "mail_large"
+		goodie_count = 2
+		stamp_max = 2
+		stamp_offset_y = 5
+	. = ..()
+	color = pick(COLOR_SILVER, COLOR_DARK, COLOR_DRIED_TAN, COLOR_ORANGE_BROWN, COLOR_BROWN, COLOR_SYNDIE_RED)
+	for(var/goodie in 1 to goodie_count)
+		var/target_good = pick_weight(generic_goodies)
+		new target_good(src)
 
 
 /// Opened mail crate

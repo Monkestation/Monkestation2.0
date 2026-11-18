@@ -29,7 +29,6 @@
 	maximum_antags = 10 //so 10 maximum is for the rare megapop rounds. i hope this just doesnt spawn 10 ops with 30 ready.
 	enemy_roles = list(
 		JOB_AI,
-		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
 		JOB_DETECTIVE,

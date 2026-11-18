@@ -9,6 +9,8 @@ SUBSYSTEM_DEF(parallax)
 	var/planet_y_offset = 128
 	//var/random_layer //monkestation removal
 	//var/random_parallax_color //monkestation removal
+	/// Extra parallax layer type a nebula station trait drapes over space, if any
+	var/atom/movable/screen/parallax_layer/nebula_layer
 
 
 //These are cached per client so needs to be done asap so people joining at roundstart do not miss these.

@@ -126,3 +126,4 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	for(var/datum/round_event_control/event as anything in all_events)
 		if(is_type_in_typecache(event, meteor_event_typecache))
 			event.weight *= mod
+			event.calculated_weight = null

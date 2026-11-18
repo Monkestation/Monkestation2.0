@@ -1,16 +1,19 @@
+///This station traits gives 5 bananium sheets to the clown (and every dead clown out there in deep space or lavaland).
 /datum/station_trait/bananium_shipment
 	name = "Bananium Shipment"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
-	report_message = "Rumors has it that the clown planet has been sending support packages to clowns in this system"
+	cost = STATION_TRAIT_COST_LOW
+	report_message = "Rumors has it that the clown planet has been sending support packages to clowns in this system."
 	trait_to_give = STATION_TRAIT_BANANIUM_SHIPMENTS
 
 /datum/station_trait/unnatural_atmosphere
 	name = "Unnatural atmospherical properties"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	report_message = "System's local planet has irregular atmospherical properties"
+	report_message = "System's local planet has irregular atmospherical properties."
 	trait_to_give = STATION_TRAIT_UNNATURAL_ATMOSPHERE
 
 	// This station trait modifies the atmosphere, which is too far past the time admins are able to revert it
@@ -26,6 +29,7 @@
 /datum/station_trait/unique_ai
 	name = "Unique AI"
 	trait_type = STATION_TRAIT_NEUTRAL
+	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	weight = 5
 	show_in_report = TRUE
 	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment, we've removed \
@@ -42,6 +46,7 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = FALSE
+	cost = STATION_TRAIT_COST_LOW
 	report_message = "Ian has gone exploring somewhere in the station."
 
 /datum/station_trait/ian_adventure/on_round_start()
@@ -101,6 +106,7 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = TRUE
+	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Something seems to be wrong with the PDAs issued to you all this shift. Nothing too bad though."
 	trait_to_give = STATION_TRAIT_PDA_GLITCHED
 
@@ -182,67 +188,15 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 10
 	show_in_report = TRUE
+	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Due to a shortage in standard issue jumpsuits, we have provided your assistants with one of our backup supplies."
+	blacklist = list(/datum/station_trait/assistant_gimmicks)
 
 /datum/station_trait/colored_assistants/New()
 	. = ..()
 
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
-
-/datum/station_trait/cargorilla
-	name = "Cargo Gorilla"
-	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 5
-	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
-
-	/// The gorilla we created, we only hold this ref until the round starts.
-	var/mob/living/basic/gorilla/cargorilla/cargorilla
-
-/datum/station_trait/cargorilla/New()
-	. = ..()
-	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
-
-/// Replace some cargo equipment and 'personnel' with a gorilla.
-/datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
-	SIGNAL_HANDLER
-
-	var/mob/living/basic/sloth/cargo_sloth = GLOB.cargo_sloth
-	if(isnull(cargo_sloth))
-		return
-
-	cargorilla = new(cargo_sloth.loc)
-	cargorilla.name = cargo_sloth.name
-	// We do a poll on roundstart, don't let ghosts in early
-	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
-	// hm our sloth looks funny today
-	qdel(cargo_sloth)
-
-	// monkey carries the crates, the age of robot is over
-	if(GLOB.cargo_ripley)
-		qdel(GLOB.cargo_ripley)
-
-/// Makes an ID card for the gorilla
-/datum/station_trait/cargorilla/proc/make_id_for_gorilla()
-	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
-	gorilla_id.registered_name = cargorilla.name
-	gorilla_id.update_label()
-
-	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
-
-/datum/station_trait/cargorilla/on_round_start()
-	if(!cargorilla)
-		return
-
-	addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
-	cargorilla = null
-
-/// Get us a ghost for the gorilla.
-/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
-	if(QDELETED(gorilla))
-		return
-
-	gorilla.poll_for_gorilla()
 
 /datum/station_trait/birthday
 	name = "Employee Birthday"
@@ -379,6 +333,7 @@
 	name = "Scryers"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "Nanotrasen has chosen your station for an experiment - everyone has free scryers! Use these to talk to other people easily and privately."
 
@@ -406,7 +361,7 @@
 	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
 	new_scryer.label = player_client?.prefs?.read_preference(/datum/preference/text/default_scryer_label) || spawned.real_name
 	new_scryer.update_name()
-	var/ringtone = player_client.prefs.read_preference(/datum/preference/choiced/call_ringtone)
+	var/ringtone = player_client?.prefs?.read_preference(/datum/preference/choiced/call_ringtone)
 	if(ringtone)
 		new_scryer.set_ringtone(ringtone)
 
@@ -414,9 +369,10 @@
 
 /datum/station_trait/wallets
 	name = "Wallets!"
-	trait_type = STATION_TRAIT_POSITIVE
+	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
 	weight = 5
+	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
 
 /datum/station_trait/wallets/New()
@@ -460,35 +416,23 @@
 
 /datum/station_trait/linked_closets/on_round_start()
 	. = ..()
-	var/list/roundstart_non_secure_closets = GLOB.roundstart_station_closets.Copy()
-	for(var/obj/structure/closet/closet in roundstart_non_secure_closets)
-		if(closet.secure)
-			roundstart_non_secure_closets -= closet
+	var/list/roundstart_closets = GLOB.roundstart_station_closets.Copy()
 
 	/**
-	 * The number of links to perform.
-	 * Combined with 50/50 the probability of the link being triangular, the boundaries of any given
-	 * on-station, non-secure closet being linked are as high as 1 in 7/8 and as low as 1 in 16-17,
-	 * nearing an a mean of 1 in 9 to 11/12 the more repetitions are done.
-	 *
-	 * There are more than 220 roundstart closets on meta, around 150 of which aren't secure,
-	 * so, about 13 to 17 closets will be affected by this most of the times.
+	 * The number of links to perform. the chance of a closet being linked are about 1 in 10
+	 * There are more than 220 roundstart closets on meta, so, about 22 closets will be affected on average.
 	 */
-	var/number_of_links = round(length(roundstart_non_secure_closets) * (rand(350, 450)*0.0001), 1)
+	var/number_of_links = round(length(roundstart_closets) * (rand(400, 430)*0.0001), 1)
 	for(var/repetition in 1 to number_of_links)
-		var/closets_left = length(roundstart_non_secure_closets)
-		if(closets_left < 2)
-			return
 		var/list/targets = list()
-		for(var/how_many in 1 to min(closets_left, rand(2,3)))
-			targets += pick_n_take(roundstart_non_secure_closets)
-		if(closets_left == 1) //there's only one closet left. Let's not leave it alone.
-			targets += roundstart_non_secure_closets[1]
+		for(var/how_many in 1 to rand(2,3))
+			targets += pick_n_take(roundstart_closets)
 		GLOB.eigenstate_manager.create_new_link(targets)
 
 /datum/station_trait/triple_ai
 	name = "AI Triumvirate"
 	trait_type = STATION_TRAIT_NEUTRAL
+	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	show_in_report = TRUE
 	weight = 2 // Since were gibbing overflow
 	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
@@ -507,3 +451,13 @@
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
 		ai_datum.total_positions = 3
+
+/// Tells the area map generator to ADD MORE TREEEES
+/datum/station_trait/forested
+	name = "Forested"
+	trait_type = STATION_TRAIT_NEUTRAL
+	trait_to_give = STATION_TRAIT_FORESTED
+	trait_flags = STATION_TRAIT_PLANETARY
+	weight = 10
+	show_in_report = TRUE
+	report_message = "There sure are a lot of trees out there."

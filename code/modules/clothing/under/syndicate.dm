@@ -26,6 +26,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /datum/armor/syndicate_skirt
 	melee = 10
@@ -104,6 +105,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /datum/armor/tacticool_skirt
 	bio = 10
@@ -186,3 +188,16 @@
 	greyscale_colors = "#61423f#61423f#b22c20#61423f#61423f#1c070e"
 	has_sensor = NO_SENSORS
 	resistance_flags = FIRE_PROOF
+
+
+/obj/item/clothing/under/syndicate/bloodred/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //extra-tactical
+
+/obj/item/clothing/under/syndicate/floortilecamo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
+
+/obj/item/clothing/under/syndicate/scrubs/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!

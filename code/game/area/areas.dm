@@ -24,7 +24,11 @@
 	/// This uses the same nested list format as turfs_by_zlevel
 	var/list/list/turf/turfs_to_uncontain_by_zlevel = list()
 
-	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED
+	/// Flag for mapping related area properties (such as cavegen)
+	var/area_flags_mapping = UNIQUE_AREA
+	/// Terrain navigation cost groups applied to every turf in this area.
+	var/nav_cost_flags = NONE
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
@@ -126,9 +130,6 @@
 
 	/// Are shuttles allowed to dock in this area
 	var/allow_shuttle_docking = FALSE
-
-	/// Extra A* weight applied to all turfs in this area.
-	var/astar_weight = 0
 	var/auto_renamed
 
 	/// Whether roundstart lockers should be anchored by default in this area, if eligible.
@@ -165,12 +166,22 @@
 
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
-	if (area_flags & UNIQUE_AREA)
+	if (area_flags_mapping & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 	GLOB.areas += src
 	energy_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	alarm_manager = new(src) // just in case
 	return ..()
+
+/// Changes this area's navigation cost groups and republishes affected turf costs.
+/area/proc/set_nav_cost_flags(new_flags)
+	if(nav_cost_flags == new_flags)
+		return
+	var/old_flags = nav_cost_flags
+	nav_cost_flags = new_flags
+	for(var/turf/area_turf as anything in contents)
+		if((area_turf.nav_cost_flags | old_flags) != (area_turf.nav_cost_flags | new_flags))
+			area_turf.nav_cost_dirty()
 
 /proc/combine_area_names(match, a, b)
 	return "[a][LOWER_TEXT(b)]"
@@ -589,6 +600,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+	SEND_SIGNAL(gone, COMSIG_MOVABLE_EXITED_AREA, src, direction)
 
 	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
