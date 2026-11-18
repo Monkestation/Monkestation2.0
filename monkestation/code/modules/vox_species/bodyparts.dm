@@ -6,6 +6,37 @@
 	var/vox_markings
 	/// Color of the vox body marking.
 	var/vox_markings_color
+	/// Whether this limb has taken its skin tone and markings from a vox yet.
+	/// Like on Yogstation, a limb that never had one (limbgrown) takes them from the first vox it is attached to, while a severed limb keeps its own.
+	var/vox_looks_set = FALSE
+	/// The vox skin tone this limb is drawn in.
+	var/vox_skin_tone = "lime"
+
+/obj/item/bodypart
+	/// Icon file holding the part of this limb's sprite that never changes with skin tone or color, like a vox beak or claws.
+	var/static_sprite_icon
+
+/// Returns the icon state of this limb's never-changing sprite part (see static_sprite_icon), or null if it has none.
+/// Override this for things like alternate beak styles.
+/obj/item/bodypart/proc/get_static_sprite_state()
+	return null
+
+/// Vox beaks and claws. The scruffy mossy skin tone has its own, like on Yogstation.
+/obj/item/bodypart/proc/get_vox_static_state()
+	var/state = "vox_[body_zone]_static"
+	if(vox_skin_tone == "mossy" && icon_exists(static_sprite_icon, "[state]_mossy"))
+		return "[state]_mossy"
+	return state
+
+/obj/item/bodypart/head
+	/// Icon file this head's eyes are drawn from (the human face file if null). It belongs to the head, not the species,
+	/// so a vox head on a human keeps its vox eyes, and a human head on a vox keeps human ones.
+	var/eyes_icon
+
+/// Extra eye overlays drawn over the (colored) eyes of this head and never colored themselves, like Yogstation's vox eye static.
+/// Dropped heads apply their own face offset, the eye organ offsets the rest.
+/obj/item/bodypart/head/proc/get_eye_static_overlays(dropped = FALSE)
+	return list()
 
 /// Returns the verb for a single unarmed attack with this limb. Lets a limb pick from several verbs, like Yogstation's attack_verbs.
 /obj/item/bodypart/proc/get_unarmed_attack_verb()
@@ -24,10 +55,12 @@
 	// Quill colors and gradients are hair colors and gradients, as on Yogstation, so they follow the head on every update (dye and all).
 	for(var/datum/bodypart_overlay/mutant/vox_quills/quills_overlay in bodypart_overlays)
 		quills_overlay.update_from_head(src)
-	if(!is_creating)
+	if(!is_creating && vox_looks_set)
 		return
+	vox_looks_set = TRUE
 	var/list/features = owner.dna.features
-	icon_static = GLOB.vox_skin_tones[features["vox_skin_tone"]] || initial(icon_static)
+	vox_skin_tone = (features["vox_skin_tone"] in GLOB.vox_skin_tones) ? features["vox_skin_tone"] : "lime"
+	icon_static = GLOB.vox_skin_tones[vox_skin_tone]
 	vox_markings = features["vox_body_markings"]
 	vox_markings_color = features["vox_body_markings_color"]
 	// Our tail and quills follow the owner's features too, which is what lets the character preview show changes to them.
@@ -60,10 +93,11 @@
 	. += overlay
 
 /obj/item/bodypart/proc/vox_icon_key()
-	return "-[vox_markings]-[vox_markings_color]"
+	return "-[vox_markings]-[vox_markings_color]-[get_static_sprite_state()]"
 
 /obj/item/bodypart/head/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'
+	static_sprite_icon = 'icons/mob/human/species/vox/bodyparts_static.dmi'
 	limb_id = SPECIES_VOX
 	icon_husk = 'icons/mob/human/species/vox/husk.dmi'
 	husk_type = "vox"
@@ -72,6 +106,17 @@
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
 	head_flags = HEAD_EYESPRITES | HEAD_EYECOLOR | HEAD_EYEHOLES | HEAD_DEBRAIN
+	eyes_icon = 'icons/mob/human/species/vox/eyes.dmi'
+
+/// Like on Yogstation, part of a vox's eyes is never colored: green, or blue for the crimson and mossy skin tones.
+/obj/item/bodypart/head/vox/get_eye_static_overlays(dropped = FALSE)
+	var/static/list/blue_static_skin_tones = list("crimson", "mossy")
+	var/static_state = "eyes_static_[(vox_skin_tone in blue_static_skin_tones) ? "blue" : "green"]"
+	if(!dropped)
+		return list(mutable_appearance('icons/mob/human/species/vox/eyes.dmi', static_state, -BODY_LAYER))
+	var/image/eye_static = image('icons/mob/human/species/vox/eyes.dmi', static_state, -BODY_LAYER, SOUTH)
+	worn_face_offset?.apply_offset(eye_static)
+	return list(eye_static)
 
 /obj/item/bodypart/head/vox/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
@@ -86,11 +131,18 @@
 				. -= overlay
 	. += vox_marking_overlays(dropped)
 
-/// Vox empty eye sockets, like on Yogstation. They also cover the eye static drawn into the head sprite.
+/// Vox empty eye sockets, like on Yogstation.
 /obj/item/bodypart/head/vox/get_eyeless_overlay(can_rotate = TRUE)
 	var/image/eyeless_overlay = ..()
 	eyeless_overlay.icon = 'icons/mob/human/species/vox/eyes.dmi'
 	return eyeless_overlay
+
+/// Vox cry with their own tears, drawn under their eyes. Like on Yogstation.
+/datum/bodypart_overlay/simple/emote/cry/get_image(obj/item/bodypart/limb, layer_index, layer_real)
+	var/image/image = ..()
+	if(limb?.limb_id == SPECIES_VOX)
+		image.icon = 'icons/mob/human/species/vox/eyes.dmi'
+	return image
 
 /obj/item/bodypart/head/vox/generate_icon_key()
 	. = ..()
@@ -121,6 +173,7 @@
 
 /obj/item/bodypart/arm/left/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'
+	static_sprite_icon = 'icons/mob/human/species/vox/bodyparts_static.dmi'
 	limb_id = SPECIES_VOX
 	icon_husk = 'icons/mob/human/species/vox/husk.dmi'
 	husk_type = "vox"
@@ -146,6 +199,7 @@
 
 /obj/item/bodypart/arm/right/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'
+	static_sprite_icon = 'icons/mob/human/species/vox/bodyparts_static.dmi'
 	limb_id = SPECIES_VOX
 	icon_husk = 'icons/mob/human/species/vox/husk.dmi'
 	husk_type = "vox"
@@ -171,6 +225,7 @@
 
 /obj/item/bodypart/leg/left/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'
+	static_sprite_icon = 'icons/mob/human/species/vox/bodyparts_static.dmi'
 	limb_id = SPECIES_VOX
 	icon_husk = 'icons/mob/human/species/vox/husk.dmi'
 	husk_type = "vox"
@@ -193,6 +248,7 @@
 
 /obj/item/bodypart/leg/right/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'
+	static_sprite_icon = 'icons/mob/human/species/vox/bodyparts_static.dmi'
 	limb_id = SPECIES_VOX
 	icon_husk = 'icons/mob/human/species/vox/husk.dmi'
 	husk_type = "vox"
@@ -212,3 +268,18 @@
 /obj/item/bodypart/leg/right/vox/generate_icon_key()
 	. = ..()
 	. += vox_icon_key()
+
+/obj/item/bodypart/arm/left/vox/get_static_sprite_state()
+	return get_vox_static_state()
+
+/obj/item/bodypart/arm/right/vox/get_static_sprite_state()
+	return get_vox_static_state()
+
+/obj/item/bodypart/head/vox/get_static_sprite_state()
+	return get_vox_static_state()
+
+/obj/item/bodypart/leg/left/vox/get_static_sprite_state()
+	return get_vox_static_state()
+
+/obj/item/bodypart/leg/right/vox/get_static_sprite_state()
+	return get_vox_static_state()

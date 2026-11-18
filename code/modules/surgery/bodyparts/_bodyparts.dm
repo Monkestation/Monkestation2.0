@@ -1175,12 +1175,23 @@
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
 		.[aux] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
+	// monkestation edit start: the part of the sprite that never changes with skin tone or color (vox beaks and claws), like Yogstation's limb statics.
+	// Added here so it gets the same masking, height and emissive handling as the limb under it. Never colored, but husked.
+	var/image/limb_static
+	var/static_state = get_static_sprite_state()
+	if(static_state && static_sprite_icon)
+		limb_static = image(static_sprite_icon, static_state, -BODYPARTS_LAYER, image_dir)
+		.[limb_static] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
+	// monkestation edit end
+
 	update_draw_color()
 
 	if(is_husked)
 		huskify_image(thing_to_husk = limb)
 		if(aux)
 			huskify_image(thing_to_husk = aux)
+		if(limb_static) // monkestation edit
+			huskify_image(thing_to_husk = limb_static)
 		draw_color = husk_color
 	if(draw_color)
 		limb.color = "[draw_color]"
@@ -1202,6 +1213,10 @@
 				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
 				aux_em_block.dir = image_dir
 				.[aux_em_block] = LIMB_OVERLAY_META
+			if(limb_static) // monkestation edit: static sprite parts block emissives like the rest of the limb
+				var/mutable_appearance/static_em_block = emissive_blocker(limb_static.icon, limb_static.icon_state, location, layer = limb_static.layer, alpha = limb_static.alpha)
+				static_em_block.dir = image_dir
+				.[static_em_block] = LIMB_OVERLAY_META
 		if(is_emissive)
 			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
 			limb_em.dir = image_dir

@@ -19,6 +19,8 @@
 	var/datum/universal_icon/final_icon = uni_icon('icons/blanks/32x32.dmi', "nothing")
 	for(var/zone in body_zones)
 		final_icon.blend_icon(uni_icon('icons/mob/human/species/vox/bodyparts_lime.dmi', "vox_[zone]"), ICON_OVERLAY)
+		if(icon_exists('icons/mob/human/species/vox/bodyparts_static.dmi', "vox_[zone]_static")) // claws
+			final_icon.blend_icon(uni_icon('icons/mob/human/species/vox/bodyparts_static.dmi', "vox_[zone]_static"), ICON_OVERLAY)
 	if(istype(accessory) && accessory.icon_state && accessory.icon_state != SPRITE_ACCESSORY_NONE)
 		final_icon.blend_icon(uni_icon(icon_file, accessory.icon_state), ICON_OVERLAY)
 	return final_icon

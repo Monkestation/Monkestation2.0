@@ -62,6 +62,8 @@ GLOBAL_LIST_EMPTY(vox_body_markings_list)
 		return // someone else's tail keeps looking like theirs
 	. = ..()
 	overlay.markings = human.dna.features["vox_tail_markings"]
+	overlay.markings_color = human.dna.features["vox_tail_markings_color"]
+	overlay.cache_key = jointext(overlay.generate_icon_cache(), "_") // built by the parent before the markings changed
 
 /datum/bodypart_overlay/mutant/tail/vox
 	feature_key = "tail_vox" // only names the icon states, the sprite is picked by the "vox_skin_tone" feature

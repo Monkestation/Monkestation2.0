@@ -147,7 +147,8 @@
 	if(isnull(eye_icon_state))
 		return list()
 
-	var/eye_icon = parent.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species.
+	var/obj/item/bodypart/head/eye_head = parent.get_bodypart(BODY_ZONE_HEAD) // monkestation edit: the head decides its eye icon, not the species
+	var/eye_icon = eye_head?.eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species.
 
 	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -BODY_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -BODY_LAYER)
@@ -155,6 +156,7 @@
 	var/list/overlays = list(eye_left, eye_right)
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
+		overlays += my_head.get_eye_static_overlays() // monkestation edit: uncolored eye parts (vox eye static), offset with the eyes below
 		if(my_head.head_flags & HEAD_EYECOLOR)
 			eye_right.color = parent.get_right_eye_color() || eye_color_right
 			eye_left.color = parent.get_left_eye_color() || eye_color_left

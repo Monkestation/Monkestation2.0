@@ -1,10 +1,13 @@
 /// Makes a preview icon of a vox head wearing the passed quills (or nothing).
 /proc/generate_vox_head_shot(datum/sprite_accessory/sprite_accessory, key, skin_tone = "lime")
 	var/datum/universal_icon/final_icon = uni_icon(GLOB.vox_skin_tones[skin_tone], "vox_head", SOUTH)
+	final_icon.blend_icon(uni_icon('icons/mob/human/species/vox/bodyparts_static.dmi', skin_tone == "mossy" ? "vox_head_static_mossy" : "vox_head_static", SOUTH), ICON_OVERLAY) // the beak
 	for(var/eye_state in list("eyes_l", "eyes_r"))
 		var/datum/universal_icon/eye = uni_icon('icons/mob/human/species/vox/eyes.dmi', eye_state, SOUTH)
 		eye.blend_color(COLOR_CYAN, ICON_MULTIPLY)
 		final_icon.blend_icon(eye, ICON_OVERLAY)
+	var/static_color = (skin_tone in list("crimson", "mossy")) ? "blue" : "green" // the uncolored part of the eyes, as on Yogstation
+	final_icon.blend_icon(uni_icon('icons/mob/human/species/vox/eyes.dmi', "eyes_static_[static_color]", SOUTH), ICON_OVERLAY)
 
 	if(!isnull(sprite_accessory) && sprite_accessory.name != SPRITE_ACCESSORY_NONE)
 		var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", SOUTH)

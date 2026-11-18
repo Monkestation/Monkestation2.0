@@ -9,6 +9,9 @@
 		"SKRE", "AHK", "EHK", "RAWK", "KRA", "AAA", "EEE", "KI", "II", "KRI", "KA",
 	)
 	default_priority = 90
+	speech_verb = "shrieks"
+	ask_verb = "creels"
+	exclaim_verb = "loudly skrees"
 	icon = 'icons/obj/species/vox/language.dmi'
 	icon_state = "voxpidgin"
 

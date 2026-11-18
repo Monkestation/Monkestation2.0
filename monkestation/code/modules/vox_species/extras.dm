@@ -66,6 +66,40 @@
 		return TRUE
 	vox.set_vox_quills(new_style, facial)
 
+/**
+ * Magic mirror race change for vox: skin tone, body markings and tail markings, each with its color.
+ * Yogstation offers only the two marking colors (they are its mutant colors). Cancelling a choice keeps the current one.
+ * The caller redraws the body, which makes the limbs and the tail take up the new features.
+ */
+/obj/structure/mirror/proc/change_vox_looks(mob/living/carbon/human/vox)
+	var/list/features = vox.dna.features
+	var/new_skin_tone = tgui_input_list(vox, "Choose your skin tone", "Race change", GLOB.vox_skin_tones, features["vox_skin_tone"])
+	if(new_skin_tone)
+		features["vox_skin_tone"] = new_skin_tone
+		vox.dna.update_uf_block(DNA_VOX_SKIN_TONE_BLOCK)
+
+	var/new_body_markings = tgui_input_list(vox, "Choose your body markings", "Race change", GLOB.vox_body_markings_list, features["vox_body_markings"])
+	if(new_body_markings)
+		features["vox_body_markings"] = new_body_markings
+		vox.dna.update_uf_block(DNA_VOX_BODY_MARKINGS_BLOCK)
+	if(features["vox_body_markings"] && features["vox_body_markings"] != SPRITE_ACCESSORY_NONE)
+		var/new_body_color = tgui_color_picker(vox, "Choose your body markings color", "Race change", features["vox_body_markings_color"])
+		if(new_body_color)
+			features["vox_body_markings_color"] = sanitize_hexcolor(new_body_color)
+			vox.dna.update_uf_block(DNA_VOX_BODY_MARKINGS_COLOR_BLOCK)
+
+	if(!istype(vox.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/external/tail/vox))
+		return
+	var/new_tail_markings = tgui_input_list(vox, "Choose your tail markings", "Race change", GLOB.vox_tail_markings_list, features["vox_tail_markings"])
+	if(new_tail_markings)
+		features["vox_tail_markings"] = new_tail_markings
+		vox.dna.update_uf_block(DNA_VOX_TAIL_MARKINGS_BLOCK)
+	if(features["vox_tail_markings"] && features["vox_tail_markings"] != SPRITE_ACCESSORY_NONE)
+		var/new_tail_color = tgui_color_picker(vox, "Choose your tail markings color", "Race change", features["vox_tail_markings_color"])
+		if(new_tail_color)
+			features["vox_tail_markings_color"] = sanitize_hexcolor(new_tail_color)
+			vox.dna.update_uf_block(DNA_VOX_TAIL_MARKINGS_COLOR_BLOCK)
+
 // Underwear, socks and undershirts drawn from species-fitted icon files
 
 /datum/species
@@ -345,15 +379,15 @@
 /datum/bounty/item/medical/vox_tail
 	name = "Vox Tail"
 	description = "Negotiations have broken down between Central Command and a group of Vox raiders. Ship us a vox tail so we can show them we mean business."
-	reward = 3000
+	reward = CARGO_CRATE_VALUE * 6 // Yogstation prices vox like its lizards, so these match Monkestation's lizard prices
 	wanted_types = list(/obj/item/organ/external/tail/vox = TRUE)
 
-/datum/export/organ/vox_tail
-	cost = 300
+/datum/export/organ/external/tail/vox
+	cost = CARGO_CRATE_VALUE * 1.25
 	unit_name = "vox tail"
 	export_types = list(/obj/item/organ/external/tail/vox)
 
 /datum/export/stack/skin/vox
-	cost = 2500
+	cost = CARGO_CRATE_VALUE * 0.75
 	unit_name = "vox hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/vox)

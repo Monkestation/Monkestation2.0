@@ -1,7 +1,12 @@
 // Vox organs are partially synthetic: they do not decay, but react badly to EMPs.
 
+/obj/item/organ/internal/brain
+	/// What this brain is called in MMI and brain messages ("your brain fizzles out"). Like on Yogstation.
+	var/brain_name = "brain"
+
 /obj/item/organ/internal/brain/vox
 	name = "cortical stack"
+	brain_name = "cortical stack"
 	desc = "A peculiarly advanced bio-electronic device that seems to hold the memories and identity of a Vox."
 	icon = 'icons/obj/species/vox/organs.dmi'
 	icon_state = "cortical-stack"

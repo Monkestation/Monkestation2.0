@@ -67,8 +67,7 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	mutantears = /obj/item/organ/internal/ears/vox
 	mutanteyes = /obj/item/organ/internal/eyes/vox
 	mutantappendix = /obj/item/organ/internal/appendix/vox
-	eyes_icon = 'icons/mob/human/species/vox/eyes.dmi'
-	meat = /obj/item/food/meat/slab/human/mutant/vox
+	meat =/obj/item/food/meat/slab/human/mutant/vox
 	skinned_type = /obj/item/stack/sheet/animalhide/vox
 	exotic_bloodtype = BLOOD_TYPE_VOX
 	species_language_holder = /datum/language_holder/vox
@@ -97,7 +96,7 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	features["vox_body_markings"] = pick(GLOB.vox_body_markings_list)
 	features["vox_tail_markings"] = pick(GLOB.vox_tail_markings_list)
 	features["vox_body_markings_color"] = "#[random_color()]"
-	features["vox_tail_markings_color"] = features["vox_body_markings_color"]
+	features["vox_tail_markings_color"] = "#[random_color()]" // picked on its own, like Yogstation's secondary mutant color
 	return features
 
 /datum/species/vox/prepare_human_for_preview(mob/living/carbon/human/human)
@@ -298,6 +297,19 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	if(!icon_file || !icon_exists(icon_file, worn_state))
 		return null
 	return icon_file
+
+/**
+ * Swaps a blood overlay for its vox-shaped version, if this item is drawn vox-fitted. Like on Yogstation.
+ * vox_state defaults to the overlay's own state with "_vox" added.
+ */
+/obj/item/proc/vox_fit_blood_overlay(mutable_appearance/blood_overlay, item_slot, vox_state)
+	vox_state ||= "[blood_overlay.icon_state]_vox"
+	if(!icon_exists('icons/mob/clothing/species/vox/blood.dmi', vox_state))
+		return
+	if(!get_vox_fitted_worn_icon(item_slot, src))
+		return
+	blood_overlay.icon = 'icons/mob/clothing/species/vox/blood.dmi'
+	blood_overlay.icon_state = vox_state
 
 /datum/species/vox/generate_custom_worn_icon(item_slot, obj/item/item)
 	return get_vox_fitted_worn_icon(item_slot, item)
