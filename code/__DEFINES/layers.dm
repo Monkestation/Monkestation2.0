@@ -2,29 +2,28 @@
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
 //NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
-#define LOWEST_EVER_PLANE -100
+#define LOWEST_EVER_PLANE -50
 
 // Doesn't really layer, just throwing this in here cause it's the best place imo
-#define FIELD_OF_VISION_BLOCKER_PLANE -90
+#define FIELD_OF_VISION_BLOCKER_PLANE -45
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
-#define CLICKCATCHER_PLANE -80
+#define CLICKCATCHER_PLANE -40
 
-#define PLANE_SPACE -25
+#define PLANE_SPACE -21
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -16
-#define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
+#define DISPLACEMENT_PLANE -12
+#define DISPLACEMENT_RENDER_TARGET "*DISPLACEMENT_RENDER_TARGET"
 
-#define RENDER_PLANE_TRANSPARENT -15 //Transparent plane that shows openspace underneath the floor
+#define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
 
-#define TRANSPARENT_FLOOR_PLANE -14
+#define TRANSPARENT_FLOOR_PLANE -10
 
-#define FLOOR_PLANE -13
+#define FLOOR_PLANE -6
 
-#define WALL_PLANE -12
-#define GAME_PLANE -11
-
+#define WALL_PLANE -5
+#define GAME_PLANE -4
 #define ABOVE_GAME_PLANE -3
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -2
@@ -33,61 +32,82 @@
 
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
-#define WEATHER_PLANE 1
-#define AREA_PLANE 2
-#define MASSIVE_OBJ_PLANE 3
-#define GHOST_PLANE 4
-#define POINT_PLANE 5
+#define WEATHER_PLANE 2
+#define AREA_PLANE 3
+#define MASSIVE_OBJ_PLANE 4
+#define GHOST_PLANE 5
+#define POINT_PLANE 6
 
 //---------- LIGHTING -------------
-///Normal 1 per turf dynamic lighting underlays
+/// Normal 1 per turf dynamic lighting objects
 #define LIGHTING_PLANE 10
 
-///Lighting objects that are "free floating"
-#define O_LIGHTING_VISUAL_PLANE 12
-#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
+/// Lighting objects that are "free floating"
+#define O_LIGHTING_VISUAL_PLANE 11
+
+// Render plate used by overlay lighting to mask turf lights
+#define RENDER_PLANE_TURF_LIGHTING 12
 
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
-#define EMISSIVE_RENDER_PLATE 14
-#define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
+#define RENDER_PLANE_EMISSIVE 14
+#define EMISSIVE_RENDER_TARGET "*RENDER_PLANE_EMISSIVE"
 // Ensures all the render targets that point at the emissive plate layer correctly
 #define EMISSIVE_Z_BELOW_LAYER 1
 #define EMISSIVE_FLOOR_LAYER 2
 #define EMISSIVE_SPACE_LAYER 3
 #define EMISSIVE_WALL_LAYER 4
 
-#define RENDER_PLANE_LIGHTING 15
+#define RENDER_PLANE_EMISSIVE_BLOOM_MASK 15
+#define EMISSIVE_BLOOM_MASK_RENDER_TARGET "*RENDER_PLANE_EMISSIVE_BLOOM_MASK"
+#define RENDER_PLANE_EMISSIVE_BLOOM 16
+
+#define RENDER_PLANE_SPECULAR_MASK 17
+#define SPECULAR_MASK_RENDER_TARGET "*RENDER_PLANE_SPECULAR_MASK"
+
+//-------------------- Lighting ---------------------
+
+/// Main game plane to which everything renders, which then is multiplied by light
+/// Should not be lit directly as it is sourced for emissive bloom
+#define RENDER_PLANE_UNLIT_GAME 20
+
+#define RENDER_PLANE_O_LIGHTING 21
+
+#define RENDER_PLANE_LIGHTING 22
 
 /// Masks the lighting plane with turfs, so we never light up the void
 /// Failing that, masks emissives and the overlay lighting plane
-#define LIGHT_MASK_PLANE 16
-#define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
+#define RENDER_PLANE_LIGHT_MASK 23
+#define LIGHT_MASK_RENDER_TARGET "*RENDER_PLANE_LIGHT_MASK"
 
-///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 17
+/// We cannot render speculars to ABOVE_LIGHTING, as then they give it alpha and end up masking things in darkness
+/// So we need to render it directly to RENDER_PLANE_GAME above RENDER_PLANE_LIGHTING
+#define RENDER_PLANE_SPECULAR 24
 
-#define WEATHER_GLOW_PLANE 18
+/// Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 25
+
+#define WEATHER_GLOW_PLANE 26
 
 ///---------------- MISC -----------------------
 
 ///Pipecrawling images
-#define PIPECRAWL_IMAGES_PLANE 20
+#define PIPECRAWL_IMAGES_PLANE 30
 
 ///AI Camera Static
-#define CAMERA_STATIC_PLANE 21
+#define CAMERA_STATIC_PLANE 31
 
 ///Anything that wants to be part of the game plane, but also wants to draw above literally everything else
-#define HIGH_GAME_PLANE 22
+#define HIGH_GAME_PLANE 32
 
-#define FULLSCREEN_PLANE 23
+#define FULLSCREEN_PLANE 33
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
 ///Popup Chat Messages
-#define RUNECHAT_PLANE 30
+#define RUNECHAT_PLANE 34
 /// Plane for balloon text (text that fades up)
-#define BALLOON_CHAT_PLANE 31
+#define BALLOON_CHAT_PLANE 35
 
 //-------------------- HUD ---------------------
 //HUD layer defines
@@ -95,31 +115,33 @@
 #define ABOVE_HUD_PLANE 41
 
 ///Plane of the "splash" icon used that shows on the lobby screen
-#define SPLASHSCREEN_PLANE 50
+#define SPLASHSCREEN_PLANE 42
 
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
 //-------------------- Rendering ---------------------
-#define RENDER_PLANE_GAME 100
+#define RENDER_PLANE_GAME 50
 /// If fov is enabled we'll draw game to this and do shit to it
-#define RENDER_PLANE_GAME_MASKED 101
+#define RENDER_PLANE_GAME_MASKED 51
 /// The bit of the game plane that is let alone is sent here
-#define RENDER_PLANE_GAME_UNMASKED 102
-#define RENDER_PLANE_NON_GAME 103
+#define RENDER_PLANE_GAME_UNMASKED 52
+
+#define RENDER_PLANE_NON_GAME 55
 
 // Only VERY special planes should be here, as they are above not just the game, but the UI planes as well.
 
 /// Plane related to the menu when pressing Escape.
 /// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI.
-#define ESCAPE_MENU_PLANE 105
+#define ESCAPE_MENU_PLANE 56
 
-#define RENDER_PLANE_MASTER 110
+#define RENDER_PLANE_MASTER 57
 
 // Lummox I swear to god I will find you
 // NOTE! You can only ever have planes greater then -10000, if you add too many with large offsets you will brick multiz
 // Same can be said for large multiz maps. Tread carefully mappers
 #define HIGHEST_EVER_PLANE RENDER_PLANE_MASTER
 /// The range unique planes can be in
+/// Try and keep this to a nice whole number, so it's easy to look at a plane var and know what's going on
 #define PLANE_RANGE (HIGHEST_EVER_PLANE - LOWEST_EVER_PLANE)
 
 // PLANE_SPACE layer(s)

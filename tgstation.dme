@@ -4461,6 +4461,7 @@
 #include "code\modules\client\preferences\commandbar.dm"
 #include "code\modules\client\preferences\credits.dm"
 #include "code\modules\client\preferences\default_scryer_label.dm"
+#include "code\modules\client\preferences\emissive_bloom.dm"
 #include "code\modules\client\preferences\flash_visuals.dm"
 #include "code\modules\client\preferences\food_allergy.dm"
 #include "code\modules\client\preferences\fps.dm"
