@@ -98,7 +98,7 @@ const WireArea = () => {
 
 const MainMenu = () => {
   const { act, data } = useBackend<Data>();
-    const {
+  const {
     area_notice,
     area_name,
     area_allows_shuttle_docking,
