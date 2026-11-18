@@ -639,32 +639,32 @@
 // Specialty shotgun shells, unlocked by researching the matching schematics (see /datum/design/cargo_weapon).
 /datum/supply_pack/security/armory/requisition/pulse_shells
 	name = "Pulse Slug Requisition"
-	desc = "Contains a box of pulse slugs, shotgun shells that fire a weakened pulse bolt capable of armour penetration and blasting apart weak structures."
+	desc = "Contains two boxes of pulse slugs, shotgun shells that fire a weakened pulse bolt capable of armour penetration and blasting apart weak structures."
 	cost = CARGO_CRATE_VALUE * 12
-	contains = list(/obj/item/storage/box/pulseslug)
+	contains = list(/obj/item/storage/box/pulseslug = 2)
 	crate_name = "pulse slug crate"
 	no_departmental_order = TRUE
 
 /datum/supply_pack/security/armory/requisition/ion_shells
 	name = "Ion Scatter Requisition"
-	desc = "Contains a box of ion scatter shells, shotgun shells that spread electromagnetic pulses. Ideal against borgs, mechs and electronics."
+	desc = "Contains two boxes of ion scatter shells, shotgun shells that spread electromagnetic pulses. Ideal against borgs, mechs and electronics."
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/item/storage/box/ionslug)
+	contains = list(/obj/item/storage/box/ionslug = 2)
 	crate_name = "ion scatter crate"
 	no_departmental_order = TRUE
 
 /datum/supply_pack/security/armory/requisition/meteor_shells
 	name = "Meteorslug Requisition"
-	desc = "Contains a box of meteorslugs, shotgun shells that fire a miniature meteor. Anything it hits is knocked flat and possibly broken."
+	desc = "Contains two boxes of meteorslugs, shotgun shells that fire a miniature meteor. Anything it hits is knocked flat and possibly broken."
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/obj/item/storage/box/meteorslug)
+	contains = list(/obj/item/storage/box/meteorslug = 2)
 	crate_name = "meteorslug crate"
 	no_departmental_order = TRUE
 
 /datum/supply_pack/security/armory/requisition/frag_shells
 	name = "FRAG-12 Requisition"
-	desc = "Contains a box of FRAG-12 shells, explosive shotgun shells that detonate on impact."
+	desc = "Contains two boxes of FRAG-12 shells, explosive shotgun shells that detonate on impact."
 	cost = CARGO_CRATE_VALUE * 12
-	contains = list(/obj/item/storage/box/frag12)
+	contains = list(/obj/item/storage/box/frag12 = 2)
 	crate_name = "FRAG-12 crate"
 	no_departmental_order = TRUE
