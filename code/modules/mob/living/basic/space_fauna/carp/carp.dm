@@ -129,7 +129,7 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
-	ai_controller?.change_ai_movement_type(/datum/ai_movement/jps)
+	ai_controller?.change_ai_movement_type(/datum/ai_movement/navmap_astar)
 	if (!feedback)
 		return
 	spin(spintime = 10, speed = 1)

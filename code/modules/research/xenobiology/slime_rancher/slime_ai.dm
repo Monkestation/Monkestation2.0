@@ -225,7 +225,7 @@
 
 /// Starts the path search that decides whether a candidate is reachable. on_path_found() gets the result.
 /datum/bt_node/ai_behavior/slime_find_target/proc/request_path(datum/ai_controller/basic_controller/slime/controller, atom/candidate)
-	SSpathfinder.pathfind(controller.pawn, candidate, max_distance = SLIME_REACH_DISTANCE, mintargetdist = 1, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, candidate)))
+	SSpathfinder.pathfind(controller.pawn, candidate, max_distance = SLIME_REACH_DISTANCE, mintargetdist = 1, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, candidate)), max_path_cost = SLIME_REACH_DISTANCE * 14)
 
 /// Runs when pathfinding finishes. We go for the target if the path actually gets us next to it.
 /datum/bt_node/ai_behavior/slime_find_target/proc/on_path_found(datum/ai_controller/basic_controller/slime/controller, atom/candidate, list/path)

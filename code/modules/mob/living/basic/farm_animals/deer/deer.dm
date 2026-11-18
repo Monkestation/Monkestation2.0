@@ -32,3 +32,8 @@
 	ai_controller.blackboard[BB_STATIONARY_SECONDS] = time_to_freeze_for
 	ai_controller.blackboard[BB_STATIONARY_COOLDOWN] = (time_to_freeze_for * (rand(3, 5)))
 	ai_controller.blackboard[BB_STATIONARY_TARGETS] = stationary_scary_things
+
+/// Cold resistent and doesn't need to breathe
+/mob/living/basic/deer/ice
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0

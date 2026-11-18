@@ -151,7 +151,7 @@
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/navmap_astar
 
 /mob/living/basic/statue/frosty
 	name = "Frosty"

@@ -13,12 +13,17 @@
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  * * diagonal_handling: defines how we handle diagonal moves. see __DEFINES/path.dm
+ * * nav_cost_modifiers: Numeric-keyed alist mapping turf flags to cost multipliers of at least 1.
  */
-/proc/get_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY)
+/proc/get_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY, allow_multiz = FALSE, max_path_cost = 0, list/action_sidecar, allow_nav_links = FALSE, alist/nav_cost_modifiers)
 	var/list/hand_around = list()
+	var/list/datum/callback/await
+	if(action_sidecar)
+		await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished_actions), hand_around, action_sidecar))
+	else
+		await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
 	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
-	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
-	if(!SSpathfinder.pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await))
+	if(!SSpathfinder.pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await, allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers))
 		return list()
 
 	UNTIL(length(hand_around))
@@ -47,24 +52,11 @@
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  */
-/proc/get_swarm_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE)
+/proc/get_swarm_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, alist/nav_cost_modifiers)
 	var/list/hand_around = list()
 	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
-	if(!SSpathfinder.swarmed_pathfind(requester, end, max_distance, mintargetdist, age, access, simulated_only, exclude, skip_first, await))
-		return list()
-
-	UNTIL(length(hand_around))
-	var/list/return_val = hand_around[1]
-	if(!islist(return_val) || (QDELETED(requester) || QDELETED(end))) // It's trash, just hand back empty to make it easy
-		return list()
-	return return_val
-
-/proc/get_astar_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, list/access = list(), turf/exclude, check_z_levels = TRUE, smooth_diagonals = TRUE)
-	var/list/hand_around = list()
-	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
-	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
-	if(!SSpathfinder.astar_pathfind(requester, end, max_distance, mintargetdist, access, exclude, check_z_levels, smooth_diagonals, await))
+	if(!SSpathfinder.swarmed_pathfind(requester, end, max_distance, mintargetdist, age, access, simulated_only, exclude, skip_first, await, nav_cost_modifiers))
 		return list()
 
 	UNTIL(length(hand_around))
@@ -92,7 +84,11 @@
 	// We use += here to behave nicely with lists
 	return_list += LIST_VALUE_WRAP_LISTS(hand_back)
 
-/// The datum used to handle the JPS pathfinding, completely self-contained
+/proc/pathfinding_finished_actions(list/return_list, list/action_return, hand_back, list/actions)
+	return_list += LIST_VALUE_WRAP_LISTS(hand_back)
+	action_return += actions || list()
+
+/// The datum used to handle the navmap pathfinding, completely self-contained
 /datum/pathfind
 	/// The turf we started at
 	var/turf/start
@@ -155,64 +151,6 @@
 	for(var/datum/callback/finished as anything in on_finish)
 		finished.Invoke(value)
 	on_finish = null
-
-/**
- * Processes a path (list of turfs), removes any diagonal moves that would lead to a weird bump
- *
- * path - The path to process down
- * pass_info - Holds all the info about what this path attempt can go through
- * simulated_only - If we are not allowed to pass space turfs
- * avoid - A turf to be avoided
- */
-/proc/remove_clunky_diagonals(list/path, datum/can_pass_info/pass_info, simulated_only, turf/avoid)
-	if(length(path) < 2)
-		return path
-	var/list/modified_path = list()
-
-	for(var/i in 1 to length(path) - 1)
-		var/turf/current_turf = path[i]
-		modified_path += current_turf
-		var/turf/next_turf = path[i+1]
-		var/movement_dir = get_dir(current_turf, next_turf)
-		if(!(movement_dir & (movement_dir - 1))) //cardinal movement, no need to verify
-			continue
-		//If the first diagonal movement step is invalid (north/south), replace with a sidestep first, with an implied vertical step in next_turf
-		var/vertical_only = movement_dir & (NORTH|SOUTH)
-		if(!CAN_STEP(current_turf,get_step(current_turf, vertical_only), simulated_only, pass_info, avoid))
-			modified_path += get_step(current_turf, movement_dir & ~vertical_only)
-	modified_path += path[length(path)]
-
-	return modified_path
-
-/**
- * Processes a path (list of turfs), removes any diagonal moves
- *
- * path - The path to process down
- * pass_info - Holds all the info about what this path attempt can go through
- * simulated_only - If we are not allowed to pass space turfs
- * avoid - A turf to be avoided
- */
-/proc/remove_diagonals(list/path, datum/can_pass_info/pass_info, simulated_only, turf/avoid)
-	if(length(path) < 2)
-		return path
-	var/list/modified_path = list()
-
-	for(var/i in 1 to length(path) - 1)
-		var/turf/current_turf = path[i]
-		modified_path += current_turf
-		var/turf/next_turf = path[i+1]
-		var/movement_dir = get_dir(current_turf, next_turf)
-		if(!(movement_dir & (movement_dir - 1))) //cardinal movement, no need to verify
-			continue
-		var/vertical_only = movement_dir & (NORTH|SOUTH)
-		// If we can't go directly north/south, we will first go to the side,
-		if(!CAN_STEP(current_turf,get_step(current_turf, vertical_only), simulated_only, pass_info, avoid))
-			modified_path += get_step(current_turf, movement_dir & ~vertical_only)
-		else // Otherwise, we'll first go north/south, then to the side
-			modified_path += get_step(current_turf, vertical_only)
-	modified_path += path[length(path)]
-
-	return modified_path
 
 /**
  * For seeing if we can actually move between 2 given turfs while accounting for our access and the requester's pass_flags
@@ -294,7 +232,7 @@
 	/// Are we being thrown?
 	var/thrown = FALSE
 	/// Are we anchored
-	var/anchored = FLASH_LIGHT_POWER
+	var/anchored = FALSE
 
 	/// Are we a ghost? (they have effectively unique pathfinding)
 	var/is_observer = FALSE
@@ -324,8 +262,6 @@
 	/// Pass information for the object we are pulling, if any
 	var/datum/can_pass_info/pulling_info = null
 
-	var/multiz_checks = FALSE
-
 	/// Cameras have a lot of BS can_z_move overrides
 	/// Let's avoid this
 	var/camera_type
@@ -335,14 +271,13 @@
 	/// Require a movable
 	var/datum/weakref/caller_ref = null
 
-/datum/can_pass_info/New(atom/movable/construct_from, list/access, no_id = FALSE, call_depth = 0, multiz_checks = FALSE)
+/datum/can_pass_info/New(atom/movable/construct_from, list/access, no_id = FALSE, call_depth = 0)
 	// No infiniloops
 	if(call_depth > 10)
 		return
 	if(access)
 		src.access = access.Copy()
 	src.no_id = no_id
-	src.multiz_checks = multiz_checks
 
 	if(isnull(construct_from))
 		return

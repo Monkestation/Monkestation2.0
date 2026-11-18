@@ -4,32 +4,32 @@
 	var/round_started = SSticker.HasRoundStarted()
 	var/list/dat = list()
 	dat += "Storyteller: [current_storyteller ? "[current_storyteller.name]" : "None"] "
-	dat += " <a href='byond://?src=[REF(src)];panel=main;action=halt_storyteller' [halted_storyteller ? "class='linkOn'" : ""]>HALT Storyteller</a> <a href='byond://?src=[REF(src)];panel=main;action=open_stats'>Event Panel</a> <a href='byond://?src=[REF(src)];panel=main;action=set_storyteller'>Set Storyteller</a> <a href='byond://?src=[REF(src)];panel=main'>Refresh</a>"
+	dat += " <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=halt_storyteller' [halted_storyteller ? "class='linkOn'" : ""]>HALT Storyteller</a> <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=open_stats'>Event Panel</a> <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=set_storyteller'>Set Storyteller</a> <a href='byond://?src=[REF(src)];[HrefToken()];panel=main'>Refresh</a>"
 	dat += "<BR><font color='#888888'><i>Storyteller determines points gained, event chances, and is the entity responsible for rolling events.</i></font>"
 	dat += "<BR>Active Players: [active_players]   (Head: [head_crew], Sec: [sec_crew], Eng: [eng_crew], Med: [med_crew])"
 	dat += "<BR>Antagonist Point Count vs Maximum: [get_antag_count()] / [get_antag_cap()]"
 	dat += "<HR>"
-	dat += "<a href='byond://?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_MAIN]' [panel_page == GAMEMODE_PANEL_MAIN ? "class='linkOn'" : ""]>Main</a>"
-	dat += " <a href='byond://?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_VARIABLES]' [panel_page == GAMEMODE_PANEL_VARIABLES ? "class='linkOn'" : ""]>Variables</a>"
+	dat += "<a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=tab;tab=[GAMEMODE_PANEL_MAIN]' [panel_page == GAMEMODE_PANEL_MAIN ? "class='linkOn'" : ""]>Main</a>"
+	dat += " <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=tab;tab=[GAMEMODE_PANEL_VARIABLES]' [panel_page == GAMEMODE_PANEL_VARIABLES ? "class='linkOn'" : ""]>Variables</a>"
 	dat += "<HR>"
 	switch(panel_page)
 		if(GAMEMODE_PANEL_VARIABLES)
-			dat += "<a href='byond://?src=[REF(src)];panel=main;action=reload_config_vars'>Reload Config Vars</a> <font color='#888888'><i>Configs located in game_options.txt.</i></font>"
+			dat += "<a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=reload_config_vars'>Reload Config Vars</a> <font color='#888888'><i>Configs located in game_options.txt.</i></font>"
 			dat += "<BR><b>Point Gains Multipliers (only over time):</b>"
 			dat += "<BR><font color='#888888'><i>This affects points gained over time towards scheduling new events of the tracks.</i></font>"
 			for(var/track in point_gain_multipliers)
-				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=pts_multiplier;track=[track]'>[point_gain_multipliers[track]]</a>"
+				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=vars;var=pts_multiplier;track=[track]'>[point_gain_multipliers[track]]</a>"
 			dat += "<HR>"
 
 			dat += "<b>Roundstart Points Multipliers:</b>"
 			dat += "<BR><font color='#888888'><i>This affects points generated for roundstart events and antagonists.</i></font>"
-			dat += "<BR>[EVENT_TRACK_ROLESET]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=roundstart_pts;track=[EVENT_TRACK_ROLESET]'>[roundstart_roleset_multiplier]</a>"
+			dat += "<BR>[EVENT_TRACK_ROLESET]: <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=vars;var=roundstart_pts;track=[EVENT_TRACK_ROLESET]'>[roundstart_roleset_multiplier]</a>"
 			dat += "<HR>"
 
 			dat += "<b>Minimum Population for Tracks:</b>"
 			dat += "<BR><font color='#888888'><i>This are the minimum population caps for events to be able to run.</i></font>"
 			for(var/track in event_tracks)
-				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=min_pop;track=[track]'>[min_pop_thresholds[track]]</a>"
+				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=vars;var=min_pop;track=[track]'>[min_pop_thresholds[track]]</a>"
 			dat += "<HR>"
 
 			dat += "<b>Point Thresholds:</b>"
@@ -39,7 +39,7 @@
 				var/datum/storyteller_track/track_datum = event_tracks[track]
 				if(!track_datum.threshold)
 					continue
-				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=pts_threshold;track=[track]'>[track_datum.threshold]</a>"
+				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=vars;var=pts_threshold;track=[track]'>[track_datum.threshold]</a>"
 
 		if(GAMEMODE_PANEL_MAIN)
 			var/even = TRUE
@@ -69,15 +69,15 @@
 				dat += "<td>[percent]% ([points]/[threshold])</td>" //Progress
 				dat += "<td>~[next] seconds</td>" //Next
 				var/datum/round_event_control/forced_event = forced_next_events[track]
-				var/forced = forced_event ? "[forced_event.name] <a href='byond://?src=[REF(src)];panel=main;action=track_action;track_action=remove_forced;track=[track]'>X</a>" : ""
+				var/forced = forced_event ? "[forced_event.name] <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=track_action;track_action=remove_forced;track=[track]'>X</a>" : ""
 				dat += "<td>[forced]</td>" //Forced
-				dat += "<td><a href='byond://?src=[REF(src)];panel=main;action=track_action;track_action=set_pts;track=[track]'>Set Pts.</a> <a href='byond://?src=[REF(src)];panel=main;action=track_action;track_action=next_event;track=[track]'>Next Event</a></td>" //Actions
+				dat += "<td><a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=track_action;track_action=set_pts;track=[track]'>Set Pts.</a> <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=track_action;track_action=next_event;track=[track]'>Next Event</a></td>" //Actions
 				dat += "</tr>"
 			dat += "</table>"
 
 			if(current_storyteller)
 				var/datum/round_event_control/forced_latejoin = forced_next_events[EVENT_TRACK_LATEJOIN]
-				var/forced_latejoin_text = forced_latejoin ? "[forced_latejoin.name] <a href='byond://?src=[REF(src)];panel=main;action=track_action;track_action=remove_forced;track=[EVENT_TRACK_LATEJOIN]'>X</a>" : "None"
+				var/forced_latejoin_text = forced_latejoin ? "[forced_latejoin.name] <a href='byond://?src=[REF(src)];[HrefToken()];panel=main;action=track_action;track_action=remove_forced;track=[EVENT_TRACK_LATEJOIN]'>X</a>" : "None"
 				dat += "<BR>Latejoin antags: [get_latejoin_antag_chance()]% chance per latejoiner, cooldown [DisplayTimeText(COOLDOWN_TIMELEFT(src, latejoin_antag_cooldown))], forced next: [forced_latejoin_text]"
 
 			dat += "<h2>Scheduled Events:</h2>"
@@ -132,7 +132,7 @@
 		current_storyteller.calculate_weights(statistics_track_page)
 	else
 		dat += "Storyteller: None<BR>Weight and chance statistics will be inaccurate due to the present lack of a storyteller."
-	dat += "<BR><a href='byond://?src=[REF(src)];panel=stats;action=set_roundstart'[roundstart_event_view ? "class='linkOn'" : ""]>Roundstart Events</a> Forced Roundstart events will use rolled points, and are guaranteed to trigger (even if the used points are not enough)"
+	dat += "<BR><a href='byond://?src=[REF(src)];[HrefToken()];panel=stats;action=set_roundstart'[roundstart_event_view ? "class='linkOn'" : ""]>Roundstart Events</a> Forced Roundstart events will use rolled points, and are guaranteed to trigger (even if the used points are not enough)"
 	dat += "<BR>Avg. event intervals: "
 	for(var/track, track_d in event_tracks)
 		if(last_point_gains[track])
@@ -140,7 +140,7 @@
 			dat += "[track]: ~[est_time] m. | "
 	dat += "<HR>"
 	for(var/track in EVENT_PANEL_TRACKS)
-		dat += "<a href='byond://?src=[REF(src)];panel=stats;action=set_cat;cat=[track]'[(statistics_track_page == track) ? "class='linkOn'" : ""]>[track]</a>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];panel=stats;action=set_cat;cat=[track]'[(statistics_track_page == track) ? "class='linkOn'" : ""]>[track]</a>"
 	dat += "<HR>"
 	/// Create event info and stats table
 	dat += "<table align='center'; width='100%'; height='100%'; style='background-color:#13171C'>"
@@ -213,7 +213,7 @@
 /datum/controller/subsystem/gamemode/Topic(href, href_list)
 	. = ..()
 	var/mob/user = usr
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 	switch(href_list["panel"])
 		if("main")

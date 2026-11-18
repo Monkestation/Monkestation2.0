@@ -1,6 +1,6 @@
 /datum/ai_controller/chicken/gary
 	behavior_tree_json = "monkestation/code/modules/ranching/chickens/ai/gary/gary.bt.json"
-	ai_movement = /datum/ai_movement/jps/gary
+	ai_movement = /datum/ai_movement/navmap_astar/gary
 	max_target_distance = 250
 
 /datum/ai_controller/chicken/gary/get_access()
@@ -20,7 +20,7 @@
 		return null
 	return locate(turf_coords[1], turf_coords[2], turf_coords[3])
 
-/datum/ai_movement/jps/gary
+/datum/ai_movement/navmap_astar/gary
 	max_pathing_attempts = 25
 	maximum_length = 175
 	diagonal_flags = DIAGONAL_REMOVE_ALL

@@ -37,7 +37,7 @@
 	can_buckle_to = FALSE
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	lighting_cutoff_red = 12

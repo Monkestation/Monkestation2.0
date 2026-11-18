@@ -15,9 +15,9 @@
 //So far, this surgery type should be the only way carbon mobs can be fishing spots, also because the comp doesn't allow dupes.
 /datum/surgery/organ_manipulation/next_step(mob/living/user, modifiers)
 	. = ..()
-	if(!.)
+	if(!. || QDELETED(src))
 		return
-	if(!ispath(steps[status], /datum/surgery_step/manipulate_organs))
+	if(!is_fishing_step())
 		//The manipulate_organs step either hasn't been reached yet or we're already past it.
 		if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT))
 			return
@@ -29,9 +29,13 @@
 	target.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery)
 
 /datum/surgery/organ_manipulation/Destroy()
-	if(HAS_TRAIT(target, TRAIT_FISHING_SPOT) && ispath(steps[status], /datum/surgery_step/manipulate_organs))
+	if(target && HAS_TRAIT(target, TRAIT_FISHING_SPOT))
 		remove_fishing_spot()
 	return ..()
+
+/// Whether the current step is the one that lets you fish organs out of the target
+/datum/surgery/organ_manipulation/proc/is_fishing_step()
+	return status <= length(steps) && ispath(steps[status], /datum/surgery_step/manipulate_organs)
 
 /**
  * The target is a fishing spot, but we're past the step that allows us to fish organs from him, so we need
@@ -40,7 +44,7 @@
  */
 /datum/surgery/organ_manipulation/proc/remove_fishing_spot()
 	for(var/datum/surgery/organ_manipulation/manipulation in target.surgeries)
-		if(ispath(manipulation.steps[manipulation.status], /datum/surgery_step/manipulate_organs))
+		if(manipulation != src && !QDELING(manipulation) && manipulation.is_fishing_step())
 			return
 	qdel(target.GetComponent(/datum/component/fishing_spot))
 
