@@ -212,10 +212,18 @@
 		return FALSE
 
 /// Forces the body to say something
-/mob/living/intrusive_thoughts/say(message, bubble_type, list/spans = list(), \
-									sanitize = TRUE, datum/language/language = null, \
-									ignore_spam = FALSE, forced = null, filterproof = null, \
-									message_range = 7,	datum/saymode/saymode = null)
+/mob/living/intrusive_thoughts/say(
+		message,
+		bubble_type, 
+		list/spans = list(),
+		sanitize = TRUE, 
+		datum/language/language = null,
+		ignore_spam = FALSE,
+		forced = null,
+		filterproof = null,
+		message_range = 7,
+		datum/saymode/saymode = null
+)
 	trauma.owner.say(message)
 	var/turf/human_turf = get_turf(trauma.owner)
 	var/logging_text = "[key_name(src)] forced [key_name(trauma.owner)] to say [message] at [loc_name(human_turf)]"
