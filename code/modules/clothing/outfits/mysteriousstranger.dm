@@ -5,12 +5,11 @@
 	uniform = /obj/item/clothing/under/misc/patriotsuit
 	suit_store = /obj/item/tank/internals/oxygen/yellow
 	back = /obj/item/mod/control/pre_equipped/myststranger
-	box = /obj/item/storage/box/material
 	backpack_contents = list(
-		/obj/item/melee/energy/axe/lone_wanderer = 1,
+		/obj/item/melee/energy/axe/prot_inv_axe = 1,
 		/obj/item/debug/omnitool = 1,
-		/obj/item/storage/medkit/lone_wanderer_medkit = 1,
-		/obj/item/gun/ballistic/revolver/lone_wanderer = 1,
+		/obj/item/storage/medkit/courrier_medkit = 1,
+		/obj/item/gun/ballistic/revolver/big_iron = 1,
 		/obj/item/gps/advanced/lone_wanderer = 1,
 		/obj/item/holochip/tenthousand = 1,
 		/obj/item/construction/rcd/combat/admin = 1,
@@ -23,8 +22,8 @@
 	shoes = /obj/item/clothing/shoes/magboots/advance
 	mask = /obj/item/clothing/mask/chameleon
 
-	r_pocket = /obj/item/reagent_containers/medipen/lone_wanderer/single
-	l_pocket = /obj/item/reagent_containers/medipen/lone_wanderer/single_painkiller
+	r_pocket = /obj/item/reagent_containers/medipen/ancient/single
+	l_pocket = /obj/item/reagent_containers/medipen/ancient/single_painkiller
 
 	internals_slot = ITEM_SLOT_SUITSTORE
 

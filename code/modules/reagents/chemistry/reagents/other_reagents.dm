@@ -3056,7 +3056,7 @@
 	description = "Sweet release from the pain."
 	reagent_state = LIQUID
 	color = "#78dee6"
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	ph = 1
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT
 	metabolized_traits = list(TRAIT_ANALGESIA)

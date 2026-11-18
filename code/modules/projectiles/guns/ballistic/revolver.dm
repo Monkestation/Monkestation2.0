@@ -485,19 +485,31 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 
 // But he made one fatal slip, when he tried to match the ranger with the big iron on his hip.
 
-/obj/item/gun/ballistic/revolver/lone_wanderer
+/obj/item/gun/ballistic/revolver/big_iron
 	name = "\improper Big Iron"
 	desc = "No rest for the wicked."
-	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/handcannon
-	can_suppress = TRUE
-	fire_delay = 0.25
-	recoil = 0.2
+	desc_controls = "Left click fire, right click to fan the hammer for 3 quick shots, activate in hand to reload from... somewhere."
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/big_iron
+	can_suppress = FALSE
+	fire_delay = 1 SECONDS
+	recoil = 0.4
 	wield_recoil = 0
 
-/obj/item/gun/ballistic/revolver/lone_wanderer/attack_self(mob/living/user)
-	unload_ammo(user)
-	magazine.top_off()
-	spin()
-	user.balloon_alert(user,"reloaded!")
+/obj/item/gun/ballistic/revolver/big_iron/attack_self(mob/living/user)
+	if(do_after(user,1.75 SECONDS,user,timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)))
+		unload_ammo(user)
+		magazine.top_off()
+		spin()
+		user.balloon_alert(user,"reloaded!")
 	return
+/obj/item/gun/ballistic/revolver/big_iron/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ITEM_INTERACT_SUCCESS
+	fire_delay = 0
+	try_fire_gun(interacting_with,user,modifiers)
+	sleep(1.5)
+	try_fire_gun(interacting_with,user,modifiers)
+	sleep(1.5)
+	try_fire_gun(interacting_with,user,modifiers)
+	fire_delay = initial(fire_delay)
+

@@ -202,6 +202,7 @@
 
 	// monkestation edit: dont try to convert banned people
 	if(is_banned_from(flashed.ckey, list(ROLE_BROTHER, ROLE_SYNDICATE)))
+		to_chat(flashed, span_big(span_hypnophrase("You can't remember how you fell down!")))
 		flashed.balloon_alert(source, "cannot become brother!")
 		return
 	// monkestation end
