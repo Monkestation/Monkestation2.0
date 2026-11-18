@@ -22,6 +22,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 	COOLDOWN_DECLARE(move_cooldown)
+	var/atom/movable/screen/healthdoll/living/disguise/disguise_healthdoll
 	var/obj/mimicked_object
 	var/datum/action/cooldown/mimic_object/mimic_ability
 	var/spoofed_flags = 0
@@ -318,6 +319,44 @@
 	mimic_ability.update_mimic_mode(FALSE)
 	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
 
+/datum/component/perfect_mimicry/proc/on_disguise_integrity_changed(obj/source, old_value, new_value)
+	SIGNAL_HANDLER
+
+	if(!disguise_healthdoll || source != mimicked_object)
+		return
+
+	disguise_healthdoll.update_disguise_integrity(source.get_integrity_percentage())
+
+/datum/component/perfect_mimicry/proc/show_disguise_healthdoll()
+	var/mob/living/mimic = parent
+	var/datum/hud/mimic_hud = mimic.hud_used
+	if(!mimic_hud?.healthdoll || disguise_healthdoll)
+		return
+
+	disguise_healthdoll = new(null, mimic_hud)
+	disguise_healthdoll.set_disguise_icon(mimicked_object)
+	disguise_healthdoll.update_disguise_integrity(mimicked_object.get_integrity_percentage())
+	if(ishuman(mimic))
+		disguise_healthdoll.screen_loc = "EAST-2:28,CENTER-2:17"
+	else
+		disguise_healthdoll.screen_loc = "EAST-2:28,CENTER-1:15"
+	mimic_hud.infodisplay += disguise_healthdoll
+
+	if(mimic_hud.hud_version != HUD_STYLE_NOHUD && mimic.client)
+		mimic.client.screen += disguise_healthdoll
+
+/datum/component/perfect_mimicry/proc/hide_disguise_healthdoll()
+	if(!disguise_healthdoll)
+		return
+
+	var/mob/living/mimic = parent
+	if(mimic.hud_used)
+		mimic.hud_used.infodisplay -= disguise_healthdoll
+	if(mimic.client)
+		mimic.client.screen -= disguise_healthdoll
+
+	QDEL_NULL(disguise_healthdoll)
+
 /datum/component/perfect_mimicry/proc/is_allowed_object(atom/mimic_target)
 	if(!isitem(mimic_target))
 		return FALSE
@@ -435,9 +474,11 @@
 	if(length(applied_mob_traits))
 		mimic.add_traits(applied_mob_traits, REF(src))
 	block_actions()
+	show_disguise_healthdoll()
 	mimic.flags_1 |= IGNORE_STORAGE_INVENTORY_1
 	RegisterSignal(mimic, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(mimic, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(mimicked_object, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_disguise_integrity_changed))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_RELAYMOVE, PROC_REF(on_user_move))
 	return TRUE
 
@@ -445,6 +486,7 @@
 	if(!mimicked_object)
 		return FALSE
 	unblock_actions()
+	hide_disguise_healthdoll()
 	UnregisterSignal(mimicked_object, list(
 		COMSIG_QDELETING,
 		COMSIG_ITEM_DROPPED,
@@ -452,7 +494,8 @@
 		COMSIG_ATOM_RELAYMOVE,
 		COMSIG_ATOM_ITEM_INTERACTION,
 		COMSIG_ATOM_TAKE_DAMAGE,
-		COMSIG_PROJECTILE_PREHIT
+		COMSIG_PROJECTILE_PREHIT,
+		COMSIG_ATOM_INTEGRITY_CHANGED
 		))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
