@@ -83,5 +83,4 @@
 	if(borer_team)
 		var/datum/antagonist/cortical_borer/antag = spawned_mob.mind.has_antag_datum(/datum/antagonist/cortical_borer)
 		borer_team.add_member(spawned_mob.mind, antag)
-	if(host_egg
 	qdel(host_egg)
