@@ -201,7 +201,7 @@
 	illustration = null
 
 /obj/item/storage/box/pulseslug/PopulateContents()
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/pulseslug(src)
 
 /obj/item/storage/box/ionslug
@@ -211,7 +211,7 @@
 	illustration = null
 
 /obj/item/storage/box/ionslug/PopulateContents()
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/ion(src)
 
 /obj/item/storage/box/meteorslug
@@ -221,7 +221,7 @@
 	illustration = null
 
 /obj/item/storage/box/meteorslug/PopulateContents()
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/meteorslug(src)
 
 /obj/item/storage/box/frag12
@@ -231,7 +231,7 @@
 	illustration = null
 
 /obj/item/storage/box/frag12/PopulateContents()
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/frag12(src)
 
 /obj/item/storage/box/beanbag
