@@ -31,7 +31,7 @@
 	owner.remove_filter("queens_crown")
 
 /datum/status_effect/queens_crown/get_examine_text()
-	return span_rose("There is no crown on [owner.p_their()] head, and yet you are certain it sits perfectly straight. Nothing done to [owner.p_them()] seems to stay done.")
+	return span_rose(span_slightly_larger("There is no crown on [owner.p_their()] head, and yet you are certain it sits perfectly straight. Nothing done to [owner.p_them()] seems to stay done."))
 
 /datum/status_effect/queens_crown/tick(seconds_between_ticks, times_fired)
 	var/needs_update = FALSE
