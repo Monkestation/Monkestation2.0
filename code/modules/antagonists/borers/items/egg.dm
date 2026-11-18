@@ -27,14 +27,6 @@
 	new /obj/effect/decal/cleanable/food/egg_smudge(user.drop_location())
 	qdel(src)
 
-/obj/item/food/egg/borer_egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(..()) // was it caught by a mob?
-		return
-
-	var/turf/hit_turf = get_turf(hit_atom)
-	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
-	qdel(src)
-
 /obj/effect/mob_spawn/ghost_role/borer_egg
 	name = "borer egg"
 	desc = "An egg of a creature that is known to crawl inside of you, be careful."
