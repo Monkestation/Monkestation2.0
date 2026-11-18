@@ -42,6 +42,18 @@
 		/obj/item/bikehorn,
 		/obj/item/soap,
 		/obj/item/toy/crayon,
+		/obj/item/storage/toolbox,
+		/obj/item/storage/backpack,
+		/obj/item/storage/medkit,
+		/obj/item/storage/box,
+		/obj/item/storage/briefcase,
+		/obj/item/storage/pill_bottle,
+		/obj/item/storage/belt/utility,
+		/obj/item/storage/belt/medical,
+		/obj/item/storage/belt/holster,
+		/obj/item/storage/wallet,
+		/obj/item/storage/basket,
+		/obj/item/storage/bag/garment,
 	))
 	// What is blocked. Used when using the whitelist blocks a problematic subtype.
 	var/static/list/blocked_objects = typecacheof(list(
@@ -58,6 +70,13 @@
 		/obj/item/toy/crayon/mime,
 		/obj/item/toy/crayon/rainbow,
 		/obj/item/reagent_containers/cup/glass/bottle,
+		/obj/item/storage/toolbox/guncase,
+		/obj/item/storage/backpack/holding,
+		/obj/item/storage/backpack/santabag,
+		/obj/item/storage/backpack/meat,
+		/obj/item/storage/backpack/duffelbag/cursed,
+		/obj/item/storage/backpack/satchel/flat,
+		/obj/item/storage/box/papersack,
 	))
 	// Traits applied to mob during disguise.
 	var/list/applied_mob_traits = list(
@@ -499,6 +518,7 @@
 		))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
+	mimicked_object.transfer_observers_to(mimic)
 	mimic.flags_2 &= ~IGNORE_STORAGE_INVENTORY_2
 	UnregisterSignal(mimic, list(COMSIG_MOB_SAY, COMSIG_MOB_STATCHANGE))
 	if(length(applied_mob_traits))
