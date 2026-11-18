@@ -37,7 +37,7 @@
 	can_buckle_to = FALSE
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	lighting_cutoff_red = 12
@@ -420,7 +420,7 @@
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/attack_everything,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/navmap_astar
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/* /datum/ai_planning_subtree/escape_captivity, */
