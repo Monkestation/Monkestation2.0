@@ -97,7 +97,7 @@
 			for(var/obj/object in turf_location)
 				if(object == src)
 					continue
-				if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+				if(HAS_TRAIT(object, TRAIT_UNDERFLOOR))
 					continue
 				reagents.expose(object, VAPOR, fraction)
 

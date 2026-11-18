@@ -20378,7 +20378,8 @@
 	color = "#0000cc";
 	name = "Strange Fluid";
 	desc = "Something of extradimensional origin had leaked from the potato.";
-	layer = 2.99
+	layer = 2.99;
+	plane = -4
 	},
 /turf/open/floor/carpet/neon/simple/black,
 /area/centcom/central_command_areas/adminroom)

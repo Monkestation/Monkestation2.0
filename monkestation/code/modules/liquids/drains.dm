@@ -7,7 +7,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	density = FALSE
 	plane = FLOOR_PLANE
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CATWALK_LAYER
 	anchored = TRUE
 	var/processing = FALSE
 	var/drain_flat = 5

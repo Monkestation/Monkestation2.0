@@ -781,7 +781,7 @@
 	icon_state = "floor"
 	bulb_outer_range = 4
 	light_angle = 360
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

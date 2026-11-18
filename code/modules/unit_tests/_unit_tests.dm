@@ -278,6 +278,7 @@
 #include "vendor_boards.dm"
 #include "verify_config_tags.dm"
 #include "verify_emoji_names.dm"
+#include "washing.dm"
 #include "wizard_loadout.dm"
 #include "worn_icons.dm"
 // END_INCLUDE

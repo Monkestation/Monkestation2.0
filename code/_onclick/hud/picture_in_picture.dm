@@ -44,7 +44,7 @@
 	standard_background = new /mutable_appearance()
 	standard_background.icon = 'icons/hud/pic_in_pic.dmi'
 	standard_background.icon_state = "background"
-	standard_background.layer = SPACE_LAYER /* LOWER_FLOOR_LAYER */
+	standard_background.layer = LOWER_FLOOR_LAYER
 	standard_background.appearance_flags = PIXEL_SCALE
 
 /atom/movable/screen/movable/pic_in_pic/proc/add_buttons()
