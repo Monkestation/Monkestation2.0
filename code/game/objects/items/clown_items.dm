@@ -307,7 +307,7 @@
 	current_sound = sound_effects[tgui_input_list(user, "Select a sound", "Noisemaker", sort_list(sound_effects))]
 
 /obj/item/noisemaker/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] sticks [src] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] sticks [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, current_sound, sound_volume * 2, FALSE, 10) //Play the selected sfx at double volume and add 10 to the range
 	return BRUTELOSS
 
