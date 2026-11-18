@@ -293,7 +293,7 @@
 	make_noise()
 	..()
 
-/obj/item/noisemaker/attack()
+/obj/item/noisemaker/afterattack()
 	make_noise()
 	..()
 
@@ -301,7 +301,7 @@
 	if(!COOLDOWN_FINISHED(src, noisemaker_cooldown))
 		return
 	COOLDOWN_START(src, noisemaker_cooldown, cooldown_time)
-	playsound(src, current_sound, sound_volume, FALSE, extra_sound_range)
+	playsound(src, current_sound, sound_volume, FALSE, extra_sound_range, channel = CHANNEL_INSTRUMENTS)
 
 /obj/item/noisemaker/attack_self_secondary(mob/user) //Selecting the sound to play
 	current_sound = sound_effects[tgui_input_list(user, "Select a sound", "Noisemaker", sort_list(sound_effects))]
