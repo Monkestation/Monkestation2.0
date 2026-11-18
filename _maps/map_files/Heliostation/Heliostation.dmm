@@ -26442,7 +26442,7 @@
 "dbF" = (
 /obj/structure/sign/warning/electric_shock/directional/south,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "dbH" = (
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun{
@@ -26860,6 +26860,11 @@
 	dir = 4
 	},
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"djx" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/rods,
+/turf/open/space/basic,
+/area/space/nearstation)
 "djB" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/turf_decal/bot,
@@ -47410,7 +47415,7 @@
 "lhi" = (
 /obj/structure/sign/warning/electric_shock/directional/east,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "lhm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51568,10 +51573,6 @@
 	dir = 8
 	},
 /area/station/engineering/hallway)
-"mJA" = (
-/obj/item/stack/rods,
-/turf/open/space/basic,
-/area/space)
 "mJL" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/dark/textured_half,
@@ -69852,7 +69853,7 @@
 "txF" = (
 /obj/structure/sign/warning/secure_area/directional/south,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "txG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -138231,9 +138232,9 @@ aak
 aaa
 aaa
 aaa
-mJA
 aaa
-aOd
+aaa
+djx
 aaa
 aak
 aaa

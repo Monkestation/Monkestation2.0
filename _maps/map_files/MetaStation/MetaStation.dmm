@@ -47686,12 +47686,6 @@
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"qrd" = (
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "qrg" = (
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/circuit/green{
@@ -113176,7 +113170,7 @@ lMJ
 lMJ
 aox
 lMJ
-qrd
+rrt
 rrt
 rrt
 rrt
