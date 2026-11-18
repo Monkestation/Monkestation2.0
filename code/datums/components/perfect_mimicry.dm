@@ -475,7 +475,7 @@
 		mimic.add_traits(applied_mob_traits, REF(src))
 	block_actions()
 	show_disguise_healthdoll()
-	mimic.flags_1 |= IGNORE_STORAGE_INVENTORY_1
+	mimic.flags_2 |= IGNORE_STORAGE_INVENTORY_2
 	RegisterSignal(mimic, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(mimic, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_disguise_integrity_changed))
@@ -499,7 +499,7 @@
 		))
 	var/mob/living/mimic = parent
 	mimic.forceMove(mimicked_object.drop_location())
-	mimic.flags_1 &= ~IGNORE_STORAGE_INVENTORY_1
+	mimic.flags_2 &= ~IGNORE_STORAGE_INVENTORY_2
 	UnregisterSignal(mimic, list(COMSIG_MOB_SAY, COMSIG_MOB_STATCHANGE))
 	if(length(applied_mob_traits))
 		mimic.remove_traits(applied_mob_traits, REF(src))

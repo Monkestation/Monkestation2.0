@@ -15,6 +15,8 @@
 
 	///First atom flags var
 	var/flags_1 = NONE
+	///Second atom flags var
+	var/flags_2 = NONE
 	///Intearaction flags
 	var/interaction_flags_atom = NONE
 

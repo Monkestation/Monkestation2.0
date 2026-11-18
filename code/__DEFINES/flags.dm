@@ -71,8 +71,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 /// This atom does not need to generate its own preview icon for GAGS
 #define NO_NEW_GAGS_PREVIEW_1 (1<<21)
+
+/// This is for flags_2
 /// Whether this atom should be ignored when enumerating storage inventory contents.
-#define IGNORE_STORAGE_INVENTORY_1 (1<<22)
+#define IGNORE_STORAGE_INVENTORY_2 (1<<0)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name

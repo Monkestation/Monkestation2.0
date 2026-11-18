@@ -7,7 +7,7 @@
 	var/list/toreturn = list()
 
 	for(var/obj/item/thing in real_location)
-		if(thing.flags_1 & IGNORE_STORAGE_INVENTORY_1)
+		if(thing.flags_2 & IGNORE_STORAGE_INVENTORY_2)
 			continue
 		var/total_amnt = 1
 
