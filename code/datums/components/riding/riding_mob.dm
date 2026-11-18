@@ -475,7 +475,6 @@
 	basic_parent.melee_attack(pointed)
 
 /datum/component/riding/creature/leaper/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
-	SIGNAL_HANDLER
 	UnregisterSignal(rider, COMSIG_MOVABLE_POINTED)
 	return ..()
 

@@ -101,7 +101,9 @@
 		if(!add_to_contents)
 			food_stack.use(1)
 			return
-		final_target = food_stack.split_stack(eater, 1)
+		// monkestation edit: our split_stack can sleep, so make the bite by hand
+		final_target = new food_stack.type(eater, 1, FALSE, food_stack.mats_per_unit)
+		food_stack.use(1)
 
 	eater.log_message("has eaten [target], [add_to_contents ? "swallowing it" : "destroying it"]!", LOG_ATTACK)
 
