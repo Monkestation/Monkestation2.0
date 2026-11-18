@@ -1390,7 +1390,8 @@
 	if(greyscale_colors)
 		vended_item.set_greyscale(colors=greyscale_colors)
 	R.amount--
-	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
+	var/sigreturn = SEND_SIGNAL(usr, COMSIG_MOB_VENDING_PURCHASE, src, vended_item)
+	if(!(sigreturn & VENDING_NO_PICKUP) && usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take \the [R.name] out of the slot."))
 	else
 		to_chat(usr, span_warning("[capitalize(format_text(R.name))] falls onto the floor!"))
