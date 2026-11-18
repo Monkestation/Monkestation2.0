@@ -30,6 +30,7 @@
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 /obj/item/clothing/suit/apron/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
@@ -177,8 +178,9 @@
 	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
+	has_coat_pockets = TRUE
 
-/obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
@@ -199,6 +201,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	species_exception = list(/datum/species/golem)
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"

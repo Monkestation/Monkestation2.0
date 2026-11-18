@@ -8,6 +8,7 @@
 	armor_type = /datum/armor/shoes_roman
 	can_be_tied = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -16,6 +17,7 @@
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 /obj/item/clothing/shoes/griffin/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "galoshes") //close enough
@@ -47,6 +49,7 @@
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()

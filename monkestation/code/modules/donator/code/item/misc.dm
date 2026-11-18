@@ -8,7 +8,7 @@
 	pickup_mixer_channel = CHANNEL_SQUEAK
 	drop_mixer_channel = CHANNEL_SQUEAK
 	var/datum/looping_sound/wumpa/sound_loop
-	var/shutup = FALSE
+	var/shutup = TRUE
 	var/static/list/squeak_override = list(
 		'monkestation/code/modules/donator/sounds/woah_1.ogg'   = 33,
 		'monkestation/code/modules/donator/sounds/woah_2.ogg'   = 33,
@@ -19,6 +19,7 @@
 /obj/item/donator/wumpa/Initialize(mapload)
 	. = ..()
 	sound_loop = new /datum/looping_sound/wumpa(src, TRUE, FALSE, FALSE, CHANNEL_JUKEBOX)
+	sound_loop.stop()
 	AddComponent(/datum/component/squeak, squeak_override)
 
 /obj/item/donator/wumpa/Destroy(force)

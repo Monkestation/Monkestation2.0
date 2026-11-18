@@ -35,7 +35,9 @@ export const NtosRevelation = () => {
                 <Button
                   color={armed ? 'bad' : 'average'}
                   onClick={() => act('PRG_arm')}
-                >{armed ? 'ARMED' : 'DISARMED'}</Button>
+                >
+                  {armed ? 'ARMED' : 'DISARMED'}
+                </Button>
               }
             />
           </LabeledList>
@@ -48,8 +50,9 @@ export const NtosRevelation = () => {
             color="bad"
             disabled={!armed}
             confirmColor="good"
-            onClick={() => act('PRG_activate')}>
-              ACTIVATE
+            onClick={() => act('PRG_activate')}
+          >
+            ACTIVATE
           </Button.Confirm>
         </Section>
       </NtosWindow.Content>

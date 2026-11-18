@@ -27,11 +27,12 @@
 	var/mob/living/carbon/carbon = fishing_spot
 	var/list/possible_organs = list()
 	for(var/datum/surgery/organ_manipulation/operation in carbon.surgeries)
-		var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[operation.steps[operation.status]]
-		if(!istype(manip_step))
+		if(!operation.is_fishing_step() || !operation.operated_bodypart)
 			continue
-		for(var/obj/item/organ/organ in operation.operated_bodypart)
-			if(organ.organ_flags & ORGAN_UNREMOVABLE || !manip_step.can_use_organ(organ))
+		var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[operation.steps[operation.status]]
+		// Organs aren't stored inside the bodypart here, so look them up by zone instead.
+		for(var/obj/item/organ/organ as anything in carbon.get_organs_for_zone(operation.operated_bodypart.body_zone, include_children = TRUE))
+			if(organ.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_VITAL) || !manip_step.can_use_organ(organ))
 				continue
 			possible_organs |= organ
 

@@ -28,7 +28,7 @@
 		RegisterSignal(gloves, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 		var/mob/living/wearer = gloves.loc
 		if(istype(wearer) && wearer.get_item_by_slot(ITEM_SLOT_GLOVES) == gloves)
-			RegisterSignal(wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+			RegisterSignals(wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), PROC_REF(on_unarmed_attack))
 
 /// Adds the screentip to open the rod UI when held with an empty hand
 /datum/component/profound_fisher/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/living/user)
@@ -71,7 +71,7 @@
 	SIGNAL_HANDLER
 	if(slot != ITEM_SLOT_GLOVES)
 		return
-	RegisterSignal(equipper, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignals(equipper, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), PROC_REF(on_unarmed_attack))
 	RegisterSignal(equipper, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_fishing))
 
 /// Opens the UI of the integrated fishing rod
@@ -83,7 +83,7 @@
 /// Stops the dropper from fishing with their bare hands
 /datum/component/profound_fisher/proc/on_drop(datum/source, atom/dropper)
 	SIGNAL_HANDLER
-	UnregisterSignal(dropper, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_COMPLETE_FISHING))
+	UnregisterSignal(dropper, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_MOB_COMPLETE_FISHING))
 	REMOVE_TRAIT(dropper, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC) //this will cancel the current minigame if the fishing rod was internal.
 
 /// Fishes on the target when attacking it unarmed, if it's a fishing spot
