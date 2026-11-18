@@ -5,6 +5,7 @@
 	base_icon_state = "water"
 	anchored = TRUE
 	plane = FLOOR_PLANE
+	layer = CLEANABLE_FLOOR_OBJECT_LAYER
 	color = "#DDF"
 	alpha = 175
 	//For being on fire
@@ -301,7 +302,7 @@
 /obj/effect/abstract/fire
 	icon = 'icons/obj/effects/liquid.dmi'
 	plane = FLOOR_PLANE
-	layer = BELOW_MOB_LAYER
+	layer = CLEANABLE_FLOOR_OBJECT_LAYER
 	mouse_opacity = FALSE
 	appearance_flags = RESET_COLOR | RESET_ALPHA
 
