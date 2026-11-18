@@ -103,7 +103,7 @@
 	convert_damage = TRUE
 	convert_damage_type = BRUTE
 	sound = 'sound/effects/magic/darkspawn/devour_will_end.ogg'
-	possible_shapes = list(/mob/living/simple_animal/hostile/crawling_shadows)
+	possible_shapes = list(/mob/living/basic/crawling_shadows)
 
 /datum/action/cooldown/spell/shapeshift/crawling_shadows/Grant(mob/grant_to)
 	. = ..()

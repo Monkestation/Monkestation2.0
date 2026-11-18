@@ -7,7 +7,6 @@
 	var/list/allowed_types = list(
 		/mob/living/simple_animal/hostile,
 		/mob/living/simple_animal/hostile/asteroid,
-		/mob/living/simple_animal/hostile/asteroid/curseblob,
 		/mob/living/simple_animal/hostile/asteroid/elite,
 		/mob/living/simple_animal/hostile/asteroid/elite/broodmother,
 		/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child,
@@ -16,7 +15,6 @@
 		/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
 		/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead,
 		/mob/living/simple_animal/hostile/asteroid/elite/pandora,
-		/mob/living/simple_animal/hostile/crawling_shadows,
 		/mob/living/simple_animal/hostile/megafauna,
 		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
 		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom,
@@ -40,7 +38,6 @@
 		/mob/living/simple_animal/hostile/ooze,
 		/mob/living/simple_animal/hostile/ooze/gelatinous,
 		/mob/living/simple_animal/hostile/ooze/grapes,
-		/mob/living/simple_animal/hostile/darkspawn_progenitor,
 
 		//MONKESTATION-SPECIFIC ENTRIES START
 		/mob/living/simple_animal/fish,
