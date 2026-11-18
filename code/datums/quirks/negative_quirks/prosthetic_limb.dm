@@ -12,6 +12,11 @@
 	var/limb_zone
 	species_blacklist = list(SPECIES_OOZELING)
 
+/// Lists the preferences shown under the customize button of this quirk
+/datum/quirk_constant_data/prosthetic_limb
+	associated_typepath = /datum/quirk/prosthetic_limb
+	customization_options = list(/datum/preference/choiced/limb/prosthetic)
+
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	limb_zone = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/limb/prosthetic)]
 	if (isnull(limb_zone))  //Client gone or they chose a random limb
