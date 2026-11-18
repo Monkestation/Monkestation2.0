@@ -15,7 +15,6 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_BASIC
-	astar_weight = 75
 
 	//Can this plating have reinforced floors placed ontop of it
 	var/attachment_holes = TRUE

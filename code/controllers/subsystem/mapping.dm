@@ -105,6 +105,14 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
+	var/bake_map_config_path = world.params[NAVMAP_BAKE_MAP_CONFIG_PARAMETER]
+	if(bake_map_config_path)
+		var/datum/map_config/bake_config = new
+		if(!bake_config.LoadConfig(bake_map_config_path, TRUE))
+			CRASH("Could not load navmap bake configuration [bake_map_config_path]")
+		QDEL_NULL(current_map)
+		current_map = bake_config
+		return
 #ifdef FORCE_MAP
 	current_map = load_map_config(FORCE_MAP, FORCE_MAP_DIRECTORY)
 #else
@@ -144,6 +152,11 @@ SUBSYSTEM_DEF(mapping)
 	require_area_resort()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
+	#ifdef NAVMAP_BAKE_GENERATION
+	var/generating_navmap_bakes = TRUE
+	#else
+	var/generating_navmap_bakes = FALSE
+	#endif
 
 #ifndef SKIP_SPACE_LEVELS
 	var/start_time = REALTIMEOFDAY
@@ -158,7 +171,7 @@ SUBSYSTEM_DEF(mapping)
 		++space_levels_so_far
 	SStitle.add_init_text("Empty Space", "> Space", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
-	if(current_map.wilderness_levels)
+	if(current_map.wilderness_levels && !generating_navmap_bakes)
 		var/list/FailedZs = list()
 
 		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.wilderness_maps_to_spawn, default_traits = current_map.wilderness_z_traits, height_autosetup = FALSE)
@@ -168,7 +181,7 @@ SUBSYSTEM_DEF(mapping)
 
 	start_time = REALTIMEOFDAY
 	// Pick a random away mission.
-	if(CONFIG_GET(flag/roundstart_away))
+	if(!generating_navmap_bakes && CONFIG_GET(flag/roundstart_away))
 		SStitle.add_init_text("Away Mission", "> Away Mission", "<font color='yellow'>LOADING...</font>")
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 		SStitle.add_init_text("Away Mission", "> Away Mission", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
@@ -177,22 +190,24 @@ SUBSYSTEM_DEF(mapping)
 //		load_all_away_missions() We don't use away missions, as of now at least
 
 	start_time = REALTIMEOFDAY
-	SStitle.add_init_text("Ruins", "> Ruins", "<font color='yellow'>LOADING...</font>")
-	setup_ruins()
-	SStitle.add_init_text("Ruins", "> Ruins", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
+	if(!generating_navmap_bakes)
+		SStitle.add_init_text("Ruins", "> Ruins", "<font color='yellow'>LOADING...</font>")
+		setup_ruins()
+		SStitle.add_init_text("Ruins", "> Ruins", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
 #endif
-	// Run map generation after ruin space is reserved, since this space is used for the cave gen.
-	run_map_terrain_generation()
-	// Generate our rivers, we do this here so the map doesn't load on top of them
-	setup_rivers()
-	// Now that terrain generation is done, actually load the ruin maps in.
-	var/ruin_load_start = REALTIMEOFDAY
-	SStitle.add_init_text("Ruin Loading", "> Ruin Loading", "<font color='yellow'>LOADING...</font>")
-	load_reserved_ruins()
-	SStitle.add_init_text("Ruin Loading", "> Ruin Loading", "<font color='green'>DONE</font>", (REALTIMEOFDAY - ruin_load_start) / (1 SECONDS))
-	// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
-	run_map_terrain_population()
+	if(!generating_navmap_bakes)
+		// Run map generation after ruin space is reserved, since this space is used for the cave gen.
+		run_map_terrain_generation()
+		// Generate our rivers, we do this here so the map doesn't load on top of them
+		setup_rivers()
+		// Now that terrain generation is done, actually load the ruin maps in.
+		var/ruin_load_start = REALTIMEOFDAY
+		SStitle.add_init_text("Ruin Loading", "> Ruin Loading", "<font color='yellow'>LOADING...</font>")
+		load_reserved_ruins()
+		SStitle.add_init_text("Ruin Loading", "> Ruin Loading", "<font color='green'>DONE</font>", (REALTIMEOFDAY - ruin_load_start) / (1 SECONDS))
+		// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
+		run_map_terrain_population()
 	// Add the first transit level
 	var/datum/space_level/base_transit = add_reservation_zlevel()
 	require_area_resort()
@@ -600,6 +615,9 @@ Used by the AI doomsday and the self-destruct nuke.
 	// load the station
 	station_start = world.maxz + 1
 	LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.traits, ZTRAITS_STATION, height_autosetup = current_map.height_autosetup)
+	#ifdef NAVMAP_BAKE_GENERATION
+	return
+	#endif
 
 	LoadStationRoomTemplates()
 	LoadStationRooms()
