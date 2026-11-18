@@ -57,7 +57,7 @@
 	/// What the generation of the borer egg is
 	var/generation = 0
 	/// The egg that is attached to this mob spawn
-	var/obj/item/borer_egg/host_egg = /obj/item/borer_egg
+	var/obj/item/food/egg/borer_egg/host_egg = /obj/item/food/egg/borer_egg
 	/// The team we should make our borers join
 	var/datum/team/cortical_borers/borer_team
 
