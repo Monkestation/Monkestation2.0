@@ -20,7 +20,7 @@
 
 	attack_verb_continuous = "headbutts"
 	attack_verb_simple = "headbutt"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SMASH
 	speak_emote = list("shrieks")
 	death_message = "seizes!"

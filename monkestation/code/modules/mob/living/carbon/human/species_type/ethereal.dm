@@ -16,8 +16,6 @@
 
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
 	bodytemp_normal = (BODYTEMP_NORMAL + 50)
-	temperature_homeostasis_speed = 3
-	temperature_normalization_speed = 1
 
 	siemens_coeff = 0.5 //They thrive on energy
 	payday_modifier = 1

@@ -1,0 +1,5 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "fixed Spit Ink bypassing the ability cooldown."
+  - rscadd: "Spit Ink will backfire when attempting to fire it when unusable."

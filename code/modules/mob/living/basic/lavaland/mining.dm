@@ -6,8 +6,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = INFINITY
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = INFINITY
 	// Pale purple, should be red enough to see stuff on lavaland
 	lighting_cutoff_red = 25
 	lighting_cutoff_green = 15
@@ -26,14 +26,10 @@
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	if (kill_count)
 		AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
-	AddElement(\
-		/datum/element/ranged_armour,\
-		minimum_projectile_force = 30,\
-		below_projectile_multiplier = 0.3,\
-		vulnerable_projectile_types = MINING_MOB_PROJECTILE_VULNERABILITY,\
-		minimum_thrown_force = 20,\
-		throw_blocked_message = throw_blocked_message,\
-	)
+	var/static/list/vulnerable_projectiles
+	if(!vulnerable_projectiles)
+		vulnerable_projectiles = string_list(MINING_MOB_PROJECTILE_VULNERABILITY)
+	add_ranged_armour(vulnerable_projectiles)
 	if(crusher_loot)
 		AddElement(\
 			/datum/element/crusher_loot,\
@@ -41,3 +37,14 @@
 			drop_mod = crusher_drop_chance,\
 			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)
+
+/// Adds the ranged armour element, which makes projectiles (bar the listed ones) weaker against us
+/mob/living/basic/mining/proc/add_ranged_armour(list/vulnerable_projectiles)
+	AddElement(\
+		/datum/element/ranged_armour,\
+		minimum_projectile_force = 30,\
+		below_projectile_multiplier = 0.3,\
+		vulnerable_projectile_types = vulnerable_projectiles,\
+		minimum_thrown_force = 20,\
+		throw_blocked_message = throw_blocked_message,\
+	)

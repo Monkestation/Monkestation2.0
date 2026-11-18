@@ -21,7 +21,7 @@
 	/// The time it takes to link to a mob.
 	var/link_time = 6 SECONDS
 
-/datum/action/cooldown/spell/pointed/manse_link/New(Target)
+/datum/action/cooldown/spell/pointed/manse_link/New(Target, original = TRUE)
 	. = ..()
 	if(!istype(Target, /datum/component/mind_linker))
 		stack_trace("[name] ([type]) was instantiated on a non-mind_linker target, this doesn't work.")

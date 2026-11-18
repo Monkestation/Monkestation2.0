@@ -3315,7 +3315,7 @@
 "Go" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 9
 	},
 /obj/item/clothing/gloves/latex{
@@ -4154,7 +4154,7 @@
 /area/virtual_domain/powered_lighting)
 "Ok" = (
 /obj/structure/table/glass,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/book/manual/wiki/surgery{
 	pixel_x = -4;
 	pixel_y = 3

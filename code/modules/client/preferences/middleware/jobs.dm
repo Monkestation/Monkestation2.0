@@ -19,6 +19,8 @@
 		return TRUE
 
 	for (var/datum/job/job as anything in SSjob.joinable_occupations)
+		if (job.job_flags & JOB_LATEJOIN_ONLY)
+			continue
 		job_prefs[job.title] = JP_LOW
 
 	return TRUE
@@ -40,13 +42,16 @@
 	if (isnull(job))
 		return FALSE
 
-	if (job.faction != FACTION_STATION)
+	if (job.faction != FACTION_STATION || (job.job_flags & JOB_LATEJOIN_ONLY))
 		return FALSE
 
 	if (!preferences.set_job_preference_level(job, level, job_prefs_type))
 		return FALSE
 
 	preferences.character_preview_view?.update_body()
+
+	if(!SSticker.HasRoundStarted())
+		SEND_SIGNAL(user, COMSIG_JOB_PREF_UPDATED)
 
 	return TRUE
 
@@ -58,6 +63,8 @@
 		return FALSE
 
 	preferences.alt_job_titles[default_job_title] = new_job_title
+	if(!SSticker.HasRoundStarted())
+		SEND_SIGNAL(user, COMSIG_JOB_PREF_UPDATED)
 
 	return TRUE
 
@@ -79,6 +86,8 @@
 	var/list/jobs = list()
 
 	for (var/datum/job/job as anything in SSjob.joinable_occupations)
+		if (job.job_flags & JOB_LATEJOIN_ONLY)
+			continue
 		var/datum/job_department/department_type = job.department_for_prefs || job.departments_list?[1]
 		if (isnull(department_type))
 			stack_trace("[job] does not have a department set, yet is a joinable occupation!")
@@ -142,6 +151,8 @@
 	var/list/job_required_experience = list()
 
 	for (var/datum/job/job as anything in SSjob.all_occupations)
+		if (job.job_flags & JOB_LATEJOIN_ONLY)
+			continue
 		var/required_playtime_remaining = job.required_playtime_remaining(user.client)
 		if (required_playtime_remaining)
 			job_required_experience[job.title] = list(

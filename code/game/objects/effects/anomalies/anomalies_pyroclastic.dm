@@ -31,13 +31,12 @@
 	if(istype(tile))
 		tile.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
 
-	var/new_colour = pick(/datum/slime_color/red, /datum/slime_color/orange)
-	var/mob/living/basic/slime/pyro = new(tile, new_colour)
-	ADD_TRAIT(pyro, TRAIT_SLIME_RABID, "pyro")
+	var/new_type = pick(/datum/slime_type/red, /datum/slime_type/orange)
+	var/mob/living/basic/slime/pyro = new(tile, new_type)
+	pyro.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, checked_target = pyro, ignore_category = POLL_IGNORE_PYROSLIME, alert_pic = pyro, role_name_text = "pyroclastic anomaly slime")
 	if(isnull(chosen_one))
-		pyro.recompile_ai_tree()
 		return
 	pyro.PossessByPlayer(chosen_one.key)
 	pyro.mind.special_role = ROLE_PYROCLASTIC_SLIME

@@ -30,7 +30,7 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ruin/ambimine.ogg')
 	icon_state = "awaycontent5"
 	outdoors = TRUE
 
@@ -52,7 +52,7 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ruin/ambimine.ogg')
 	icon_state = "awaycontent8"
 
 //Fluff objects/structures.

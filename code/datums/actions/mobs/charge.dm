@@ -44,7 +44,7 @@
 
 	if(charger in charging)
 		// Stop any existing charging, this'll clean things up properly
-		SSmove_manager.stop_looping(charger)
+		GLOB.move_manager.stop_looping(charger)
 
 	charger.pulledby?.stop_pulling() // janky fix for charging while grabbed breaking movement
 	charging += charger
@@ -60,7 +60,7 @@
 
 	var/time_to_hit = min(get_dist(charger, target), charge_distance) * charge_speed
 
-	var/datum/move_loop/new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/new_loop = GLOB.move_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!new_loop)
 		return
 	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
@@ -93,7 +93,7 @@
 /datum/action/cooldown/mob_cooldown/charge/proc/stat_changed(mob/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 	if(new_stat == DEAD)
-		SSmove_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
+		GLOB.move_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
 
 /datum/action/cooldown/mob_cooldown/charge/proc/do_charge_indicator(atom/charger, atom/charge_target)
 	var/turf/target_turf = get_turf(charge_target)
@@ -222,14 +222,20 @@
 	id = "tired_post_charge"
 	duration = 1 SECONDS
 	alert_type = null
+	/// The movespeed modifier applied while tired after charging
+	var/tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge
 
 /datum/status_effect/tired_post_charge/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tired_post_charge)
+	owner.add_movespeed_modifier(tired_movespeed)
 
 /datum/status_effect/tired_post_charge/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tired_post_charge)
+	owner.remove_movespeed_modifier(tired_movespeed)
+
+/datum/status_effect/tired_post_charge/lesser
+	id = "tired_post_charge_easy"
+	tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge/lesser
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"

@@ -819,7 +819,7 @@
 	armor_type = /datum/armor/mask_chameleon
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
@@ -1314,16 +1314,13 @@
 	pin = /obj/item/firing_pin
 	automatic_charge_overlays = FALSE
 	can_select = FALSE
+	has_manufacturer = FALSE
 
 	/// The vars copied over to our projectile on fire.
 	var/list/chameleon_projectile_vars
 
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
-
-/obj/item/gun/energy/laser/chameleon/give_manufacturer_examine()
-	return
-
 
 /obj/item/gun/energy/laser/chameleon/multitool_act(mob/living/user, obj/item/tool)
 	if(chameleon_action.hidden)

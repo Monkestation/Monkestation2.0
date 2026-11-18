@@ -632,12 +632,13 @@
 		return
 	if(can_bleed(BLOOD_COVER_TURFS) != BLEED_SPLATTER)
 		return
+	var/list/blood_dna = get_blood_dna_list()
 	for(var/i in 1 to amount)
-		var/obj/effect/decal/cleanable/blood/particle/droplet = new(loc, get_static_viruses(), get_blood_dna_list())
+		var/obj/effect/blood_droplet/droplet = new(loc, get_static_viruses(), blood_dna)
 		if(QDELETED(droplet)) // if they're deleting upon init, let's not waste any more time, any others will prolly just do the same thing
 			return
 		droplet.pixel_z = rand(min_pixel_z, max_pixel_z)
-		droplet.start_movement(angle + rand(min_deviation, max_deviation))
+		droplet.fling(angle + rand(min_deviation, max_deviation))
 
 #undef BLOOD_DRIP_RATE_MOD
 #undef DRUNK_POWER_TO_BLOOD_ALCOHOL

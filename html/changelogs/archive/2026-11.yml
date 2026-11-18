@@ -1,0 +1,794 @@
+2026-11-01:
+  AitorLogedo:
+  - balance: The Double-Bladed Energy Sword can only be bought when there are at least
+      30 living players.
+  - bugfix: Balaclavas, emotion masks, clown and mime masks, vapes and facehuggers
+      no longer reset their look when changing z levels.
+  - balance: Body temperature works like tg. Space, cold and hot rooms, fire and hot
+      or cold reagents actually affect your body temperature again.
+  - balance: Clothing protects you from heat and cold based on what it covers and
+      the temperature it's rated for.
+  - balance: Fire burns you by heating you up instead of dealing extra direct damage.
+  - balance: The temperature gun changes body temperature way more, can heat or cool
+      beakers and the heat beam dries wet people.
+  - balance: Cold and hot drinks and reagents, leporazine, traps, thermal regulators
+      and a lot of other temperature stuff are back to their old values.
+  - rscdel: Removed homeostasis, your body doesn't burn hunger to keep its temperature
+      anymore.
+  ? Ghommie, MrMelbert, vinylspiders, ArcaneMusic, san7890, Ben10Omintrix, tralezab,
+    JohnFulpWillard, jwc1015, Zenitheevee, Paxilmaniac, homexp13, Y0SH1M4S73R
+  : - rscadd: Fish analyzers can be used for fish scanning experiments and can be
+        bought as a goodie.
+    - rscadd: Aquariums have a small feed storage that feeds the fish automatically,
+        also works with plumbing.
+    - rscadd: Fish catalogs can be bought as a goodie.
+    - rscadd: You can fish in hydroponics trays with water and nothing planted in
+        them.
+    - rscadd: Added a few fish related bounties.
+    - rscadd: Fish cases can be printed from the service techfab and the autolathe.
+    - rscadd: Most fishing rods come with a hook and line preinstalled. Hooks are
+        needed to fish.
+    - rscadd: The rescue and jawed hook can snag and reel in mobs. The jawed hook
+        also slows them down.
+    - rscadd: Added the auto-reel fishing line, it speeds up fishing and lets you
+        yank things towards you.
+    - rscadd: Fishes love kronkaine.
+    - rscadd: Examining a fishing spot twice with enough fishing skill (or the skillchip)
+        lists the fish you can catch there.
+    - rscadd: 'New fish: the lavaloop (lava and plasma rivers), the anxious zipzap
+        and the monocloning jumpercable.'
+    - rscadd: New aquarium, the bioelectricity generator.
+    - rscadd: Electric eels prefer used car batteries for bait.
+    - rscadd: Aquariums influence the beauty of the room based on their contents.
+        Morbid people like dead fish in them.
+    - rscadd: You can now fish with explosives.
+    - rscadd: Fish can be sold through cargo, bigger fish sell for more.
+    - rscdel: Removed the specific fish bounty, the other two pay a bit more.
+    - balance: Without a reel line the rod range is shorter. The master fishing rod
+        comes with a better line and hook.
+    - balance: Reacting fast when a fish bites gives you a head start in the minigame.
+        Clicking early only delays the bite a bit instead of resetting it.
+    - balance: Bait quality affects the chance of rarer fish. Any bait removes fishing
+        duds.
+    - balance: Tetrodotoxin can be synthesized and pufferfish give more of it.
+    - balance: The fishing skill is a bit stronger and the bait is easier to control.
+    - balance: Aquariums start unanchored with breeding enabled.
+    - qol: Fish analyzers have a UI.
+    - qol: You can unhook the hooked item of a fishing rod with right click.
+    - sound: Reeling in something plays a sound.
+    - image: Resprited fish and the aquarium.
+    - bugfix: Bait is actually used up when you catch a fish.
+    - bugfix: Fishing up spawners gives you the item instead of a broken spawner.
+    - bugfix: Fishing rods work on adjacent targets.
+    - bugfix: Grinding fish no longer gives a silly amount of blood and gibs.
+    - bugfix: Fixed fish prices using xor instead of a power.
+    - bugfix: Mixotrophic fish properly lack food requirements.
+  HoggyHart:
+  - bugfix: voice sensor nanites work now
+  - spellcheck: species sensor description "singal" -> "signal"
+  LettuceGuardian:
+  - rscadd: Two new tactical sec jumpsuits. Nanotrasen advises that LARPing in company
+      time leads to lower efficiency.
+  - rscadd: Roll up sleeves for the syndicate combat jumpsuit.
+  Tractor-Maam:
+  - rscadd: AIs in shells now receive download alerts
+  - rscadd: AI download alerts now make an audio cue.
+  - balance: AI Control Consoles now stop downloads when depowered (previously paused)
+  - bugfix: the silent variable on control console upload ai now actually makes it
+      silent.
+  chumtoadmonke:
+  - rscdel: Removed infectious exo-locomotion program
+  - balance: Brainwashing nanites will check if you have a mindshield
+  notghosti:
+  - bugfix: '"Reconnect to shell" verb, action, and key bind now all properly reconnect
+      you the last shell used as a AI'
+  - bugfix: Drones have the following traits returned, Unobservant, silicon access,
+      and reagent scanner
+2026-11-02:
+  notghosti:
+  - balance: Nuke disk guaranteed nukeop spawn now respects maximum antags. And if
+      fails will try again in 5 minutes.
+  - bugfix: Nuke disk no longer tracks time at half the rate of intended
+2026-11-03:
+  Absolucy:
+  - balance: oozeling jelly regen, limb self-cannibalizing, membrane regen and the
+      wetness hud now come from the core instead of the slime heart. swapping out
+      an oozeling's heart doesn't take those away anymore, and they go wherever the
+      core goes
+  - bugfix: regrowing only some of your limbs as an oozeling no longer spawns extra
+      pairs of eyes
+  - bugfix: oozeling regenerate limbs button now greys out when you don't have enough
+      blood to use it
+  - bugfix: oozeling retract limb button now greys out when you've got nothing left
+      to retract
+  - qol: the "too wet, dry off!" alert on oozelings doesn't spam every tick anymore
+  - spellcheck: fixed "it's" typo in the oozeling core signal messages
+  AitorLogedo:
+  - rscdel: Tundra moths are no longer a separate species. Moths can pick tundra fur
+      in the new Body style option instead, which only changes how they look.
+  - qol: The moth mutant colors checkbox is now part of the Body style option.
+  V2LenKagamine:
+  - refactor: Moves old modular art sci in monkestation/modules to just code/modules.
+  - bugfix: Size Change ++ Artifacts no longer anchor when too large to carry.
+  - bugfix: Fixes an issue where bomb artifacts had a good chance to just not bomb.
+  - bugfix: Fixes a bug where blood artifacts could not generate.
+  - bugfix: Fixed a bug that caused valid origins to make the effect unobtainable.
+  - bugfix: Small artifact effects can no longer roll on larger objects
+  - bugfix: radiation artifacts no longer always trigger at 1.
+  - bugfix: narsie artifact no longer steals all your blood.
+  - bugfix: attempts to stop some cases where artifacts try to activate on non-existing
+      artifacts.
+  - rscadd: Adds a couple more lines to artifact inspects.
+  - rscadd: Adds some more whisper fault lines.
+  - rscadd: Adds a "Do Not Roll" var for artifacts for base-class artifact effects.
+  - rscadd: A few new asteroid shapes for variety
+  - rscadd: Artifact that turns things into gold.
+  - rscadd: Artifact that grants a wizard spell from a list. Mostly defensive spells.
+  - rscadd: Artifact that makes things fantasy flavored
+  - balance: Nudges the weights around for item-like artifacts in spawn_artifact.
+  - balance: Asteroids are now considerably more mineral [and artifact] dense
+  - balance: blood artifacts now only need 3 bodies of blood to generate a reward
+  - balance: Its A secret [Literally] artifact is now slightly more common
+  - qol: New Medium chance rock for Asteroids
+  - qol: A few objects with forced artifact effects [For easier admin spawn or map
+      making]
+  - code_imp: Re-organised the artifact init to ensure artifacts are given the correct
+      naming and icon if given a forced effect somehow
+  - refactor: Artifact stimuli are no longer bitflags, but string lists to be compared.
+  - refactor: Rework artifact_activators in base class to dynamically compile from
+      all availible, and is now called "all_activators"
+  - bugfix: Artifacts no longer trigger faults from activators they don't have.
+  - bugfix: Artifact fourms no longer show un-achievable effects, and have a 'no fault'
+      option
+  - bugfix: smol_rock no longer uses the wrong asteroid rock.
+  - bugfix: soap artifacts work again.
+  - bugfix: add SINGULAR missing `.` in artifact wand text.
+  - balance: The average artifact is worth far more to cargo. Weapons[and things that
+      could be used as such] are worth more.
+  - balance: Flawless artifacts now sell for more than flawed artifacts.
+  - balance: powergen artifacts are harder to trigger instant death zapps.
+  - code_imp: try_add_effect on artifact now null-checks its 1 argument
+  - bugfix: Aritfact wands now properly summon weird type artifacts, like batteries
+      and generators, from disks.
+  - balance: Artifact wands are now considerably more expensive. Go mine them dammit!
+  - balance: Bomb artifacts are now 5% chance to be a dud. Fuck around find out.
+  - balance: dark altar artifacts made more common
+  - balance: Artifact wands can now summon a full copy of disks [for things like battery
+      artifacts]
+  - rscadd: New chaos smoke effect for artifacts. God save you.
+  - rscadd: New Mind swap effect for artifacts. Zipp zoop.
+  - map: Slightly nudges down asteroid magnet on Helio to avoid killing shuttles [Hopefully]
+  - map: Add tiny fans to all [or at least most] of Helio airlocks
+  - map: Slightly nudges ordinance launcher to accomidate asteroid magnet
+2026-11-04:
+  Absolucy:
+  - bugfix: Trying to fix more goddamn laggy bullshit.
+  Absolucy, Melbert:
+  - bugfix: Cleaning a mob cleans all of their equipment again
+  AitorLogedo:
+  - bugfix: Taking stuff out of machines with your active hand full now puts it in
+      the other hand of the same pair instead of your first left hand (moths with
+      4 arms)
+  JohnFulpWillard, 00-Steven, timothymtorres, vinylspiders, PapaMichae1, TealSeer, LemonInTheDark, MrMelbert, Ghommie:
+  - bugfix: Advanced cameras show static right away.
+  - bugfix: Holding a PDA note up to a camera gives the AI a working link.
+  - balance: Camera upgrades use power, disabled cameras don't use any.
+  - bugfix: Camera tracking checks the person tracking instead of the program.
+  - qol: The AI's last camera hotkey takes you back to where you were before tracking
+      someone.
+  - qol: You can examine things through advanced camera consoles and holocalls.
+  - bugfix: Cameras looking through glass on the bottom z level don't break.
+  - image: Camera lights glow in the dark.
+  - bugfix: Body cameras and broadcast cameras update the AI's view when they move.
+  - admin: Toggling camera updates is logged.
+  - balance: Cyborgs and drones get a notification when someone is watching them through
+      a camera console.
+  - rscadd: Station drones have an internal camera that shows up on camera consoles.
+  - bugfix: Cutting a cyborg's camera wire disables it, and mending it enables it
+      again.
+  - refactor: Camera construction uses item interaction now.
+  Melbert:
+  - rscdel: Spacesuits no longer fully conceal lizard tails
+  - rscadd: Species features like wings and tails will appear "meshed over" when wearing
+      certain equipment like spacesuits or biosuits.
+  - rscadd: Biosuit and beekeeper suit sprites now alter when worn by digitigrade
+      mobs.
+  - rscadd: Apron sprites now alter when worn by digitigrade mobs.
+  - spellcheck: All heretic armor hoods are consistently known by their name, rather
+      than "ominous hood"
+  - refactor: Bodypart textures were refactored a tiny bit, report any oddities.
+  - bugfix: Fix riot armor using brown mesh (now black, matching the armor)
+  V2LenKagamine:
+  - bugfix: Deconstructing a slot machine doubles what you put in
+  big-boss-crate:
+  - bugfix: borg limbs now show up on the correct side of endoskeletons when attached
+  notghosti:
+  - bugfix: Queueing research now creates a research history entry.
+  tontyGH, vinylspiders:
+  - rscadd: Mothpeople now have 2 extra arms in their chest, giving them 4 total arms
+  - balance: Mothpeople are now generally a bit more fragile
+  - bugfix: Akimbo used the wrong gun when determining spread penalty
+  - bugfix: Akimbo penalty did not include the gun that was firing
+  - balance: Akimbo penalty now has multiplicative scaling (double PKA was adjusted
+      to consider this)
+  - balance: Akimbo spread can't go past what two guns give, so 3 or 4 guns don't
+      shoot all around you
+  - balance: Blocking now only works if the blocking item is in your active set of
+      hands
+  - rscdel: The deathmatch 4 hands modifier had to be removed for technical reasons.
+      Sorry.
+  - qol: Wield is unbound by default now, Shift+X swaps between your pairs of hands
+      instead
+  - bugfix: losing a moth's chest arms no longer drops what's in your right hand,
+      and your active hand moves to a hand you still have
+  - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
+  - bugfix: arm implants always come out of the arm they're in, instead of any free
+      hand on that side
+2026-11-05:
+  Absolucy:
+  - rscadd: (LemonInTheDark) Wall lights now shine out from the wall in a cone instead
+      of a circle
+  - rscadd: (LemonInTheDark) Light shining through open space gets dimmer on each
+      floor it reaches.
+  - rscadd: (LemonInTheDark) Starlight is brighter and blends into the hull better.
+  - rscadd: (MrMelbert) cable explosions flicker nearby lights, also cables are squishier
+  - balance: (MrMelbert) Cables have less integrity, and are much tougher to bombs
+      while hidden under the floor.
+  - bugfix: The tram indicator now actually points its light into the room.
+  - bugfix: Starlight around the hull keeps its intended falloff, and empty space
+      around shuttles no longer lights up.
+  - bugfix: Bar signs, chem masters, explosion flashes, a few spell projectiles, primitive
+      forges and translucent floors now actually give off light.
+  Fikou, FlufflesTheDog, Jackraxxus, mc-oofert, SmArtKar, necromanceranne, lelandkemble:
+  - refactor: MODsuit parts got refactored, report any bugs.
+  - balance: You no longer need all parts deployed to activate a MODsuit, you can
+      use them with missing limbs.
+  - rscadd: Added the portable suit, a deployable one-piece three-piece suit. Buy
+      it from the LawDrobe or print the plating after researching Civilian Modular
+      Suits.
+  - bugfix: MODules don't work or show overlays when the part they need isn't sealed.
+  - bugfix: Rad protection, ash accretion, sphere and stealth MODules need the full
+      suit out.
+  - bugfix: Springlock only activates when at least one part is sealed and no longer
+      damages body parts the suit doesn't cover.
+  - bugfix: MODsuit deactivation disables modules properly and deleted MODsuits delete
+      their parts.
+  - bugfix: An AI needs the boots out to move someone in a MODsuit.
+  - bugfix: Partially deployed MODsuits can be retracted with the deploy action.
+  - qol: You can extend or retract MODsuit parts from the UI, and cores have color
+      coded charge bars.
+  SirNightKnight:
+  - rscadd: ghosts/observers have new unique speak emotes.
+  V2LenKagamine:
+  - bugfix: missing discover text on powergen type artifacts
+  chumtoadmonke:
+  - rscadd: Added setting to disable tab autocomplete on command bar
+  notghosti:
+  - qol: Max CPU speed set to twice the original speed. Instead of 10.
+2026-11-07:
+  Absolucy:
+  - bugfix: Fixed runechat colors being unreadabley dark sometimes.
+  - balance: Borg hyposprays can no longer inject more than 10u of knockout chems
+      into a person at a time.
+  - balance: Piercing borg hyposprays now have a 2-second delay if their target is
+      wearing thick material, unless it's like, a nukie-borg injecting a nukie or
+      such.
+2026-11-08:
+  AitorLogedo, Deadgebert:
+  - balance: Capsaicin can't heat you up enough to burn you anymore, spicy donk pockets
+      are safe to eat again.
+  - balance: Superheated microfusion lasers give 0.5 fire stacks per hit instead of
+      2.
+  - balance: Unhusking with synthflesh needs 60u instead of 100u.
+  - bugfix: Dead bodies cool down after burning instead of staying hot and husking
+      if they wear insulating clothes.
+  EatsTheGrapes:
+  - rscadd: Robotics can build IPC shells after unlocking the required research by
+      assembling an IPC core, synthetic organs, a wired and secured head, limbs, and
+      a wired and secured screen, then finalizing the chassis with a multitool.
+  - rscadd: Built IPC shells start without a brain or charging cord. MMIs and positronic
+      brains, including brains recovered from roundstart IPCs, can be installed through
+      cybernetic brain surgery. Charging cords can be installed separately through
+      augmentation surgery.
+  - rscadd: Positronic brains can be imprinted to a master before their first activation.
+      Imprinted positronics and Syndicate MMIs can create IRCs bound to their master
+      or directive.
+  - rscadd: Robotics can build spiderbots by attaching a manipulator to a robotic
+      head. Spiderbots hold an MMI or positronic brain, can ventcrawl, and have no
+      hands. IDs with robotics access can eject their brain.
+  - rscadd: Emagging a spiderbot binds it to the emagger, strengthens it, and blocks
+      ID-based brain removal. Emagged spiderbots explode and gib on death, destroying
+      their installed brain.
+  - qol: IPC screens are now printable organs that can be removed and replaced.
+  - code_imp: IPC food processing is now handled by the synthetic stomach rather than
+      the species.
+  - qol: Surgically removing an IPC's brain returns its MMI or positronic brain with
+      the original name and personality, allowing it to be installed into another
+      shell.
+  - balance: Traumatic IPC brain removal causes a 30-second reboot in the recovered
+      MMI or positronic brain. When the reboot finishes, the occupant's ghost is brought
+      back using the same return mechanism as defibrillation.
+  - qol: Robotic limbs can be replaced with other robotic limb types through mechanical
+      augmentation surgery.
+  - qol: The MOD paint kit is now the robotics paint kit. It can restyle robotic limbs
+      and IPC chassis, still paints MODsuits, and no longer requires plastic to print.
+  - bugfix: Restyling robotic limbs with the robotics paint kit preserves their existing
+      limb type and upgrades.
+  Mantlecrawler:
+  - bugfix: Kinetic Hellhound now correctly states its mag size
+  - bugfix: Quartermaster's office is now spelled correctly on Deltastation
+  ThePooba:
+  - bugfix: dont starve and animal voices work again
+  Tractor-Maam:
+  - qol: Trying to hack the R&D console as a space ninja now pushes you to hack the
+      server instead.
+  V2LenKagamine:
+  - rscadd: '''Ass Pic'' smite. Spawns an ass pick, puts in targets hand if possible.'
+  - rscadd: Status affect 'Feeling funny';rotates client move by +-90/180 every 15
+      seconds.
+  - qol: '''Select Equipment'' now requires ''R_SPAWN'' permissions from ''R_FUN'''
+  chumtoadmonke:
+  - rscadd: shadekin, a new roundstart species that doesnt need to breathe and heals
+      and sees better in the dark in exchange for taking more damage and being vulnerable
+      to flashing
+  - rscadd: 2 tail options, 4 ears, (credits to bubberstation for the sprites), mutant
+      color picker for their skintone and eyes, their own unique language
+  - sound: added mar emote
+  ma44, MrMelbert, AnturK, leaKsi, TiviPlus, StrangeWeirdKitten, SmArtKar, afonamo, jlsnow301, FalloutFalcon:
+  - bugfix: Fixed a bunch of places where players could send unsanitized HTML to other
+      players or admins.
+  - bugfix: Cassette song titles are properly encoded in chat and admin messages.
+  - bugfix: Safes, the message monitor, netpods, limbgrowers, launch pads and a few
+      other machines validate their inputs properly.
+  - bugfix: Number inputs reject NaN.
+  - admin: View variables topic calls require R_VAREDIT.
+  - server: World topics require the comms key unless they're meant to be public.
+  tattax:
+  - rscadd: you can now switch between plasmaman suit styles using metal and crowbars
+  - bugfix: winter hoods now don't set you ablaze anymore when you toggle them as
+      plasmaman
+  - image: changed bulky plasmaman helmet icon slightly (and all variants with it)
+2026-11-09:
+  Mantlecrawler:
+  - rscadd: Command announcements now allow newlines
+  Melbert:
+  - refactor: Refactored clothing obscurity entirely. Items should be a lot more consistent
+      about what covers what, and update snappier. Report any oddities, like disappearing
+      clothes, hair or species parts
+  - refactor: Refactored handcuffs and legcuffs a bit, report anything odd like getting
+      stuck restrained
+  ThePooba:
+  - balance: this didnt need to be buffed in the first place GRAPES. *slap
+  V2LenKagamine:
+  - bugfix: Single typo
+2026-11-10:
+  Absolucy:
+  - rscadd: Most clothes should actually cover the parts of the body their sprites
+      imply they cover - i.e, morningstar coats don't cover literally nothing anymore
+  - bugfix: Goliath cloaks actually provide armor now.
+  - rscadd: Oozelings can now eat/absorb coins. Beware your valuable coins, your local
+      slime may just see them as a snack.
+  - rscadd: station traits roll off a budget now, so small traits can sneak in next
+      to the big ones
+  - rscadd: some station traits give you a sign-up button in the lobby
+  - rscadd: cargo gorilla is a lobby sign-up now instead of a ghost poll
+  - rscadd: pun pun is a playable crewmember on monkey day
+  - rscadd: 'new negative trait: radioactive nebula. build the shielders or enjoy
+      a permanent rad storm'
+  - rscadd: 'new traits: dust stormfront, postal workers strike, geared assistants,
+      the great skub contention, glowsticks party, machine language malfunction, spiked
+      drinks'
+  - bugfix: blackouts, night shift, grid checks, electrical storms and the malf AI
+      blackout actually hit mapped APCs now
+  - bugfix: stuff that's supposed to change event odds (stormfront traits, shuttle
+      insurance, meteor shields) actually does now
+  - bugfix: the department resupply shuttle loan can actually show up
+  - bugfix: bureaucratic error can't give HoS or blueshield infinite slots anymore
+  - bugfix: yellow clown spawns with the clown instead of at arrivals
+  AitorLogedo:
+  - bugfix: Job XP actually saves now, so you can level up your jobs.
+  - bugfix: Roundend job XP doesn't drop when the round goes over an hour.
+  - bugfix: Claiming job rewards doesn't eat your saved rewards and reconnecting doesn't
+      let you claim them again.
+  - bugfix: Reload Job Rewards doesn't duplicate per round rewards.
+  - bugfix: Rolling rollies only gives botanist XP to botanists.
+  - qol: The XP menu only shows station jobs and shows how much XP you have.
+  Dominion, SirNightKnight:
+  - image: After decades of failing to compete with Cohiba Robustos, Havana cigars
+      have rebranded to a new colour theme.
+  - image: Cigar butts are now distinguishable based on the type of cigar it was.
+  - bugfix: fixed some discrepancies with onmob cigarette sprites.
+  EnterTheJake:
+  - balance: Codex Cicatrix is back to being a roundstart knowledge.
+  - balance: Cosmix expansion radius reverted back to 5x5, cooldown increased from
+      15 to 30 seconds.
+  LettuceGuardian:
+  - rscadd: Syndicate command has authorized 'Drip or Drown' procedures. A MOD paint
+      kit is now located inside the infiltrator.
+  - rscadd: Two new altskins for blood-red MODs.
+  - image: Updated the alt skin for sec MODs.
+  Melbert:
+  - refactor: Species part rendering got refactored a bit, report any oddities with
+      wings, snouts, tails and the like
+  - refactor: Refactored how digitigrade legs and snouts render, report any oddities
+      with that
+  Melbert, vinylspiders:
+  - bugfix: Large wings are now fully covered by limb textures and suit meshes
+  - bugfix: Emotes like blushing and visible implants no longer get covered by limb
+      textures or suit meshes
+  - refactor: Refactored bodypart rendering ever so slightly to fix some bodypart
+      texture issues, report anything weird like missing overlays
+  SirNightKnight:
+  - bugfix: fixed the summoning fantasy effect summoning megafauna.
+  SmArtKar, Stonetear:
+  - sound: MODsuits no longer spam error buzzes when taken off with their parts retracted.
+  - sound: Retracting a sealed MODsuit part no longer plays the hiss twice.
+  - refactor: MODsuit modules render on the part they're attached to, report any weird
+      module overlays.
+  - bugfix: MODsuit modules don't get painted with the suit color anymore unless they're
+      meant to.
+  - rscadd: When a MODsuit part overslots an item, it shows underneath the part while
+      it's unsealed.
+  Tractor-Maam:
+  - code_imp: undefined some chameleon bomb definitions.
+  V2LenKagamine:
+  - admin: Hehe funny lone wanderer reference.
+  big-boss-crate:
+  - rscadd: added the *plink emote
+  - sound: added plink.ogg and plonk.ogg (equal chance for either to trigger when
+      using the emote)
+2026-11-11:
+  Absolucy:
+  - bugfix: Maybe fix the frost miner ruin failing to spawn sometimes.
+  - bugfix: Fixed damage slowdown applying while floating/levitating.
+  - rscadd: Added new xenobiology request and order consoles!
+  - rscadd: Xenobio request consoles, usually in the front of science, can be used
+      to order extracts and crossbreeds, with an optional payout, too. Also available
+      as a PDA app!
+  - rscadd: Xenobio has a purple console on their wall that allows them to view, approve,
+      deny, and fulfill orders! Sprite by kiaroh.
+  ThePooba:
+  - bugfix: Wrong sound location for the animal and dont starve voices
+  V2LenKagamine:
+  - admin: more larp to the stranger!
+  vinylspiders:
+  - bugfix: Radios are blocked again in the abductor ship and the heretic sacrifice
+      areas.
+  - bugfix: You can no longer send credits from inside a virtual domain to real bank
+      accounts.
+  - code_imp: Mapping related area flags now live in their own var, area_flags_mapping.
+2026-11-12:
+  Absolucy:
+  - rscadd: bloodsuckers are now sovereign citizens of space, and can claim *custom*
+      shuttles as their lair.
+  AitorLogedo:
+  - rscadd: Simian traitors can now buy the Banana-Stained Scroll for 8 TC, which
+      teaches Jungle Arts. It only works while in combat mode, so you can still grab
+      and shove normally with it off.
+  - bugfix: Searing body temperatures take a while to cure diseases instead of doing
+      it instantly, and spicy food can't cure them anymore.
+  V2LenKagamine:
+  - bugfix: 'TODO REMOVED: Having a medical hud allows you to see how much brute/burn
+      is left when doing surgery'
+  - bugfix: 'TODO REMOVED: Powergen artifacts now gausian their powergen, so higher
+      values much rarer.'
+  - admin: 'fix: the ancient medkit now accepts anything.'
+  - bugfix: powergen artifacts now have a SPAN DANGER warning because they will fucking
+      DUST YOU
+  - refactor: powergen artifacts can now be touched on aggressive to turn them off,
+      percussive maintenance style
+  - map: Box station now has smithing
+  - map: Most maps I could think of with smithing area cleaned up, and hammer added
+  - rscadd: Forging hammer, added to crates and craftable with 2 metal!
+  - rscadd: New 'Crush Hammer' weapon, 2h. Heavy blunt damage.
+  - rscadd: New 'Tanto' weapon, 1h. Quick slashing damage.
+  - rscadd: alloy forge, primitive method of alloying. Has been added to both ashwalker
+      structures
+  - rscadd: New material trait, serrated, gives bonus wound damage
+  - rscadd: Firestorm-bane trait, on bronze, deals bonus damage to anything immune
+      to an ash storm.
+  - qol: THE RHYTHM MINIGAME IS DEAD, you now hit forged items about 100 times to
+      reach full quality, with an inspect minigame instead
+  - qol: Gutlunches now produce copper in their milk if given iron, so ashwalkers
+      can make more bronze.
+  - qol: Bunch of more descriptions for random minerals, context for assembly, forge,
+      etc...
+  - qol: You can now tell roughly what a mineral does looking at it
+  - map: maps [incl ashwalkers] have had smithing areas visually improved!
+  - code_imp: new 'finisheddesc' var for smithed weapons
+  - code_imp: perfect anvils now end after the first bit because they're perfect.
+  - code_imp: forged items 'made_of' is now an /datum/material
+  - refactor: start demodularize of monkeystation/code/modules/smithing by moving
+      whole folder to code/modules/smithing.
+  - balance: you can now make assembly benches with 15 wood
+  - balance: the forge [primitive] is now made with stone. Why was it made with iron
+      before?
+  - balance: anvils can now be made using 25 iron sheets.
+  - balance: '`/turf/closed/mineral/random/` artifacts now as likely as gibtonite,
+      mineral chance added, as likely as artifacts and gibtonite.'
+  - balance: art sci meteors more likely to contain minerals [and artifacts]
+  - balance: Ashwalkers start with higher smithing, to offset below
+  - balance: smithing levels slower, to make getting good items take time.
+  - balance: your smithing skill now weighs more into the quality of items you create.
+  - balance: random minerals now worth 200 from 20 [Base value, adjusted by how good
+      they are.]
+  - balance: random minerals now range from 30 to 120 in all stats, instead of 0 to
+      125
+  - balance: slightly adjust smithing minigame speed by making at least 3 notes appear
+      per section
+  - balance: smithed objects are now more valuable by default, affected by quality
+  - balance: Nudge damage values to be more not brutal
+  - balance: Smithed Spears, Staffs, and Swords are now wieldable, and need to be
+      for full damage.
+  - balance: Smithed spears and staffs now only have 2 tile range when wielded.
+  - balance: Daggers now are weak as shit for melee, but make great one off throw
+      weapons.
+  - balance: Ideal material range for hardness and density is 140, with a 'godlike'
+      material being 200. Weapons and armor balanced around this range.
+  chumtoadmonke:
+  - balance: cyborgs are no longer counted as an enemy
+  - balance: security assistants are not counted as an enemy for most antagonists
+  - rscadd: adds lightbearer and dipped wing options
+  - rscadd: added greyscaling to wings/antennae/eyes for moths
+  - rscadd: antennae reconstruction surgery
+  tattax:
+  - qol: handcuff sprites for each ui
+2026-11-13:
+  ? Ghommie, carlarctg, SmArtKar, Ben10Omintrix, 00-Steven, Rhials, grungussuss, deathrobotpunch,
+    DaCoolBoss, necromanceranne, Time-Green, MrMelbert, ninjanomnom, zoomachina, SyncIt21,
+    vinylspiders, Aniantan, Jacquerel, OrbisAnima, ArcaneMusic, TealSeer, Aliceee2ch,
+    Y0SH1M4S73R, lelandkemble, timothymtorres, soulware1, btcbuster, TymSha, QuiteLiterallyAnything,
+    Stonetear, san7890
+  : - rscadd: Chasm chrabs can grow into lobstrosities inside aquariums with breeding
+        on. Juvenile lobstrosities can be tamed with arms and lavaloops, and keep
+        some of the traits they had as fish.
+    - rscadd: Tadpoles, scooped from puddles with right click. They grow into frogs.
+    - rscadd: 'Lots of new fish: twelve from the fishing expansion plus perch, two
+        pikes, monkfish, plaice, squid, zagoskian moonfish (lays eggs) and sacabambaspis.
+        Some of them are straight up weapons.'
+    - rscadd: 'New fishing spots: sand, ice holes, rivers, the cursed spring, deep
+        fryers, toilets, hot springs, aquariums, the carp rift and people in the middle
+        of organ manipulation surgery.'
+    - rscadd: Fishing lures. They don't get used up like bait and catch specific kinds
+        of fish, but you have to spin them every few seconds. The whole set can be
+        ordered from cargo.
+    - rscadd: Material fishing rods can be printed from the autolathe. Each material
+        changes difficulty, cast range, experience and more.
+    - rscadd: Fishing bluespace capsules that deploy a small fishing spot (freshwater,
+        saltwater, tizira, ice, hot spring, and lava or plasma if emagged). Found
+        in maints, the black market and as fishing loot.
+    - rscadd: Portable fish tanks, crafted with an aquarium kit and plastic. A bluespace
+        fish tank kit removes their limits. The lawyer's pet goldfish lives in one
+        now.
+    - rscadd: Hot springs wash you, heal you a bit, warm you up and make you happy.
+        Felinids hate them.
+    - rscadd: Athletic fishing gloves and the fishing MOD module let you fish without
+        holding a rod.
+    - rscadd: Messages in a bottle. Put papers, photos or cash in a bottle and toss
+        it in the ocean so someone can fish it up in a future round.
+    - rscadd: A treasure chest can be fished from the ocean and beach.
+    - rscadd: Whole fish is edible. Cook it first.
+    - rscadd: You can release fish after catching them for a good mood, which also
+        repopulates the spot.
+    - rscadd: Your clothes and the chair you sit on change fishing difficulty.
+    - rscadd: Fishing portal generators can be linked to other fishing spots with
+        a multitool.
+    - rscadd: You can pet fish while holding them. Careful with the aggressive ones.
+    - rscadd: Fish grow in aquariums if you feed them regularly. Feeding them mutagen,
+        growth serum or teslium has some effects.
+    - rscadd: Space carps and space dragons can fish. Dragons can eat fish and unlock
+        a shark form.
+    - rscadd: A score that tracks every fish species you've caught across rounds.
+    - rscadd: Aquatic mob biotype for carps, lobstrosities and fire sharks. Aquatic
+        mobs can be hooked without a jawed hook, and fish and carp infusions make
+        you aquatic.
+    - rscadd: Fishy reagent (strange reagent for fish) and the lifish reaction that
+        makes fish.
+    - rscadd: Stethoscopes can check a fish's pulse.
+    - rscadd: Fishing toolboxes and maints have paper slips with fishing tips.
+    - rscadd: Fishing category in the games vendor, fish feed in the library vendor,
+        a rescue hook rod in the mining order console and a rescue hook heirloom for
+        paramedics.
+    - rscadd: Gills give you fish puns.
+    - rscadd: Cleric maces can be made of two materials.
+    - rscadd: Water, lava and plasma make you look immersed in them. Water also puts
+        out fires and gets you wet.
+    - rscadd: Fish have suicides now. A lot of them, almost all unique.
+    - rscadd: Fish mounts for trophy fish, crafted with wood. Trophies from previous
+        rounds can be taken off the mount, if you are skilled enough to not turn them
+        into dust.
+    - rscadd: Rift fishing. Drained and undrained heretic influences can be fished
+        in (the undrained ones only by heretics), with new wacky fish like the mossglob
+        and the babbelfish. Heretics can infuse their rod and fish for knowledge.
+    - rscadd: Failing the minigame in a rift costs you an arm. Arms, heads and other
+        things lost to rifts can be fished back up.
+    - rscadd: You can try to fish random products out of vending machines with a fishing
+        rod and a few bucks.
+    - rscadd: Fishing bags, found in fun vendors or made from carpskin.
+    - rscadd: Aquariums have three modes (Manual/Assisted/Stasis) instead of the safe
+        mode toggle.
+    - rscadd: Fish gene-gun and bluespace fishing reel in the Marine Utility node.
+    - rscadd: Anomalous lure hook in the new Anomalous Fishing node. It takes an anomaly
+        core and does something different for each one. Material fish now need a dimensional
+        core in it.
+    - rscadd: Skeleton keys and tendril chests can be fished from lava and plasma
+        rivers, but they're rare.
+    - rscadd: Mining mob parts and some mining mobs can be fished out of lava.
+    - rscadd: Chrabs with the territorial trait are hostile when they grow up.
+    - rscadd: Fish have their own log file.
+    - admin: objectify() works with instances of objects.
+    - balance: Fish cases stop hunger and breeding and heal fish up to 65%. Added
+        a bluespace fish case to the advanced fishing node.
+    - balance: Heavy fish slow you down and big ones need two hands.
+    - balance: With good enough skill and gear you can skip the minigame. The fishing
+        skill also affects cast range, reeling and completion speed.
+    - balance: Fish scanning experiments need fewer fish. The ocean and chasm portal
+        rewards were swapped.
+    - balance: Fish selling price is soft capped past 6k credits.
+    - balance: Limited fishing loot like tendril chests and mystery boxes comes back
+        after 30 minutes.
+    - balance: The aggressive fish trait was replaced with territorial.
+    - balance: Aquarium kits are printed now instead of ordered from cargo.
+    - balance: Fishing difficulty of every fishing spot is back to its intended values.
+    - balance: Explosions and NPCs no longer get you unique fishing loot.
+    - balance: Fish trait inheritability is easier, both parents having a trait guarantees
+        it.
+    - balance: Rods with higher or lower bait speed are a bit easier to control. Autoreel
+        lines nudge the bait towards the fish, cloaked lines are more transparent.
+    - balance: Shooting or hitting a fish damages it like any other object. Fish health
+        is integrity now.
+    - balance: Monocloning jumpercables export for less and are lighter.
+    - balance: Killing yourself with a tadpole only bursts your chest. Suicides that
+        gib or dust you don't delete your items anymore.
+    - balance: Chasm chrabs eat and grow every 10 minutes instead of 12 and 15.
+    - balance: Reinforced and sinew fishing lines are fire and lava proof.
+    - balance: The generator aquarium upgrade can be printed in service and science
+        lathes too.
+    - balance: Psychic resistance stops the rift from tearing your head off when you
+        use telekinesis on it.
+    - qol: New aquarium UI with screentips.
+    - qol: Fishing rods and fish cases can be printed from cargo and science lathes
+        too.
+    - qol: Fish weight is measured in kiloclam now.
+    - qol: Fishing capsules only need a 3x3 space to deploy.
+    - qol: The fishing minigame is smoother and the fish analyzer UI updates more
+        reliably.
+    - sound: New fish sounds, and reeling is less noisy.
+    - image: New icons for fish sources, linkable fishing spots, plasmaloops and fish
+        tanks.
+    - image: Resprited the fishing UI, reels, bobber and the mansus rift portal.
+    - refactor: Refactored how materials apply their effects and turned aquariums
+        into a component. Report any weird material or aquarium bug.
+    - refactor: Components count subtypes as duplicates now, and surgery steps are
+        shared instead of created on every click.
+    - bugfix: The fishing rod difficulty modifier was being added twice.
+    - bugfix: Fish analyzers and fish scanning experiments work again.
+    - bugfix: 'Fixed a bunch of fishing bugs: bait, lures, auto-reel catching, fish
+        reproduction and hunger in aquariums, explosive fishing, the randomizer portal,
+        squid and pufferfish infusions, rod duping with poly belts, fish overlays
+        in aquariums, flipped hooks and more.'
+    - bugfix: Fish no longer drown half-submerged in their own native turf, and they
+        die on dry land again.
+    - bugfix: You can't fish things in storages or things you can't see anymore, and
+        fishing an adjacent spot doesn't hit other things on the turf.
+    - bugfix: 'Fixed lots of other fishing bugs: lobstrosities fishing lobstrosities,
+        bluespace rods, auto reel ripping off anchored stuff, bait cans, achievement
+        cheese, fish reproduction and overlays, random portals, the gene gun, fish
+        suicides and more.'
+    - bugfix: Mythril fished up from plasma rivers regenerates now.
+    - bugfix: Uranium structures are radioactive again.
+    - server: Added the fish_progress table, database version 6.2. The query is in
+        SQL/database_changelog.md.
+  V2LenKagamine:
+  - rscadd: Med-x, it stops pain. thats it. wow.
+  - balance: ALL SMITHING WEAPONS NERFED AND CLAMPED STOP BREAKING THINGS
+  - balance: Armor laser, energy, and bullet resist half as effective, and clamp at
+      50.
+  - balance: artifacts now have a variable for when they are summoned/modified by
+      a wand, and dont give research if so.
+  - balance: artifacts and mineral samples are now rarer from asteroids,other objects
+      more common.
+  - balance: Clamp forged weapons to 22 damage because GOD FUCKING DAMMIT MATH WORK
+      DANM YOU
+  - bugfix: reagents with allow deadprocess now can actually work when you're dead!
+  - admin: more lone larp
+2026-11-14:
+  AitorLogedo:
+  - balance: fireproof helmets now protect your mask, glasses, neck item and headset
+      from burning while you're on fire
+  - balance: masks can burn again if you're on fire without a fireproof helmet
+2026-11-15:
+  AitorLogedo:
+  - bugfix: venomous fish keep their venom when they die instead of runtiming
+  - rscdel: removed the Disassemble smite and the IPC rod hit sound for now, they'll
+      be back
+  - bugfix: Fishing organs out of patients during organ manipulation surgery actually
+      works now.
+  - bugfix: Patients no longer stay fishable after the surgery is cancelled.
+  - balance: Vital organs like the brain can't be fished out.
+  - bugfix: athletic fishing gloves actually let you fish with your bare hands now
+  - balance: station engineers start with an RCD again
+  HoggyHart:
+  - rscdel: Removed references to nanite trigger and signal codes
+  - qol: Simplified nanite sensor usage
+  - bugfix: Nanite sensors now use the results of the automatic checks they perform
+  - code_imp: (hopefully) tiny efficiency + readability increases
+  Tractor-Maam:
+  - rscadd: Frontier Kitchen supply crates now come with a oven tray, cutting board,
+      knife, rolling pin, and wrench.
+  big-boss-crate:
+  - rscadd: added "Disassemble" admin smite (basically a bloodless gib)
+  - sound: added fall_apart.ogg
+  - code_imp: Added a new option in the gib() proc allowing for bloodless gibbing
+      (no_blood), false by default
+2026-11-16:
+  Absolucy:
+  - qol: Lowered the weight of the skub station trait to 1. I really do not care about
+      this meme, and I regret porting it at all.
+  - rscadd: (Time-Green, vinylspiders, timothymtorres, Iajret, SmArtKar) Icebox's
+      surface now connects to 2 wilderness levels. Walk off any edge to explore, keep
+      going to loop back to the station.
+  - rscadd: '(Time-Green) Added the Forested station trait for Icebox: lots of trees,
+      and deer.'
+  - rscadd: '(Ghommie) Added the Bright Day station trait for Icebox: a brighter surface.'
+  - rscadd: (Melbert) Walking in snow leaves footprints. Snowstorms clear them, and
+      you can fill them in with snow.
+  - sound: (tommysalami3, JohnFulpWillard) Added outdoor ambience music to Icebox.
+  - balance: (Time-Green) Icebox surface rivers are now plasma instead of holes to
+      the level below.
+  - balance: (Time-Green) The map edge transition band is one tile wider, and any
+      walkable ground in it now moves you to the next level.
+  - map: Cleaned up walkable tiles near the map edge on Heliostation, Theseus and
+      Tramstation, and moved the Tramstation clown planet exit chute.
+  - map: Lots of decorations floating in space near stations are now properly lit.
+  - bugfix: Icebox snowstorms actually happen again.
+  - bugfix: You can't build floors on map edge tiles anymore, which used to break
+      the edge teleport.
+  - bugfix: (Time-Green) Random trees and plants no longer block light in the wrong
+      shape.
+  - bugfix: (CabinetOnFire) Ruins no longer leave unfinished placeholder ground around
+      them.
+  - bugfix: (LemonInTheDark) Leftover placeholder ground can no longer mess up a planet's
+      air at round start.
+  - bugfix: (Sealed101) Ash storms reset dug-up basalt properly.
+  - bugfix: The MOD drill no longer drains power when it fails to dig.
+  - bugfix: Trying to dig icy snow now tells you it's too hard instead of wasting
+      4 seconds.
+  - bugfix: (SmArtKar) Mirages at the map edge now cover the full widescreen view.
+  - admin: The z-level list shows grid-linked levels properly.
+  - code_imp: (itsmeow) Map edge mirages are an element now, which is cheaper at round
+      start.
+  - code_imp: (timothymtorres, unit0016) Multi-z maps get their up/down level links
+      set automatically.
+  - code_imp: (ShizCalev) Added a unit test for things accidentally left in unlit
+      space.
+  AitorLogedo:
+  - bugfix: fixed some bad stuff
+  - bugfix: Mourning poultices work on dead bodies again.
+  EnterTheJake:
+  - bugfix: Moon robes once again grant the wearer immunity to slowdowns.
+  SirNightKnight:
+  - bugfix: made radios fireproof.
+  Tractor-Maam:
+  - admin: The Tunnel Arts will now properly list the name of the move used in combat
+      logs.
+  V2LenKagamine:
+  - qol: Free golems now move faster
+  - qol: Free golems now can expand their power range with the blueprints to new rooms.
+  - qol: The wumpa now starts silent.
+  - code_imp: The golem blueprints check if the person is a free golem[job] or nuke
+      immune, because that means they're probably an admin.
+  - code_imp: Create Area proc now accepts the type of area it should be making as
+      an input, defaulting to just /area
+  - rscadd: Strange Contract, for IC admin-bus permissions!
+  - balance: Emaged spiderbots now have explosion of (-1 -1 2 4) from (-1 -1 3 5)
+  - qol: exploding spiderbots now wait 2.5 seconds and beep and shake before doing
+      so.
+2026-11-17:
+  AitorLogedo:
+  - bugfix: the Electric-Buzz lure, artificial minnow, plug lure and Indy spoon actually
+      attract fish again, and examining them lists what they catch
+  SirNightKnight:
+  - rscadd: gave most jackets, labcoats, wintercoats, and coats two small item slot
+      pockets.
+  - rscadd: added a keybind for removing items from your suit slot (Shift+R).

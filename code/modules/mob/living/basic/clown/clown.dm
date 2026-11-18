@@ -23,8 +23,8 @@
 	basic_mob_flags = DEL_ON_DEATH
 	initial_language_holder = /datum/language_holder/clown
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = T0C
-	bodytemp_heat_damage_limit = (T0C + 100)
+	minimum_survivable_temperature = T0C
+	maximum_survivable_temperature = (T0C + 100)
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -248,7 +248,7 @@
 	armour_penetration = 20
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
-	attack_sound = 'sound/items/airhorn2.ogg'
+	attack_sound = 'sound/items/airhorn/airhorn2.ogg'
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/effect/spawner/foam_starter/small,
@@ -587,7 +587,7 @@
 	var/peels_to_spawn = min(peel_amount, reachable_turfs.len)
 	for(var/i in 1 to peels_to_spawn)
 		new banana_type(pick_n_take(reachable_turfs))
-	playsound(owner, 'sound/creatures/clown/clownana_rustle.ogg', 60)
+	playsound(owner, 'sound/mobs/non-humanoids/clown/clownana_rustle.ogg', 60)
 	animate(owner, time = 1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
 	animate(time = 2, pixel_x = -8, easing = CUBIC_EASING)
 	animate(time = 1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
@@ -618,7 +618,7 @@
 	if(!do_after(owner, 1 SECONDS))
 		activating = FALSE
 		return
-	playsound(owner, 'sound/creatures/clown/hehe.ogg', 100)
+	playsound(owner, 'sound/mobs/non-humanoids/clown/hehe.ogg', 100)
 	if(!do_after(owner, 1 SECONDS))
 		activating = FALSE
 		return
@@ -629,5 +629,5 @@
 	. = ..()
 	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
 	playsound(owner, 'sound/items/bikehorn.ogg', 60)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/mobs/non-humanoids/clown/hohoho.ogg', 100, 1), 1 SECONDS)
 	StartCooldown()

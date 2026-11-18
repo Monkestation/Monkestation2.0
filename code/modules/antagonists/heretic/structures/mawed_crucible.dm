@@ -6,7 +6,7 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "crucible"
 	base_icon_state = "crucible"
-	break_sound = 'sound/hallucinations/wail.ogg'
+	break_sound = 'sound/effects/hallucinations/wail.ogg'
 	light_power = 1
 	anchored = TRUE
 	density = TRUE
@@ -44,7 +44,7 @@
 		for(var/turf/nearby_turf as anything in get_adjacent_open_turfs(our_turf))
 			if(prob(10 * current_mass))
 				new /obj/effect/decal/cleanable/greenglow(nearby_turf)
-		playsound(our_turf, 'sound/effects/bubbles2.ogg', 50, TRUE)
+		playsound(our_turf, 'sound/effects/bubbles/bubbles2.ogg', 50, TRUE)
 
 	return ..()
 
@@ -192,7 +192,7 @@
 
 	var/obj/item/spawned_pot = new spawned_type(drop_location())
 
-	playsound(src, 'sound/misc/desecration-02.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/desecration/desecration-02.ogg', 75, TRUE)
 	visible_message(span_notice("[src]'s shining liquid drains into a flask, creating a [spawned_pot.name]!"))
 	balloon_alert(user, "potion created")
 
@@ -273,7 +273,7 @@
 	if(!can_refresh && user.has_status_effect(status_effect))
 		return
 
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 
 	if(!IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))

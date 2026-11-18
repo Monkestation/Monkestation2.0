@@ -372,13 +372,16 @@
 /proc/CheckToolReach(atom/movable/here, atom/movable/there, reach)
 	if(!here || !there)
 		return
+	var/turf/turf = get_turf(here)
+	if(turf.z != there.z)
+		return FALSE
 	switch(reach)
 		if(0)
 			return FALSE
 		if(1)
 			return FALSE //here.Adjacent(there)
 		if(2 to INFINITY)
-			var/obj/dummy = new(get_turf(here))
+			var/obj/dummy = new(turf)
 			dummy.pass_flags |= PASSTABLE
 			dummy.SetInvisibility(INVISIBILITY_ABSTRACT)
 			for(var/i in 1 to reach) //Limit it to that many tries
@@ -446,7 +449,7 @@
 	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A, params)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
 		return
-	swap_hand()
+	cycle_hand(WEST, FALSE)
 
 /**
  * Shift click
@@ -462,7 +465,7 @@
 	var/shiftclick_flags = SEND_SIGNAL(user, COMSIG_CLICK_SHIFT, src)
 	if(shiftclick_flags & COMSIG_MOB_CANCEL_CLICKON)
 		return
-	if(user.client && (user.client.eye == user || user.client.eye == user.loc || shiftclick_flags & COMPONENT_ALLOW_EXAMINATE))
+	if(user.client)
 		user.examinate(src)
 
 /mob/proc/TurfAdjacent(turf/tile)
@@ -550,9 +553,8 @@
 
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.swap_hand()
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && ismob(usr))
+		usr.cycle_hand(WEST, FALSE)
 	else
 		var/turf/click_turf = parse_caught_click_modifiers(modifiers, get_turf(usr.client ? usr.client.eye : usr), usr.client)
 		if (click_turf)

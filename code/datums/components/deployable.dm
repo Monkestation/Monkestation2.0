@@ -10,15 +10,15 @@
 
 /datum/component/deployable
 	/// The time it takes to deploy the object
-	var/deploy_time = 5 SECONDS
+	var/deploy_time
 	/// The object that gets spawned if deployed successfully
 	var/obj/thing_to_be_deployed
 	/// Used in getting the name of the deployed object
 	var/deployed_name
 	/// If the item used to deploy gets deleted on use or not
-	var/delete_on_use = TRUE
+	var/delete_on_use
 
-/datum/component/deployable/Initialize(deploy_time, obj/thing_to_be_deployed, delete_on_use = TRUE)
+/datum/component/deployable/Initialize(deploy_time = 5 SECONDS, obj/thing_to_be_deployed, delete_on_use = TRUE)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -59,7 +59,7 @@
 			return
 		new_direction = user.dir //Gets the direction for thing_to_be_deployed if there is a user
 		source.balloon_alert(user, "deploying...")
-		playsound(source, 'sound/items/ratchet.ogg', 50, TRUE)
+		playsound(source, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 		if(!do_after(user, deploy_time))
 			return
 	else //If there is for some reason no user, then the location and direction are set here

@@ -378,6 +378,15 @@
 	. = view(range, source)
 	source.luminosity = lum
 
+/// get_hear that only gets turfs so we can use as_anything
+/proc/get_hear_turfs(range, atom/source)
+	var/lum = source.luminosity
+	source.luminosity = range + 2
+	. = list()
+	for(var/turf/turf in view(range, source))
+		. += turf
+	source.luminosity = lum
+
 ///Returns the open turf next to the center in a specific direction
 /proc/get_open_turf_in_dir(atom/center, dir)
 	var/turf/open/get_turf = get_step(center, dir)
@@ -434,6 +443,16 @@
 		get_area(get_ranged_target_turf(center, SOUTH, 1)),
 		get_area(get_ranged_target_turf(center, EAST, 1)),
 		get_area(get_ranged_target_turf(center, WEST, 1))
+		)
+	list_clear_nulls(.)
+
+///Returns a list of all turfs that are adjacent to the center atom's turf, clear the list of nulls at the end.
+/proc/get_adjacent_turfs(atom/center)
+	. = list(
+		get_step(center, NORTH),
+		get_step(center, SOUTH),
+		get_step(center, EAST),
+		get_step(center, WEST)
 		)
 	list_clear_nulls(.)
 

@@ -127,3 +127,7 @@
 //Used in visible_message_flags, audible_message_flags and runechat_flags
 #define EMOTE_MESSAGE (1<<0)
 #define LOOC_MESSAGE (1<<1)
+
+///Defines for priorities for the bubble_icon_override comp
+#define BUBBLE_ICON_PRIORITY_ACCESSORY 2
+#define BUBBLE_ICON_PRIORITY_ORGAN 1

@@ -81,7 +81,7 @@
 		return null
 
 	// conversion gets REVERSED for moon heretics.
-	if(conversion_target.has_status_effect(/datum/status_effect/heretic_passive/moon))
+	if(isliving(conversion_target) && conversion_target.has_status_effect(/datum/status_effect/heretic_passive/moon)) // isliving is NEEDED bc oozeling cores can also be passed
 		to_chat(owner.current, span_userdanger("You begin to pour your will into [conversion_target]'s mind, \
 			but the demand does not stop. It draws you in, like a lamb caught in raPID WATERS, SWEPT INTO THE TUNNEL WITHIN, \
 			DRUMS DEAFENING AS THE WATERS CRASH, THE LIGHTS AND SOUNDS DANCING ABOVE THE DROWNING DEPTHS, SWALLOWING YOU WHOLE."), type = MESSAGE_TYPE_WARNING)

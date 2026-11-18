@@ -6,7 +6,7 @@
 #warn COMMENT OUT MM2_DEBUGGING BEFORE DEPLOYING!!!
 #else
 #define MM2_DEBUG(x)
-#define MEDIA_WINDOW_ID "outputwindow.mediapanel"
+#define MEDIA_WINDOW_ID "input_buttons.mediapanel"
 #endif
 
 /client
@@ -156,6 +156,8 @@
 
 /datum/media_player/Topic(href, list/href_list)
 	. = ..()
+	if(usr?.client != owner)
+		return
 	var/message_type = href_list["type"]
 	if(!message_type)
 		return

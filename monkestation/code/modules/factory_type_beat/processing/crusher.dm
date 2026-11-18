@@ -35,21 +35,19 @@
 		var/obj/item/processing/exotic = chosen_exotic
 		if(!exotic.processed_by)
 			check_for_boosts()
+			var/list/rejected_mats = list()
 			for(var/datum/material/material as anything in exotic.custom_materials)
-				if(!can_process_material(material))
-					continue
 				var/quantity = exotic.custom_materials[material]
+				if(!can_process_material(material))
+					rejected_mats[material] = quantity
+					continue
 				var/obj/item/processing/dirty_dust/dust  = new(src)
-				dust.custom_materials = list()
-				dust.custom_materials += material
-				dust.custom_materials[material] = quantity
-				exotic.custom_materials -= material
-
-				if(!length(dust.custom_materials))
-					qdel(dust)
-				else
-					dust.set_colors()
-					src.remove_resource(dust)
+				var/list/dust_mats = list()
+				dust_mats[material] = quantity
+				dust.set_custom_materials(dust_mats)
+				dust.set_colors()
+				src.remove_resource(dust)
+			exotic.set_custom_materials(rejected_mats)
 
 			use_energy(active_power_usage)
 			if(!length(exotic.custom_materials))

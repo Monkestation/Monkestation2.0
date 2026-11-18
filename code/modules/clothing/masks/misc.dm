@@ -12,10 +12,10 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/clothing/mask/kitsuneblack/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
 /obj/item/clothing/mask/kitsuneblack/click_alt(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/kitsunewhite
@@ -32,10 +32,10 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/clothing/mask/kitsunewhite/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
 /obj/item/clothing/mask/kitsunewhite/click_alt(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/ookmask
@@ -45,19 +45,19 @@
 	icon_state = "ook"
 	worn_icon = 'icons/mob/clothing/mask.dmi'
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	alternative_screams = list(	'sound/creatures/monkey/monkey_screech_1.ogg',
-								'sound/creatures/monkey/monkey_screech_2.ogg',
-								'sound/creatures/monkey/monkey_screech_3.ogg',
-								'sound/creatures/monkey/monkey_screech_4.ogg',
-								'sound/creatures/monkey/monkey_screech_5.ogg',
-								'sound/creatures/monkey/monkey_screech_6.ogg',
-								'sound/creatures/monkey/monkey_screech_7.ogg')
+	alternative_screams = list(	'sound/mobs/non-humanoids/monkey/monkey_screech_1.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_2.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_3.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_4.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_5.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_6.ogg',
+								'sound/mobs/non-humanoids/monkey/monkey_screech_7.ogg')
 
-	alternative_laughs = list(	'sound/voice/laugh/misc/big_laugh0.ogg',
-								'sound/voice/laugh/misc/big_laugh1.ogg',
-								'sound/voice/laugh/misc/big_laugh2.ogg',
-								'sound/voice/laugh/misc/big_laugh3.ogg',
-								'sound/voice/laugh/misc/big_laugh4.ogg')
+	alternative_laughs = list(	'sound/mobs/humanoids/misc/laugh/big_laugh0.ogg',
+								'sound/mobs/humanoids/misc/laugh/big_laugh1.ogg',
+								'sound/mobs/humanoids/misc/laugh/big_laugh2.ogg',
+								'sound/mobs/humanoids/misc/laugh/big_laugh3.ogg',
+								'sound/mobs/humanoids/misc/laugh/big_laugh4.ogg')
 
 /obj/item/clothing/mask/breath/sec_bandana
 	desc = "An incredibly dense synthetic thread bandana that can be used as an internals mask."
@@ -66,6 +66,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "sec_bandana_default"
 	actions_types = null
+	adjustable = FALSE
 
 	var/obj/item/clothing/suit/armor/secduster/suit
 

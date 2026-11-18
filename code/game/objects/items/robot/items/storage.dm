@@ -325,13 +325,14 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and shuttle frame rods."
 	icon_state = "borg_stack_apparatus"
 	whitelist_storables = list(
 		/obj/item/stack/sheet,
 		/obj/item/stack/rods,
-		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stack/tile,
+		/obj/item/stack/conveyor,
+		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/flatpacked_machine
 	)
 
@@ -369,6 +370,7 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 		/obj/item/electronics,
 		/obj/item/stock_parts,
 		/obj/item/assembly,
+		/obj/item/conveyor_switch_construct,
 		/obj/item/flatpacked_machine
 	)
 	allow_electronics_interaction = TRUE
@@ -408,7 +410,6 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 		/obj/item/gun/magic/artifact,
 		/obj/item/melee/artifact,
 		/obj/item/artifact_summon_wand,
-		/obj/item/slime_mutation_syringe,
 		/obj/item/borg_restart_board
 	)
 	blacklisted_storables = list(

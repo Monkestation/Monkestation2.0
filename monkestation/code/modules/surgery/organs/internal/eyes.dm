@@ -49,11 +49,6 @@
 	icon_state = "crystalline_eyeballs"
 	eye_icon_state = "etherealeyes"
 
-/obj/item/organ/internal/eyes/moth/tundra
-	name = "tundra moth eyes"
-	eye_icon_state = "tundramotheyes"
-	icon_state = "eyeballs-tundramoth"
-
 /obj/item/organ/internal/eyes/jelly
 	name = "photosensitive eyespots"
 	zone = BODY_ZONE_CHEST

@@ -47,7 +47,7 @@
 			for(var/mob/living/silicon/ai/A as anything in GLOB.ai_list)
 				if(A.nuking)
 					target = A
-			for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+			for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 				if(apc.malfhack && apc.occupier)
 					target = apc
 		if(TRACK_INFILTRATOR)
@@ -63,7 +63,7 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		to_chat(L, span_userdanger("Your [name] beeps as it reconfigures it's tracking algorithms."))
-		playsound(L, 'sound/machines/triple_beep.ogg', 50, TRUE)
+		playsound(L, 'sound/machines/beep/triple_beep.ogg', 50, TRUE)
 	mode = new_mode
 	scan_for_target()
 

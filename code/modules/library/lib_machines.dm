@@ -691,7 +691,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
  */
 /obj/machinery/libraryscanner
 	name = "scanner control interface"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bigscanner"
 	desc = "It's an industrial strength book scanner. Perfect!"
 	circuit = /obj/item/circuitboard/machine/libraryscanner
@@ -749,7 +749,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 				return
 			cache = held_book.book_data.return_copy()
 			flick("bigscanner1", src)
-			playsound(src, 'sound/machines/scanner.ogg', vol = 50, vary = TRUE)
+			playsound(src, 'sound/machines/scanner/scanner.ogg', vol = 50, vary = TRUE)
 			return TRUE
 		if("clear")
 			cache = null
@@ -764,7 +764,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
  */
 /obj/machinery/bookbinder
 	name = "book binder"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "binder"
 	desc = "Only intended for binding paper products."
 	circuit = /obj/item/circuitboard/machine/bookbinder

@@ -12,7 +12,7 @@
 	endurance = 25
 	growthstages = 3
 	weed_chance = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.25)
 	possible_mutations = list(/datum/hydroponics/plant_mutation/red_onion)
 	harvest_age = 80
@@ -48,7 +48,7 @@
 /obj/item/food/grown/onion/red/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15, screentip_verb = "Cut")
 
-/obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
+/obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option, list/created_atoms)
 	var/datum/effect_system/fluid_spread/smoke/chem/cry_about_it = new //Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src) //we need to set up the smoke beforehand
 	cry_about_it.attach(splat_location)

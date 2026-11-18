@@ -72,7 +72,7 @@
 	slot_flags = null
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shot_alt.ogg'
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
@@ -162,9 +162,7 @@
 	charge_sections = 5
 	ammo_x_offset = 2
 	shaded_charge = FALSE
-
-/obj/item/gun/energy/laser/instakill/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE
 
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
@@ -201,6 +199,7 @@
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	worn_icon = 'icons/mob/clothing/suits/ctf.dmi'
 	SETUP_MAP_ICONS("standard", "/obj/item/clothing/suit/armor/vest/ctf")
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	greyscale_config = /datum/greyscale_config/ctf_standard
 	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
 	greyscale_colors = "#ffffff"
@@ -232,6 +231,7 @@
 	desc = "Lightweight vest for playing capture the flag."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("light", "/obj/item/clothing/suit/armor/vest/ctf/light")
+	body_parts_covered = CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/ctf_light
 	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
 	slowdown = -0.25

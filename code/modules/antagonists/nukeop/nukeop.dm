@@ -9,7 +9,7 @@
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
 	remove_from_manifest = TRUE
-	stinger_sound = 'sound/ambience/antag/ops.ogg'
+	stinger_sound = 'sound/music/antag/ops.ogg'
 	antag_count_points = 12
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
@@ -104,7 +104,7 @@
 /datum/antagonist/nukeop/proc/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
 		nuke_team.memorized_code = random_nukecode()
-		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/syndicate)
+		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/syndicate)
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
 			if(nuke.r_code == NUKE_CODE_UNSET)
@@ -257,7 +257,7 @@
 	suit_store = /obj/item/tank/jetpack/oxygen
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/shield/energy/shield = locate() in H.held_items
+	var/obj/item/shield/energy/shield = H.is_holding_item_of_type(__IMPLIED_TYPE__)
 	shield.icon_state = "[shield.base_icon_state]1"
 	H.update_held_items()
 
@@ -576,7 +576,7 @@ their person at all times.
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && GLOB.station_was_nuked && !are_all_operatives_dead())
-		text += "<BIG>[icon2html('icons/ui_icons/antags/badass.dmi', world, "badass")]</BIG>"
+		text += "<BIG>[icon2html('icons/ui/antags/badass.dmi', world, "badass")]</BIG>"
 
 	parts += text
 

@@ -30,8 +30,6 @@ GLOBAL_LIST_INIT(ai_project_categories, list(
 
 ///How much is the AI download progress increased by per tick? Multiplied by a modifer on the AI if they have upgraded. Need to reach 100 to be downloaded
 #define AI_DOWNLOAD_PER_PROCESS 0.5
-///Check for tracked individual coming into view every X ticks
-#define AI_CAMERA_MEMORY_TICKS 15
 
 //Needs UI change to properly work!
 #define AI_MAX_CPUS_PER_RACK 4

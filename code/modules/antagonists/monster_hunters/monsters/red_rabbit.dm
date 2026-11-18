@@ -10,7 +10,7 @@
 	unsuitable_atmos_damage = NONE
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	speak_emote = list("roars")
 

@@ -47,7 +47,7 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!length(get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE)))
+	if(!length(get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE, max_path_cost = changeling.sting_range * 14)))
 		return // no path within the sting's range is found. what a weird place to use the pathfinding system
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		sting_feedback(user, target)
@@ -177,13 +177,13 @@
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
-	playsound(target, 'sound/effects/blobattack.ogg', 30, TRUE)
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(remove_fake), target, blade), 600)
 	return TRUE
 
 /datum/action/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
-	playsound(target, 'sound/effects/blobattack.ogg', 30, TRUE)
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
 	[target] reforms [target.p_their()] [blade.name] into an arm!</span>",
 	span_warning("[blade] reforms back to normal."),

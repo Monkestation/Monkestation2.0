@@ -1,6 +1,6 @@
 /datum/element/trash_if_empty
 	var/attach_type = /obj
-	var/static/list/update_signals = list(
+	var/list/update_signals = list(
 		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_EXITED
 	)
@@ -40,7 +40,7 @@
 // Variant for reagent containers
 /datum/element/trash_if_empty/reagent_container
 	attach_type = /obj/item/reagent_containers
-	var/static/list/reagent_signals = list(
+	var/list/reagent_signals = list(
 		COMSIG_REAGENTS_NEW_REAGENT,
 		COMSIG_REAGENTS_ADD_REAGENT,
 		COMSIG_REAGENTS_DEL_REAGENT,
@@ -61,6 +61,6 @@
 
 /datum/element/trash_if_empty/reagent_container/if_prefilled/is_empty_or_trash(datum/reagents/source)
 	var/obj/item/reagent_containers/container = source?.my_atom
-	if(!container.list_reagents)
+	if(!length(container.list_reagents))
 		return FALSE
 	return ..()

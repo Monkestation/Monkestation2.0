@@ -13,8 +13,8 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-/// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, FALSE, "Admin PM Mob", mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, FALSE, "Admin PM Mob", /mob)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!ismob(target))
 		to_chat(
 			user,
@@ -104,7 +104,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 		if(length(recipient_interactions) == 1)
 			if(length(opening_interactions)) // Inform the admin that they aren't the first
 				var/printable_interators = english_list(opening_interactions)
-				SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
+				SEND_SOUND(src, sound('sound/machines/buzz/buzz-sigh.ogg', volume=30))
 				message_prompt += "\n\n**This ticket is already being responded to by: [printable_interators]**"
 			// add the admin who is currently responding to the list of people responding
 			LAZYADD(recipient_ticket.opening_responders, src)

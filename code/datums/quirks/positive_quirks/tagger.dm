@@ -4,6 +4,7 @@
 	icon = FA_ICON_SPRAY_CAN
 	value = 4
 	mob_trait = TRAIT_TAGGER
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SAVE
 	gain_text = span_notice("You know how to tag walls efficiently.")
 	lose_text = span_danger("You forget how to tag walls properly.")
 	medical_record_text = "Patient was recently seen for possible paint huffing incident."

@@ -37,7 +37,7 @@
 	var/turf/our_turf = get_turf(src)
 
 	if(our_turf)
-		our_turf.opacity = FALSE
+		our_turf.set_opacity(FALSE)
 
 	// Ideally this'd be part of the SM component, but the SM itself snowflakes bullets (emitters are bullets).
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(eat_bullets))
@@ -72,7 +72,7 @@
 				span_userdanger("The crystal mass lunges on you and hits you in the chest. As your vision is filled with a blinding light, you think to yourself \"Damn it.\""))
 		else if(istype(checked_atom, /obj/cascade_portal))
 			checked_atom.visible_message(span_userdanger("\The [checked_atom] screeches and closes away as it is hit by \a [src]! Too late!"))
-			playsound(get_turf(checked_atom), 'sound/magic/charge.ogg', 50, TRUE)
+			playsound(get_turf(checked_atom), 'sound/effects/magic/charge.ogg', 50, TRUE)
 			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
 			qdel(checked_atom)
 		else if(isitem(checked_atom))

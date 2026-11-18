@@ -16,7 +16,7 @@
 	charge_time = 10
 	detonation_damage = 60
 	backstab_bonus = 20
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	icon = 'icons/obj/mining.dmi'
 	attack_verb_continuous = list("slashes", "stabs", "cuts")
 	attack_verb_simple = list("slash", "stab", )
@@ -87,7 +87,7 @@
 	knife.aim_projectile(target, user, modifiers)
 	knife.firer = user
 	knife.fired_from = src
-	playsound(user, 'sound/weapons/fwoosh.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/fwoosh.ogg', 100, TRUE)
 	knife.fire()
 
 /obj/projectile/destabilizer/longrange //This does not get all its procs copy pasted because its actually a subtype of destabilizer
@@ -105,8 +105,8 @@
 	armor_flag = MELEE
 	wound_bonus = 5
 	bare_wound_bonus = 10
-	hitsound = 'sound/weapons/guillotine.ogg'
-	hitsound_wall = 'sound/weapons/guillotine.ogg'
+	hitsound = 'sound/items/weapons/guillotine.ogg'
+	hitsound_wall = 'sound/items/weapons/guillotine.ogg'
 
 //we have more copy pasted crusher code here because the damage from a projectile is different from a melee strike
 /obj/projectile/knives/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -138,7 +138,7 @@
 	if((firer.dir & backstab_dir) && (living_target.dir & backstab_dir))
 		backstabbed = TRUE
 		combined_damage += used_crusher.backstab_bonus
-		playsound(firer, 'sound/weapons/kenetic_accel.ogg', 50, TRUE)
+		playsound(firer, 'sound/items/weapons/kinetic_accel.ogg', 50, TRUE)
 
 	if(!QDELETED(mark_damage))
 		mark_damage.total_damage += combined_damage

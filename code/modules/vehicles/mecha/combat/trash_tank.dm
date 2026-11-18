@@ -1,15 +1,15 @@
 /obj/vehicle/sealed/mecha/trash_tank
 	desc = "A trashcart that seems to be repurposed as the basis of a tank hull. with a turret and an electric engine strapped into it. It's a miracle it's even working"
 	name = "trash tank"
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "trash_tank"
 	base_icon_state = "trash_tank"
 	silicon_icon_state = "null"
 	max_integrity = 200
 	force = 20
 	movedelay = 1.5
-	stepsound = 'sound/mecha/tank_treads.ogg'
-	turnsound = 'sound/mecha/tank_treads.ogg'
+	stepsound = 'sound/vehicles/mecha/tank_treads.ogg'
+	turnsound = 'sound/vehicles/mecha/tank_treads.ogg'
 	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/scrap_tank //mediocre armor, do you expect any better?
 	internal_damage_threshold = 60 //Its got shitty durability

@@ -233,17 +233,33 @@
 	return
 
 /mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
-	var/list/loadout_datums = loadout_list_to_datums(used_pref?.loadout_list)
+	if(!used_pref)
+		return
+
 	var/obj/item/hat_to_use = null
 
-	// We want the last hat in the list to match the behaviour of humanoid loadouts
-	for (var/datum/loadout_item/head/item in loadout_datums)
-		if (ispath(item.item_path, /obj/item))
+	// We want the last hat in the list to match the behaviour of humanoid loadouts.
+	var/list/loadout_datums = loadout_list_to_datums(used_pref.loadout_list)
+	for(var/datum/loadout_item/head/item in loadout_datums)
+		if(ispath(item.item_path, /obj/item))
 			var/obj/item/hat = new item.item_path()
-			if (hat.slot_flags & ITEM_SLOT_HEAD)
+			if(hat.slot_flags & ITEM_SLOT_HEAD)
 				hat_to_use = hat
 
-	if (hat_to_use)
+	for(var/num in used_pref.special_loadout_list["unusual"])
+		var/list/unusuals = used_pref.extra_stat_inventory["unusual"]
+		var/unusual_idx = text2num(num)
+		if(length(unusuals) < unusual_idx)
+			stack_trace("tried to get unusual [unusual_idx] despite length being [length(unusuals)]")
+			continue
+		var/list/data = unusuals[unusual_idx]
+		var/item_path = text2path(data["unusual_type"])
+		var/obj/item/hat = SSwardrobe.provide_type(item_path)
+		hat.AddComponent(/datum/component/unusual_handler, data)
+		if(hat.slot_flags & ITEM_SLOT_HEAD)
+			hat_to_use = hat
+
+	if(hat_to_use)
 		place_on_head(hat_to_use)
 
 #define VERY_LATE_ARRIVAL_TOAST_PROB 20
@@ -267,12 +283,16 @@
 
 #undef VERY_LATE_ARRIVAL_TOAST_PROB
 
+/// Return the outfit to use
+/datum/job/proc/get_outfit(visual_only)
+	return outfit
+
 /mob/living/proc/dress_up_as_job(datum/job/equipping, visual_only = FALSE)
 	return
 
 /mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only = FALSE, datum/preferences/used_pref)
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
-	equip_outfit_and_loadout(equipping.outfit, used_pref, visual_only, equipping)
+	equip_outfit_and_loadout(equipping.get_outfit(visual_only), used_pref, visual_only, equipping)
 
 /datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(!human)
@@ -565,13 +585,17 @@
 			else
 				spawn_points_not_picked += spawn_point
 
-	var/obj/effect/landmark/start/picked = length(spawn_points_not_picked) ? pick(spawn_points_not_picked) : pick(spawn_points_picked)
+	if(.)
+		return
 
-	. = picked
-	picked.used = TRUE
-
-	if(!.)
+	var/list/spawn_pool = length(spawn_points_not_picked) ? spawn_points_not_picked : spawn_points_picked
+	if(!length(spawn_pool))
 		log_world("Couldn't find a round start spawn point for [title]")
+		return
+
+	var/obj/effect/landmark/start/picked = pick(spawn_pool)
+	picked.used = TRUE
+	return picked
 
 
 /// Finds a valid latejoin spawn point, checking for events and special conditions.

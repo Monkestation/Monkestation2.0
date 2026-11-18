@@ -320,6 +320,8 @@
 				return
 			approve_all(user)
 		if("handle")
+			if(!check_rights(R_ADMIN))
+				return
 			handle(user)
 		if("issue_gear")
 			if(!check_rights(R_ADMIN))
@@ -378,8 +380,10 @@
 	user.client?.admin_follow(mind_reference.current)
 
 /datum/opposing_force/proc/set_equipment_count(mob/user, datum/opposing_force_selected_equipment/equipment, new_count)
+	if(!can_edit)
+		return
 	var/sanitized_newcount = sanitize_integer(new_count, 1, equipment.opposing_force_equipment.max_amount)
-	equipment.count = new_count
+	equipment.count = sanitized_newcount
 	add_log(user.ckey, "Set equipment '[equipment.opposing_force_equipment.name] count to [sanitized_newcount]")
 
 /datum/opposing_force/proc/handle(mob/user)
@@ -757,14 +761,14 @@
 		var/admin_ckey = get_admin_ckey(user)
 		message_string = "[time2text(real_round_time, "hh:mm:ss", 0)] (ADMIN) [admin_ckey]: " + message
 		to_chat(mind_reference.current, boxed_message(span_pink("[span_prefix("OPFOR CHAT ([admin_ckey]):")] [message]")))
-		SEND_SOUND(mind_reference.current, sound('sound/machines/terminal_prompt.ogg'))
+		SEND_SOUND(mind_reference.current, sound('sound/machines/terminal/terminal_prompt.ogg'))
 	else
 		message_string = "[time2text(real_round_time, "hh:mm:ss", 0)] (USER) [user.ckey]: " + message
 		var/admin_message = span_pink("[span_prefix("OPFOR CHAT ([user.ckey]):")] [message] (<a href='byond://?src=[REF(src)];admin_pref=show_panel'>Show Panel</a>)")
 		var/msg_target
 		if(handling_admin && GLOB.directory[handling_admin])
 			var/client/admin = GLOB.directory[handling_admin]
-			SEND_SOUND(admin, sound('sound/machines/terminal_prompt.ogg'))
+			SEND_SOUND(admin, sound('sound/machines/terminal/terminal_prompt.ogg'))
 			if(!admin.is_afk())
 				msg_target = admin
 		to_chat(

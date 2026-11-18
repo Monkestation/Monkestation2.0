@@ -1,7 +1,7 @@
 /mob/living/basic/tree
 	name = "pine tree"
 	desc = "A pissed off tree-like alien. It seems annoyed with the festivities..."
-	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
@@ -28,7 +28,7 @@
 	melee_damage_upper = 12
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_HOSTILE)
@@ -36,8 +36,8 @@
 
 	habitable_atmos = list("min_oxy" = 2, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 2.5
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = 1200
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 1200
 
 	death_message = "is hacked into pieces!"
 
@@ -86,10 +86,8 @@
 	var/mob/living/victim = target
 	var/boost = 0
 	if(iscarbon(victim))
-		for(var/item_path in infuriating_objects)
-			if(locate(item_path) in victim.held_items)
-				boost = anger_boost
-				break
+		if(victim.is_holding_item_of_types(infuriating_objects))
+			boost = anger_boost
 
 	if(prob(paralyze_prob + boost))
 		victim.Paralyze(paralyze_value + boost)

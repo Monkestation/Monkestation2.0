@@ -119,6 +119,8 @@ SUBSYSTEM_DEF(gamemode)
 	/// Are we able to run roundstart events
 	var/can_run_roundstart = TRUE
 	var/list/triggered_round_events = list()
+	/// Cooldown between latejoiners being made into antags
+	COOLDOWN_DECLARE(latejoin_antag_cooldown)
 
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
@@ -182,7 +184,7 @@ SUBSYSTEM_DEF(gamemode)
 		else if(!sch_event.alerted_admins && world.time >= sch_event.start_time - 1 MINUTES)
 			///Alert admins 1 minute before running and allow them to cancel or refund the event, once again.
 			sch_event.alerted_admins = TRUE
-			message_admins("Scheduled Event: [sch_event.event] will run in [DisplayTimeText(sch_event.start_time - world.time)]. (<a href='byond://?src=[REF(sch_event)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(sch_event)];action=refund'>REFUND</a>)")
+			message_admins("Scheduled Event: [sch_event.event] will run in [DisplayTimeText(sch_event.start_time - world.time)]. (<a href='byond://?src=[REF(sch_event)];[HrefToken(forceGlobal = TRUE)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(sch_event)];[HrefToken(forceGlobal = TRUE)];action=refund'>REFUND</a>)")
 
 	if(!halted_storyteller && current_storyteller)
 		// We update crew information here to adjust population scalling and event thresholds for the storyteller.
@@ -249,30 +251,34 @@ SUBSYSTEM_DEF(gamemode)
 
 /// Gets candidates for antagonist roles.
 /datum/controller/subsystem/gamemode/proc/get_candidates(role, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, \
-														midround_antag_pref, no_antags = TRUE, list/restricted_roles, list/required_roles)
+														midround_antag_pref, no_antags = TRUE, list/restricted_roles, list/required_roles, list/candidate_pool)
 	var/list/candidates = list()
 	var/list/candidate_candidates = list() //lol
-	//should refactor this to use caching of whos valid for a given role
-	for(var/mob/player as anything in GLOB.player_list)
-		if(QDELETED(player) || player.mind?.picking)
-			continue
-		if(ready_newplayers && isnewplayer(player))
-			var/mob/dead/new_player/new_player = player
-			if(new_player.ready == PLAYER_READY_TO_PLAY && new_player.mind && new_player.check_preferences())
+	// avoid bullshit involving arrivals shuttle not being on-station
+	if(!isnull(candidate_pool))
+		candidate_candidates = candidate_pool
+	else
+		//should refactor this to use caching of whos valid for a given role
+		for(var/mob/player as anything in GLOB.player_list)
+			if(QDELETED(player))
+				continue
+			if(ready_newplayers && isnewplayer(player))
+				var/mob/dead/new_player/new_player = player
+				if(new_player.ready == PLAYER_READY_TO_PLAY && new_player.mind && new_player.check_preferences())
+					candidate_candidates += player
+			else if(observers && isobserver(player))
 				candidate_candidates += player
-		else if(observers && isobserver(player))
-			candidate_candidates += player
-		else if(living_players && isliving(player))
-			if(!ishuman(player) && !isAI(player))
-				continue
-			// I split these checks up to make the code more readable ~Lucy
-			var/is_on_station = is_station_level(player.z)
-			if(!is_on_station && !is_late_arrival(player))
-				continue
-			candidate_candidates += player
+			else if(living_players && isliving(player))
+				if(!ishuman(player) && !isAI(player))
+					continue
+				// I split these checks up to make the code more readable ~Lucy
+				var/is_on_station = is_station_level(player.z)
+				if(!is_on_station && !is_late_arrival(player))
+					continue
+				candidate_candidates += player
 
 	for(var/mob/candidate as anything in candidate_candidates)
-		if(QDELETED(candidate) || !candidate.key || !candidate.client || (!observers && !candidate.mind))
+		if(QDELETED(candidate) || candidate.mind?.picking || !candidate.key || !candidate.client || (!observers && !candidate.mind))
 			continue
 		if(!observers)
 			if(isliving(candidate) && !HAS_MIND_TRAIT(candidate, TRAIT_JOINED_AS_CREW))
@@ -365,9 +371,9 @@ SUBSYSTEM_DEF(gamemode)
 	var/datum/scheduled_event/scheduled = new (passed_event, world.time + passed_time, passed_cost, passed_ignore, passed_announce)
 	var/round_started = SSticker.HasRoundStarted()
 	if(round_started)
-		message_admins("Event: [passed_event] has been scheduled to run in [DisplayTimeText(passed_time)]. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(scheduled)];action=refund'>REFUND</a>)")
+		message_admins("Event: [passed_event] has been scheduled to run in [DisplayTimeText(passed_time)]. (<a href='byond://?src=[REF(scheduled)];[HrefToken(forceGlobal = TRUE)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(scheduled)];[HrefToken(forceGlobal = TRUE)];action=refund'>REFUND</a>)")
 	else //Only roundstart events can be scheduled before round start
-		message_admins("Event: [passed_event] has been scheduled to run on roundstart. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>)")
+		message_admins("Event: [passed_event] has been scheduled to run on roundstart. (<a href='byond://?src=[REF(scheduled)];[HrefToken(forceGlobal = TRUE)];action=cancel'>CANCEL</a>)")
 	scheduled_events += scheduled
 
 //simplified version of `get_active_player_count()`
@@ -418,12 +424,16 @@ SUBSYSTEM_DEF(gamemode)
 
 		current_pop_scale_multipliers[track] = calculated_multiplier
 
+/// Returns the running round event if it fired, otherwise one of the EVENT_* defines.
 /datum/controller/subsystem/gamemode/proc/TriggerEvent(datum/round_event_control/event, forced = FALSE)
 	. = event.preRunEvent(forced)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		event.max_occurrences = 0
 	else if(. == EVENT_READY)
-		event.run_event(random = TRUE, admin_forced = forced) // fallback to dynamic
+		var/datum/round_event/round_event = event.run_event(random = TRUE, admin_forced = forced) // fallback to dynamic
+		if(!round_event)
+			return EVENT_INTERRUPTED
+		return round_event
 
 ADMIN_VERB(force_event, R_FUN, FALSE, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
 	SSgamemode.event_panel(user.mob)
@@ -449,46 +459,9 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 			continue
 
 		var/list/var_list = decoded[event_text_path]
-		for(var/variable in var_list)
-			var/value = var_list[variable]
-			switch(variable)
-				if("weight")
-					event.weight = value
-				if("min_players")
-					event.min_players = value
-				if("max_occurrences")
-					event.max_occurrences = value
-				if("earliest_start")
-					event.earliest_start = value * (1 MINUTES)
-				if("track")
-					if(value in event_tracks)
-						event.track = value
-				if("cost")
-					event.cost = value
-				if("reoccurence_penalty_multiplier")
-					event.reoccurence_penalty_multiplier = value
-				if("shared_occurence_type")
-					if(!isnull(value))
-						value = "[value]"
-					event.shared_occurence_type = value
-				if("repeated_mode_adjust")
-					event.repeated_mode_adjust = value
-				if("extra_spawned_events")
-					if(!islist(value) && !isnull(value))
-						stack_trace("extra_spawned_events must be a list or null (tried to set invalid for [event_path])")
-						continue
-					if(!istype(event, /datum/round_event_control/antagonist))
-						stack_trace("tried to set extra_spawned_events for event that isn't a subtype of /datum/round_event_control/antagonist ([event_path])")
-						continue
-					var/datum/round_event_control/antagonist/antag_event = event
-					antag_event.extra_spawned_events = null
-					var/list/extra_spawned_events = fill_with_ones(value)
-					for(var/key in extra_spawned_events)
-						var/extra_path = text2path(key)
-						if(!extra_path)
-							stack_trace("invalid event typepath '[key]' in extra_spawned_events for [event_path] in events.json")
-							continue
-						LAZYSET(antag_event.extra_spawned_events, extra_path, extra_spawned_events[key])
+		for(var/variable, value in var_list)
+			if(!event.apply_config_var(variable, value))
+				stack_trace("Failed to apply [variable]=[value] from config to [event_path]")
 
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()

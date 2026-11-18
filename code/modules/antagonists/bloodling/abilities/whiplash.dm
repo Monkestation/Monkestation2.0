@@ -5,7 +5,7 @@
 	background_icon_state = "button_bg"
 	button_icon = 'icons/mob/actions/actions_bloodling.dmi'
 	button_icon_state = "whiplash"
-	sound = 'sound/magic/tail_swing.ogg'
+	sound = 'sound/effects/magic/tail_swing.ogg'
 	shared_cooldown = MOB_SHARED_COOLDOWN_1
 
 	spell_requirements = NONE

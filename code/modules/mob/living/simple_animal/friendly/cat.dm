@@ -15,8 +15,8 @@
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	bodytemp_cold_damage_limit = 200
-	bodytemp_heat_damage_limit = 400
+	minbodytemp = 200
+	maxbodytemp = 400
 	unsuitable_atmos_damage = 0.5
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten = 1)
@@ -36,7 +36,7 @@
 	held_state = "cat2"
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
+	attack_sound = 'sound/items/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -59,8 +59,8 @@
 	icon_living = "spacecat"
 	icon_dead = "spacecat_dead"
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = TCMB
-	bodytemp_heat_damage_limit = T0C + 40
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40
 	held_state = "spacecat"
 
 /mob/living/simple_animal/pet/cat/breadcat
@@ -253,7 +253,7 @@
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
-			SSmove_manager.stop_looping(src)
+			GLOB.move_manager.stop_looping(src)
 			turns_since_scan = 0
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
@@ -269,7 +269,7 @@
 							break
 			if(movement_target)
 				stop_automated_movement = 1
-				SSmove_manager.move_to(src, movement_target, 0, 3)
+				GLOB.move_manager.move_to(src, movement_target, 0, 3)
 
 /mob/living/simple_animal/pet/cat/jerry //Holy shit we left jerry on donut ~ Arcane ~Fikou
 	name = "Jerry"

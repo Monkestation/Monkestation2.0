@@ -252,17 +252,24 @@
 
 	return .
 
+/obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
+	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
+	if(isnull(limb))
+		if(!silent)
+			patient.balloon_alert(user, "no [parse_zone(healed_zone)]!")
+		return FALSE
+	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
+		if(!silent)
+			patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
+		return FALSE
+	return TRUE
+
 // gauze is only relevant for wounds, which are handled in the wounds themselves
-/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
+/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 
-	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(user.zone_selected))
+	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
 	if(!limb)
-		patient.balloon_alert(user, "no limb!")
-		return
-
-	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
-		patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
 		return
 
 	var/boosted = FALSE
@@ -315,8 +322,16 @@
 			span_infoplain(span_green("[user] applies [src] to [theirs] [limb.plaintext_zone].")),
 			span_infoplain(span_green("You [limb.current_gauze?.type == type ? "replace" : "bandage"] the wounds on [whose] [limb.plaintext_zone].")),
 		)
+	// plastiseal and the like also help burn wounds under them
+	var/wound_sanitization = sanitization
+	var/wound_flesh_regeneration = flesh_regeneration
 	limb.apply_gauze(src)
-	return TRUE //for flesh burn wound code
+	if(wound_sanitization || wound_flesh_regeneration)
+		for(var/datum/wound/burn/flesh/wound in limb.wounds)
+			wound.sanitization += wound_sanitization
+			wound.flesh_healing += wound_flesh_regeneration
+			break
+	return TRUE
 
 /obj/item/stack/medical/gauze/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WIRECUTTER || attacking_item.get_sharpness())

@@ -1,5 +1,6 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/instrument
+	abstract_type = /obj/item/instrument
 	name = "generic instrument"
 	force = 10
 	max_integrity = 100
@@ -72,7 +73,7 @@
 	inhand_icon_state = "banjo"
 	attack_verb_continuous = list("scruggs-styles", "hum-diggitys", "shin-digs", "clawhammers")
 	attack_verb_simple = list("scruggs-style", "hum-diggity", "shin-dig", "clawhammer")
-	hitsound = 'sound/weapons/banjoslap.ogg'
+	hitsound = 'sound/items/weapons/banjoslap.ogg'
 	allowed_instrument_ids = "banjo"
 
 /obj/item/instrument/guitar
@@ -82,7 +83,7 @@
 	inhand_icon_state = "guitar"
 	attack_verb_continuous = list("plays metal on", "serenades", "crashes", "smashes")
 	attack_verb_simple = list("play metal on", "serenade", "crash", "smash")
-	hitsound = 'sound/weapons/stringsmash.ogg'
+	hitsound = 'sound/items/weapons/stringsmash.ogg'
 	allowed_instrument_ids = list("guitar","csteelgt","cnylongt", "ccleangt", "cmutedgt")
 
 /obj/item/instrument/eguitar
@@ -93,7 +94,7 @@
 	force = 12
 	attack_verb_continuous = list("plays metal on", "shreds", "crashes", "smashes")
 	attack_verb_simple = list("play metal on", "shred", "crash", "smash")
-	hitsound = 'sound/weapons/stringsmash.ogg'
+	hitsound = 'sound/items/weapons/stringsmash.ogg'
 	allowed_instrument_ids = "eguitar"
 
 /obj/item/instrument/glockenspiel
@@ -125,14 +126,19 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "trumpets", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trumpet", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
+	var/single_use = FALSE
 
 /obj/item/instrument/trumpet/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
 /obj/item/instrument/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/trombone/En4.mid', 100,1,-1)
 	..()
+
+/obj/item/instrument/trumpet/spectral/one_doot
+	single_use = TRUE
 
 /obj/item/instrument/saxophone
 	name = "saxophone"
@@ -149,14 +155,19 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "saxxes", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "sax", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
+	var/single_use = FALSE
 
 /obj/item/instrument/saxophone/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
 /obj/item/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/saxophone/En4.mid', 100,1,-1)
 	..()
+
+/obj/item/instrument/saxophone/spectral/one_doot
+	single_use = TRUE
 
 /obj/item/instrument/trombone
 	name = "trombone"
@@ -173,10 +184,15 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "trombones", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trombone", "mourn", "doot", "spook")
+	/// Whether the instrument can only make someone a skeleton once
+	var/single_use = FALSE
 
 /obj/item/instrument/trombone/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
+
+/obj/item/instrument/trombone/spectral/one_doot
+	single_use = TRUE
 
 /obj/item/instrument/trombone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/trombone/Cn4.mid', 100,1,-1)
@@ -280,6 +296,6 @@
 	attack_verb_simple = list("flutter", "flap")
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
-	hitsound = 'sound/voice/moth/scream_moth.ogg'
+	hitsound = 'sound/mobs/humanoids/moth/scream_moth.ogg'
 	custom_price = PAYCHECK_COMMAND * 2.37
 	custom_premium_price = PAYCHECK_COMMAND * 2.37

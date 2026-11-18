@@ -3,7 +3,7 @@
 	var/phrase_sound = null
 
 /datum/hailer_phrase/emag
-	phrase_text = "%^!!&@#&*@#*%&%!@#!&*#&@(!*#&@#*%&!%!%#*(@&!*#%&!!" //Monkestation edit
+	phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSTORM AND EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND POO AND SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKE FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
 	phrase_sound = "emag"
 
 /datum/hailer_phrase/halt

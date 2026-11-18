@@ -51,7 +51,7 @@
 /area/template_noop)
 "m" = (
 /obj/machinery/door/airlock/multi_tile/public/glass{
-	doorOpen = 'sound/machines/defib_success.ogg'
+	doorOpen = 'sound/machines/defib/defib_success.ogg'
 	},
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/firedoor/border_only{

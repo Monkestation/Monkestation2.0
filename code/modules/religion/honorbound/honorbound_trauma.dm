@@ -248,7 +248,7 @@
 	/// The declaration that's shouted in invocation. Set in New()
 	var/declaration = "By the divine light of my deity, you are an evil of this world that must be wrought low!"
 
-/datum/action/cooldown/spell/pointed/declare_evil/New()
+/datum/action/cooldown/spell/pointed/declare_evil/New(Target, original = TRUE)
 	. = ..()
 	declaration = "By the divine light of [GLOB.deity], you are an evil of this world that must be wrought low!"
 

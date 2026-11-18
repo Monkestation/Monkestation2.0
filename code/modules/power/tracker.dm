@@ -9,7 +9,7 @@
 /obj/machinery/power/tracker
 	name = "solar tracker"
 	desc = "A solar directional tracker."
-	icon = 'icons/obj/solar.dmi'
+	icon = 'icons/obj/machines/solar.dmi'
 	icon_state = "tracker_base"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -132,7 +132,7 @@
 /obj/machinery/power/tracker/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 		unset_control()
 
 /obj/machinery/power/tracker/deconstruct(disassembled = TRUE)

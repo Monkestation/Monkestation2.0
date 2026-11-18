@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/proc/announce(message)
 	priority_announce(
 		text = message,
-		sound = 'sound/misc/notice2.ogg',
+		sound = 'sound/announcer/notice/notice2.ogg',
 		sender_override = "Automated Lighting System Announcement",
 		color_override = "grey",
 	)
@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(nightshift)
 	set waitfor = FALSE
 
 	if(!resumed)
-		currentrun = SSmachines.get_machines_by_type(/obj/machinery/power/apc)
+		currentrun = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 		nightshift_active = active
 		if(announce)
 			if (active)

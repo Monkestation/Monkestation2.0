@@ -1,6 +1,6 @@
 /area/mapping_showcase
 	name = "Mapping Contest Showcase Area"
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 	base_lighting_alpha = 225
 	has_gravity = TRUE
 	requires_power = FALSE

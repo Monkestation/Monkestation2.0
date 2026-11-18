@@ -121,10 +121,10 @@ GAME_VERB_DESC(/client, verify_in_discord, "Verify Discord Account", "Verify you
 
 /datum/asset/simple/discord_verification
 	assets = list(
-		"dverify_image1.png" = 'icons/ui_icons/tgui/dverify_image1.png',
-		"dverify_image2.png" = 'icons/ui_icons/tgui/dverify_image2.png',
-		"dverify_image3.png" = 'icons/ui_icons/tgui/dverify_image3.png',
-		"dverify_image4.png" = 'icons/ui_icons/tgui/dverify_image4.png',
+		"dverify_image1.png" = 'icons/ui/tgui/dverify_image1.png',
+		"dverify_image2.png" = 'icons/ui/tgui/dverify_image2.png',
+		"dverify_image3.png" = 'icons/ui/tgui/dverify_image3.png',
+		"dverify_image4.png" = 'icons/ui/tgui/dverify_image4.png',
 	)
 
 /// Details are on /datum/persistent_client

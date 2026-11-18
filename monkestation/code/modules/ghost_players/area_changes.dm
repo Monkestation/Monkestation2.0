@@ -1,10 +1,10 @@
 /area/centcom/central_command_areas
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA
+	area_flags = NOTELEPORT | GHOST_AREA
 	ban_explosions = TRUE
 	grace = TRUE
 
 /area/centcom/tdome
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA
+	area_flags = NOTELEPORT | GHOST_AREA
 	ban_explosions = TRUE
 
 /area/centcom/tdome/arena/actual
@@ -16,51 +16,53 @@
 	name = "Centcom Ghost Spawn"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom_ghostspawn"
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA
+	area_flags = NOTELEPORT | GHOST_AREA | PASSIVE_AREA
 
 /area/centcom/central_command_areas/supply
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
+	area_flags_mapping = UNIQUE_AREA
 
 /area/centcom/central_command_areas/pre_shuttle
 	name = "Centcom Pre Shuttle"
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
 
 /area/centcom/central_command_areas/supply
-	area_flags = UNIQUE_AREA | NOTELEPORT | PASSIVE_AREA | GHOST_AREA | NO_GHOSTS_DURING_ROUND
+	area_flags = NOTELEPORT | PASSIVE_AREA | GHOST_AREA | NO_GHOSTS_DURING_ROUND
+	area_flags_mapping = UNIQUE_AREA
 
 /area/centcom/central_command_areas/borbop
 	name = "Borbop's Bar"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "borbop"
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA
+	area_flags = NOTELEPORT | GHOST_AREA | PASSIVE_AREA
 
 /area/centcom/central_command_areas/adminroom
 	name = "Private Admin Room"
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
 
 /area/centcom/central_command_areas/kitchen
 	name = "Papa's Pizzeria"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom_kitchen"
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA
+	area_flags = NOTELEPORT | GHOST_AREA | PASSIVE_AREA
 
 /area/centcom/central_command_areas/medical
 	name = "Centcom Medical"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom_medical"
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA
+	area_flags = NOTELEPORT | GHOST_AREA | PASSIVE_AREA
 
 /area/centcom/central_command_areas/botany
 	name = "Centcom Botany"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom_botany"
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA
+	area_flags = NOTELEPORT | GHOST_AREA
 
 /area/centcom/central_command_areas/hall
 	name = "Centcom Hall"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom_hall"
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA
+	area_flags = NOTELEPORT | GHOST_AREA | PASSIVE_AREA
 
 /area/centcom/central_command_areas/hall/tutorial_chamber
 	name = "Tutorial Chamber"
@@ -69,34 +71,37 @@
 	name = "Admin Hangout"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom_hangout"
-	area_flags = UNIQUE_AREA | NOTELEPORT | PASSIVE_AREA | GHOST_AREA | NO_GHOSTS_DURING_ROUND
+	area_flags = NOTELEPORT | PASSIVE_AREA | GHOST_AREA | NO_GHOSTS_DURING_ROUND
 
 /area/centcom/central_command_areas/ghost_blocker
 	name = "During Round Ghost Blocker"
 	area_flags = NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_GHOSTS_DURING_ROUND
+	area_flags_mapping = NONE
 
 /area/centcom/central_command_areas/evacuation
 	area_flags = NOTELEPORT
+	area_flags_mapping = NONE
 
 /area/centcom/central_command_areas/admin
 	area_flags = NOTELEPORT | GHOST_AREA | NO_GHOSTS_DURING_ROUND
+	area_flags_mapping = NONE
 
 /area/centcom/central_command_areas/firing_range
 	name = "Centcom Firing Range"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom_firingrange"
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA
+	area_flags = NOTELEPORT | GHOST_AREA
 	ban_explosions = FALSE
 	grace = FALSE
 
 /area/centcom/central_command_areas/firing_range_checkpoint_control
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
 
 /area/centcom/central_command_areas/arcade
 	name = "Centcom Arcade"
 	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom_arcade"
-	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA
+	area_flags = NOTELEPORT | GHOST_AREA | PASSIVE_AREA
 
 /area/centcom
 	/// Whether to ban explosions in this area.
@@ -118,27 +123,3 @@
 	SIGNAL_HANDLER
 	if(ban_explosions)
 		return COMSIG_CANCEL_EXPLOSION
-
-// Override that handles teleporting ghost player's mobs back to Centcom ghostspawn, if they try to
-// move out of it during the round.
-/area/Entered(atom/movable/thing)
-	. = ..()
-
-	// For the atom that just entered this area, as well as each of its contents...
-	for(var/atom/movable/atom_inside as anything in thing.get_all_contents())
-		// ...check if any of them are a ghost player mob...
-		if(istype(atom_inside, /mob/living/carbon/human/ghost))
-			// ...and if so, run the checks.
-			teleport_ghost_mob_if_needed(atom_inside)
-
-// Teleports a ghost's mob to ghostspawn, if this area does not meet certain requirements.
-/area/proc/teleport_ghost_mob_if_needed(mob/living/carbon/human/ghost/ghost)
-	// We should teleport, if...
-	var/should_teleport = FALSE
-	// ...this is not an area allowed to be inhabited by ghost characters
-	should_teleport |= (!(area_flags & GHOST_AREA))
-	// ...this is an area ghosts are prohibited to inhabit during a round, and the round is ongoing
-	should_teleport |= ((area_flags & NO_GHOSTS_DURING_ROUND) && SSticker.current_state != GAME_STATE_FINISHED)
-
-	if(should_teleport)
-		ghost.move_to_ghostspawn()

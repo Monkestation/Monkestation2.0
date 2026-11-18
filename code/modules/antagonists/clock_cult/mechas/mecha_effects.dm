@@ -23,11 +23,11 @@
 		marked_mob.apply_status_effect(STATUS_EFFECT_INTERDICTION)
 
 /obj/effect/judicial_mark/proc/do_mark() //need to do antimagic stuff
-	playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, use_reverb = TRUE)
+	playsound(src, 'sound/effects/magic/clockwork/ratvar_attack.ogg', 50, use_reverb = TRUE)
 	sleep(1.6 SECONDS)
 	flick("judicial_explosion", src)
 	sleep(1.3 SECONDS)
-	playsound(src, 'sound/effects/explosion_distant.ogg', 100, use_reverb = TRUE)
+	playsound(src, 'sound/effects/explosion/explosion_distant.ogg', 100, use_reverb = TRUE)
 	for(var/mob/living/marked_mob in range(1, src))
 		if(IS_CLOCK(marked_mob))
 			continue

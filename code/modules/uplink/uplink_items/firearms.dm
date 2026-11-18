@@ -1,6 +1,6 @@
 /datum/uplink_category/firearms
 	name = "Firearms"
-	weight = 9
+	weight = 13
 
 /datum/uplink_item/firearms
 	category = /datum/uplink_category/firearms
@@ -65,7 +65,7 @@
 /datum/uplink_item/firearms/laser_musket
 	name = "Syndicate Laser Musket"
 	desc = "An exprimental 'rifle' designed by Aetherofusion. This laser(probably) uses alien technology to fit 4 high energy capacitors \
-			into a small rifle which can be stored safely(?) in any backpack. To charge, simply press down on the main control panel. \
+			into a medium sized rifle, make sure you have a vest to hang it on! To charge, simply press down on the main control panel. \
 			Rumors of this 'siphoning power off your lifeforce' are greatly exaggerated, and Aetherofusion assures safety for up to 2 years of use."
 	item = /obj/item/gun/energy/laser/musket/syndicate
 	progression_minimum = 30 MINUTES

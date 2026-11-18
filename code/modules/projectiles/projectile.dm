@@ -5,6 +5,7 @@
 #define MUZZLE_EFFECT_PIXEL_INCREMENT 17
 
 /obj/projectile
+	abstract_type = /obj/projectile
 	name = "projectile"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bullet"
@@ -19,7 +20,7 @@
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
 	/// The sound this plays on impact.
-	var/hitsound = 'sound/weapons/pierce.ogg'
+	var/hitsound = 'sound/items/weapons/pierce.ogg'
 	/// Sound played when the projectile hits a wall
 	var/hitsound_wall
 	var/mixer_channel
@@ -122,6 +123,8 @@
 	var/nondirectional_sprite = FALSE
 	/// Random spread done projectile-side for convinience
 	var/spread = 0
+	/// Additional rotation for the projectile, in case it uses some object's sprite
+	var/projectile_angle = 0
 	/// Gliding does not enjoy something getting moved multiple turfs in a tick, which is why we animate it manually
 	animate_movement = NO_STEPS
 
@@ -842,7 +845,7 @@
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
-		transform = transform.TurnTo(angle, new_angle)
+		transform = transform.TurnTo(angle, new_angle + projectile_angle)
 	angle = new_angle
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
@@ -854,7 +857,7 @@
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
-		transform = transform.TurnTo(angle, new_angle)
+		transform = transform.TurnTo(angle, new_angle + projectile_angle)
 	free_hitscan_forceMove = TRUE
 	forceMove(center_turf)
 	entry_x = 0

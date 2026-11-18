@@ -1,0 +1,6 @@
+author: "V2LenKagamine"
+delete-after: True
+changes:
+  - code_imp: " /datum/outift now has [cybernetics] list for cyber implants."
+  - code_imp: "human proc [delete_equipment] now accounts for cybernetics and implants."
+  - code_imp: "vv copy_outfit now disallows null name outfits, and copies cybernetics"

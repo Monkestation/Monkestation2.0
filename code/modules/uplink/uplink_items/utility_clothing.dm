@@ -2,7 +2,7 @@
 
 /datum/uplink_category/utility_clothing
 	name = "Utility Clothing"
-	weight = 4
+	weight = 7
 
 /datum/uplink_item/utility_clothing
 	category = /datum/uplink_category/utility_clothing

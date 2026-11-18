@@ -1,4 +1,3 @@
-#define MAX_DENT_DECALS 15
 #define LEANING_OFFSET 11
 
 /turf/closed/wall
@@ -220,7 +219,7 @@
 	if(devastated)
 		devastate_wall()
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
@@ -277,7 +276,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, span_notice("You push the wall but nothing happens!"))
-	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
 /turf/closed/wall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -490,5 +489,4 @@
 	smoothing_groups = SMOOTH_GROUP_SILK_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_SILK_WALLS
 
-#undef MAX_DENT_DECALS
 #undef LEANING_OFFSET

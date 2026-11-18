@@ -7,7 +7,7 @@
 	hijack_speed = 2 //You literally are here to do nothing else. Might as well be fast about it.
 	antag_hud_name = "wishgranter"
 	suicide_cry = "HAHAHAHAHA!!"
-	stinger_sound = 'sound/ambience/antag/wishgranter_gain.ogg'
+	stinger_sound = 'sound/music/antag/wishgranter_gain.ogg'
 	antag_moodlet = /datum/mood_event/wishgranter
 	antag_count_points = 15 // very loud hijacker
 	/// List of traits given to the avatar's body.
@@ -81,8 +81,8 @@
 	var/mutable_appearance/aura_e = emissive_appearance('icons/effects/effects.dmi', "wg_aura_e", source)
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source
-		human_source.apply_height_filters(aura)
-		human_source.apply_height_filters(aura_e)
+		human_source.apply_height(aura, ENTIRE_BODY)
+		human_source.apply_height(aura_e, ENTIRE_BODY)
 	overlays += aura
 	overlays += aura_e
 

@@ -46,7 +46,12 @@
 	if (IsAdminAdvancedProcCall())
 		return
 
+	var/static/uploaded_icons = list()
+	if(uploaded_icons["[name]"])
+		return // we don't need to scream if we already have the image
+
 	fcopy(icon, "data/autowiki_files/[name].png")
+	uploaded_icons["[name]"] = TRUE
 
 /// Escape a parameter such that it can be correctly put inside a wiki output
 /datum/autowiki/proc/escape_value(parameter)

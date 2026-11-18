@@ -559,7 +559,7 @@
 
 	vampire_charging_enabled = !vampire_charging_enabled
 	balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
-	playsound(src, 'sound/machines/twobeep_high.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, FALSE)
 	if(HAS_SILICON_ACCESS(user))
 		visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
 	return CLICK_ACTION_SUCCESS
@@ -660,11 +660,11 @@
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		balloon_alert(cooker, "no power draw!")
 		return
 
@@ -700,7 +700,7 @@
 /obj/machinery/microwave/proc/wzhzhzh()
 	if(cell_powered && !isnull(cell))
 		if(!cell.use(TIER_1_CELL_CHARGE_RATE * efficiency))
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 			return
 
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
@@ -877,13 +877,13 @@
 /obj/machinery/microwave/proc/vampire(mob/cooker)
 	var/obj/item/modular_computer/vampire_pda = LAZYACCESS(ingredients, 1)
 	if(isnull(vampire_pda))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		after_finish_loop()
 		return
 
 	vampire_cell = vampire_pda.internal_cell
 	if(isnull(vampire_cell))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		after_finish_loop()
 		return
 
@@ -897,7 +897,7 @@
 
 	if(!vampire_charging_capable)
 		balloon_alert(cooker, "needs upgrade!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	if(operating || broken > 0 || panel_open || dirty >= MAX_MICROWAVE_DIRTINESS)
@@ -905,11 +905,11 @@
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	if(cell_powered && !cell?.charge)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		balloon_alert(cooker, "no power draw!")
 		return
 
@@ -917,7 +917,7 @@
 	for(var/atom/movable/potential_item as anything in ingredients)
 		if(!istype(potential_item, /obj/item/modular_computer))
 			balloon_alert(cooker, "pda only!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 			eject()
 			return
 

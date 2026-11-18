@@ -195,7 +195,7 @@
 
 	to_chat(owner.current, span_announce("Claim the souls of the fallen, the more souls you have, the sharper your blade."))
 	to_chat(owner.current, span_announce("Reject the light, it hides you but makes you vulnerable."))
-	owner.current.playsound_local(null, 'sound/ambience/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(null, 'sound/music/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_between_ticks, times_fired)
@@ -216,7 +216,7 @@
 			currently_beating |= held
 			if(!(held in heartbeats))
 				heartbeats |= held
-				human.playsound_local(human, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+				human.playsound_local(human, 'sound/effects/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 
 		if(stage >= 2)
 			current_statics |= held

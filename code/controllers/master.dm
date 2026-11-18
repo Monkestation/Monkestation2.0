@@ -429,6 +429,12 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 			subsystem.init_order = evaluated_order
 			evaluated_order++
 			init_subsystem(subsystem)
+			#ifdef NAVMAP_BAKE_GENERATION
+			// we did what we came for, time to end it. o7
+			if(subsystem == SSnavmap)
+				world.FinishTestRun()
+				return
+			#endif
 
 			CHECK_TICK
 		current_initializing_subsystem = null

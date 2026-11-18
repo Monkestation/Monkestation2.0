@@ -1,4 +1,5 @@
 /obj/item/clothing/under/rank/rnd
+	abstract_type = /obj/item/clothing/under/rank/rnd
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
 
@@ -29,6 +30,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck
 	desc = "A Nanotrasen-purple turtleneck and black jeans, for a director with a superior sense of style."
@@ -47,6 +49,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/rnd/scientist
 	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
@@ -68,6 +71,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/rnd/roboticist
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
@@ -85,6 +89,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/rnd/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
@@ -141,6 +146,6 @@
 	desc = "A simple semi-formal uniform consisting of a grayish-blue shirt and off-white slacks, paired with a ridiculous, but mandatory, tie."
 	icon_state = "hl_scientist"
 	can_adjust = FALSE
-	alternative_screams = list(	'sound/voice/screams/misc/HL1 Scientist/scream_sci0.ogg',
-								'sound/voice/screams/misc/HL1 Scientist/scream_sci1.ogg',
-								'sound/voice/screams/misc/HL1 Scientist/scream_sci2.ogg')
+	alternative_screams = list(	'sound/mobs/humanoids/misc/scream/HL1 Scientist/scream_sci0.ogg',
+								'sound/mobs/humanoids/misc/scream/HL1 Scientist/scream_sci1.ogg',
+								'sound/mobs/humanoids/misc/scream/HL1 Scientist/scream_sci2.ogg')

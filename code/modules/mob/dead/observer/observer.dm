@@ -22,6 +22,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_power = 2
 	light_on = FALSE
 	rclick_always_context_menu = TRUE
+
+	// to-do: move this to /mob parent without breaking shit, dunno think it might
+	var/list/speak_emote = list("wails", "laments", "weeps", "bemoans", "mourns", "malds", "complains", "bewails", "cries", "moans", "mutters", "whispers", "murmurs", "grieves", "regrets", "sorrows")
+
 	var/can_reenter_corpse
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -181,6 +185,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	QDEL_NULL(minigames_menu)
 	return ..()
 
+/mob/dead/observer/say_mod(input, list/message_mods = list())
+	if(length(speak_emote))
+		verb_say = pick(speak_emote)
+	return ..()
+
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
  * Please call update_icon(updates, icon_state) from now on when you want to update the icon_state of the ghost,
@@ -287,7 +296,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 */
 GAME_VERB_DESC(/mob/living, ghost, "Ghost", "Relinquish your life and enter the land of the dead.", "OOC")
 
-	if(stat != DEAD)
+	if((stat == SOFT_CRIT || stat == HARD_CRIT) && stat != DEAD)
 		succumb()
 	if(stat == DEAD)
 		if(!HAS_TRAIT(src, TRAIT_CORPSELOCKED)) //corpse-locked have to confirm with the alert below

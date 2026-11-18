@@ -1,11 +1,13 @@
 #define ICON_STATE_CHECKED 1 /// this dmi is checked. We don't check this one anymore.
 #define ICON_STATE_NULL 2 /// this dmi has null-named icon_state, allowing it to show a sprite on vv editor.
 
-ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "View the variables of a datum.", ADMIN_CATEGORY_DEBUG, datum/thing in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", /datum)
+	VERB_ARG_TYPED(thing, VERB_ARG_TYPE_DATUM, VERB_ARG_SOURCE_WORLD, /datum)
 	user.debug_variables(thing)
 
 // This is kept as a seperate proc because admins are able to show VV to non-admins
-GAME_VERB_PROC(/client, debug_variables, "View Variables", "Debug", datum/thing in world)
+GAME_VERB_PROC(/client, debug_variables, "View Variables", "Debug")
+	VERB_ARG_TYPED(thing, VERB_ARG_TYPE_DATUM, VERB_ARG_SOURCE_WORLD, /datum)
 	//set src in world
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 

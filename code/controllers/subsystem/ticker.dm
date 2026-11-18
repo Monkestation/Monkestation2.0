@@ -14,7 +14,11 @@ SUBSYSTEM_DEF(ticker)
 	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
 	var/force_ending = END_ROUND_AS_NORMAL
 	/// If TRUE, there is no lobby phase, the game starts immediately.
+	#ifdef AUTOSTART_GAME
+	var/start_immediately = TRUE
+	#else
 	var/start_immediately = FALSE
+	#endif
 	/// Boolean to track and check if our subsystem setup is done.
 	var/setup_done = FALSE
 
@@ -586,7 +590,7 @@ SUBSYSTEM_DEF(ticker)
 		list_clear_nulls(queued_players)
 		for (var/mob/dead/new_player/new_player in queued_players)
 			to_chat(new_player, span_userdanger("The alive players limit has been released!<br><a href='byond://?src=[REF(new_player)];late_join=override'>[html_encode(">>Join Game<<")]</a>"))
-			SEND_SOUND(new_player, sound('sound/misc/notice1.ogg'))
+			SEND_SOUND(new_player, sound('sound/announcer/notice/notice1.ogg'))
 			GLOB.latejoin_menu.ui_interact(new_player)
 		queued_players.len = 0
 		queue_delay = 0
@@ -601,7 +605,7 @@ SUBSYSTEM_DEF(ticker)
 			if(living_player_count() < hard_popcap)
 				if(next_in_line?.client)
 					to_chat(next_in_line, span_userdanger("A slot has opened! You have approximately 20 seconds to join. <a href='byond://?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a>"))
-					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
+					SEND_SOUND(next_in_line, sound('sound/announcer/notice/notice1.ogg'))
 					next_in_line.ui_interact(next_in_line)
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
@@ -1880,11 +1884,11 @@ SUBSYSTEM_DEF(ticker)
 	log_game("As a result of the station goal being completed, [total_crew] players were rewarded [amount] monkecoins each.")
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards(list/coin_rewards)
-	var/hour = round((world.time - SSticker.round_start_time) / 36000)
-	var/minute = round(((world.time - SSticker.round_start_time) - (hour * 36000)) / 600)
-	var/added_xp = round(25 + (minute ** 0.85))
+	var/minutes = round((world.time - SSticker.round_start_time) / (1 MINUTES))
+	var/added_xp = round(25 + (minutes ** 0.85))
 	for(var/ckey in coin_rewards)
 		distribute_rewards_to_client(ckey, added_xp, coin_rewards[ckey])
+	save_all_jobxp() // monkestation edit: nothing else saves the job xp
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards_to_client(ckey, added_xp, list/rewards)
 	var/client/client = GLOB.directory[ckey]

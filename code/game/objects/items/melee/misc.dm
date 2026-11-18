@@ -1,5 +1,6 @@
 // Deprecated, you do not need to use this type for melee weapons.
 /obj/item/melee
+	abstract_type = /obj/item/melee
 	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/chainofcommand
@@ -21,7 +22,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
-	hitsound = 'sound/weapons/chainhit.ogg'
+	hitsound = 'sound/items/weapons/chainhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/chainofcommand/suicide_act(mob/living/user)
@@ -39,7 +40,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 10
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
@@ -71,8 +72,8 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
-	block_sound = 'sound/weapons/parry.ogg'
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 5 // MONKESTATION EDIT ORG 10
 	bare_wound_bonus = 20 // MONKESTATION EDIT ORG 25
@@ -163,8 +164,8 @@
 	armour_penetration = 100
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
-	hitsound = 'sound/weapons/rapierhit.ogg'
-	block_sound = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 
 /obj/item/melee/beesword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
@@ -352,7 +353,7 @@
 	inhand_icon_state = active ? "nullrod" : null
 	if(user)
 		balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
@@ -406,7 +407,7 @@
 		return NONE
 	if ((istype(interacting_with, /obj/singularity) || istype(interacting_with, /obj/energy_ball)) && get_dist(user, interacting_with) < 10)
 		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
-		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
 		finish_roasting(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
@@ -418,7 +419,7 @@
 	if (!is_type_in_typecache(interacting_with, ovens))
 		return NONE
 	to_chat(user, span_notice("You extend [src] towards [interacting_with]."))
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	finish_roasting(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
@@ -427,14 +428,14 @@
 		return
 	if(!do_after(user, 10 SECONDS, target = user, interaction_key = DOAFTER_SOURCE_ROASTING_STICK) || !held_sausage)
 		QDEL_NULL(beam)
-		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 		to_chat(user, span_notice("You put [src] away."))
 		return
 
 	if(istype(held_sausage, /obj/item/gun))
 		var/obj/item/gun/roastedgun = held_sausage
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 			to_chat(user, span_warning("You feel like \the [roastedgun] on [src] might accidentally hurt someone and put it away."))
 			return
 		if(roastedgun.can_shoot())
@@ -457,7 +458,7 @@
 		held_sausage.reagents?.add_reagent(/datum/reagent/consumable/char, 0.5)
 		held_sausage.reagents?.add_reagent(/datum/reagent/consumable/nutriment, 1)
 	to_chat(user, span_notice("You finish roasting [held_sausage]."))
-	playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/welder2.ogg', 50, TRUE)
 	held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
@@ -475,16 +476,41 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/cleric_mace_lefthand
 	greyscale_config_inhand_right = /datum/greyscale_config/cleric_mace_righthand
 	greyscale_config_worn = /datum/greyscale_config/cleric_mace
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE + COLOR_BROWN
 
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)  //Defaults to an Iron Mace.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
 	force = 14
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
 	block_chance = 10
-	block_sound = 'sound/weapons/genhit.ogg'
+	block_sound = 'sound/items/weapons/genhit.ogg'
 	armour_penetration = 75
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
+
+///Cleric maces are made of two custom materials: one is handle, and the other is the mace itself.
+/obj/item/melee/cleric_mace/get_material_multiplier(datum/material/custom_material, list/materials, index)
+	if(length(materials) <= 1)
+		return 1.2
+	if(index == 1)
+		return 1
+	else
+		return 0.3
+
+/obj/item/melee/cleric_mace/get_material_prefixes(list/materials)
+	var/datum/material/material = materials[1]
+	return material.name //It only inherits the name of the main material it's made of. The secondary is in the description.
+
+/obj/item/melee/cleric_mace/finalize_material_effects(list/materials)
+	. = ..()
+	if(length(materials) == 1)
+		return
+	var/datum/material/material = materials[2]
+	desc = "[initial(desc)] Its handle is made of [material.name]."
+
+/obj/item/melee/cleric_mace/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace
+	return ..()

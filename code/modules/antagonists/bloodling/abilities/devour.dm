@@ -40,7 +40,7 @@
 		span_alertalien("[our_mob] snaps its maw over [target]s [target_part] and swiftly devours it!"),
 		span_noticealien("You devour [target]s [target_part]!"),
 	)
-	playsound(our_mob, 'sound/magic/demon_attack1.ogg', 80)
+	playsound(our_mob, 'sound/effects/magic/demon_attack1.ogg', 80)
 	StartCooldownOthers(5 SECONDS)
 	return TRUE
 

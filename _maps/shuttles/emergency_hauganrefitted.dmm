@@ -369,7 +369,7 @@
 /area/shuttle/escape/engine)
 "zk" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/storage/medkit,
 /obj/item/healthanalyzer,
 /obj/effect/spawner/random/medical/surgery_tool,

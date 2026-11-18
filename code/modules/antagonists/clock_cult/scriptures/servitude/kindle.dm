@@ -34,14 +34,14 @@
 	if(hit_mob.can_block_magic(MAGIC_RESISTANCE_HOLY))
 		hit_mob.mob_light(color = LIGHT_COLOR_HOLY_MAGIC, range = 2, duration = 10 SECONDS)
 
-		var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+		var/mutable_appearance/forbearance = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		hit_mob.add_overlay(forbearance)
 		addtimer(CALLBACK(hit_mob, TYPE_PROC_REF(/atom, cut_overlay), forbearance), 10 SECONDS)
 
 		hit_mob.visible_message(span_warning("[hit_mob] stares blankly, as a field of energy flows around them."), \
 									   span_userdanger("You feel a slight shock as a wave of energy flows past you."))
 
-		playsound(invoker, 'sound/magic/mm_hit.ogg', 50, TRUE)
+		playsound(invoker, 'sound/effects/magic/mm_hit.ogg', 50, TRUE)
 		return TRUE
 
 	//To make battles more fun, both sides can't bullshit stun hand the other
@@ -60,7 +60,7 @@
 		to_chat(invoker, span_warning("Some force greater than you intervenes! [hit_mob] is protected by Nar'sie!"))
 		to_chat(hit_mob, span_warning("You are protected by your faith to Nar'sie!"))
 
-		playsound(invoker, 'sound/magic/mm_hit.ogg', 50, TRUE)
+		playsound(invoker, 'sound/effects/magic/mm_hit.ogg', 50, TRUE)
 		return TRUE
 
 	if(IS_HERETIC(hit_mob))
@@ -71,7 +71,7 @@
 		animate(hit_mob, color = old_color, time = 1 SECONDS, easing = EASE_IN)
 		hit_mob.adjust_stutter(15 SECONDS)
 		hit_mob.adjust_jitter(15 SECONDS)
-		playsound(invoker, 'sound/magic/mm_hit.ogg', 50, TRUE)
+		playsound(invoker, 'sound/effects/magic/mm_hit.ogg', 50, TRUE)
 		return TRUE
 
 	//Successful Invokation
@@ -101,7 +101,7 @@
 		hit_mob.client.color = "#BE8700"
 		animate(hit_mob.client, color = client_color, time = 2.5 SECONDS)
 
-	playsound(invoker, 'sound/magic/staff_animation.ogg', 50, TRUE)
+	playsound(invoker, 'sound/effects/magic/staff_animation.ogg', 50, TRUE)
 	return TRUE
 
 // copy-pasted from blood cult code lol

@@ -33,6 +33,7 @@
 	persistent_client?.set_mob(null)
 
 	unset_machine()
+	active_storage?.hide_contents(src)
 	clear_fullscreens()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
@@ -564,7 +565,8 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-GAME_VERB(/mob, examinate, "Examine", "IC", atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", "IC", /atom)
+	VERB_ARG_TYPED(examinify, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /atom)
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
@@ -701,13 +703,20 @@ GAME_VERB(/mob, examinate, "Examine", "IC", atom/examinify as mob|obj|turf in vi
 		return
 
 	// check to see if their face is blocked or, if not, a signal blocks it
-	if(examined_mob.is_face_visible() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
+	if(examined_mob.can_eye_contact() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 0.3 SECONDS) // so the examine signal has time to fire and this will print after
 
-	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
+	if(!imagined_eye_contact && can_eye_contact() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 3)
+
+/// Checks if we can make eye contact or someone can make eye contact with us
+/mob/living/proc/can_eye_contact()
+	return TRUE
+
+/mob/living/carbon/can_eye_contact()
+	return !(obscured_slots & HIDEFACE)
 
 /**
  * Called by using Activate Held Object with an empty hand/limb
@@ -829,10 +838,10 @@ GAME_VERB(/mob, cancel_camera, "Cancel Camera View", "OOC")
 	unset_machine()
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
-GAME_VERB_HIDDEN(/mob, DisClick, ".click", argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+GAME_VERB_NATIVE(/mob, DisClick, ".click", null, argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
 	return
 
-GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
+GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
 	return
 
 /**
@@ -886,19 +895,82 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 
 	return data
 
-/mob/proc/swap_hand(held_index)
-	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
-
-	var/obj/item/held_item = get_active_held_item()
-	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
-		to_chat(src, span_warning("Your other hand is too busy holding [held_item]."))
+/**
+ * Attempts to cycle through hands to select a new hand.
+ *
+ * - cycle_dir: A cardinal (NORTH, SOUTH, EAST, WEST) direction. Defaults to WEST, which is forwards.
+ * - climb: If TRUE, wrapping will also shift rows/columns.
+ * - silent: If applicable and TRUE, will output messages to the mob.
+ * - initial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
+ */
+/mob/proc/cycle_hand(cycle_dir = WEST, climb = TRUE, silent = FALSE, initial_index = active_hand_index)
+	if(!(cycle_dir in GLOB.cardinals))
+		stack_trace("received invalid cycle_dir [!isnull(cycle_dir) ? cycle_dir : "null"]")
 		return FALSE
 
-	var/result = perform_hand_swap(held_index)
-	if (result)
-		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS)
+	if(SEND_SIGNAL(src, COMSIG_MOB_CYCLE_HAND, cycle_dir, climb, silent) & COMPONENT_BLOCK_CYCLE)
+		return FALSE
 
-	return result
+	var/step = ((cycle_dir & NORTHWEST) != 0) ? 1 : -1
+	var/by_row = cycle_dir & (NORTH|SOUTH)
+
+	var/hand_count = held_items.len
+	var/num_rows = floor(hand_count / 2)
+	var/row = floor((initial_index - 1) / 2)
+	var/column = (initial_index - 1) % 2
+
+	var/max_iterations // worst case, we iterate this many times up to our initial_index
+	if(climb)
+		max_iterations = hand_count
+	else if(!by_row)
+		max_iterations = 2
+	else
+		max_iterations = num_rows
+	for(var/i in 1 to max_iterations)
+		if(by_row) // vertically
+			row += step
+			if(row < 0 || row >= num_rows)
+				row = ((row % num_rows) + num_rows) % num_rows
+				if(climb)
+					column = abs(column + step) % 2
+		else // horizontally
+			column += step
+			if(column < 0 || column >= 2)
+				column = abs(column) % 2
+				if(climb)
+					row = (((row + step) % num_rows) + num_rows) % num_rows
+
+		var/desired_index = (row * 2 + column) + 1
+
+		var/sigresult = SEND_SIGNAL(src, COMSIG_MOB_CYCLE_HAND_INDEX(desired_index), cycle_dir, climb, silent)
+		if(sigresult & COMPONENT_BLOCK_CYCLE)
+			return FALSE
+		if(sigresult & COMPONENT_CONTINUE_CYCLE)
+			continue
+
+		return swap_hand(desired_index, silent = silent)
+	return FALSE
+
+/// Swaps the mob's active hand to the specified held_index.
+/// If intending to swap to the "next" hand, use [/mob/proc/cycle_hand] instead.
+/mob/proc/swap_hand(held_index, silent = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
+
+	if(!isnum(held_index))
+		stack_trace("You passed [held_index] into swap_hand instead of a number. WTF man")
+		return FALSE
+
+	if(held_index < 1 || held_index > get_num_hand_slots())
+		stack_trace("held_index out of bounds ([held_index])")
+		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_index, silent) & COMPONENT_BLOCK_SWAP)
+		return FALSE
+
+	var/obj/item/old_active_held_item = get_active_held_item()
+	. = perform_hand_swap(held_index)
+	if(.)
+		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), old_active_held_item)
 
 /// Performs the actual ritual of swapping hands, such as setting the held index variables
 /mob/proc/perform_hand_swap(held_index)
@@ -906,22 +978,13 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
 		return FALSE
 
-	if(!held_index)
-		held_index = (active_hand_index % held_items.len) + 1
-
-	if(!isnum(held_index))
-		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
-
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
-		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots["[previous_index]"]
-		if(!isnull(held_location))
-			held_location.update_appearance()
-		held_location = hud_used.hand_slots["[held_index]"]
-		if(!isnull(held_location))
-			held_location.update_appearance()
+		// update the previous handset and the current handset
+		for(var/hand_index in list(previous_index, get_offhand_index(previous_index), held_index, get_offhand_index(held_index)))
+			var/atom/movable/screen/inventory/hand/held_location = hud_used.hand_slots["[hand_index]"]
+			held_location?.update_appearance()
 	return TRUE
 
 /mob/proc/activate_hand(selected_hand)
@@ -1022,29 +1085,29 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		)
 		antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
-		playsound(src, 'sound/magic/magic_block.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/magic_block.ogg', 50, TRUE)
 
 	else if(magic_flags & MAGIC_RESISTANCE_HOLY)
 		visible_message(
 			span_warning("[src] starts to glow as [ismob(antimagic_source) ? p_they() : antimagic_source] emits a halo of light!"),
 			span_userdanger("A feeling of warmth washes over [ismob(antimagic_source) ? "you" : antimagic_source] as rays of light surround your body and protect you!"),
 		)
-		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
-		playsound(src, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
 
 	else if(magic_flags & MAGIC_RESISTANCE_MIND)
 		visible_message(
 			span_warning("[src] forehead shines as [ismob(antimagic_source) ? p_they() : antimagic_source] repulses magic from their mind!"),
 			span_userdanger("A feeling of cold splashes on [ismob(antimagic_source) ? "you" : antimagic_source] as your forehead reflects magic usering your mind!"),
 		)
-		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
+		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
-		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/magic_block_mind.ogg', 50, TRUE)
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/human = src
-		human.apply_height_filters(antimagic_effect)
+		human.apply_height(antimagic_effect, ENTIRE_BODY)
 
 	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
@@ -1167,7 +1230,6 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		log_message("[src] failed name change as the new name was the same as the old one: [oldname]", LOG_OWNERSHIP)
 		return FALSE
 	if(!istext(newname) && !isnull(newname))
-		stack_trace("[src] attempted to change its name from [oldname] to the non string value [newname]")
 		return FALSE
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
@@ -1481,7 +1543,7 @@ GAME_VERB(/mob, open_language_menu_verb, "Open Language Menu", "IC")
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
-///Apply a proper movespeed modifier based on items we have equipped
+/// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = 0
 	var/immutable_speedies = 0

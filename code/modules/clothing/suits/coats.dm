@@ -72,6 +72,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "driscoll_suit"
+	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/suit/morningstar
 	name = "morningstar coat"
@@ -79,6 +80,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "morningstar_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/suit/saints
 	name = "Third Street Saints fur coat"
@@ -86,6 +88,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "saints_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/suit/phantom
 	name = "phantom thief coat"
@@ -93,6 +96,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "phantom_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 // End Of Costume Stuff
 
@@ -104,6 +108,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon_state = "heartcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/suit/armor/guardmanvest
 	name = "guardman's vest"
@@ -161,6 +166,7 @@
 	worn_icon = 'icons/mob/clothing/suit.dmi'
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "cowboy_sec_default"
+	body_parts_covered = CHEST|ARMS
 	var/obj/item/clothing/mask/breath/sec_bandana/mask
 	var/obj/item/clothing/suit/armor/secduster/suit
 	var/mask_adjusted = 0
@@ -209,7 +215,7 @@
 	H.transferItemToLoc(mask, src, TRUE)
 	H.update_worn_oversuit()
 	to_chat(H, "<span class='notice'>You pull down the bandana.</span>")
-	playsound(src.loc, 'sound/items/handling/cloth_drop.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/handling/cloth/cloth_drop1.ogg', 50, 1)
 	user.update_action_buttons()
 
 /obj/item/clothing/suit/armor/secduster/dropped(mob/living/user)
@@ -238,7 +244,7 @@
 		to_chat(H, "<span class='notice'>You pull up the bandana over your face.</span>")
 		suittoggled = TRUE
 		H.update_worn_oversuit()
-		playsound(H, 'sound/items/handling/cloth_drop.ogg', 50, 1)
+		playsound(H, 'sound/items/handling/cloth/cloth_drop1.ogg', 50, 1)
 
 
 /obj/item/clothing/suit/armor/secduster/Destroy()

@@ -14,10 +14,14 @@ else
   rm -rf "$HOME/BYOND"
   mkdir -p "$HOME/BYOND"
   cd "$HOME/BYOND"
-	sudo dpkg --add-architecture i386
-	sudo apt update
-	sudo apt-get install --no-install-recommends -y libcurl4:i386
-  curl -H "User-Agent: Monkestation2.0/1.0 CI Script" "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
+  if ! curl -H "User-Agent: Monkestation2.0/1.0 CI Script" "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip || ! unzip -qt byond.zip; then
+    echo "Attempting fallback mirror..."
+    rm -f byond.zip
+    if ! curl "https://byond-builds.dm-lang.org/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip -A "Monkestation2.0/1.0 CI Script" || ! unzip -qt byond.zip; then
+      echo "Failure!"
+      exit 1
+    fi
+  fi
   unzip byond.zip
   rm byond.zip
   cd byond

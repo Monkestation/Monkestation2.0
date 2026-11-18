@@ -215,7 +215,7 @@
 
 	var/progress_text
 
-	if(locate(/obj/item/healthanalyzer) in user.held_items)
+	if(user.is_holding_item_of_type(/obj/item/healthanalyzer))
 		if(target.getBruteLoss())
 			progress_text = ". Remaining brute: <font color='#ff3333'>[target.getBruteLoss()]</font>"
 		if(target.getFireLoss())

@@ -1,7 +1,8 @@
 // THIS IS A MONKESTATION UI FILE
+
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
-import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 
 type Data = {
@@ -24,13 +25,12 @@ export const DevilContract = (props) => {
     <Window width={475} height={400} theme="wizard">
       <Window.Content>
         <Box>
-          Current point balance: {points} <br />
-          - Currently selected clauses are highlighted in green, whilst
-          unselected ones are red
-          <br />
-          - The contract requires to have negative or 0 points at all times.
-          <br />
-          - You can hover over clauses to get the general idea of what they do.
+          Current point balance: {points} <br />- Currently selected clauses are
+          highlighted in green, whilst unselected ones are red
+          <br />- The contract requires to have negative or 0 points at all
+          times.
+          <br />- You can hover over clauses to get the general idea of what
+          they do.
           <br />
           (The UI is made in a way that makes you love all other UI interfaces
           better)

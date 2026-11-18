@@ -43,7 +43,7 @@
 	var/list/remaining = list()
 	if(istype(tool, /obj/item/blood_filter/advanced))
 		success_scan(target.getToxLoss(), remaining, tox_heal_factor, target)
-	else if(locate(/obj/item/healthanalyzer) in user.held_items)
+	else if(user.is_holding_item_of_type(/obj/item/healthanalyzer))
 		success_scan(target.getToxLoss(), remaining, tox_heal_factor, target)
 	else if(target.buckled)
 		var/obj/machinery/computer/operating/puter = null

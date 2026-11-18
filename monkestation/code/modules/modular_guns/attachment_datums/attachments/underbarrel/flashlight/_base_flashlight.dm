@@ -49,6 +49,6 @@
 	if(user)
 		user.balloon_alert(user, "[light_object.name] toggled [light_object.on ? "on":"off"]")
 
-	playsound(light_object, 'sound/weapons/empty.ogg', 100, TRUE)
+	playsound(light_object, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	toggled = !toggled
 	return TRUE

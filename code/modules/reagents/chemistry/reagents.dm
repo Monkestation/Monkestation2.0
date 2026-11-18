@@ -116,6 +116,8 @@
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
 	var/list/added_traits
+	/// Multiplier of the amount purged by reagents such as calomel, multiver, syniver etc.
+	var/purge_multiplier = 1
 	///are we able to merge
 	var/can_merge = TRUE
 	///does it intoxicate IPCs and if so how much
@@ -338,6 +340,10 @@ Primarily used in reagents/reaction_agents
 	if(!purity)
 		purity = src.purity
 	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.
+
+///Called when feeding a fish. If TRUE is returned, a portion of reagent will be consumed.
+/datum/reagent/proc/used_on_fish(obj/item/fish/fish)
+	return FALSE
 
 /**
  * Input a reagent_list, outputs pretty readable text!

@@ -18,8 +18,8 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
-/obj/item/clothing/mask/gas/slasher/adjustmask()
-	return
+/obj/item/clothing/mask/gas/slasher/adjust_visor(mob/living/user)
+	return FALSE
 
 /obj/item/clothing/mask/gas/slasher/cluwne
 	name = "cluwne mask"
@@ -39,6 +39,7 @@
 	icon = 'icons/mob/slasher/slasher_items.dmi'
 	worn_icon = 'icons/mob/slasher/slasher_wornstates.dmi'
 	icon_state = "slasher_apron"
+	body_parts_covered = CHEST|GROIN|LEGS
 	inhand_icon_state = null
 	armor_type = /datum/armor/slasher/level0
 
@@ -90,6 +91,7 @@
 /obj/item/clothing/suit/apron/slasher/brute
 	name = "soul-steel armor"
 	icon_state = "brute_apron"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	desc = "A set of armor that grows stronger with each soul claimed."
 
 /obj/item/clothing/under/slasher
