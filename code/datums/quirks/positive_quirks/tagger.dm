@@ -15,6 +15,7 @@
 		/obj/item/canvas/twentythree_twentythree
 	)
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/tagger
 	associated_typepath = /datum/quirk/item_quirk/tagger
 	customization_options = list(/datum/preference/color/paint_color)

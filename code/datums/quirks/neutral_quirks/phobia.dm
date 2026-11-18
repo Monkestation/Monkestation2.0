@@ -8,6 +8,7 @@
 	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/storage/pill_bottle/psicodine)
 	var/phobia
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/phobia
 	associated_typepath = /datum/quirk/phobia
 	customization_options = list(/datum/preference/choiced/phobia)

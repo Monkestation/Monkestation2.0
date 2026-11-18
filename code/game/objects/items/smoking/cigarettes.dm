@@ -677,6 +677,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list(/datum/reagent/drug/nicotine = 15)
 	choke_time_max = 40 SECONDS
 
+/// The cigar that spawns in premium cigar cases
 /obj/item/clothing/mask/cigarette/cigar/premium
 	name = "premium cigar"
 	//this is the version that actually spawns in premium cigar cases, the distinction is made so that the smoker quirk can differentiate between the default cigar box and its subtypes

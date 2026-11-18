@@ -1,3 +1,4 @@
+/// Base for quirks that keep you addicted to one reagent and start you with a supply of it
 /datum/quirk/item_quirk/addict
 	name = "Addict"
 	desc = "You are addicted to something that doesn't exist. Suffer."
@@ -12,8 +13,10 @@
 	var/obj/item/drug_container_type //! If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
 	var/where_accessory //! where the accessory spawned
 	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
+	/// Appended to the message telling where the drug container spawned
 	var/drug_flavour_text = "Better hope you don't run out... of what, exactly? You don't know."
-	var/process_interval = 30 SECONDS //! how frequently the quirk processes
+	/// How frequently the quirk checks that the addiction is still there
+	var/process_interval = 30 SECONDS
 	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
 /datum/quirk/item_quirk/addict/add(client/client_source)
@@ -80,6 +83,7 @@
 		for(var/addiction in reagent_instance.addiction_types)
 			human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
+/// Addicted to a hard drug, picked from the Junkie preference
 /datum/quirk/item_quirk/addict/junkie
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
@@ -91,6 +95,7 @@
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
 	drug_flavour_text = "Better hope you don't run out..."
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/junkie
 	associated_typepath = /datum/quirk/item_quirk/addict/junkie
 	customization_options = list(/datum/preference/choiced/junkie)
@@ -108,6 +113,7 @@
 	for(var/addiction_type in subtypesof(/datum/addiction))
 		quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
+/// Addicted to nicotine, with a favorite brand and worse lungs
 /datum/quirk/item_quirk/addict/smoker
 	name = "Smoker"
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
@@ -128,6 +134,7 @@
 		/obj/item/clothing/mask/cigarette/pipe,
 	)
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/smoker
 	associated_typepath = /datum/quirk/item_quirk/addict/smoker
 	customization_options = list(/datum/preference/choiced/smoker)
@@ -189,6 +196,7 @@
 	// default to false because whatever setup we have at this point is weird and arcane
 	return FALSE
 
+/// Addicted to alcohol, with a favorite drink and a weaker liver
 /datum/quirk/item_quirk/addict/alcoholic
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
@@ -209,6 +217,7 @@
 	/// Cached typepath of the owner's favorite alcohol reagent
 	var/datum/reagent/consumable/ethanol/favorite_alcohol
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/alcoholic
 	associated_typepath = /datum/quirk/item_quirk/addict/alcoholic
 	customization_options = list(/datum/preference/choiced/alcoholic)
@@ -245,6 +254,7 @@
 /datum/quirk/item_quirk/addict/alcoholic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
 
+/// Gives a bad moodlet while drinking alcohol that is not the favorite one
 /datum/quirk/item_quirk/addict/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
 	SIGNAL_HANDLER
 
@@ -257,6 +267,7 @@
 	else
 		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
 
+/// Addicted to coffee
 /datum/quirk/item_quirk/addict/caffeinedependence
 	name = "Caffeine Dependence"
 	desc = "You are just not the same without a cup of coffee"

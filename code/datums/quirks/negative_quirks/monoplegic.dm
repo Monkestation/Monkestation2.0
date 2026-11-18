@@ -5,6 +5,7 @@
 	value = QUIRK_COST_MONOPLEGIC
 	hardcore_value = QUIRK_HARDCORE_MONOPLEGIC
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/monoplegic
 	associated_typepath = /datum/quirk/monoplegic
 	customization_options = list(/datum/preference/choiced/limb/monoplegic)

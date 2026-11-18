@@ -1,15 +1,18 @@
+/// Turns a list of reagent types into reagent name = type
 /proc/setup_junkie_addictions(list/possible_addictions)
 	. = possible_addictions
 	for(var/datum/reagent/addiction as anything in .)
 		. -= addiction
 		.[addiction::name] = addiction
 
+/// Turns a list of cigarette box types into box name = type
 /proc/setup_smoker_addictions(list/possible_addictions)
 	. = possible_addictions
 	for(var/obj/item/storage/addiction as anything in .)
 		. -= addiction
 		.[format_text(addiction::name)] = addiction // Format text to remove \improper used in cigarette packs
 
+/// Which drug the Junkie quirk makes you addicted to
 /datum/preference/choiced/junkie
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "junkie"
@@ -30,6 +33,7 @@
 /datum/preference/choiced/junkie/apply_to_human(mob/living/carbon/human/target, value)
 	return
 
+/// Which cigarette brand the Smoker quirk prefers
 /datum/preference/choiced/smoker
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "smoker"
@@ -50,6 +54,7 @@
 /datum/preference/choiced/smoker/apply_to_human(mob/living/carbon/human/target, value)
 	return
 
+/// Which drink the Alcoholic quirk prefers
 /datum/preference/choiced/alcoholic
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "alcoholic"

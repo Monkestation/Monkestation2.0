@@ -8,6 +8,7 @@
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
 	var/color
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/heterochromatic
 	associated_typepath = /datum/quirk/heterochromatic
 	customization_options = list(/datum/preference/color/heterochromatic)

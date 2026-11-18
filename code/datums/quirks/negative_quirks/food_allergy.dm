@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	var/target_foodtypes = NONE
 	species_blacklist = list(SPECIES_IPC)
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/food_allergy
 	associated_typepath = /datum/quirk/item_quirk/food_allergic
 	customization_options = list(/datum/preference/choiced/food_allergy)

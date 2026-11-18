@@ -12,6 +12,7 @@
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full,
 	)
 
+/// Lists the preferences shown under the customize button of this quirk
 /datum/quirk_constant_data/hemiplegic
 	associated_typepath = /datum/quirk/hemiplegic
 	customization_options = list(/datum/preference/choiced/hemiplegic_side)
