@@ -124,7 +124,7 @@
 	var/matrix/m180 = matrix(target.transform)
 	m180.Turn(180)
 	animate(target, transform = m180, time = 3)
-	target.pixel_y = target.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	target.add_offsets(type, y_add = -6, animate = FALSE)
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob != user)
@@ -155,7 +155,7 @@
 	var/matrix/m180 = matrix(buckled_mob.transform)
 	m180.Turn(180)
 	animate(buckled_mob, transform = m180, time = 3)
-	buckled_mob.pixel_y = buckled_mob.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	buckled_mob.remove_offsets(type, animate = FALSE)
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)

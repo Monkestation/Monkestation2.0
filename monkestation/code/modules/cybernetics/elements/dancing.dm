@@ -124,16 +124,11 @@
 	var/continues = TRUE
 
 /datum/dance/proc/trigger_dance(mob/target)
-	animate(target, pixel_y = 2, time = 2, loop = -1, flags = ANIMATION_RELATIVE)
-	animate(pixel_y = -2, time = 2, flags = ANIMATION_RELATIVE)
+	animate(target, pixel_z = 2, time = 0.2 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -2, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
 
 /datum/dance/proc/end_dance(mob/target)
-	var/final_pixel_y = target.base_pixel_y
-	// Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here.
-	if(isliving(target))
-		var/mob/living/living_target = target
-		final_pixel_y += living_target.body_position_pixel_y_offset
-	animate(target, pixel_y = final_pixel_y, time = 0.5 SECONDS)
+	animate(target, pixel_z = target.base_pixel_z, time = 0.5 SECONDS)
 /*
 /datum/dance/head_spin/trigger_dance(mob/living/target, start=TRUE)
 	ADD_TRAIT(target, TRAIT_IMMOBILIZED, type)

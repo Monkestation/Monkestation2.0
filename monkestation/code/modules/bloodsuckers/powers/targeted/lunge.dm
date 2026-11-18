@@ -78,16 +78,16 @@
 	START_PROCESSING(SSprocessing, src)
 	owner.balloon_alert(owner, "lunge started!")
 	//animate them shake
-	var/base_x = owner.base_pixel_x
-	var/base_y = owner.base_pixel_y
-	animate(owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
+	var/base_w = owner.base_pixel_w
+	var/base_z = owner.base_pixel_z
+	animate(owner, pixel_w = base_w, pixel_z = base_z, time = 0.1 SECONDS, loop = -1)
 	for(var/i in 1 to 25)
-		var/x_offset = base_x + rand(-3, 3)
-		var/y_offset = base_y + rand(-3, 3)
-		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+		var/w_offset = base_w + rand(-3, 3)
+		var/z_offset = base_z + rand(-3, 3)
+		animate(pixel_w = w_offset, pixel_z = z_offset, time = 0.1 SECONDS)
 
 	if(!do_after(owner, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_SLOWDOWNS), extra_checks = CALLBACK(src, PROC_REF(CheckCanTarget), target_atom), hidden = TRUE))
-		end_target_lunge(base_x, base_y)
+		end_target_lunge()
 
 		return FALSE
 
@@ -96,8 +96,8 @@
 	return TRUE
 
 ///When preparing to lunge ends, this clears it up.
-/datum/action/cooldown/bloodsucker/targeted/lunge/proc/end_target_lunge(base_x, base_y)
-	animate(owner, pixel_x = base_x, pixel_y = base_y, time = 1)
+/datum/action/cooldown/bloodsucker/targeted/lunge/proc/end_target_lunge()
+	animate(owner, pixel_w = owner.base_pixel_w, pixel_z = owner.base_pixel_z, time = 0.1 SECONDS)
 	STOP_PROCESSING(SSprocessing, src)
 
 /datum/action/cooldown/bloodsucker/targeted/lunge/process()

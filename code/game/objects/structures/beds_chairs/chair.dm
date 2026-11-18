@@ -515,11 +515,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	fishing_modifier = -21 //it only lives for 25 seconds, so we make them worth it.
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
-	M.pixel_y += 5
+	M.add_offsets(type, z_add = 5)
 
 /obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
-	M.pixel_y -= 5
-
+	M.remove_offsets(type)
 
 /obj/structure/chair/plastic
 	icon_state = "plastic_chair"
@@ -534,13 +533,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	fishing_modifier = -10
 
 /obj/structure/chair/plastic/post_buckle_mob(mob/living/Mob)
-	Mob.pixel_y += 2
-	.=..()
+	Mob.add_offsets(type, z_add = 2)
+	. = ..()
 	if(iscarbon(Mob))
 		INVOKE_ASYNC(src, PROC_REF(snap_check), Mob)
 
 /obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
-	Mob.pixel_y -= 2
+	Mob.remove_offsets(type)
 
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)

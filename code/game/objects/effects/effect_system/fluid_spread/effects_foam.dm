@@ -103,7 +103,7 @@
 
 	var/hit = 0
 	for(var/mob/living/foamer in loc)
-		if(HAS_TRAIT(foamer, TRAIT_ON_ELEVATED_SURFACE))
+		if(HAS_TRAIT(foamer, TRAIT_MOB_ELEVATED))
 			continue
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
@@ -155,7 +155,7 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
-			if(HAS_TRAIT(foaming, TRAIT_ON_ELEVATED_SURFACE))
+			if(HAS_TRAIT(foaming, TRAIT_MOB_ELEVATED))
 				continue
 			foam_mob(foaming, seconds_per_tick)
 
