@@ -1,8 +1,8 @@
-/datum/ai_movement/jps/oneshot
+/datum/ai_movement/navmap_astar/oneshot
 	max_pathing_attempts = 1
 
 /datum/ai_behavior/targeted_mob_ability/min_range/chicken
-	new_movement = /datum/ai_movement/jps/oneshot
+	new_movement = /datum/ai_movement/navmap_astar/oneshot
 
 /datum/ai_behavior/targeted_mob_ability/min_range/chicken/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()

@@ -85,8 +85,6 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 
 	overwrites_attack_by = TRUE
 
-	astar_weight = 50
-
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
 	var/ocean_temp = T20C

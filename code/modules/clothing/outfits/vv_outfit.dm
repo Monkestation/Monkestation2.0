@@ -132,8 +132,14 @@
 	outfit.implants = list()
 	for(var/obj/item/implant/implant in implants)
 		outfit.implants |= implant.type
+	outfit.cybernetics = list()
+	for(var/obj/item/organ/internal/cyberimp/cyb in organs)
+		outfit.cybernetics |= cyb.type
 	//Copy to outfit cache
 	var/outfit_name = stripped_input(usr,"Enter the outfit name")
+	if(!outfit_name)
+		to_chat(usr,"Outfit has no name, canceled!")
+		return
 	outfit.name = outfit_name
 	GLOB.custom_outfits += outfit
 	to_chat(usr,"Outfit registered, use select equipment to equip it.")
@@ -152,7 +158,7 @@
 			else
 				item = human.get_item_by_slot(text2num(slot))
 		for(var/vname in edits)
-			item.vv_edit_var(vname,edits[vname])
+			item?.vv_edit_var(vname,edits[vname])
 	//Apply access
 	var/obj/item/id_slot = human.get_item_by_slot(ITEM_SLOT_ID)
 	if(id_slot)
