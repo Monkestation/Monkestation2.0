@@ -1,12 +1,11 @@
 /mob/living/silicon/pai/mouse_drop_dragged(atom/target_atom, mob/user)
 	if(ishuman(target_atom) && target_atom != src && user == src)
-		var/mob/living/M = target_atom
+		var/mob/living/carrier = target_atom
 		if(!possible_chassis[chassis])
 			to_chat(user, span_warning("Your current form isn't able to be carried!"))
-			return 
-		if(src.can_be_held)
-			src.mob_try_stash(M)
 			return
+		if(can_be_held)
+			mob_try_stash(carrier)
 
 /mob/living/silicon/pai/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!possible_chassis[chassis])

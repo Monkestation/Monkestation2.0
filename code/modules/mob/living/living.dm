@@ -1891,27 +1891,27 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	return TRUE
 
 ///Attempts to stash the mob into a human's hands if able.
-/mob/living/proc/mob_try_stash(mob/living/user, instant=FALSE)
-	if(!(src in range(1, user)))
+/mob/living/proc/mob_try_stash(mob/living/carrier, instant=FALSE)
+	if(!(Adjacent(carrier)))
 		return
-	if(!ishuman(user))
+	if(!ishuman(carrier))
 		return
-	if(IS_DEAD_OR_INCAP(user))
-		to_chat(src, span_warning("[user] is unable to hold on to you!"))
+	if(IS_DEAD_OR_INCAP(carrier))
+		to_chat(src, span_warning("[carrier] is unable to hold on to you!"))
 		return
-	if(!length(user.get_empty_held_indexes()))
-		to_chat(src, span_warning("[src]'s hands are full!"))
+	if(!length(carrier.get_empty_held_indexes()))
+		to_chat(src, span_warning("[carrier]'s hands are full!"))
 		return FALSE
 	if(buckled)
 		to_chat(src, span_warning("You are buckled to something!"))
 		return FALSE
 	if(!instant)
-		user.visible_message(span_warning("[src] starts trying to crawl into [user]'s hands!"), \
+		carrier.visible_message(span_warning("[src] starts trying to crawl into [carrier]'s hands!"), \
 						span_danger("[src] starts trying to crawl into your hands..."), null, null, src)
-		to_chat(src, span_userdanger("You start trying to crawl into [user]'s hands!"))
-		if(!do_after(src, 5 SECONDS, target = user))
+		to_chat(src, span_userdanger("You start trying to crawl into [carrier]'s hands!"))
+		if(!do_after(src, 5 SECONDS, target = carrier))
 			return FALSE
-	mob_pickup(user)
+	mob_pickup(carrier)
 	return TRUE
 
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
