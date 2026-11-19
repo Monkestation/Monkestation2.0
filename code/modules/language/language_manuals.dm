@@ -70,7 +70,8 @@
 		/datum/language/nekomimetic, \
 		/datum/language/draconic, \
 		/datum/language/moffic, \
-		/datum/language/calcic \
+		/datum/language/calcic, \
+		/datum/language/vox \
 	)
 	name = "[initial(language.name)] manual"
 	desc = "The book's cover reads: \"[initial(language.name)] for Xenos - Learn common galactic tongues in seconds.\""

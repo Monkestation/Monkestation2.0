@@ -211,6 +211,12 @@
 		to_chat(user, span_warning("You stop, look down at what you're currently holding and ponder to yourself, \"This is probably to be used on their hair or their facial hair.\""))
 		return
 
+	if(isvox(target_human)) // monkestation edit: vox have quills
+		if(location != BODY_ZONE_HEAD)
+			return ..()
+		style_vox_quills(target_human, user)
+		return
+
 	if(target_human.hairstyle == "Bald" && target_human.facial_hairstyle == "Shaved")
 		balloon_alert(user, "what hair? They have none!")
 		return
@@ -263,6 +269,39 @@
 			target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)
 			user.visible_message(span_notice("[user] successfully cuts [target_human]'s facial hair!"), span_notice("You successfully cut [target_human]'s facial hair!"))
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
+
+/// Vox version of a haircut: sculpts their quills or facial quills.
+/obj/item/scissors/proc/style_vox_quills(mob/living/carbon/human/vox, mob/living/user)
+	var/selected_part = tgui_alert(user, "Please select which part of [vox] you would like to sculpt!", "It's sculpting time!", list("Quills", "Facial Quills", "Cancel"))
+	if(!selected_part || selected_part == "Cancel")
+		return
+
+	var/facial = (selected_part == "Facial Quills")
+	var/quill_name = facial ? "facial quills" : "quills"
+
+	var/new_style = tgui_input_list(user, "Please select what [quill_name] style you'd like to sculpt!", "Select masterpiece", facial ? GLOB.vox_facial_quills_list : GLOB.vox_quills_list)
+	if(!new_style || !user.can_perform_action(vox, FORBID_TELEKINESIS_REACH))
+		return
+
+	if(!get_location_accessible(vox, facial ? BODY_ZONE_PRECISE_MOUTH : BODY_ZONE_HEAD))
+		balloon_alert(user, "[facial ? "the mask" : "the headgear"] is in the way!")
+		return
+
+	if(new_style != SPRITE_ACCESSORY_NONE && HAS_TRAIT(vox, facial ? TRAIT_SHAVED : TRAIT_BALD))
+		balloon_alert(user, "their [quill_name] won't grow back!")
+		return
+
+	if(new_style == SPRITE_ACCESSORY_NONE)
+		to_chat(vox, span_danger("[user] seems to be cutting all your [quill_name] off!"))
+
+	to_chat(user, span_notice("You begin to masterfully sculpt [vox]'s [quill_name]!"))
+
+	playsound(vox, 'monkestation/code/modules/blueshift/sounds/haircut.ogg', 100)
+
+	if(do_after(user, facial ? facial_haircut_duration : haircut_duration, vox))
+		vox.set_vox_quills(new_style, facial)
+		user.visible_message(span_notice("[user] successfully cuts [vox]'s [quill_name]!"), span_notice("You successfully cut [vox]'s [quill_name]!"))
+		new /obj/effect/decal/cleanable/hair(get_turf(src))
 
 /obj/item/reagent_containers/dropper/precision
 	name = "pipette"
@@ -569,7 +608,9 @@
 	return BRUTELOSS
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/target_human, location = BODY_ZONE_PRECISE_MOUTH)
-	if(location == BODY_ZONE_PRECISE_MOUTH)
+	if(isvox(target_human)) // vox have quills
+		target_human.set_vox_quills(SPRITE_ACCESSORY_NONE, facial = (location == BODY_ZONE_PRECISE_MOUTH))
+	else if(location == BODY_ZONE_PRECISE_MOUTH)
 		target_human.set_facial_hairstyle("Shaved", update = TRUE)
 	else
 		target_human.set_hairstyle("Bald", update = TRUE)
@@ -601,7 +642,7 @@
 			to_chat(user, span_warning("The mask is in the way!"))
 			return
 
-		if(!(noggin.head_flags & HEAD_FACIAL_HAIR))
+		if(!(noggin.head_flags & HEAD_FACIAL_HAIR) && !target_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_FACIAL_QUILLS))
 			to_chat(user, span_warning("There is no facial hair to style!"))
 			return
 
@@ -609,7 +650,7 @@
 			to_chat(user, span_warning("[target_human] is just way too shaved. Like, really really shaved."))
 			return
 
-		if(target_human.facial_hairstyle == "Shaved")
+		if(target_human.facial_hairstyle == "Shaved" && !isvox(target_human))
 			to_chat(user, span_warning("Already clean-shaven!"))
 			return
 
@@ -629,11 +670,11 @@
 			to_chat(user, span_warning("The headgear is in the way!"))
 			return
 
-		if(!(noggin.head_flags & HEAD_HAIR))
+		if(!(noggin.head_flags & HEAD_HAIR) && !target_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_QUILLS))
 			to_chat(user, span_warning("There is no hair to shave!"))
 			return
 
-		if(target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead")
+		if(!isvox(target_human) && (target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead"))
 			to_chat(user, span_warning("There is not enough hair left to shave!"))
 			return
 

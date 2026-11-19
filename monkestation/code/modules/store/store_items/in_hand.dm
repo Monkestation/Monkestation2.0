@@ -26,6 +26,11 @@ GLOBAL_LIST_INIT(store_inhand_items, generate_store_items(/datum/store_item/inha
 	item_path = /obj/item/skub
 	item_cost = 3500
 
+/datum/store_item/inhand/vox_flag
+	name = "Vox Flag"
+	item_path = /obj/item/flag/species/vox
+	item_cost = 3500
+
 /datum/store_item/inhand/skateboard
 	name = "Skateboard"
 	item_path = /obj/item/melee/skateboard

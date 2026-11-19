@@ -483,6 +483,8 @@
 	var/list/usable_organs = grantable_organs.Copy()
 	if (isplasmaman(sac_target))
 		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
+	if (isvox(sac_target)) // monkestation edit: cursed lungs breathe oxygen, which would kill a vox
+		usable_organs -= /obj/item/organ/internal/lungs/corrupt
 
 	// don't remove unremovable organs
 	for(var/obj/item/organ/internal/organ_type as anything in usable_organs)

@@ -58,11 +58,14 @@
 		/obj/item/organ/internal/tongue/ethereal,
 		/obj/item/organ/internal/tongue/robot,
 		/obj/item/organ/internal/tongue/zombie,
+		/obj/item/organ/internal/tongue/vox, // monkestation edit
 		/obj/item/organ/internal/appendix,
 		/obj/item/organ/internal/liver/fly,
 		/obj/item/organ/internal/lungs/plasmaman,
+		/obj/item/organ/internal/lungs/vox, // monkestation edit
 		/obj/item/organ/external/tail/cat,
 		/obj/item/organ/external/tail/lizard,
+		/obj/item/organ/external/tail/vox, // monkestation edit
 	)
 
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner

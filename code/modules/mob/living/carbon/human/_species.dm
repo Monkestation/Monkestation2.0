@@ -231,8 +231,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/maxhealthmod = 1
 	///Path to BODYSHAPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
 	var/list/custom_worn_icons = list()
-	///Override of the eyes icon file, used for Monkeys.
-	var/eyes_icon
+	// monkestation edit: the eyes icon override moved to heads (/obj/item/bodypart/head/var/eyes_icon), so transplanted heads keep their own eyes
 	///our color palette
 	var/datum/color_palette/color_palette
 
@@ -699,7 +698,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						standing += markings_l_leg_overlay
 
 	//Underwear, Undershirts & Socks
-	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
+	if(fitted_underwear_icons) // monkestation edit: species with their own underwear sprites
+		standing += get_fitted_underwear_overlays(species_human)
+	else if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		if(species_human.underwear && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE)) //MONKESTATION EDIT
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
@@ -1126,7 +1127,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(time_since_irradiated > RAD_MOB_HAIRLOSS && SPT_PROB(RAD_MOB_HAIRLOSS_PROB, seconds_per_tick))
 		var/obj/item/bodypart/head/head = source.get_bodypart(BODY_ZONE_HEAD)
-		if(!(source.hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)))
+		if(!(source.hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)) && !isvox(source)) // monkestation edit: vox quills are not lost to radiation, like on Yogstation
 			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
 			addtimer(CALLBACK(src, PROC_REF(go_bald), source), 5 SECONDS)
 
@@ -1182,7 +1183,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 		var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
-		var/atk_verb = attacking_bodypart.unarmed_attack_verb
+		var/atk_verb = attacking_bodypart.get_unarmed_attack_verb() // monkestation edit: limbs can have several attack verbs
 		var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 		if(atk_effect == ATTACK_EFFECT_BITE)

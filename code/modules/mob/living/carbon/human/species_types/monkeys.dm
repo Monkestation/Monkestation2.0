@@ -43,8 +43,7 @@
 
 	// NON-MODULAR CHANGES BELOW
 
-	//Default eyes have the side portrait icons on the wrong side, this fixes that.
-	eyes_icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	// Monkey eyes (default eyes have the side portrait icons on the wrong side) are now set on the monkey head, see /obj/item/bodypart/head/var/eyes_icon. // monkestation edit
 	species_race_mutation = /datum/mutation/race
 	///Whether or not this monkey gets the innate effects of running over tables and the gene activated, used to exclude subtypes from getting it.
 	///The reason we block the gene's activation is so you can't "deconvert" from being a monkey subtype.
