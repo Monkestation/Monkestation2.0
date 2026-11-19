@@ -17,8 +17,8 @@
 	var/list/rejected_brothers = list()
 
 /datum/team/brother_team/New(starting_members)
-	// Roll the extra conversion once, when the team is made
-	if(prob(brother_chance))
+	// Roll for extra conversions when the team is made, again after every success
+	while(prob(brother_chance))
 		brothers_left++
 	return ..()
 
