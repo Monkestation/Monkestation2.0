@@ -230,7 +230,7 @@
 		picked_type = /datum/ai_movement/basic_avoidance/adaptive/follow
 		leash = SLIME_SEEK_PATH_LENGTH
 	else if(ai_controller.blackboard_key_exists(BB_SLIME_ROAM_TARGET))
-		picked_type = /datum/ai_movement/astar/slime
+		picked_type = /datum/ai_movement/navmap_astar/slime
 		leash = SLIME_SEEK_PATH_LENGTH
 	else if(cleaner_slime)
 		picked_type = /datum/ai_movement/basic_avoidance/adaptive

@@ -71,8 +71,6 @@
 	// Called when the sufferer of the symptom bumps, is bumped, or is touched by hand.
 /datum/symptom/proc/on_death(mob/living/carbon/mob)
 	// Called when the sufferer of the symptom dies
-/datum/symptom/proc/side_effect(mob/living/mob)
-	// Called on every Life() while the body is alive
 ///called before speech goes out, returns FALSE if we stop, otherwise returns Edited Message
 /datum/symptom/proc/on_speech(mob/living/mob)
 

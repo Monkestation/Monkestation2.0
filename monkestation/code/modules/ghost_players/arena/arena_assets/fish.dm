@@ -70,7 +70,7 @@
 	name = "dwarf moonfish"
 	desc = "Ordinarily in the wild, the Zagoskian moonfish is around the size of a tuna, however through selective breeding a smaller breed suitable for being kept as an aquarium pet has been created."
 	icon_state = "dwarf_moonfish"
-	loot = list(/obj/item/fish/dwarf_moonfish)
+	loot = list(/obj/item/fish/moonfish/dwarf)
 
 /mob/living/simple_animal/fish/gunner_jellyfish
 	name = "gunner jellyfish"

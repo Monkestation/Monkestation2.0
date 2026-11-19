@@ -2,7 +2,7 @@
 
 /area/ruin/space
 	has_gravity = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/space/unpowered
 	always_unpowered = TRUE
@@ -20,7 +20,7 @@
 // Ruin solars define, /area/solars was moved to /area/station/solars, causing the solars specific areas to lose their properties
 /area/ruin/space/solars
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -33,6 +33,7 @@
 // Ruins of "onehalf" ship
 
 /area/ruin/space/has_grav/onehalf/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Hallway"
 
 /area/ruin/space/has_grav/onehalf/drone_bay
@@ -211,6 +212,7 @@
 	name = "\improper ASRC Laboratory"
 
 /area/ruin/space/has_grav/dangerous_research/maint
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper ASRC Maintenance"
 
 //Interdyne Ruin
@@ -241,6 +243,7 @@
 	icon_state = "os_beta_engine"
 
 /area/ruin/space/ancientstation/beta/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Beta Station Main Corridor"
 	icon_state = "os_beta_hall"
 
@@ -266,6 +269,7 @@
 	icon_state = "charliestation"
 
 /area/ruin/space/ancientstation/charlie/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Charlie Station Main Corridor"
 	icon_state = "os_charlie_hall"
 
@@ -299,7 +303,7 @@
 	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	sound_environment = SOUND_AREA_SPACE
 
 /area/ruin/space/ancientstation/charlie/storage
@@ -310,6 +314,7 @@
 	icon_state = "deltastation"
 
 /area/ruin/space/ancientstation/delta/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Delta Station Main Corridor"
 	icon_state = "os_delta_hall"
 
@@ -342,6 +347,7 @@
 
 // Area define for organization
 /area/ruin/space/ks13/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 
 /area/ruin/space/ks13/hallway/central
 	name = "\improper Derelict Central Hallway"
@@ -483,6 +489,7 @@
 	icon_state = "ks13_ord"
 
 /area/ruin/space/ks13/science/ordnance_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Ordnance Hallway"
 	icon_state = "ks13_ord_hall"
 
@@ -502,6 +509,7 @@
 	icon_state = "ks13_court"
 
 /area/ruin/space/ks13/security/court_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Courtroom Hallway"
 	icon_state = "ks13_court_hall"
 
@@ -513,6 +521,7 @@
 	icon_state = "ks13_bridge"
 
 /area/ruin/space/ks13/command/bridge_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Bridge Hallway"
 	icon_state = "ks13_bridge_hall"
 
@@ -528,6 +537,7 @@
 	icon_state = "ks13_ai_vault"
 
 /area/ruin/space/ks13/ai/corridor
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict AI Corridor"
 	icon_state = "ks13_ai_corridor"
 
@@ -558,7 +568,7 @@
 /area/ruin/space/djstation/solars
 	name = "\improper DJ Station Solars"
 	icon_state = "DJ"
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	has_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/djstation/service
@@ -601,7 +611,7 @@
 
 /area/ruin/space/has_grav/hellfactoryoffice
 	name = "\improper Hell Factory Office"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT //who decided blobs should be allowed, i don't know, but it's funny
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | NOTELEPORT //who decided blobs should be allowed, i don't know, but it's funny
 
 //Ruin of Spinward Smoothies
 

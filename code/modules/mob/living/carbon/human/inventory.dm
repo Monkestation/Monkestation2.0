@@ -400,15 +400,18 @@
 	return outfit_to_equip.equip(src, visualsOnly)
 
 
-//delete all equipment without dropping anything
+///delete all equipment and cybernetics without dropping anything, implants dont replace organs so we should be fine doing this.
 /mob/living/carbon/human/proc/delete_equipment()
 	for(var/slot in get_equipped_items(INCLUDE_POCKETS))//order matters, dependant slots go first
 		qdel(slot)
 	for(var/obj/item/held_item in held_items)
 		qdel(held_item)
+	for(var/obj/item/organ/internal/cyberimp/cybernetic in organs)
+		qdel(cybernetic)
+	for(var/obj/item/implant/imp in implants)
+		qdel(imp)
 
 /// take the most recent item out of a slot or place held item in a slot
-
 /mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt")
 	if(incapacitated())
 		return

@@ -15,6 +15,8 @@
 	COOLDOWN_DECLARE(next_extinguish)
 	var/extinguish_cooldown = 10 SECONDS
 	var/extinguishes_left = 10
+	bodyshapes_with_variations = NONE
+	fishing_modifier = 0
 
 /datum/armor/eva_plasmaman
 	bio = 100
@@ -66,6 +68,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right
 	/// helmet -> stripes -> visor
 	greyscale_colors = "#d15b1b#a747c0#bd6abd"
+	fishing_modifier = 0
 
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	strip_delay = 8 SECONDS
@@ -241,7 +244,7 @@
 
 
 ///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return

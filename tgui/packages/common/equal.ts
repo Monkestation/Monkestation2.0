@@ -14,7 +14,7 @@ export default function equal(a: unknown, b: unknown): boolean {
       if (!Array.isArray(b)) return false;
       length = a.length;
       if (length !== b.length) return false;
-      for (i = length; i-- !== 0;) {
+      for (i = length; i-- !== 0; ) {
         if (!equal(a[i], b[i])) return false;
       }
       return true;
@@ -47,7 +47,7 @@ export default function equal(a: unknown, b: unknown): boolean {
       const bb = b as unknown as ArrayLike<number>;
       length = aa.length;
       if (length !== bb.length) return false;
-      for (i = length; i-- !== 0;) {
+      for (i = length; i-- !== 0; ) {
         if (aa[i] !== bb[i]) return false;
       }
       return true;
@@ -73,11 +73,11 @@ export default function equal(a: unknown, b: unknown): boolean {
     length = keys.length;
     if (length !== Object.keys(b as object).length) return false;
 
-    for (i = length; i-- !== 0;) {
+    for (i = length; i-- !== 0; ) {
       if (!Object.hasOwn(b, keys[i])) return false;
     }
 
-    for (i = length; i-- !== 0;) {
+    for (i = length; i-- !== 0; ) {
       const key = keys[i];
 
       // if (key === '_owner' && (a as any).$$typeof) continue;

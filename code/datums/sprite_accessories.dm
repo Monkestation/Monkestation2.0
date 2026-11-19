@@ -108,6 +108,14 @@
 	name = "Afro"
 	icon_state = "hair_afro"
 
+/datum/sprite_accessory/hair/afro_over_eyes
+	name = "Afro (Over Eyes)"
+	icon_state = "hair_afro_over_eyes"
+
+/datum/sprite_accessory/hair/afrothreequarters
+	name = "Afro (Three Quarters)"
+	icon_state = "hair_afro_three_quarters"
+
 /datum/sprite_accessory/hair/afro2
 	name = "Afro 2"
 	icon_state = "hair_afro2"
@@ -123,6 +131,10 @@
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
+
+/datum/sprite_accessory/hair/animeprotag
+	name = "Anime Protagonist"
+	icon_state = "hair_anime_protag"
 
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
@@ -148,6 +160,34 @@
 	name = "Bedhead 4x"
 	icon_state = "hair_bedheadv4"
 
+/datum/sprite_accessory/hair/bowlcutovereyes
+	name = "Bowl Cut Over Eyes"
+	icon_state = "hair_bowlcut_over_eyes"
+
+/datum/sprite_accessory/hair/coily
+	name = "Coily"
+	icon_state = "hair_coily"
+
+/datum/sprite_accessory/hair/curtains
+	name = "Curtains"
+	icon_state = "hair_curtains"
+
+/datum/sprite_accessory/hair/fluffymess
+	name = "Fluffy Mess"
+	icon_state = "hair_fluffy_mess"
+
+/datum/sprite_accessory/hair/frizzysidecut
+	name = "Frizzy Sidecut"
+	icon_state = "hair_frizzy_sidecut"
+
+/datum/sprite_accessory/hair/hightopslant
+	name = "Hightop Slant"
+	icon_state = "hair_hightop_slant"
+
+/datum/sprite_accessory/hair/killmonger
+	name = "Killmonger"
+	icon_state = "hair_killmonger"
+
 /datum/sprite_accessory/hair/bedhead_long
 	name = "Long Bedhead"
 	icon_state = "hair_long_bedhead"
@@ -159,6 +199,42 @@
 /datum/sprite_accessory/hair/bedhead_floorlength
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
+
+/datum/sprite_accessory/hair/longdreads
+	name = "Long Dreadlocks"
+	icon_state = "hair_long_dreads"
+
+/datum/sprite_accessory/hair/longsidecut
+	name = "Long Sidecut"
+	icon_state = "hair_long_sidecut"
+
+/datum/sprite_accessory/hair/longwavy
+	name = "Long Wavy"
+	icon_state = "hair_long_wavy"
+
+/datum/sprite_accessory/hair/moneypiece
+	name = "Money Piece"
+	icon_state = "hair_money_piece"
+
+/datum/sprite_accessory/hair/mulletwrattail
+	name = "Mullet with Rat Tail"
+	icon_state = "hair_mullet_with_rat_tail"
+
+/datum/sprite_accessory/hair/pigtails5
+	name = "Pigtails 5"
+	icon_state = "hair_pigtails_5"
+
+/datum/sprite_accessory/hair/sadako
+	name = "Sadako"
+	icon_state = "hair_sadako"
+
+/datum/sprite_accessory/hair/shortwavy
+	name = "Short Wavy"
+	icon_state = "hair_short_wavy"
+
+/datum/sprite_accessory/hair/shorterbangs
+	name = "Shorter Bangs"
+	icon_state = "hair_shorter_bangs"
 
 /datum/sprite_accessory/hair/monke/bedhead_glorppy
 	name = "Bedhead (Glorppy ver.)"
@@ -749,6 +825,14 @@
 	name = "Sidecut"
 	icon_state = "hair_sidecut"
 
+/datum/sprite_accessory/hair/sidecutbang
+	name = "Sidecut Bang"
+	icon_state = "hair_sidecut_bang"
+
+/datum/sprite_accessory/hair/singedblownback
+	name = "Singed Blown Back"
+	icon_state = "hair_singed_blown_back"
+
 /datum/sprite_accessory/hair/skinhead
 	name = "Skinhead"
 	icon_state = "hair_skinhead"
@@ -776,6 +860,18 @@
 /datum/sprite_accessory/hair/swept2
 	name = "Swept Back Hair 2"
 	icon_state = "hair_swept2"
+
+/datum/sprite_accessory/hair/swirlycurlsalt
+	name = "Swirl Curls Alt"
+	icon_state = "hair_swirly_curls_alt"
+
+/datum/sprite_accessory/hair/swirlycurls
+	name = "Swirly Curls"
+	icon_state = "hair_swirly_curls"
+
+/datum/sprite_accessory/hair/tayama
+	name = "Tayama"
+	icon_state = "hair_tayama"
 
 /datum/sprite_accessory/hair/thinning
 	name = "Thinning"
@@ -856,6 +952,10 @@
 /datum/sprite_accessory/hair/wisp
 	name = "Wisp"
 	icon_state = "hair_wisp"
+
+/datum/sprite_accessory/hair/wolfcut
+	name = "Wolfcut"
+	icon_state = "hair_wolfcut"
 
 /datum/sprite_accessory/hair/ziegler
 	name = "Ziegler"
@@ -2636,6 +2736,19 @@ MONKESTATION EDIT
 	center = TRUE
 	dimension_x = 36
 
+//cerulean species fish tails
+/datum/sprite_accessory/tails/fish/cerulean
+	name = "Cerulean"
+	icon = 'icons/mob/human/species/cerulean/cerulean_tails.dmi'
+	icon_state = "default"
+	gender_specific = TRUE
+	locked = TRUE
+
+/datum/sprite_accessory/tails/fish/cerulean/skeleton
+	name = "Cerulean Skeleton"
+	icon_state = "skeleton"
+	color_src = NONE
+
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/human/cat_features.dmi'
@@ -3141,6 +3254,156 @@ MONKESTATION EDIT
 	name = "Moffra"
 	icon_state = "moffra"
 
+/datum/sprite_accessory/moth_wings/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"
+
+/datum/sprite_accessory/moth_wings/dipped
+	name = "Dipped"
+	icon_state = "dipped"
+
+// greyscale wing slop starts here
+
+/datum/sprite_accessory/moth_wings/plain_grey
+	name = "Plain (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "plaingrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/monarch_grey
+	name = "Monarch (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "monarchgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/luna_grey
+	name = "Luna (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "lunagrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/atlas_grey
+	name = "Atlas (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "atlasgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/reddish_grey
+	name = "Reddish (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "redishgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/royal_grey
+	name = "Royal (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "royalgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/lovers_grey
+	name = "Lovers (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "loversgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/whitefly_grey
+	name = "White Fly (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "whiteflygrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/firewatch_grey
+	name = "Firewatch (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "firewatchgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/deathhead_grey
+	name = "Deathshead (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "deathheadgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/poison_grey
+	name = "Poison (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "poisongrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/ragged_grey
+	name = "Ragged (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "raggedgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/moonfly_grey
+	name = "Moon Fly (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "moonflygrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/oakworm_grey
+	name = "Oak Worm (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "oakwormgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/jungle_grey
+	name = "Jungle (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "junglegrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/witchwing_grey
+	name = "Witch Wing (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "witchwinggrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/rosy_grey
+	name = "Rosy (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "rosygrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/feathery_grey
+	name = "Feathery (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "featherygrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/brown_grey
+	name = "Brown (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "browngrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/plasmafire_grey
+	name = "Plasmafire (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "plasmafiregrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/moffra_grey
+	name = "Moffra (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "moffragrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/lightbearer_grey
+	name = "Lightbearer (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "lightbearergrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_wings/dipped_grey
+	name = "Dipped (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_wings_greyscale.dmi'
+	icon_state = "dippedgrey"
+	color_src = MUTANT_COLOR
+
+// flap
+
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
@@ -3231,6 +3494,136 @@ MONKESTATION EDIT
 /datum/sprite_accessory/moth_antennae/moffra
 	name = "Moffra"
 	icon_state = "moffra"
+
+// greyscale antennae slop starts here
+
+/datum/sprite_accessory/moth_antennae/plain_grey
+	name = "Plain (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "plaingrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/monarch_grey
+	name = "Monarch (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "monarchgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/luna_grey
+	name = "Luna (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "lunagrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/atlas_grey
+	name = "Atlas (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "atlasgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/reddish_grey
+	name = "Reddish (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "reddishgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/royal_grey
+	name = "Royal (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "royalgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/lovers_grey
+	name = "Lovers (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "loversgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/firewatch_grey
+	name = "Firewatch (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "firewatchgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/deathhead_grey
+	name = "Deathshead (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "deathheadgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/poison_grey
+	name = "Poison (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "poisongrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/ragged_grey
+	name = "Ragged (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "raggedgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/moonfly_grey
+	name = "Moon Fly (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "moonflygrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/oakworm_grey
+	name = "Oak Worm (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "oakwormgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/jungle_grey
+	name = "Jungle (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "junglegrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/witchwing_grey
+	name = "Witch Wing (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "witchwinggrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/regal_grey
+	name = "Regal (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "regalgrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/rosy_grey
+	name = "Rosy (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "rosygrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/feathery_grey
+	name = "Feathery (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "featherygrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/brown_grey
+	name = "Brown (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "browngrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/plasmafire_grey
+	name = "Plasmafire (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "plasmafiregrey"
+	color_src = MUTANT_COLOR
+
+/datum/sprite_accessory/moth_antennae/moffra_grey
+	name = "Moffra (Grey)"
+	icon = 'icons/mob/human/species/moth/moth_antennae_greyscale.dmi'
+	icon_state = "moffragrey"
+	color_src = MUTANT_COLOR
+
+// chitter
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'

@@ -113,6 +113,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 #define iswerewolf(A) (is_species(A,/datum/species/werewolf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
+#define iscerulean(A) (is_species(A, /datum/species/human/cerulean))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isshadowperson(A) (is_species(A, /datum/species/shadow))
@@ -257,8 +258,6 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isstructure(A) (istype(A, /obj/structure))
 
-#define isaquarium(A) (istype(A, /obj/structure/aquarium))
-
 #define ismachinery(A) (istype(A, /obj/machinery))
 
 #define istramwall(A) (istype(A, /obj/structure/tram))
@@ -366,3 +365,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define isslugcat(A) (istype(A, /mob/living/basic/slugcat))
 
 #define isvirusdish(A) (istype(A, /obj/item/weapon/virusdish))
+
+#define is_area_virtual(checked_area) (GLOB.virtual_areas && GLOB.virtual_areas[(checked_area).type])

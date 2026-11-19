@@ -242,8 +242,7 @@
 	if(!istype(user))
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	for(var/trait in clothing_traits)
-		REMOVE_CLOTHING_TRAIT(user, trait)
+	remove_clothing_traits(user)
 	if(iscarbon(user) && tint)
 		var/mob/living/carbon/carbon_user = user
 		carbon_user.update_tint()
@@ -274,8 +273,7 @@
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
-		for(var/trait in clothing_traits)
-			ADD_CLOTHING_TRAIT(user, trait)
+		give_clothing_traits(user, slot)
 		if(iscarbon(user) && tint)
 			var/mob/living/carbon/carbon_user = user
 			carbon_user.update_tint()
@@ -309,6 +307,16 @@
 
 	wearer.update_clothing(slot_flags | wearer.get_slot_by_item(src))
 
+
+/// Gives the wearer all the clothing traits associated with this item
+/obj/item/clothing/proc/give_clothing_traits(mob/living/wearer, slot)
+	for(var/trait in clothing_traits)
+		ADD_CLOTHING_TRAIT(wearer, trait)
+
+/// Removes all the clothing traits associated with this item from the wearer
+/obj/item/clothing/proc/remove_clothing_traits(mob/living/wearer)
+	for(var/trait in clothing_traits)
+		REMOVE_CLOTHING_TRAIT(wearer, trait)
 
 /**
  * Inserts a trait (or multiple traits) into the clothing traits list
@@ -679,7 +687,7 @@ BLIND     // can't see anything
 	return ..()
 
 /// Returns a list of overlays with our blood, if we're bloodied
-/obj/item/clothing/proc/get_blood_overlay(blood_state)
+/obj/item/clothing/proc/get_blood_overlay(blood_state, bodyshape = NONE)
 	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 

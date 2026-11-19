@@ -19,7 +19,7 @@
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	movement_type = FLYING
 	health = 25
 	maxHealth = 25
@@ -95,6 +95,7 @@
 
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
+	AddComponent(/datum/component/profound_fisher)
 	if (tamer)
 		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
@@ -128,7 +129,7 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
-	ai_controller?.change_ai_movement_type(/datum/ai_movement/jps)
+	ai_controller?.change_ai_movement_type(/datum/ai_movement/navmap_astar)
 	if (!feedback)
 		return
 	spin(spintime = 10, speed = 1)
