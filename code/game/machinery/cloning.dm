@@ -150,13 +150,15 @@
 		return NONE
 	if(mess || attempting)
 		return NONE
-	if(!bypass_restrictions && !isnull(dna.species) && (dna.species::inherent_biotypes & MOB_ROBOTIC)) // no cloning IPCs
+	// Robotic species can't be cloned, unless a blood brother hacked the console
+	if(!bypass_restrictions && !isnull(dna.species) && (dna.species::inherent_biotypes & MOB_ROBOTIC))
 		return NONE
 	if(!empty) //Doesn't matter if we're just making a copy
 		clonemind = locate(mindref) in SSticker.minds
 		if(!istype(clonemind))	//not a mind
 			return NONE
-		if(!bypass_restrictions && clonemind.has_antag_datum(/datum/antagonist/bloodsucker)) // no cloning bloodsuckers.
+		// Same for bloodsuckers
+		if(!bypass_restrictions && clonemind.has_antag_datum(/datum/antagonist/bloodsucker))
 			return NONE
 		if(!QDELETED(clonemind.current))
 			if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
