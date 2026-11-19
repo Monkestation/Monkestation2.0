@@ -1,0 +1,5 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Viscerators no longer body-block people."
+  - balance: "Viscerators can now fly over machines and through plastic flaps."
