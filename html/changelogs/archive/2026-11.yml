@@ -872,5 +872,9 @@
   - bugfix: Mute and muzzled chuunibyous can no longer shout their spell lines on
       non invocation spells.
   - bugfix: Chav and Elvis mutations now use their correct speech patterns.
+  ashallaryn:
+  - rscadd: 'New Quirk: Intrusive Thoughts'
+  - rscadd: 'New Special Brain Trauma: Intrusive Thoughts (Variant of Split Personality)'
+  - rscadd: 'New action: Intrusive Thought (variant of Personality Commune)'
   tattax:
   - bugfix: fix trasenknox pull icon sometimes showing up as the righthand cuff spritte
