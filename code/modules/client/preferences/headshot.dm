@@ -54,7 +54,7 @@ GLOBAL_VAR(admin_approving_headshot)
 		return FALSE
 
 	if(usr)
-	 var/list/approved_headshots = get_approved_headshots()
+		 var/list/approved_headshots = get_approved_headshots()
 		if(approved_headshots[value] || GLOB.admin_approving_headshot == value)
 			return TRUE
 
