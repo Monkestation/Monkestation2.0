@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Cyborgs hit with a security baton are now told who hit them, instead of themselves."
