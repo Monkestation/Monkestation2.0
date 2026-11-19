@@ -42,6 +42,7 @@
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "be" = (
 /obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "bi" = (
@@ -109,6 +110,11 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/under/syndicate/nova/overalls,
+/obj/item/clothing/under/syndicate/nova/tactical,
+/obj/item/clothing/under/syndicate/sniper,
+/obj/item/clothing/under/syndicate/combat,
 /turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "ch" = (
@@ -141,7 +147,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
-/turf/open/floor/iron/smooth_half,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/listeningstation/support)
 "dg" = (
 /obj/effect/turf_decal/sand/plating,
@@ -168,7 +174,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/medical)
 "dW" = (
-/obj/machinery/light/small/maintenance/directional/north,
 /obj/machinery/porta_turret/syndicate/depot{
 	dir = 10
 	},
@@ -176,16 +181,16 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "ep" = (
-/mob/living/basic/mining/hivelord,
-/turf/open/misc/asteroid,
+/obj/item/mop,
+/obj/structure/mop_bucket,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "eM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table_frame,
-/obj/item/stack/sheet/iron,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -197,6 +202,7 @@
 	pixel_x = -10;
 	pixel_y = 6
 	},
+/obj/structure/closet/generic/wall/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "eR" = (
@@ -220,7 +226,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "eZ" = (
-/turf/closed/wall/rust,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "fe" = (
 /obj/effect/decal/cleanable/dirt,
@@ -301,7 +310,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/listeningstation/support)
 "hm" = (
 /obj/structure/cable,
@@ -505,9 +514,9 @@
 /turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "nM" = (
-/obj/item/reagent_containers/cup/bucket,
-/obj/item/bodypart/arm/right/robot/surplus,
-/turf/open/misc/asteroid,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "of" = (
 /obj/effect/decal/cleanable/dirt,
@@ -639,6 +648,7 @@
 	},
 /obj/structure/sign/warning/explosives/alt/directional/north,
 /obj/machinery/syndicatebomb/self_destruct/announce,
+/obj/effect/baseturf_helper/asteroid/airless,
 /turf/open/floor/circuit/red/anim,
 /area/ruin/space/has_grav/listeningstation/support)
 "rx" = (
@@ -723,9 +733,13 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "uV" = (
-/obj/item/assembly/prox_sensor,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/listeningstation/asteroid)
+/mob/living/basic/bot/cleanbot{
+	faction = list("neutral","silicon","turret","Syndicate");
+	req_one_access = null;
+	req_access = list("syndicate")
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/support)
 "vc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -810,7 +824,8 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 4
 	},
-/turf/open/misc/asteroid/airless,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "xm" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -825,7 +840,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
-/turf/open/floor/iron/smooth_half,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/listeningstation/support)
 "xY" = (
 /turf/open/misc/asteroid/airless,
@@ -856,7 +871,7 @@
 /obj/machinery/duct,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/turf/open/floor/iron/smooth_half,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/listeningstation/support)
 "yJ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -935,6 +950,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/bedsheetbin,
+/obj/structure/table,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "AO" = (
@@ -1038,9 +1055,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/support)
 "Ck" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/machinery/firealarm/directional/east,
 /obj/structure/closet/crate/bin,
 /obj/item/storage/bag/trash,
@@ -1060,7 +1074,7 @@
 /area/ruin/space/has_grav/listeningstation/lounge)
 "Cm" = (
 /obj/item/stock_parts/capacitor,
-/turf/closed/mineral/random/stationside/asteroid/porus,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "CJ" = (
 /obj/structure/sign/nanotrasen{
@@ -1088,8 +1102,6 @@
 "DB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/airalarm/directional/west,
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/machinery/duct,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1104,6 +1116,7 @@
 /obj/item/stack/sheet/mineral/wood{
 	amount = 21
 	},
+/obj/effect/spawner/random/trash/food_packaging,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "Er" = (
@@ -1172,7 +1185,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/duct,
-/turf/open/floor/iron/smooth_half,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/listeningstation/support)
 "Fy" = (
 /obj/effect/turf_decal/sand/plating,
@@ -1210,10 +1223,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/medical)
-"Gr" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall,
-/area/ruin/space/has_grav/listeningstation/support)
 "Gu" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/door/airlock/security{
@@ -1352,7 +1361,7 @@
 "Kt" = (
 /obj/structure/falsewall,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/support)
+/area/ruin/space/has_grav/listeningstation/lounge)
 "Ku" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/west,
@@ -1411,7 +1420,7 @@
 /obj/machinery/turretid{
 	req_access = list("syndicate");
 	pixel_x = 31;
-	pixel_y = 3;
+	pixel_y = -24;
 	control_area = "/area/ruin/space/has_grav/listeningstation/asteroid";
 	name = "base turret control panel";
 	lethal = 1;
@@ -1458,7 +1467,7 @@
 	},
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/iron/smooth_half,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/listeningstation/support)
 "MY" = (
 /obj/machinery/modular_computer/preset/civilian,
@@ -1513,7 +1522,7 @@
 	pixel_y = 23;
 	specialfunctions = 4
 	},
-/turf/open/floor/iron/smooth_half,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/listeningstation/support)
 "NY" = (
 /obj/effect/turf_decal/sand/plating,
@@ -1540,6 +1549,12 @@
 /obj/structure/closet/syndicate,
 /obj/machinery/firealarm/directional/west,
 /obj/item/ammo_box/magazine/m9mm,
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/under/syndicate/nova/overalls,
+/obj/item/clothing/under/syndicate/nova/tactical,
+/obj/item/clothing/under/syndicate/sniper,
+/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/head/hats/hos/beret/syndicate,
 /turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "OG" = (
@@ -1549,14 +1564,14 @@
 "OO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hatch{
-	name = "Laundry"
+	name = "Sanitorial Equipment"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/listeningstation/support)
 "OQ" = (
 /obj/structure/cable,
@@ -1731,25 +1746,11 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "SI" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/item/circuitboard/machine/ore_redemption{
-	pixel_x = -5;
-	pixel_y = 6
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
-/obj/structure/closet/crate/secure/plasma{
-	req_access = list("syndicate");
-	name = "refinery crate"
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/card/id/advanced/mining{
-	pixel_x = 0;
-	pixel_y = -6
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/support)
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/listeningstation/lounge)
 "Th" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/light/small/directional/east,
@@ -1867,8 +1868,6 @@
 /area/ruin/space/has_grav/listeningstation/comms)
 "Xc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bedsheetbin,
-/obj/structure/table,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "Xs" = (
@@ -1886,7 +1885,7 @@
 	},
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/iron/smooth_half,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/listeningstation/support)
 "XB" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -1940,7 +1939,23 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "Yb" = (
-/turf/closed/wall,
+/obj/item/circuitboard/machine/ore_redemption{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/structure/closet/crate/secure/plasma{
+	req_access = list("syndicate");
+	name = "refinery crate"
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/card/id/advanced/mining{
+	pixel_x = 0;
+	pixel_y = -6
+	},
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "Yf" = (
 /obj/structure/cable,
@@ -1955,9 +1970,9 @@
 "Ym" = (
 /obj/item/weldingtool/largetank,
 /obj/item/wrench,
-/obj/item/clothing/head/utility/welding,
 /obj/structure/rack,
 /obj/effect/turf_decal/delivery,
+/obj/item/clothing/glasses/welding,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "Yy" = (
@@ -2317,7 +2332,7 @@ AV
 VK
 go
 go
-yK
+nM
 go
 go
 go
@@ -2355,7 +2370,7 @@ AV
 VK
 go
 go
-yK
+nM
 go
 go
 go
@@ -2393,8 +2408,8 @@ AV
 VK
 VK
 go
-yK
-yK
+nM
+nM
 yK
 yK
 yK
@@ -2434,7 +2449,7 @@ go
 go
 go
 go
-Yb
+XM
 gA
 yK
 Vg
@@ -2485,7 +2500,7 @@ Pz
 NI
 Ay
 rE
-DS
+go
 go
 go
 go
@@ -2523,7 +2538,7 @@ OO
 JD
 wk
 rE
-QI
+go
 go
 go
 go
@@ -2596,8 +2611,8 @@ Pz
 Ey
 xR
 Pz
-Pz
-Pz
+ep
+uV
 LP
 go
 go
@@ -2634,8 +2649,8 @@ LP
 qV
 xR
 Kt
-SI
-ep
+ME
+ME
 CR
 CR
 CR
@@ -2671,8 +2686,8 @@ Va
 OT
 LP
 MV
-Gr
 ME
+SI
 eZ
 CR
 Gj
@@ -2869,7 +2884,7 @@ bi
 nc
 go
 go
-QI
+DS
 go
 VK
 AV
@@ -2905,7 +2920,7 @@ TO
 LR
 RK
 FK
-go
+QI
 QI
 AO
 go
@@ -2944,7 +2959,7 @@ QI
 Sz
 go
 go
-go
+Yb
 go
 go
 VK
@@ -3055,7 +3070,7 @@ by
 QI
 QI
 RP
-QI
+by
 kt
 be
 go
@@ -3081,8 +3096,8 @@ go
 QI
 vC
 QI
-go
-go
+QI
+QI
 go
 QI
 lE
@@ -3120,9 +3135,9 @@ go
 wx
 QI
 go
-go
-go
-go
+QI
+QI
+QI
 QI
 LA
 QI
@@ -3158,17 +3173,17 @@ go
 go
 go
 go
-nM
-go
-go
-go
-go
-go
-go
-go
-go
-vC
 QI
+QI
+QI
+go
+go
+go
+go
+go
+go
+go
+go
 go
 go
 VK
@@ -3197,7 +3212,7 @@ VK
 VK
 go
 QI
-uV
+QI
 go
 go
 go
