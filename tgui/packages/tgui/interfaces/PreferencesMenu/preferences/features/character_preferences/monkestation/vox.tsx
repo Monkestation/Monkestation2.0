@@ -110,7 +110,7 @@ export const feature_quill_gradientcolor: Feature<string> = {
 };
 
 export const feature_vox_tank_type: FeatureChoiced = {
-  name: 'N² Tank',
+  name: 'N₂ Tank',
   description: 'The nitrogen tank your character starts the shift with.',
   component: FeatureDropdownInput,
 };
