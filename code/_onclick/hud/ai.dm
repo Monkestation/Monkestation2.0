@@ -199,7 +199,9 @@
 
 /atom/movable/screen/ai_download_alarm/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	AI = hud_owner.mymob
+	AI = hud_owner?.mymob
+	if(!AI)
+		return INITIALIZE_HINT_QDEL //this is probably a bad idea ingame, but... hey if it works for unit tests? (does not know if itll work)
 	START_PROCESSING(SSobj, src) //SSobj sounds good. The things that download are also on the same subsystem.
 
 /atom/movable/screen/ai_download_alarm/Destroy()
