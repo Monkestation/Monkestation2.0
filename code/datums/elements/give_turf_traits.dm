@@ -44,11 +44,14 @@
 
 	LAZYADDASSOCLIST(trait_sources, location, trait_source)
 	var/update_movespeeds = (TRAIT_TURF_IGNORE_SLOWDOWN in traits) && !HAS_TRAIT(location, TRAIT_TURF_IGNORE_SLOWDOWN)
+	var/update_lava_cost = islava(location) && (TRAIT_LAVA_STOPPED in traits) && !HAS_TRAIT(location, TRAIT_LAVA_STOPPED)
 	for(var/trait in traits)
 		ADD_TRAIT(location, trait, trait_source)
 	if(update_movespeeds)
 		for(var/mob/living/living in location)
 			living.update_turf_movespeed()
+	if(update_lava_cost)
+		location.nav_cost_dirty()
 
 /**
  * Unregisters the turf signals if it's no longer unoccupied and removes it from the list of occupied turfs.
@@ -67,6 +70,9 @@
 		for(var/mob/living/living in location)
 			living.update_turf_movespeed()
 
+	if(islava(location) && (TRAIT_LAVA_STOPPED in traits) && !HAS_TRAIT(location, TRAIT_LAVA_STOPPED))
+		location.nav_cost_dirty()
+
 /// Signals are carried over when the turf is changed, but traits aren't, so they've to be readded post-change.
 /datum/element/give_turf_traits/proc/pre_change_turf(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
@@ -76,3 +82,5 @@
 	for(var/trait in traits)
 		for(var/source in trait_sources[changed])
 			ADD_TRAIT(changed, trait, source)
+	if(islava(changed) && (TRAIT_LAVA_STOPPED in traits))
+		changed.nav_cost_dirty()
