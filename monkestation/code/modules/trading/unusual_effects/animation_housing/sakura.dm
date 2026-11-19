@@ -2,7 +2,7 @@
 	unusual_description = "sakura"
 	icon_file = 'icons/effects/particle.dmi'
 	particle_state = "petals1"
-	burst_amount = 5
+	burst_amount = 6
 	duration = 9 SECONDS
 	random_bursts = TRUE
 	spawn_interval = 4 SECONDS

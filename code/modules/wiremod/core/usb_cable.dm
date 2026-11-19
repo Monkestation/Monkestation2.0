@@ -2,7 +2,7 @@
 /obj/item/usb_cable
 	name = "usb cable"
 	desc = "A cable that can connect integrated circuits to anything with a USB port, such as computers and machines."
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "usb_cable"
 	inhand_icon_state = "coil_yellow"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -53,7 +53,7 @@
 			CRASH("Producers of COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT must set attached_circuit")
 		balloon_alert(user, "connected to circuit\nconnect to a port")
 
-		playsound(src, 'sound/machines/pda_button1.ogg', 20, TRUE)
+		playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 20, TRUE)
 
 		if (last_attached_circuit != attached_circuit)
 			if (!isnull(last_attached_circuit))
@@ -73,7 +73,7 @@
 			connection_description = "machine"
 
 		balloon_alert(user, "connected to [connection_description]")
-		playsound(src, 'sound/items/screwdriver2.ogg', 20, TRUE)
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 20, TRUE)
 
 		return TRUE
 

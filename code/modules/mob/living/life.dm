@@ -1,3 +1,6 @@
+/// This divisor controls how fast body temperature changes to match the environment
+#define BODYTEMP_DIVISOR 16
+
 /**
  * Handles the biological and general over-time processes of the mob.
  *
@@ -55,18 +58,11 @@
 		if(stat != DEAD)
 			//Random events (vomiting etc)
 			handle_random_events(seconds_per_tick, times_fired)
-			// Handle tempature alerts
-			body_temperature_alerts()
 
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
 			handle_environment(environment, seconds_per_tick, times_fired)
-			body_temperature_damage(environment, seconds_per_tick, times_fired)
-		if(stat <= SOFT_CRIT && !on_fire)
-			if(!ishuman(src))
-				return
-			temperature_homeostasis(seconds_per_tick, times_fired)
 
 		handle_gravity(seconds_per_tick, times_fired)
 
@@ -99,52 +95,23 @@
 /mob/living/proc/handle_random_events(seconds_per_tick, times_fired)
 	return
 
-/**
- * Handle this mob's interactions with the environment
- *
- * By default handles body temperature normalization to the area's temperature,
- * but also handles pressure for many mobs
- *
- * Arguments:
- * * environment: The gas mixture of the area the mob is in, will never be null
- * * seconds_per_tick: The amount of time that has elapsed since this last fired.
- * * times_fired: The number of times SSmobs has fired
- */
+// Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	var/loc_temp = get_temperature(environment)
-	var/temp_delta = loc_temp - bodytemperature
-	if(temp_delta == 0)
-		return
-	if(temp_delta < 0 && on_fire)
-		return
-
-	// Prevents homeostasis and environmental temperature equalization only direct temperature changes work.
+	// Prevents environmental temperature equalization, only direct temperature changes work.
 	if(HAS_TRAIT(src, TRAIT_THERMAL_STASIS))
 		return
+	var/loc_temp = get_temperature(environment)
+	var/temp_delta = loc_temp - bodytemperature
 
-	var/thermal_protection = get_insulation(loc_temp)
-	var/protection_modifier = 1
-	if(bodytemperature > standard_body_temperature + 2 KELVIN)
-		protection_modifier = 0.7
+	if(ismovable(loc))
+		var/atom/movable/occupied_space = loc
+		temp_delta *= (1 - occupied_space.contents_thermal_insulation)
 
-	// Calculate the equilibrium temperature considering insulation
-	var/equilibrium_temp = get_insulated_equilibrium_temperature(loc_temp, thermal_protection * protection_modifier)
-
-	var/temp_change = (equilibrium_temp - bodytemperature) * temperature_normalization_speed * seconds_per_tick
-
-	// Cap increase and decrease
-	temp_change = temp_change < 0 ? max(temp_change, BODYTEMP_HOMEOSTASIS_COOLING_MAX) : min(temp_change, BODYTEMP_HOMEOSTASIS_HEATING_MAX)
-	// Boost when returning to equilibrium (if we're not cold-blooded)
-	if(!HAS_TRAIT(src, TRAIT_COLD_BLOODED) && !ISINRANGE_EX(equilibrium_temp, standard_body_temperature - 2, standard_body_temperature + 2))
-		temp_change *= 2
-
-	adjust_bodytemperature(temp_change * seconds_per_tick) // No use_insulation because we manually account for it
-
-/mob/living/proc/get_insulated_equilibrium_temperature(environment_temp, insulation)
-	return environment_temp + (standard_body_temperature - environment_temp) * insulation
-
-/mob/living/silicon/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	return // Not yet
+	if(temp_delta < 0) // it is cold here
+		if(!on_fire) // do not reduce body temp when on fire
+			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * seconds_per_tick, temp_delta))
+	else // this is a hot place
+		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * seconds_per_tick, temp_delta))
 
 /**
  * Get the fullness of the mob
@@ -204,3 +171,5 @@
 /// Proc used for custom reagent exposure effects, if any
 /mob/living/proc/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	return
+
+#undef BODYTEMP_DIVISOR

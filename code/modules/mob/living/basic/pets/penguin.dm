@@ -11,6 +11,7 @@
 	response_harm_simple = "kick"
 
 	faction = list(FACTION_NEUTRAL)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
 	ai_controller = /datum/ai_controller/basic_controller/penguin
 	///it can lay an egg?
 	var/can_lay_eggs = TRUE
@@ -124,6 +125,12 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/basic/pet/penguin/emperor/neuter
+	can_lay_eggs = FALSE
+
+/// Cold resistant and doesn't need to breathe, so it can live out on the icemoon
+/mob/living/basic/pet/penguin/emperor/icemoon
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
 	can_lay_eggs = FALSE
 
 /mob/living/basic/pet/penguin/emperor/shamebrero

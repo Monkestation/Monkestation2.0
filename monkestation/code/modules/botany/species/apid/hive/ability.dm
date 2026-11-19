@@ -2,7 +2,7 @@
 /datum/action/cooldown/spell/build_hive
 	name = "Build Hive Home"
 	desc = "You construct a once home for you and your bee people."
-	button_icon = 'icons/obj/hydroponics/equipment.dmi'
+	button_icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	button_icon_state = "beebox"
 
 	cooldown_time = 5 MINUTES

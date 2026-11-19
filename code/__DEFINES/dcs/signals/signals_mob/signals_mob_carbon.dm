@@ -63,9 +63,16 @@
 #define COMSIG_CARBON_POST_REMOVE_LIMB "carbon_post_remove_limb"
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
+/// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
+#define COMSIG_BODYPART_POST_REMOVED "bodypart_post_removed"
 
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
+
+/// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
+#define COMSIG_BODYPART_UPDATED "bodypart_updated"
+/// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
+#define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"
 ///from /item/organ/proc/Remove() (/obj/item/organ/)
@@ -131,6 +138,8 @@
 #define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
+///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
+#define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
 ///from /datum/species/handle_fire. Called when the human is set on fire and burning clothes and stuff
 #define COMSIG_HUMAN_BURNING "human_burning"
 	/// Return to do no burn damage
@@ -194,3 +203,5 @@
 
 /// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
 #define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"
+/// From /mob/living/carbon/item_coverage_changed: (added_slots, removed_slots)
+#define COMSIG_CARBON_ITEM_COVERAGE_CHANGED "carbon_item_coverage_changed"

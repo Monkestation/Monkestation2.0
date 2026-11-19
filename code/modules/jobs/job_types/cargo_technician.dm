@@ -55,3 +55,4 @@
 	name = "Cargo Technician (MODsuit)"
 
 	back = /obj/item/mod/control/pre_equipped/loader
+	suit = null

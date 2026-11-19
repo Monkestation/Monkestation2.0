@@ -545,7 +545,7 @@
 //Support and Mechs
 /datum/uplink_category/support
 	name = "Support and Exosuits"
-	weight = 5
+	weight = 10
 
 /datum/uplink_item/support
 	category = /datum/uplink_category/support

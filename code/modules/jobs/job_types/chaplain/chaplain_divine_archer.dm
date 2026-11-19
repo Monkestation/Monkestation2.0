@@ -17,8 +17,8 @@
 	icon_state = "archercoat"
 	inhand_icon_state = "archercoat"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/chaplainsuit_archer_garb
 	strip_delay = 80
 	equip_delay_other = 60

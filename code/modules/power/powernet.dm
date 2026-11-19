@@ -13,6 +13,9 @@
 	var/netexcess = 0 // excess power on the powernet (typically avail-load)///////
 	var/delayedload = 0 // load applied to powernet between power ticks.
 
+	/// If a run of propagate_light_flicker is ongoing
+	VAR_PRIVATE/flickering = FALSE
+
 /datum/powernet/New()
 	SSmachines.powernets += src
 
@@ -90,3 +93,33 @@
 
 /datum/powernet/proc/get_electrocute_damage()
 	return ELECTROCUTE_DAMAGE(energy_to_power(avail)) // Assuming 1 second of contact.
+
+/**
+ * Triggers lights connected to this powernet to flicker a few times
+ *
+ * * flicker_source - The center of the flicker. If null the whole powernet will flicker
+ * * falloff_distance - Only relevant if you passed a source. Areas beyond this distance will be less and less likely to flicker.
+ */
+/datum/powernet/proc/propagate_light_flicker(atom/flicker_source, falloff_distance = 32)
+	if(flickering || !length(nodes))
+		return
+
+	flickering = TRUE
+	for(var/obj/machinery/power/terminal/terminal in nodes)
+		if(!istype(terminal.master, /obj/machinery/power/apc))
+			continue
+
+		var/flicker_prob = 85
+		if(!isnull(flicker_source))
+			flicker_prob = 85 + min(3 * (falloff_distance - get_dist(flicker_source, terminal)), 0)
+
+		if(!prob(flicker_prob))
+			continue
+
+		var/obj/machinery/power/apc/apc = terminal.master
+		for(var/obj/machinery/light/light as anything in apc.get_lights())
+			light.flicker(amount = 1)
+			CHECK_TICK
+
+	// don't let another flicker propagation until our slowest area is done (with some added leeway)
+	addtimer(VARSET_CALLBACK(src, flickering, FALSE), 9 SECONDS)

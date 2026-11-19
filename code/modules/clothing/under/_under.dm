@@ -1,4 +1,5 @@
 /obj/item/clothing/under
+	abstract_type = /obj/item/clothing/under
 	name = "under"
 	icon = 'icons/obj/clothing/under/default.dmi'
 	worn_icon = 'icons/mob/clothing/under/default.dmi'
@@ -9,9 +10,10 @@
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	armor_type = /datum/armor/clothing_under
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	limb_integrity = 30
 	blood_overlay_type = "uniform"
 
@@ -97,7 +99,7 @@
 
 	return .
 
-/obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
@@ -170,7 +172,7 @@
 
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/wearer = user
-		if(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
+		if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
 
@@ -336,10 +338,7 @@
 
 	return all_accessories
 
-/obj/item/clothing/under/verb/toggle()
-	set name = "Adjust Suit Sensors"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/under, toggle, usr, "Adjust Suit Sensors", "Object")
 	var/mob/user_mob = usr
 	if(!can_toggle_sensors(user_mob))
 		return
@@ -417,10 +416,7 @@
 
 	pop_accessory(user)
 
-/obj/item/clothing/under/verb/jumpsuit_adjust()
-	set name = "Adjust Jumpsuit Style"
-	set category = null
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/under, jumpsuit_adjust, usr, "Adjust Jumpsuit Style", null)
 
 	if(!can_adjust)
 		balloon_alert(usr, "can't be adjusted!")
@@ -499,4 +495,5 @@
 		return
 
 /obj/item/clothing/under/rank
+	abstract_type = /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

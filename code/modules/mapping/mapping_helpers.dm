@@ -99,6 +99,12 @@
 		return
 	return ..(ceiling)
 
+///Used for marking mapping errors. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
+/obj/effect/mapping_error
+	name = "I AM ERROR"
+	desc = "IF YOU SEE ME, YELL AT A MAPPER!!!"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "mapping_error"
 
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'
@@ -144,11 +150,11 @@
 			if(1 to 9)
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
-					here.PlaceOnTop(T.type)
+					here.place_on_top(T.type)
 					qdel(airlock)
 					qdel(src)
 					return
-				here.PlaceOnTop(/turf/closed/wall)
+				here.place_on_top(/turf/closed/wall)
 				qdel(airlock)
 				qdel(src)
 				return

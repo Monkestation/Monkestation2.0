@@ -13,7 +13,6 @@
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
-	astar_weight = 9999
 
 /turf/open/chasm/Initialize(mapload)
 	. = ..()
@@ -48,7 +47,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
 
@@ -71,7 +70,7 @@
 			to_chat(user, span_warning("You need one rod to build a lattice."))
 			return
 		to_chat(user, span_notice("You construct a lattice."))
-		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		// Create a lattice, without reverting to our baseturf
 		new /obj/structure/lattice(src)
 		return

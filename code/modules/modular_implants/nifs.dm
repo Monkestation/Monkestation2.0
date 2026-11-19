@@ -131,7 +131,7 @@
 
 	if(linked_mob && stored_ckey != insertee.ckey && theft_protection)
 		insertee.audible_message(span_warning("[src] lets out a negative buzz before forcefully removing itself from [insertee]'s brain."))
-		playsound(insertee, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(insertee, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		Remove(insertee)
 		forceMove(get_turf(insertee))
 

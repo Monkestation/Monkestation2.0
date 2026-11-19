@@ -107,7 +107,7 @@
 	owner.current.adjustCloneLoss(-1 * (actual_regen * 4) * mult)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4) * mult) //adjustBrainLoss(-1 * (actual_regen * 4) * mult, 0)
 	if(in_coffin && in_torpor) // if we're in a coffin, in torpor, stabilize our body temperature.
-		owner.current.update_homeostasis_level(type, owner.current.standard_body_temperature, 10 KELVIN)
+		owner.current.adjust_bodytemperature(clamp(owner.current.get_body_temp_normal() - owner.current.bodytemperature, -10 KELVIN, 10 KELVIN))
 	if(!iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		return
 	var/mob/living/carbon/user = owner.current
@@ -167,7 +167,7 @@
 		var/obj/item/bodypart/missing_bodypart = user.get_bodypart(missing_limb) // 2) Limb returns Damaged
 		missing_bodypart.brute_dam = 60
 		to_chat(user, span_notice("Your flesh knits as it regrows your [missing_bodypart]!"))
-		playsound(user, 'sound/magic/demon_consume.ogg', vol = 50, vary = TRUE)
+		playsound(user, 'sound/effects/magic/demon_consume.ogg', vol = 50, vary = TRUE)
 		return TRUE
 
 /*
@@ -331,7 +331,7 @@
 			span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
 			span_hear("You hear a dry, crackling sound.")
 		)
-		addtimer(CALLBACK(body, TYPE_PROC_REF(/mob/living, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+		addtimer(CALLBACK(body, TYPE_PROC_REF(/atom/movable, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 	else
 		body.visible_message(
 			span_warning("[body]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat."),

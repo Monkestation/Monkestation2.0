@@ -64,19 +64,19 @@
 /obj/structure/showcase/mecha/marauder
 	name = "combat mech exhibit"
 	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees."
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "marauder"
 
 /obj/structure/showcase/mecha/ripley
 	name = "construction mech exhibit"
 	desc = "A stand with a retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "firefighter"
 
 /obj/structure/showcase/machinery/implanter
 	name = "\improper Nanotrasen automated mindshield implanter exhibit"
 	desc = "A flimsy model of a standard Nanotrasen automated mindshield implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!"
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 
 /obj/structure/showcase/machinery/microwave

@@ -1,4 +1,5 @@
 /obj/item/clothing/head
+	abstract_type = /obj/item/clothing/head
 	name = BODY_ZONE_HEAD
 	icon = 'icons/obj/clothing/head/default.dmi'
 	worn_icon = 'icons/mob/clothing/head/default.dmi'
@@ -66,7 +67,7 @@
 
 
 
-/obj/item/clothing/head/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/head/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
@@ -146,11 +147,7 @@
 		to_chat(user, span_warning("You take apart the pile of hats."))
 		update_hats(NONE, user)
 
-
-/obj/item/clothing/head/verb/detach_stacked_hat()
-	set name = "Remove Stacked Hat"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/head, detach_stacked_hat, usr, "Remove Stacked Hat", "Object")
 
 	if(!isliving(usr) || !can_use(usr) || !length(contents))
 		return

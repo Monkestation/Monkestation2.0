@@ -81,8 +81,8 @@
 	icon_living = "space"
 	icon_dead = "space_dead"
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = 1500
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 1500
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 ///Updates dog speech and emotes for each walter

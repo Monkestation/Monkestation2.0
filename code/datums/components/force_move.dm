@@ -56,7 +56,7 @@
 /// Create a new movement loop for us
 /datum/component/force_move/proc/create_loop(atom/target)
 	var/dist = get_dist(parent, target)
-	our_looper = SSmove_manager.move_towards(parent, target, delay = 1, timeout = dist)
+	our_looper = GLOB.move_manager.move_towards(parent, target, delay = 1, timeout = dist)
 	if(slip_spin || slip_crash)
 		RegisterSignal(our_looper, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_process))
 	RegisterSignal(our_looper, COMSIG_QDELETING, PROC_REF(loop_ended))

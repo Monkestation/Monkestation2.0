@@ -7,8 +7,8 @@
 		/obj/item/knife = 50,
 		/obj/item = 10) // 10% success with any sharp item.
 	time = 24
-	preop_sound = 'sound/items/screwdriver.ogg'
-	success_sound = 'sound/items/screwdriver2.ogg'
+	preop_sound = 'sound/items/tools/screwdriver.ogg'
+	success_sound = 'sound/items/tools/screwdriver2.ogg'
 
 /datum/surgery_step/mechanic_open/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -37,8 +37,8 @@
 		/obj/item/knife = 50,
 		/obj/item = 10) // 10% success with any sharp item.
 	time = 24
-	preop_sound = 'sound/items/screwdriver.ogg'
-	success_sound = 'sound/items/screwdriver2.ogg'
+	preop_sound = 'sound/items/tools/screwdriver.ogg'
+	success_sound = 'sound/items/tools/screwdriver2.ogg'
 
 /datum/surgery_step/mechanic_close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -85,7 +85,7 @@
 		TOOL_WRENCH = 100,
 		TOOL_RETRACTOR = 60)
 	time = 24
-	preop_sound = 'sound/items/ratchet.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
 
 /datum/surgery_step/mechanic_unwrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -110,7 +110,7 @@
 		TOOL_WRENCH = 100,
 		TOOL_RETRACTOR = 60)
 	time = 24
-	preop_sound = 'sound/items/ratchet.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
 
 /datum/surgery_step/mechanic_wrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -133,8 +133,8 @@
 	name = "open the hatch (hand)"
 	accept_hand = TRUE
 	time = 10
-	preop_sound = 'sound/items/ratchet.ogg'
-	preop_sound = 'sound/machines/doorclick.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
+	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_step/open_hatch/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -151,3 +151,80 @@
 		preop_sound = tool.usesound
 
 	return TRUE
+
+/datum/surgery_step/install_brain
+	name = "insert robotic brain"
+	implements = list(/obj/item/mmi = 100)
+
+/datum/surgery_step/install_brain/preop(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	var/obj/item/bodypart/affected_bodypart = target.get_bodypart(target_zone)
+	var/obj/item/mmi/installed_mmi = tool
+
+	if(!affected_bodypart)
+		return SURGERY_STEP_FAIL
+
+	if(!istype(installed_mmi))
+		return SURGERY_STEP_FAIL
+
+	if(!isipc(target))
+		to_chat(user, span_danger("[tool] cannot be installed into an organic body, as it is not designed to operate the complex biological systems of one!"))
+		return SURGERY_STEP_FAIL
+
+	if(target.get_organ_slot(ORGAN_SLOT_BRAIN) || target.mind)
+		to_chat(user, span_warning("[target] already houses a consciousness. Remove it before installing [tool]."))
+		return SURGERY_STEP_FAIL
+
+	if(!installed_mmi.ready_for_ipc_install(user))
+		return SURGERY_STEP_FAIL
+
+	display_results(
+		user,
+		target,
+		span_notice("You start installing \the [tool] into [target]'s [affected_bodypart.name]."),
+		span_notice("[user] starts installing \the [tool] into [target]'s [affected_bodypart.name]."),
+		span_notice("[user] starts installing \the [tool] into [target]'s [affected_bodypart.name]."),
+	)
+
+/datum/surgery_step/install_brain/success(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	if(target_zone != BODY_ZONE_CHEST)
+		to_chat(user, span_warning("You can no longer access [target]'s chest cavity."))
+		return FALSE
+	var/obj/item/bodypart/affected_bodypart = target.get_bodypart(target_zone)
+	var/obj/item/mmi/installed_mmi = tool
+	if(!affected_bodypart || !istype(installed_mmi))
+		to_chat(user, span_warning("[target]'s chest can no longer accept [tool]."))
+		return FALSE
+	if(!isipc(target))
+		to_chat(user, span_warning("[target]'s body is no longer compatible with [tool]."))
+		return FALSE
+	if(target.get_organ_slot(ORGAN_SLOT_BRAIN) || target.mind)
+		to_chat(user, span_warning("[target] already houses a consciousness. [tool] cannot be inserted."))
+		return FALSE
+	if(!installed_mmi.ready_for_ipc_install(user))
+		to_chat(user, span_warning("[tool]'s personality is no longer ready for installation."))
+		return FALSE
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		to_chat(user, span_warning("You can no longer install [tool] into [target]."))
+		return FALSE
+	if(!installed_mmi.attempt_become_ipc_organ(affected_bodypart, target, user))
+		user.put_in_hands(tool)
+		to_chat(user, span_warning("You can no longer install [tool] into [target]."))
+		return FALSE
+	display_results(
+		user,
+		target,
+		span_notice("You install [tool] into [target]'s [affected_bodypart.name]."),
+		span_notice("[user] installs [tool] into [target]'s [affected_bodypart.name]."),
+		span_notice("[user] installs [tool] into [target]'s [affected_bodypart.name]."),
+	)
+	return ..()
+
+/datum/surgery_step/install_brain/failure(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	display_results(
+		user,
+		target,
+		span_warning("Your hand slips, mangling the delicate connections!"),
+		span_warning("[user]'s hand slips, mangling the delicate connections!"),
+		span_warning("[user]'s hand slips!"),
+	)
+	return FALSE

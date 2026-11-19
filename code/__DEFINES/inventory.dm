@@ -74,7 +74,7 @@
 	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-//Make sure to update check_obscured_slots() if you add more.
+//Make sure to update obscured_slots if you add more.
 #define HIDEGLOVES (1<<0)
 #define HIDESUITSTORAGE (1<<1)
 #define HIDEJUMPSUIT (1<<2) //these first four are only used in exterior suits
@@ -316,7 +316,7 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/resonator,
 	/obj/item/spear,
 	/obj/item/tank/jetpack,
-	/obj/item/gun/ballistic/shotgun/autoshotgun,
+	/obj/item/gun/ballistic/shotgun/semiauto/kinetic,
 	/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
 	/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
 	/obj/item/gun/ballistic/automatic/proto/pksmg,

@@ -11,7 +11,6 @@
 	var/check_faction = FALSE
 
 /datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	. = ..()
 	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_strategy_key, hiding_place_key, check_faction)
 
 /datum/ai_planning_subtree/target_retaliate/check_faction
@@ -58,7 +57,6 @@
 		enemies_list += potential_target
 
 	if(!length(enemies_list))
-		controller.clear_blackboard_key(target_key)
 		finish_action(controller, succeeded = FALSE, check_faction = check_faction)
 		return
 
@@ -76,7 +74,7 @@
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
 	return pick(enemies_list)
 
-/datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, check_faction)
+/datum/ai_behavior/target_from_retaliate_list/finish_action(datum/ai_controller/controller, succeeded, shitlist_key, target_key, targeting_strategy_key, hiding_location_key, check_faction)
 	. = ..()
 	if (succeeded || check_faction)
 		return

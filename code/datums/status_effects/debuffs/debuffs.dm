@@ -56,7 +56,7 @@
 
 	// anti-drop logic (for shuttle dock or tripped)
 	if(prevent_drop)
-		for(var/obj/item/held_item in owner.held_items)
+		for(var/obj/item/held_item as anything in owner.get_held_items())
 			ADD_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 	// Apply floored trait so the mob falls over
@@ -67,7 +67,7 @@
 		addtimer(CALLBACK(src, PROC_REF(clear_prevent_drop)), 0)
 
 /datum/status_effect/incapacitating/knockdown/proc/clear_prevent_drop()
-	for(var/obj/item/held_item in owner.held_items)
+	for(var/obj/item/held_item as anything in owner.get_held_items())
 		REMOVE_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
@@ -344,7 +344,7 @@
 	alerttooltipstyle = "hisgrace"
 
 /datum/status_effect/his_wrath/tick()
-	for(var/obj/item/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG as anything in owner.get_held_items_of_type(/obj/item/his_grace))
 		qdel(src)
 		return
 	owner.adjustBruteLoss(0.1)
@@ -537,7 +537,7 @@
 		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
 		wasting_effect.alpha = 255
 		animate(wasting_effect, alpha = 0, time = 32)
-		playsound(owner, 'sound/effects/curse5.ogg', 20, TRUE, -1)
+		playsound(owner, 'sound/effects/curse/curse5.ogg', 20, TRUE, -1)
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
@@ -560,7 +560,7 @@
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
+	playsound(spawn_turf, 'sound/effects/curse/curse2.ogg', 80, TRUE, -1)
 	var/obj/projectile/curse_hand/C = new (spawn_turf)
 	C.aim_projectile(owner, spawn_turf)
 	C.fire()
@@ -589,7 +589,7 @@
 /datum/status_effect/progenitor_curse/proc/grasp(turf/spawn_turf)
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
+	playsound(spawn_turf, pick('sound/effects/curse/curse1.ogg','sound/effects/curse/curse2.ogg','sound/effects/curse/curse3.ogg'), 80, 1, -1)
 	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
 	pro.aim_projectile(owner, spawn_turf)
 	pro.fire()
@@ -817,7 +817,7 @@
 		owner.gib() //fuck you in particular
 		return
 	var/mob/living/carbon/human/H = owner
-	H.something_horrible(kill_either_way)
+	INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, something_horrible), kill_either_way)
 
 /atom/movable/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
@@ -836,11 +836,44 @@
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
+	owner.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id)) //I believe I can fly!
 
 /datum/status_effect/go_away/tick()
 	owner.AdjustStun(1, ignore_canstun = TRUE)
-	var/turf/T = get_step(owner, direction)
-	owner.forceMove(T)
+	var/turf/turf = get_step(owner, direction)
+	if(!turf)
+		qdel(src)
+		return
+	owner.forceMove(turf)
+
+/datum/status_effect/go_away/on_remove()
+	. = ..()
+	owner.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id))
+
+///Subtype of the go away effect (phases the mob in one direction) that deletes the owner on z-level change or when the time's up.
+/datum/status_effect/go_away/deletes_mob
+	id = "go_away_deletes_mob"
+	duration = 30 SECONDS
+	/// Timer that tracks when we should vanish
+	var/deletion_timer
+
+/datum/status_effect/go_away/deletes_mob/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	deletion_timer = addtimer(CALLBACK(src, PROC_REF(wipe_bozo)), duration - 5 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	RegisterSignals(new_owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH), PROC_REF(wipe_bozo))
+
+/// Fades out and deletes the owner
+/datum/status_effect/go_away/deletes_mob/proc/wipe_bozo()
+	deltimer(deletion_timer)
+	owner.fade_into_nothing()
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
+
+/datum/status_effect/go_away/deletes_mob/on_remove()
+	. = ..()
+	deltimer(deletion_timer)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"
@@ -934,7 +967,7 @@
 			if(!prob(1)) // 99%
 				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
 			else // 1%
-				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
+				INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, say), "AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
 	. = ..()
 

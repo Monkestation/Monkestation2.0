@@ -174,11 +174,12 @@
 	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "uraniumpen"
 	damage = 35
+	armour_penetration = 75
 	projectile_piercing = (ALL & (~PASSMOB))
 
 /obj/projectile/bullet/pellet/trickshot
 	name = "trickshot pellet"
-	damage = 6
+	damage = 7
 	damage_falloff_tile = 0
 	ricochets_max = 5
 	ricochet_chance = 100
@@ -341,7 +342,7 @@
 /obj/projectile/bullet/shotgun_breaching
 	name = "12g breaching round"
 	desc = "A breaching round designed to destroy airlocks and windows with only a few shots. Ineffective against other targets."
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	damage = 5 //does shit damage to everything except doors and windows
 	demolition_mod = 200 //one shot to break a window or grille, or two shots to breach an airlock door
 

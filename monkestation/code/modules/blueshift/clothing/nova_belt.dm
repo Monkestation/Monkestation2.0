@@ -37,6 +37,7 @@
 	icon_state = "russian_green_belt"
 	inhand_icon_state = "security"
 	worn_icon_state = "russian_green_belt"
+	unique_reskin = null
 
 /obj/item/storage/belt/military/nri/captain
 	name = "black tactical belt"

@@ -43,7 +43,7 @@
 	/// The percentage that this objective has been increased or decreased by as a result of progression. Used by the UI
 	var/original_progression = 0
 	/// Abstract type that won't be included as a possible objective
-	var/abstract_type = /datum/traitor_objective
+	abstract_type = /datum/traitor_objective
 	/// The duplicate type that will be used to check for duplicates.
 	/// If undefined, this will either take from the abstract type or the type of the objective itself
 	var/duplicate_type = null
@@ -223,10 +223,10 @@
 /datum/traitor_objective/proc/finish_objective(mob/user)
 	switch(objective_state)
 		if(OBJECTIVE_STATE_FAILED, OBJECTIVE_STATE_INVALID)
-			user.playsound_local(get_turf(user), 'sound/traitor/objective_failed.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+			user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_failed.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 			return TRUE
 		if(OBJECTIVE_STATE_COMPLETED)
-			user.playsound_local(get_turf(user), 'sound/traitor/objective_success.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+			user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_success.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 			completion_payout()
 			return TRUE
 	return FALSE

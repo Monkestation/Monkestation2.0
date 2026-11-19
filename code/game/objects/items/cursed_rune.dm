@@ -22,5 +22,5 @@
 		user.balloon_alert(user, "the curse does not effect you...")
 		return FALSE
 	var/datum/smite/bad_luck/cursed = new /datum/smite/bad_luck
-	cursed.incidents = 13
+	cursed.incidents = 3
 	cursed.effect(user.client, user)

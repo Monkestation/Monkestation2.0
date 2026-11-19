@@ -28,9 +28,9 @@
 	var/glass_amount = 1
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/break_sound = SFX_SHATTER
-	var/knock_sound = 'sound/effects/glassknock.ogg'
-	var/bash_sound = 'sound/effects/glassbash.ogg'
-	var/hit_sound = 'sound/effects/glasshit.ogg'
+	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
+	var/hit_sound = 'sound/effects/glass/glasshit.ogg'
 	///Datum that the shard and debris type is pulled from for when the glass is broken.
 	var/datum/material/glass_material_datum = /datum/material/glass
 
@@ -346,9 +346,9 @@
 			if(damage_amount)
 				playsound(src, hit_sound, 75, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
@@ -898,10 +898,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/none
 	knock_sound = SFX_PAGE_TURN
-	bash_sound = 'sound/weapons/slashmiss.ogg'
-	break_sound = 'sound/items/poster_ripped.ogg'
-	hit_sound = 'sound/weapons/slashmiss.ogg'
-	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
+	bash_sound = 'sound/items/weapons/slashmiss.ogg'
+	break_sound = 'sound/items/poster/poster_ripped.ogg'
+	hit_sound = 'sound/items/weapons/slashmiss.ogg'
+	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 
 /obj/structure/window/paperframe/Initialize(mapload)

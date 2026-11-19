@@ -40,12 +40,12 @@
 	return"CENTER+[x_off]:16,SOUTH+[y_off]:[5 + y_pixel_offset]"
 
 /proc/ui_equip_position(mob/M)
-	var/y_off = round((M.held_items.len-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
+	var/y_off = round((M.get_num_hand_slots()-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
 	return "CENTER:-16,SOUTH+[y_off+1]:5"
 
 /proc/ui_swaphand_position(mob/M, which = 1) //values based on old swaphand ui positions (CENTER: +/-16,SOUTH+1:5)
 	var/x_off = which == 1 ? -1 : 0
-	var/y_off = round((M.held_items.len-1) / 2)
+	var/y_off = round((M.get_num_hand_slots()-1) / 2)
 	return "CENTER+[x_off]:16,SOUTH+[y_off+1]:5"
 
 // Middle

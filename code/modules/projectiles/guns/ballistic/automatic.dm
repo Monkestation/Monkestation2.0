@@ -1,14 +1,15 @@
 /obj/item/gun/ballistic/automatic
+	abstract_type = /obj/item/gun/ballistic/automatic
 	w_class = WEIGHT_CLASS_NORMAL
 	can_suppress = TRUE
 	burst_size = 3
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
-	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	rack_sound = 'sound/items/weapons/gun/smg/smgrack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/smg/shot_suppressed.ogg'
 	var/select = 1 ///fire selector position. 1 = semi, 2 = burst. anything past that can vary between guns.
 	var/selector_switch_icon = FALSE ///if it has an icon for a selector switch indicating current firemode.
 	gun_flags = GUN_SMOKE_PARTICLES
@@ -42,7 +43,7 @@
 		fire_delay = initial(fire_delay)
 		balloon_alert(user, "switched to [burst_size]-round burst")
 
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 	update_item_action_buttons()
 
@@ -74,7 +75,7 @@
 	desc = "A bullpup three-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	inhand_icon_state = "c20r"
-	fire_sound = 'sound/weapons/gun/smg/gunshot_c20.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/gunshot_c20.ogg'
 	selector_switch_icon = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smgm45
 	fire_delay = 2
@@ -107,7 +108,7 @@
 		underfunded security personnel, cargo technicians, theoretical physicists and gang bangers out on the rim. \
 		Light-weight and fully automatic. Uses 4.6x30mm rounds."
 	icon_state = "wt550"
-	fire_sound = 'sound/weapons/gun/smg/gunshot_wt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/gunshot_wt.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wt550m9
@@ -207,7 +208,7 @@
 	mag_display = TRUE
 	empty_indicator = TRUE
 	special_mags = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
 	name = "\improper PP-96 SMG"
@@ -262,7 +263,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	mag_display = TRUE
-	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
 
 /obj/item/gun/ballistic/automatic/tommygun
 	name = "\improper Thompson SMG"
@@ -497,7 +498,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/m90/Initialize(mapload)
 	. = ..()
@@ -734,9 +735,9 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	tac_reloads = FALSE
-	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
-	rack_sound = 'sound/weapons/gun/l6/l6_rack.ogg'
-	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	fire_sound = 'sound/items/weapons/gun/l6/shot.ogg'
+	rack_sound = 'sound/items/weapons/gun/l6/l6_rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/cover_open = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
@@ -757,7 +758,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
-	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
+	playsound(src, 'sound/items/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -872,7 +873,7 @@
 	icon_state = "minigun_spin"
 	inhand_icon_state = "minigun"
 	slowdown = 0.4
-	fire_sound = 'sound/weapons/gun/minigun10burst.ogg'
+	fire_sound = 'sound/items/weapons/gun/minigun10burst.ogg'
 	fire_sound_volume = 50
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
@@ -1075,7 +1076,7 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
 	casing_ejector = FALSE
 
 
@@ -1098,7 +1099,7 @@
 	pin = /obj/item/firing_pin/wastes
 	bolt_type = BOLT_TYPE_LOCKING
 	show_bolt_icon = FALSE
-	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
 
 //FLASHLIGHTTTTTT
 /obj/item/gun/ballistic/automatic/proto/pksmg/add_seclight_point()
@@ -1115,7 +1116,6 @@
 	desc = "Using parts from confiscated weapons, the Mining Research team has thrown together \
 	A beast of a weapon. Using Proto Kinetic Acceleration technology as per usual, the 'Hellhound' \
 	is a LMG chambered in kinetic 7.62 with a incredibly high fire rate, for when you need a beast \
-	to kill a beast. Has a fixed unremovable 100 round magazine with a special loading port on the outside, allowing you to \
 	to kill a beast. Has a fixed unremovable 150 round magazine with a special loading port on the outside, forcing you to \
 	top off and reload using stripper clips."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
@@ -1133,4 +1133,4 @@
 	spread = 3
 	fire_delay = 1
 	pin = /obj/item/firing_pin/wastes
-	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
+	fire_sound = 'sound/items/weapons/gun/hmg/hmg.ogg'

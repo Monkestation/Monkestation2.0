@@ -12,7 +12,7 @@
 	health = 170
 	loot = list(/obj/effect/gibspawner/human)
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/trooper/syndicate/space/Initialize(mapload)
@@ -32,7 +32,7 @@
 	loot = list(/obj/effect/gibspawner/human)
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	r_hand = /obj/item/knife/combat/survival
 	var/projectile_deflect_chance = 0
@@ -48,7 +48,7 @@
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/trooper/syndicate/melee/space/Initialize(mapload)
@@ -67,7 +67,7 @@
 	melee_damage_upper = 30
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/blade1.ogg'
+	attack_sound = 'sound/items/weapons/blade1.ogg'
 	armour_penetration = 75
 	projectile_deflect_chance = 50
 	light_outer_range = 2
@@ -81,7 +81,7 @@
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	projectile_deflect_chance = 50
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
@@ -105,7 +105,7 @@
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/c9mm
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/projectilesound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	/// number of burst shots
 	var/burst_shots
 	/// Time between taking shots
@@ -124,7 +124,7 @@
 		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /mob/living/basic/trooper/syndicate/ranged/infiltrator //shuttle loan event
-	projectilesound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	projectilesound = 'sound/items/weapons/gun/smg/shot_suppressed.ogg'
 	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 
 /mob/living/basic/trooper/syndicate/ranged/space
@@ -132,7 +132,7 @@
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/trooper/syndicate/ranged/space/Initialize(mapload)
@@ -148,7 +148,7 @@
 
 /mob/living/basic/trooper/syndicate/ranged/smg
 	casingtype = /obj/item/ammo_casing/c45
-	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
+	projectilesound = 'sound/items/weapons/gun/smg/shot.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
 	burst_shots = 3
 	ranged_cooldown = 3 SECONDS
@@ -164,7 +164,7 @@
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/trooper/syndicate/ranged/smg/space/Initialize(mapload)
@@ -190,7 +190,7 @@
 	maxHealth = 170
 	health = 170
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatecommando
 
 /mob/living/basic/trooper/syndicate/ranged/shotgun/space/Initialize(mapload)
@@ -216,8 +216,8 @@
 	mob_biotypes = MOB_ROBOTIC
 	basic_mob_flags = DEL_ON_DEATH
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = 700
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 700
 	unsuitable_cold_damage = 0
 	health = 25
 	maxHealth = 25
@@ -229,7 +229,7 @@
 	obj_damage = 0
 	attack_verb_continuous = "cuts"
 	attack_verb_simple = "cut"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list(ROLE_SYNDICATE)
 	mob_size = MOB_SIZE_TINY

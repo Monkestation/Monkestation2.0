@@ -1,5 +1,6 @@
 
 /obj
+	abstract_type = /obj
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
@@ -57,10 +58,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
 	add_debris_element() //monkestation edit
+	if(opacity)
+		SScameras.update_visibility(src)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	if(opacity)
+		SScameras.update_visibility(src)
 	SStgui.close_uis(src)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
@@ -368,3 +373,28 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod
+
+/obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	modify_max_integrity(ceil(max_integrity * integrity_mod))
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force *= strength_mod
+	throwforce *= strength_mod
+	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+
+///This proc is called when the material is removed from an object specifically.
+/obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	modify_max_integrity(floor(max_integrity / integrity_mod))
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force /= strength_mod
+	throwforce /= strength_mod
+	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))

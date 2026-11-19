@@ -5,7 +5,7 @@
 	name = "curse hand"
 	icon_state = "cursehand0"
 	base_icon_state = "cursehand"
-	hitsound = 'sound/effects/curse4.ogg'
+	hitsound = 'sound/effects/curse/curse4.ogg'
 	layer = LARGE_MOB_LAYER
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	damage_type = BURN
@@ -44,7 +44,7 @@
 	if(arm)
 		QDEL_NULL(arm)
 	if((movement_type & PHASING))
-		playsound(src, 'sound/effects/curse3.ogg', 25, TRUE, -1)
+		playsound(src, 'sound/effects/curse/curse3.ogg', 25, TRUE, -1)
 	var/turf/T = get_turf(src)
 	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)
 	leftover.icon_state = icon_state

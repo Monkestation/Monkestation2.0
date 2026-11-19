@@ -412,19 +412,16 @@
 				screenmob.client.screen -= H.r_store
 
 	if(hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in H.held_items)
+		for(var/obj/item/I as anything in H.get_held_items())
 			I.screen_loc = ui_hand_position(H.get_held_index_of_item(I))
 			screenmob.client.screen += I
 	else
-		for(var/obj/item/I in H.held_items)
+		for(var/obj/item/I as anything in H.get_held_items())
 			I.screen_loc = null
 			screenmob.client.screen -= I
 
 
-/mob/living/carbon/human/verb/toggle_hotkey_verbs()
-	set category = "OOC"
-	set name = "Toggle hotkey buttons"
-	set desc = "This disables or enables the user interface buttons which can be used with hotkeys."
+GAME_VERB_DESC(/mob/living/carbon/human, toggle_hotkey_verbs, "Toggle hotkey buttons", "This disables or enables the user interface buttons which can be used with hotkeys.", "OOC")
 
 	if(hud_used.hotkey_ui_hidden)
 		client.screen += hud_used.hotkeybuttons

@@ -632,6 +632,10 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Warning Cone"
 	item_path = /obj/item/clothing/head/cone
 
+/datum/loadout_item/head/bear_pelt //BUYABLE
+	name = "Bear Pelt"
+	item_path = /obj/item/clothing/head/costume/bearpelt
+
 /*
 *	JOB-LOCKED
 */

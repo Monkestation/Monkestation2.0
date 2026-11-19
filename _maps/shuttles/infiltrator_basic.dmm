@@ -183,6 +183,7 @@
 "aU" = (
 /obj/machinery/light/directional/east,
 /obj/structure/rack,
+/obj/item/mod/paint,
 /obj/item/crowbar/red,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4

@@ -15,7 +15,7 @@
 	key_third_person = "beeps"
 	message = "beeps."
 	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
+	sound = 'sound/machines/beep/twobeep.ogg'
 	emote_type = EMOTE_AUDIBLE
 
 
@@ -25,14 +25,14 @@
 	message = "buzzes."
 	message_param = "buzzes at %t."
 	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/machines/buzz-sigh.ogg'
+	sound = 'sound/machines/buzz/buzz-sigh.ogg'
 
 
 /datum/emote/silicon/buzz2
 	key = "buzz2"
 	message = "buzzes twice."
 	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/machines/buzz-two.ogg'
+	sound = 'sound/machines/buzz/buzz-two.ogg'
 
 /datum/emote/silicon/chime
 	key = "chime"

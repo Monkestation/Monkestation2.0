@@ -144,6 +144,15 @@
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)
 ///from /mob/living/emote(): ()
 #define COMSIG_MOB_EMOTE "mob_emote"
+/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
+/// Ran before hand cycling behaviour is started<br>
+#define COMSIG_MOB_CYCLE_HAND "mob_cycle_hand"
+	#define COMPONENT_BLOCK_CYCLE (1<<0) //! Do not continue cycling hands
+/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
+/// Ran while hands are being cycled, firing once a hand_index has been selected<br>
+/// hand_index: the hand index we want to react to
+#define COMSIG_MOB_CYCLE_HAND_INDEX(hand_index) "mob_cycle_hand_index_[hand_index]"
+	#define COMPONENT_CONTINUE_CYCLE (1<<1) //! This index was invalid, but don't give up yet
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
 #define COMSIG_MOB_SWAPPING_HANDS "mob_swapping_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)
@@ -173,8 +182,8 @@
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
-///From /datum/component/creamed/Initialize()
-#define COMSIG_MOB_CREAMED "mob_creamed"
+///From /datum/component/face_decal/splat/Initialize()
+#define COMSIG_MOB_HIT_BY_SPLAT "hit_by_splat"
 ///From /obj/item/gun/proc/check_botched()
 #define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=obj/structure/table/slammed_table, mob/living/slammer)
@@ -267,11 +276,6 @@
 #define EMOTION_BUFFER_SPEAK_FROM_BUFFER "release_emotion"
 #define COMSIG_EMOTION_HEARD "heard_emotion"
 #define EMOTION_BUFFER_UPDATE_OVERLAY_STATES "update_emotion_overlay"
-
-#define COMSIG_ATOM_JOIN_STACK "join_stack"
-#define COMSIG_STACK_MOVE "stack_move"
-#define COMSIG_CHECK_CAN_ADD_NEW_STACK "check_stack_add"
-#define COMSIG_MOBSTACKER_DESTROY "mobstack_destroy_stack"
 
 #define COMSIG_SLIME_REGEN_CALC "slime_regen_calc"
 

@@ -73,7 +73,7 @@
 	gender = PLURAL
 	name = "sand"
 	desc = "This is better than a vacation, since you're still getting paid."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE

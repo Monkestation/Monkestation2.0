@@ -15,7 +15,13 @@ const States = ['Filling', 'Heating', 'Cooling', 'Emptying'] as const;
 
 export const ChemAcclimator = (props) => {
   const { act, data } = useBackend<Data>();
-  const { chem_temp, target_temperature, allowed_temperature_difference, max_volume, acclimate_state } = data;
+  const {
+    chem_temp,
+    target_temperature,
+    allowed_temperature_difference,
+    max_volume,
+    acclimate_state,
+  } = data;
 
   return (
     <Window width={320} height={160}>

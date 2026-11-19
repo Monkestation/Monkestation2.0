@@ -76,6 +76,14 @@ GLOBAL_LIST_EMPTY(ai_projects)
 	AC.Grant(ai)
 	return AC
 
+/**
+*	Finds the actual action button in the AI's actions list and removes it.
+*/
+/datum/ai_project/proc/remove_ability(datum/action/innate/ai/ability)
+	var/datum/action/innate/has_ability = locate(ability) in ai.actions
+	if(has_ability)
+		has_ability.Remove()
+
 /datum/ai_project/proc/invest_ability(used_cpu)
 	var/datum/action/innate/ai/ability = locate(ability_path) in ai.actions
 	if(isnull(ability))

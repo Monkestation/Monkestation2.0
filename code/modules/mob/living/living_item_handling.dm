@@ -14,12 +14,14 @@
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 
 /mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
 	throw_mode = mode
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
@@ -79,6 +81,7 @@
 	if (feeble)
 		power_throw = 0
 	//MONKESTATION EDIT END
+	do_attack_animation(target, no_effect = TRUE)
 	if(isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing
 		if(thrown_item.throw_verb)
@@ -184,7 +187,7 @@
 	if(!offered_item || offerer.get_active_held_item() != offered_item && !bypass)
 		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
 		return
-	if(!get_empty_held_indexes())
+	if(!length(get_empty_held_indexes()))
 		to_chat(src, span_warning("You have no empty hands!"))
 		return
 

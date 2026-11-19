@@ -45,6 +45,10 @@
 /datum/job/ai/get_roundstart_spawn_point()
 	return get_latejoin_spawn_point()
 
+// we live in data cores, not start landmarks
+/datum/job/ai/get_default_roundstart_spawn_point(chosen_title)
+	return get_latejoin_spawn_point()
+
 /datum/job/ai/get_latejoin_spawn_point()
 	for(var/obj/machinery/ai/data_core/core as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai/data_core))
 		if(istype(core) && is_station_level(core.z) && !QDELETED(core))
@@ -73,3 +77,6 @@
 
 /datum/job/ai/get_radio_information()
 	return "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>"
+
+/datum/job/ai/get_lobby_icon()
+	return uni_icon('icons/mob/huds/hud.dmi', "hudai")

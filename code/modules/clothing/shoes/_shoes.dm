@@ -1,4 +1,5 @@
 /obj/item/clothing/shoes
+	abstract_type = /obj/item/clothing/shoes
 	name = "shoes"
 	icon = 'icons/obj/clothing/shoes.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
@@ -42,10 +43,10 @@
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
 		for(var/i in 1 to 3)
 			sleep(0.3 SECONDS)
-			playsound(user, 'sound/weapons/genhit2.ogg', 50, TRUE)
+			playsound(user, 'sound/items/weapons/genhit2.ogg', 50, TRUE)
 		return BRUTELOSS
 
-/obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
@@ -227,9 +228,9 @@
 
 			if(6 to 13) // .7% chance to stumble and fling what we're holding
 				var/have_anything = FALSE
-				for(var/obj/item/I in our_guy.held_items)
+				for(var/obj/item/item as anything in our_guy.get_held_items())
 					have_anything = TRUE
-					our_guy.accident(I)
+					our_guy.accident(item)
 				to_chat(our_guy, span_danger("You trip on your shoelaces a bit[have_anything ? ", flinging what you were holding" : ""]!"))
 
 			if(14 to 25) // 1.3ish% chance to stumble and be a bit off balance (like being disarmed)

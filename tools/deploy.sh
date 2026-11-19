@@ -11,6 +11,7 @@ fi
 
 mkdir -p \
     $1/_maps \
+    $1/build/navmaps \
     $1/data/cassette_storage \
     $1/code/datums/greyscale/json_configs \
     $1/data/spritesheets \
@@ -18,7 +19,6 @@ mkdir -p \
     $1/sound/runtime \
     $1/strings \
     $1/tgui/public \
-    $1/tgui/packages/tgfont/dist \
     $1/goon/icons \
     $1/monkestation/code
 
@@ -29,13 +29,13 @@ fi
 
 cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/
+cp -r build/navmaps/* $1/build/navmaps/
 cp -r data/cassette_storage/* $1/data/cassette_storage/
 cp -r code/datums/greyscale/json_configs/* $1/code/datums/greyscale/json_configs/
 cp -r icons/* $1/icons/
 cp -r sound/runtime/* $1/sound/runtime/
 cp -r strings/* $1/strings/
 cp -r tgui/public/* $1/tgui/public/
-cp -r tgui/packages/tgfont/dist/* $1/tgui/packages/tgfont/dist/
 cp -r goon/icons/* $1/goon/icons/
 cp -r monkestation/code/* $1/monkestation/code/
 

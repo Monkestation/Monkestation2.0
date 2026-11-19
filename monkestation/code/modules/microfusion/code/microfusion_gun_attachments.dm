@@ -311,7 +311,7 @@ The gun fires fast heavy lasers but takes a long time to fire.
 	heat_addition = 150
 	power_usage = 100
 	delay_to_add = 2.5 SECONDS
-	new_fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	new_fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 	projectile_override = /obj/projectile/beam/laser/microfusion/lance
 
 /obj/item/microfusion_gun_attachment/barrel/lance/examine(mob/user)

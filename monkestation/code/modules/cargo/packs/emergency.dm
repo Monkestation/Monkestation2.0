@@ -7,8 +7,8 @@
 	resistance_flags = FIRE_PROOF
 	foldable_result = /obj/item/stack/sheet/iron
 	w_class = WEIGHT_CLASS_BULKY //just so nobody thinks to pocket these
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	flags_1 = CONDUCT_1
 
 /obj/item/storage/box/emergency_eva/PopulateContents()

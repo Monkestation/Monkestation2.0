@@ -55,10 +55,7 @@
 
 /* Discord Verification Window */
 
-/client/verb/verify_in_discord()
-	set category = "OOC"
-	set name = "Verify Discord Account"
-	set desc = "Verify your discord account with your BYOND account"
+GAME_VERB_DESC(/client, verify_in_discord, "Verify Discord Account", "Verify your discord account with your BYOND account", "OOC")
 
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(src, span_warning("This feature requires the SQL backend to be running."))
@@ -124,10 +121,10 @@
 
 /datum/asset/simple/discord_verification
 	assets = list(
-		"dverify_image1.png" = 'icons/ui_icons/tgui/dverify_image1.png',
-		"dverify_image2.png" = 'icons/ui_icons/tgui/dverify_image2.png',
-		"dverify_image3.png" = 'icons/ui_icons/tgui/dverify_image3.png',
-		"dverify_image4.png" = 'icons/ui_icons/tgui/dverify_image4.png',
+		"dverify_image1.png" = 'icons/ui/tgui/dverify_image1.png',
+		"dverify_image2.png" = 'icons/ui/tgui/dverify_image2.png',
+		"dverify_image3.png" = 'icons/ui/tgui/dverify_image3.png',
+		"dverify_image4.png" = 'icons/ui/tgui/dverify_image4.png',
 	)
 
 /// Details are on /datum/persistent_client

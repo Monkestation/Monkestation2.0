@@ -62,10 +62,10 @@
 			if(!ispath(structure_path, required_structure_path) || R.blacklist.Find(structure_path))
 				continue
 
-				needed_amount -= structures[required_structure_path]
-				requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
-				if(needed_amount <= 0)
-					break
+			needed_amount -= structures[required_structure_path]
+			requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
+			if(needed_amount <= 0)
+				break
 
 		// We didn't find the required item
 		if(needed_amount > 0)
@@ -286,7 +286,6 @@
 							RGNT.volume += RG.volume
 							RGNT.data += RG.data
 							qdel(RG)
-						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
 			else if(ispath(path_key, /obj/item/stack))

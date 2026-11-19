@@ -39,6 +39,9 @@
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
+		new /obj/item/storage/pill_bottle/potassiodide(src)
+
 	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels) && !length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
 		new /obj/item/climbing_hook/emergency(src)
 
@@ -126,7 +129,7 @@
 		new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(get_turf(user))
 		new /obj/item/lighter(get_turf(user))
 		to_chat(user, span_notice("...oh, someone left some cigarettes in here."))
-	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 	qdel(src)
 
 /obj/item/storage/box/survival/centcom

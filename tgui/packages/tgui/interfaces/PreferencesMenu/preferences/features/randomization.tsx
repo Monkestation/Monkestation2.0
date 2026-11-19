@@ -58,10 +58,14 @@ export const random_name: Feature<RandomSetting> = {
   name: 'Random Name',
   component: (props) => {
     return (
-      <RandomizationButton
-        setValue={(value) => props.handleSetValue(value)}
-        value={props.value}
-      />
+      <Stack>
+        <Stack.Item>
+          <RandomizationButton
+            setValue={(value) => props.handleSetValue(value)}
+            value={props.value}
+          />
+        </Stack.Item>
+      </Stack>
     );
   },
 };

@@ -36,9 +36,9 @@
 	)
 	repeatable = TRUE // monke edit: you can repeat the brainwashing step to add more objectives
 	time = 200
-	preop_sound = 'sound/surgery/hemostat1.ogg'
-	success_sound = 'sound/surgery/hemostat1.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	var/objective
 
 /datum/surgery_step/brainwash/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

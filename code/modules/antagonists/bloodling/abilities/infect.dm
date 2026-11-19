@@ -91,5 +91,5 @@
 	for(var/datum/objective/objective in bloodling_datum.objectives)
 		objective.update_explanation_text()
 
-	playsound(get_turf(bloodling), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
+	playsound(get_turf(bloodling), 'sound/music/antag/blobalert.ogg', 50, FALSE)
 	qdel(src)

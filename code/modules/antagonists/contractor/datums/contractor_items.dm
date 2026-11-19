@@ -26,7 +26,7 @@
 
 	handler.purchased_contractor_items.Add(src)
 
-	user.playsound_local(user, 'sound/machines/uplinkpurchase.ogg', 100)
+	user.playsound_local(user, 'sound/machines/uplink/uplinkpurchase.ogg', 100)
 
 	if(item)
 		var/atom/item_to_create = new item(get_turf(user))

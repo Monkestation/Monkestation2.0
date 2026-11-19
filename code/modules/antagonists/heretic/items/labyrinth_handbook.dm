@@ -26,7 +26,7 @@
 /obj/item/heretic_labyrinth_handbook
 	name = "labyrinth handbook"
 	desc = "A book containing the laws and regulations of the Locked Labyrinth, penned on an unknown substance. Its pages squirm and strain, looking to lash out and escape."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "heretichandbook"
 	force = 10
 	damtype = BURN
@@ -82,7 +82,7 @@
 		return ITEM_INTERACT_BLOCKING
 	turf_target.visible_message(span_warning("A storm of paper materializes!"))
 	new /obj/effect/temp_visual/paper_scatter(turf_target)
-	playsound(turf_target, 'sound/magic/smoke.ogg', 30)
+	playsound(turf_target, 'sound/effects/magic/smoke.ogg', 30)
 	new barrier_type(turf_target, user)
 	charges--
 	charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))

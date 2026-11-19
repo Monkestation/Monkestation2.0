@@ -2,13 +2,13 @@
 // I mean they coould but funny armour
 
 /obj/item/clothing/head/viking
-	icon = 'icons/viking/viking_items.dmi'
-	worn_icon = 'icons/viking/viking_armor.dmi'
+	icon = 'icons/obj/weapons/viking_items.dmi'
+	worn_icon = 'icons/mob/clothing/viking_armor.dmi'
 	desc = "oi admins wrong one"
 
 /obj/item/clothing/under/viking
-	icon = 'icons/viking/viking_items.dmi'
-	worn_icon ='icons/viking/viking_armor.dmi'
+	icon = 'icons/obj/weapons/viking_items.dmi'
+	worn_icon ='icons/mob/clothing/viking_armor.dmi'
 	desc = "oi admins wrong one"
 
 //warning this item will include the godslayer armor heal (as soon as i get the code in)
@@ -51,7 +51,7 @@
 		COOLDOWN_START(src, effect_cooldown, effect_cooldown_time) //This needs to happen first, otherwise there's an infinite loop
 		user.heal_ordered_damage(heal_amount, damage_heal_order)
 		user.visible_message(span_notice("[user] suddenly revives, as if their rage healed them!"), span_notice("You suddenly feel invigorated!"))
-		playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)
+		playsound(user.loc, 'sound/effects/magic/clockwork/ratvar_attack.ogg', 50)
 
 /obj/item/clothing/under/viking/godly_tunic
 	name = " Cloak of Fenrir"

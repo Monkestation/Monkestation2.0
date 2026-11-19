@@ -150,7 +150,7 @@
 		return FALSE
 
 	var/obj/item/held_item = obj_resolve
-	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored, destination_task.skip_non_dense)
 
 	if(isnull(type_to_use))
 		drop_held_after_use(destination_task)
@@ -272,7 +272,7 @@
 		finish_manipulation()
 		return
 
-	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored, destination_task.skip_non_dense)
 	if(isnull(type_to_use))
 		check_end_of_use_for_use_with_empty_hand(destination_task, FALSE)
 		return

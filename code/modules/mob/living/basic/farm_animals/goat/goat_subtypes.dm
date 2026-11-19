@@ -14,7 +14,7 @@
 /mob/living/basic/goat/pete/icebox
 	name = "Snowy Pete"
 	desc = parent_type::desc + " This one seems a bit more hardy to the cold."
-	bodytemp_cold_damage_limit = ICEBOX_MIN_TEMPERATURE - 5 KELVIN
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE - 5 KELVIN
 	habitable_atmos = list(
 		"min_oxy" = 1,
 		"max_oxy"= 0,

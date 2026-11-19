@@ -4,7 +4,7 @@
 /obj/vehicle/ridden/hoverdog
 	name = "XXL-9a 'Hoverdog'"
 	desc = "A top of the line hoverbike, comissioned by Nanotrassen for their hotdog salespeople."
-	icon = 'icons/obj/car.dmi'
+	icon = 'icons/obj/toys/car.dmi'
 	icon_state = "hoverdog"
 	layer = LYING_MOB_LAYER
 	pixel_y = -48

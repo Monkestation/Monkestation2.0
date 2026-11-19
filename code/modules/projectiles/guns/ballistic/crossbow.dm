@@ -9,7 +9,7 @@
 	base_icon_state = "rebarxbow"
 	inhand_icon_state = "rebarxbow"
 	worn_icon_state = "rebarxbow"
-	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
 	mag_display = FALSE
 	empty_indicator = TRUE
 	bolt_type = BOLT_TYPE_OPEN
@@ -62,7 +62,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/shoot_with_empty_chamber(mob/living/user)
 	if(chambered || !magazine || !length(magazine.contents))
 		return ..()
-	drop_bolt(user)
+	INVOKE_ASYNC(src, PROC_REF(drop_bolt), user)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
 	. = ..()
@@ -109,8 +109,6 @@
 	worn_icon_state = "speargun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	recoil = 0
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
-
-/obj/item/gun/ballistic/rifle/boltaction/harpoon/give_manufacturer_examine()
-	return
+	has_manufacturer = FALSE

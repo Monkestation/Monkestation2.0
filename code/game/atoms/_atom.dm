@@ -5,6 +5,7 @@
  * as much as possible to the components/elements system
  */
 /atom
+	abstract_type = /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
@@ -84,8 +85,15 @@
 	var/light_power = 1
 	///Hexadecimal RGB string representing the colour of the light. White by default.
 	var/light_color = COLOR_WHITE
+	/// Angle of light to show in light_dir
+	/// 360 is a circle, 90 is a cone, etc.
+	var/light_angle = 360
+	/// What angle to project light in
+	var/light_dir = NORTH
 	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
 	var/light_on = TRUE
+	/// How many tiles "up" this light is. 1 is typical, should only really change this if it's a floor light
+	var/light_height = LIGHTING_HEIGHT
 	///Bitflags to determine lighting-related atom properties.
 	var/light_flags = NONE
 	///Our light source. Don't fuck with this directly unless you have a good reason!
@@ -112,6 +120,9 @@
 	var/base_pixel_z = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
+
+	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
+	var/spawn_blacklisted = FALSE
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
@@ -251,7 +262,7 @@
 	// atom_integrity is checked against max_integrity and can BREAK the atom.
 	// The integrity to max_integrity ratio is still preserved.
 	if(custom_materials)
-		set_custom_materials(custom_materials)
+		initialize_materials(custom_materials)
 
 	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)
@@ -721,14 +732,14 @@
  */
 /atom/proc/wash(clean_types)
 	SHOULD_CALL_PARENT(TRUE)
+	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
-		return TRUE
+		. = TRUE
 
 	// Basically "if has washable coloration"
 	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		return TRUE
-	return FALSE
+		. = TRUE
 
 ///Where atoms should drop if taken from this atom
 /atom/proc/drop_location()
@@ -820,10 +831,11 @@
 			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 			created_atoms.Add(created_atom)
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
-		UsedforProcessing(user, process_item, chosen_option)
+		UsedforProcessing(user, process_item, chosen_option, created_atoms)
 		return
 
-/atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option)
+/// Called when the atom is used to process something into other atoms, deletes it by default
+/atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
 	qdel(src)
 	return
 
@@ -1121,9 +1133,24 @@
 /// So transparent, blue, with a scanline and an emissive glow
 /// This is acomplished using a combination of filters and render steps/overlays
 /// The degree of the opacity is optional, based off the opacity arg (0 -> 1)
-/atom/proc/makeHologram(opacity = 0.5)
+/// An optional color_override replaces the default blue tint — either a hex string (opacity applied on top) or a color matrix/list (passed through as-is; caller owns its own alpha)
+/// Returns the glow mutable_appearance so callers can cut the overlay later
+/atom/proc/makeHologram(opacity = 0.5, color_override)
 	// First, we'll make things blue (roughly) and sorta transparent
-	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125,180,225, opacity * 255)))
+	var/color_value
+	if(islist(color_override))
+		color_value = color_override
+	else
+		var/r = 125
+		var/g = 180
+		var/b = 225
+		if(color_override)
+			var/list/rgb_list = rgb2num(color_override)
+			r = rgb_list[1]
+			g = rgb_list[2]
+			b = rgb_list[3]
+		color_value = rgb(r, g, b, opacity * 255)
+	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(color_value))
 	// Now we're gonna do a scanline effect
 	// Gonna take this atom and give it a render target, then use it as a source for a filter
 	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
@@ -1145,7 +1172,9 @@
 		render_target = "HOLOGRAM [uid]"
 		uid++
 	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually tho
-	var/static/atom/movable/render_step/emissive/glow = new(null)
+	var/static/atom/movable/render_step/emissive/glow
+	if(!glow)
+		glow = new(null)
 	glow.render_source = render_target
 	SET_PLANE_EXPLICIT(glow, initial(glow.plane), src)
 	// We're creating a render step that copies ourselves, and draws it to the emissive plane
@@ -1154,3 +1183,4 @@
 	var/mutable_appearance/glow_appearance = new(glow)
 	add_overlay(glow_appearance)
 	LAZYADD(update_overlays_on_z, glow_appearance)
+	return glow_appearance

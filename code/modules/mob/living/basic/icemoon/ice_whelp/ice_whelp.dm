@@ -14,6 +14,7 @@
 	)
 	crusher_loot = /obj/item/crusher_trophy/tail_spike
 	speed = 12
+	initial_language_holder = /datum/language_holder/lizard
 
 	maxHealth = 300
 	health = 300
@@ -25,9 +26,9 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	death_message = "collapses on its side."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG

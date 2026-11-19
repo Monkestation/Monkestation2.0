@@ -116,18 +116,20 @@
 	if(!chosen_boulder.processed_by)
 		check_for_boosts()
 		var/obj/item/processing/clumps/clump  = new(src)
-		clump.custom_materials = list()
+		var/list/clump_mats = list()
+		var/list/rejected_mats = list()
 		for(var/datum/material/material as anything in chosen_boulder.custom_materials)
-			if(!can_process_material(material))
-				continue
 			var/quantity = chosen_boulder.custom_materials[material]
-			clump.custom_materials += material
-			clump.custom_materials[material] = quantity * refining_efficiency
-			chosen_boulder.custom_materials -= material
+			if(!can_process_material(material))
+				rejected_mats[material] = quantity
+				continue
+			clump_mats[material] = quantity * refining_efficiency
+		chosen_boulder.set_custom_materials(rejected_mats)
 
-		if(!length(clump.custom_materials))
+		if(!length(clump_mats))
 			qdel(clump)
 		else
+			clump.set_custom_materials(clump_mats)
 			clump.set_colors()
 			src.remove_resource(clump)
 

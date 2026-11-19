@@ -74,6 +74,10 @@
 	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
 	return
 
+/// Checks if there are enough living players to purchase an item
+/datum/uplink_handler/proc/not_enough_population(datum/uplink_item/to_purchase)
+	return length(GLOB.alive_player_list) < to_purchase.population_minimum
+
 /// Checks for uplink flags as well as items restricted to roles and species
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
 	if((to_purchase in extra_purchasable))
@@ -110,6 +114,9 @@
 			return FALSE
 
 	if(!check_if_restricted(to_purchase))
+		return FALSE
+
+	if(not_enough_population(to_purchase))
 		return FALSE
 
 	var/current_stock = item_stock[to_purchase.stock_key]
@@ -273,7 +280,7 @@
 	if(!(to_take in potential_objectives))
 		return
 
-	user.playsound_local(get_turf(user), 'sound/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+	user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 	to_take.on_objective_taken(user)
 	to_take.objective_state = OBJECTIVE_STATE_ACTIVE
 	potential_objectives -= to_take

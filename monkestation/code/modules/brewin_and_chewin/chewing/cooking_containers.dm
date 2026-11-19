@@ -158,11 +158,7 @@
 /obj/item/reagent_containers/cooking_container/proc/handle_ignition()
 	return FALSE
 
-/obj/item/reagent_containers/cooking_container/verb/empty()
-	set src in view(1)
-	set name = "Empty Container"
-	set category = "Object"
-	set desc = "Removes items from the container, excluding reagents."
+GAME_VERB_SRC_DESC(/obj/item/reagent_containers/cooking_container, empty, view(1), "Empty Container", "Removes items from the container, excluding reagents.", "Object")
 	do_empty(usr)
 
 /obj/item/reagent_containers/cooking_container/proc/do_empty(mob/user, atom/target = null, reagent_clear = TRUE)
@@ -314,7 +310,7 @@
 
 	icon_state = "pan" //Default state is the base icon so it looks nice in the map builder
 	lip = "pan_lip"
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	appliancetype = PAN
 
 /obj/item/reagent_containers/cooking_container/pot
@@ -325,7 +321,7 @@
 	icon_state = "pot"
 	lip = "pot_lip"
 
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	removal_penalty = 5
 	appliancetype = POT
 	w_class = WEIGHT_CLASS_BULKY

@@ -36,7 +36,7 @@
 
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/attacker, mob/living/defender)
 	attacker.say("TORNADO SWEEP!", forced="plasma fist")
-	dance_rotate(attacker, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), attacker.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
+	dance_rotate(attacker, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), attacker.loc, 'sound/items/weapons/punch1.ogg', 15, TRUE, -1))
 
 	var/datum/action/cooldown/spell/aoe/repulse/tornado_spell = new(src)
 	tornado_spell.cast(attacker)
@@ -49,7 +49,7 @@
 	defender.visible_message(span_danger("[attacker] hits [defender] with Plasma Punch!"), \
 					span_userdanger("You're hit with a Plasma Punch by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 	to_chat(attacker, span_danger("You hit [defender] with Plasma Punch!"))
-	playsound(defender.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
+	playsound(defender.loc, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(defender, get_dir(defender, get_step_away(defender, attacker)))
 	defender.throw_at(throw_target, 200, 4,attacker)
 	attacker.say("HYAH!", forced="plasma fist")
@@ -60,7 +60,7 @@
 	var/hasclient = defender.client ? TRUE : FALSE
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(defender.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
+	playsound(defender.loc, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	attacker.say("PLASMA FIST!", forced="plasma fist")
 	defender.visible_message(span_danger("[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!"), \
 					span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
@@ -111,7 +111,7 @@
 	user.apply_damage(rand(50,70), BRUTE)
 
 	addtimer(CALLBACK(src, PROC_REF(Apotheosis_end), user), 6 SECONDS)
-	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
+	playsound(boomspot, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE, explosion_cause = src)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
@@ -142,10 +142,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/proc/plasma_fist_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Plasma Fist."
-	set category = "Plasma Fist"
+GAME_VERB_PROC_DESC(/mob/living, plasma_fist_help, "Recall Teachings", "Remember the martial techniques of the Plasma Fist.", "Plasma Fist")
 
 	var/datum/martial_art/plasma_fist/martial = usr.mind.martial_art
 	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")

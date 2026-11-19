@@ -24,7 +24,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 
 	butcher_results = list(/obj/item/food/meat/slab/grassfed = 4)
@@ -34,11 +34,12 @@
 
 	health = 40
 	maxHealth = 40
+	biomass_value = 0.2
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
-	bodytemp_cold_damage_limit = COLD_ROOM_TEMP - 75 // enough so that they can survive the cold room spawn with plenty of room for comfort
+	minimum_survivable_temperature = COLD_ROOM_TEMP - 75 // enough so that they can survive the cold room spawn with plenty of room for comfort
 
 	blood_volume = BLOOD_VOLUME_NORMAL
 

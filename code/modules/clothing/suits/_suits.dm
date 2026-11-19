@@ -1,4 +1,5 @@
 /obj/item/clothing/suit
+	abstract_type = /obj/item/clothing/suit
 	name = "suit"
 	icon = 'icons/obj/clothing/suits/default.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
@@ -11,20 +12,29 @@
 		/obj/item/storage/belt/holster,
 		)
 	armor_type = /datum/armor/none
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	slot_flags = ITEM_SLOT_OCLOTHING
 	blood_overlay_type = "suit"
 	limb_integrity = 0 // disabled for most exo-suits
 	var/suittoggled = FALSE // sec duster toggling and more
 	/// tackling bonus
 	var/tackle_mod = 0
+	/// has coat pockets, neat if true. two small item slots. added on intialize
+	var/has_coat_pockets = FALSE
+	var/coat_pocket_storage_datum = /datum/storage/pockets/coat
 
 /obj/item/clothing/suit/Initialize(mapload)
 	. = ..()
 	setup_shielding()
+	if(has_coat_pockets)
+		var/obj/item/magical_pocket_item = new /obj/item/food/donut/chaos(src)
+		var/datum/storage/magic_pocket = create_storage(storage_type = coat_pocket_storage_datum)
+		magic_pocket.set_real_location(magical_pocket_item)
+		magic_pocket.locked = STORAGE_NOT_LOCKED
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 
-/obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return

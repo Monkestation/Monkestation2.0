@@ -2,9 +2,8 @@
 	unusual_description = "cashflow"
 	icon_file = 'icons/obj/economy.dmi'
 	particle_state = "spacecash1"
-	burst_amount = 1
+	burst_amount = 2
 	duration = 2 SECONDS
-	random_bursts = TRUE
 	spawn_interval = 6 SECONDS
 
 /datum/component/particle_spewer/cash/animate_particle(obj/effect/abstract/particle/spawned)

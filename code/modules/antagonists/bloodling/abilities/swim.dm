@@ -20,7 +20,7 @@
 	var/mob/living/basic/bloodling/our_mob = owner
 
 	//Stay still for a moment and do an animation
-	playsound(get_turf(owner), 'sound/effects/blobattack.ogg', 30)
+	playsound(get_turf(owner), 'sound/effects/blob/blobattack.ogg', 30)
 	our_mob.Stun(5, ignore_canstun = TRUE)
 	our_mob.density = FALSE
 	our_mob.spawn_gibs()
@@ -31,7 +31,7 @@
 
 	do_teleport(owner, get_turf(target), no_effects=TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 	our_mob.spawn_gibs()
-	playsound(get_turf(owner), 'sound/effects/blobattack.ogg', 30)
+	playsound(get_turf(owner), 'sound/effects/blob/blobattack.ogg', 30)
 	our_mob.density = 1
 	our_mob.icon_state = icon_was
 	return TRUE

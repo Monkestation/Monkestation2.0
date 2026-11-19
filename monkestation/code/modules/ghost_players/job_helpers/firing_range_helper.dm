@@ -3,7 +3,7 @@
 	desc = "Able to print most guns and ammo your heart could ever desire.(not liable for any damages)"
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	icon = 'icons/obj/money_machine.dmi'
+	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
 	blacklisted_items = list(
 		/obj/item/ammo_box/c38/trac,

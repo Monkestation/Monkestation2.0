@@ -1,3 +1,7 @@
+#define STYLE_BULKY "Jumpsuit"
+#define STYLE_NEITHER "Neither"
+#define STYLE_SLEEK "Jumpskirt"
+
 //Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
 
 /obj/item/clothing/suit/space/eva/plasmaman
@@ -8,10 +12,10 @@
 	resistance_flags = FIRE_PROOF
 	icon_state = "plasmaman_suit"
 	inhand_icon_state = "plasmaman_suit"
-	var/next_extinguish = 0
-	var/extinguish_cooldown = 100
+	COOLDOWN_DECLARE(next_extinguish)
+	var/extinguish_cooldown = 10 SECONDS
 	var/extinguishes_left = 10
-
+	fishing_modifier = 0
 
 /datum/armor/eva_plasmaman
 	bio = 100
@@ -22,21 +26,32 @@
 	. = ..()
 	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.")
 
-
-/obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/suit/space/eva/plasmaman/proc/suit_extinguish(mob/living/carbon/human/suitedfellow)
+	if(!istype(suitedfellow))
 		return
 
-	if(H.fire_stacks > 0)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
-			H.extinguish_mob()
-			new /obj/effect/particle_effect/water(get_turf(H))
+	if(!suitedfellow.on_fire)
+		return
 
+	if(!extinguishes_left)
+		suitedfellow.balloon_alert(suitedfellow, "no suit extinguish charges left!")
+		return
+
+	if(!COOLDOWN_FINISHED(src, next_extinguish))
+		return
+
+	if(HAS_TRAIT(suitedfellow, TRAIT_NO_EXTINGUISH))
+		to_chat(suitedfellow, span_danger("The suit releases a meager puff of water before it hails: The fire burning you is unable to be extinguished!"))
+		return
+
+	COOLDOWN_START(src, next_extinguish, extinguish_cooldown)
+	extinguishes_left--
+	suitedfellow.visible_message(
+		span_warning("[suitedfellow]'s suit automatically extinguishes [suitedfellow.p_them()]!"),
+		span_warning("Your suit automatically extinguishes you.")
+	)
+	suitedfellow.extinguish_mob()
+	new /obj/effect/particle_effect/water(get_turf(suitedfellow))
 
 //I just want the light feature of helmets
 /obj/item/clothing/head/helmet/space/plasmaman
@@ -52,6 +67,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right
 	/// helmet -> stripes -> visor
 	greyscale_colors = "#d15b1b#a747c0#bd6abd"
+	fishing_modifier = 0
 
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	strip_delay = 8 SECONDS
@@ -71,11 +87,14 @@
 	var/smile_color = "#FF0000"
 	/// Used to differentiate between different helmet colors on GAGs
 	var/smile_state = "envirohelm_smile"
+	/// Hat currently ontop of the helmet
 	var/obj/item/clothing/head/attached_hat
 	/// Used for the "sleek" icon state variant of this helmet
 	var/sleek_greyscale_colors = "#39393f#bd6abd"
 	/// Used for security "sleek" icon state variant
 	var/cowl = FALSE
+	/// Style used for the helmet currently. Sleek or Bulky
+	var/style = STYLE_BULKY
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen)
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -99,57 +118,69 @@
 	else
 		. += span_notice("There's nothing placed on the helmet.")
 
-/obj/item/clothing/head/helmet/space/plasmaman/proc/handle_style_change(style)
-	if(style != PREF_SKIRT)
-		icon_state = initial(icon_state)
-		worn_icon_state = initial(worn_icon_state)
-		inhand_icon_state = initial(inhand_icon_state)
-		return
-	icon_state = "plasmaman_helmet_s"
-	worn_icon_state = "plasmaman_helmet_s_w"
-	inhand_icon_state = "plasmaman_helmet_s"
-	greyscale_config = /datum/greyscale_config/plasmaman_helmet/sleek
-	greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/sleek
-	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/sleek
-	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right/sleek
-	greyscale_colors = sleek_greyscale_colors
+/obj/item/clothing/head/helmet/space/plasmaman/examine_more(mob/user)
+	. = ..()
+	if(style != STYLE_NEITHER)
+		if(style == STYLE_BULKY)
+			. += span_notice(span_italics("You notice the helmet can be pried loose of some pieces without any function loss."))
+		else
+			. += span_notice(span_italics("You notice the helmet has some open slots for some metal that can be filled in."))
+
+/*
+ * Proc that actually handles which sprite to use. -> suit for bulky (old) | skirt for sleek (new)
+ * based on PREF defines, but using in-file defines for better readability
+ * for consistency's sake we keep bulky vars as the default ones to fall back on using initial().
+ */
+/obj/item/clothing/head/helmet/space/plasmaman/proc/handle_style_change(new_style)
+	if(new_style == STYLE_SLEEK)
+		greyscale_config = /datum/greyscale_config/plasmaman_helmet/sleek
+		greyscale_config_worn = /datum/greyscale_config/plasmaman_helmet/worn/sleek
+		greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/sleek
+		greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right/sleek
+		greyscale_colors = sleek_greyscale_colors
+	else
+		greyscale_config = initial(greyscale_config)
+		greyscale_config_worn = initial(greyscale_config_worn)
+		greyscale_config_inhand_left = initial(greyscale_config_inhand_left)
+		greyscale_config_inhand_right = initial(greyscale_config_inhand_right)
+		greyscale_colors = initial(greyscale_colors)
+	style = new_style
+	update_greyscale()
 	update_appearance(UPDATE_ICON)
+	return TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
-	toggle_welding_screen(user)
-	return CLICK_ACTION_SUCCESS
+	if(user.can_perform_action(src))
+		adjust_visor(user)
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
-		toggle_welding_screen(user)
+		adjust_visor(user)
 		return
 
 	return ..()
 
-/obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
-	if(!weldingvisortoggle(user))
+/obj/item/clothing/head/helmet/space/plasmaman/adjust_visor(mob/living/user)
+	. = ..()
+	if(!.)
 		return
 	if(helmet_on)
 		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 		helmet_on = FALSE
 		set_light_on(FALSE)
-	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Welding visors don't just come from nothing
-	update_appearance(UPDATE_ICON)
-
-/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling()
-	. = ..()
+	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE) //Welding visors don't just come from nothing
 	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()
 	. = ..()
-	if(greyscale_config != /datum/greyscale_config/plasmaman_helmet/sleek)
-		icon_state = initial(icon_state)
-		worn_icon_state = initial(worn_icon_state)
-		inhand_icon_state = initial(inhand_icon_state)
-	else
+	if(style == STYLE_SLEEK)
 		icon_state = "plasmaman_helmet_s"
 		worn_icon_state = "plasmaman_helmet_s_w"
 		inhand_icon_state = "plasmaman_helmet_s"
+	else
+		icon_state = initial(icon_state)
+		worn_icon_state = initial(worn_icon_state)
+		inhand_icon_state = initial(inhand_icon_state)
 	if(helmet_on)
 		icon_state = "[icon_state]_light"
 		worn_icon_state = "[worn_icon_state]_light"
@@ -166,7 +197,7 @@
 	if(cowl)
 		. += mutable_appearance('icons/obj/clothing/head/plasmaman_hats.dmi', "security_cowl")
 
-/obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/hitting_item, mob/living/user)
+/obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/hitting_item, mob/living/user, params)
 	. = ..()
 	if(istype(hitting_item, /obj/item/toy/crayon))
 		if(!smile)
@@ -193,8 +224,26 @@
 		hitting_clothing.forceMove(src)
 		update_appearance(UPDATE_ICON)
 
+	if(hitting_item.tool_behaviour == TOOL_CROWBAR && style == STYLE_BULKY)
+		hitting_item.play_tool_sound(src)
+		user.balloon_alert(user, "removing parts...")
+		if(do_after(user, 3 SECONDS, src))
+			if(handle_style_change(STYLE_SLEEK))
+				new /obj/item/stack/sheet/iron(get_turf(src))
+		return
+
+	if(istype(hitting_item, /obj/item/stack/sheet/iron) && style == STYLE_SLEEK)
+		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		user.balloon_alert(user, "adding parts...")
+		var/obj/item/stack/sheet/iron/metal_stack = hitting_item
+		if(do_after(user, 3 SECONDS, src))
+			if(handle_style_change(STYLE_BULKY))
+				metal_stack.use(1)
+		return
+
+
 ///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
@@ -257,12 +306,14 @@
 	sleek_greyscale_colors = "#39393f#a52f29"
 	armor_type = /datum/armor/plasmaman_security
 
-/obj/item/clothing/head/helmet/space/plasmaman/security/handle_style_change(style)
+/obj/item/clothing/head/helmet/space/plasmaman/security/handle_style_change(new_style)
 	. = ..()
-	if(style != PREF_SKIRT)
+	if(new_style == STYLE_SLEEK)
+		cowl = TRUE
+	else
 		cowl = FALSE
-		return
-	cowl = TRUE
+	update_appearance(UPDATE_ICON)
+	return TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/secmed
 	name = "security medical envirosuit helmet"
@@ -453,9 +504,10 @@
 	greyscale_config_inhand_right = null
 	greyscale_colors = null
 	actions_types = list(/datum/action/item_action/toggle_welding_screen)
+	style = STYLE_NEITHER
 
-/obj/item/clothing/head/helmet/space/plasmaman/curator/handle_style_change(style)
-	return
+/obj/item/clothing/head/helmet/space/plasmaman/curator/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/head/helmet/space/plasmaman/curator/update_icon_state()
 	. = ..()
@@ -491,9 +543,10 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/plasmaman_helmet/inhand_left/mime
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right/mime
 	greyscale_colors = "#eeeeee#a52f29"
+	style = STYLE_NEITHER
 
-/obj/item/clothing/head/helmet/space/plasmaman/mime/handle_style_change(style)
-	return
+/obj/item/clothing/head/helmet/space/plasmaman/mime/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/head/helmet/space/plasmaman/clown
 	name = "clown envirosuit helmet"
@@ -505,9 +558,10 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/plasmaman_helmet/inhand_right/clown
 	smile_state = "clown_smile"
 	greyscale_colors = "#ffc0ff#e91111"
+	style = STYLE_NEITHER
 
-/obj/item/clothing/head/helmet/space/plasmaman/clown/handle_style_change(style)
-	return
+/obj/item/clothing/head/helmet/space/plasmaman/clown/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel
 	name = "head of personnel's envirosuit helmet"
@@ -580,6 +634,11 @@
 	icon_state = "bunny_envirohelm"
 	inhand_icon_state = "plasmaman-helm"
 	worn_icon_state = "bunny_envirohelm"
+	style = STYLE_NEITHER
 
-/obj/item/clothing/head/helmet/space/plasmaman/bunny_ears/handle_style_change(style)
-	return
+/obj/item/clothing/head/helmet/space/plasmaman/bunny_ears/handle_style_change(new_style)
+	return FALSE
+
+#undef STYLE_SLEEK
+#undef STYLE_NEITHER
+#undef STYLE_BULKY

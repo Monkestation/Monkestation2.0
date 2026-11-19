@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	marker_children += spawned_marker
 
 /obj/item/cargo_teleporter/item_ctrl_click(mob/user)
-	if(!(src in user.held_items))
+	if(!user.is_holding(src))
 		return NONE
 	if(my_fulton.choose_beacon(user))
 		return CLICK_ACTION_SUCCESS
@@ -84,10 +84,12 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 			continue
 		if(length(movable_content.get_all_contents_type(/mob/living)))
 			continue
+		if(movable_content.buckled_mobs)
+			continue
 		if(movable_content.anchored)
 			continue
 		do_teleport(movable_content, moving_turf)
-	playsound(src, 'sound/magic/disable_tech.ogg', 35) // The sound isn't played in the loop above because it will spam sounds if there are lots of items to teleport.
+	playsound(src, 'sound/effects/magic/disable_tech.ogg', 35) // The sound isn't played in the loop above because it will spam sounds if there are lots of items to teleport.
 	new /obj/effect/decal/cleanable/ash(target_turf)
 	COOLDOWN_START(src, use_cooldown, 8 SECONDS)
 

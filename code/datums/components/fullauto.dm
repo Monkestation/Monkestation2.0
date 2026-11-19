@@ -259,7 +259,7 @@
 		current_windup_reduction = (current_windup_reduction + autofire_shot_delay * windup_autofire_reduction_multiplier)
 		timerid = addtimer(CALLBACK(src, PROC_REF(windup_reset), FALSE), windup_spindown, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(HAS_TRAIT(shooter, TRAIT_DOUBLE_TAP))
-		next_delay = round(next_delay * 0.5, SSprojectiles.wait)
+		next_delay = max(round(next_delay * 0.5, world.tick_lag), world.tick_lag)
 	COOLDOWN_START(src, next_shot_cd, next_delay)
 	if(SEND_SIGNAL(parent, COMSIG_AUTOFIRE_SHOT, target, shooter, allow_akimbo, mouse_parameters) & COMPONENT_AUTOFIRE_SHOT_SUCCESS)
 		return TRUE
