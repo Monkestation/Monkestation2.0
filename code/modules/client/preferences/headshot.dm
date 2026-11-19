@@ -38,7 +38,7 @@ GLOBAL_VAR(admin_approving_headshot)
 
 		WRITE_LOG("[GLOB.log_directory]/headshots.log", "\[[time2text(world.realtime,"YYYY-MM-DD hh:mm:ss")]\] [key_name(usr)] submitted a new headshot for approval: [value]")
 
-		message_admins("[ADMIN_LOOKUPFLW(usr)] submitted a headshot: <a href='[value]' target='_blank'>[value]</a> | <a href='?src=[REF(src)];approve_headshot=[usr.ckey];url=[url_encode(value)]'>\[Approve]</a>")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] submitted a headshot: <a href='[value]' target='_blank'>[value]</a> | <a href='byond://?src=[REF(src)];approve_headshot=[usr.ckey];url=[url_encode(value)]'>\[Approve]</a>")
 		to_chat(usr, span_notice("Your headshot has been submitted and is pending administrator approval."))
 
 	return FALSE
