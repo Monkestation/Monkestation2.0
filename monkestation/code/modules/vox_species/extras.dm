@@ -104,7 +104,7 @@
 
 /datum/species
 	/// If set, underwear is drawn from these files instead: list("underwear" = icon, "undershirt" = icon, "socks" = icon).
-	/// Anything that does not have a sprite in there is not drawn at all.
+	/// Anything that does not have a sprite in there is drawn with its normal sprite, like on Yogstation.
 	var/list/fitted_underwear_icons
 
 /datum/species/vox
