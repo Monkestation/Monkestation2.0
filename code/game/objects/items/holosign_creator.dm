@@ -118,16 +118,12 @@
 
 /obj/item/holosign_creator/attack_self(mob/user)
 	if(LAZYLEN(signs))
-		for(var/atom/hologram as anything in signs)
-			qdel(hologram)
-		signs.Cut()
+		QDEL_LIST(signs)
 		balloon_alert(user, "holograms cleared")
 
 /obj/item/holosign_creator/Destroy()
 	. = ..()
 	if(LAZYLEN(signs))
-		for(var/atom/hologram as anything in signs)
-			qdel(hologram)
 		QDEL_LIST(signs)
 
 /obj/item/holosign_creator/janibarrier
