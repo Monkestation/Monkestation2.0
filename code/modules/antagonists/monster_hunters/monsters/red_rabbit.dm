@@ -7,6 +7,7 @@
 	health = 500
 	maxHealth = 500
 	speed = 5
+	lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
 	unsuitable_atmos_damage = NONE
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
