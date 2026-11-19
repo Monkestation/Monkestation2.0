@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Fixed a runtime when tongueless flesh heretics upgrade their passive."
