@@ -1,5 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Radiation sickness works again: prolonged exposure can now make you collapse, vomit blood, mutate and lose your hair."
-  - bugfix: "Radiation no longer makes hairless heads (robotic heads, pod people) \"lose\" their hair."
