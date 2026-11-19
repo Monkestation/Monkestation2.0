@@ -11,8 +11,5 @@
 	species_blacklist = list(SPECIES_IPC, SPECIES_ETHEREAL, SPECIES_OOZELING)
 
 /datum/quirk/fat/process(seconds_per_tick, times_fired)
-	if(HAS_TRAIT(quirk_holder, TRAIT_STASIS) || quirk_holder.stat == DEAD)
-		return
-
 	if(quirk_holder.nutrition <= NUTRITION_LEVEL_FAT)
 		quirk_holder.nutrition += 10 * seconds_per_tick
