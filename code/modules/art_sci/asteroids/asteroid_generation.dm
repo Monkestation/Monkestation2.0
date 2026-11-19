@@ -31,25 +31,26 @@
 /// Mapping Stuff
 /turf/closed/mineral/asteroid/tospace
 	baseturfs = /turf/open/misc/asteroid/airless/tospace
+	base_icon_state = "smoothrocks"
 	name = "rock"
 	icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
 	icon_state = "rock"
 
 /turf/closed/mineral/asteroid/tospace/uranium
 	mineralType = /obj/item/stack/ore/uranium
-	scan_state = "rock_Uranium"
+	scan_state = "rock_uranium"
 
 /turf/closed/mineral/asteroid/tospace/diamond
 	mineralType = /obj/item/stack/ore/diamond
-	scan_state = "rock_Diamond"
+	scan_state = "rock_diamond"
 
 /turf/closed/mineral/asteroid/tospace/gold
 	mineralType = /obj/item/stack/ore/gold
-	scan_state = "rock_Gold"
+	scan_state = "rock_gold"
 
 /turf/closed/mineral/asteroid/tospace/silver
 	mineralType = /obj/item/stack/ore/silver
-	scan_state = "rock_Silver"
+	scan_state = "rock_silver"
 
 /turf/closed/mineral/asteroid/tospace/titanium
 	mineralType = /obj/item/stack/ore/titanium
@@ -57,17 +58,17 @@
 
 /turf/closed/mineral/asteroid/tospace/plasma
 	mineralType = /obj/item/stack/ore/plasma
-	scan_state = "rock_Plasma"
+	scan_state = "rock_plasma"
 
 /turf/closed/mineral/asteroid/tospace/bananium
 	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
-	scan_state = "rock_Bananium"
+	scan_state = "rock_bananium"
 
 /turf/closed/mineral/asteroid/tospace/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
 	mineralAmt = 1
-	scan_state = "rock_BScrystal"
+	scan_state = "rock_bscrystal"
 
 /obj/effect/forcefield/asteroid_magnet
 	name = "magnetic field"
