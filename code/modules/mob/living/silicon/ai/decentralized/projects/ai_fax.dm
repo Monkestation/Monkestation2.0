@@ -23,10 +23,10 @@
 
 /datum/action/innate/ai/fax_machine/Grant(mob/living/player)
 	. = ..()
-	fax_machine = new /obj/machinery/fax/ai(src, owner_AI.name)
+	fax_machine = new /obj/machinery/fax/ai(owner_AI, owner_AI.name)
 
 
-/datum/action/innate/ai/fax_machine/Destroy()
+/datum/action/innate/ai/fax_machine/Remove()
 	. = ..()
 	qdel(fax_machine)
 
