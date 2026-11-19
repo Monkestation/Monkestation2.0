@@ -83,7 +83,7 @@
 	if(real_target)
 		pipe_placer.face_atom(real_target)
 	var/obj/parent_obj = parent
-	var/list/pipe_locations = get_path_to(parent, real_target, max_distance = MAX_PIPE_DISTANCE, exclude=get_turf(get_step(parent_obj, REVERSE_DIR(parent_obj.dir))), diagonal_handling = DIAGONAL_REMOVE_ALL)
+	var/list/pipe_locations = get_path_to(parent, real_target, max_distance = MAX_PIPE_DISTANCE, exclude=get_turf(get_step(parent_obj, REVERSE_DIR(parent_obj.dir))), diagonal_handling = DIAGONAL_REMOVE_ALL, max_path_cost = MAX_PIPE_DISTANCE * 10)
 	var/list/new_turf_list = list()
 	for(var/turf/next_location as anything in pipe_locations)
 		new_turf_list += pipe_locations
@@ -138,7 +138,7 @@
 /datum/component/pipe_laying/proc/build_pipes(turf/ending_location, mob/user)
 	building_pipes = TRUE
 	var/obj/parent_obj = parent
-	var/list/pipe_locations = get_path_to(parent, ending_location, max_distance = MAX_PIPE_DISTANCE, exclude=get_turf(get_step(parent_obj, REVERSE_DIR(parent_obj.dir))), diagonal_handling = DIAGONAL_REMOVE_ALL)
+	var/list/pipe_locations = get_path_to(parent, ending_location, max_distance = MAX_PIPE_DISTANCE, exclude=get_turf(get_step(parent_obj, REVERSE_DIR(parent_obj.dir))), diagonal_handling = DIAGONAL_REMOVE_ALL, max_path_cost = MAX_PIPE_DISTANCE * 10)
 	var/obj/structure/liquid_plasma_extraction_pipe/last_placed_pipe
 	var/should_delete_ourselves = FALSE
 	if(length(pipe_locations))

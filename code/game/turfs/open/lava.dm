@@ -7,6 +7,7 @@
 /turf/open/lava
 	name = "lava"
 	icon_state = "lava"
+	nav_cost_flags = NAV_COST_LAVA
 	desc = "Looks painful to step in. Don't mine down."
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down
@@ -65,6 +66,11 @@
 		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
 		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 	return ..()
+
+/turf/open/lava/get_nav_cost_flags()
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_LAVA_STOPPED))
+		. &= ~NAV_COST_LAVA
 
 ///We lazily add the immerse element when something is spawned or crosses this turf and not before.
 /turf/open/lava/proc/on_atom_inited(datum/source, atom/movable/movable)
