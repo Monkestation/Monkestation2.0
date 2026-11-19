@@ -105,8 +105,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	return display_radial_menu(user)
 
 /obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
-	if(isvox(beard_dresser)) // monkestation edit: vox have quills
-		return change_vox_quills(beard_dresser, facial = TRUE)
+	if(restyle_hairlike_features(beard_dresser, HEAD_FACIAL_HAIR))
+		return TRUE
 	if(beard_dresser.physique != FEMALE && !magical_mirror)
 		var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 		if(isnull(new_style))
@@ -123,8 +123,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 		beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
-	if(isvox(hairdresser)) // monkestation edit: vox have quills
-		return change_vox_quills(hairdresser, facial = FALSE)
+	if(restyle_hairlike_features(hairdresser, HEAD_HAIR))
+		return TRUE
 	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 	if(isnull(new_style))
 		return TRUE
@@ -134,6 +134,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 		return TRUE
 
 	hairdresser.set_hairstyle(new_style, update = TRUE)
+
+/**
+ * Heads that can't grow (facial) hair restyle their hair-like features instead, such as vox quills.
+ * Returns TRUE if the head has such features, which means the normal hair styling should be skipped.
+ */
+/obj/structure/mirror/proc/restyle_hairlike_features(mob/living/carbon/human/user, head_flag)
+	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(!head || (head.head_flags & head_flag))
+		return FALSE
+	if(!head.has_restylable_features(EXTERNAL_RESTYLE_HAIR))
+		return FALSE
+	head.attempt_feature_restyle(src, user, user, BODY_ZONE_HEAD, EXTERNAL_RESTYLE_HAIR, 0)
+	return TRUE
 
 /obj/structure/mirror/proc/change_name(mob/living/carbon/human/user)
 	var/newname = sanitize_name(tgui_input_text(user, "Who are we again?", "Name change", user.name, MAX_NAME_LEN, encode = FALSE), allow_numbers = TRUE) //It's magic so whatever.
@@ -156,9 +169,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 	var/datum/species/newrace = selectable_races[racechoice]
 	race_changer.set_species(newrace, icon_update = FALSE)
-	if(isvox(race_changer)) // monkestation edit: vox pick skin tone and markings instead
-		change_vox_looks(race_changer)
-	else if(HAS_TRAIT(race_changer, TRAIT_USES_SKINTONES))
+	if(HAS_TRAIT(race_changer, TRAIT_USES_SKINTONES))
 		var/new_s_tone = tgui_input_list(race_changer, "Choose your skin tone", "Race change", GLOB.skin_tones)
 		if(new_s_tone)
 			race_changer.skin_tone = new_s_tone
@@ -320,21 +331,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	selectable_races = sort_list(selectable_races)
 
 //Magic mirrors can change hair color as well
-/obj/structure/mirror/magic/change_hair(mob/living/carbon/human/user) // monkestation edit: was /obj/structure/mirror/magic/mirror, a type that doesn't exist
-	var/hair_word = isvox(user) ? "quill" : "hair" // monkestation edit: vox quills are colored by hair color
-	var/hairchoice = tgui_alert(user, "[capitalize(hair_word)] style or [hair_word] color?", "Change [capitalize(hair_word)]", list("Style", "Color"))
+/obj/structure/mirror/magic/mirror/change_hair(mob/living/carbon/human/user)
+	var/hairchoice = tgui_alert(user, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
 	if(hairchoice == "Style") //So you just want to use a mirror then?
 		return ..()
-	if(hairchoice != "Color") // monkestation edit: closing the alert shouldn't fall through to recoloring
-		return TRUE
 
-	var/new_hair_color = tgui_color_picker(user, "Choose your [hair_word] color", "[capitalize(hair_word)] Color", user.hair_color)
+	var/new_hair_color = tgui_color_picker(user, "Choose your hair color", "Hair Color", user.hair_color)
 
 	if(new_hair_color)
 		user.set_haircolor(sanitize_hexcolor(new_hair_color), update = FALSE)
 		user.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
-	if(user.physique == MALE || isvox(user)) // monkestation edit: any vox can have facial quills
-		var/new_face_color = tgui_color_picker(user, "Choose your facial [hair_word] color", "[capitalize(hair_word)] Color", user.facial_hair_color)
+	if(user.physique == MALE)
+		var/new_face_color = tgui_color_picker(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color)
 		if(new_face_color)
 			user.set_facial_haircolor(sanitize_hexcolor(new_face_color), update = FALSE)
 			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)

@@ -170,6 +170,20 @@ monkestation edit end */
 		return ..()
 	return FALSE
 
+/datum/emote/living/carbon/human/quill
+	key = "quill"
+	key_third_person = "quills"
+	message = "rustles their quills."
+	message_param = "rustles their quills at %t."
+	emote_type = EMOTE_AUDIBLE
+	// Credit to sound-ideas (freesfx.co.uk) for the sound.
+	sound = 'sound/voice/vox_species/voxrustle.ogg'
+
+/datum/emote/living/carbon/human/quill/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+	if(!user.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_QUILLS))
+		return FALSE
+	return ..()
+
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"

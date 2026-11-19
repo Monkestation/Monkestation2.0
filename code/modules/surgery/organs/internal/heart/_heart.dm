@@ -583,3 +583,10 @@
 /obj/item/organ/internal/heart/spider
 	name = "spider heart"
 	heart_bloodtype = BLOOD_TYPE_HEMOLYMPH
+
+/obj/item/organ/internal/heart/vox
+	name = "vox heart"
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "heart-vox-on"
+	base_icon_state = "heart-vox"
+	decay_factor = 0

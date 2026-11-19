@@ -126,14 +126,12 @@ There are several things that need to be remembered:
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
 			icon_file = DEFAULT_UNIFORM_FILE
 			handled_by_bodyshape = FALSE
-		// monkestation edit start: BODYSHAPE_CUSTOM uniforms
 		if(bodyshape & BODYSHAPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_UNIFORM, uniform)
 			if(species_icon_file && (istype(species_icon_file, /icon) || icon_exists(species_icon_file, target_overlay)))
 				icon_file = species_icon_file
 				handled_by_bodyshape = TRUE
 				woman = FALSE
-		// monkestation edit end
 
 		//END SPECIES HANDLING
 		uniform_overlay = uniform.build_worn_icon(
@@ -184,6 +182,13 @@ There are several things that need to be remembered:
 	apply_overlay(ID_LAYER)
 
 
+/// Returns the blood.dmi icon state for a bloody bare hand. Arms of a different shape can have their own, like vox claws.
+/mob/living/carbon/human/proc/get_bloody_hand_state(arm_zone, side)
+	var/obj/item/bodypart/arm = get_bodypart(arm_zone)
+	if(arm && icon_exists('icons/effects/blood.dmi', "bloodyhands_[arm.limb_id]_[side]"))
+		return "bloodyhands_[arm.limb_id]_[side]"
+	return "bloodyhands_[side]"
+
 /mob/living/carbon/human/update_worn_gloves()
 	remove_overlay(GLOVES_LAYER)
 
@@ -198,15 +203,11 @@ There are several things that need to be remembered:
 		// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
 		var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
 		if(has_left_hand(check_disabled = FALSE))
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
-			if(is_vox_limb(src, BODY_ZONE_L_ARM)) // monkestation edit: vox claws
-				blood_overlay = mutable_appearance('icons/mob/clothing/species/vox/blood.dmi', "bloodyhands_vox_left")
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_bloody_hand_state(BODY_ZONE_L_ARM, "left"))
 			blood_overlay.color = get_blood_dna_color()
 			hands_combined.overlays += blood_overlay
 		if(has_right_hand(check_disabled = FALSE))
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
-			if(is_vox_limb(src, BODY_ZONE_R_ARM)) // monkestation edit: vox claws
-				blood_overlay = mutable_appearance('icons/mob/clothing/species/vox/blood.dmi', "bloodyhands_vox_right")
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_bloody_hand_state(BODY_ZONE_R_ARM, "right"))
 			blood_overlay.color = get_blood_dna_color()
 			hands_combined.overlays += blood_overlay
 
@@ -223,7 +224,6 @@ There are several things that need to be remembered:
 
 	var/icon_file = 'icons/mob/clothing/hands.dmi'
 
-	// monkestation edit start: BODYSHAPE_CUSTOM gloves
 	var/mutant_override = FALSE
 	if(bodyshape & BODYSHAPE_CUSTOM)
 		var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_GLOVES, gloves)
@@ -232,7 +232,6 @@ There are several things that need to be remembered:
 			mutant_override = TRUE
 
 	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
-	// monkestation edit end
 
 	var/feature_y_offset = 0
 	//needs to be typed, hand_bodyparts can have nulls

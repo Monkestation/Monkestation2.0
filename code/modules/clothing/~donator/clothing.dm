@@ -960,7 +960,6 @@
 	desc = "Skrektastic."
 	icon = 'icons/obj/clothing/donator/masks.dmi'
 	worn_icon = 'icons/mob/clothing/donator/mask.dmi'
-	worn_icon_vox = 'icons/mob/clothing/donator/mask_vox.dmi' // monkestation edit
 	icon_state = "death"
 	actions_types = null
 	adjustable = FALSE

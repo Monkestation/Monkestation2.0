@@ -11,7 +11,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = TRUE
 	head_flags = HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_EYECOLOR
-	eyes_icon = 'icons/mob/human/species/monkey/bodyparts.dmi' // was the monkey species' eyes_icon
+	eyes_icon = 'icons/mob/human/species/monkey/bodyparts.dmi' // Default eyes have the side portrait icons on the wrong side, this fixes that.
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
 

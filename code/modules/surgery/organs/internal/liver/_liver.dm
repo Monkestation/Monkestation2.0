@@ -367,3 +367,19 @@
 #undef LIVER_DEFAULT_TOX_RESISTANCE
 #undef LIVER_FAILURE_STAGE_SECONDS
 #undef MAX_TOXIN_LIVER_DAMAGE
+
+/obj/item/organ/internal/liver/vox
+	name = "vox liver"
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "liver-vox"
+	decay_factor = 0
+
+/obj/item/organ/internal/liver/vox/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
+		return
+	// Oxygen is as toxic to vox in the blood as it is in the lungs
+	if(chem.type == /datum/reagent/oxygen)
+		organ_owner.adjustToxLoss(0.5 * seconds_per_tick)
+		organ_owner.reagents.remove_reagent(chem.type, 0.1 * seconds_per_tick)
+		return COMSIG_MOB_STOP_REAGENT_TICK

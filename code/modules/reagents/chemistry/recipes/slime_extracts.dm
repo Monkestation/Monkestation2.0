@@ -73,6 +73,12 @@
 	required_reagents = list(/datum/reagent/uranium/radium = 1)
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimevox
+	desc = "Makes 1u of vox mutation toxin."
+	results = list(/datum/reagent/mutationtoxin/vox = 1)
+	required_reagents = list(/datum/reagent/nitrogen = 1)
+	required_container = /obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	desc = "Makes 15 iron sheets and 5 plasteel sheets."

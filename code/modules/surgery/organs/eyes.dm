@@ -147,16 +147,14 @@
 	if(isnull(eye_icon_state))
 		return list()
 
-	var/obj/item/bodypart/head/eye_head = parent.get_bodypart(BODY_ZONE_HEAD) // monkestation edit: the head decides its eye icon, not the species
-	var/eye_icon = eye_head?.eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species.
+	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
+	var/eye_icon = my_head?.eyes_icon || 'icons/mob/species/human/human_face.dmi'
 
 	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -BODY_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -BODY_LAYER)
 
 	var/list/overlays = list(eye_left, eye_right)
-	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
-		overlays += my_head.get_eye_static_overlays() // monkestation edit: uncolored eye parts (vox eye static), offset with the eyes below
 		if(my_head.head_flags & HEAD_EYECOLOR)
 			eye_right.color = parent.get_right_eye_color() || eye_color_right
 			eye_left.color = parent.get_left_eye_color() || eye_color_left
@@ -781,3 +779,24 @@
 	adapt_light.forceMove(src)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()
+
+/obj/item/organ/internal/eyes/vox
+	name = "vox eyes"
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "eyes-vox"
+	decay_factor = 0
+
+/obj/item/organ/internal/eyes/vox/generate_body_overlay(mob/living/carbon/human/parent)
+	. = ..()
+	var/obj/item/bodypart/head/vox/head = parent.get_bodypart(BODY_ZONE_HEAD)
+	if(!length(.) || !istype(head))
+		return
+	var/mutable_appearance/eye_static = mutable_appearance(head.eyes_icon, head.get_eye_static_state(), -BODY_LAYER)
+	head.worn_face_offset?.apply_offset(eye_static)
+	. += eye_static
+
+/obj/item/organ/internal/eyes/vox/emp_act(severity)
+	. = ..()
+	if((. & EMP_PROTECT_SELF) || !owner)
+		return
+	owner.adjust_hallucinations(10 SECONDS)

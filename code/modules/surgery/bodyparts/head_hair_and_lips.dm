@@ -162,8 +162,9 @@
 /// Returns an appropriate missing eyes overlay
 /obj/item/bodypart/head/proc/get_eyeless_overlay(can_rotate = TRUE)
 	RETURN_TYPE(/image)
-	var/eyeless_icon = 'icons/mob/species/human/human_face.dmi'
 	var/eyeless_icon_state = "eyes_missing"
+	// Heads with eyes of their own can have their own empty sockets
+	var/eyeless_icon = (eyes_icon && icon_exists(eyes_icon, eyeless_icon_state)) ? eyes_icon : 'icons/mob/species/human/human_face.dmi'
 
 	var/image/eyeless_overlay
 	if(can_rotate)

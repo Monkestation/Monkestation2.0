@@ -316,14 +316,15 @@
 		wielder.update_worn_shoes()
 		return
 
-	// monkestation edit start: vox claws get their own bloody feet
 	var/mutable_appearance/feet_overlay = bloody_feet
-	if(is_vox_limb(wielder, BODY_ZONE_L_LEG) && is_vox_limb(wielder, BODY_ZONE_R_LEG))
-		feet_overlay = mutable_appearance('icons/mob/clothing/species/vox/blood.dmi', "shoeblood_vox", SHOES_LAYER)
+	// Legs of a different shape can have bloody feet of their own, like vox claws
+	var/obj/item/bodypart/left_leg = wielder.get_bodypart(BODY_ZONE_L_LEG)
+	var/obj/item/bodypart/right_leg = wielder.get_bodypart(BODY_ZONE_R_LEG)
+	if(left_leg && left_leg.limb_id == right_leg?.limb_id && icon_exists(bloody_feet.icon, "shoeblood_[left_leg.limb_id]"))
+		feet_overlay = mutable_appearance(bloody_feet.icon, "shoeblood_[left_leg.limb_id]", SHOES_LAYER)
 	feet_overlay.color = wielder.get_blood_dna_color()
 	wielder.apply_height(feet_overlay, ENTIRE_BODY)
 	wielder.overlays_standing[SHOES_LAYER] = feet_overlay
-	// monkestation edit end
 	wielder.apply_overlay(SHOES_LAYER)
 
 /datum/component/bloodysoles/feet/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/footprint)

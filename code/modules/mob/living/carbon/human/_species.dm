@@ -238,7 +238,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/maxhealthmod = 1
 	///Path to BODYSHAPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
 	var/list/custom_worn_icons = list()
-	// monkestation edit: the eyes icon override moved to heads (/obj/item/bodypart/head/var/eyes_icon), so transplanted heads keep their own eyes
 	///our color palette
 	var/datum/color_palette/color_palette
 
@@ -708,17 +707,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						standing += markings_l_leg_overlay
 
 	//Underwear, Undershirts & Socks
-	if(fitted_underwear_icons) // monkestation edit: species with their own underwear sprites
-		standing += get_fitted_underwear_overlays(species_human)
-	else if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
+	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		if(species_human.underwear && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE)) //MONKESTATION EDIT
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
+				var/underwear_icon = get_custom_underwear_icon(species_human, LOADOUT_ITEM_UNDERWEAR, underwear)
+				if(underwear_icon == underwear.icon && species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
 					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
-					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+					underwear_overlay = mutable_appearance(underwear_icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
 					underwear_overlay.color = species_human.underwear_color
 				standing += underwear_overlay
@@ -727,10 +725,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
 				var/mutable_appearance/working_shirt
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
+				var/undershirt_icon = get_custom_underwear_icon(species_human, LOADOUT_ITEM_UNDERSHIRT, undershirt)
+				if(undershirt_icon == undershirt.icon && species_human.dna.species.sexes && species_human.physique == FEMALE)
 					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon, undershirt.icon), layer = -BODY_LAYER)
 				else
-					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
+					working_shirt = mutable_appearance(undershirt_icon, undershirt.icon_state, layer = -BODY_LAYER)
 				standing += working_shirt
 
 		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
@@ -738,10 +737,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			//MONKESTATION EDITS FOR COLOURABLE SOCKS
 			var/mutable_appearance/socks_overlay
 			if(socks)
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
+				var/socks_icon = get_custom_underwear_icon(species_human, LOADOUT_ITEM_SOCKS, socks)
+				if(socks_icon == socks.icon && species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
 					socks_overlay = mutable_appearance(wear_female_version(socks.icon_state, socks.icon, socks.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
-					socks_overlay = mutable_appearance(socks.icon, socks.icon_state, layer = -BODY_LAYER)
+					socks_overlay = mutable_appearance(socks_icon, socks.icon_state, layer = -BODY_LAYER)
 				if(!socks.use_static)
 					socks_overlay.color = species_human.socks_color
 				standing += socks_overlay
@@ -1141,7 +1141,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(time_since_irradiated > RAD_MOB_HAIRLOSS && SPT_PROB(RAD_MOB_HAIRLOSS_PROB, seconds_per_tick))
 		var/obj/item/bodypart/head/head = source.get_bodypart(BODY_ZONE_HEAD)
-		if(!(source.hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)) && !isvox(source)) // monkestation edit: vox quills are not lost to radiation, like on Yogstation
+		if(!(source.hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)))
 			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
 			addtimer(CALLBACK(src, PROC_REF(go_bald), source), 5 SECONDS)
 

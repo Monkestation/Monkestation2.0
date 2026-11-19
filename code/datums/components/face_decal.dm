@@ -42,8 +42,8 @@
 		bodypart_overlay.set_layers(layers)
 		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "[icon_state]_lizard"
-		else if(my_head.limb_id == SPECIES_VOX && icon_exists(bodypart_overlay.icon, "[icon_state]_vox")) // monkestation edit: vox beaks
-			bodypart_overlay.icon_state = "[icon_state]_vox"
+		else if(icon_exists(bodypart_overlay.icon, "[icon_state]_[my_head.limb_id]")) // heads with a face shape of their own, like vox beaks
+			bodypart_overlay.icon_state = "[icon_state]_[my_head.limb_id]"
 		else if(my_head.bodyshape & BODYSHAPE_MONKEY)
 			bodypart_overlay.icon_state = "[icon_state]_monkey"
 		else

@@ -21,7 +21,7 @@
 
 	if(!isnull(species_override))
 		user.set_species(species_override)
-	else if(isplasmaman(user) && plasmaman_outfit) //plasmamen get lit on fire and die // monkestation edit: was any species with an important outfit, which gave vox plasma tanks
+	else if(isplasmaman(user) && plasmaman_outfit) //plasmamen get lit on fire and die. Other species that need gear to live get it from give_important_for_life() below
 		if(isnull(l_hand) || isnull(r_hand))
 			uniform = plasmaman_outfit::uniform
 			gloves = plasmaman_outfit::gloves

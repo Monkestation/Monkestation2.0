@@ -27,3 +27,25 @@
 	desc = "85cr for a iced lactose-free caramel frappe?! Who buys that?!"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)
+
+/obj/structure/sign/pox
+	name = "\improper NO VOX ALLOWED sign"
+	desc = "A sign which reads 'NO VOX ALLOWED'."
+	icon = 'icons/obj/species/vox/signs.dmi'
+	icon_state = "novox1-b"
+	is_editable = FALSE
+
+/obj/structure/sign/pox/no_cross
+	icon_state = "novox2-b"
+
+/obj/structure/sign/pox/red
+	icon_state = "novox1-r"
+
+/obj/structure/sign/pox/red/no_cross
+	icon_state = "novox2-r"
+
+/obj/structure/sign/pox/red/circle
+	icon_state = "novox_circle1"
+
+/obj/structure/sign/pox/red/circle/no_cross
+	icon_state = "novox_circle2"

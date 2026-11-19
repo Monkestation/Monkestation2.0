@@ -55,8 +55,8 @@
 		former_captain.equipOutfit(/datum/outfit/plasmaman)
 		former_captain.internal = former_captain.get_item_for_held_index(2)
 	else
+		former_captain.dna.species.give_important_for_life(former_captain) // vox internals
 		former_captain.equipOutfit(/datum/outfit/job/assistant)
-		former_captain.dna.species.post_equip_species_outfit(null, former_captain, used_pref = former_captain.client?.prefs) // monkestation edit: vox internals
 
 	GLOB.manifest.modify(former_captain.real_name, JOB_ASSISTANT, JOB_ASSISTANT)
 	var/list/valid_turfs = list()

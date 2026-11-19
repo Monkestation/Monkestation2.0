@@ -27,13 +27,8 @@
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)
 		return
-	// monkestation edit start: vox get a mask that fits their beak. Like on Yogstation it replaces only breath masks, so other masks (explorer gas masks) stay.
-	if(isvox(loc))
-		var/vox_mask_type = pick(/obj/item/clothing/mask/breath/vox, /obj/item/clothing/mask/breath/vox/respirator)
-		new vox_mask_type(src)
-	if(!isnull(mask_type) && !(isvox(loc) && ispath(mask_type, /obj/item/clothing/mask/breath)))
+	if(!isnull(mask_type))
 		new mask_type(src)
-	// monkestation edit end
 
 	give_internals()
 
@@ -53,7 +48,7 @@
 /obj/item/storage/box/survival/proc/give_internals()
 	if(isplasmaman(loc))
 		return new /obj/item/tank/internals/plasmaman/belt(src)
-	if(isvox(loc)) // monkestation edit: vox breathe nitrogen
+	if(isvox(loc))
 		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen(src)
 
 	return new internal_type(src)
@@ -98,7 +93,7 @@
 /obj/item/storage/box/survival/engineer/give_internals()
 	if(isplasmaman(loc))
 		return new /obj/item/tank/internals/plasmaman/belt(src)
-	if(isvox(loc)) // monkestation edit: vox breathe nitrogen
+	if(isvox(loc))
 		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi(src)
 
 	return new internal_type(src)
@@ -120,7 +115,7 @@
 /obj/item/storage/box/survival/syndie/give_internals()
 	if(isplasmaman(loc))
 		return new /obj/item/tank/internals/plasmaman/belt(src)
-	if(isvox(loc)) // monkestation edit: vox breathe nitrogen
+	if(isvox(loc))
 		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi(src)
 
 	return new internal_type(src)

@@ -684,6 +684,14 @@
 	taste_description = "dragon's breath but not as cool"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/mutationtoxin/vox
+	name = "Vox Mutation Toxin"
+	description = "A shrieking toxin."
+	color = "#5EFF3B"
+	race = /datum/species/vox
+	taste_description = "dust and quills"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/mutationtoxin/fly
 	name = "Fly Mutation Toxin"
 	description = "An insectifying toxin."

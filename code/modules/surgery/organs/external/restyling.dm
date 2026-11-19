@@ -28,6 +28,13 @@
 
 	INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
+///Returns TRUE if any external organ inside the limb can be restyled with the given restyle type
+/obj/item/bodypart/proc/has_restylable_features(restyle_type)
+	for(var/obj/item/organ/external/feature in contents)
+		if(feature.restyle_flags & restyle_type)
+			return TRUE
+	return FALSE
+
 ///Asks the external organs inside the limb if they can restyle
 /obj/item/bodypart/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	var/list/valid_features = list()

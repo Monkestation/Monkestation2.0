@@ -160,7 +160,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	language ||= message_mods[LANGUAGE_EXTENSION] || get_selected_language()
-	message_mods[LANGUAGE_SPOKEN] = language // monkestation edit: language speech verbs
 
 	var/succumbed = FALSE
 

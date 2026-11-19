@@ -1220,6 +1220,9 @@
 /mob/living/carbon/human/species/shadow
 	race = /datum/species/shadow
 
+/mob/living/carbon/human/species/vox
+	race = /datum/species/vox
+
 /mob/living/carbon/human/species/shadow/nightmare
 	race = /datum/species/shadow/nightmare
 

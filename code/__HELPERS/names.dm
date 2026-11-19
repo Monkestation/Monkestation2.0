@@ -19,6 +19,12 @@
 /proc/plasmaman_name()
 	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
 
+/proc/vox_name()
+	var/new_name = ""
+	for(var/i in 1 to rand(2, 8))
+		new_name += pick("ti", "hi", "ki", "ya", "ta", "ha", "ka", "yi", "chi", "cha", "kah")
+	return new_name
+
 /proc/moth_name()
 	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
 

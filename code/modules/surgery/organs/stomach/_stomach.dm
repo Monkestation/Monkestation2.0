@@ -356,3 +356,16 @@
 	disease_free_foods = rat_cache
 
 #undef STOMACH_METABOLISM_CONSTANT
+
+/obj/item/organ/internal/stomach/vox
+	name = "gizzard"
+	desc = "Mechanical digestion."
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "stomach-vox"
+	decay_factor = 0
+
+/obj/item/organ/internal/stomach/vox/emp_act(severity)
+	. = ..()
+	if((. & EMP_PROTECT_SELF) || !owner)
+		return
+	owner.adjust_disgust(10)

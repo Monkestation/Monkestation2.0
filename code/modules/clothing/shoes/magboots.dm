@@ -100,3 +100,47 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 	slowdown_active = 0.5 //monkestation addition
 	magpulse_fishing_modifier = 6
 	fishing_modifier = 3
+
+/obj/item/clothing/shoes/magboots/vox
+	name = "vox magclaws"
+	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
+	icon = 'icons/obj/species/vox/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/species/vox/shoes.dmi'
+	icon_state = "boots-vox"
+	base_icon_state = "boots-vox"
+	supports_variations_flags = NONE
+	slowdown_active = 0 // like on Yogstation, gripping with claws doesn't slow you down
+
+/obj/item/clothing/shoes/magboots/vox/update_icon_state()
+	. = ..()
+	icon_state = base_icon_state // one sprite, gripping or not
+
+/obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)
+	if(!magpulse)
+		//make sure these can only be used when equipped.
+		var/mob/living/carbon/human/wearer = user
+		if(!istype(wearer) || wearer.shoes != src)
+			to_chat(user, span_warning("You will have to put on [src] before you can do that."))
+			return
+	. = ..()
+	if(magpulse)
+		//kinda hard to take off magclaws when you are gripping them tightly.
+		ADD_TRAIT(src, TRAIT_NODROP, REF(src))
+		to_chat(user, span_notice("You dig your claws deeply into the flooring, bracing yourself."))
+		to_chat(user, span_notice("It would be hard to take off [src] without relaxing your grip first."))
+	else
+		REMOVE_TRAIT(src, TRAIT_NODROP, REF(src))
+		to_chat(user, span_notice("You relax your deathgrip on the flooring."))
+
+//In case they somehow come off while enabled.
+/obj/item/clothing/shoes/magboots/vox/dropped(mob/user)
+	. = ..()
+	if(magpulse)
+		user.visible_message(span_notice("[src] go limp as they are removed from [user]'s feet."), span_notice("[src] go limp as they are removed from your feet."))
+		REMOVE_TRAIT(src, TRAIT_NODROP, REF(src))
+		attack_self(user)
+
+/obj/item/clothing/shoes/magboots/vox/examine(mob/user)
+	. = ..()
+	if(magpulse)
+		. += span_notice("It would be hard to take these off without relaxing your grip first.")

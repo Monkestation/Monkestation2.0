@@ -244,8 +244,9 @@
 	if(isplasmaman(H))
 		H.equipOutfit(plasmaman_outfit)
 		H.open_internals(H.get_item_for_held_index(2))
+	else
+		H.dna.species.give_important_for_life(H) // vox internals
 	H.equipOutfit(outfit)
-	H.dna.species.post_equip_species_outfit(null, H, used_pref = H.client?.prefs) // monkestation edit: vox internals
 	ADD_TRAIT(H?.mind, TRAIT_CAN_HYPNO, JOB_TRAIT)
 
 /datum/antagonist/ert/greet()

@@ -246,6 +246,17 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,
 	)
 
+/datum/design/vox_tank
+	name = "Vox Nitrogen Tank"
+	id = "vox_tank"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*8)
+	build_path = /obj/item/tank/internals/emergency_oxygen/vox/empty
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,
+	)
+
 /datum/design/generic_gas_tank
 	name = "Generic Gas Tank"
 	id = "generic_tank"

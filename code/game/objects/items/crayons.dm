@@ -110,7 +110,7 @@
 		"revolution",
 		"star",
 		"uboa",
-		"voxpox", // monkestation edit
+		"voxpox",
 	)
 	/// List of selectable symbol options
 	var/static/list/symbols = list(

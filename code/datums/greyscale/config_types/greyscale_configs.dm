@@ -1656,3 +1656,21 @@
 /datum/greyscale_config/plasmaman_suit/worn/doublebelt
 	name = "Plasmaman Double Belt Suit (Worn)"
 	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/doublebelt/plasmaman_suit_doublebelt_worn.json'
+
+// Vox shaped worn sprites, see /datum/species/vox/generate_custom_worn_icon()
+
+/datum/greyscale_config/jumpsuit/worn/vox
+	name = "Jumpsuit (Worn, Vox)"
+	icon_file = 'icons/mob/clothing/species/vox/greyscale.dmi'
+
+/datum/greyscale_config/jumpsuit_prison_worn/vox
+	name = "Worn Prison Jumpsuit (Vox)"
+	icon_file = 'icons/mob/clothing/species/vox/greyscale.dmi'
+
+/datum/greyscale_config/sneakers/worn/vox
+	name = "Sneakers (Worn, Vox)"
+	icon_file = 'icons/mob/clothing/species/vox/greyscale.dmi'
+
+/datum/greyscale_config/sneakers_orange/worn/vox
+	name = "Orange Sneakers (Worn, Vox)"
+	icon_file = 'icons/mob/clothing/species/vox/greyscale.dmi'

@@ -61,11 +61,6 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
  * * item: The item being rendered.
  */
 /datum/species/proc/generate_custom_worn_icon(item_slot, obj/item/item)
-	// Vox limbs on another species still wear vox-fitted clothing, like on Yogstation.
-	var/vox_icon = get_vox_fitted_worn_icon(item_slot, item)
-	if(vox_icon)
-		return vox_icon
-
 	// If already set (possibly by us, or manually, use it.)
 	var/icon/final_icon = get_custom_worn_icon(item_slot, item)
 	if(final_icon && icon_exists(final_icon, item.worn_icon_state || item.icon_state))
@@ -141,3 +136,19 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
 	set_custom_worn_icon_cached(human_icon, human_icon_state, item.greyscale_colors || "x", final_icon)
 
 	return final_icon
+
+/**
+ * Returns the icon file an underwear-like sprite accessory is drawn from.
+ * BODYSHAPE_CUSTOM wearers use the species' custom_worn_icons file for that slot, if it has the sprite. Otherwise it's the accessory's own icon.
+ * Arguments:
+ * * wearer: The human wearing it.
+ * * item_slot: LOADOUT_ITEM_UNDERWEAR, LOADOUT_ITEM_UNDERSHIRT or LOADOUT_ITEM_SOCKS.
+ * * accessory: The underwear, undershirt or socks sprite accessory.
+ */
+/datum/species/proc/get_custom_underwear_icon(mob/living/carbon/human/wearer, item_slot, datum/sprite_accessory/accessory)
+	if(!(wearer.bodyshape & BODYSHAPE_CUSTOM))
+		return accessory.icon
+	var/custom_icon = custom_worn_icons[item_slot]
+	if(custom_icon && icon_exists(custom_icon, accessory.icon_state))
+		return custom_icon
+	return accessory.icon

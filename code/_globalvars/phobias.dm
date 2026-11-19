@@ -470,7 +470,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 
 	"birds" = typecacheof(list(
 		/obj/item/clothing/head/costume/chicken,
-		// monkestation edit start: vox
 		/obj/item/toy/plush/voxplushie,
 		/obj/item/clothing/mask/breath/vox,
 		/obj/item/clothing/suit/space/vox,
@@ -480,7 +479,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/flag/species/vox,
 		/obj/item/stack/sheet/animalhide/vox,
 		/obj/item/organ/external/tail/vox,
-		// monkestation edit end
 		/obj/item/clothing/head/costume/griffin,
 		/obj/item/clothing/head/helmet/space/freedom,
 		/obj/item/clothing/mask/gas/owl_mask,
@@ -566,7 +564,7 @@ GLOBAL_LIST_INIT(phobia_species, list(
 		/datum/species/fly,
 		/datum/species/moth,
 	)),
-	"birds" = typecacheof(list(/datum/species/vox)), // monkestation edit
+	"birds" = typecacheof(list(/datum/species/vox)),
 	"lizards" = typecacheof(list(/datum/species/lizard)),
 	"robots" = typecacheof(list(/datum/species/android)),
 	"skeletons" = typecacheof(list(

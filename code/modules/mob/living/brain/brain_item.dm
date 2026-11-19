@@ -48,7 +48,7 @@
 	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
 	if(brain_owner?.mind?.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)
 		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
-			to_chat(brainmob, span_danger("You can't feel your body! You're still just a [brain_name]!")) // monkestation edit: brain_name
+			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(brain_owner)
 		brain_owner.update_body_parts()
 		return
@@ -145,12 +145,9 @@
 		// Hack, fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and shit
 		for(var/source in GET_TRAIT_SOURCES(L, TRAIT_BADDNA))
 			ADD_TRAIT(brainmob, TRAIT_BADDNA, source)
-	// monkestation edit: unclonable species (vox) stay unclonable as a lone brain, like on Yogstation
-	for(var/source in GET_TRAIT_SOURCES(L, TRAIT_NO_CLONE))
-		ADD_TRAIT(brainmob, TRAIT_NO_CLONE, source)
 	if(L.mind && L.mind.current)
 		L.mind.transfer_to(brainmob)
-	to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a [brain_name].")) // monkestation edit: brain_name
+	to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
 /obj/item/organ/internal/brain/attackby(obj/item/item, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -204,8 +201,7 @@
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
 			return TRUE
 
-		var/shade = (brain_name == "brain") ? " of pink" : "" // monkestation edit: cortical stacks aren't pink
-		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade[shade]."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade[shade]."))
+		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
 		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
 		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
@@ -309,7 +305,7 @@
 	if(HAS_TRAIT(src, TRAIT_BRAIN_DAMAGE_NODEATH))
 		return
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
-		to_chat(owner, span_userdanger("The last spark of life in your [brain_name] fizzles out...")) // monkestation edit: brain_name
+		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
 		owner.death()
 
@@ -589,3 +585,17 @@
 	old_brain.Remove(new_owner, special = TRUE, no_id_transfer = TRUE)
 	qdel(old_brain)
 	Insert(new_owner, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+
+/obj/item/organ/internal/brain/vox
+	name = "cortical stack"
+	desc = "A peculiarly advanced bio-electronic device that seems to hold the memories and identity of a Vox."
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "cortical-stack"
+	decay_factor = 0
+
+/obj/item/organ/internal/brain/vox/emp_act(severity)
+	. = ..()
+	if((. & EMP_PROTECT_SELF) || !owner)
+		return
+	to_chat(owner, span_warning("Your head hurts."))
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, severity == EMP_HEAVY ? 50 : 25)

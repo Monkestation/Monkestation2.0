@@ -15,6 +15,9 @@
 
 /datum/bodypart_overlay/simple/emote/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	var/image/image = ..()
+	// Limbs of a different shape can have their own version of the emote, like vox tears
+	if(limb && icon_exists(icon, "[icon_state]_[limb.limb_id]"))
+		image.icon_state = "[icon_state]_[limb.limb_id]"
 	feature_offset?.apply_offset(image)
 	return image
 

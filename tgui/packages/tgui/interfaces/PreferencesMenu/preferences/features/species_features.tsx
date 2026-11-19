@@ -1,11 +1,15 @@
+import { sortBy } from 'common/collections';
+
 import {
   CheckboxInput,
   type Feature,
   type FeatureChoiced,
+  type FeatureChoicedServerData,
   FeatureColorInput,
   FeatureDropdownInput,
   type FeatureToggle,
   type FeatureValueProps,
+  type HexValue,
   StandardizedPalette,
 } from './base';
 
@@ -323,4 +327,97 @@ export const feature_fish_tail_color: Feature<string> = {
 export const feature_cerulean_frills: FeatureToggle = {
   name: 'Fish frills',
   component: CheckboxInput,
+};
+
+type VoxSkinToneServerData = FeatureChoicedServerData & {
+  display_names: NonNullable<FeatureChoicedServerData['display_names']>;
+  to_hex: Record<string, HexValue>;
+};
+
+const sortHexValues = sortBy<[string, HexValue]>(
+  ([_, hexValue]) => -hexValue.lightness,
+);
+
+export const feature_vox_skin_tone: Feature<
+  string,
+  string,
+  VoxSkinToneServerData
+> = {
+  name: 'Skin Tone',
+  component: (
+    props: FeatureValueProps<string, string, VoxSkinToneServerData>,
+  ) => {
+    const { handleSetValue, serverData, value } = props;
+
+    if (!serverData) {
+      return null;
+    }
+
+    return (
+      <StandardizedPalette
+        choices={sortHexValues(Object.entries(serverData.to_hex)).map(
+          ([key]) => key,
+        )}
+        choices_to_hex={Object.fromEntries(
+          Object.entries(serverData.to_hex).map(([key, hex]) => [
+            key,
+            hex.value,
+          ]),
+        )}
+        displayNames={serverData.display_names}
+        onSetValue={handleSetValue}
+        value={value}
+      />
+    );
+  },
+};
+
+export const feature_vox_quills: FeatureChoiced = {
+  name: 'Quillstyle',
+  small_supplemental: false,
+  component: FeatureDropdownInput,
+};
+
+export const quill_color: Feature<string> = {
+  name: 'Quill Color',
+  small_supplemental: true,
+  description: "The color of your character's quills.",
+  component: FeatureColorInput,
+};
+
+export const feature_vox_facial_quills: FeatureChoiced = {
+  name: 'Facial Quillstyle',
+  small_supplemental: false,
+  component: FeatureDropdownInput,
+};
+
+export const facial_quill_color: Feature<string> = {
+  name: 'Facial Quill Color',
+  small_supplemental: true,
+  description: "The color of your character's facial quills.",
+  component: FeatureColorInput,
+};
+
+export const feature_vox_body_markings: FeatureChoiced = {
+  name: 'Body Markings',
+  description: 'Colored by the mutant color.',
+  component: FeatureDropdownInput,
+};
+
+export const feature_vox_tail_markings: FeatureChoiced = {
+  name: 'Tail Markings',
+  description: 'Colored by the secondary mutant color.',
+  component: FeatureDropdownInput,
+};
+
+export const feature_vox_tank_type: FeatureChoiced = {
+  name: 'N₂ Tank',
+  description: 'The nitrogen tank your character starts the shift with.',
+  component: FeatureDropdownInput,
+};
+
+export const feature_vox_mask: FeatureChoiced = {
+  name: 'Mask',
+  description: 'The breath mask your character starts the shift with.',
+  component: FeatureDropdownInput,
 };

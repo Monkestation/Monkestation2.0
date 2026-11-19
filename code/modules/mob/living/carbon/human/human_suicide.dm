@@ -73,7 +73,7 @@
 				"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.",
 				"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.",
 				"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.",
-			) + dna?.species?.get_suicide_messages(src)) // monkestation edit: species suicide messages
+			))
 
 		if(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
 			suicide_message = pick(list(

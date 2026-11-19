@@ -297,3 +297,21 @@
 
 /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi/empty/populate_gas()
 	return
+
+/obj/item/tank/internals/emergency_oxygen/vox
+	name = "vox specialized nitrogen tank"
+	desc = "A high-tech nitrogen tank designed specifically for Vox."
+	icon = 'icons/obj/species/vox/items.dmi'
+	icon_state = "emergency_vox"
+	inhand_icon_state = "emergency_vox"
+	lefthand_file = 'icons/obj/species/vox/tank_lefthand.dmi'
+	righthand_file = 'icons/obj/species/vox/tank_righthand.dmi'
+	worn_icon = 'icons/obj/species/vox/tank_worn.dmi'
+	worn_icon_state = "emergency_vox"
+	volume = 35
+
+/obj/item/tank/internals/emergency_oxygen/vox/populate_gas()
+	air_contents.set_gas(/datum/gas/nitrogen, (10 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
+/obj/item/tank/internals/emergency_oxygen/vox/empty/populate_gas()
+	return

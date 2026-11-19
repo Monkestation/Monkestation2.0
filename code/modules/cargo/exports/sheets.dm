@@ -40,6 +40,11 @@
 	unit_name = "lizard hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/lizard)
 
+/datum/export/stack/skin/vox
+	cost = CARGO_CRATE_VALUE * 0.75
+	unit_name = "vox hide"
+	export_types = list(/obj/item/stack/sheet/animalhide/vox)
+
 /datum/export/stack/skin/gondola
 	cost = CARGO_CRATE_VALUE * 10
 	unit_name = "gondola hide"

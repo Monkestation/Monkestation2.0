@@ -198,3 +198,44 @@
 
 /datum/bodypart_overlay/mutant/tail/shadekin/get_global_feature_list()
 	return GLOB.tails_list_shadekin
+
+/obj/item/organ/external/tail/vox
+	name = "vox tail"
+	desc = "A severed vox tail. Somewhere, no doubt, a vox hater is very pleased with themselves."
+	icon = 'icons/mob/human/species/vox/tails.dmi'
+	icon_state = "m_tail_vox_lime_BEHIND"
+	preference = "feature_vox_tail_markings"
+	dna_block = DNA_VOX_TAIL_MARKINGS_BLOCK
+	wag_flags = WAG_ABLE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/vox
+
+/obj/item/organ/external/tail/vox/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	color = null // our draw color is the color of the markings, the tail sprite has its own colors
+
+/// The tail is drawn in the skin tone of the body it's on, with its markings (the sprite accessory) on top.
+/// The markings sprites are dark, the secondary mutant color gets added to them.
+/datum/bodypart_overlay/mutant/tail/vox
+	feature_key = "vox_tail_markings"
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR_SECONDARY
+
+/datum/bodypart_overlay/mutant/tail/vox/get_global_feature_list()
+	return GLOB.vox_tail_markings_list
+
+/datum/bodypart_overlay/mutant/tail/vox/get_image(obj/item/bodypart/limb, layer_index, layer_real, layer_name)
+	var/skin_tone = limb?.get_drawn_limb_style() || VOX_DEFAULT_SKIN_TONE
+	var/wagging_prefix = wagging ? "wagging_" : ""
+	var/mutable_appearance/tail = mutable_appearance('icons/mob/human/species/vox/tails.dmi', "m_tail_vox_[wagging_prefix][skin_tone]_[layer_index]", layer = layer_real)
+	if(sprite_datum.icon_state != "plain")
+		var/mutable_appearance/markings = mutable_appearance(sprite_datum.icon, "m_[wagging_prefix]vox_tail_markings_[sprite_datum.icon_state]_[layer_index]")
+		markings.color = color_matrix_additive(draw_color)
+		tail.overlays += markings
+	return tail
+
+/datum/bodypart_overlay/mutant/tail/vox/color_image(image/overlay, obj/item/bodypart/limb, layer_index, key_name)
+	return // the markings are colored in get_image(), the tail itself isn't
+
+/obj/item/organ/external/tail/vox/fake
+	name = "fabricated vox tail"
+	desc = "A fabricated severed vox tail. This one's made of synthflesh."

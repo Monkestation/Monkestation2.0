@@ -157,15 +157,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["oni_tail"] = get_consistent_feature_entry(GLOB.oni_tail_list)
 	target.dna.features["apid_wings"] = get_consistent_feature_entry(GLOB.apid_wings_list)
 	target.dna.features["apid_antenna"] = get_consistent_feature_entry(GLOB.apid_antenna_list)
-	//Monkestation Addition Start: vox
-	target.dna.features["vox_skin_tone"] = "lime"
 	target.dna.features["vox_quills"] = get_consistent_feature_entry(GLOB.vox_quills_list)
 	target.dna.features["vox_facial_quills"] = get_consistent_feature_entry(GLOB.vox_facial_quills_list)
 	target.dna.features["vox_body_markings"] = get_consistent_feature_entry(GLOB.vox_body_markings_list)
-	target.dna.features["vox_body_markings_color"] = COLOR_DARKER_BROWN
 	target.dna.features["vox_tail_markings"] = get_consistent_feature_entry(GLOB.vox_tail_markings_list)
-	target.dna.features["vox_tail_markings_color"] = COLOR_DARKER_BROWN
-	//Monkestation Addition End
 
 
 	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]

@@ -216,3 +216,25 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	apply_organ_damage(40/severity)
+
+/obj/item/organ/internal/ears/vox
+	name = "vox ears"
+	desc = "Researchers hypothesize that the titanium reinforced tympanic membrane takes the piercing edge off their own shrieking."
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "ears-vox"
+	decay_factor = 0
+
+/obj/item/organ/internal/ears/vox/emp_act(severity)
+	. = ..()
+	if((. & EMP_PROTECT_SELF) || !owner)
+		return
+	ADD_TRAIT(owner, TRAIT_DEAF, REF(src))
+	addtimer(CALLBACK(src, PROC_REF(end_emp_deafness), owner), 20 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/item/organ/internal/ears/vox/proc/end_emp_deafness(mob/living/carbon/deafened)
+	if(!QDELETED(deafened))
+		REMOVE_TRAIT(deafened, TRAIT_DEAF, REF(src))
+
+/obj/item/organ/internal/ears/vox/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, REF(src))

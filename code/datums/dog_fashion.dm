@@ -251,3 +251,7 @@
 	obj_icon_state = "eyepatch"
 	emote_hear = list("sighs gruffly.", "groans.")
 	emote_see = list("considers their own mortality.", "stares bleakly into the middle distance.", "ponders the horrors of warfare.")
+
+/datum/dog_fashion/head/fried_vox_empty
+	name = "Colonel %REAL_NAME%"
+	desc = "Keep away from live Vox."

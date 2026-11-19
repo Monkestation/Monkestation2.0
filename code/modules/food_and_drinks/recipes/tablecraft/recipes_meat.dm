@@ -336,3 +336,12 @@
 	)
 	result = /obj/item/food/kebab/pineapple_skewer
 	category = CAT_MEAT
+
+/datum/crafting_recipe/food/fried_vox
+	name = "Kentucky Fried Vox"
+	reqs = list(
+		/obj/item/food/meat/slab/human/mutant/vox = 1,
+		/obj/item/stack/sheet/animalhide/vox = 1,
+	)
+	result = /obj/item/food/fried_vox
+	category = CAT_MEAT

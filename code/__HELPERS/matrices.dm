@@ -206,6 +206,17 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 	return list(cosval,sinval,0,0, -sinval,cosval,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 
 
+/// Returns a color matrix that adds the given color instead of multiplying by it, for dark sprites that get brighter with color (like vox markings and quills)
+/proc/color_matrix_additive(color)
+	var/list/rgb = rgb2num(sanitize_hexcolor(color, include_crunch = TRUE))
+	return list(
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1,
+		rgb[1] / 255, rgb[2] / 255, rgb[3] / 255, 0,
+	)
+
 //Returns a matrix addition of A with B
 /proc/color_matrix_add(list/A, list/B)
 	if(!istype(A) || !istype(B))

@@ -80,6 +80,12 @@
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/item/organ/external/tail/lizard = TRUE)
 
+/datum/bounty/item/medical/vox_tail
+	name = "Vox Tail"
+	description = "Negotiations have broken down between Central Command and a group of Vox raiders. Ship us a vox tail so we can show them we mean business."
+	reward = CARGO_CRATE_VALUE * 6
+	wanted_types = list(/obj/item/organ/external/tail/vox = TRUE)
+
 /datum/bounty/item/medical/cat_tail
 	name = "Cat Tail"
 	description = "Central Command has run out of heavy duty pipe cleaners. Can you ship over a cat tail to help us out?"

@@ -281,7 +281,7 @@
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/monkey)
 
-/datum/supply_pack/goody/vox_encryption_key // monkestation edit
+/datum/supply_pack/goody/vox_encryption_key
 	name = "Vox-pidgin radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand Vox-pidgin when the radio is worn."
 	cost = PAYCHECK_CREW * 12

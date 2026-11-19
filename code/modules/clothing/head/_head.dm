@@ -77,7 +77,6 @@
 
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "helmetblood")
-		vox_fit_blood_overlay(blood_overlay, LOADOUT_ITEM_HEAD) // monkestation edit: vox
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 

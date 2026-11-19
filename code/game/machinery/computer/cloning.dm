@@ -541,7 +541,7 @@
 			scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 			playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, 0)
 			return
-	if(HAS_TRAIT(mob_occupant.mind, TRAIT_NO_CLONE) || HAS_TRAIT(mob_occupant, TRAIT_NO_CLONE)) // monkestation edit: species can be unclonable too
+	if(HAS_TRAIT(mob_occupant.mind, TRAIT_NO_CLONE) || HAS_TRAIT(mob_occupant, TRAIT_NO_CLONE))
 		scantemp = "<font class='bad'>Subject's brain neurons are too short to be scanned.</font>"
 		playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, 0)
 		return

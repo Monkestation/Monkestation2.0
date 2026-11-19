@@ -103,6 +103,15 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/lizard
 
+/obj/item/stack/sheet/animalhide/vox
+	name = "vox hide"
+	desc = "SKREE!"
+	singular_name = "vox hide piece"
+	icon = 'icons/obj/species/vox/items.dmi'
+	icon_state = "sheet-vox"
+	inhand_icon_state = null
+	merge_type = /obj/item/stack/sheet/animalhide/vox
+
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien hide"
 	desc = "The skin of a terrible creature."
