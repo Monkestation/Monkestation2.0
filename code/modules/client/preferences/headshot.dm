@@ -1,3 +1,5 @@
+GLOBAL_VAR(admin_approving_headshot)
+
 /datum/preference/text/headshot
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -31,13 +33,15 @@
 		return FALSE
 
 	if(usr)
-		var/static/list/last_logged = list()
-		var/ckey = usr.ckey
-		if(last_logged[ckey] != value)
-			log_game("[key_name(usr)] set their headshot to: [value]")
-			last_logged[ckey] = value
+		if(GLOB.admin_approving_headshot == value)
+			return TRUE
 
-	return TRUE
+		WRITE_LOG("[GLOB.log_directory]/headshots.log", "\[[time2text(world.realtime,"YYYY-MM-DD hh:mm:ss")]\] [key_name(usr)] submitted a new headshot for approval: [value]")
+
+		message_admins("[ADMIN_LOOKUPFLW(usr)] submitted a headshot: <a href='[value]' target='_blank'>[value]</a> | <a href='?src=[REF(src)];approve_headshot=[usr.ckey];url=[url_encode(value)]'>\[Approve]</a>")
+		to_chat(usr, span_notice("Your headshot has been submitted and is pending administrator approval."))
+
+	return FALSE
 
 /datum/preference/text/headshot/deserialize(input, datum/preferences/preferences)
 	. = ..(input, preferences)
@@ -58,6 +62,32 @@
 	if(!compiled_link_regex.Find(.))
 		return ""
 
+/datum/preference/text/headshot/Topic(href, href_list)
+	. = ..()
+	if(.)
+		return
+
+	if(href_list["approve_headshot"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/target_ckey = href_list["approve_headshot"]
+		var/approved_url = url_decode(href_list["url"])
+		var/client/C = GLOB.directory[target_ckey]
+
+		if(!C || !C.prefs)
+			to_chat(usr, span_warning("Could not find active client preferences for ckey: [target_ckey]"))
+			return
+
+		GLOB.admin_approving_headshot = approved_url
+		C.prefs.write_preference(src, approved_url)
+		GLOB.admin_approving_headshot = null
+
+		C.prefs.save_preferences()
+
+		to_chat(C, span_notice("Your headshot has been approved by an administrator!"))
+		message_admins("[key_name_admin(usr)] approved the headshot for [target_ckey]: [approved_url]")
+		WRITE_LOG("[GLOB.log_directory]/headshots.log", "\[[time2text(world.realtime,"YYYY-MM-DD hh:mm:ss")]\] [key_name(usr)] approved headshot for [target_ckey] to: [approved_url]")
 
 /datum/preference/toggle/see_headshots
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

@@ -3,6 +3,6 @@ import { type Feature, FeatureShortTextInput } from '../base';
 export const headshot: Feature<string> = {
   name: 'Character Artwork',
   description:
-    'Paste a direct HTTPS image link from an allowed image hosting service  . Supported formats: JPG, PNG, JPEG, and WebP',
+    'Paste a direct HTTPS image link from an allowed image hosting service. Supported formats: JPG, PNG, JPEG, and WebP, Note that it requires admin approval first!',
   component: FeatureShortTextInput,
 };
