@@ -95,6 +95,7 @@
 	if(!SSatoms.initialized)
 		return
 
+	SSair.hold_machinery_for_template()
 	SSatoms.InitializeAtoms(areas + turfs + movables, returns_created_atoms ? created_atoms : null)
 
 	for(var/turf/unlit as anything in turfs)

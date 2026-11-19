@@ -33,6 +33,8 @@ SUBSYSTEM_DEF(air)
 	var/list/adjacent_rebuild = list()
 	/// A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.
 	var/list/obj/machinery/atmos_machinery = list()
+	/// Machine processing is skipped while this runs, so machines in a template that's still loading don't run before their pipenets exist
+	COOLDOWN_DECLARE(machinery_hold)
 
 	var/list/pipe_init_dirs_cache = list()
 	//atmos singletons
@@ -314,6 +316,8 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = FALSE)
+	if(!COOLDOWN_FINISHED(src, machinery_hold))
+		return
 	if (!resumed)
 		src.currentrun = atmos_machinery.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -733,6 +737,10 @@ GLOBAL_LIST_EMPTY(colored_images)
 			shiny.color = sharp_color
 			GLOB.colored_images += shiny
 
+/// Call before initializing a template's atoms, setup_template_machinery lifts it. The deadline is there so a runtime mid-load can't freeze atmos machinery for good.
+/datum/controller/subsystem/air/proc/hold_machinery_for_template()
+	COOLDOWN_START(src, machinery_hold, 10 SECONDS)
+
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	var/obj/machinery/atmospherics/AM
 	for(var/A in 1 to atmos_machines.len)
@@ -747,6 +755,8 @@ GLOBAL_LIST_EMPTY(colored_images)
 			build_target.build_pipeline_blocking(AM)
 			build_target = AM.get_rebuild_target()
 		CHECK_TICK
+
+	COOLDOWN_RESET(src, machinery_hold)
 
 
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir, init_dir)
