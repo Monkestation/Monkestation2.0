@@ -16,6 +16,7 @@
 #define ARTIFACT_VERYUNCOMMON 300
 #define ARTIFACT_RARE 250
 #define ARTIFACT_VERYRARE 125
+#define ARTIFACT_SUPERRARE 25
 
 //cuts down on boiler plate code, last 3 args can be null.
 #define ARTIFACT_SETUP(X,subsystem,forced_origin,forced_effect,forced_size) ##X/Initialize(mapload){\
