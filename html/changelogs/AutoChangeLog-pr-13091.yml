@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Syndicate bomb timers are now capped at 100 minutes instead of roughly 16 hours."
