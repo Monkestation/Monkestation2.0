@@ -70,7 +70,7 @@
 		/obj/item/gun,
 		/obj/item/storage/belt/holster/detective,
 		/obj/item/storage/belt/holster/nukie,
-		/obj/item/storage/belt/holster/energy,
+		/obj/item/storage/belt/holster,
 	)
 	armor_type = /datum/armor/hardsuit/juggernaut
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/juggernaut
