@@ -15,7 +15,7 @@
 	move_force = INFINITY
 	move_resist = INFINITY
 	pull_force = INFINITY
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	movement_type = PHASING | FLYING
 	plane = ABOVE_LIGHTING_PLANE
 	light_outer_range = 6

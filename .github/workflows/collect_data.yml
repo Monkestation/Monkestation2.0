@@ -22,7 +22,7 @@ on:
 jobs:
   collect_data:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 15
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
       map_config: ${{ steps.map_finder.outputs.map_config }}
