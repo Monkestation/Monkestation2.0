@@ -33,7 +33,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	/// MONKESTATION EDIT: If true admins get messaged when it recieves a fax, for CC offices or other schnanigans.
 	var/recieve_notifies_admins = FALSE
 	/// Is the fax from an AI upgrade?
-	var/ai_fax = TRUE //dumbass, dont forget to change this!!!!!!
+	var/ai_fax = FALSE
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
 		/obj/item/paper,

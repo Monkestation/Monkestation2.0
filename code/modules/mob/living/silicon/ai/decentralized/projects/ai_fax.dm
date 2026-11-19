@@ -2,7 +2,7 @@
 	name = "AI Fax Machine"
 	description = "Bodge together a working fax machine by using the mainframe's diagnostic printout machine."
 	category = AI_PROJECT_MISC
-	research_cost = 1
+	research_cost = 250
 	var/datum/action/innate/ai/fax_machine_ability
 
 /datum/ai_project/ai_fax/run_project(force_run = FALSE)
