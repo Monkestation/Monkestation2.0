@@ -1,3 +1,7 @@
+#define UPPER_LIP "Upper"
+#define MIDDLE_LIP "Middle"
+#define LOWER_LIP "Lower"
+
 /obj/item/lipstick
 	gender = PLURAL
 	name = "red lipstick"
@@ -10,7 +14,8 @@
 	var/open = FALSE
 	/// Actual color of the lipstick, also gets applied to the human
 	var/lipstick_color = COLOR_RED
-
+	/// The style of lipstick. Upper, middle, or lower lip. Default is middle.
+	var/style = "lipstick"
 	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
 	var/lipstick_trait
 
@@ -27,6 +32,10 @@
 	if(vname == NAMEOF(src, open))
 		update_appearance(UPDATE_ICON)
 
+/obj/item/lipstick/examine(mob/user)
+	. = ..()
+	. += "Alt-click to change the style."
+
 /obj/item/lipstick/update_icon_state()
 	var/initial_icon_state = icon_state
 	icon_state = "[icon_state][open ? "_uncap" : null]"
@@ -41,6 +50,36 @@
 	var/mutable_appearance/colored_overlay = mutable_appearance(icon, "lipstick_uncap_color")
 	colored_overlay.color = lipstick_color
 	. += colored_overlay
+
+/obj/item/lipstick/click_alt(mob/user)
+	display_radial_menu(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/lipstick/proc/display_radial_menu(mob/living/carbon/human/user)
+	var/style_options = list(
+		UPPER_LIP = icon('icons/hud/radial.dmi', UPPER_LIP),
+		MIDDLE_LIP = icon('icons/hud/radial.dmi', MIDDLE_LIP),
+		LOWER_LIP = icon('icons/hud/radial.dmi', LOWER_LIP),
+	)
+	var/pick = show_radial_menu(user, src, style_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
+	if(!pick)
+		return TRUE
+
+	switch(pick)
+		if(MIDDLE_LIP)
+			style = "lipstick"
+		if(LOWER_LIP)
+			style = "lipstick_lower"
+		if(UPPER_LIP)
+			style = "lipstick_upper"
+	return TRUE
+
+/obj/item/lipstick/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.is_holding(src))
+		return FALSE
+	return TRUE
 
 /obj/item/lipstick/purple
 	name = "purple lipstick"
@@ -122,7 +161,7 @@
 	if(target == user)
 		user.visible_message(span_notice("[user] does [user.p_their()] lips with \the [src]."), \
 			span_notice("You take a moment to apply \the [src]. Perfect!"))
-		target.update_lips("lipstick", lipstick_color, lipstick_trait)
+		target.update_lips(style, lipstick_color, lipstick_trait)
 		return
 
 	user.visible_message(span_warning("[user] begins to do [target]'s lips with \the [src]."), \
@@ -131,7 +170,7 @@
 		return
 	user.visible_message(span_notice("[user] does [target]'s lips with \the [src]."), \
 		span_notice("You apply \the [src] on [target]'s lips."))
-	target.update_lips("lipstick", lipstick_color, lipstick_trait)
+	target.update_lips(style, lipstick_color, lipstick_trait)
 
 
 //you can wipe off lipstick with paper!
@@ -152,3 +191,7 @@
 	user.visible_message(span_notice("[user] wipes [target]'s lipstick off with \the [src]."), \
 		span_notice("You wipe off [target]'s lipstick."))
 	target.update_lips(null)
+
+#undef UPPER_LIP
+#undef MIDDLE_LIP
+#undef LOWER_LIP

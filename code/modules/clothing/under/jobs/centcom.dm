@@ -106,6 +106,7 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/centcom/admiral
+	can_adjust = FALSE
 	name = "\improper CentCom Admiral's suit"
 	desc = "It's a suit worn by a higher authority than any could imagine."
 	icon_state = "admiral"
@@ -130,4 +131,4 @@
 	inhand_icon_state = "dg_suit"
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'icons/mob/clothing/uniform.dmi'
-	can_adjust = TRUE
+	can_adjust = FALSE

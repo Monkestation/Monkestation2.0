@@ -807,3 +807,131 @@
   - code_imp: vv copy_outfit now disallows null name outfits, and copies cybernetics
   flleeppyy:
   - rscadd: Ariral plush, mapped in to a few locations on select maps
+2026-11-19:
+  AberrantQuerist:
+  - image: Parallax overhaul. Lavaland, asteroids, and several star layers are now
+      present in the background.
+  - image: Blue/"space" nebulae is now more common, while more outlandish or fantastical
+      nebulae colouring is less likely.
+  Absolucy:
+  - bugfix: maybe fixes roundend/reboot sounds not playing
+  - rscadd: Added lavaland versions of iron, uranium, diamond, silver, titanium, plasma
+      and bananium rock for mappers
+  - image: Mining scanner ore overlays have new sprites
+  - bugfix: Mining scanner radar ping volume now depends on how close a vent is
+  - bugfix: Basic mobs can't pull boulders out of vents anymore
+  - bugfix: Ore vents clear the walls around the vent instead of around the player
+  - bugfix: The hunter blood-drunk miner dashes after hitting you again
+  - bugfix: Bosses stop firing volleys once they're dead
+  - bugfix: Cursed tendrils curse people near the tendril, and ash walker nest logs
+      list the right people
+  - bugfix: Regrown mining rock gets richer ore once lavaland points are high enough
+  - bugfix: Cliffs no longer smooth into elevated floors
+  - bugfix: Snowy and ash rock join station walls like they should
+  - bugfix: Fixed ore asteroid rock draws properly
+  AitorLogedo:
+  - bugfix: Regenerative Coma and Plasma Fixation no longer keep their effects after
+      you're cured.
+  - bugfix: Sheep can be sheared with a razor again.
+  - bugfix: Robotic chickens EMP what they hit again.
+  - bugfix: Broken leg bones hurt when you walk on them again.
+  - bugfix: Taking off gauze or a splint updates the wound properly.
+  - bugfix: Material bane triggers when the bane gets embedded in you.
+  - bugfix: The MOD mirage grenade dispenser dispenses grenades again.
+  - bugfix: Deconstructing a griddle with a crowbar no longer deletes the crowbar.
+  - bugfix: Fixed admin verb permission checks when used from panels.
+  - bugfix: Hand items like finger guns can't be put in the MOD holster anymore.
+  - bugfix: Emagged wall safes no longer turn invisible.
+  - bugfix: Jumpsuits without a casual sprite can't be adjusted into invisibility
+      anymore.
+  - bugfix: Mk-honk shoes can be refilled with bananium again.
+  - bugfix: Water spray only bothers cat people.
+  - bugfix: The HoP and captain naval caps have armor like their normal caps.
+  - bugfix: The AI needs the examination upgrade to examine humans, no matter how
+      it examines.
+  - bugfix: You can't pixel shift while stunned or immobilized.
+  - bugfix: Offstation comms consoles can't request the spare ID safe codes.
+  - bugfix: Droppers can be used on open growth dishes.
+  - bugfix: Repacking the same machine twice at once no longer dupes it.
+  - bugfix: Deployable solar panels and trackers no longer leave their assembly behind
+      when repacked.
+  - bugfix: Building a solar tracker uses up the assembly instead of duplicating it.
+  - bugfix: Spam clicking a flatpack no longer deploys more than one machine.
+  - bugfix: Cortical borers no longer freeze to death inside a cold corpse sitting
+      in a warm room
+  EnterTheJake:
+  - bugfix: 'Radiation sickness works again: prolonged exposure can now make you collapse,
+      vomit blood, mutate and lose your hair.'
+  - bugfix: Radiation no longer makes hairless heads (robotic heads, pod people) "lose"
+      their hair.
+  - bugfix: Brig Physicians no longer spawn with a blank PDA
+  - bugfix: Flipped-up welding goggles no longer cover your eyes.
+  - bugfix: 'Reverse bear trap victims now see who''s trapping them, not their own
+      name.
+
+      ## Pre-Merge Checklist
+
+      - [ x] You tested this on a local server.
+
+      - [x ] This code did not runtime during testing.
+
+      - [x ] You documented all of your changes.'
+  - bugfix: Floor tiles are now worth a quarter of an iron sheet, fixing an iron duplication
+      exploit.
+  - bugfix: Fixed a runtime when tongueless flesh heretics upgrade their passive.
+  - bugfix: Fire breath now properly scorches objects caught in the cone.
+  - bugfix: Reagent containers (beakers, bottles, glasses, syringes, etc.) are no
+      longer immune to fire.
+  - bugfix: Eldritch Essence now heals heretic ghouls and lunatics.
+  - bugfix: Mute and muzzled chuunibyous can no longer shout their spell lines on
+      non invocation spells.
+  - bugfix: Chav and Elvis mutations now use their correct speech patterns.
+  - bugfix: Cyborgs hit with a security baton are now told who hit them, instead of
+      themselves.
+  - bugfix: Fixed the flashlight sitting too high on regular disablers.
+  - bugfix: Training bombs no longer alert ghosts and admins like real bombs.
+  - bugfix: Hardly wounded people no longer take worse wounds than normal people from
+      heavy hits.
+  - balance: Easily wounded and hardly wounded now raise or lower the maximum wound
+      severity a single hit can roll, instead of scaling the hit's damage.
+  - bugfix: Syndicate bomb timers are now capped at 100 minutes instead of roughly
+      16 hours.
+  - bugfix: Viscerators no longer body-block people.
+  - balance: Viscerators can now fly over machines and through plastic flaps.
+  - bugfix: Gluon grenades now irradiate again.
+  - bugfix: Fixed several uplink items being hidden from their categories or missing
+      from the uplink entirely.
+  - bugfix: Traitors can buy the Syndicate Holster again.
+  - bugfix: The Refined Matter Eater Mutator is available to geneticists again.
+  EnterTheJaks:
+  - bugfix: finger guns now credit the proper user
+  Evalence0:
+  - rscadd: Added new "Chronically Overweight" quirk
+  ashallaryn:
+  - rscadd: 'New Quirk: Intrusive Thoughts'
+  - rscadd: 'New Special Brain Trauma: Intrusive Thoughts (Variant of Split Personality)'
+  - rscadd: 'New action: Intrusive Thought (variant of Personality Commune)'
+  desertmote, vinylspiders, Charlotte-Sugar, SmArtKar, Neocloudy, Melbert:
+  - rscadd: 'A new species to play: Cerulean!'
+  - rscadd: The hydro-vaporizer, a wearable device functional like an internals tank,
+      but for water vapor
+  - rscadd: A new light/two person pirate team, the Siren Shimai
+  - rscadd: A compact laser shotgun, for the aforementioned pirate team
+  - rscadd: An armored leather jacket, for the aforementioned pirate team
+  - rscadd: Added new hairstyles
+  - image: you can now change the style of lipstick to be higher or lower on the face
+      by alt-clicking the lipstick tube
+  - code_imp: Species can change what goes in their survival box, plasmamen use it
+      now
+  - code_imp: Areas can be set to have no gravity even with a gravity generator on
+      the level
+  - bugfix: Mobs spawned with a species already set now get their species heat and
+      cold modifiers
+  - bugfix: Ceruleans picking up special shoes (like noslips) no longer permanently
+      breaks the shoes
+  - bugfix: Ceruleans no longer turn back to human skin when they lose their tail
+      or one of their fish organs
+  - bugfix: Prosthetic quirks no longer give limbs or organs you don't have, and won't
+      give lungs to species that don't breathe oxygen
+  tattax:
+  - bugfix: fix trasenknox pull icon sometimes showing up as the righthand cuff spritte
