@@ -7,7 +7,7 @@
 	lose_text = span_danger("You no longer feel so full.")
 	medical_record_text = "Patient has a metabolism that captures calories from unknown sources."
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES
-	maximum_process_stat = DEAD
+	no_process_traits = list(TRAIT_STASIS, TRAIT_NOHUNGER, TRAIT_GENELESS)
 	species_blacklist = list(SPECIES_IPC, SPECIES_ETHEREAL, SPECIES_OOZELING)
 
 /datum/quirk/fat/process(seconds_per_tick, times_fired)
