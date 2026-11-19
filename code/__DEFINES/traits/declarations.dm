@@ -693,6 +693,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GHOST_CRITTER "ghost_critter"
 /// This mob is *currently* being flashed by someone with CAN_BYPASS_INNATE_FLASH_RESISTANCE returning TRUE. Used to make IPCs not immune to rev and bb conversions.
 #define TRAIT_CONVERSION_FLASHED "conversion_flashed"
+/// This mob is being flashed by a blood brother, who ignores eye protection from the eyes
+#define TRAIT_BROTHER_CONVERSION_FLASHED "brother_conversion_flashed"
 /// For when a mob has been consumed by a zombie
 #define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
 /// Applied when blight is cured. Prevents getting blight again while present.

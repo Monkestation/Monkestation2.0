@@ -6,7 +6,7 @@
 #define CLONE_INITIAL_DAMAGE     150    //Clones in clonepods start with 150 cloneloss damage and 150 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
-#define SPEAK(message) radio.talk_into(src, message, radio_channel)
+#define SPEAK(message) if(!silent_clone) radio.talk_into(src, message, radio_channel)
 
 
 //used by cloner
@@ -44,6 +44,8 @@
 
 	var/datum/mind/clonemind
 	var/grab_ghost_when = CLONER_MATURE_CLONE
+	/// Set during a blood brother hack clone so the pod stays quiet
+	var/silent_clone = FALSE
 
 	var/internal_radio = TRUE
 	var/obj/item/radio/radio
@@ -100,6 +102,12 @@
 
 /obj/machinery/clonepod/examine(mob/user)
 	. = ..()
+	// Defined twice in this file and both run, so the hint only goes here. Red to stand out from the blue text.
+	if(user.mind?.has_antag_datum(/datum/antagonist/brother))
+		if(connected)
+			. += span_warning("As a blood brother, you can clone a dead brother through this pod by <b>alt clicking</b> its linked cloning console to hack it.")
+		else
+			. += span_warning("As a blood brother, you could clone a dead brother through this pod by hacking a cloning console linked to it, but it isn't linked to one.")
 	. += "<span class='notice'>The <i>linking</i> device can be <i>scanned<i> with a multitool.</span>"
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Cloning speed at <b>[speed_coeff*50]%</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.<span>"
@@ -136,18 +144,19 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(clonename, mutations, underwear, undershirt, socks, datum/dna/dna, mindref, factions, list/quirks, datum/bank_account/insurance, list/traumas, empty)
+/// bypass_restrictions is for the blood brother cloning hack, it ignores the IPC and bloodsucker blocks
+/obj/machinery/clonepod/proc/growclone(clonename, mutations, underwear, undershirt, socks, datum/dna/dna, mindref, factions, list/quirks, datum/bank_account/insurance, list/traumas, empty, bypass_restrictions = FALSE)
 	if(panel_open)
 		return NONE
 	if(mess || attempting)
 		return NONE
-	if(!isnull(dna.species) && (dna.species::inherent_biotypes & MOB_ROBOTIC)) // no cloning IPCs
+	if(!bypass_restrictions && !isnull(dna.species) && (dna.species::inherent_biotypes & MOB_ROBOTIC)) // no cloning IPCs
 		return NONE
 	if(!empty) //Doesn't matter if we're just making a copy
 		clonemind = locate(mindref) in SSticker.minds
 		if(!istype(clonemind))	//not a mind
 			return NONE
-		if(clonemind.has_antag_datum(/datum/antagonist/bloodsucker)) // no cloning bloodsuckers.
+		if(!bypass_restrictions && clonemind.has_antag_datum(/datum/antagonist/bloodsucker)) // no cloning bloodsuckers.
 			return NONE
 		if(!QDELETED(clonemind.current))
 			if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
@@ -160,6 +169,7 @@
 			if(HAS_TRAIT(G, TRAIT_SUICIDED)) // The ghost came from a body that is suiciding.
 				return NONE
 		current_insurance = insurance
+	silent_clone = bypass_restrictions
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
@@ -392,6 +402,8 @@
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
+	if (silent_clone)
+		return FALSE
 	if ((isnull(connected)) || (!istype(connected, /obj/machinery/computer/cloning)))
 		return FALSE
 	if (!message)
@@ -432,7 +444,8 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
 
-	var/policy = get_policy(POLICY_REVIVAL_CLONER) || get_policy(POLICY_REVIVAL)
+	// A blood brother's hacked clone counts as an antagonistic revival
+	var/policy = silent_clone ? get_policy(POLICY_ANTAGONISTIC_REVIVAL) : (get_policy(POLICY_REVIVAL_CLONER) || get_policy(POLICY_REVIVAL))
 	if(policy)
 		to_chat(occupant, policy)
 

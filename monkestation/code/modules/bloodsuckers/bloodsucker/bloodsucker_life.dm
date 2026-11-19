@@ -340,6 +340,17 @@
 		)
 		addtimer(CALLBACK(body, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
+/// Undoes Final Death for a bloodsucker brought back by a blood brother's cloning hack
+/datum/antagonist/bloodsucker/proc/restore_from_final_death()
+	if(!final_death)
+		return
+	final_death = FALSE
+	handling_death = FALSE
+	// Reset to the starting blood
+	bloodsucker_blood_volume = initial(bloodsucker_blood_volume)
+	// Final Death unregistered this
+	RegisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up), override = TRUE)
+
 /datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
 	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	heal_vampire_organs(new_body)

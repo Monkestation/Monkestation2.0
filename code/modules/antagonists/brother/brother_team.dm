@@ -11,10 +11,16 @@
 	var/datum/bb_gear/chosen_gear
 	/// The index of GLOB.color_list_blood_brothers to use to generate the color.
 	var/static/next_color = 1
-	var/brothers_left = 2
+	var/brothers_left = 3
 	var/brother_chance = 10
 	///List of people who rejected being our brother
 	var/list/rejected_brothers = list()
+
+/datum/team/brother_team/New(starting_members)
+	// Roll the extra conversion once, when the team is made
+	if(prob(brother_chance))
+		brothers_left++
+	return ..()
 
 /datum/team/brother_team/add_member(datum/mind/new_member)
 	. = ..()
@@ -22,7 +28,7 @@
 		add_brother(new_member.current)
 	roll_for_color()
 
-/datum/team/brother_team/remove_member(datum/mind/member)
+/datum/team/brother_team/remove_member(datum/mind/member, removal_message)
 	if (!(member in members))
 		return
 	. = ..()
@@ -30,11 +36,20 @@
 	if (!length(members))
 		qdel(src)
 		return
-	if (isnull(member.current))
-		return
 	for (var/datum/mind/brother_mind as anything in members)
-		to_chat(brother_mind, span_warning("[span_bold("[member.current.real_name]")] is no longer your brother!"))
+		to_chat(brother_mind.current, removal_message || span_warning("[span_bold("[member.current?.real_name || member.name]")] is no longer your brother!"))
 	update_name()
+
+/// Changes how many conversions the team has left, and lets every brother know
+/datum/team/brother_team/proc/adjust_conversion_charges(amount)
+	brothers_left = max(brothers_left + amount, 0)
+	for (var/datum/mind/member as anything in members)
+		var/datum/antagonist/brother/bond = member.has_antag_datum(/datum/antagonist/brother)
+		if (brothers_left > 0)
+			bond?.start_converting()
+		else
+			bond?.stop_converting()
+		to_chat(member.current, span_notice("Your bond can convert [brothers_left] more [brothers_left == 1 ? "person" : "people"]."))
 
 /// Adds a new brother to the team
 /datum/team/brother_team/proc/add_brother(mob/living/new_brother, source)
@@ -43,6 +58,9 @@
 	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
 	var/datum/antagonist/brother/brother = new_brother.mind.has_antag_datum(/datum/antagonist/brother)
 	brother.brotherRank = members.len - 1
+	// Only starting brothers (no source) get the HUD
+	if(isnull(source))
+		brother.give_security_hud()
 	return TRUE
 
 /datum/team/brother_team/proc/update_name()
@@ -70,10 +88,10 @@
 	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (length(members) > 2) - is_hijacker))
 		forge_single_objective()
 	if(is_hijacker)
-		if(!locate(/datum/objective/hijack) in objectives)
-			add_objective(new /datum/objective/hijack)
-	else if(!locate(/datum/objective/escape) in objectives)
-		add_objective(new /datum/objective/escape)
+		if(!locate(/datum/objective/hijack/onesurvivor) in objectives)
+			add_objective(new /datum/objective/hijack/onesurvivor)
+	else if(!locate(/datum/objective/escape/onesurvivor) in objectives)
+		add_objective(new /datum/objective/escape/onesurvivor)
 
 	for(var/datum/mind/brother as anything in members)
 		var/datum/antagonist/brother/blood_bond = brother.has_antag_datum(/datum/antagonist/brother)

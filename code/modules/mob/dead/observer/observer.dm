@@ -391,6 +391,7 @@ GAME_VERB(/mob/dead/observer, do_not_resuscitate, "Do Not Resuscitate", "Ghost")
 
 	/// Set DNR on old mind
 	mind.dnr = TRUE
+	SEND_SIGNAL(mind, COMSIG_MIND_DNR)
 
 	// Disassociates observer mind from the body mind
 	mind = null

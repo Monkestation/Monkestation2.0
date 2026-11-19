@@ -39,6 +39,22 @@
 	updatemodules(TRUE)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF) // So when an experimental cloner gets emped, it's cloning console doesn't break nullifying the threat.
 
+/obj/machinery/computer/cloning/examine(mob/user)
+	. = ..()
+	if(user.mind?.has_antag_datum(/datum/antagonist/brother))
+		// Red to stand out from the blue text
+		. += span_warning("As a blood brother, you can <b>alt click</b> this to hack it and clone a dead brother, even if their body is gone. It leaves no record behind.")
+
+/// Blood brothers can alt click to hack the console
+/obj/machinery/computer/cloning/click_alt(mob/user)
+	var/datum/antagonist/brother/bond = user.mind?.has_antag_datum(/datum/antagonist/brother)
+	if(!bond)
+		return NONE
+	if(!is_operational)
+		return NONE
+	bond.hack_cloning_console(src)
+	return CLICK_ACTION_SUCCESS
+
 /obj/machinery/computer/cloning/Destroy()
 	if(pods)
 		for(var/P in pods)
