@@ -1,5 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Fire breath now properly scorches objects caught in the cone."
-  - bugfix: "Reagent containers (beakers, bottles, glasses, syringes, etc.) are no longer immune to fire."

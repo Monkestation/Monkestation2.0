@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Mute and muzzled chuunibyous can no longer shout their spell lines on non invocation spells."

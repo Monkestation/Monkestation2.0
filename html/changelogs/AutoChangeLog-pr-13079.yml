@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "Cortical borers no longer freeze to death inside a cold corpse sitting in a warm room"

@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Floor tiles are now worth a quarter of an iron sheet, fixing an iron duplication exploit."
