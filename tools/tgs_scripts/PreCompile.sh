@@ -53,6 +53,9 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --re
 mv target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 cd ..
 
+echo "Deploying navmap-pathfinder..."
+curl -fsSL -o "$1/libnavmap_pathfinder.so" "https://github.com/${NAVMAP_PATHFINDER_REPO}/releases/download/v${NAVMAP_PATHFINDER_VERSION}/libnavmap_pathfinder.so"
+
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
