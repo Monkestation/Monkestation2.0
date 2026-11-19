@@ -250,7 +250,7 @@
 
 /obj/effect/temp_visual/explosion/Initialize(mapload, radius, color, small = FALSE, large = FALSE)
 	. = ..()
-	set_light(radius, radius, color)
+	set_light(l_outer_range = radius, l_color = color)
 	generate_particles(radius, small, large)
 	if(iswater(get_turf(src)))
 		icon_state = null

@@ -39,4 +39,4 @@
 	timer_laststart = 0
 	oven_timer = null
 
-	playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 25)
+	playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 25)

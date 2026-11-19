@@ -1,7 +1,7 @@
 /area/ruin/powered/reebe
 	name = "Reebe"
 	ambience_index = AMBIENCE_REEBE
-	area_flags = UNIQUE_AREA | CULT_PERMITTED | NOTELEPORT
+	area_flags = CULT_PERMITTED | NOTELEPORT
 	static_lighting = FALSE
 	base_lighting_alpha = 200
 

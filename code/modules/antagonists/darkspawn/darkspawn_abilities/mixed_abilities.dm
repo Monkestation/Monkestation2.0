@@ -102,7 +102,7 @@
 	die_with_shapeshifted_form = FALSE
 	convert_damage = TRUE
 	convert_damage_type = BRUTE
-	sound = 'sound/magic/darkspawn/devour_will_end.ogg'
+	sound = 'sound/effects/magic/darkspawn/devour_will_end.ogg'
 	possible_shapes = list(/mob/living/simple_animal/hostile/crawling_shadows)
 
 /datum/action/cooldown/spell/shapeshift/crawling_shadows/Grant(mob/grant_to)
@@ -155,7 +155,7 @@
 		return
 	owner.balloon_alert(owner, "zkxa'ya")
 	owner.visible_message(span_warning("[owner] breaks away from [owner]'s shadow!"), span_velvet("You create an illusion of yourself."))
-	playsound(owner, 'sound/magic/darkspawn/devour_will_form.ogg', 50, 1)
+	playsound(owner, 'sound/effects/magic/darkspawn/devour_will_form.ogg', 50, 1)
 
 	var/mob/living/simple_animal/hostile/illusion/darkspawn/clone = new(get_turf(owner))
 	clone.copy_parent(owner, duration, 100, 10) //closely follows regular player stats so it's not painfully obvious (still sorta is)
@@ -235,7 +235,7 @@
 
 	caster.balloon_alert(caster, "zkxa'yaera Hohef'era!")
 	caster.visible_message(span_warning("[caster] breaks away from [caster]'s shadow!"), span_velvet("The piece of your psyche creates a form for itself."))
-	playsound(caster, 'sound/magic/darkspawn/devour_will_form.ogg', 50, 1)
+	playsound(caster, 'sound/effects/magic/darkspawn/devour_will_form.ogg', 50, 1)
 
 	frayed = new(get_turf(caster))
 	player_mind.active = TRUE

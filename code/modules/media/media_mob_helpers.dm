@@ -38,6 +38,11 @@
 			best_source = media_source
 			best_source_priority = priority
 	if(isnull(best_source))
+		// Still hearing our source but out of its range or z-level, so mute it like tg's jukebox does instead of stopping,
+		// that way it keeps playing and picks up where it should when we come back.
+		if(!isnull(current_media_source) && (current_media_source in available_media_sources) && current_media_source.current_track?.url)
+			media_player?.set_volume(0)
+			return
 		media_player?.stop()
 		current_media_source = null
 		return

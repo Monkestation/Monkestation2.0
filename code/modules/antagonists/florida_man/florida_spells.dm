@@ -66,7 +66,7 @@
 	if(!ishuman(cast_on))
 		return
 	var/mob/living/carbon/human/floridan = cast_on
-	playsound(floridan, 'sound/voice/human/wilhelm_scream.ogg', 50, TRUE)
+	playsound(floridan, 'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg', 50, TRUE)
 	floridan.visible_message(span_warning("[floridan] howls in rage as he begins to charge!"), span_notice("You feel the strength of Florida wash over you, push through those doors!"))
 	floridan.move_force = MOVE_FORCE_OVERPOWERING
 	addtimer(CALLBACK(src, PROC_REF(end_florida_doorbuster)),5 SECONDS)

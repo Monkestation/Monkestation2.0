@@ -11,7 +11,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "e" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/blood/oil{
 	pixel_x = 8;
 	pixel_y = 15
@@ -38,7 +38,7 @@
 /area/space)
 "k" = (
 /obj/structure/spacevine,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "m" = (
@@ -103,7 +103,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "G" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "H" = (
@@ -172,7 +172,7 @@
 /area/space)
 "Y" = (
 /mob/living/basic/hivebot/range,
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "Z" = (

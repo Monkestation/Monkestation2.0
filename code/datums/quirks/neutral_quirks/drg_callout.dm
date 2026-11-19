@@ -4,7 +4,7 @@
 	name = "Miner Training"
 	desc = "You arrive with a strange D.R.G.R.A.S skillchip that teaches you how to reflexively call out mining-related entities you point at."
 	value = 0
-	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_HIDE_FROM_SCAN | QUIRK_DONT_CLONE
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_HIDE_FROM_SCAN | QUIRK_DONT_CLONE | QUIRK_OOZELING_SKIP // skillchips are in the brain anyways
 	mob_trait = TRAIT_MINING_CALLOUTS
 	icon = FA_ICON_BULLHORN
 

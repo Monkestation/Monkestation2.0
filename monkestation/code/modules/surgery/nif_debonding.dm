@@ -23,8 +23,8 @@
 /datum/surgery_step/debond_nif
 	name = "debond NIF (scalpel)"
 	time = 5 SECONDS
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/scalpel2.ogg'
+	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
+	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	implements = list(
 		TOOL_SCALPEL = 100,
 		/obj/item/melee/energy/sword = 75,

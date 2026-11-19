@@ -14,3 +14,6 @@
 #define COMSIG_CLIENT_MOB_LOGIN "client_mob_changed"
 
 #define COMSIG_CLIENT_CLICK_DIRTY "client_dirty_click"
+
+/// Called when the client mouses over an atom: (atom)
+#define COMSIG_CLIENT_HOVER_NEW "client_new_hover"

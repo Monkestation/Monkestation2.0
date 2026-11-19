@@ -13,6 +13,9 @@
 	/// Hood respects the suit's greyscale.Initialize(mapload)
 	var/respect_suit_greyscale = FALSE
 
+/obj/item/clothing/head/hooded
+	abstract_type = /obj/item/clothing/head/hooded
+
 /obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if (!hoodtype)
@@ -29,7 +32,6 @@
 		on_created = CALLBACK(src, PROC_REF(on_hood_created)),\
 		on_deployed = CALLBACK(src, PROC_REF(on_hood_up)),\
 		on_removed = CALLBACK(src, PROC_REF(on_hood_down)),\
-		overslot_check = CALLBACK(src, PROC_REF(can_overslot)),\
 	)
 
 /obj/item/clothing/suit/hooded/Destroy()
@@ -45,10 +47,6 @@
 
 /// Override to only create the hood conditionally
 /obj/item/clothing/suit/hooded/proc/can_create_hood()
-	return TRUE
-
-/// Override to disable overslotting.
-/obj/item/clothing/suit/hooded/proc/can_overslot(obj/item/hat)
 	return TRUE
 
 /// Called when the hood is instantiated
@@ -75,6 +73,7 @@
 	return
 
 /obj/item/clothing/suit/toggle
+	abstract_type = /obj/item/clothing/suit/toggle
 	/// The noun that is displayed to the user on toggle. EX: "Toggles the suit's [buttons]".
 	var/toggle_noun = "buttons"
 

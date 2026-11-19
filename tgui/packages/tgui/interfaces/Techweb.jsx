@@ -572,7 +572,7 @@ const TechNode = (props) => {
         !nocontrols && (
           <>
             {tier > 0 &&
-              (!!can_unlock && (is_free || queue_nodes.length === 0) ? (
+              (can_unlock && (is_free || queue_nodes.length === 0) ? (
                 <Button
                   icon="lightbulb"
                   disabled={!can_unlock || tier > 1 || queue_nodes.length > 0}

@@ -6,13 +6,13 @@
 	icon_living = "fire_shark"
 	pass_flags = PASSTABLE | PASSMOB
 	istate = ISTATE_HARM | ISTATE_BLOCKING
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	speed = -0.5
 	health = 16
 	maxHealth = 16
 	melee_damage_lower = 8
 	melee_damage_upper = 8
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	attack_verb_continuous = "bites"
@@ -22,6 +22,7 @@
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
+	initial_language_holder = /datum/language_holder/carp
 
 /mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()
@@ -32,3 +33,6 @@
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/basic/heretic_summon/fire_shark/wild
+	faction = list(FACTION_HOSTILE)

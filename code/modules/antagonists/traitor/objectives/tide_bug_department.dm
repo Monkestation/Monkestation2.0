@@ -121,7 +121,7 @@
 
 	anchored = TRUE
 
-	icon = 'icons/obj/device_syndie.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "bug-animated"
 	/// Ref to our bug item
 	var/obj/item/traitor_bug/bug_item_ref

@@ -20,7 +20,7 @@
 	name = "\"alien\" floor tile"
 	singular_name = "alien floor tile"
 	desc = "A tile made out of cheap immitation alien alloy."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "tile_abductor"
 	inhand_icon_state = "tile-abductor"
 	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*0.25)
@@ -43,25 +43,25 @@
 	name = "immitation alien scalpel"
 	desc = "It's a gleaming sharp knife made out of silvery-green metal... \
 			Or at least it looks like it."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 
 /obj/item/hemostat/fake_alien
 	name = "immitation alien hemostat"
 	desc = "You've never seen this before... \
 			Besides in that one ad."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 
 /obj/item/retractor/fake_alien
 	name = "immitation alien retractor"
 	desc = "You're not sure if you want the veil pulled back... \
 			On second thought it already has been."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 
 /obj/item/circular_saw/fake_alien
 	name = "immitation alien saw"
 	desc = "Do the aliens also lose this, and need to find an alien hatchet? \
 			Looks cheaply made."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	force = 13 //this one is less good for combat
 	wound_bonus = 10
 
@@ -69,23 +69,23 @@
 	name = "immitation alien drill"
 	desc = "Maybe alien surgeons have finally found a use for the drill... \
 			Making it cost more then your rent."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 
 /obj/item/cautery/fake_alien
 	name = "immitation alien cautery"
 	desc = "Why would bloodless aliens have a tool to stop bleeding? \
 			Unless..."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 
 /obj/machinery/chem_dispenser/drinks/fake_abductor
 	name = "odd looking soda dispenser"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "chem_dispenser"
 	base_icon_state = "chem_dispenser"
 
 /obj/machinery/chem_dispenser/drinks/beer/fake_abductor
 	name = "odd looking booze dispenser"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "dispenser"
 	base_icon_state = "dispenser"
 	pixel_x = 0
@@ -107,7 +107,7 @@
 /obj/structure/showcase/abductor_console
 	name = "\"alien\" console"
 	desc = "Used for, something. You're not sure what."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "console"
 
 ///////////////

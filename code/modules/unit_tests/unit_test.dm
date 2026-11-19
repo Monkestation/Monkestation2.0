@@ -32,7 +32,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 /datum/unit_test
 	/// Do not instantiate if type matches this
-	var/abstract_type = /datum/unit_test
+	abstract_type = /datum/unit_test
 
 	/// Behavior flags for this unit test
 	var/test_flags = UNIT_TEST_BASIC

@@ -74,7 +74,7 @@
 
 	if(!fuel_jar) //No fuel but we are on, shutdown
 		toggle_power()
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
+		playsound(src.loc, 'sound/machines/buzz/buzz-two.ogg', 50, 0)
 		return
 
 	add_avail(stored_power)
@@ -218,12 +218,12 @@
 		if(BRUTE)
 			if(sound_effect)
 				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+					playsound(loc, 'sound/items/weapons/smash.ogg', 50, 1)
 				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+					playsound(loc, 'sound/items/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/tools/welder.ogg', 100, 1)
 		else
 			return
 	if(damage >= 20)

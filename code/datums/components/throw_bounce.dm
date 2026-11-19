@@ -193,7 +193,7 @@
 		targets_list.len ? (current_target = WEAKREF(targets_list[1])) : move_to_thrower() //if we have a targets_list then set current_target to [1] in the list. else, move_to_thrower
 		if(current_target && !(moving_to_mob))
 			moving_to_mob = MOVING_TO_TARGET
-			addtimer(CALLBACK(SSmove_manager, TYPE_PROC_REF(/datum/controller/subsystem/move_manager, home_onto), src, current_target?.resolve(), 1), 1)
+			addtimer(CALLBACK(GLOB.move_manager, TYPE_PROC_REF(/datum/move_manager, home_onto), src, current_target?.resolve(), 1), 1)
 
 
 //this proc handles impacts and returning to the thrower
@@ -234,7 +234,7 @@
 	moving_to_mob = MOVING_TO_THROWER
 
 	if(owning_ref.item_thrower)
-		addtimer(CALLBACK(SSmove_manager, TYPE_PROC_REF(/datum/controller/subsystem/move_manager, home_onto), src, owning_ref.item_thrower?.resolve(), 1), 1)
+		addtimer(CALLBACK(GLOB.move_manager, TYPE_PROC_REF(/datum/move_manager, home_onto), src, owning_ref.item_thrower?.resolve(), 1), 1)
 	else
 		owning_ref.finish_bounce(src)
 

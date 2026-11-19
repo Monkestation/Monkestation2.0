@@ -16,7 +16,7 @@
 	whistler = user
 	var/turf/current_turf = get_turf(user)
 	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z)
-	playsound(current_turf,'sound/magic/warpwhistle.ogg', 200, TRUE)
+	playsound(current_turf,'sound/effects/magic/warpwhistle.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, src)
 
 ///Teleporting tornado, spawned by warp whistle, teleports the user if they manage to pick them up.
@@ -43,7 +43,7 @@
 		qdel(src)
 		return
 	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, PROC_REF(check_teleport))
-	SSmove_manager.move_towards(src, get_turf(whistle.whistler))
+	GLOB.move_manager.move_towards(src, get_turf(whistle.whistler))
 
 /// Check if anything the tornado crosses is the creator.
 /obj/effect/temp_visual/teleporting_tornado/proc/check_teleport(datum/source, atom/movable/crossed)

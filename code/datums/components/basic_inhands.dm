@@ -34,7 +34,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/parent = src.parent
-	for(var/obj/item/held_thing in parent.held_items)
+	for(var/obj/item/held_thing as anything in parent.get_held_items())
 		if((held_thing.item_flags & (ABSTRACT | HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
 		examine_info += span_info("[parent.p_They()] [parent.p_are()] holding [held_thing.examine_title(user)] in [parent.p_their()] [parent.get_held_index_name(parent.get_held_index_of_item(held_thing))].")
@@ -50,7 +50,7 @@
 	SIGNAL_HANDLER
 
 	var/list/held_overlays = list()
-	for(var/obj/item/held in holding_mob.held_items)
+	for(var/obj/item/held as anything in holding_mob.get_held_items())
 		var/is_right = holding_mob.get_held_index_of_item(held) % 2 == 0
 		var/icon_file = is_right ? held.righthand_file : held.lefthand_file
 		var/mutable_appearance/held_overlay = held.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)

@@ -43,8 +43,8 @@ GLOBAL_VAR(ascended_bloodling)
 
 	to_chat(our_mob, span_noticealien("You grow a chrysalis to begin the change..."))
 	priority_announce("ALERT: level 4 biohazard morphing in [get_area_name(our_mob)]. All personell must stop the ascension. 5 minutes remain before morphing finishes.", "Biohazard Alert")
-	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
-	playsound(our_turf, 'sound/effects/blobattack.ogg', 60)
+	sound_to_playing_players('sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg')
+	playsound(our_turf, 'sound/effects/blob/blobattack.ogg', 60)
 	our_mob.evolution(6)
 	return TRUE
 
@@ -82,8 +82,8 @@ GLOBAL_VAR(ascended_bloodling)
 
 /mob/living/basic/bloodling/proper/ascending/evolution_mind_change(mob/living/basic/bloodling/proper/new_bloodling)
 	new_bloodling.setDir(dir)
-	if(numba)
-		new_bloodling.numba = numba
+	if(identifier)
+		new_bloodling.identifier = identifier
 		new_bloodling.set_name()
 	new_bloodling.name = name
 	new_bloodling.real_name = real_name

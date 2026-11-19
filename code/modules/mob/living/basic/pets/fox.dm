@@ -25,7 +25,7 @@
 	melee_damage_upper = 5
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	ai_controller = /datum/ai_controller/basic_controller/fox
 
@@ -72,3 +72,14 @@
 // A more docile subtype that won't attack other animals.
 /mob/living/basic/pet/fox/docile
 	ai_controller = /datum/ai_controller/basic_controller/fox/docile
+
+/// Cold resistant and doesn't need to breathe, so it can live out on the icemoon
+/mob/living/basic/pet/fox/arctic
+	name = "arctic fox"
+	desc = "A fox with a thick white coat, right at home in the snow."
+	icon_state = "arctic_fox"
+	icon_living = "arctic_fox"
+	icon_dead = "arctic_fox_dead"
+	held_state = "arctic_fox"
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0

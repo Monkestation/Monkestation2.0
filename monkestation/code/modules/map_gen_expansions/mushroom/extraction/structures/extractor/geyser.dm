@@ -4,7 +4,7 @@
  */
 /obj/structure/liquid_plasma_geyser
 	name = "concentrated liquid plasma geyser"
-	icon = 'icons/obj/lavaland/terrain.dmi'
+	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "geyser"
 	anchored = TRUE
 

@@ -79,8 +79,8 @@
 	name = "\improper Detective's Office"
 	icon_state = "detective"
 	ambientsounds = list(
-		'sound/ambience/ambidet1.ogg',
-		'sound/ambience/ambidet2.ogg',
+		'sound/ambience/security/ambidet1.ogg',
+		'sound/ambience/security/ambidet2.ogg',
 		)
 
 /area/station/security/detectives_office/private_investigators_office
@@ -180,7 +180,8 @@
 /area/station/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED
+	area_flags_mapping = UNIQUE_AREA | PERSISTENT_ENGRAVINGS
 
 //Rad proof
 /area/station/security/prison/toilet

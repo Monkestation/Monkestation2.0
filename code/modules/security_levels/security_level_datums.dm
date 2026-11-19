@@ -54,7 +54,7 @@
 	name = "green"
 	name_shortform = "GRN"
 	announcement_color = "green"
-	sound = 'sound/misc/notice2.ogg' // Friendly beep
+	sound = 'sound/announcer/notice/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
 	lowering_to_configuration_key = /datum/config_entry/string/alert_green
 	shuttle_call_time_mod = 2
@@ -69,7 +69,7 @@
 	name = "blue"
 	name_shortform = "BLU"
 	announcement_color = "blue"
-	sound = 'sound/misc/notice1.ogg' // Angry alarm
+	sound = 'sound/announcer/notice/notice1.ogg' // Angry alarm
 	number_level = SEC_LEVEL_BLUE
 	lowering_to_configuration_key = /datum/config_entry/string/alert_blue_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_blue_upto
@@ -85,7 +85,7 @@
 	name = "red"
 	name_shortform = "RED"
 	announcement_color = "red"
-	sound = 'sound/misc/notice3.ogg' // More angry alarm
+	sound = 'sound/announcer/notice/notice3.ogg' // More angry alarm
 	number_level = SEC_LEVEL_RED
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
@@ -101,7 +101,7 @@
 	name = "delta"
 	name_shortform = "Δ"
 	announcement_color = "purple"
-	sound = 'sound/misc/airraid.ogg' // Air alarm to signify importance
+	sound = 'sound/announcer/alarm/airraid.ogg' // Air alarm to signify importance
 	number_level = SEC_LEVEL_DELTA
 	lowering_to_configuration_key = /datum/config_entry/string/alert_delta
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
@@ -137,7 +137,7 @@
 	name_shortform =  "Ylw"
 	announcement_color = "yellow"
 	number_level = SEC_LEVEL_YELLOW
-	sound = 'sound/misc/notice1.ogg' // Its just a more spesific blue alert
+	sound = 'sound/announcer/notice/notice1.ogg' // Its just a more spesific blue alert
 	lowering_to_configuration_key = /datum/config_entry/string/alert_yellow
 	elevating_to_configuration_key = /datum/config_entry/string/alert_yellow
 	shuttle_call_time_mod = 1
@@ -153,7 +153,7 @@
 	name_shortform = "Amb"
 	announcement_color = "amber" //I see now why adding grey was painful. WATER IN THE FIRE, WHY?! (Thank you Absolucy for helping add more colors)
 	number_level = SEC_LEVEL_AMBER
-	sound = 'sound/misc/notice1.ogg' // Its just a more spesific blue alert v2
+	sound = 'sound/announcer/notice/notice1.ogg' // Its just a more spesific blue alert v2
 	lowering_to_configuration_key = /datum/config_entry/string/alert_amber
 	elevating_to_configuration_key = /datum/config_entry/string/alert_amber
 	shuttle_call_time_mod = 1

@@ -34,7 +34,7 @@
 //general disarm proc
 /mob/living/proc/disarm(mob/living/carbon/target)
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(target, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)

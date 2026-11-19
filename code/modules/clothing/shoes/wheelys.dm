@@ -52,7 +52,7 @@
 		worn_icon_state = "[initial(worn_icon_state)]-on"
 	else
 		worn_icon_state = "[initial(worn_icon_state)]"
-	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
+	playsound(src, 'sound/items/weapons/tap.ogg', 10, TRUE)
 	update_appearance()
 
 /obj/item/clothing/shoes/wheelys/Destroy()
@@ -93,5 +93,6 @@
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	custom_price = PAYCHECK_CREW * 1.6
+	clothing_traits = list(TRAIT_NO_SNOWPRINTS)
 	worn_x_dimension = 64
 	worn_y_dimension = 72

@@ -2,7 +2,7 @@
 /obj/item/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	verb_say = "beeps"
 	verb_yell = "blares"
 	icon_state = "gps-c"
@@ -74,6 +74,11 @@
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 1.5,
 	)
+///used in /datum/outfit/myststranger
+/obj/item/gps/advanced/lone_wanderer
+	name = "ancient gps"
+	desc = "Far too many seek this signal, only to find their graves. Far too few carry their own to be saved by this ones carrier."
+	gpstag = "???"
 
 /obj/item/gps/medical
 	desc = "A variention on the standard GPS Model, purposed for finding signals of those who have been lost. This one is in blue!"

@@ -22,7 +22,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -49,6 +49,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	// If someone adds non-cargo sloths to maps we'll have a problem but we're fine for now
 	GLOB.cargo_sloth = src
+	GLOB.gorilla_start += get_turf(src)
 
 /mob/living/basic/sloth/Destroy()
 	if(GLOB.cargo_sloth == src)

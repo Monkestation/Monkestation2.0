@@ -73,6 +73,7 @@
 	desc = "A coat built for urban life."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("urban_coat", "/obj/item/clothing/suit/urban")
+	body_parts_covered = CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/urban_coat
 	greyscale_config_worn = /datum/greyscale_config/urban_coat/worn
 	greyscale_colors = "#252e5a#938060#66562b"
@@ -90,6 +91,8 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor_type = /datum/armor/toggle_deckard
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 
 
 
@@ -114,6 +117,7 @@
 	desc = "This station ain't big enough for the both of us."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("duster", "/obj/item/clothing/suit/duster")
+	body_parts_covered = CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/duster
 	greyscale_config_worn = /datum/greyscale_config/duster/worn
 	greyscale_colors = "#954b21"
@@ -125,6 +129,7 @@
 	desc = "The way you guys are blending in with the local colour. I mean, Flag Girl was bad enough, but U-Boat Captain?"
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("peacoat", "/obj/item/clothing/suit/toggle/peacoat")
+	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	greyscale_config = /datum/greyscale_config/peacoat
 	greyscale_config_worn = /datum/greyscale_config/peacoat/worn
@@ -148,6 +153,8 @@
 /obj/item/clothing/suit/armor/vest/det_suit/runner
 	name = "joyful coat"
 	desc = "<i>\"You look like a good Joe.\"</i>"
+	heat_protection = CHEST|ARMS|GROIN|LEGS
+	cold_protection = CHEST|GROIN|ARMS|LEGS
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	blood_overlay_type = "coat"
@@ -164,6 +171,7 @@
 	greyscale_colors = "#1d1b1b"
 
 	body_parts_covered = CHEST|ARMS
+	cold_protection = CHEST|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -237,7 +245,7 @@
 	greyscale_config_worn = /datum/greyscale_config/warm_coat/worn
 	greyscale_colors = "#7a5f4f#d9cec7"
 	flags_1 = IS_PLAYER_COLORABLE_1
-
+	cold_protection = CHEST|GROIN|ARMS
 	body_parts_covered = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

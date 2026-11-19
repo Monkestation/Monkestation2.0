@@ -16,6 +16,8 @@
 #define STRIPPABLE_ITEM_RPOCKET "right_pocket"
 #define STRIPPABLE_ITEM_LHAND "left_hand"
 #define STRIPPABLE_ITEM_RHAND "right_hand"
+#define STRIPPABLE_ITEM_UPPER_LHAND "upper_left_hand"
+#define STRIPPABLE_ITEM_UPPER_RHAND "upper_right_hand"
 #define STRIPPABLE_ITEM_HANDCUFFS "handcuffs"
 #define STRIPPABLE_ITEM_LEGCUFFS "legcuffs"
 #define STRIPPABLE_ITEM_PET_COLLAR "pet_collar"
@@ -29,3 +31,6 @@
 
 /// This slot can't be seen, but can be accessed.
 #define STRIPPABLE_OBSCURING_HIDDEN 2
+
+/// This slot can be seen, but cannot be accessed
+#define STRIPPABLE_OBSCURING_INACCESSIBLE 3

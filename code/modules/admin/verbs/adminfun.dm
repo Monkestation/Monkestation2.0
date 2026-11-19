@@ -149,7 +149,7 @@ ADMIN_VERB(polymorph_all, R_ADMIN | R_FUN, TRUE, "Polymorph All", "Applies the e
 			continue
 
 		M.audible_message(span_hear("...wabbajack...wabbajack..."))
-		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, TRUE, -1)
+		playsound(M.loc, 'sound/effects/magic/staff_change.ogg', 50, TRUE, -1)
 
 		M.wabbajack()
 
@@ -170,7 +170,15 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, TRUE, "Smite", "Smite a 
 
 ///"Turns" people into bread. Really, we just add them to the contents of the bread food item.
 /proc/breadify(atom/movable/target)
-	var/obj/item/food/bread/plain/smite/tomb = new(get_turf(target))
+	objectify(target, /obj/item/food/bread/plain/smite)
+
+/// "Turns" people into objects. Really, we just add them to the contents of the item.
+/proc/objectify(atom/movable/target, path_or_instance)
+	var/atom/tomb
+	if(ispath(path_or_instance))
+		tomb = new path_or_instance(get_turf(target))
+	else
+		tomb = path_or_instance
 	target.forceMove(tomb)
 	target.AddComponent(/datum/component/itembound, tomb)
 
@@ -189,7 +197,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, TRUE, "Smite", "Smite a 
 /proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
 	if(!target.get_bodypart(body_zone))
 		return
-	playsound(target, 'sound/weapons/gun/revolver/shot.ogg', 100)
+	playsound(target, 'sound/items/weapons/gun/revolver/shot.ogg', 100)
 	var/obj/projectile/bullet/smite/divine_wrath = new(source_turf)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus

@@ -27,7 +27,7 @@
 	desc = "What's under the bag, anyway?"
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "ook"
-	squeak_override = list('sound/voice/laugh/simian/monkey_laugh_1.ogg'=1)
+	squeak_override = list('sound/mobs/humanoids/simian/monkey_laugh_1.ogg'=1)
 	suicide_text = "is overcome with curiosity and tries to pull the bag off of"
 	creepy_plush_type = "monkey"
 	has_creepy_icons = TRUE
@@ -38,7 +38,7 @@
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "tyria"
 	attack_verb_simple = list("fluttered", "flapped")
-	squeak_override = list('sound/voice/laugh/moth/mothlaugh.ogg'=1)
+	squeak_override = list('sound/mobs/humanoids/moth/moth_laugh1.ogg'=1)
 	has_creepy_icons = TRUE
 
 
@@ -47,7 +47,7 @@
 	desc = "Voted cutest monke 2023"
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "sammi"
-	squeak_override = list('sound/voice/laugh/simian/monkey_laugh_1.ogg'=1)
+	squeak_override = list('sound/mobs/humanoids/simian/monkey_laugh_1.ogg'=1)
 
 /obj/item/toy/plush/knightplush
 	name = "knight plush"
@@ -62,3 +62,16 @@
 	icon_state = "durrcell"
 	squeak_override = list('sound/voice/durrcell-squeak.ogg'=1)
 
+/obj/item/toy/plush/argemia
+	name = "strange plushie"
+	desc = "Voiding..."
+	icon_state = "argemia"
+	icon = 'icons/obj/plushes.dmi'
+
+/obj/item/toy/plush/argemia/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
+	. = ..()
+	playsound(microwave_source.loc, 'sound/voice/aeaeae.ogg', 100, FALSE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/plush/argemia, microwave_explode), microwave_source), 5 SECONDS)
+
+/obj/item/toy/plush/argemia/proc/microwave_explode(obj/machinery/microwave/microwave_source)
+	explosion(microwave_source.loc, 0, 1, 2)

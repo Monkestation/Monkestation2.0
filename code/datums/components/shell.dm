@@ -324,7 +324,7 @@
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, PROC_REF(on_circuit_add_component_manually))
 	if(attached_circuit.display_name != "")
-		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
+		parent_atom.name = "[initial(parent_atom.name)] ([strip_html(attached_circuit.display_name)])"
 	attached_circuit.set_locked(FALSE)
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
@@ -354,7 +354,11 @@
 	))
 	if(!QDELETED(attached_circuit) && (attached_circuit.loc == parent || isnull(attached_circuit.loc)))
 		var/atom/parent_atom = parent
-		attached_circuit.forceMove(parent_atom.drop_location())
+		var/drop_location = parent_atom.drop_location()
+		if(drop_location)
+			attached_circuit.forceMove(drop_location)
+		else
+			attached_circuit.moveToNullspace()
 
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)

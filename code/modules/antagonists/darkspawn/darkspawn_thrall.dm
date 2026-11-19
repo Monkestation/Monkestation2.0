@@ -19,7 +19,7 @@
 	antagpanel_category = "Darkspawn"
 	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_moodlet = /datum/mood_event/thrall_darkspawn
-	stinger_sound = 'sound/ambience/antag/darkspawn/become_veil.ogg'
+	stinger_sound = 'sound/music/antag/darkspawn/become_veil.ogg'
 	antag_count_points = 5 //conversion
 	///The abilities granted to the thrall
 	var/list/abilities = list(/datum/action/cooldown/spell/toggle/nightvision, /datum/action/cooldown/spell/pointed/darkspawn_build/thrall_eye/thrall)

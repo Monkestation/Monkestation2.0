@@ -26,7 +26,7 @@
 	damage = 41
 	damage_type = STAMINA
 	armor_flag = ENERGY
-	hitsound = 'sound/weapons/tap.ogg'
+	hitsound = 'sound/items/weapons/tap.ogg'
 	eyeblur = 0
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
@@ -45,7 +45,8 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living = target
-		living.adjust_fire_stacks(2)
+		// Each stack is about 20 seconds of burning, so this adds up fast on repeated hits
+		living.adjust_fire_stacks(0.5)
 		living.ignite_mob()
 
 /obj/projectile/beam/laser/microfusion/hellfire

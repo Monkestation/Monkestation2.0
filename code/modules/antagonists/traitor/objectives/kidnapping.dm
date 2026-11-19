@@ -247,6 +247,7 @@
 		if (!unequipped)
 			continue
 		target_belongings.Add(belonging)
+		RegisterSignal(belonging, COMSIG_QDELETING, PROC_REF(on_belonging_deleted))
 
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
@@ -326,8 +327,10 @@
 			continue
 		sent_mob.dropItemToGround(belonging) // No souvenirs, except shoes and t-shirts
 
-	for(var/obj/item/belonging in target_belongings)
+	for(var/obj/item/belonging as anything in target_belongings)
+		UnregisterSignal(belonging, COMSIG_QDELETING)
 		belonging.forceMove(return_pod)
+	target_belongings.Cut()
 
 	sent_mob.forceMove(return_pod)
 	sent_mob.flash_act()
@@ -337,6 +340,11 @@
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
 
 	new /obj/effect/pod_landingzone(return_turf, return_pod)
+
+/datum/traitor_objective/target_player/kidnapping/proc/on_belonging_deleted(obj/item/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_QDELETING)
+	target_belongings -= source
 
 /// Returns a list of things that the provided mob has which we would rather that they do not have
 /datum/traitor_objective/target_player/kidnapping/proc/gather_belongings(mob/living/carbon/human/kidnapee)
@@ -352,14 +360,14 @@
 
 /datum/status_effect/contractor_healing/on_apply()
 	. = ..()
-	owner.add_homeostasis_level(id, owner.standard_body_temperature, 2.5 KELVIN)
 	owner.losebreath = 0
 
-/datum/status_effect/contractor_healing/on_remove()
-	. = ..()
-	owner.remove_homeostasis_level(id)
-
 /datum/status_effect/contractor_healing/tick(seconds_between_ticks)
+	var/target_temp = owner.get_body_temp_normal()
+	if(owner.bodytemperature > target_temp)
+		owner.adjust_bodytemperature(-2.5 KELVIN * seconds_between_ticks, target_temp)
+	else
+		owner.adjust_bodytemperature(2.5 KELVIN * seconds_between_ticks, 0, target_temp)
 	var/needs_update = FALSE
 	var/base_healing = 1
 	if(owner.health <= owner.crit_threshold)

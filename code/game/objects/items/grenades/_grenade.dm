@@ -23,7 +23,7 @@
 	///Is this grenade currently armed?
 	var/active = FALSE
 	/// Sound played when the grenade is armed
-	var/grenade_arm_sound = 'sound/weapons/armbomb.ogg'
+	var/grenade_arm_sound = 'sound/items/weapons/armbomb.ogg'
 	/// If the sound of the grenade should be varied
 	var/grenade_sound_vary = TRUE
 	///How long it takes for a grenade to explode after being armed

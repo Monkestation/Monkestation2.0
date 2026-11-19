@@ -301,6 +301,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/set_channel_volume(channel, vol)
 	parent.mob.update_media_volume(channel)
+	SSsound_tokens.clients_needing_update[parent] = TRUE // tokens aren't in SoundQuery() with a real volume, let them redo it
 
 	//we gotta take into account existing sounds repeating/waiting, otherwise we completely wipe looping sounds (such as whitenoise).
 	for(var/sound/S in parent.SoundQuery())

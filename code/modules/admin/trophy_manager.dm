@@ -1,6 +1,6 @@
 ADMIN_VERB(trophy_manager, R_ADMIN, FALSE, "Trophy Manager", "View all trophies.", ADMIN_CATEGORY_MAIN)
-	var/static/datum/trophy_manager/ui = new
-	ui.ui_interact(user.mob)
+	var/datum/trophy_manager/tgui = new()
+	tgui.ui_interact(user.mob)
 
 /// Trophy Admin Management Panel
 /datum/trophy_manager

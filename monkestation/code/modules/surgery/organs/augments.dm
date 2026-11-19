@@ -69,9 +69,7 @@
 			continue
 		loaded_surgeries |= surgery_design.surgery
 	if(download_from_held)
-		for(var/held_item in owner.held_items)
-			if(!held_item)
-				continue
+		for(var/held_item in owner.get_held_items())
 			var/list/surgeries_to_add = list()
 			if(istype(held_item, /obj/item/disk/surgery))
 				var/obj/item/disk/surgery/surgery_disk = held_item

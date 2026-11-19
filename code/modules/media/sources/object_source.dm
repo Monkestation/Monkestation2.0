@@ -26,7 +26,7 @@
 	src.falloff_exponent = falloff_exponent
 	src.tracker = new(max_distance, max_distance, 1)
 	src.falloff_distance = min(falloff_distance, max_distance - 1)
-	update_cells(init = TRUE)
+	update_cells()
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_source_qdeleting))
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(on_source_moved))
 
@@ -60,7 +60,7 @@
 	if(isnull(their_turf) || isnull(source_turf))
 		return
 	var/distance = get_dist(source_turf, their_turf)
-	return ceil(. - CALCULATE_SOUND_VOLUME(., distance, max_distance, falloff_distance, falloff_exponent))
+	return ceil(. - CALCULATE_SOUND_VOLUME_RATIO(., distance, max_distance, falloff_distance, falloff_exponent) * .)
 
 /datum/media_source/object/get_priority(mob/target)
 	var/datum/preferences/prefs = target?.client?.prefs
@@ -84,6 +84,16 @@
 	if(!QDELETED(src))
 		qdel(src)
 
+/datum/media_source/object/update_for_listener(mob/target, force_update_time = FALSE)
+	// Whoever is carrying us can get their moved signal before we hear that we moved too,
+	// so catch up first or they'd stop and restart the song when changing z-levels.
+	var/turf/our_turf = get_turf(source)
+	if(!isnull(our_turf) && our_turf != source_turf)
+		on_source_moved(source)
+		if(!force_update_time)
+			return
+	return ..()
+
 /datum/media_source/object/proc/on_source_moved(atom/movable/source)
 	SIGNAL_HANDLER
 	if(QDELETED(src))
@@ -94,7 +104,7 @@
 		update_cells()
 		update_for_all_listeners()
 
-/datum/media_source/object/proc/update_cells(init = FALSE)
+/datum/media_source/object/proc/update_cells()
 	if(QDELETED(src) || QDELETED(source) || QDELETED(tracker))
 		return
 	var/turf/our_turf = get_turf(source)
@@ -114,9 +124,9 @@
 			continue
 		RegisterSignal(new_grid, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_enter))
 		RegisterSignal(new_grid, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_client_exit))
-		if(init)
-			for(var/mob/listener in new_grid.client_contents)
-				add_listener(listener)
+		// Shuttles can move people into these cells before us, and they won't enter them again, so pick them up here.
+		for(var/mob/listener in new_grid.client_contents)
+			add_listener(listener)
 
 /datum/media_source/object/proc/on_client_enter(datum/source, list/target_list)
 	SIGNAL_HANDLER

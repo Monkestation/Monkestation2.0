@@ -1,8 +1,4 @@
-#ifdef LOWMEMORYMODE
-	#define DEVIL_REVIVAL_TIME (1 MINUTES)
-#else
-	#define DEVIL_REVIVAL_TIME (10 MINUTES)
-#endif
+#define DEVIL_REVIVAL_TIME (10 MINUTES)
 
 #define INNATE_DEVIL_TRAITS list(\
 	TRAIT_NO_SOUL, \
@@ -210,8 +206,7 @@
 	new_body.undershirt = "Nude"
 	new_body.underwear = "Nude"
 	new_body.socks = "Nude"
-	new_body.eye_color_left = "#FEE5A3"
-	new_body.eye_color_right = "#FEE5A3"
+	new_body.set_eye_color("#FEE5A3")
 	new_body.set_species(/datum/species/lizard)
 	new_body.equipOutfit(/datum/outfit/devil)
 	return new_body

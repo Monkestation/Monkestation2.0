@@ -147,6 +147,11 @@
 	if(objective)
 		objective.completed = TRUE
 
+/obj/machinery/computer/rdconsole/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	balloon_alert(ninja, "not the target!")
+	to_chat(ninja, span_warning("This is a console! Not a server! The Spider Clan needs you to access the server in the server room directly to hack it."))
+	return NONE
+
 //SECURITY CONSOLE//
 /obj/machinery/computer/records/security/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
@@ -304,13 +309,11 @@
 	spark_system.start()
 	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
-	faction = list(ROLE_NINJA)
-	bubble_icon = "syndibot"
 	UnlinkSelf()
-	ionpulse = TRUE
 	laws = new /datum/ai_laws/ninja_override()
-	apply_model(pick(/obj/item/robot_model/syndicate, /obj/item/robot_model/syndicate/medical, /obj/item/robot_model/syndicate/saboteur))
+	apply_model(pick(/obj/item/robot_model/ninja, /obj/item/robot_model/ninja/medical, /obj/item/robot_model/ninja/saboteur))
 	apply_skin(model.default_skin)
+	ionpulse = TRUE
 
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)

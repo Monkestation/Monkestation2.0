@@ -1,13 +1,14 @@
 //the base mining mob
 /mob/living/simple_animal/hostile/asteroid
+	abstract_type = /mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list(FACTION_MINING)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = INFINITY
+	minbodytemp = 0
+	maxbodytemp = INFINITY
 	unsuitable_heat_damage = 20
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"

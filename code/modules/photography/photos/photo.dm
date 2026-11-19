@@ -9,6 +9,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	grind_results = list(/datum/reagent/iodine = 4)
 	var/datum/picture/picture
 	var/scribble //Scribble on the back.
@@ -17,6 +19,13 @@
 
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)
+	//Photos are quite rarer than papers, so they're more likely to be added to the queue to make things even.
+	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE * 5) && picture?.id)
+		LAZYADD(SSpersistence.queued_message_bottles, src)
+	return ..()
+
+/obj/item/photo/Destroy()
+	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
 	return ..()
 
 /obj/item/photo/proc/set_picture(datum/picture/P, setname, setdesc, name_override = FALSE)
@@ -59,9 +68,9 @@
 /obj/item/photo/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))//when you wanna look at photo of waifu one last time before you die...
 	if (user.gender == MALE)
-		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, TRUE)//EVERY TIME I DO IT MAKES ME LAUGH
+		playsound(user, 'sound/mobs/humanoids/human/laugh/manlaugh1.ogg', 50, TRUE)//EVERY TIME I DO IT MAKES ME LAUGH
 	else if (user.gender == FEMALE)
-		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, TRUE)
+		playsound(user, 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg', 50, TRUE)
 	return OXYLOSS
 
 /obj/item/photo/attack_self(mob/user)

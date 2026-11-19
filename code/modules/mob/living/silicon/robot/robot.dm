@@ -26,8 +26,6 @@
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
 
-	ident = rand(1, 999)
-
 	previous_health = health
 
 	if(ispath(cell))
@@ -43,9 +41,8 @@
 		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
-		builtInCamera = new (src)
+		builtInCamera = new(src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.toggle_cam(null, displaymessage = FALSE)
 	update_icons()
@@ -119,6 +116,13 @@
 	if(istype(model, /obj/item/robot_model/syndicate) || (emagged && !centcom))
 		modularInterface.device_theme = PDA_THEME_SYNDICATE
 		modularInterface.icon_state = "tablet-silicon-syndicate"
+		modularInterface.icon_state_powered = null
+		modularInterface.icon_state_unpowered = null
+	else if(istype(model, /obj/item/robot_model/ninja))
+		modularInterface.device_theme = PDA_THEME_SYNDICATE
+		modularInterface.icon_state = "tablet-silicon-ninja"
+		modularInterface.icon_state_powered = null
+		modularInterface.icon_state_unpowered = null
 	else
 		modularInterface.device_theme = PDA_THEME_NTOS
 		modularInterface.icon_state = "tablet-silicon"
@@ -170,6 +174,11 @@
 		return
 	prompt_full_transformation()
 
+/// We have our name-making proc to call after we make our mmi, just set identifier here
+/mob/living/silicon/robot/set_name()
+	if(identifier == 0)
+		identifier = rand(1, 999)
+
 /// Used to setup the a basic and (somewhat) unique name for the robot.
 /mob/living/silicon/robot/proc/setup_default_name()
 	var/new_name
@@ -204,7 +213,7 @@
 
 
 /mob/living/silicon/robot/proc/get_standard_name()
-	return "[(designation ? "[designation] " : "")][(mmi ? mmi.braintype : "Cyborg")]-[ident]"
+	return "[(designation ? "[designation] " : "")][(mmi ? mmi.braintype : "Cyborg")]-[identifier]"
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
@@ -754,7 +763,7 @@
 		upgrades |= new /obj/item/borg/upgrade/ai(src)
 	shell = TRUE
 	braintype = "AI Shell"
-	name = "Empty AI Shell-[ident]"
+	name = "Empty AI Shell-[identifier]"
 	real_name = name
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
@@ -773,7 +782,7 @@
 		qdel(boris)
 	shell = FALSE
 	GLOB.available_ai_shells -= src
-	name = "Unformatted Cyborg-[ident]"
+	name = "Unformatted Cyborg-[identifier]"
 	real_name = name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
@@ -786,7 +795,7 @@
  * * AI - AI unit that initiated the deployment into the AI shell
  */
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] [designation] Shell-[ident]"
+	real_name = "[AI.real_name] [designation] Shell-[identifier]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name //update the camera name too
@@ -852,7 +861,7 @@
 /mob/living/silicon/robot/attack_ai(mob/user)
 	if(shell && (!connected_ai || connected_ai == user))
 		var/mob/living/silicon/ai/AI = user
-		AI.deploy_to_shell(src)
+		AI.select_shell(src)
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
 	//Don't try buckling on INTENT_HARM so that silicons can search people's inventories without loading them

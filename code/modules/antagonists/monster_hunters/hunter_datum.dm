@@ -9,7 +9,7 @@
 	antag_moodlet = /datum/mood_event/monster_hunter
 	show_to_ghosts = TRUE
 	ui_name = "AntagInfoMonsterHunter"
-	stinger_sound = 'sound/ambience/antag/monster_hunter.ogg'
+	stinger_sound = 'sound/music/antag/monster_hunter.ogg'
 	var/list/datum/action/powers = list()
 	/// Have we chosen a weapon yet?
 	var/weapon_claimed = FALSE
@@ -20,6 +20,8 @@
 	var/list/obj/effect/bnnuy/rabbits = list()
 	///the red card tied to this trauma if any
 	var/obj/item/rabbit_locator/locator
+	///tracks the hunter and whatever they're inside, so the rabbit images follow them
+	var/datum/movement_detector/rabbit_tracker
 	///have we triggered the apocalypse
 	var/apocalypse = FALSE
 	///a list of our prey
@@ -50,7 +52,7 @@
 	current_mob.update_sight()
 	current_mob.faction |= FACTION_RABBITS
 	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(setup_bnuuy_images))
-	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(update_bnnuy_visibility))
+	rabbit_tracker = new(current_mob, CALLBACK(src, PROC_REF(update_bnnuy_visibility)))
 
 /datum/antagonist/monsterhunter/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -58,7 +60,8 @@
 	current_mob.remove_traits(granted_traits, HUNTER_TRAIT)
 	current_mob.faction -= FACTION_RABBITS
 	current_mob.update_sight()
-	UnregisterSignal(current_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(current_mob, COMSIG_MOB_LOGIN)
+	QDEL_NULL(rabbit_tracker)
 
 /datum/antagonist/monsterhunter/on_gain()
 	owner.special_role = ROLE_MONSTERHUNTER
@@ -164,14 +167,13 @@
 	for(var/obj/effect/bnnuy/bnnuy as anything in rabbits)
 		if(QDELETED(bnnuy))
 			continue
-		owner.current?.client?.images |= bnnuy.hunter_image
+		bnnuy.update_far_image(owner.current)
 
-/datum/antagonist/monsterhunter/proc/update_bnnuy_visibility(mob/living/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
+/datum/antagonist/monsterhunter/proc/update_bnnuy_visibility(atom/movable/tracked, atom/movable/mover, atom/old_loc, dir)
 	for(var/obj/effect/bnnuy/bnnuy as anything in rabbits)
 		if(QDELETED(bnnuy))
 			continue
-		bnnuy.update_mouse_opacity(source)
+		bnnuy.update_far_image(tracked)
 
 /datum/antagonist/monsterhunter/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -444,7 +446,7 @@
 /datum/action/droppod_item
 	name = "Summon Monster Hunter Tools"
 	desc = "Summon specific monster hunter tools that will aid us with our hunt."
-	button_icon = 'icons/obj/device.dmi'
+	button_icon = 'icons/obj/devices/tracker.dmi'
 	button_icon_state = "beacon"
 
 /datum/action/droppod_item/New(obj/item/target)

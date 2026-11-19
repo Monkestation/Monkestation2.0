@@ -17,7 +17,7 @@
 	attack_verb_continuous = "weakly tackles"
 	attack_verb_simple = "weakly tackles"
 	speak_emote = list("telepathically cries")
-	attack_sound = 'sound/weapons/pierce.ogg'
+	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "passes between the bodies of the"
 	obj_damage = 0
 	pass_flags = PASSTABLE
@@ -84,8 +84,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = INFINITY
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = INFINITY
 	speed = 1.5
 	maxHealth = 1
 	health = 1
@@ -94,7 +94,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	speak_emote = list("telepathically cries")
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	density = FALSE

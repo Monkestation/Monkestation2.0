@@ -20,7 +20,7 @@
 	var/sound_volume = 25
 	/// The sound of fermentation
 	var/datum/looping_sound/boiling/soundloop
-	var/lid_open_sound = 'sound/items/handling/cardboardbox_pickup.ogg'
+	var/lid_open_sound = 'sound/items/handling/cardboard_box/cardboardbox_pickup.ogg'
 	var/lid_close_sound = 'sound/effects/footstep/woodclaw2.ogg'
 
 /obj/structure/fermenting_barrel/Initialize(mapload)

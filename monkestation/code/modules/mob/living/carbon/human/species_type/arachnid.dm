@@ -123,8 +123,8 @@
 	throwforce = 0
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "silk"
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	mats_per_unit = list(/datum/material/silk = SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/cellulose = 20)
 	tableVariant = /obj/structure/table/silk
@@ -167,7 +167,6 @@ GLOBAL_LIST_INIT(silk_recipes, list ( \
 	name = "silk"
 	desc = "Arachnid silk, for web development."
 	color = "#ffffff"
-	greyscale_colors = "#ffffff"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/silk
 	value_per_unit = 45 / SHEET_MATERIAL_AMOUNT

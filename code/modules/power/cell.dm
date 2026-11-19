@@ -23,6 +23,8 @@
 
 /obj/item/stock_parts/power_store/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_POISONOUS_BAIT, INNATE_TRAIT) //bro is fishing using lithium...
 
 /obj/item/stock_parts/power_store/cell/create_reagents(max_vol, flags)
 	. = ..()
@@ -37,7 +39,7 @@
 /obj/item/stock_parts/power_store/cell/update_overlays()
 	. = ..()
 	if(grown_battery)
-		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
+		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
 	. += mutable_appearance('icons/obj/power.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
@@ -192,7 +194,7 @@
 /obj/item/stock_parts/power_store/cell/infinite/abductor
 	name = "void core"
 	desc = "An alien power cell that produces energy seemingly out of nowhere."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "cell"
 	maxcharge = STANDARD_CELL_CHARGE * 50
 	ratingdesc = FALSE

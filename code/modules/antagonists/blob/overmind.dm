@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		antag_team.has_announced = TRUE
 
 /mob/eye/blob/proc/victory()
-	sound_to_playing_players('sound/machines/alarm.ogg')
+	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg')
 	sleep(10 SECONDS)
 	for(var/mob/living/live_guy as anything in GLOB.mob_living_list)
 		var/turf/guy_turf = get_turf(live_guy)

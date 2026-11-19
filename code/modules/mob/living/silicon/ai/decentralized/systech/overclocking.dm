@@ -60,7 +60,7 @@
 		balloon_alert(user, "cpu already inserted!")
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/ai_cpu/CPU = tool
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	inserted_cpu = CPU
 	CPU.forceMove(src)
 	return ITEM_INTERACT_SUCCESS
@@ -105,7 +105,7 @@
 		if("eject_cpu")
 			if(!inserted_cpu)
 				return
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 			inserted_cpu.speed = initial(inserted_cpu.speed)
 			inserted_cpu.power_multiplier = initial(inserted_cpu.power_multiplier)
 			inserted_cpu.forceMove(drop_location())

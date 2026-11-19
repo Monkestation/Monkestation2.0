@@ -2,7 +2,7 @@
 /obj/machinery/plumbing/liquid_pump
 	name = "liquid pump"
 	desc = "Pump up those sweet liquids from under the surface. Uses thermal energy from geysers to power itself." //better than placing 200 cables, because it wasn't fun
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	icon_state = "pump"
 	base_icon_state = "pump"
 	anchored = FALSE
@@ -43,7 +43,7 @@
 		if(!geyser) //we didnt find one, abort
 			geyserless = TRUE
 			visible_message(span_warning("The [name] makes a sad beep!"))
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50)
 			return
 
 	pump(seconds_per_tick)

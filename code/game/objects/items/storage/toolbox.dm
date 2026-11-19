@@ -16,10 +16,10 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
-	hitsound = 'sound/weapons/smash.ogg'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	hitsound = 'sound/items/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
@@ -108,6 +108,12 @@
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
+
+// version of below that isn't a traitor item
+/obj/item/storage/toolbox/mechanical/old/cleaner
+	name = "old blue toolbox"
+	icon_state = "oldtoolboxclean"
+	icon_state = "toolbox_blue_old"
 
 /obj/item/storage/toolbox/mechanical/old/clean // the assistant traitor toolbox, damage scales with TC inside
 	name = "toolbox"
@@ -430,7 +436,7 @@
 	explosion_timer = addtimer(CALLBACK(src, PROC_REF(think_fast_chucklenuts)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
 	to_chat(user, span_warning("You prime [src]'s evidence disposal bomb!"))
 	log_bomber(user, "has activated a", src, "for detonation")
-	playsound(src, 'sound/weapons/armbomb.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/armbomb.ogg', 50, TRUE)
 	currently_exploding = TRUE
 	update_appearance()
 

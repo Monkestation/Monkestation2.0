@@ -6,7 +6,7 @@
 	worn_icon = 'icons/mob/clothing/suits/labcoat.dmi'
 	inhand_icon_state = "labcoat"
 	blood_overlay_type = "coat"
-	body_parts_covered = CHEST|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/analyzer,
 		/obj/item/biopsy_tool,
@@ -32,12 +32,17 @@
 		)
 	armor_type = /datum/armor/toggle_labcoat
 	species_exception = list(/datum/species/golem)
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/toggle/labcoat/cmo
 	name = "chief medical officer's labcoat"
 	desc = "Bluer than the standard model."
 	icon_state = "labcoat_cmo"
 	inhand_icon_state = null
+
+/obj/item/clothing/suit/toggle/labcoat/cmo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /datum/armor/toggle_labcoat
 	bio = 50
@@ -56,6 +61,10 @@
 	icon_state = "labcoat_paramedic"
 	inhand_icon_state = null
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/toggle/labcoat/paramedic/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/suit/toggle/labcoat/mad
 	name = "\proper The Mad's labcoat"
@@ -156,12 +165,7 @@
 		destroy_on_removal = FALSE,\
 		parent_icon_state_suffix = "",\
 		down_overlay_state_suffix = "", \
-		overslot_check = CALLBACK(src, PROC_REF(can_overslot)),\
 	)
-
-/// Override to disable overslotting.
-/obj/item/clothing/suit/toggle/labcoat/paramedic/deforest/proc/can_overslot(obj/item/hat)
-	return TRUE
 
 /obj/item/clothing/head/hooded/winterhood/medical/deforest
 	name = "Deforest Hood"

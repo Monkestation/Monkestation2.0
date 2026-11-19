@@ -56,6 +56,8 @@
 		"extinguisher",
 		"pocketfireextinguisher",
 		"fax",
+		"fish_case",
+		"aquarium_kit",
 		"fishing_rod",
 		"fishing_line",
 		"fishing_hook",

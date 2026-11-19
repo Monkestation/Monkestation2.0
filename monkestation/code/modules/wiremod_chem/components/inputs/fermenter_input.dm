@@ -2,7 +2,7 @@
 	name = "remote chemical fermenter"
 	desc = "Turns plants into various types of booze."
 	icon_state = "fermenter"
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	reagent_flags = TRANSPARENT | DRAINABLE
 	component_name = "Fermenter Input"
 	density = FALSE

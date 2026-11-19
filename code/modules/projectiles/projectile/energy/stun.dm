@@ -2,7 +2,7 @@
 	name = "electrode"
 	icon_state = "spark"
 	color = COLOR_YELLOW
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 5
 	reflectable = FALSE
 	tracer_type = /obj/effect/projectile/tracer/stun
@@ -307,7 +307,7 @@
 	// moves the tase beam up or down if the target moves up or down
 	tase_line.RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, TYPE_PROC_REF(/datum/beam, redrawing))
 
-	playsound(get_turf(owner), 'sound/weapons/taser.ogg', 45, TRUE, 1)
+	playsound(get_turf(owner), 'sound/items/weapons/taser.ogg', 45, TRUE, 1)
 
 	tasing = TRUE
 	do_sparks(3, TRUE, src)
@@ -368,7 +368,7 @@
 	if(DOING_INTERACTION(remover, id))
 		return
 	owner.shake_up_animation()
-	playsound(owner, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(owner, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	remover.visible_message(
 		span_warning("[owner] tries to remove [electrode_name][remover == owner ? "" : " from [owner]"]!"),
 		span_notice("You try to remove [electrode_name][remover == owner ? "" : " from [owner]"]!"),

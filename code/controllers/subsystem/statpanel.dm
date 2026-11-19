@@ -181,10 +181,10 @@ SUBSYSTEM_DEF(statpanels)
 	target.stat_panel.send_message("update_interviews", data)
 	// Monkestation Addition: Token Manager START
 	var/list/token_data = list(
-		"accepted" = SStoken_manager.accepted_count || 0,
-		"pending" = length(SStoken_manager.pending_requests) || 0,
-		"rejected" = SStoken_manager.rejected_count || 0,
-		"timed_out" = SStoken_manager.timed_out_count || 0,
+		"accepted" = GLOB.token_manager.accepted_count || 0,
+		"pending" = length(GLOB.token_manager.pending_requests) || 0,
+		"rejected" = GLOB.token_manager.rejected_count || 0,
+		"timed_out" = GLOB.token_manager.timed_out_count || 0,
 	)
 	target.stat_panel.send_message("update_tokens", token_data)
 	// Monkestation Addition END
@@ -242,7 +242,6 @@ SUBSYSTEM_DEF(statpanels)
 #endif
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), text_ref(sub_system))
-	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [SScameras.cameras.len] | Chunks: [SScameras.chunks.len]", text_ref(SScameras))
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)

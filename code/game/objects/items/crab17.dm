@@ -1,7 +1,7 @@
 /obj/item/suspiciousphone
 	name = "suspicious phone"
 	desc = "This device raises pink levels to unknown highs."
-	icon = 'icons/obj/device_syndie.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("dumps")
@@ -40,7 +40,7 @@
 /obj/structure/checkoutmachine
 	name = "\improper Nanotrasen Space-Coin Market"
 	desc = "This is good for spacecoin because"
-	icon = 'icons/obj/money_machine.dmi'
+	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -79,7 +79,7 @@
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
-		playsound(get_turf(src),'sound/magic/repulse.ogg', 100, TRUE)
+		playsound(get_turf(src),'sound/effects/magic/repulse.ogg', 100, TRUE)
 
 		return
 
@@ -126,7 +126,7 @@
 	sleep(3 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
 	hologram.pixel_y = 16
 	add_overlay(hologram)
@@ -158,7 +158,7 @@
 	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
 	add_overlay("text")
 	sleep(1 SECONDS)
 	if(QDELETED(src))
@@ -217,7 +217,7 @@
 
 /obj/effect/dumpeet_fall //Falling pod
 	name = ""
-	icon = 'icons/obj/money_machine_64.dmi'
+	icon = 'icons/obj/machines/money_machine_64.dmi'
 	pixel_z = 300
 	desc = "Get out of the way!"
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
@@ -247,7 +247,7 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, TRUE, 6)
+	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, PROC_REF(endLaunch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 

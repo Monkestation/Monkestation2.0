@@ -14,7 +14,7 @@
 	else
 		current_color = COLOR_MATRIX_IDENTITY
 
-	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
+	var/mutable_appearance/view = image('icons/testing/colortest.dmi', "colors")
 	if(_target)
 		target = WEAKREF(_target)
 		if(!(_target.appearance_flags & PLANE_MASTER))
@@ -73,13 +73,13 @@
 	if(istype(target_atom))
 		target_atom.vv_edit_var("color", current_color)
 
-/datum/color_matrix_editor/proc/wait()
-	while(!closed)
+/datum/color_matrix_editor/proc/wait(mob/user)
+	while(!closed && !QDELETED(user))
 		stoplag(1)
 
 /client/proc/open_color_matrix_editor(atom/in_atom)
 	var/datum/color_matrix_editor/editor = new /datum/color_matrix_editor(src, in_atom)
 	editor.ui_interact(mob)
-	editor.wait()
+	editor.wait(mob)
 	. = editor.current_color
 	qdel(editor)

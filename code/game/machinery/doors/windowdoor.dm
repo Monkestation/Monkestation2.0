@@ -12,7 +12,7 @@
 	integrity_failure = 0
 	armor_type = /datum/armor/door_window
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = parent_type::flags_1 | ON_BORDER_1
 	opacity = FALSE
 	pass_flags_self = PASSGLASS | PASSDOORS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -227,7 +227,6 @@
 	sleep(1 SECONDS)
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	if(operating == 1) //emag again
 		operating = FALSE
@@ -270,7 +269,6 @@
 
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 	sleep(1 SECONDS)
 
 	operating = FALSE
@@ -300,9 +298,9 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glasshit.ogg', 90, TRUE)
+			playsound(src, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
