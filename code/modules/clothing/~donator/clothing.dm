@@ -342,6 +342,7 @@
 
 // Donation reward for NetraKyram
 /obj/item/clothing/under/rank/blueshield/netra
+	can_adjust = FALSE
 	name = "black and silver armored dress"
 	desc = "An ankle length black and silver dress, made out of some shiny synthetic material with inlaid kevlar shards and silver reinforcements, a silver ring surrounds the collar, and it doesn't appear to have a zipper... How does somebody put this thing on anyways?"
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -569,6 +570,7 @@
 
 // Donation Reward for Grand Vegeta
 /obj/item/clothing/under/mikubikini
+	can_adjust = FALSE
 	name = "starlight singer bikini"
 	desc = " "
 	icon_state = "mikubikini"
@@ -887,6 +889,7 @@
 
 //Donation reward for Hacker T.Dog
 /obj/item/clothing/under/rank/nanotrasen_consultant/hubert
+	can_adjust = FALSE
 	name = "CC ensign's uniform"
 	desc = "A tailor-made Ensign's uniform, various medals and chains hang down from it."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -926,6 +929,7 @@
 
 // Donation reward for gamerguy14948
 /obj/item/clothing/under/occult
+	can_adjust = FALSE
 	name = "occult collector's outfit"
 	desc = "A set of clothes fit for someone dapper that isn't afraid of getting dirty."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1136,6 +1140,7 @@
 
 // Donation reward for M97screwsyourparents
 /obj/item/clothing/under/recruiter_uniform
+	can_adjust = FALSE
 	name = "recruiter uniform"
 	desc = "Hey, free college!"
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1189,6 +1194,7 @@
 // Donation reward for BoisterousBeebz
 
 /obj/item/clothing/under/bubbly_clown/skirt
+	can_adjust = FALSE
 	name = "bubbly clown dress"
 	desc = "A bright and cheerful clown dress, honk!"
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1211,6 +1217,7 @@
 
 // Donation reward for Kay-Nite
 /obj/item/clothing/under/tactichill
+	can_adjust = FALSE
 	name = "tactichill jacket"
 	desc = "The brighter variant of the tacticool clotheswear, for when you want to look even cooler than usual and still operate at the same time."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1220,6 +1227,7 @@
 // Donation reward for Razurath
 
 /obj/item/clothing/under/bimpcap
+	can_adjust = FALSE
 	name = "Formal Matte Black Captain Uniform"
 	desc = "A professional looking matte black uniform cladded with medals of distintive service and valor, only worn by the highest of station officials."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1237,6 +1245,7 @@
 
 // Donation reward for Thedragmeme
 /obj/item/clothing/under/caged_dress/skirt
+	can_adjust = FALSE
 	name = "Caged Purple Dress"
 	desc = "A silky purple dress with a partially exposed crinoline underneath."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'

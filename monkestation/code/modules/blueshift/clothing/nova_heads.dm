@@ -84,11 +84,13 @@
 	name = "captain's naval officer cap"
 	desc = "A white naval cap with a silver disk in the center."
 	icon_state = "impcap"
+	armor_type = /datum/armor/hats_caphat
 
 /obj/item/clothing/head/hats/imperial/hop
 	name = "head of personnel's naval officer cap"
 	desc = "An olive naval cap with a silver disk in the center."
 	icon_state = "imphop"
+	armor_type = /datum/armor/hats_hopcap
 
 /obj/item/clothing/head/hats/imperial/hos
 	name = "head of security's naval officer cap"

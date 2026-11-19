@@ -10,6 +10,8 @@
 	. = ..()
 	if(!. || (movement_type & FLOATING)) //floating is easy
 		return
+	if(!moving_diagonally)
+		SEND_SIGNAL(src, COMSIG_CARBON_STEP, NewLoc, direct)
 	if(nutrition <= 0 || stat == DEAD)
 		return
 	var/hunger_loss = HUNGER_FACTOR / 10

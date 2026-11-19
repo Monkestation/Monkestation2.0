@@ -141,6 +141,7 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/under/costume/whitebeard
+	can_adjust = FALSE
 	name = "\improper Whitebeard's Attire"
 	desc = "The garb of a world renowned pirate."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
@@ -181,6 +182,7 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 
 /obj/item/clothing/under/costume/krieg
+	can_adjust = FALSE
 	name = "\improper Krieg's Attire"
 	desc = "The garb of a malicious psycho from the Pandora sector."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
@@ -227,6 +229,7 @@
 	)
 
 /obj/item/clothing/under/costume/aotuniform
+	can_adjust = FALSE
 	name = "\improper Survey Corps Uniform"
 	desc = "The uniform of a Survey Corps member."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
@@ -502,6 +505,7 @@
 	flags_inv = HIDEFACE
 
 /obj/item/clothing/under/costume/holstein_cow_jumpsuit
+	can_adjust = FALSE
 	name = "holstein cow jumpsuit"
 	desc = "A frumpy black and white holstein cow jumpsuit. It smells like grass."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
