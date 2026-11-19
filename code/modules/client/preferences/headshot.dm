@@ -1,5 +1,26 @@
 GLOBAL_VAR(admin_approving_headshot)
 
+#define APPROVED_HEADSHOTS_FILE "data/approved_headshots.json"
+
+/proc/get_approved_headshots()
+	var/static/list/approved_headshots
+	if(!approved_headshots)
+		approved_headshots = list()
+		if(fexists(APPROVED_HEADSHOTS_FILE))
+			var/raw_json = file2text(APPROVED_HEADSHOTS_FILE)
+			if(length(raw_json))
+				var/list/loaded = json_decode(raw_json)
+				if(islist(loaded))
+					approved_headshots = loaded
+	return approved_headshots
+
+/proc/cache_approved_headshot(url)
+	var/list/approved_headshots = get_approved_headshots()
+	if(approved_headshots[url])
+		return
+	approved_headshots[url] = TRUE
+	rustg_file_write(json_encode(approved_headshots), APPROVED_HEADSHOTS_FILE)
+
 /datum/preference/text/headshot
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -33,10 +54,11 @@ GLOBAL_VAR(admin_approving_headshot)
 		return FALSE
 
 	if(usr)
-		if(GLOB.admin_approving_headshot == value)
+	 var/list/approved_headshots = get_approved_headshots()
+		if(approved_headshots[value] || GLOB.admin_approving_headshot == value)
 			return TRUE
 
-		WRITE_LOG("[GLOB.log_directory]/headshots.log", "\[[time2text(world.realtime,"YYYY-MM-DD hh:mm:ss")]\] [key_name(usr)] submitted a new headshot for approval: [value]")
+		logger.Log(LOG_CATEGORY_HEADSHOT, "\[[time2text(world.realtime,"YYYY-MM-DD hh:mm:ss")]\] [key_name(usr)] submitted a new headshot for approval: [value]")
 
 		message_admins("[ADMIN_LOOKUPFLW(usr)] submitted a headshot: <a href='[value]' target='_blank'>[value]</a> | <a href='byond://?src=[REF(src)];approve_headshot=[usr.ckey];url=[url_encode(value)]'>\[Approve]</a>")
 		to_chat(usr, span_notice("Your headshot has been submitted and is pending administrator approval."))
@@ -79,6 +101,8 @@ GLOBAL_VAR(admin_approving_headshot)
 			to_chat(usr, span_warning("Could not find active client preferences for ckey: [target_ckey]"))
 			return
 
+		cache_approved_headshot(approved_url)
+
 		GLOB.admin_approving_headshot = approved_url
 		C.prefs.write_preference(src, approved_url)
 		GLOB.admin_approving_headshot = null
@@ -87,7 +111,7 @@ GLOBAL_VAR(admin_approving_headshot)
 
 		to_chat(C, span_notice("Your headshot has been approved by an administrator!"))
 		message_admins("[key_name_admin(usr)] approved the headshot for [target_ckey]: [approved_url]")
-		WRITE_LOG("[GLOB.log_directory]/headshots.log", "\[[time2text(world.realtime,"YYYY-MM-DD hh:mm:ss")]\] [key_name(usr)] approved headshot for [target_ckey] to: [approved_url]")
+		logger.Log(LOG_CATEGORY_HEADSHOT, "\[[time2text(world.realtime,"YYYY-MM-DD hh:mm:ss")]\] [key_name(usr)] approved headshot for [target_ckey] to: [approved_url]")
 
 /datum/preference/toggle/see_headshots
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

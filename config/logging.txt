@@ -107,3 +107,6 @@ LOG_ZONE_SWITCH
 
 ## log storyteller
 # LOG_STORYTELLER
+
+## log character headshots
+# LOG_HEADSHOT
