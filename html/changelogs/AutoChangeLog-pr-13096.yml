@@ -1,0 +1,5 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Hardly wounded people no longer take worse wounds than normal people from heavy hits."
+  - balance: "Easily wounded and hardly wounded now raise or lower the maximum wound severity a single hit can roll, instead of scaling the hit's damage."
