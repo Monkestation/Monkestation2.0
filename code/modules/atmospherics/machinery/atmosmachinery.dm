@@ -405,7 +405,7 @@
 	add_fingerprint(user)
 
 	var/unsafe_wrenching = FALSE
-	var/internal_pressure = int_air.return_pressure() - env_air.return_pressure()
+	var/internal_pressure = int_air?.return_pressure() - env_air.return_pressure()
 	var/empty_pipe = FALSE
 	if(istype(src, /obj/machinery/atmospherics/components))
 		var/list/datum/gas_mixture/all_gas_mixes = return_analyzable_air()
@@ -419,7 +419,7 @@
 				internal_pressure = internal_pressure > pressure_delta ? internal_pressure : pressure_delta
 		if(empty_mixes == device_type)
 			empty_pipe = TRUE
-	if(!int_air.total_moles())
+	if(!int_air?.total_moles())
 		empty_pipe = TRUE
 
 	if(!empty_pipe)

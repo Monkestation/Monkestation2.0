@@ -100,7 +100,6 @@
 /obj/machinery/atmospherics/components/nullify_node(i)
 	if(parents[i])
 		nullify_pipenet(parents[i])
-	airs[i] = null
 	return ..()
 
 /obj/machinery/atmospherics/components/on_construction(mob/user)

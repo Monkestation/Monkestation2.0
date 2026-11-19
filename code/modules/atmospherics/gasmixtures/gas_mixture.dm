@@ -585,7 +585,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/output_moles = output_air.total_moles()
 	var/output_pressure = output_air.return_pressure()
 
-	if(our_moles <= 0 || temperature <= 0)
+	if(our_moles <= 0 || temperature <= 0 || !output_air.volume)
 		return FALSE
 
 	var/pressure_delta = 0
