@@ -475,4 +475,4 @@
 	default = 250
 
 /datum/config_entry/flag/log_headshot
-	default = TRUE
+ default = TRUE
