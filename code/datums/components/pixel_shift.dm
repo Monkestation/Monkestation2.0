@@ -54,7 +54,8 @@
 /datum/component/pixel_shift/proc/pre_move_check(mob/source, new_loc, direct)
 	SIGNAL_HANDLER
 	if(shifting)
-		pixel_shift(source, direct)
+		if(!source.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) && !HAS_TRAIT(source, TRAIT_IMMOBILIZED))
+			pixel_shift(source, direct)
 		return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
 
 //procs for tilting parent

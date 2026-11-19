@@ -285,6 +285,8 @@
 	var/mob/living/carbon/human/fat_human = owner
 	fat_human.on_fat() // Make sure to update the movespeed modifier in case we gain the trait while already fat
 	var/obj/item/organ/internal/tongue/tongue = fat_human.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
 	tongue.liked_foodtypes = ALL
 	tongue.disliked_foodtypes = NONE
 	tongue.toxic_foodtypes = NONE
