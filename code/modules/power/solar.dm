@@ -331,6 +331,11 @@
 			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
 			return TRUE
 
+		//prevent construction if something dense's on our tile
+		var/turf/tracker_turf = get_turf(src)
+		if(tracker_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+			balloon_alert(user, "something in the way!")
+			return
 		if(!istype(attacking_item, /obj/item/stack/sheet/glass))
 			to_chat(user, span_warning("The tracker only accepts standard, un-reinforced glass."))
 			return
@@ -340,7 +345,7 @@
 			return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		user.visible_message(span_notice("[user] places the glass on the solar assembly."),span_notice("You place the glass on the solar assembly."))
-		new /obj/machinery/power/tracker/(get_turf(src))
+		new /obj/machinery/power/tracker/(get_turf(src), src)
 		return
 
 	if(!tracker)

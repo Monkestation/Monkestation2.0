@@ -196,7 +196,7 @@ export class TextHighlightRules implements Ace.HighlightRules {
     Object.keys(map!).forEach((className) => {
       const a = map![className];
       const list = a.split(splitChar || '|');
-      for (let i = list.length; i--;) {
+      for (let i = list.length; i--; ) {
         let word = list[i];
         this.$keywordList.push(word);
         if (ignoreCase) word = word.toLowerCase();

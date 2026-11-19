@@ -30,7 +30,7 @@
 		to_chat(mob, span_notice("You suddenly love plasma."))
 	ADD_TRAIT(mob, TRAIT_PLASMA_LOVER_METABOLISM, type)
 
-/datum/symptom/plasma_heal/side_effect(mob/living/mob)
+/datum/symptom/plasma_heal/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	. = ..()
 	REMOVE_TRAIT(mob, TRAIT_PLASMA_LOVER_METABOLISM, type)
 

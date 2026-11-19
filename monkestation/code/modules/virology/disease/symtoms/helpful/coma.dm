@@ -34,11 +34,13 @@
 	Heal(mob, effectiveness)
 	return
 
-/datum/symptom/coma/side_effect(mob/living/mob)
+/datum/symptom/coma/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
+	. = ..()
 	if(active_coma)
-		uncoma()
+		uncoma(mob)
 	if(!added_to_mob)
 		return
+	added_to_mob = FALSE
 	REMOVE_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 
 /datum/symptom/coma/proc/CanHeal(mob/living/victim)

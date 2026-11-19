@@ -101,7 +101,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
   const { act, data } = useBackend<SecurityRecordsData>();
   const { current_user, higher_access } = data;
   const { author, crime_ref, details, fine, name, paid, time, valid } = item;
-  const showFine = !!fine && fine > 0 ? `: ${fine} cr` : '';
+  const showFine = fine && fine > 0 ? `: ${fine} cr` : '';
 
   let collapsibleColor = '';
   if (!valid) {

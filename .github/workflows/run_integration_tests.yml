@@ -38,6 +38,7 @@ jobs:
           sparse-checkout: |
             _maps
             .github
+            build/navmaps
             code/datums/greyscale/json_configs
             data/cassette_storage
             goon/icons
@@ -51,6 +52,7 @@ jobs:
             SQL/tgstation_schema_prefixed.sql
             tools/ci/install_byond.sh
             tools/ci/install_dreamluau.sh
+            tools/ci/install_navmap_pathfinder.sh
             tools/ci/install_rust_g.sh
             tools/ci/mysql_config.cnf
             tools/ci/run_server.sh
@@ -68,6 +70,7 @@ jobs:
           path: |
             ~/.byond/bin/librust_g.so
             ~/.byond/bin/libdreamluau.so
+            ~/.byond/bin/libnavmap_pathfinder.so
           key: ${{ runner.os }}-native-libraries-${{ hashFiles('dependencies.sh') }}
 
       - parallel:
@@ -83,6 +86,11 @@ jobs:
           if: ${{ steps.native_libraries_cache.outputs.cache-hit != 'true' }}
           run: |
             bash tools/ci/install_dreamluau.sh
+
+        - name: Install navmap-pathfinder
+          if: ${{ steps.native_libraries_cache.outputs.cache-hit != 'true' }}
+          run: |
+            bash tools/ci/install_navmap_pathfinder.sh
 
       # Excluded from the above parallel group because it reads event.json as it loads, and the runner empties and rewrites that file whenever another step starts (actions/runner#4641)
       - name: Download build artifact
