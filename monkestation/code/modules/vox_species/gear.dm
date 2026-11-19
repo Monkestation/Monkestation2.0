@@ -23,6 +23,7 @@
 /obj/item/clothing/suit/space/vox
 	icon = 'icons/obj/species/vox/suits.dmi'
 	worn_icon = 'icons/mob/clothing/species/vox/suit.dmi'
+	icon_state = "vox-pressure" // the base type would otherwise use the generic space suit's sprite, which our icon file lacks
 	inhand_icon_state = "s_suit"
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(
@@ -43,6 +44,7 @@
 /obj/item/clothing/head/helmet/space/vox
 	icon = 'icons/obj/species/vox/hats.dmi'
 	worn_icon = 'icons/mob/clothing/species/vox/head.dmi'
+	icon_state = "vox-pressure" // the base type would otherwise use the generic space helmet's sprite, which our icon file lacks
 	armor_type = /datum/armor/vox_space
 	clothing_flags = STOPSPRESSUREDAMAGE // as on Yogstation: not syringe-proof, and vox breathe through their own masks
 	flags_cover = HEADCOVERSEYES
