@@ -1,0 +1,4 @@
+author: "Evalence0"
+delete-after: True
+changes:
+  - rscadd: "Added new \"Chronically Overweight\" quirk"
