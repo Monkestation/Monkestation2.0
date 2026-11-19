@@ -1057,6 +1057,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cybernetic_liver/bioscrambler
+	name = "Bioscrambler Liver"
+	desc = "A cutting-edge cyberliver that reshapes itself around its host. Steadies the host's genome and lets even synthetic bodies use genetics, but an EMP will scramble the host's genes. Requires a bioscrambler anomaly core to function."
+	id = "cybernetic_liver_bioscrambler"
+	construction_time = 5 SECONDS
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 //monkestation_edit start
 /datum/design/cybernetic_spleen
 	name = "Basic Cybernetic Spleen"
