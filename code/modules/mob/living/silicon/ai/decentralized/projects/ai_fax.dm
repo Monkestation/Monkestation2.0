@@ -16,7 +16,8 @@
 /datum/action/innate/ai/fax_machine
 	name = "Fax Machine"
 	desc = "Access our jury-rigged fax-machine."
-	button_icon_state = "emergency_lights"
+	button_icon = 'icons/obj/machines/fax.dmi'
+	button_icon_state = "fax"
 	max_uses = 999
 	auto_use_uses = FALSE
 	var/obj/machinery/fax/ai/fax_machine
