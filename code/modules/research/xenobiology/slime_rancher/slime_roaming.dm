@@ -1,5 +1,8 @@
-/datum/ai_movement/astar/slime
+/datum/ai_movement/navmap_astar/slime
 	maximum_length = SLIME_SEEK_PATH_LENGTH
+	allow_multiz = TRUE
+	update_movement_for_moving_target = TRUE
+	nav_cost_modifiers = alist(NAV_COST_LAVA = 99999)
 
 /// Cleaners with no mess in reach go wander somewhere else to look for one
 /datum/ai_planning_subtree/slime_target/roam
@@ -100,17 +103,15 @@
 	return !controller.is_ignoring(get_area(destination))
 
 /datum/ai_behavior/slime_find_target/roam/request_path(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate)
-	if(SSpathfinder.astar_pathfind(controller.pawn, candidate, max_distance = SLIME_SEEK_PATH_LENGTH, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, candidate))))
-		return
-	controller.ignore_target(candidate, SLIME_CHASE_GIVE_UP_TIME)
-	// refused before searching means they're too far off, same as on_path_found finding nothing
-	controller.clear_blackboard_key(BB_SLIME_ROAM_PLAYER)
+	// every way this can fail still ends up in on_path_found(), with an empty path
+	SSpathfinder.pathfind(controller.pawn, candidate, max_distance = SLIME_SEEK_PATH_LENGTH, access = controller.get_access(), on_finish = list(CALLBACK(src, PROC_REF(on_path_found), controller, target_key, candidate)), allow_multiz = TRUE, max_path_cost = SLIME_SEEK_PATH_LENGTH * 10, allow_nav_links = TRUE, nav_cost_modifiers = alist(NAV_COST_LAVA = 99999))
 
-/datum/ai_behavior/slime_find_target/roam/on_path_found(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate, list/path)
+/datum/ai_behavior/slime_find_target/roam/on_path_found(datum/ai_controller/basic_controller/slime/controller, target_key, atom/candidate, list/path, list/actions)
 	if(QDELETED(controller))
 		return ..()
 	if(length(path))
 		controller.override_blackboard_key(BB_PATH_TO_USE, path)
+		controller.override_blackboard_key(BB_PATH_ACTIONS_TO_USE, actions)
 		return ..()
 	// a failed search goes through every tile in reach, so don't keep picking spots in the same locked room
 	if(!controller.blackboard_key_exists(BB_SLIME_ROAM_PLAYER))

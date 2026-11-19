@@ -17,7 +17,7 @@
 	icon_dead = "spacedragon_dead"
 	health_doll_icon = "spacedragon"
 	faction = list(FACTION_CARP)
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
 	maxHealth = 400
 	health = 400

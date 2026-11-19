@@ -8,7 +8,7 @@
 	desc = "Inner garb for divine archers."
 	icon_state = "archergarb"
 	inhand_icon_state = "archergarb"
-	can_adjust = TRUE
+	can_adjust = FALSE
 
 /// suit
 /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer
