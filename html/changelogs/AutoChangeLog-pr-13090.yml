@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Training bombs no longer alert ghosts and admins like real bombs."

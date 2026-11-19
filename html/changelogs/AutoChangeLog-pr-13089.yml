@@ -1,6 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Fixed several uplink items being hidden from their categories or missing from the uplink entirely."
-  - bugfix: "Traitors can buy the Syndicate Holster again."
-  - bugfix: "The Refined Matter Eater Mutator is available to geneticists again."

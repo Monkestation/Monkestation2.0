@@ -872,9 +872,52 @@
   - bugfix: Mute and muzzled chuunibyous can no longer shout their spell lines on
       non invocation spells.
   - bugfix: Chav and Elvis mutations now use their correct speech patterns.
+  - bugfix: Cyborgs hit with a security baton are now told who hit them, instead of
+      themselves.
+  - bugfix: Fixed the flashlight sitting too high on regular disablers.
+  - bugfix: Training bombs no longer alert ghosts and admins like real bombs.
+  - bugfix: Hardly wounded people no longer take worse wounds than normal people from
+      heavy hits.
+  - balance: Easily wounded and hardly wounded now raise or lower the maximum wound
+      severity a single hit can roll, instead of scaling the hit's damage.
+  - bugfix: Syndicate bomb timers are now capped at 100 minutes instead of roughly
+      16 hours.
+  - bugfix: Viscerators no longer body-block people.
+  - balance: Viscerators can now fly over machines and through plastic flaps.
+  - bugfix: Gluon grenades now irradiate again.
+  - bugfix: Fixed several uplink items being hidden from their categories or missing
+      from the uplink entirely.
+  - bugfix: Traitors can buy the Syndicate Holster again.
+  - bugfix: The Refined Matter Eater Mutator is available to geneticists again.
+  EnterTheJaks:
+  - bugfix: finger guns now credit the proper user
+  Evalence0:
+  - rscadd: Added new "Chronically Overweight" quirk
   ashallaryn:
   - rscadd: 'New Quirk: Intrusive Thoughts'
   - rscadd: 'New Special Brain Trauma: Intrusive Thoughts (Variant of Split Personality)'
   - rscadd: 'New action: Intrusive Thought (variant of Personality Commune)'
+  desertmote, vinylspiders, Charlotte-Sugar, SmArtKar, Neocloudy, Melbert:
+  - rscadd: 'A new species to play: Cerulean!'
+  - rscadd: The hydro-vaporizer, a wearable device functional like an internals tank,
+      but for water vapor
+  - rscadd: A new light/two person pirate team, the Siren Shimai
+  - rscadd: A compact laser shotgun, for the aforementioned pirate team
+  - rscadd: An armored leather jacket, for the aforementioned pirate team
+  - rscadd: Added new hairstyles
+  - image: you can now change the style of lipstick to be higher or lower on the face
+      by alt-clicking the lipstick tube
+  - code_imp: Species can change what goes in their survival box, plasmamen use it
+      now
+  - code_imp: Areas can be set to have no gravity even with a gravity generator on
+      the level
+  - bugfix: Mobs spawned with a species already set now get their species heat and
+      cold modifiers
+  - bugfix: Ceruleans picking up special shoes (like noslips) no longer permanently
+      breaks the shoes
+  - bugfix: Ceruleans no longer turn back to human skin when they lose their tail
+      or one of their fish organs
+  - bugfix: Prosthetic quirks no longer give limbs or organs you don't have, and won't
+      give lungs to species that don't breathe oxygen
   tattax:
   - bugfix: fix trasenknox pull icon sometimes showing up as the righthand cuff spritte

@@ -1,4 +1,0 @@
-author: "EnterTheJaks"
-delete-after: True
-changes:
-  - bugfix: "finger guns now credit the proper user"
