@@ -1,0 +1,16 @@
+author: "desertmote, vinylspiders, Charlotte-Sugar, SmArtKar, Neocloudy, Melbert"
+delete-after: True
+changes:
+  - rscadd: "A new species to play: Cerulean!"
+  - rscadd: "The hydro-vaporizer, a wearable device functional like an internals tank, but for water vapor"
+  - rscadd: "A new light/two person pirate team, the Siren Shimai"
+  - rscadd: "A compact laser shotgun, for the aforementioned pirate team"
+  - rscadd: "An armored leather jacket, for the aforementioned pirate team"
+  - rscadd: "Added new hairstyles"
+  - image: "you can now change the style of lipstick to be higher or lower on the face by alt-clicking the lipstick tube"
+  - code_imp: "Species can change what goes in their survival box, plasmamen use it now"
+  - code_imp: "Areas can be set to have no gravity even with a gravity generator on the level"
+  - bugfix: "Mobs spawned with a species already set now get their species heat and cold modifiers"
+  - bugfix: "Ceruleans picking up special shoes (like noslips) no longer permanently breaks the shoes"
+  - bugfix: "Ceruleans no longer turn back to human skin when they lose their tail or one of their fish organs"
+  - bugfix: "Prosthetic quirks no longer give limbs or organs you don't have, and won't give lungs to species that don't breathe oxygen"
