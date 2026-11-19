@@ -137,7 +137,7 @@ GLOBAL_DATUM(wonderland_apocalypse, /datum/wonderland_apocalypse)
 		),
 		/datum/antagonist/bloodsucker = list(
 			"A Masquerade in my court, and I was not invited? Masks off, Kindred. Without my word of acceptance you are nothing.",
-			"The blood in your veins shrinks from her voice like prey. Every power you call on will cost you dearly now.",
+			"The Blood in your veins shrinks from her voice like prey. Every power you call on will cost you dearly now.",
 		),
 		/datum/antagonist/changeling = list(
 			"I know what you are under that borrowed face. Pick one and keep it - I will not have my executioner guessing which head is yours.",
