@@ -12,4 +12,4 @@
 
 /datum/quirk/fat/process(seconds_per_tick, times_fired)
 	if(quirk_holder.nutrition <= NUTRITION_LEVEL_FAT)
-		quirk_holder.nutrition += 10 * seconds_per_tick
+		quirk_holder.adjust_nutrition(10)
