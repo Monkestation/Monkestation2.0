@@ -6,7 +6,7 @@
  */
 /obj/item/proc/generate_cerulean_icons(icon/base_icon, key, greyscale_colors, bodyshape)
 	var/static/list/cerulean_icon_cache = list()
-	var/mob/living/carbon/human/wearer = loc
+	var/mob/living/carbon/human/wearer = astype(loc, /mob/living/carbon/human)
 	var/physique = wearer?.physique == FEMALE ? "f" : NONE
 	var/index = "[key][physique ? "-[physique]" : ""]-[type]-[greyscale_colors]"
 	var/icon/cerulean_clothing_icon = cerulean_icon_cache[index]

@@ -29,7 +29,9 @@
 	return (savefile_key in species.get_features())
 
 /datum/preference/toggle/cerulean_frills/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
-	if(iscerulean(target) && value)
+	if(!iscerulean(target))
+		return
+	if(value)
 		target.dna.features["frills"] = /datum/sprite_accessory/frills/aquatic::name
 		target.dna.species.external_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
 	target.dna.species.regenerate_organs(target, GLOB.species_prototypes[target.dna.species.type], visual_only = FALSE)

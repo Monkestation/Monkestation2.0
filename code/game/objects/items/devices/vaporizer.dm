@@ -103,12 +103,12 @@
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
 		cell?.emp_act(severity)
-	if(. & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || isnull(cell))
 		return
 	var/turf/tile = get_turf(src)
 	if(isclosedturf(tile))
 		return
-	to_chat(src, span_warning("[src] overloads, spewing out a cloud of hot steam!"))
+	visible_message(span_warning("[src] overloads, spewing out a cloud of hot steam!"))
 	playsound(src, 'sound/effects/spray.ogg', rand(50, 80), TRUE)
 	tile.atmos_spawn_air("water_vapor=[clamp(cell.maxcharge * 0.1, 1, 100)];TEMP=1000")
 	for(var/mob/living/nearby_mob in range(4, tile))

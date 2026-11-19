@@ -191,9 +191,9 @@
 	throw_at(get_edge_target_turf(owner, REVERSE_DIR(owner.dir))) //ok so it doesnt actually fling it it just spins but idk hwo to fling
 	playsound(src, 'sound/effects/cartoon_sfx/cartoon_splat.ogg', rand(50, 75), TRUE)
 
-/obj/item/organ/external/tail/fish/cerulean/on_surgical_removal(mob/living/user, obj/item/bodypart/limb, obj/item/tool)
+/obj/item/organ/external/tail/fish/cerulean/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	. = ..()
-	if(!splatter_check(limb.owner))
+	if(!splatter_check(old_owner))
 		return
 	shake_camera(user, 1 SECONDS, 2) //you shake too hehe
 	user.set_jitter_if_lower(1 SECONDS)

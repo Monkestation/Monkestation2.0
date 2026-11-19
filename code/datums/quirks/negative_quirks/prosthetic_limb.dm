@@ -65,4 +65,7 @@
 	if(QDELETED(quirk_holder))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
+	// the species might not have this limb anymore (ceruleans have no legs)
+	if(isnull(limb_zone) || !human_holder.dna?.species?.bodypart_overrides[limb_zone])
+		return
 	human_holder.reset_to_original_bodypart(limb_zone)
