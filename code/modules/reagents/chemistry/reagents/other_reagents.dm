@@ -199,9 +199,6 @@
 	if(methods & VAPOR)
 		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_VAPOR) // Spraying someone with water with the hope to put them out is just simply too funny to me not to add it.
 
-		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
-		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
-
 	if((methods & INGEST) && HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) && reac_volume >= 4)
 		exposed_mob.adjust_wet_stacks(0.15 * reac_volume)
 
@@ -209,6 +206,8 @@
 		return
 
 	var/mob/living/victim = exposed_mob
+	if(methods & VAPOR)
+		victim.incapacitate(1) // startles the felinid, canceling any do_after
 	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof())
 		victim.apply_status_effect(/datum/status_effect/cat_water_sprayed)
 
@@ -2776,7 +2775,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(IS_HERETIC(drinker))
+	if(IS_HERETIC_OR_MONSTER(drinker))
 		drinker.adjust_drowsiness(-10 * REM * seconds_per_tick)
 		drinker.AdjustAllImmobility(-40 * REM * seconds_per_tick)
 		drinker.stamina.adjust(10 * REM * seconds_per_tick, TRUE)

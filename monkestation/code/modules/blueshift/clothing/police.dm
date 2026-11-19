@@ -73,6 +73,7 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/wornarmor.dmi'
 
 /obj/item/clothing/under/colonial
+	can_adjust = FALSE
 	name = "colonial outfit"
 	desc = "Fancy white satin shirt and a pair of cotton-blend pants with a black synthleather belt."
 	icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing.dmi'

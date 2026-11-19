@@ -31,6 +31,12 @@
 	if(always_noslip)
 		LAZYOR(clothing_traits, TRAIT_NO_SLIP_WATER)
 
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/sheet/mineral/bananium))
+		bananium.user_insert(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Destroy()
 	bananium = null
 	return ..()
