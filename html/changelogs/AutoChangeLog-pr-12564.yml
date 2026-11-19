@@ -1,0 +1,6 @@
+author: "ashallaryn"
+delete-after: True
+changes:
+  - rscadd: "New Quirk: Intrusive Thoughts"
+  - rscadd: "New Special Brain Trauma: Intrusive Thoughts (Variant of Split Personality)"
+  - rscadd: "New action: Intrusive Thought (variant of Personality Commune)"
