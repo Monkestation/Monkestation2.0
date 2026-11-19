@@ -95,6 +95,7 @@
 	desc = "A set of armor that grows stronger with each soul claimed."
 
 /obj/item/clothing/under/slasher
+	can_adjust = FALSE
 	name = "butcher's jumpsuit"
 	icon = 'icons/mob/slasher/slasher_items.dmi'
 	worn_icon = 'icons/mob/slasher/slasher_wornstates.dmi'

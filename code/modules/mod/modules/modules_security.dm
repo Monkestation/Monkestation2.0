@@ -123,7 +123,7 @@
 		if(!holding)
 			balloon_alert(mod.wearer, "nothing to holster!")
 			return
-		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY)
+		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || (holding.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
 			balloon_alert(mod.wearer, "doesn't fit!")
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
@@ -272,6 +272,9 @@
 	dispense_type = /obj/item/grenade/mirage
 
 /obj/item/mod/module/dispenser/mirage/on_use()
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/grenade/mirage/grenade = .
 	grenade.arm_grenade(mod.wearer)
 
