@@ -16,7 +16,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	///are we allowed to place another sign/thing when there is already one here?
 	var/ignore_other_signs = FALSE
-	var/list/signs
+	var/list/signs = list()
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
@@ -42,7 +42,7 @@
 
 /obj/item/holosign_creator/emp_act(severity)
 	. = ..()
-	for(var/obj/structure/holosign/sign as anything in signs)
+	for(var/atom/sign as anything in signs)
 		if(prob(90 / severity))
 			qdel(sign)
 
@@ -56,12 +56,13 @@
 			if(our_barrier.openable)
 				our_barrier.open(user)
 				return ITEM_INTERACT_SUCCESS
-			else
-				qdel(our_barrier)
+			else if(interacting_with in signs)
+				signs.Remove(interacting_with)
+				qdel(interacting_with)
 				return ITEM_INTERACT_SUCCESS
 
 	var/turf/target_turf = get_turf(interacting_with)
-	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
+	var/atom/target_holosign = locate(holosign_type) in target_turf
 
 	if(target_holosign && !ignore_other_signs)
 		return ITEM_INTERACT_BLOCKING
@@ -88,6 +89,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 	target_holosign = create_holosign(interacting_with, user)
+	signs.Add(target_holosign)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holosign_creator/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -96,15 +98,19 @@
 
 	var/turf/target_turf = get_turf(interacting_with)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
-	if(target_holosign)
+	if(target_holosign && (target_holosign in signs))
+		signs.Remove(target_holosign)
 		qdel(target_holosign)
-	return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_SUCCESS
+	else if (target_holosign)
+		balloon_alert(user,"[src] does not own hologram!")
+	return NONE
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/holosign_creator/proc/create_holosign(atom/target, mob/user)
-	var/atom/new_holosign = new holosign_type(get_turf(target), src)
+	var/atom/new_holosign = new holosign_type(get_turf(target))
 	new_holosign.add_hiddenprint(user)
 	if(color)
 		new_holosign.color = color
@@ -112,15 +118,17 @@
 
 /obj/item/holosign_creator/attack_self(mob/user)
 	if(LAZYLEN(signs))
-		for(var/obj/structure/holosign/hologram as anything in signs)
+		for(var/atom/hologram as anything in signs)
 			qdel(hologram)
+		signs.Cut()
 		balloon_alert(user, "holograms cleared")
 
 /obj/item/holosign_creator/Destroy()
 	. = ..()
 	if(LAZYLEN(signs))
-		for(var/obj/structure/holosign/hologram as anything in signs)
+		for(var/atom/hologram as anything in signs)
 			qdel(hologram)
+		QDEL_LIST(signs)
 
 /obj/item/holosign_creator/janibarrier
 	name = "custodial holobarrier projector"
@@ -213,7 +221,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/holosign_creator/atmos/create_holosign(atom/target, mob/user)
-	var/obj/structure/holosign/barrier/atmos/new_holosign = new holosign_type(get_turf(target), src)
+	var/obj/structure/holosign/barrier/atmos/new_holosign = new holosign_type(get_turf(target))
 	new_holosign.add_hiddenprint(user)
 	if(color)
 		new_holosign.color = color
@@ -282,9 +290,10 @@
 	balloon_alert(user, "holograms cleared")
 
 /obj/item/holosign_creator/holo_candle
-	name = "HOLO Candle Projector"
+	name = "HOLO-Candle Projector"
 	desc = "A handy-dandy holographic projector that places tiny holographic candles."
 	ignore_other_signs = TRUE
+	max_signs = 5
 	holosign_type = /obj/item/flashlight/flare/candle/holo_candle
 	creation_time = 0.8 SECONDS
 

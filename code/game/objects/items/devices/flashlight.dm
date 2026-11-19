@@ -649,6 +649,7 @@
 		humankind. The jewelry he kept for himself. Seems this one is actually a hologram though...."
 	heat = 0 //its a hologram
 	icon_state = "holo_candle1"
+	base_icon_state = "holo_candle"
 	anchored = TRUE
 	trash_type = null
 	fuel = INFINITY
@@ -658,8 +659,8 @@
 
 /obj/item/flashlight/flare/candle/holo_candle/update_icon_state()
 	. = ..()
-	icon_state = "holo_candle[current_wax_level][on ? "_lit" : ""]"
-	inhand_icon_state = "holo_candle[on ? "_lit" : ""]"
+	icon_state = "[base_icon_state][current_wax_level][on ? "_lit" : ""]"
+	inhand_icon_state = "[base_icon_state][on ? "_lit" : ""]"
 
 /obj/item/flashlight/flare/torch
 	name = "torch"
