@@ -807,3 +807,30 @@
   - code_imp: vv copy_outfit now disallows null name outfits, and copies cybernetics
   flleeppyy:
   - rscadd: Ariral plush, mapped in to a few locations on select maps
+2026-11-19:
+  AberrantQuerist:
+  - image: Parallax overhaul. Lavaland, asteroids, and several star layers are now
+      present in the background.
+  - image: Blue/"space" nebulae is now more common, while more outlandish or fantastical
+      nebulae colouring is less likely.
+  Absolucy:
+  - bugfix: maybe fixes roundend/reboot sounds not playing
+  EnterTheJake:
+  - bugfix: 'Radiation sickness works again: prolonged exposure can now make you collapse,
+      vomit blood, mutate and lose your hair.'
+  - bugfix: Radiation no longer makes hairless heads (robotic heads, pod people) "lose"
+      their hair.
+  - bugfix: Brig Physicians no longer spawn with a blank PDA
+  - bugfix: Flipped-up welding goggles no longer cover your eyes.
+  - bugfix: 'Reverse bear trap victims now see who''s trapping them, not their own
+      name.
+
+      ## Pre-Merge Checklist
+
+      - [ x] You tested this on a local server.
+
+      - [x ] This code did not runtime during testing.
+
+      - [x ] You documented all of your changes.'
+  tattax:
+  - bugfix: fix trasenknox pull icon sometimes showing up as the righthand cuff spritte
