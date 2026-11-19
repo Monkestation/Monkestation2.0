@@ -25,9 +25,13 @@
 	)
 
 	var/list/possible_organ_slots = organ_slots.Copy()
+	for(var/slot in possible_organ_slots)
+		if(!human_holder.get_organ_slot(slot))
+			possible_organ_slots -= slot
+
 	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
 		possible_organ_slots -= ORGAN_SLOT_HEART
-	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
+	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH) || human_holder.dna.species.breathid != "o2")
 		possible_organ_slots -= ORGAN_SLOT_LUNGS
 	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
 		possible_organ_slots -= ORGAN_SLOT_LIVER
@@ -35,8 +39,9 @@
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
 	if(HAS_TRAIT(human_holder, TRAIT_SPLEENLESS_METABOLISM))
 		possible_organ_slots -= ORGAN_SLOT_SPLEEN
-	if(!length(organ_slots)) //what the hell
-		return
+
+	if(!length(possible_organ_slots)) // you get NOTHING I guess
+		CRASH("Prosthetic organ applied to a mob who had no available organ slots, consider blacklisting their species ([human_holder.dna.species.type]) from this quirk")
 
 	var/organ_slot = pick(possible_organ_slots)
 	var/obj/item/organ/prosthetic

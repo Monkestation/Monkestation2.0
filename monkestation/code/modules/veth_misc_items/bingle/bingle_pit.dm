@@ -12,6 +12,7 @@
 	light_outer_range = 5
 	anchored = TRUE
 	density = FALSE
+	can_astar_pass = CANASTARPASS_ALWAYS_PROC
 	layer = TURF_LAYER + 0.1
 	var/item_value_consumed = 0
 	var/current_pit_size = 1 // 1 = 1x1, 2 = 2x2, 3 = 3x3 can go higher
@@ -352,6 +353,7 @@
 	plane = GAME_PLANE
 	anchored = TRUE
 	density = FALSE
+	can_astar_pass = CANASTARPASS_ALWAYS_PROC
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	uses_integrity = TRUE
 	obj_flags = parent_type::obj_flags | BLOCK_Z_OUT_DOWN

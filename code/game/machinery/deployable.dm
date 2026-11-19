@@ -61,6 +61,7 @@
 	icon_state = "woodenbarricade"
 	resistance_flags = FLAMMABLE
 	bar_material = WOOD
+	can_astar_pass = CANASTARPASS_ALWAYS_PROC
 	var/drop_amount = 3
 
 /obj/structure/barricade/wooden/Initialize(mapload)
