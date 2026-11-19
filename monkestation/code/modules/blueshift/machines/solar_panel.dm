@@ -14,6 +14,13 @@
 /obj/machinery/power/solar/deployable/crowbar_act(mob/user, obj/item/I)
 	return
 
+/obj/machinery/power/solar/deployable/Destroy()
+	// the assembly would get dumped on the floor when we get repacked, letting you build infinite panels
+	var/obj/item/solar_assembly/assembly = locate() in src
+	if(assembly)
+		qdel(assembly)
+	return ..()
+
 /obj/machinery/power/solar/deployable/deconstruct(disassembled)
 	var/obj/item/solar_assembly/assembly = locate() in src
 	if(assembly)
@@ -57,6 +64,13 @@
 
 /obj/machinery/power/tracker/deployable/crowbar_act(mob/user, obj/item/item_acting)
 	return NONE
+
+/obj/machinery/power/tracker/deployable/Destroy()
+	// same as the panel, dont leave the assembly behind when repacked
+	var/obj/item/solar_assembly/assembly = locate() in src
+	if(assembly)
+		qdel(assembly)
+	return ..()
 
 // previously NO_DECONSTRUCTION
 /obj/machinery/power/tracker/deployable/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)

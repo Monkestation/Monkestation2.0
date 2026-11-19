@@ -17,7 +17,10 @@ SUBSYSTEM_DEF(greyscale_previews)
 		return SS_INIT_SUCCESS
 #endif
 
+// the navmap bake compile watches icons/, so rewriting these would make juke rebuild it before every map
+#ifndef NAVMAP_BAKE_GENERATION
 	ExportMapPreviews()
+#endif
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/greyscale_previews/proc/ExportMapPreviews()
