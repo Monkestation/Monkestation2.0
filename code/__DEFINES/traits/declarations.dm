@@ -1575,3 +1575,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A trait given to users as a mutex to prevent repeated unresolved attempts to christen a shuttle
 #define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
+
+
