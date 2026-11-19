@@ -212,3 +212,171 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/standard, // Can mine walls
 		/mob/living/basic/guardian/support, // Heals and teleports you
 	)
+
+/// Holoparasite injector printed by science. Needs a hallucination core and an MMI/posibrain, whose occupant picks the guardian type and then pilots it.
+/obj/item/guardian_creator/tech/phantasmal
+	name = "phantasmal holoparasite injector"
+	desc = "A holoparasite injector with no nanoswarm of its own. A hallucination core powers the hardlight projector inside, allowing a living mind to control a body of light. Holoparasite type is determined by the occupant."
+	use_message = span_holoparasite("You start to power on the injector...")
+	used_message = span_holoparasite("The injector has already been used.")
+	failure_message = span_boldholoparasite("...ERROR. PROJECTION ABORTED. PILOT FAILED TO CONNECT. PLEASE TRY AGAIN LATER.")
+	success_message = span_holoparasite("<b>%GUARDIAN</b> is now online!")
+	ling_failure = span_boldholoparasite("The injector scans you and shuts down in a burst of static. It wants nothing to do with a creature like you.")
+	icon = 'icons/obj/medical/holo_injector.dmi'
+	icon_state = "holo_injector"
+	/// The hallucination core we are loaded with.
+	var/obj/item/assembly/signaler/anomaly/hallucination/loaded_core
+	/// The MMI or posibrain we are loaded with, its occupant becomes the guardian.
+	var/obj/item/mmi/loaded_mmi
+	/// True while the occupant is picking a type, so it can't be activated twice.
+	var/choosing = FALSE
+	/// How long the occupant has to answer.
+	var/choice_time = 30 SECONDS
+
+/obj/item/guardian_creator/tech/phantasmal/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/item/guardian_creator/tech/phantasmal/Destroy()
+	QDEL_NULL(loaded_core)
+	QDEL_NULL(loaded_mmi)
+	return ..()
+
+/obj/item/guardian_creator/tech/phantasmal/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == loaded_core)
+		loaded_core = null
+		update_appearance()
+	else if(gone == loaded_mmi)
+		loaded_mmi = null
+		update_appearance()
+
+/obj/item/guardian_creator/tech/phantasmal/examine(mob/user)
+	. = ..()
+	if(used)
+		return
+	. += span_notice("The core socket is [loaded_core ? "loaded" : "empty, it needs a hallucination core"].")
+	. += span_notice("The brain slot is [loaded_mmi ? "loaded with [loaded_mmi]" : "empty, it needs an MMI or positronic brain"].")
+	. += span_notice("<b>Alt-click</b> to remove whatever is loaded.")
+
+/obj/item/guardian_creator/tech/phantasmal/update_icon_state()
+	if(used)
+		icon_state = "holo_injector_spent"
+	else if(loaded_core && loaded_mmi)
+		icon_state = "holo_injector_ready"
+	else
+		icon_state = "holo_injector"
+	return ..()
+
+/obj/item/guardian_creator/tech/phantasmal/update_overlays()
+	. = ..()
+	if(used || (loaded_core && loaded_mmi))
+		return
+	if(loaded_mmi)
+		. += "holo_injector_brain"
+	if(loaded_core)
+		. += "holo_injector_core"
+
+/obj/item/guardian_creator/tech/phantasmal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(used || choosing)
+		return NONE
+	if(istype(tool, /obj/item/assembly/signaler/anomaly/hallucination))
+		if(loaded_core)
+			balloon_alert(user, "already has a core!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		loaded_core = tool
+		balloon_alert(user, "core loaded")
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/mmi))
+		var/obj/item/mmi/new_mmi = tool
+		if(loaded_mmi)
+			balloon_alert(user, "already has a brain!")
+			return ITEM_INTERACT_BLOCKING
+		if(!new_mmi.brainmob)
+			balloon_alert(user, "nobody inside!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		loaded_mmi = new_mmi
+		balloon_alert(user, "brain loaded")
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/guardian_creator/tech/phantasmal/click_alt(mob/user)
+	if(used || choosing)
+		return CLICK_ACTION_BLOCKING
+	if(!loaded_core && !loaded_mmi)
+		return CLICK_ACTION_BLOCKING
+	if(loaded_core)
+		user.put_in_hands(loaded_core)
+	if(loaded_mmi)
+		user.put_in_hands(loaded_mmi)
+	balloon_alert(user, "unloaded")
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/guardian_creator/tech/phantasmal/attack_self(mob/living/user)
+	if(used)
+		to_chat(user, used_message)
+		return
+	if(choosing)
+		balloon_alert(user, "already in use!")
+		return
+	if(isguardian(user))
+		balloon_alert(user, "can't do that!")
+		return
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
+		to_chat(user, ling_failure)
+		return
+	if(!loaded_core)
+		balloon_alert(user, "needs a hallucination core!")
+		return
+	if(!loaded_mmi)
+		balloon_alert(user, "needs an MMI or posibrain!")
+		return
+	var/mob/living/brain/pilot = loaded_mmi.brainmob
+	if(QDELETED(pilot) || !pilot.client || pilot.stat == DEAD)
+		balloon_alert(user, "the brain doesn't respond!")
+		return
+
+	choosing = TRUE
+	to_chat(user, use_message)
+	to_chat(pilot, span_boldholoparasite("[user.real_name] is trying to use a phantasmal holoparasite injector with you as the pilot. Pick a type, or refuse and nothing will happen."))
+
+	var/list/options = list()
+	for(var/mob/living/basic/guardian/possible_path as anything in subtypesof(/mob/living/basic/guardian))
+		var/guardian_name = initial(possible_path.creator_name)
+		if(!guardian_name)
+			continue
+		options["[capitalize(guardian_name)]: [initial(possible_path.creator_desc)]"] = possible_path
+	var/refuse_option = "Refuse"
+	var/choice = tgui_input_list(pilot, "Pick the type of holoparasite you will pilot, or refuse and nothing will happen.", "Phantasmal Holoparasite", list(refuse_option) + assoc_to_keys(options), refuse_option, choice_time)
+	choosing = FALSE
+
+	if(isnull(choice) || choice == refuse_option)
+		if(!QDELETED(user))
+			to_chat(user, span_warning("...ERROR. PILOT REFUSED THE CONNECTION. The injector has not been used."))
+		return
+	// Everything could have changed while they were choosing
+	if(QDELETED(user) || user.stat == DEAD || !user.is_holding(src) || QDELETED(loaded_core) || QDELETED(loaded_mmi) || loaded_mmi.brainmob != pilot || !pilot.client)
+		if(!QDELETED(user))
+			to_chat(user, span_warning("...ERROR. CONNECTION LOST. The injector has not been used."))
+		if(!QDELETED(pilot))
+			to_chat(pilot, span_warning("The connection to the injector was lost."))
+		return
+	var/mob/living/basic/guardian/guardian_path = options[choice]
+	used = TRUE
+	var/key_name_pilot = key_name(pilot)
+	var/mob/living/basic/guardian/summoned_guardian = spawn_guardian(user, pilot, guardian_path)
+	if(isnull(summoned_guardian))
+		used = FALSE
+		to_chat(user, failure_message)
+		return
+	summoned_guardian.log_message("was piloted by the brain of [key_name_pilot] through a phantasmal injector.", LOG_GAME)
+	// The core and the brain are used up, the occupant now lives in the guardian
+	QDEL_NULL(loaded_core)
+	QDEL_NULL(loaded_mmi)
+	update_appearance()
