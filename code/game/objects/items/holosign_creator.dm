@@ -90,6 +90,9 @@
 
 	target_holosign = create_holosign(interacting_with, user)
 	signs.Add(target_holosign)
+	var/obj/structure/holosign/new_sign = target_holosign
+	if(istype(new_sign))
+		new_sign.projector = src
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holosign_creator/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
