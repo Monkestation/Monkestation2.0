@@ -503,13 +503,19 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 		spin()
 		user.balloon_alert(user,"reloaded!")
 	return
+
 /obj/item/gun/ballistic/revolver/big_iron/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ITEM_INTERACT_SUCCESS
+	var/params = list2params(modifiers)
 	fire_delay = 0
-	try_fire_gun(interacting_with,user,modifiers)
+	try_fire_gun(interacting_with,user,params)
 	sleep(1.5)
-	try_fire_gun(interacting_with,user,modifiers)
+	if(user.is_holding(src))
+		try_fire_gun(interacting_with,user,params)
 	sleep(1.5)
-	try_fire_gun(interacting_with,user,modifiers)
+	if(user.is_holding(src))
+		try_fire_gun(interacting_with,user,params)
 	fire_delay = initial(fire_delay)
+	semicd = TRUE
+	addtimer(CALLBACK(src,PROC_REF(reset_semicd)),fire_delay)
 

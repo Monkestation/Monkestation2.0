@@ -90,6 +90,7 @@ GLOBAL_VAR_INIT(liquid_pool_react, TRUE)
 	cached_fire_spreads = null
 	cached_reagent_list = null
 	splitting_array = null
+	QDEL_NULL(reagents)
 	return ..()
 
 /datum/liquid_group/proc/copy_properties(datum/liquid_group/from)

@@ -104,7 +104,7 @@ export const ChemDebugSynthesizer = (props: BeakerProps) => {
           {beaker ? (
             <>
               <Box>
-                <AnimatedNumber value={beaker.maxVolume} />
+                <AnimatedNumber value={beaker.currentVolume} />
                 {` / ${beaker.maxVolume} u`}
               </Box>
               {beakerContents.length > 0 ? (
