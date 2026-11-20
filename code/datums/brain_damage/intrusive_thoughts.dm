@@ -70,6 +70,7 @@
  * Calls schism after the poll concludes.
 */
 /datum/brain_trauma/special/intrusive_thoughts/proc/get_ghost()
+	set waitfor = FALSE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",
 		check_jobban = ROLE_PAI,

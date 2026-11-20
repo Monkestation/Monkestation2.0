@@ -62,6 +62,7 @@
 			if(istype(atom, /obj/machinery/atmospherics))
 				atmos_machines += atom
 
+	SSair.hold_machinery_for_template(atmos_machines)
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)

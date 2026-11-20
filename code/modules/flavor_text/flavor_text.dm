@@ -100,16 +100,21 @@ GLOBAL_LIST_EMPTY(flavor_texts)
 	. = list()
 
 	// Antagonists can see expoitable information.
-	if(expl_info)
-		for(var/datum/antagonist/antag_datum as anything in examiner.mind?.antag_datums)
-			if(!(antag_datum.antag_flags & FLAG_CAN_SEE_EXPOITABLE_INFO))
-				continue
-			. += "<a href='byond://?src=[REF(src)];exploitable_info=1'>\[Exploitable Info\]</a>"
-			break
+	if(expl_info && can_see_exploitable_info(examiner))
+		. += "<a href='byond://?src=[REF(src)];exploitable_info=1'>\[Exploitable Info\]</a>"
 
 	. += (separator_hr("Flavor text") + get_flavor_text(examiner, shorten))
 
 	return .
+
+/// Whether this mob is allowed to read exploitable info: antagonists with the right flag, and admin ghosts.
+/datum/flavor_text/proc/can_see_exploitable_info(mob/viewer)
+	if(viewer.client?.holder && isAdminObserver(viewer))
+		return TRUE
+	for(var/datum/antagonist/antag_datum as anything in viewer.mind?.antag_datums)
+		if(antag_datum.antag_flags & FLAG_CAN_SEE_EXPOITABLE_INFO)
+			return TRUE
+	return FALSE
 
 /datum/flavor_text/Topic(href, href_list)
 	. = ..()
@@ -121,7 +126,7 @@ GLOBAL_LIST_EMPTY(flavor_texts)
 			return
 
 	if(href_list["exploitable_info"])
-		if(expl_info)
+		if(expl_info && can_see_exploitable_info(usr))
 			var/datum/browser/popup = new(usr, "[name]'s exp info", "[name]'s Exploitable Info", 500, 200)
 			popup.set_content(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", "[name]'s exploitable information", replacetext(expl_info, "\n", "<BR>")))
 			popup.open()
