@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	// Rate limiting
-	if(!holder && href_list["window_id"] != "statbrowser")
+	if(!holder)
 		var/mtl = CONFIG_GET(number/minute_topic_limit)
 		if (mtl)
 			var/minute = round(world.time, 1 MINUTES)
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				return
 
 		var/stl = max(CONFIG_GET(number/second_topic_limit), CONFIG_GET(number/tgui_max_chunk_count))
-		if (stl)
+		if (stl && href_list["window_id"] != "statbrowser")
 			var/second = round(world.time, 1 SECONDS)
 			if (!topiclimiter)
 				topiclimiter = new(LIMITER_SIZE)

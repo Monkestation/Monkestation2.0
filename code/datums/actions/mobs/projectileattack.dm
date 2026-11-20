@@ -333,7 +333,8 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
 	. = ..()
-	Remove(owner)
+	if(owner)
+		Remove(owner)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/attack_sequence(mob/living/firer, atom/target)
 	var/mob/living/simple_animal/hostile/megafauna/colossus/colossus
