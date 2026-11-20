@@ -420,7 +420,7 @@
 	playsound(target_mob, 'sound/items/handling/surgery/organ1.ogg', 50, TRUE)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
-	to_chat(user, span_notice("The liver weaves itself into you without a trace. You barely feel it."))
+	to_chat(user, span_notice("The liver slots itself effortlessly into you, and you feel a strange tingling sensation."))
 	return TRUE
 
 /obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/attack_self(mob/user, modifiers)
