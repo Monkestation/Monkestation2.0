@@ -146,7 +146,6 @@
 	cost = 7
 	item = /obj/item/gun/ballistic/shotgun/china_lake
 	purchasable_from = ~UPLINK_CLOWN_OPS
-	population_minimum = 20
 
 /datum/uplink_item/explosives/grenade_launcher
 	name = "40mm Grenade Launcher"
