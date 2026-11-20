@@ -1,7 +1,7 @@
 /datum/armor/queens_huntsman
 	melee = 55
 	bullet = 35
-	laser = 35
+	laser = 45
 	energy = 50
 	bomb = 35
 	wound = 45
