@@ -730,15 +730,10 @@
 	worn_icon_state = "ghostgoggles_on"
 	inhand_icon_state = "glasses"
 
-	///The core item the goggles run off.
 	var/obj/item/assembly/signaler/anomaly/core
-	///Accepted type of anomaly core.
 	var/required_anomaly = /obj/item/assembly/signaler/anomaly/ectoplasm
-	///If the core is removable once socketed.
 	var/core_removable = TRUE
-	///Who is wearing the goggles.
 	var/mob/living/carbon/human/wearer
-	///The client we have put our images on.
 	var/client/tracked_client
 	///Images of hidden mobs shown to the wearer. Assoc list of mob = image.
 	var/list/tracked_images = list()
@@ -847,7 +842,6 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	clear_images()
 
-/// Takes every image we showed off the client
 /obj/item/clothing/glasses/ghost_hunter/proc/clear_images()
 	for(var/hidden_mob in tracked_images)
 		if(tracked_client)

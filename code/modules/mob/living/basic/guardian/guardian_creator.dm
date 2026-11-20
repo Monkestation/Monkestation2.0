@@ -224,13 +224,11 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	ling_failure = span_boldholoparasite("The injector scans you and shuts down in a burst of static. It wants nothing to do with a creature like you.")
 	icon = 'icons/obj/medical/holo_injector.dmi'
 	icon_state = "holo_injector"
-	/// The hallucination core we are loaded with.
 	var/obj/item/assembly/signaler/anomaly/hallucination/loaded_core
 	/// The MMI or posibrain we are loaded with, its occupant becomes the guardian.
 	var/obj/item/mmi/loaded_mmi
 	/// True while the occupant is picking a type, so it can't be activated twice.
 	var/choosing = FALSE
-	/// How long the occupant has to answer.
 	var/choice_time = 30 SECONDS
 
 /obj/item/guardian_creator/tech/phantasmal/Initialize(mapload)

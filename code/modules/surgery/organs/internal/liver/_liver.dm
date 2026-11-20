@@ -373,11 +373,8 @@
 	// Toxins still get filtered, they just never hurt the organ. Not 0, damage is divided by this
 	liver_resistance = 1000
 
-	///The core item the organ runs off.
 	var/obj/item/assembly/signaler/anomaly/core
-	///Accepted type of anomaly core.
 	var/required_anomaly = /obj/item/assembly/signaler/anomaly/bioscrambler
-	///If the core is removable once socketed.
 	var/core_removable = TRUE
 	///The DNA we added our stability bonus to, so we take it back from the same one.
 	var/datum/dna/stabilized_dna
@@ -397,7 +394,6 @@
 	// Everyone else just loses the stability bonus, which can push them to 0 or below
 	remove_stability()
 
-/// Adds our stability bonus to the owner's DNA
 /obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/proc/add_stability(mob/living/carbon/organ_owner)
 	if(stabilized_dna || !organ_owner.dna)
 		return
@@ -405,7 +401,6 @@
 	stabilized_dna.stability_bonus += BIOSCRAMBLER_STABILITY_BONUS
 	stabilized_dna.update_instability(FALSE)
 
-/// Takes our stability bonus back
 /obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/proc/remove_stability()
 	if(!stabilized_dna)
 		return
