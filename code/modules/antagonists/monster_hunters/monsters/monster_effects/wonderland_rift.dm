@@ -66,6 +66,7 @@
 	var/datum/atom_hud/alternate_appearance/basic/rift_appearance = alternate_appearances?["white_rabbit"]
 	if(rift_appearance)
 		rift_images += rift_appearance.image
+		rift_images += rift_appearance.ghost_appearance.image
 	for(var/image/rift_image as anything in rift_images)
 		animate(rift_image, transform = matrix().Scale(1.25, 0.85), time = 0.3 SECONDS, loop = -1)
 		animate(transform = matrix(), time = 0.7 SECONDS)
@@ -195,6 +196,7 @@
 	hunter_antag.powers += silverblood
 
 /datum/atom_hud/alternate_appearance/basic/white_rabbit
+	add_ghost_version = TRUE
 	/// The mind of the hunter who gets to see the rabbit
 	var/datum/mind/hunter_mind
 
