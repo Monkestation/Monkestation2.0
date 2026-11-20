@@ -1,33 +1,30 @@
-/obj/item/borer_egg
+/obj/item/food/egg/borer_egg
 	name = "borer egg"
 	desc = "An egg of a creature that is known to crawl inside of you, be careful."
 	icon = 'icons/mob/borer/borer.dmi'
 	icon_state = "brainegg"
 	layer = BELOW_MOB_LAYER
+	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4, /datum/reagent/drug/methamphetamine/borer_version = 4)
+	chick_throw_prob = 0 // please no
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_LARGE
+	preserved_food = TRUE // Egg Cuticle
+	obj_flags = NONE
 	/// The spawner that ghosts use to actually get created
 	var/obj/effect/mob_spawn/ghost_role/borer_egg/host_spawner
 
-/obj/item/borer_egg/Destroy(force)
+/obj/item/food/egg/borer_egg/Destroy(force)
 	if(host_spawner)
 		QDEL_NULL(host_spawner)
 	return ..()
 
-/obj/item/borer_egg/attack_ghost(mob/user)
+/obj/item/food/egg/borer_egg/attack_ghost(mob/user)
 	if(host_spawner)
 		host_spawner.attack_ghost(user)
 	return ..()
 
-/obj/item/borer_egg/attack_self(mob/user, modifiers)
+/obj/item/food/egg/borer_egg/attack_self(mob/user, modifiers)
 	to_chat(user, span_notice("You crush [src] within your grasp."))
 	new /obj/effect/decal/cleanable/food/egg_smudge(user.drop_location())
-	qdel(src)
-
-/obj/item/borer_egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(..()) // was it caught by a mob?
-		return
-
-	var/turf/hit_turf = get_turf(hit_atom)
-	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
 	qdel(src)
 
 /obj/effect/mob_spawn/ghost_role/borer_egg
@@ -53,7 +50,7 @@
 	/// What the generation of the borer egg is
 	var/generation = 0
 	/// The egg that is attached to this mob spawn
-	var/obj/item/borer_egg/host_egg = /obj/item/borer_egg
+	var/obj/item/food/egg/borer_egg/host_egg = /obj/item/food/egg/borer_egg
 	/// The team we should make our borers join
 	var/datum/team/cortical_borers/borer_team
 
