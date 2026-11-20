@@ -32,6 +32,9 @@
 
 	reagents.flags &= ~NO_REACT
 	reagents.handle_reactions()
+	//Monkestation Addition: For Australium
+	chamber.process_reacted_reagents() //catches mixes where nothing reacts, or everything reacted instantly
+	//End Monkestation Addition
 
 	chamber.emptying = TRUE //If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero. Other option is make the reaction update
 	//everything for every chemical removed, wich isn't a good option either.
