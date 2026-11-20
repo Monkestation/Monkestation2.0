@@ -14,6 +14,8 @@
 	burning_particles = /particles/smoke/burning
 	var/broken = FALSE
 	var/w_class = WEIGHT_CLASS_GIGANTIC //lol
+	var/projectile_cover = FALSE
+	var/projectile_pass_rate = 0
 
 /datum/armor/obj_structure
 	fire = 50
@@ -76,3 +78,17 @@
 	flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(src, oldloc))
 	new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
 	deconstruct(disassembled = FALSE)
+
+/// For letting projectiles pass through structures
+/obj/structure/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	// Based on /obj/structure/barricade
+	if(isprojectile(mover) && projectile_cover)
+		if(!anchored)
+			return TRUE
+		var/obj/projectile/proj = mover
+		if(proj.firer && Adjacent(proj.firer))
+			return TRUE
+		if(prob(projectile_pass_rate))
+			return TRUE
+		return FALSE
