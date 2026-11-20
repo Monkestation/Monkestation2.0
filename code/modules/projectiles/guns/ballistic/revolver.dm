@@ -486,9 +486,9 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 // But he made one fatal slip, when he tried to match the ranger with the big iron on his hip.
 
 /obj/item/gun/ballistic/revolver/big_iron
-	name = "\improper Big Iron"
+	name = "\proper Big Iron"
 	desc = "No rest for the wicked."
-	desc_controls = "Left click fire, right click to fan the hammer for 3 quick shots, activate in hand to reload from... somewhere."
+	desc_controls = "Left click fire, right click to fan the hammer for 3 quick shots, 6 while wielded, activate in hand to reload from... somewhere."
 	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/big_iron
 	can_suppress = FALSE
@@ -497,7 +497,10 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	wield_recoil = 0
 
 /obj/item/gun/ballistic/revolver/big_iron/attack_self(mob/living/user)
-	if(do_after(user,1.75 SECONDS,user,timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)))
+	var/reload_delay = 2.75 SECONDS
+	if(HAS_TRAIT(src,TRAIT_WIELDED))
+		reload_delay = 1.75 SECONDS
+	if(do_after(user,reload_delay,user,timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)))
 		unload_ammo(user)
 		magazine.top_off()
 		spin()
@@ -509,13 +512,22 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	var/params = list2params(modifiers)
 	fire_delay = 0
 	try_fire_gun(interacting_with,user,params)
-	sleep(1.5)
-	if(user.is_holding(src))
-		try_fire_gun(interacting_with,user,params)
-	sleep(1.5)
-	if(user.is_holding(src))
-		try_fire_gun(interacting_with,user,params)
-	fire_delay = initial(fire_delay)
+	addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),1.2)
+	addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),2.4)
+	var/semidelay = 3
+	if(HAS_TRAIT(src,TRAIT_WIELDED))
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),3.6)
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),4.8)
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),6)
+		semidelay = 6.2
 	semicd = TRUE
-	addtimer(CALLBACK(src,PROC_REF(reset_semicd)),fire_delay)
+	addtimer(CALLBACK(src,PROC_REF(reset_semicd)),semidelay)
 
+/obj/item/gun/ballistic/revolver/big_iron/proc/try_fan_hammer(atom/at,mob/living/user,params)
+	if(user.is_holding(src))
+		fire_delay = 0//Dont ask why but if I dont re-set it here it only fires 2, comment out and try for yourself!
+		try_fire_gun(at,user,params)
+
+/obj/item/gun/ballistic/revolver/big_iron/reset_semicd()
+	. = ..()
+	fire_delay = initial(fire_delay)
