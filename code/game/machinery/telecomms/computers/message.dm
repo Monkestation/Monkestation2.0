@@ -109,7 +109,7 @@
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 			var/list/request_list = list()
 			for(var/datum/data_rc_msg/rc in linkedServer?.rc_msgs)
-				request_list += list(list("ref" = REF(rc), "message" = rc.message, "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.send_dpt))
+				request_list += list(list("ref" = REF(rc), "message" = rc.message, "stamp" = rc.stamp, "id_auth" = rc.id_auth, "send_dpt" = rc.send_dpt))
 			data["requests"] = request_list
 	return data
 
