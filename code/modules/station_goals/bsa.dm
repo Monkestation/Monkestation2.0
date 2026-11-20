@@ -325,7 +325,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	var/list/gps_locators = list()
 	for(var/datum/component/gps/G in GLOB.GPS_list) //nulls on the list somehow
 		if(G.tracking && G.bsa_targetable) // monkestation edit: bsa_targetable
-			gps_locators[G.gpstag] = G
+			gps_locators[html_decode(G.gpstag)] = G
 
 	var/list/options = gps_locators
 	if(area_aim)
@@ -344,7 +344,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return get_area_name(target, TRUE)
 	else if(istype(target, /datum/component/gps))
 		var/datum/component/gps/G = target
-		return G.gpstag
+		return html_decode(G.gpstag)
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
 	if(obj_flags & EMAGGED)

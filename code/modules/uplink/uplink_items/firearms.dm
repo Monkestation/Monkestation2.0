@@ -72,6 +72,7 @@
 	cost = 12
 	surplus = 40
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	population_minimum = 20
 
 /datum/uplink_item/firearms/autoshotgun
 	name = "Auto Shotgun Case"
@@ -80,6 +81,7 @@
 	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) // Nuke ops have their own shotty, Clown ops can't buy lethal firearms
 	cost = 14
+	population_minimum = 30
 
 /datum/uplink_item/firearms/shotgun_revolver
 	name = "\improper Bóbr 12 GA revolver"

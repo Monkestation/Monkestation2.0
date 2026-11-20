@@ -107,7 +107,7 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, FALSE, "Play Direct Mob Sound", "Play
 				music_extra_data["artist"] = "Song Artist Hidden"
 				music_extra_data["album"] = "Song Album Hidden"
 			if("Custom Title")
-				var/custom_title = tgui_input_text(user, "Enter the title to show to players", "Custom sound info", null)
+				var/custom_title = tgui_input_text(user, "Enter the title to show to players", "Custom sound info", null, encode = FALSE)
 				if (!length(custom_title))
 					tgui_alert(user, "No title specified, using default.", "Custom sound info", list("Okay"))
 				else
@@ -173,7 +173,7 @@ ADMIN_VERB(play_web_sound, R_SOUND, FALSE, "Play Internet Sound", "Play a given 
 			return
 		if(prompt != "Yes")
 			return
-	var/web_sound_input = tgui_input_text(user, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
+	var/web_sound_input = tgui_input_text(user, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null, encode = FALSE)
 
 	if(length(web_sound_input))
 		web_sound_input = trim(web_sound_input)
@@ -240,7 +240,7 @@ ADMIN_VERB(play_web_sound, R_SOUND, FALSE, "Play Internet Sound", "Play a given 
 				music_extra_data["upload_date"] = "Song Upload Date Hidden"
 				music_extra_data["album"] = "Song Album Hidden"
 			if("Custom Title")
-				var/custom_title = tgui_input_text(user, "Enter the title to show to players", "Custom sound info", null)
+				var/custom_title = tgui_input_text(user, "Enter the title to show to players", "Custom sound info", null, encode = FALSE)
 				if (!length(custom_title))
 					tgui_alert(user, "No title specified, using default.", "Custom sound info", list("Okay"))
 				else
@@ -307,7 +307,7 @@ ADMIN_VERB(play_web_sound_classic, R_SOUND, FALSE, "Play Internet Sound Classic"
 			return
 		if(prompt != "Yes")
 			return
-	var/web_sound_input = tgui_input_text(user, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
+	var/web_sound_input = tgui_input_text(user, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null, encode = FALSE)
 
 	if(length(web_sound_input))
 		web_sound_input = trim(web_sound_input)

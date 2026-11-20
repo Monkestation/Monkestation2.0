@@ -123,7 +123,7 @@
 
 	data["current_volume"] = current_volume
 	data["max_volume"] = max_volume
-	data["product_name"] = product_name
+	data["product_name"] = html_decode(product_name)
 	data["packaging_type"] = REF(packaging_type)
 	data["packaging_category"] = packaging_category
 

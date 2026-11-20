@@ -60,7 +60,7 @@
 			minor_disabilities = target.minor_disabilities_desc,
 			physical_status = target.physical_status,
 			mental_status = target.mental_status,
-			name = target.name,
+			name = html_decode(target.name),
 			notes = notes,
 			quirk_notes = target.quirk_notes,
 			rank = target.rank,
