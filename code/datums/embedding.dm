@@ -217,8 +217,7 @@
 	parent.forceMove(owner)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(weapon_disappeared))
 	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
-	owner.visible_message(span_danger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
-		span_userdanger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
+	embed_message()
 
 	var/damage = parent.throwforce
 	if (!is_harmless(consider_stamina = TRUE))
@@ -262,6 +261,10 @@
 
 	return TRUE
 
+/datum/embedding/proc/embed_message()
+	owner.visible_message(span_danger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
+		span_userdanger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
+
 /// Proc which is called upon successfully embedding into someone/something, for children to override
 /datum/embedding/proc/on_successful_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)
 	return
@@ -285,6 +288,7 @@
 		owner_limb._unembed_object(parent)
 	if (owner)
 		UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EX_ACT))
+		SEND_SIGNAL(owner, COMSIG_CARBON_EMBED_REMOVED, parent, owner_limb)
 		if (!owner.has_embedded_objects())
 			owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 			owner.clear_mood_event("embedded")
