@@ -87,6 +87,8 @@
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
 
+/// Global signal sent when a mob is spawned from a ghost in a dynamic ruleset (mob/spawned_mob)
+#define COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS "!ruleset_body_generated_from_ghosts"
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
 

@@ -49,7 +49,7 @@
 	/* //MONKESTATION EDIT ORIGINAL
 	minimum_survivable_temperature = 0
 	*/
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	//MONKESTATION EDIT END
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee/space)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee/space
@@ -90,7 +90,7 @@
 	/* //MONKESTATION EDIT ORIGINAL
 	minimum_survivable_temperature = 0
 	*/
-	bodytemp_cold_damage_limit = -1
+	minimum_survivable_temperature = 0
 	//MONKESTATION EDIT END
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/ranged/space)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/ranged/space

@@ -236,6 +236,8 @@
 	spawned_human.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
 	spawned_human.remove_language(/datum/language/common)
+	if(spawned_human.mind)
+		spawned_human.mind.set_level(/datum/skill/smithing,3,FALSE)//They probably forge their own tools
 	team.players_spawned += (spawned_human.key)
 	eggshell.egg = null
 	QDEL_NULL(eggshell)

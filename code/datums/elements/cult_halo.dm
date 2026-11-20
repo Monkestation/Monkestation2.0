@@ -31,6 +31,7 @@
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
 		new /obj/effect/temp_visual/cult/sparks(get_turf(human_parent), human_parent.dir)
+		human_parent.apply_height(new_halo_overlay, UPPER_BODY)
 		human_parent.overlays_standing[HALO_LAYER] = new_halo_overlay
 		human_parent.apply_overlay(HALO_LAYER)
 	else

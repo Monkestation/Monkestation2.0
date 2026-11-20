@@ -104,6 +104,9 @@
 	  */
 	var/list/implants = null
 
+	///Above, but for /obj/item/organ/internal/cyberimp, same format.
+	var/list/cybernetics = null
+
 	///ID of the slot containing a gas tank
 	var/internals_slot = null
 
@@ -244,6 +247,7 @@
 					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BACKPACK)
 
 	post_equip(H, visualsOnly)
+	H.dna?.species?.post_equip_species_outfit(H, visualsOnly)
 
 	if(!visualsOnly)
 		apply_fingerprints(H)
@@ -254,12 +258,13 @@
 					H.open_internals(internals)
 			else
 				H.open_internals(H.get_item_by_slot(internals_slot))
-		if(implants)
-			for(var/implant_type in implants)
-				var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)
-				I.implant(H, null, TRUE)
+		for(var/implant_type in implants)
+			var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)
+			I.implant(H, null, TRUE)
 
-		// Insert the skillchips associated with this outfit into the target.
+		for(var/cyber_type in cybernetics)
+			var/obj/item/organ/internal/cyberimp/Cyb = SSwardrobe.provide_type(cyber_type,H.loc)
+			Cyb.Insert(H)
 		if(skillchips)
 			for(var/skillchip_path in skillchips)
 				var/obj/item/skillchip/skillchip_instance = SSwardrobe.provide_type(skillchip_path)
@@ -323,7 +328,7 @@
 		H.l_store.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.r_store)
 		H.r_store.add_fingerprint(H, ignoregloves = TRUE)
-	for(var/obj/item/I in H.held_items)
+	for(var/obj/item/I as anything in H.get_held_items())
 		I.add_fingerprint(H, ignoregloves = TRUE)
 	return TRUE
 
@@ -396,6 +401,7 @@
 	.["backpack_contents"] = backpack_contents
 	.["box"] = box
 	.["implants"] = implants
+	.["cybernetics"] = cybernetics
 	.["accessory"] = accessory
 
 /// Copy most vars from another outfit to this one
@@ -423,6 +429,7 @@
 	backpack_contents = target.backpack_contents
 	box = target.box
 	implants = target.implants
+	cybernetics = target.cybernetics
 	accessory = target.accessory
 
 /// Prompt the passed in mob client to download this outfit as a json blob
@@ -471,6 +478,12 @@
 		var/imptype = text2path(I)
 		if(imptype)
 			implants += imptype
+	var/list/cyb = outfit_data["cybernetics"]
+	cybernetics = list()
+	for(var/C in cyb)
+		var/cybtype = text2path(C)
+		if(cybtype)
+			cybernetics += cybtype
 	accessory = text2path(outfit_data["accessory"])
 	return TRUE
 

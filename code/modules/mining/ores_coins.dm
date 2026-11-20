@@ -74,7 +74,7 @@
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
-	scan_state = "rock_Uranium"
+	scan_state = "rock_uranium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/uranium
 
@@ -86,7 +86,7 @@
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/iron
 	mine_experience = 1
-	scan_state = "rock_Iron"
+	scan_state = "rock_iron"
 	spreadChance = 20
 	merge_type = /obj/item/stack/ore/iron
 
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 5
-	scan_state = "rock_Plasma"
+	scan_state = "rock_plasma"
 	spreadChance = 8
 	merge_type = /obj/item/stack/ore/plasma
 
@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 3
 	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
-	scan_state = "rock_Silver"
+	scan_state = "rock_silver"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/silver
 
@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 5
 	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
-	scan_state = "rock_Gold"
+	scan_state = "rock_gold"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/gold
 
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
-	scan_state = "rock_Diamond"
+	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
 
 /obj/item/stack/ore/diamond/five
@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
-	scan_state = "rock_Bananium"
+	scan_state = "rock_bananium"
 	merge_type = /obj/item/stack/ore/bananium
 
 /obj/item/stack/ore/titanium
@@ -424,15 +424,15 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_[coinflip]"
 	pixel_x = base_pixel_x + rand(0, 16) - 8
 	pixel_y = base_pixel_y + rand(0, 8) - 8
+	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 
-/obj/item/coin/set_custom_materials(list/materials, multiplier = 1)
+/obj/item/coin/finalize_material_effects(list/materials)
 	. = ..()
 	if(override_material_worth)
 		return
 	value = 0
-	for(var/i in custom_materials)
-		var/datum/material/M = i
-		value += M.value_per_unit * custom_materials[M]
+	for(var/datum/material/material as anything in materials)
+		value += material.value_per_unit * materials[material][MATERIAL_LIST_OPTIMAL_AMOUNT]
 
 /obj/item/coin/get_item_credit_value()
 	return value

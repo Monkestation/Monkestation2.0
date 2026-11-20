@@ -1,4 +1,5 @@
 /mob/living/carbon
+	abstract_type = /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
 	gender = MALE
 	pressure_resistance = 15
@@ -91,6 +92,11 @@
 	/// This number is also reset to 0 every tick of carbon Life(). Pain.
 	var/damageoverlaytemp = 0
 
+	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
+	var/heat_protection = 0 // No heat protection
+	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
+	var/cold_protection = 0 // No cold protection
+
 	/// Timer id of any transformation
 	var/transformation_timer
 
@@ -115,7 +121,10 @@
 	var/last_top_offset
 
 	/// A bitfield of "bodytypes", updated by /mob/living/carbon/proc/synchronize_bodytypes()
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	var/bodytype = BODYTYPE_ORGANIC
+
+	/// A bitfield of "bodyshapes", updated by /mob/living/carbon/proc/synchronize_bodyshapes()
+	var/bodyshape = BODYSHAPE_HUMANOID
 
 	var/is_leaning = FALSE
 
@@ -125,3 +134,8 @@
 
 	/// Timer used to make the carbon fart shortly after they die
 	var/death_fart_timerid
+
+	/// Obscured hide flags (hideflags that can't be seen AND can't be interacted with)
+	var/obscured_slots = NONE
+	/// Covered hide flags (hideflags that can be seen, BUT can't be interacted with)
+	var/covered_slots = NONE

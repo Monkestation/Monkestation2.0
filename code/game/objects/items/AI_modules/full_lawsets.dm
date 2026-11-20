@@ -57,7 +57,7 @@
 	var/subject = "human being"
 
 /obj/item/ai_module/core/full/asimov/attack_self(mob/user as mob)
-	var/targName = tgui_input_text(user, "Enter a new subject that Asimov is concerned with.", "Asimov", subject, MAX_NAME_LEN)
+	var/targName = tgui_input_text(user, "Enter a new subject that Asimov is concerned with.", "Asimov", html_decode(subject), MAX_NAME_LEN)
 	if(!targName)
 		return
 	subject = targName
@@ -72,7 +72,7 @@
 	var/subject = "human being"
 
 /obj/item/ai_module/core/full/asimovpp/attack_self(mob/user)
-	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, MAX_NAME_LEN)
+	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", html_decode(subject), MAX_NAME_LEN)
 	if(!target_name)
 		return
 	laws.Cut()

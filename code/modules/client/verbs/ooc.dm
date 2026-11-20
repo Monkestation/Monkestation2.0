@@ -54,7 +54,7 @@ GAME_VERB(/client, ooc, "OOC", "OOC")
 	msg = emoji_parse(msg)
 
 	if(SSticker.HasRoundStarted() && ((msg[1] in list(".",";",":","#")) || findtext_char(msg, "say", 1, 5)))
-		if(tgui_alert(usr,"Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr,"Your message \"[html_decode(raw_msg)]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", list("Yes", "No")) != "Yes")
 			return
 
 	if(!holder)

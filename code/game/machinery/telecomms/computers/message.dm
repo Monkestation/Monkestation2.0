@@ -104,14 +104,28 @@
 		if(MSG_MON_SCREEN_LOGS)
 			var/list/message_list = list()
 			for(var/datum/data_tablet_msg/pda in linkedServer?.pda_msgs)
-				message_list += list(list("ref" = REF(pda), "sender" = pda.sender, "recipient" = pda.recipient, "message" = pda.message))
+				message_list += list(list("ref" = REF(pda), "sender" = html_decode(pda.sender), "recipient" = html_decode(pda.recipient), "message" = pda.message))
 			data["messages"] = message_list
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 			var/list/request_list = list()
 			for(var/datum/data_rc_msg/rc in linkedServer?.rc_msgs)
-				request_list += list(list("ref" = REF(rc), "message" = rc.message, "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.send_dpt))
+				request_list += list(list("ref" = REF(rc), "message" = html_decode(rc.message), "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.send_dpt))
 			data["requests"] = request_list
 	return data
+
+/obj/machinery/computer/message_monitor/ui_static_data(mob/user)
+	var/list/data = list()
+	data["is_on_station"] = is_on_station()
+	return data
+
+/// Check if this console is on the station and in a valid area
+/obj/machinery/computer/message_monitor/proc/is_on_station()
+	if(!is_station_level(z))
+		return FALSE
+	var/area/station/area = get_area(src)
+	if(isnull(area) || !(area.area_flags & VALID_TERRITORY))
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/message_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -144,7 +158,11 @@
 				message_servers += message_server
 
 			if(length(message_servers) > 1)
-				linkedServer = tgui_input_list(usr, "Please select a server", "Server Selection", message_servers)
+				var/selected_server = tgui_input_list(usr, "Please select a server", "Server Selection", message_servers)
+				if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
+					screen = MSG_MON_SCREEN_MAIN
+					return TRUE
+				linkedServer = selected_server
 				if(linkedServer)
 					notice_message = "NOTICE: Server selected."
 				else if(length(message_servers) > 0)
@@ -176,10 +194,17 @@
 			notice_message = "NOTICE: Logs cleared."
 			return TRUE
 		if("set_key")
-			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
+			if(!is_on_station())
+				return TRUE
+
+			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption", max_length = 16, encode = FALSE)
+			if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
+				return TRUE
 			if(dkey && dkey != "")
 				if(linkedServer.decryptkey == dkey)
-					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key")
+					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", max_length = 16, encode = FALSE)
+					if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
+						return TRUE
 					if(length(newkey) <= 3)
 						notice_message = "NOTICE: Decryption key too short!"
 					else if(newkey && newkey != "")
@@ -231,10 +256,12 @@
 
 			if(isnull(recipient))
 				notice_message = "NOTICE: No recipient selected!"
-				return attack_hand(usr)
+				return TRUE
 			if(isnull(message) || message == "")
 				notice_message = "NOTICE: No message entered!"
-				return attack_hand(usr)
+				return TRUE
+			if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
+				return TRUE
 
 			var/datum/signal/subspace/messaging/tablet_message/signal = new(src, list(
 				"fakename" = "[sender]",
@@ -288,7 +315,7 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
-	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is <b>[server.decryptkey]</b>.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
+	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is <b>[html_encode(server.decryptkey)]</b>.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
 	add_overlay("paper_words")
 	update_appearance()
 

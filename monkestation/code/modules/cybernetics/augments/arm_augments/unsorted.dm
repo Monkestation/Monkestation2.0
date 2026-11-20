@@ -269,16 +269,10 @@
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#00e1ff"
 
-/obj/item/organ/internal/cyberimp/arm/cooler/on_life()
+/obj/item/organ/internal/cyberimp/arm/cooler/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(owner.bodytemperature > (owner.standard_body_temperature + 2 KELVIN))
-		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
-	else
-		owner.remove_homeostasis_level(REF(src))
-
-/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	organ_owner?.remove_homeostasis_level(REF(src))
+	if(owner.bodytemperature > (owner.get_body_temp_normal() + 2 KELVIN))
+		owner.adjust_bodytemperature(-0.25 KELVIN * seconds_per_tick, owner.get_body_temp_normal())
 
 /obj/item/organ/internal/cyberimp/arm/heater
 	name = "sub-dermal heater implant"
@@ -288,15 +282,9 @@
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#ff9100"
 
-/obj/item/organ/internal/cyberimp/arm/heater/on_life()
+/obj/item/organ/internal/cyberimp/arm/heater/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(owner.bodytemperature < (owner.standard_body_temperature - 2 KELVIN))
-		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
-	else
-		owner.remove_homeostasis_level(REF(src))
-
-/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	organ_owner.remove_homeostasis_level(REF(src))
+	if(owner.bodytemperature < (owner.get_body_temp_normal() - 2 KELVIN))
+		owner.adjust_bodytemperature(0.25 KELVIN * seconds_per_tick, 0, owner.get_body_temp_normal())
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION

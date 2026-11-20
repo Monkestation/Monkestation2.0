@@ -126,6 +126,7 @@
 	inhand_icon_state = "hostrench"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
 
 
 // Donation reward for Thedragmeme
@@ -250,7 +251,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	icon_state = "blutigen_kimono"
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/gloves/ring/hypno
 	var/list/spans = list()
@@ -302,7 +303,7 @@
 	icon_state = "avipilotup"
 	inhand_icon_state = "rus_ushanka"
 	flags_inv = HIDEEARS|HIDEHAIR
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT //about as warm as an ushanka
 	actions_types = list(/datum/action/item_action/adjust)
 	var/goggles = FALSE
@@ -318,7 +319,7 @@
 		to_chat(user, span_notice("You focus all your willpower to put the goggles down on your eyes."))
 	goggles = !goggles
 	if(user)
-		user.head_update(src, forced = 1)
+		user.update_worn_head()
 		user.update_mob_action_buttons()
 
 /obj/item/clothing/head/avipilot/ui_action_click(mob/living/carbon/user, action)
@@ -341,6 +342,7 @@
 
 // Donation reward for NetraKyram
 /obj/item/clothing/under/rank/blueshield/netra
+	can_adjust = FALSE
 	name = "black and silver armored dress"
 	desc = "An ankle length black and silver dress, made out of some shiny synthetic material with inlaid kevlar shards and silver reinforcements, a silver ring surrounds the collar, and it doesn't appear to have a zipper... How does somebody put this thing on anyways?"
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -568,6 +570,7 @@
 
 // Donation Reward for Grand Vegeta
 /obj/item/clothing/under/mikubikini
+	can_adjust = FALSE
 	name = "starlight singer bikini"
 	desc = " "
 	icon_state = "mikubikini"
@@ -582,6 +585,7 @@
 	name = "starlight singer jacket"
 	desc = " "
 	icon_state = "mikujacket"
+	body_parts_covered = CHEST|GROIN
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	worn_icon_state = "mikujacket"
@@ -620,8 +624,8 @@
 	worn_icon_state = "emissionhelm"
 	inhand_icon_state = null
 
-/obj/item/clothing/head/helmet/space/plasmaman/candlejax/handle_style_change(style)
-	return
+/obj/item/clothing/head/helmet/space/plasmaman/candlejax/handle_style_change(new_style)
+	return FALSE
 
 // Donation reward for CandleJax
 /obj/item/clothing/under/plasmaman/candlejax
@@ -640,8 +644,8 @@
 	worn_icon_state = "emissionsuit"
 	inhand_icon_state = null
 
-/obj/item/clothing/under/plasmaman/candlejax/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/candlejax/handle_style_change(new_style)
+	return FALSE
 
 // Donation reward for CandleJax
 /obj/item/clothing/head/bio_hood/jax
@@ -667,8 +671,8 @@
 	worn_icon_state = "plasmaman_jax"
 	inhand_icon_state = null
 
-/obj/item/clothing/under/plasmaman/jax2/handle_style_change(style)
-	return
+/obj/item/clothing/under/plasmaman/jax2/handle_style_change(new_style)
+	return FALSE
 
 /obj/item/clothing/suit/toggle/labcoat/skyrat/rd/jax
 	name = "xuracorp enameled labcoat"
@@ -676,7 +680,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "labcoat_xc"
-	body_parts_covered = CHEST|ARMS|LEGS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor_type = /datum/armor/rd_jax
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -710,7 +714,7 @@
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "greycoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for Cherno_00
@@ -720,8 +724,8 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "chernocoat"
-	body_parts_covered = CHEST|GROIN|ARMS
-
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for GoldenAlpharex
@@ -765,7 +769,7 @@
 	slot_flags = up ? ITEM_SLOT_EYES | ITEM_SLOT_HEAD : ITEM_SLOT_EYES
 	toggle_vision_effects()
 
-/obj/item/clothing/glasses/welding/steampunk_goggles/weldingvisortoggle(mob/user)
+/obj/item/clothing/glasses/welding/steampunk_goggles/adjust_visor(mob/living/user)
 	. = ..()
 	handle_sight_updating(user)
 
@@ -789,9 +793,7 @@
 
 	to_chat(user, span_notice("You slide \the [src]'s welding shutters slider, [welding_protection ? "closing" : "opening"] them."))
 	playsound(user, shutters_sound, 100, TRUE)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = 1)
+	user.update_clothing(slot_flags)
 	update_item_action_buttons()
 	return TRUE
 
@@ -823,7 +825,7 @@
 		if(iscarbon(user))
 			var/mob/living/carbon/carbon_user = user
 			carbon_user.update_tint()
-			carbon_user.head_update(src, forced = TRUE)
+		user.update_clothing(slot_flags)
 
 /obj/item/clothing/glasses/welding/steampunk_goggles/ui_action_click(mob/user, actiontype, is_welding_toggle = FALSE)
 	if(!is_welding_toggle)
@@ -887,6 +889,7 @@
 
 //Donation reward for Hacker T.Dog
 /obj/item/clothing/under/rank/nanotrasen_consultant/hubert
+	can_adjust = FALSE
 	name = "CC ensign's uniform"
 	desc = "A tailor-made Ensign's uniform, various medals and chains hang down from it."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -926,6 +929,7 @@
 
 // Donation reward for gamerguy14948
 /obj/item/clothing/under/occult
+	can_adjust = FALSE
 	name = "occult collector's outfit"
 	desc = "A set of clothes fit for someone dapper that isn't afraid of getting dirty."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -947,6 +951,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "occultcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/occult
 
 // Donation reward for Octus
@@ -956,6 +961,8 @@
 	icon = 'icons/obj/clothing/donator/masks.dmi'
 	worn_icon = 'icons/mob/clothing/donator/mask.dmi'
 	icon_state = "death"
+	actions_types = null
+	adjustable = FALSE
 
 // Donation reward for 1ceres
 /obj/item/clothing/glasses/rosecolored
@@ -1109,6 +1116,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "rainbowcoat"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	base_icon_state = "rainbowcoat"
 
 // Donation reward for M97screwsyourparents
@@ -1127,10 +1135,12 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "officerjacket"
+	body_parts_covered = CHEST|GROIN|ARMS
 	base_icon_state = "officerjacket"
 
 // Donation reward for M97screwsyourparents
 /obj/item/clothing/under/recruiter_uniform
+	can_adjust = FALSE
 	name = "recruiter uniform"
 	desc = "Hey, free college!"
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1184,6 +1194,7 @@
 // Donation reward for BoisterousBeebz
 
 /obj/item/clothing/under/bubbly_clown/skirt
+	can_adjust = FALSE
 	name = "bubbly clown dress"
 	desc = "A bright and cheerful clown dress, honk!"
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1206,6 +1217,7 @@
 
 // Donation reward for Kay-Nite
 /obj/item/clothing/under/tactichill
+	can_adjust = FALSE
 	name = "tactichill jacket"
 	desc = "The brighter variant of the tacticool clotheswear, for when you want to look even cooler than usual and still operate at the same time."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1215,6 +1227,7 @@
 // Donation reward for Razurath
 
 /obj/item/clothing/under/bimpcap
+	can_adjust = FALSE
 	name = "Formal Matte Black Captain Uniform"
 	desc = "A professional looking matte black uniform cladded with medals of distintive service and valor, only worn by the highest of station officials."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1232,6 +1245,7 @@
 
 // Donation reward for Thedragmeme
 /obj/item/clothing/under/caged_dress/skirt
+	can_adjust = FALSE
 	name = "Caged Purple Dress"
 	desc = "A silky purple dress with a partially exposed crinoline underneath."
 	icon = 'icons/obj/clothing/donator/uniform.dmi'
@@ -1243,6 +1257,7 @@
 	name = "Short Purple Coat"
 	desc = "A short black and purple coat, mostly used for asthetics then insulating the person wearing it."
 	icon_state = "short_coat"
+	body_parts_covered = CHEST|ARMS
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 
@@ -1277,6 +1292,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "long-coat"
+	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/sigmarcoat
 
 //reward for SomeRandomOwl
@@ -1302,6 +1318,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "razurath_coat"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 // Donation reward for MaSvedish
 /obj/item/clothing/mask/holocigarette/masvedishcigar
@@ -1322,6 +1339,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "lt3_jacket"
+	body_parts_covered = CHEST|ARMS
 	inhand_icon_state = "syndicate-black"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -1342,6 +1360,7 @@
 	lefthand_file = 'icons/mob/inhands/donator/donator_left.dmi'
 	righthand_file = 'icons/mob/inhands/donator/donator_right.dmi'
 	icon_state = "lt3_jeans"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	inhand_icon_state = "lt3_jeans"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -1359,6 +1378,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	icon_state = "colorblockhoodie"
+	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/colorblockhoodie
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -1375,6 +1395,7 @@
 	icon = 'icons/obj/clothing/donator/suits.dmi'
 	worn_icon = 'icons/mob/clothing/donator/suit.dmi'
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	body_parts_covered = CHEST|GROIN|ARMS
 
 //Public version of Razurath's donation reward
 /obj/item/clothing/suit/toggle/digicoat/glitched

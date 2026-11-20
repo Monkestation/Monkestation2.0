@@ -135,15 +135,15 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/ui_data()
 	var/list/data = list()
-	data["arrival"] = arrival
+	data["arrival"] = html_decode(arrival)
 	data["arrivalToggle"] = arrival_toggle
-	data["newhead"] = newhead
+	data["newhead"] = html_decode(newhead)
 	data["newheadToggle"] = newhead_toggle
-	data["node_message"] = node_message
+	data["node_message"] = html_decode(node_message)
 	data["node_toggle"] = announce_research_node
 	return data
 
-/obj/machinery/announcement_system/ui_act(action, param)
+/obj/machinery/announcement_system/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -155,17 +155,17 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	switch(action)
 		if("ArrivalText")
-			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
+			var/new_message = trim(html_encode(params["newText"]), MAX_MESSAGE_LEN)
 			if(new_message)
 				arrival = new_message
 				usr.log_message("updated the arrivals announcement to: [new_message]", LOG_GAME)
 		if("NewheadText")
-			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
+			var/new_message = trim(html_encode(params["newText"]), MAX_MESSAGE_LEN)
 			if(new_message)
 				newhead = new_message
 				usr.log_message("updated the head announcement to: [new_message]", LOG_GAME)
 		if("node_message")
-			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
+			var/new_message = trim(html_encode(params["newText"]), MAX_MESSAGE_LEN)
 			if(new_message)
 				node_message = new_message
 				usr.log_message("updated the researched node announcement to: [node_message]", LOG_GAME)

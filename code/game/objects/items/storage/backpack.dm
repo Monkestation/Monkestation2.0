@@ -28,6 +28,7 @@
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
 	create_storage(max_slots = 21, max_total_storage = 21)
+	atom_storage.set_holdable(exception_hold_list = /obj/item/fish_tank)
 	AddElement(/datum/element/attack_equip)
 
 /obj/item/storage/backpack/equipped(mob/user, slot, initial)
@@ -614,6 +615,7 @@
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/razor(src)
 	new /obj/item/blood_filter(src)
+	new /obj/item/autopsy_scanner(src)
 
 /obj/item/storage/backpack/duffelbag/sec
 	name = "security duffel bag"
@@ -641,6 +643,7 @@
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/blood_filter(src)
+	new /obj/item/autopsy_scanner(src)
 
 /obj/item/storage/backpack/duffelbag/engineering
 	name = "industrial duffel bag"

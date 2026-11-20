@@ -109,6 +109,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
+	population_minimum = 20 //no one wants mass station damage on lowpop
 
 /datum/uplink_item/explosives/syndicate_bomb/New()
 	. = ..()

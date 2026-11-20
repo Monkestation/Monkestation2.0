@@ -99,11 +99,16 @@
 	var/list/preferred_events
 	/// Do we always spawn our full amount, regardless of being over antag cap
 	var/always_spawn_full_amount = FALSE
+	/// The candidate pool passed to run_event(), held just long enough for the new event to take it in New().
+	var/list/next_candidate_pool
 
 /datum/round_event_control/antagonist/New()
 	. = ..()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		restricted_roles |= protected_roles
+		LAZYOR(restricted_roles, protected_roles)
+	for(var/datum/job/job_type as anything in subtypesof(/datum/job))
+		if(job_type::job_flags & JOB_ANTAG_BLACKLISTED)
+			LAZYOR(restricted_roles, job_type::title)
 
 /datum/round_event_control/antagonist/return_failure_string(players_amt)
 	. =..()
@@ -115,6 +120,10 @@
 		if(.)
 			. += ", "
 		. += "No Required"
+	if(roundstart && occurrences)
+		if(.)
+			. += ", "
+		. += "Already Ran"
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates() //we should optimize this
 	if(length(candidates) < antag_amt)
@@ -126,17 +135,39 @@
 /datum/round_event_control/antagonist/generate_image(list/mobs)
 	SScredits.generate_major_icon(mobs, event_icon_state)
 
-/datum/round_event_control/antagonist/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/antagonist/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE, list/candidate_pool)
 	. = ..()
 	if(!.)
 		return
 	if(!check_required_roles())
 		return FALSE
+	// raw occurrences, the shared count would block bloodcult's clockcult pairing
+	if(roundstart && occurrences)
+		return FALSE
 
 	var/antag_amt = get_antag_amount()
-	var/list/candidates = get_candidates()
+	var/list/candidates = get_candidates(candidate_pool)
 	if(length(candidates) < antag_amt)
 		return FALSE
+
+/datum/round_event_control/antagonist/run_event(random = FALSE, announce_chance_override = null, admin_forced = FALSE, event_cause, list/candidate_pool)
+	// New() is the only thing between here and the event's setup() that we can hand anything to
+	next_candidate_pool = candidate_pool
+	var/datum/round_event/antagonist/round_event = ..()
+	next_candidate_pool = null
+	if(!istype(round_event) || length(round_event.setup_minds))
+		return round_event
+	// refund occurence (duh)
+	subtract_occurrence()
+	round_event.processing = FALSE
+	round_event.kill()
+	return null
+
+/datum/round_event_control/antagonist/get_href_actions()
+	// firing or scheduling one of these with no latejoiner would just grab someone already aboard, unprompted
+	if(track == EVENT_TRACK_LATEJOIN)
+		return "<a href='byond://?src=[REF(src)];[HrefToken()];action=force_next'>Force Next</a>"
+	return ..()
 
 /datum/round_event_control/antagonist/get_weight()
 	. = ..()
@@ -205,14 +236,14 @@
 			return i
 	return amount
 
-/datum/round_event_control/antagonist/proc/get_candidates()
+/datum/round_event_control/antagonist/proc/get_candidates(list/candidate_pool)
 	var/round_started = SSticker.HasRoundStarted()
 	var/new_players_arg = round_started ? FALSE : TRUE
 	var/living_players_arg = round_started ? TRUE : FALSE
 	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
 
 	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, FALSE, new_players_arg, living_players_arg, midround_antag_pref = midround_antag_pref_arg, \
-													restricted_roles = restricted_roles, required_roles = required_roles)
+													restricted_roles = restricted_roles, required_roles = required_roles, candidate_pool = candidate_pool)
 	candidates = trim_candidates(candidates)
 	return candidates
 

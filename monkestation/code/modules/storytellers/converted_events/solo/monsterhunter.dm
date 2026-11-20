@@ -1,5 +1,3 @@
-#define MINIMUM_MONSTERS_REQUIRED 2
-
 /datum/round_event_control/antagonist/monsterhunter
 	name = "Monster Hunters"
 	track = EVENT_TRACK_MAJOR
@@ -34,15 +32,9 @@
 	max_occurrences = 1
 	checks_antag_cap = FALSE
 
-/datum/round_event_control/antagonist/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/antagonist/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE, list/candidate_pool)
 	. = ..()
 	if(!.)
 		return
 
-	var/count = length(get_all_monster_hunter_prey())
-	if(MINIMUM_MONSTERS_REQUIRED > count)
-		return FALSE
-
-	return TRUE
-
-#undef MINIMUM_MONSTERS_REQUIRED
+	return can_monster_hunter_spawn()

@@ -81,7 +81,7 @@
 	desc = "Includes shoes and plaid."
 	icon_state = "kilt"
 	inhand_icon_state = "kilt"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
@@ -100,6 +100,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -133,7 +134,7 @@
 	name = "black yukata"
 	desc = "A comfortable black cotton yukata inspired by traditional designs, perfect for a non-formal setting."
 	icon_state = "yukata1"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -152,7 +153,7 @@
 	desc = "A luxurious black silk kimono with traditional flair, ideal for elegant festive occasions."
 	icon_state = "kimono1"
 	inhand_icon_state = "yukata1"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -267,7 +268,7 @@
 	icon_state = "red_mech_suit"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE

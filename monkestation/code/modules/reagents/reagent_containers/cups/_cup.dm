@@ -1,7 +1,3 @@
-/obj/item/reagent_containers/cup/Initialize(mapload, vol)
-	. = ..()
-	AddElement(/datum/element/trash_if_empty/reagent_container/if_prefilled)
-
 /obj/item/reagent_containers/cup
 	var/static/list/pouring_sounds_categorized = list(
 		"0_10" = list(

@@ -6,7 +6,6 @@
 #define POLL_IGNORE_ASHWALKER "ashwalker"
 #define POLL_IGNORE_BLOB "blob"
 #define POLL_IGNORE_BOTS "bots"
-#define POLL_IGNORE_CARGORILLA "cargorilla"
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 #define POLL_IGNORE_CONSTRUCT "construct"
 #define POLL_IGNORE_CORTICAL_BORER "cortical_borer"
@@ -52,7 +51,6 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_BLOB = "Blob spores",
 	POLL_IGNORE_BLOODLING_THRALL = "Bloodling Thrall",
 	POLL_IGNORE_BOTS = "Bots",
-	POLL_IGNORE_CARGORILLA = "Cargorilla",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
 	POLL_IGNORE_CONSTRUCT = "Construct",
 	POLL_IGNORE_CORTICAL_BORER = "Cortical Borer",
@@ -99,7 +97,6 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_PAI = JOB_PERSONAL_AI,
 	POLL_IGNORE_VENUSHUMANTRAP = "Venus Human Traps",
 	POLL_IGNORE_REGAL_RAT = "Regal rat",
-	POLL_IGNORE_CARGORILLA = "Cargorilla",
 	POLL_IGNORE_MONKEY_HELMET = "Mind magnified monkey",
 	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
 	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",

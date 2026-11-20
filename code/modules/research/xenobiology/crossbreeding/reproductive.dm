@@ -1,7 +1,7 @@
 /*
 Reproductive extracts:
 	When fed three biomass cubes, produces between
-	1 and 4 normal slime extracts of the same colour.
+	1 and 4 normal slime extracts of the same color.
 */
 
 
@@ -65,88 +65,88 @@ Reproductive extracts:
 
 /obj/item/slimecross/reproductive/grey
 	extract_type = /obj/item/slime_extract/grey
-	colour = "grey"
+	slime_type = /datum/slime_type/grey
 
 /obj/item/slimecross/reproductive/orange
 	extract_type = /obj/item/slime_extract/orange
-	colour = "orange"
+	slime_type = /datum/slime_type/orange
 
 /obj/item/slimecross/reproductive/purple
 	extract_type = /obj/item/slime_extract/purple
-	colour = "purple"
+	slime_type = /datum/slime_type/purple
 
 /obj/item/slimecross/reproductive/blue
 	extract_type = /obj/item/slime_extract/blue
-	colour = "blue"
+	slime_type = /datum/slime_type/blue
 
 /obj/item/slimecross/reproductive/metal
 	extract_type = /obj/item/slime_extract/metal
-	colour = "metal"
+	slime_type = /datum/slime_type/metal
 
 /obj/item/slimecross/reproductive/yellow
 	extract_type = /obj/item/slime_extract/yellow
-	colour = "yellow"
+	slime_type = /datum/slime_type/yellow
 
 /obj/item/slimecross/reproductive/darkpurple
 	extract_type = /obj/item/slime_extract/darkpurple
-	colour = "dark purple"
+	slime_type = /datum/slime_type/darkpurple
 
 /obj/item/slimecross/reproductive/darkblue
 	extract_type = /obj/item/slime_extract/darkblue
-	colour = "dark blue"
+	slime_type = /datum/slime_type/darkblue
 
 /obj/item/slimecross/reproductive/silver
 	extract_type = /obj/item/slime_extract/silver
-	colour = "silver"
+	slime_type = /datum/slime_type/silver
 
 /obj/item/slimecross/reproductive/bluespace
 	extract_type = /obj/item/slime_extract/bluespace
-	colour = "bluespace"
+	slime_type = /datum/slime_type/bluespace
 
 /obj/item/slimecross/reproductive/sepia
 	extract_type = /obj/item/slime_extract/sepia
-	colour = "sepia"
+	slime_type = /datum/slime_type/sepia
 
 /obj/item/slimecross/reproductive/cerulean
 	extract_type = /obj/item/slime_extract/cerulean
-	colour = "cerulean"
+	slime_type = /datum/slime_type/cerulean
 
 /obj/item/slimecross/reproductive/pyrite
 	extract_type = /obj/item/slime_extract/pyrite
-	colour = "pyrite"
+	slime_type = /datum/slime_type/pyrite
 
 /obj/item/slimecross/reproductive/red
 	extract_type = /obj/item/slime_extract/red
-	colour = "red"
+	slime_type = /datum/slime_type/red
 
 /obj/item/slimecross/reproductive/green
 	extract_type = /obj/item/slime_extract/green
-	colour = "green"
+	slime_type = /datum/slime_type/green
 
 /obj/item/slimecross/reproductive/pink
 	extract_type = /obj/item/slime_extract/pink
-	colour = "pink"
+	slime_type = /datum/slime_type/pink
 
 /obj/item/slimecross/reproductive/gold
 	extract_type = /obj/item/slime_extract/gold
-	colour = "gold"
+	slime_type = /datum/slime_type/gold
 
 /obj/item/slimecross/reproductive/oil
 	extract_type = /obj/item/slime_extract/oil
-	colour = "oil"
+	slime_type = /datum/slime_type/oil
 
 /obj/item/slimecross/reproductive/black
 	extract_type = /obj/item/slime_extract/black
-	colour = "black"
+	slime_type = /datum/slime_type/black
 
 /obj/item/slimecross/reproductive/lightpink
 	extract_type = /obj/item/slime_extract/lightpink
-	colour = "light pink"
+	slime_type = /datum/slime_type/lightpink
 
 /obj/item/slimecross/reproductive/adamantine
 	extract_type = /obj/item/slime_extract/adamantine
-	colour = "adamantine"
+	slime_type = /datum/slime_type/adamantine
 
 /obj/item/slimecross/reproductive/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
-	colour = "rainbow"
+	slime_type = /datum/slime_type/rainbow

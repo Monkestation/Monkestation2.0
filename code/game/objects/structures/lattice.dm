@@ -80,20 +80,28 @@
 		to_chat(user, span_notice("You build a floor."))
 		var/turf/T = src.loc
 		if(isgroundlessturf(T))
-			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			T.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			qdel(src)
 			return TRUE
 	if(passed_mode == RCD_CATWALK)
 		to_chat(user, span_notice("You build a catwalk."))
-		var/turf/turf = loc
-		qdel(src)
-		new /obj/structure/lattice/catwalk(turf)
+		replace_with_catwalk()
 		return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
+
+/// Replaces the lattice with a catwalk, calling any callbacks added through COMSIG_LATTICE_PRE_REPLACE_WITH_CATWALK with the new catwalk
+/obj/structure/lattice/proc/replace_with_catwalk()
+	var/list/post_replacement_callbacks = list()
+	SEND_SIGNAL(src, COMSIG_LATTICE_PRE_REPLACE_WITH_CATWALK, post_replacement_callbacks)
+	var/turf/turf = loc
+	qdel(src)
+	var/new_catwalk = new /obj/structure/lattice/catwalk(turf)
+	for(var/datum/callback/callback as anything in post_replacement_callbacks)
+		callback.Invoke(new_catwalk)
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
@@ -106,7 +114,7 @@
 	smoothing_groups = SMOOTH_GROUP_CATWALK + SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_OPEN_FLOOR
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
-	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_HYPERSPACE_STOPPED)
+	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED, TRAIT_HYPERSPACE_STOPPED)
 
 /obj/structure/lattice/catwalk/Initialize(mapload)
 	. = ..()
@@ -161,7 +169,7 @@
 	canSmoothWith = SMOOTH_GROUP_LATTICE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
-	give_turf_traits = list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_HYPERSPACE_STOPPED)
+	give_turf_traits = list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED, TRAIT_HYPERSPACE_STOPPED)
 
 /obj/structure/lattice/lava/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>, but the <i>heat treatment will shatter off</i>. There's space for a <i>tile</i>.")

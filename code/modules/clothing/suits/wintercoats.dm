@@ -7,11 +7,13 @@
 	worn_icon = 'icons/mob/clothing/suits/wintercoat.dmi'
 	inhand_icon_state = "coatwinter"
 	body_parts_covered = CHEST|GROIN|ARMS
-	// cold_protection = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
 	// hood_down_overlay_suffix = "_hood"
+	bodyshapes_with_variations = NONE
+	has_coat_pockets = TRUE
 
 /datum/armor/hooded_wintercoat
 	bio = 10
@@ -37,7 +39,7 @@
 	icon_state = "hood_winter"
 	worn_icon = 'icons/mob/clothing/head/winterhood.dmi'
 	body_parts_covered = HEAD
-
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
@@ -473,7 +475,7 @@
 /datum/armor/wintercoat_engineering
 	fire = 20
 
-/obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
@@ -486,7 +488,7 @@
 /datum/armor/winterhood_engineering
 	fire = 20
 
-/obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)

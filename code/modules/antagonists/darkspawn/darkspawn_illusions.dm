@@ -5,8 +5,8 @@
 	health = 100
 	pressure_resistance = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = 0
-	bodytemp_heat_damage_limit = INFINITY
+	minbodytemp = 0
+	maxbodytemp = INFINITY
 
 	speed = -1
 	pass_flags_self = PASSTABLE | PASSMOB | PASSDOORS | PASSMACHINE | PASSGRILLE | PASSGLASS

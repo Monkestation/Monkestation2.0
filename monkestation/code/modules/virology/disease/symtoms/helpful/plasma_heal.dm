@@ -30,7 +30,7 @@
 		to_chat(mob, span_notice("You suddenly love plasma."))
 	ADD_TRAIT(mob, TRAIT_PLASMA_LOVER_METABOLISM, type)
 
-/datum/symptom/plasma_heal/side_effect(mob/living/mob)
+/datum/symptom/plasma_heal/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	. = ..()
 	REMOVE_TRAIT(mob, TRAIT_PLASMA_LOVER_METABOLISM, type)
 
@@ -82,12 +82,12 @@
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing plasma inside and around you..."))
 
-	var/target_temp = M.standard_body_temperature
+	var/target_temp = M.get_body_temp_normal()
 	if(M.bodytemperature > target_temp)
 		M.adjust_bodytemperature(-2 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
 		if(prob(5))
 			to_chat(M, span_notice("You feel less hot."))
-	else if(M.bodytemperature < (M.standard_body_temperature + 1))
+	else if(M.bodytemperature < (target_temp + 1))
 		M.adjust_bodytemperature(2 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
 		if(prob(5))
 			to_chat(M, span_notice("You feel warmer."))

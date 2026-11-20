@@ -135,12 +135,16 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			user.balloon_alert(user, "lid closed")
 			return ITEM_INTERACT_BLOCKING
 
-		if(!tool.is_open_container())
+		var/is_dropper = istype(tool, /obj/item/reagent_containers/dropper)
+		if(!tool.is_open_container() && !is_dropper)
 			to_chat(user, span_notice("[tool] is not an open container"))
 			return ITEM_INTERACT_BLOCKING
 
+		var/obj/item/reagent_containers/container = tool
 		var/transfered_amount = 0
-		transfered_amount = tool.reagents.trans_to(src, 10, transferred_by = user)
+		transfered_amount = container.reagents.trans_to(src, is_dropper ? container.amount_per_transfer_from_this : 10, transferred_by = user)
+		if(is_dropper)
+			container.update_appearance()
 		if(transfered_amount > 0)
 			to_chat(user, span_notice("You transfer [transfered_amount] units of the solution to \the [src]."))
 		return ITEM_INTERACT_SUCCESS
@@ -313,7 +317,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	if(open)//If the dish is open, we may get infected by the disease inside on top of those that might be stuck on it.
 		var/block = 0
 		var/bleeding = 0
-		if(src in perp.held_items)
+		if(perp.is_holding(src))
 			block = perp.check_contact_sterility(BODY_ZONE_ARMS)
 			bleeding = perp.check_bodypart_bleeding(BODY_ZONE_ARMS)
 			if(!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))

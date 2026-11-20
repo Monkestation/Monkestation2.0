@@ -42,11 +42,15 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/plasmaman,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
 	)
+	survival_box_overrides = list(
+		SURVIVAL_INTERNALS_TYPE = /obj/item/tank/internals/plasmaman/belt,
+		SURVIVAL_MEDIPEN_TYPE = /obj/item/reagent_containers/medipen,
+	)
 
 	// Body temperature for Plasmen is much lower human as they can handle colder environments
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
 	// The minimum amount they stabilize per tick is reduced making hot areas harder to deal with
-	temperature_normalization_speed = /mob/living/carbon/human::temperature_normalization_speed * 0.5
+	bodytemp_autorecovery_min = 2
 	// They are hurt at hot temps faster as it is harder to hold their form
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
 	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
@@ -106,7 +110,7 @@
 	else if(H.fire_stacks)
 		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
 		if(istype(P))
-			P.Extinguish(H)
+			P.suit_extinguish(H)
 			internal_fire = FALSE
 	else
 		internal_fire = FALSE

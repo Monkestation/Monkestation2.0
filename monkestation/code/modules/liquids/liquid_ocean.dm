@@ -32,16 +32,16 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	has_gravity = TRUE
 
 /area/ruin/ocean/listening_outpost
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/bunker
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/bioweapon_research
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/ocean/mining_site
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ocean/near_station_powered
 	requires_power = FALSE
@@ -84,8 +84,6 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	resistance_flags = INDESTRUCTIBLE
 
 	overwrites_attack_by = TRUE
-
-	astar_weight = 50
 
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
@@ -154,7 +152,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 		if(RCD_CATWALK)
 			to_chat(user, span_notice("You build a catwalk."))
@@ -185,7 +183,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 		else
 			to_chat(user, span_notice("You reinforce \the [src]."))
 			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	else if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
 		to_chat(user, span_notice("You begin constructing a ladder..."))
@@ -558,7 +556,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 		var/mob/living/carbon/burn_carbon = burn_living
 		var/obj/item/clothing/burn_suit = burn_carbon.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		var/obj/item/clothing/burn_helmet = burn_carbon.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(burn_suit?.clothing_flags & LAVAPROTECT && burn_helmet?.clothing_flags & LAVAPROTECT)
+		if(isclothing(burn_suit) && (burn_suit.clothing_flags & LAVAPROTECT) && isclothing(burn_helmet) && (burn_helmet.clothing_flags & LAVAPROTECT))
 			return LAVA_BE_PROCESSING
 
 	return LAVA_BE_BURNING
@@ -614,13 +612,15 @@ GLOBAL_LIST_EMPTY(the_lever)
 	base_lighting_alpha = 0
 	//map_generator = /datum/map_generator/ocean_generator
 	map_generator = /datum/map_generator/cave_generator/trench
-	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 
 /area/ocean/generated_above
 	icon_state = "ocean_gen_above"
 	map_generator = /datum/map_generator/ocean_generator
-	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /turf/open/floor/plating/ocean/pit
 	name = "pit"
@@ -731,6 +731,12 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 /// For each set of this amount of points beyond LAVALAND_POINTS_CHANCE_THRESHOLD, the mineral chance increases by 1.
 #define LAVALAND_POINTS_PER_CHANCE 1000
 
+/turf/closed/mineral/random/regrowth/Initialize(mapload)
+	if(GLOB.lavaland_points_generated > LAVALAND_POINTS_CHANCE_THRESHOLD)
+		var/mineral_increase = (GLOB.lavaland_points_generated - LAVALAND_POINTS_CHANCE_THRESHOLD) / LAVALAND_POINTS_PER_CHANCE
+		mineralChance = clamp(mineralChance + mineral_increase, 0, 100)
+	return ..()
+
 /turf/closed/mineral/random/regrowth/Destroy(force)
 	. = ..()
 	var/timer = max(1 MINUTES - round(max(1, GLOB.lavaland_points_generated) / LAVALAND_POINTS_PER_SECOND), 5 SECONDS)
@@ -738,11 +744,7 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 
 /// Creates a regrowth material turf ontop of an another turf.
 /proc/regrow_mineral(turf/location)
-	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.PlaceOnTop(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
-	if(GLOB.lavaland_points_generated <= LAVALAND_POINTS_CHANCE_THRESHOLD)
-		return
-	var/mineral_increase = (GLOB.lavaland_points_generated - LAVALAND_POINTS_CHANCE_THRESHOLD) / LAVALAND_POINTS_PER_CHANCE
-	regrowth_turf.mineralChance = clamp(initial(regrowth_turf.mineralChance) + mineral_increase, 0, 100)
+	location.place_on_top(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
 
 #undef LAVALAND_POINTS_CHANCE_THRESHOLD
 #undef LAVALAND_POINTS_PER_SECOND

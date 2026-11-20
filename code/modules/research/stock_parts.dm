@@ -242,6 +242,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	return second_item.get_part_rating() - first_item.get_part_rating()
 
 /obj/item/stock_parts
+	abstract_type = /obj/item/stock_parts
 	name = "stock part"
 	desc = "What?"
 	icon = 'icons/obj/stock_parts.dmi'

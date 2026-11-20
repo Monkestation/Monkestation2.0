@@ -26,5 +26,21 @@
 #define MOOK_ATTACK_ACTIVE 2
 #define MOOK_ATTACK_STRIKE 3
 
+#define EMOTION_HAPPY "happy"
+#define EMOTION_SAD "sad"
+#define EMOTION_SCARED "scared"
+#define EMOTION_FUNNY "funny"
+#define EMOTION_ANGER "anger"
+#define EMOTION_SURPRISED "suprised"
+#define EMOTION_HUNGRY "hungry"
+
+#define FRIENDSHIP_HATED "hated"
+#define FRIENDSHIP_DISLIKED "disliked"
+#define FRIENDSHIP_STRANGER "stranger"
+#define FRIENDSHIP_NEUTRAL "neutral"
+#define FRIENDSHIP_ACQUAINTANCES "acquaintances"
+#define FRIENDSHIP_FRIEND "friend"
+#define FRIENDSHIP_BESTFRIEND "bestfriend"
+
 ///keeps track of how many gutlunches are born
 GLOBAL_VAR_INIT(gutlunch_count, 0)

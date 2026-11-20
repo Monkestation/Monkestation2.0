@@ -87,6 +87,31 @@
 	discount_experiments = list(/datum/experiment/physical/arcade_winner = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SERVICE)
 
+/datum/techweb_node/marine_util
+	id = "marine_util"
+	display_name = "Marine Utility"
+	description = "Fish are nice to look at and all, but they can be put to use."
+	prereq_ids = list("fishing")
+	design_ids = list(
+		"bioelec_gen",
+		"bluespace_reel",
+		"fish_genegun",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
+	discount_experiments = list(/datum/experiment/scanning/fish/second = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)
+
+/datum/techweb_node/fishing_anomalous
+	id = "fishing_anomalous"
+	display_name = "Anomalous Fishing"
+	description = "For the truly adventurous fisher, these experimental tools could augment your catches in unpredictable ways."
+	prereq_ids = list("fishing", "anomaly_research")
+	design_ids = list(
+		"anomalous_fishing_hook",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+
 // Kitchen root node
 /datum/techweb_node/bio_process
 	id = "bio_process"
@@ -107,13 +132,13 @@
 		"smartfridge",
 		"stove",
 		"biomass_recycler",
-		"corral_corner",
-		"slime_extract_requestor",
-		"slime_market_pad",
-		"slime_market",
-		"slimevac",
-		"slime_compressor",
-
+		"extract_compressor",
+		"slime_pen_post",
+		"extract_requests_console",
+		"extract_orders_console",
+		"slime_rancher_scanner",
+		"vacuum_pack",
+		"vacuum_upgrade_printer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = TECHWEB_TIER_2_POINTS) //Big discount to reinforce doing it.
@@ -128,7 +153,12 @@
 	design_ids = list(
 		"fishing_rod_tech",
 		"stabilized_hook",
+		"auto_reel",
 		"fish_analyzer",
+		"bluespace_fish_case",
+		"bluespace_fish_tank_kit",
+		"fishing_gloves",
+		"mod_fishing",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)

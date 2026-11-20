@@ -10,7 +10,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/satyr_tail
 
 /datum/bodypart_overlay/mutant/satyr_tail
-	layers = EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "satyr_tail"
 	color_source = ORGAN_COLOR_HAIR
 
@@ -20,5 +23,8 @@
 /datum/bodypart_overlay/mutant/satyr_tail/get_base_icon_state()
 	return sprite_datum.icon_state
 
-/datum/bodypart_overlay/mutant/satyr_tail/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/satyr_tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	return TRUE

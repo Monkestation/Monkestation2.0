@@ -1,4 +1,5 @@
 /obj/item/reagent_containers
+	abstract_type = /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -316,9 +317,6 @@
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
 	reagents.expose_temperature(1000)
 	return ..() | COMPONENT_MICROWAVE_SUCCESS
-
-/obj/item/reagent_containers/fire_act(temperature, volume)
-	reagents.expose_temperature(temperature)
 
 /// Updates the icon of the container when the reagents change. Eats signal args
 /obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)

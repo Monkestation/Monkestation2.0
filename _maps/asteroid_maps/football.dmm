@@ -7,7 +7,7 @@
 /turf/open/misc/asteroid/airless/tospace,
 /area/template_noop)
 "I" = (
-/turf/closed/mineral/random/asteroid/tospace,
+/turf/closed/mineral/random/asteroid/tospace/mediumchance,
 /area/template_noop)
 "Q" = (
 /turf/open/misc/asteroid/airless/tospace,

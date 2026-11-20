@@ -285,7 +285,7 @@
 			if(girder)
 				return girder.rcd_act(user, the_rcd, passed_mode)
 
-			PlaceOnTop(/turf/closed/wall)
+			place_on_top(/turf/closed/wall)
 			return TRUE
 		if(RCD_REFLECTOR)
 			if(locate(/obj/structure/reflector) in src)
@@ -420,4 +420,4 @@
 	. = ..()
 	if(.)
 		var/obj/item/stack/tile = .
-		tile.set_mats_per_unit(custom_materials, 1)
+		tile.set_custom_materials(custom_materials)

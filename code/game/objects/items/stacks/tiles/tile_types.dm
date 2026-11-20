@@ -79,7 +79,7 @@
 	if(!use(1))
 		return
 
-	target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
+	target_plating = target_plating.place_on_top(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
 	target_plating.setDir(turf_dir)
 	playsound(target_plating, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
@@ -395,7 +395,7 @@
 	. += neon_overlay
 	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, src, alpha = emissive_alpha)
 
-/obj/item/stack/tile/carpet/neon/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/stack/tile/carpet/neon/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands || !neon_inhand_icon_state)
 		return
@@ -1215,7 +1215,7 @@
 	. = ..()
 	. += emissive_appearance(icon, icon_state, src, alpha = alpha)
 
-/obj/item/stack/tile/emissive_test/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/stack/tile/emissive_test/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	. += emissive_appearance(standing.icon, standing.icon_state, src, alpha = standing.alpha)
 

@@ -10,6 +10,7 @@
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	area_flags = NONE
+	area_flags_mapping = NONE
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
@@ -17,12 +18,20 @@
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 
-/area/shuttle/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+/area/shuttle/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)
 	. = ..()
-	if(length(new_baseturfs) > 1 || fake_turf_type)
-		return // More complicated larger changes indicate this isn't a player
-	if(ispath(new_baseturfs[1], /turf/open/floor/plating))
+	if(ispath(added_layer, /turf/open/floor/plating))
+		new_baseturfs.Add(/turf/baseturf_skipover/shuttle)
+		. |= CHANGETURF_GENERATE_SHUTTLE_CEILING
+	else if(ispath(new_baseturfs[1], /turf/open/floor/plating))
 		new_baseturfs.Insert(1, /turf/baseturf_skipover/shuttle)
+		. |= CHANGETURF_GENERATE_SHUTTLE_CEILING
+
+////////////////////////////Custom Shuttles////////////////////////////
+
+/area/shuttle/custom
+	requires_power = TRUE
+	area_flags = parent_type::area_flags | ALWAYS_VALID_BLOODSUCKER_LAIR
 
 ////////////////////////////Multi-area shuttles////////////////////////////
 
@@ -46,6 +55,7 @@
 	name = "Syndicate Infiltrator EVA"
 
 /area/shuttle/syndicate/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Syndicate Infiltrator Hall"
 
 /area/shuttle/syndicate/engineering
@@ -63,6 +73,10 @@
 /area/shuttle/pirate/flying_dutchman
 	name = "Flying Dutchman"
 	requires_power = FALSE
+
+/area/shuttle/pirate/siren
+	has_gravity = FALSE
+	area_flags = NO_GRAVITY
 
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
@@ -114,7 +128,8 @@
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
-	area_flags = UNIQUE_AREA// SSjob refers to this area for latejoiners
+	area_flags = NONE // SSjob refers to this area for latejoiners
+	area_flags_mapping = UNIQUE_AREA
 
 
 /area/shuttle/arrival/on_joining_game(mob/living/boarder)
@@ -158,9 +173,11 @@
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 	area_flags = BLOBS_ALLOWED
+	area_flags_mapping = NONE
 	area_limited_icon_smoothing = /area/shuttle/escape
 	flags_1 = CAN_BE_DIRTY_1
 	area_flags = CULT_PERMITTED
+	area_flags_mapping = NONE
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"

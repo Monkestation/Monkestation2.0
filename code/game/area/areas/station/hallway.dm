@@ -1,7 +1,7 @@
 /area/station/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	icon_state = "hall"
 	sound_environment = SOUND_AREA_STANDARD_STATION
-	astar_weight = -20 // hallways should be pathed through MORE often
 
 /area/station/hallway/primary
 	name = "\improper Primary Hallway"
@@ -84,7 +84,7 @@
 /area/station/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
-	area_flags = UNIQUE_AREA | EVENT_PROTECTED
+	area_flags = EVENT_PROTECTED
 
 /area/station/hallway/secondary/dock
 	name = "\improper Secondary Station Dock Hallway"

@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 				RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 			to_chat(M, span_userdanger("[src] was cursed!"))
 			M.update_worn_mask()
+			M.refresh_obscured()
 
 /obj/item/clothing/mask/animal/proc/clear_curse()
 	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
@@ -150,6 +151,18 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	animal_sounds_alt = list("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
+/obj/item/clothing/mask/animal/frog/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, cursed ? 4 : -4)
+
+/obj/item/clothing/mask/animal/frog/make_cursed()
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4)
+
+/obj/item/clothing/mask/animal/frog/clear_curse()
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
 /obj/item/clothing/mask/animal/frog/cursed
 	cursed = TRUE
 
@@ -179,6 +192,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	cursed = TRUE
 
 /obj/item/clothing/mask/animal/small
+	abstract_type = /obj/item/clothing/mask/animal/small
 	name = "A small animal mask"
 	desc = "If you're seeing this, yell at a coder."
 	flags_inv = HIDEFACE|HIDESNOUT
@@ -228,6 +242,18 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	inhand_icon_state = null
 	animal_sounds = list("RAWR!","Rawr!","GRR!","Growl!")
 
+/obj/item/clothing/mask/animal/small/bear/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, cursed ? 4 : -4)
+
+/obj/item/clothing/mask/animal/small/bear/make_cursed()
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4)
+
+/obj/item/clothing/mask/animal/small/bear/clear_curse()
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
 /obj/item/clothing/mask/animal/small/bear/cursed
 	cursed = TRUE
 
@@ -275,6 +301,18 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	animal_sounds = list("Bad juju, mon!", "Da Iwa be praised!", "Sum bad mojo, dat!", "You do da voodoo, mon!")
 	animal_sounds_alt = list("Eekum-bokum!", "Oomenacka!", "In mah head..... Zombi.... Zombi!")
 	animal_sounds_alt_probability = 5
+
+/obj/item/clothing/mask/animal/small/tribal/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, cursed ? 5 : -5)
+
+/obj/item/clothing/mask/animal/small/tribal/make_cursed()
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+
+/obj/item/clothing/mask/animal/small/tribal/clear_curse()
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/mask/animal/small/tribal/cursed //adminspawn only.
 	cursed = TRUE

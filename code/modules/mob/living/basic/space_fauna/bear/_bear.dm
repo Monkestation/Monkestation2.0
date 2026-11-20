@@ -34,8 +34,8 @@
 	faction = list(FACTION_RUSSIAN)
 
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = TCMB
-	bodytemp_heat_damage_limit = T0C + 1500
+	minimum_survivable_temperature = TCMB
+	maximum_survivable_temperature = T0C + 1500
 	ai_controller = /datum/ai_controller/basic_controller/bear
 	/// is the bear wearing a armor?
 	var/armored = FALSE
@@ -145,7 +145,7 @@
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free butter to the station!</b>")
 	var/default_name = "Terrygold"
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN, encode = FALSE)), cap_after_symbols = FALSE)
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name

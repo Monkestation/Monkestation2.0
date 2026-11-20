@@ -52,7 +52,7 @@
 			if(isnull(inserted_badge) || !(ACCESS_UNION_LEADER in inserted_badge.access))
 				computer.balloon_alert(user, "access not found!")
 				return TRUE
-			var/member_name = tgui_input_text(user, "What is the new member's name?", "New Union Personnel", max_length = MAX_NAME_LEN)
+			var/member_name = reject_bad_name(tgui_input_text(user, "What is the new member's name?", "New Union Personnel", max_length = MAX_NAME_LEN, encode = FALSE))
 			if(isnull(member_name) || !istext(member_name))
 				return TRUE
 			var/union_leader = tgui_input_list(user, "What is the new member's rank?", "New Union Personnel", list(UNION_LEADER, UNION_MEMBER))

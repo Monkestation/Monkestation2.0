@@ -12,7 +12,7 @@
 	Syndicate brand \"Extra-Bright Lantern™\". Enjoy."
 	cost = 2
 	item = /obj/item/flashlight/lantern/syndicate
-	restricted_species = list(SPECIES_MOTH, SPECIES_TUNDRA)
+	restricted_species = list(SPECIES_MOTH)
 	surplus = 15
 
 /datum/uplink_item/species_restricted/mothletgrenade
@@ -23,7 +23,7 @@
 			handling them, as they wont hesitate to pants you and the captain at the same time."
 	item = /obj/item/grenade/frag/mothlet
 	cost = 4
-	restricted_species = list(SPECIES_MOTH, SPECIES_TUNDRA)
+	restricted_species = list(SPECIES_MOTH)
 	surplus = 0
 
 /datum/uplink_item/species_restricted/monkey_barrel
@@ -39,6 +39,14 @@
 	cost = 12
 	item = /obj/vehicle/ridden/monkey_ball
 	restricted_species = list(SPECIES_MONKEY, SPECIES_SIMIAN)
+
+/datum/uplink_item/species_restricted/jungle_arts_scroll
+	name = "Banana-Stained Scroll"
+	desc = "A scroll passed down by the most feral of simians. It teaches the user Jungle Arts, a primal martial art of biting \
+	and tail strikes that only comes out while in combat mode."
+	cost = 8
+	item = /obj/item/book/granter/martial/jungle_arts
+	restricted_species = list(SPECIES_SIMIAN)
 
 /datum/uplink_item/species_restricted/tribal_claw_scroll
 	name = "Silver-Scale Scroll"

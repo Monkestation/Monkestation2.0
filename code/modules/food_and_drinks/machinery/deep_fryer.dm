@@ -57,6 +57,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	create_reagents(50, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
 	fry_loop = new(src, FALSE)
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/deepfryer])
+	AddElement(/datum/element/fish_safe_storage) //Prevents fryish and fritterish from dying inside the deepfryer.
 
 /obj/machinery/deepfryer/Destroy()
 	QDEL_NULL(fry_loop)

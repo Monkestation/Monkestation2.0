@@ -9,6 +9,7 @@ import {
   hotkeysAtom,
   initializeCommandBarAtom,
   type Target,
+  tabAutocompleteAtom,
   typepathsAtom,
   type Verb,
 } from './atoms';
@@ -65,8 +66,14 @@ export function handleClearCommandBar() {
   store.set(clearCommandBarAtom, (n) => n + 1);
 }
 
-export function handleHotkeyMode(payload: { hotkeys?: number }) {
+export function handleHotkeyMode(payload: {
+  hotkeys?: number;
+  tab_autocomplete?: boolean;
+}) {
   if (payload.hotkeys != null) {
     store.set(hotkeysAtom, !!payload.hotkeys);
+  }
+  if (payload.tab_autocomplete != null) {
+    store.set(tabAutocompleteAtom, payload.tab_autocomplete);
   }
 }

@@ -16,13 +16,13 @@
 
 /mob/living/basic/chicken/robot/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_HOSTILE_ATTACKINGTARGET, PROC_REF(emp_burst))
+	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(emp_burst))
 
-/mob/living/basic/chicken/robot/Destroy()
-	. = ..()
-	UnregisterSignal(src, COMSIG_HOSTILE_ATTACKINGTARGET)
-
-/mob/living/basic/chicken/robot/proc/emp_burst(target)
+/// EMPs whatever we just hit
+/mob/living/basic/chicken/robot/proc/emp_burst(datum/source, atom/target, success)
+	SIGNAL_HANDLER
+	if(!success)
+		return
 	var/turf/location = get_turf(target)
 	empulse(location, 1, 2, 0)
 

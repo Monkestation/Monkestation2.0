@@ -364,7 +364,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			for(var/datum/port/output/output as anything in port.connected_ports)
 				connected_to += REF(output)
 			component_data["input_ports"] += list(list(
-				"name" = port.name,
+				"name" = html_decode(port.name),
 				"type" = port.datatype,
 				"ref" = REF(port), // The ref is the identifier to work out what it is connected to
 				"connected_to" = connected_to,
@@ -375,7 +375,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		component_data["output_ports"] = list()
 		for(var/datum/port/output/port as anything in component.output_ports)
 			component_data["output_ports"] += list(list(
-				"name" = port.name,
+				"name" = html_decode(port.name),
 				"type" = port.datatype,
 				"ref" = REF(port),
 				"color" = port.color,
@@ -401,7 +401,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			variable_data["is_list"] = TRUE
 		.["variables"] += list(variable_data)
 
-	.["display_name"] = display_name
+	.["display_name"] = html_decode(display_name)
 
 	var/obj/item/circuit_component/examined
 	if(examined_component)

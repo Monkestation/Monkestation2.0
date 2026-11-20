@@ -19,7 +19,7 @@ Prismatic extracts:
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/prismatic/grey
-	colour = "grey"
+	slime_type = /datum/slime_type/grey
 	desc = "It's constantly wet with a pungent-smelling, clear chemical."
 
 /obj/item/slimecross/prismatic/grey/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -32,87 +32,87 @@ Prismatic extracts:
 
 /obj/item/slimecross/prismatic/orange
 	paintcolor = "#FFA500"
-	colour = "orange"
+	slime_type = /datum/slime_type/orange
 
 /obj/item/slimecross/prismatic/purple
 	paintcolor = "#B19CD9"
-	colour = "purple"
+	slime_type = /datum/slime_type/purple
 
 /obj/item/slimecross/prismatic/blue
 	paintcolor = "#ADD8E6"
-	colour = "blue"
+	slime_type = /datum/slime_type/blue
 
 /obj/item/slimecross/prismatic/metal
 	paintcolor = "#7E7E7E"
-	colour = "metal"
+	slime_type = /datum/slime_type/metal
 
 /obj/item/slimecross/prismatic/yellow
 	paintcolor = "#FFFF00"
-	colour = "yellow"
+	slime_type = /datum/slime_type/yellow
 
 /obj/item/slimecross/prismatic/darkpurple
 	paintcolor = "#551A8B"
-	colour = "dark purple"
+	slime_type = /datum/slime_type/darkpurple
 
 /obj/item/slimecross/prismatic/darkblue
 	paintcolor = "#0000FF"
-	colour = "dark blue"
+	slime_type = /datum/slime_type/darkblue
 
 /obj/item/slimecross/prismatic/silver
 	paintcolor = "#D3D3D3"
-	colour = "silver"
+	slime_type = /datum/slime_type/silver
 
 /obj/item/slimecross/prismatic/bluespace
 	paintcolor = "#32CD32"
-	colour = "bluespace"
+	slime_type = /datum/slime_type/bluespace
 
 /obj/item/slimecross/prismatic/sepia
 	paintcolor = "#704214"
-	colour = "sepia"
+	slime_type = /datum/slime_type/sepia
 
 /obj/item/slimecross/prismatic/cerulean
 	paintcolor = "#2956B2"
-	colour = "cerulean"
+	slime_type = /datum/slime_type/cerulean
 
 /obj/item/slimecross/prismatic/pyrite
 	paintcolor = "#FAFAD2"
-	colour = "pyrite"
+	slime_type = /datum/slime_type/pyrite
 
 /obj/item/slimecross/prismatic/red
 	paintcolor = "#FF0000"
-	colour = "red"
+	slime_type = /datum/slime_type/red
 
 /obj/item/slimecross/prismatic/green
 	paintcolor = "#00FF00"
-	colour = "green"
+	slime_type = /datum/slime_type/green
 
 /obj/item/slimecross/prismatic/pink
 	paintcolor = "#FF69B4"
-	colour = "pink"
+	slime_type = /datum/slime_type/pink
 
 /obj/item/slimecross/prismatic/gold
 	paintcolor = "#FFD700"
-	colour = "gold"
+	slime_type = /datum/slime_type/gold
 
 /obj/item/slimecross/prismatic/oil
 	paintcolor = "#505050"
-	colour = "oil"
+	slime_type = /datum/slime_type/oil
 
 /obj/item/slimecross/prismatic/black
 	paintcolor = "#000000"
-	colour = "black"
+	slime_type = /datum/slime_type/black
 
 /obj/item/slimecross/prismatic/lightpink
 	paintcolor = "#FFB6C1"
-	colour = "light pink"
+	slime_type = /datum/slime_type/lightpink
 
 /obj/item/slimecross/prismatic/adamantine
 	paintcolor = "#008B8B"
-	colour = "adamantine"
+	slime_type = /datum/slime_type/adamantine
 
 /obj/item/slimecross/prismatic/rainbow
 	paintcolor = "#FFFFFF"
-	colour = "rainbow"
+	slime_type = /datum/slime_type/rainbow
 
 /obj/item/slimecross/prismatic/rainbow/attack_self(mob/user)
 	var/newcolor = tgui_color_picker(user, "Choose the slime color:", "Color change", paintcolor)

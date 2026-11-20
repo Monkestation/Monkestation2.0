@@ -143,7 +143,7 @@
 		shield_appearance.alpha = (current_charges/max_charges)*255
 	if(ishuman(wearer))
 		var/mob/living/carbon/human/human_wearer = wearer
-		human_wearer.apply_height_filters(shield_appearance)
+		human_wearer.apply_height(shield_appearance, ENTIRE_BODY)
 	overlays += shield_appearance
 
 /**

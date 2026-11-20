@@ -13,11 +13,10 @@
 	setup_human_dna()
 
 	create_carbon_reagents()
+	physiology = new() // before the species, so species and organ modifiers can apply on spawn
 	set_species(dna.species.type)
 
 	prepare_huds() //Prevents a nasty runtime on human init
-
-	physiology = new()
 
 	. = ..()
 
@@ -104,11 +103,6 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
-		var/slot = text2num(href_list["item"])
-		if(check_obscured_slots(TRUE) & slot)
-			to_chat(usr, span_warning("You can't reach that! Something is covering it."))
-			return
 
 	if(href_list["see_id"])
 		var/mob/viewer = usr
@@ -529,7 +523,7 @@
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_THREE)
-		for(var/obj/item/hand in held_items)
+		for(var/obj/item/hand as anything in get_held_items())
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
 				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
@@ -616,8 +610,7 @@
  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
  */
 /mob/living/carbon/human/proc/wash_hands(clean_types)
-	var/obscured = check_obscured_slots()
-	if(obscured & ITEM_SLOT_GLOVES)
+	if(covered_slots & HIDEGLOVES)
 		return FALSE
 
 	if(gloves)
@@ -637,13 +630,10 @@
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
-	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
-		update_worn_glasses()
+	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		. = TRUE
 
-	var/obscured = check_obscured_slots()
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
-		update_worn_mask()
+	if(wear_mask && !(covered_slots & HIDEMASK) && wear_mask.wash(clean_types))
 		. = TRUE
 
 /**
@@ -651,28 +641,11 @@
  */
 /mob/living/carbon/human/wash(clean_types)
 	. = ..()
-
-	// Wash equipped stuff that cannot be covered
-	if(wear_suit?.wash(clean_types))
-		update_worn_oversuit()
-		. = TRUE
-
-	if(belt?.wash(clean_types))
-		update_worn_belt()
-		. = TRUE
-
-	// Check and wash stuff that can be covered
-	var/obscured = check_obscured_slots()
-
-	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && w_uniform.wash(clean_types))
-		update_worn_undersuit()
-		. = TRUE
-
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
 	// Wash hands if exposed
-	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(obscured & ITEM_SLOT_GLOVES))
+	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(covered_slots & HIDEGLOVES))
 		blood_in_hands = 0
 		update_worn_gloves()
 		. = TRUE
@@ -747,6 +720,11 @@
 		for(var/datum/mutation/existing_mutation in dna.mutations)
 			if(existing_mutation.quality != POSITIVE)
 				dna.remove_mutation(existing_mutation.name, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
+
+	if(heal_flags & HEAL_TEMP)
+		set_coretemperature(get_body_temp_normal(apply_change = FALSE))
+		heat_exposure_stacks = 0
+
 	return ..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1, knockdown = FALSE)
@@ -1036,6 +1014,16 @@
 			eye_color = eye_color_left_overrides[override_priority]
 	return eye_color
 
+///Proc used to make monkey roles able to function like crew, but not be able to shift into humans easily.
+/mob/living/carbon/human/proc/crewlike_monkify()
+	if(!ismonkey(src))
+		set_species(/datum/species/monkey)
+	// Can't make them human or nonclever. At least not with the easy and boring way out.
+	dna.add_mutation(/datum/mutation/clever, MUTATION_SOURCE_CREW_MONKEY)
+	dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_CREW_MONKEY)
+
+	ADD_TRAIT(src, TRAIT_BADDNA, SPECIES_TRAIT)
+
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey
 
@@ -1170,6 +1158,35 @@
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
 
+#define COLOR_AMP_DARKER 0.33
+
+/mob/living/carbon/human/species/cerulean
+	race = /datum/species/human/cerulean
+
+/mob/living/carbon/human/species/cerulean/set_species(datum/species/mrace, icon_update, pref_load)
+	. = ..()
+	dna.features["frills"] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.external_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.regenerate_organs(src, excluded_zones = (GLOB.all_body_zones - BODY_ZONE_HEAD))
+
+/mob/living/carbon/human/species/cerulean/abyss/set_species(datum/species/mrace, icon_update, pref_load)
+	. = ..()
+	dna.features["fish_tail_color"] = sanitize_hexcolor(rgb(
+		min(255, hex2num(copytext(copytext(dna.features["fish_tail_color"], 2), 1, 3)) * COLOR_AMP_DARKER),
+		min(255, hex2num(copytext(copytext(dna.features["fish_tail_color"], 2), 3, 5)) * COLOR_AMP_DARKER),
+		min(255, hex2num(copytext(copytext(dna.features["fish_tail_color"], 2), 5, 7)) * COLOR_AMP_DARKER),
+	))
+	dna.features["horns"] = /datum/sprite_accessory/horns/angler::name
+	dna.species.mutantlungs = /obj/item/organ/internal/lungs/fish/amphibious
+	dna.species.external_organs = list(
+		/obj/item/organ/external/tail/fish/cerulean/abyss = /datum/sprite_accessory/tails/fish/cerulean::name,
+		/obj/item/organ/external/horns = /datum/sprite_accessory/horns/angler::name,
+		/obj/item/organ/external/frills = /datum/sprite_accessory/frills/aquatic::name,
+	)
+	dna.species.regenerate_organs(src, excluded_zones = GLOB.limb_zones)
+
+#undef COLOR_AMP_DARKER
+
 /mob/living/carbon/human/species/moth
 	race = /datum/species/moth
 
@@ -1193,6 +1210,19 @@
 
 /mob/living/carbon/human/species/skeleton/fragile
 	race = /datum/species/skeleton/fragile
+
+/mob/living/carbon/human/species/skeleton/cerulean/set_species(datum/species/mrace, icon_update, pref_load)
+	. = ..()
+	for(var/zone in GLOB.leg_zones)
+		dna.species.bodypart_overrides -= zone
+	dna.features["fish_tail_color"] = "#fee5ca"
+	dna.features["fish_tail"] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
+	dna.features["frills"] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.external_organs[/obj/item/organ/external/tail/fish/cerulean/skeletal] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
+	dna.species.external_organs[/obj/item/organ/external/frills] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.regenerate_organs(src)
+	if(has_gravity() && !buckled)
+		set_resting(TRUE, silent = TRUE, instant = TRUE)
 
 /mob/living/carbon/human/species/snail
 	race = /datum/species/snail

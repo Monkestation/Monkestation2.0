@@ -18,8 +18,8 @@
 	turns_per_move = 5
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	bodytemp_cold_damage_limit = 200
-	bodytemp_heat_damage_limit = 400
+	minbodytemp = 200
+	maxbodytemp = 400
 	unsuitable_atmos_damage = 0.5
 	animal_species = /mob/living/simple_animal/pet/cat
 	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/internal/ears/cat = 1, /obj/item/organ/external/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
@@ -56,8 +56,8 @@
 	turns_per_move = 5
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	bodytemp_cold_damage_limit = 200
-	bodytemp_heat_damage_limit = 400
+	minbodytemp = 200
+	maxbodytemp = 400
 	unsuitable_atmos_damage = 0.5
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten = 1)

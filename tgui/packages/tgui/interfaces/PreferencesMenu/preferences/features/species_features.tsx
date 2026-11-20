@@ -1,8 +1,10 @@
 import {
+  CheckboxInput,
   type Feature,
   type FeatureChoiced,
   FeatureColorInput,
   FeatureDropdownInput,
+  type FeatureToggle,
   type FeatureValueProps,
   StandardizedPalette,
 } from './base';
@@ -261,6 +263,16 @@ export const feature_lizard_tail: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
+export const feature_shadekin_tail: FeatureChoiced = {
+  name: 'Tail',
+  component: FeatureDropdownInput,
+};
+
+export const feature_shadekin_ears: FeatureChoiced = {
+  name: 'Protruding Ears',
+  component: FeatureDropdownInput,
+};
+
 export const feature_mcolor: Feature<string> = {
   name: 'Mutant color',
   component: FeatureColorInput,
@@ -268,6 +280,18 @@ export const feature_mcolor: Feature<string> = {
 
 export const feature_mcolor_secondary: Feature<string> = {
   name: 'Mutant Secondary color',
+  component: FeatureColorInput,
+};
+
+export const wing_color: Feature<string> = {
+  name: 'Wing Color',
+  small_supplemental: true,
+  component: FeatureColorInput,
+};
+
+export const antennae_color: Feature<string> = {
+  name: 'Antennae Color',
+  small_supplemental: true,
   component: FeatureColorInput,
 };
 
@@ -289,4 +313,14 @@ export const feature_vampire_status: Feature<string> = {
 export const heterochromatic: Feature<string> = {
   name: 'Heterochromatic (Right Eye) color',
   component: FeatureColorInput,
+};
+
+export const feature_fish_tail_color: Feature<string> = {
+  name: 'Fish tail color',
+  component: FeatureColorInput,
+};
+
+export const feature_cerulean_frills: FeatureToggle = {
+  name: 'Fish frills',
+  component: CheckboxInput,
 };

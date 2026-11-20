@@ -2,6 +2,7 @@
 #define AUGGED_LIMB_EMP_BURN_DAMAGE 2
 
 /obj/item/bodypart
+	abstract_type = /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
 	force = 3
@@ -36,8 +37,10 @@
 	 * Set to BIO_STANDARD_UNJOINTED because most species have both flesh bone and blood in their limbs.
 	 */
 	var/biological_state = BIO_STANDARD_UNJOINTED
-	///A bitfield of bodytypes for clothing, surgery, and misc information
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	///A bitfield of bodytypes for surgery, and misc information
+	var/bodytype = BODYTYPE_ORGANIC
+	///A bitfield of bodyshapes for clothing and other sprite information
+	var/bodyshape = BODYSHAPE_HUMANOID
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
@@ -170,6 +173,8 @@
 	var/list/obj/item/organ/external/external_organs = list()
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
+	///A list of all bodypart textures to apply
+	var/list/bodypart_textures
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
@@ -211,13 +216,15 @@
 	///this is our color palette we pull colors from
 	var/datum/color_palette/palette
 	var/palette_key
+	///Icons used instead of icon_static for the limb styles of TRAIT_GREYSCALE_TOGGLE, limb style -> icon
+	var/list/style_icons
 
 	///limb flags for the specific limb
 	var/limb_flags
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
 	/// A potential texturing overlay to put on the limb
-	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
+	var/datum/bodypart_texture/texture_bodypart_overlay
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -246,7 +253,7 @@
 
 	if(texture_bodypart_overlay)
 		texture_bodypart_overlay = new texture_bodypart_overlay()
-		add_bodypart_overlay(texture_bodypart_overlay)
+		add_bodypart_texture(texture_bodypart_overlay, update = FALSE)
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
@@ -381,23 +388,22 @@
 		check_list += span_notice("\t There is some <a href='byond://?src=[REF(examiner)];gauze_limb=[REF(src)]'>[current_gauze.name]</a> wrapped around your [name].")
 
 /// Gets overlays to apply to the mob when damaged.
-/obj/item/bodypart/proc/get_bodypart_damage_state()
+/obj/item/bodypart/proc/get_bodypart_damage_state(damage_icon)
 	if(!dmg_overlay_type)
 		return
 
 	var/list/overlays
 	if(brutestate)
 		// divided into two overlays: one that gets colored and one that doesn't.
-		var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
+		var/mutable_appearance/brute_blood_overlay = mutable_appearance(damage_icon, "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
 		brute_blood_overlay.color = get_color_from_blood_list(blood_dna_info)
-		var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
-		if(brute_damage_overlay)
-			brute_blood_overlay.overlays += brute_damage_overlay
 		LAZYADD(overlays, brute_blood_overlay)
+		var/mutable_appearance/brute_damage_overlay = mutable_appearance(damage_icon, "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
+		LAZYADD(overlays, brute_damage_overlay)
 
 	if(burnstate)
 		var/mutable_appearance/burn_overlay = mutable_appearance(
-			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon = damage_icon,
 			icon_state = "[dmg_overlay_type]_[body_zone]_0[burnstate]",
 			layer = -DAMAGE_LAYER,
 		)
@@ -891,6 +897,10 @@
 	refresh_bleed_rate()
 	return old_owner
 
+/// Called on every bodypart once [/mob/living/carbon/proc/create_bodyparts] has made the whole body, which doesn't go through try_attach_limb()
+/obj/item/bodypart/proc/on_body_created(mob/living/carbon/new_owner)
+	return
+
 /obj/item/bodypart/proc/on_removal()
 	if(!length(bodypart_traits))
 		return
@@ -975,6 +985,8 @@
 /obj/item/bodypart/proc/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATED, dropping_limb, is_creating)
+
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
@@ -1005,10 +1017,13 @@
 	var/mob/living/carbon/human/human_owner = owner
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 	if (HAS_TRAIT(human_owner, TRAIT_GREYSCALE_TOGGLE))
-		if (human_owner.greyscale_limbs)
-			should_draw_greyscale = TRUE
-		else
-			should_draw_greyscale = FALSE
+		should_draw_greyscale = (human_owner.limb_style == LIMB_STYLE_MUTANT_COLORS)
+		var/style_icon = style_icons?[human_owner.limb_style]
+		if(style_icon)
+			icon_static = style_icon
+		else if(get_drawn_limb_style())
+			// back to normal from another style
+			icon_static = initial(icon_static)
 	if(HAS_TRAIT(human_owner, TRAIT_USES_SKINTONES))
 		skin_tone = human_owner.skin_tone
 	else if(HAS_TRAIT(human_owner, TRAIT_MUTANT_COLORS))
@@ -1033,6 +1048,13 @@
 
 	recolor_external_organs()
 	return TRUE
+
+/// Returns the limb style from style_icons this limb is drawn with right now, or null if it uses its normal icon
+/obj/item/bodypart/proc/get_drawn_limb_style()
+	for(var/style in style_icons)
+		if(icon_static == style_icons[style])
+			return style
+	return null
 
 /// Updates draw_color from the highest priority color override, or our species/skin tone color
 /obj/item/bodypart/proc/update_draw_color()
@@ -1073,7 +1095,7 @@
 
 	cut_overlays()
 	var/list/standing = get_limb_icon(dropped = TRUE)
-	if(!standing.len)
+	if(!length(standing))
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
 	for(var/image/img as anything in standing)
@@ -1119,9 +1141,10 @@
 				var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 				if(brute_damage_overlay)
 					brute_blood_overlay.overlays += brute_damage_overlay
-				. += brute_blood_overlay
+				.[brute_blood_overlay] = NONE
 			if(burnstate)
-				. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
+				var/image/burn_damage_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
+				.[burn_damage_overlay] = NONE
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
@@ -1130,13 +1153,20 @@
 	if(is_invisible)
 		limb.icon = icon_invisible
 		limb.icon_state = "invisible_[body_zone]"
-		. += limb
-		return .
+		.[limb] = NONE
+		return assoc_to_keys(.)
 
 	// This is the MEAT of limb icon code
 	limb.icon = icon_greyscale
 	if(!should_draw_greyscale || !icon_greyscale)
 		limb.icon = icon_static
+
+	var/icon_squashed = FALSE
+	if(!dropped && !is_husked && owner)
+		var/squashed_icon = owner.get_squashed_icon(limb.icon)
+		if(squashed_icon)
+			limb.icon = squashed_icon
+			icon_squashed = TRUE
 
 	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
 		limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
@@ -1145,11 +1175,11 @@
 
 	icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
 
-	. += limb
+	.[limb] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
 	if(aux_zone) //Hand shit
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
-		. += aux
+		.[aux] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
 	update_draw_color()
 
@@ -1172,54 +1202,76 @@
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
-			. += limb_em_block
+			.[limb_em_block] = LIMB_OVERLAY_META
 
 			if(aux_zone)
 				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
 				aux_em_block.dir = image_dir
-				. += aux_em_block
+				.[aux_em_block] = LIMB_OVERLAY_META
 		if(is_emissive)
 			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
 			limb_em.dir = image_dir
-			. += limb_em
+			.[limb_em] = LIMB_OVERLAY_META
 
 			if(aux_zone)
 				var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
 				aux_em.dir = image_dir
-				. += aux_em
+				.[aux_em] = LIMB_OVERLAY_META
 	//EMISSIVE CODE END
 
-		//No need to handle leg layering if dropped, we only face south anyways
-	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
-	//Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
-		var/obj/item/bodypart/leg/leg_source = src
-		for(var/image/limb_image in .)
-			//remove the old, unmasked image
-			. -= limb_image
-			//add two masked images based on the old one
-			. += leg_source.generate_masked_leg(limb_image, image_dir)
+	// No need to handle leg layering if dropped, we only face south anyways
+	if(!dropped)
+		// Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
+		for(var/generated_overlay, generated_overlay_flags in .)
+			var/list/masked_generated_overlays = handle_masking(generated_overlay, image_dir)
+			if(!length(masked_generated_overlays))
+				continue
+			// Remove the old, unmasked image
+			. -= generated_overlay
+			// Add in the new, masked images (with the same flags)
+			for(var/masked_image in masked_generated_overlays)
+				.[masked_image] = generated_overlay_flags
+
+	var/has_height = !dropped && !isnull(owner)
+	// Apply height to the overlays we generated so far
+	// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
+	if(has_height && !icon_squashed)
+		for(var/image/generated_overlay in .)
+			// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
+			// it's more important to keep it consistent for things like getflaticon
+			owner.apply_height(generated_overlay, ENTIRE_BODY)
 
 	// And finally put bodypart_overlays on if not husked
 	if(!is_husked)
 		//Draw external organs like horns and frills
+		// Height is applied again in here so we can specify where the overlay is set (ie offset_location)
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-			if(!dropped && !overlay.can_draw_on_bodypart(owner)) //if you want different checks for dropped bodyparts, you can insert it here
+			if(!overlay.can_draw_on_bodypart(src, owner))
 				continue
-			//Some externals have multiple layers for background, foreground and between
-			for(var/external_layer in overlay.all_layers)
-				if(overlay.layers & external_layer)
-					. += overlay.get_overlay(external_layer, src)
-					if(overlay.get_emissive_overlay(external_layer, src))
-						. += overlay.get_emissive_overlay(external_layer, src)
-					if(overlay.get_secondary_overlay(external_layer, src))
-						. += overlay.get_secondary_overlay(external_layer, src)
-					if(overlay.get_extended_overlay(external_layer, src))
-						for(var/mutable_appearance/item as anything in overlay.get_extended_overlay(external_layer, src))
-							. += item
-			for(var/datum/layer in .)
-				overlay.modify_bodypart_appearance(layer)
+			for(var/actual_overlay, actual_overlay_flags in overlay.get_all_overlays(src))
+				if(has_height)
+					owner.apply_height(actual_overlay, overlay.offset_location)
+				.[actual_overlay] = actual_overlay_flags
 
-	return .
+		// Then texture everything at once, including bodypart overlays
+		for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
+			if(!texture.can_texture_bodypart(src))
+				continue
+			for(var/generated_overlay, generated_overlay_flags in .)
+				if(!(generated_overlay_flags & LIMB_OVERLAY_TEXTURED))
+					continue
+
+				texture.modify_bodypart_appearance(generated_overlay, generated_overlay_flags)
+
+#ifndef UNIT_TESTS
+	if(PERFORM_ALL_TESTS(focus_only/bodypart_overlay_flags))
+		for(var/generated_overlay, generated_overlay_flags in .)
+			var/image/generated_overlay_real = generated_overlay
+			if(PLANE_TO_TRUE(generated_overlay_real.plane) == EMISSIVE_PLANE && !(generated_overlay_flags & LIMB_OVERLAY_META))
+				stack_trace("Emissive overlay without meta tag (icon state: [generated_overlay_real.icon_state])")
+#endif
+
+	return assoc_to_keys(.)
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/icon/husk_icon = new(thing_to_husk.icon)
@@ -1241,6 +1293,50 @@
 /obj/item/bodypart/proc/remove_bodypart_overlay(datum/bodypart_overlay/overlay)
 	bodypart_overlays -= overlay
 	overlay.removed_from_limb(src)
+
+/**
+ * Adds a bodypart texture to the limb
+ *
+ * * texture: The texture to add. Either an instance of a bodypart texture or a typepath of a bodypart texture.
+ * If you pass a typepath, the proc will avoid creating duplicates.
+ * * update: Whether to call update procs after adding the texture.
+ * Set this to FALSE if you are adding multiple textures at once.
+ */
+/obj/item/bodypart/proc/add_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		if(locate(texture) in bodypart_textures)
+			return
+		texture = new texture()
+
+	LAZYADD(bodypart_textures, texture)
+	if(!update)
+		return
+	if(isnull(owner))
+		update_icon_dropped()
+	else
+		owner.update_body_parts()
+
+/**
+ * Removes a bodypart texture from the limb
+ *
+ * * texture: The texture to remove. Either an instance of a bodypart texture or a typepath of a bodypart texture.
+ * If you pass a typepath, the first texture of that typepath found will be removed.
+ * * update: Whether to call update procs after removing the texture.
+ * Set this to FALSE if you are removing multiple textures at once.
+ */
+/obj/item/bodypart/proc/remove_bodypart_texture(datum/bodypart_texture/texture, update = TRUE)
+	if(ispath(texture, /datum/bodypart_texture))
+		texture = locate(texture) in bodypart_textures
+		if(isnull(texture))
+			return
+
+	LAZYREMOVE(bodypart_textures, texture)
+	if(!update)
+		return
+	if(isnull(owner))
+		update_icon_dropped()
+	else
+		owner.update_body_parts()
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -1482,6 +1578,22 @@
 
 /obj/item/bodypart/head/get_soon_dismember_message()
 	return ", threatening to split it open" // we don't sever, we cranial fissure when "dismembered" // we also don't dismember i think
+
+/// Add a bodyshape to the bodypart, then synchronize with the owner if necessary
+/obj/item/bodypart/proc/add_bodyshape(new_shape)
+	if(bodyshape & new_shape)
+		return
+
+	bodyshape |= new_shape
+	owner?.synchronize_bodyshapes()
+
+/// Remove a bodyshape from the bodypart, then synchronize with the owner if necessary
+/obj/item/bodypart/proc/remove_bodyshape(old_shape)
+	if(!(bodyshape & old_shape))
+		return
+
+	bodyshape &= ~old_shape
+	owner?.synchronize_bodyshapes()
 
 /obj/item/bodypart/proc/return_compoostion_precent(mob/living/carbon/checker)
 	var/matching_ids = 0

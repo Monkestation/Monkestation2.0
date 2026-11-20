@@ -29,7 +29,7 @@ Charged extracts:
 	return
 
 /obj/item/slimecross/charged/grey
-	colour = "grey"
+	slime_type = /datum/slime_type/grey
 	effect_desc = "Produces a slime reviver potion, which revives dead slimes."
 
 /obj/item/slimecross/charged/grey/do_effect(mob/user)
@@ -38,7 +38,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/orange
-	colour = "orange"
+	slime_type = /datum/slime_type/orange
 	effect_desc = "Instantly makes a large burst of flame for a moment."
 
 /obj/item/slimecross/charged/orange/do_effect(mob/user)
@@ -49,7 +49,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/purple
-	colour = "purple"
+	slime_type = /datum/slime_type/purple
 	effect_desc = "Creates a packet of omnizine."
 
 /obj/item/slimecross/charged/purple/do_effect(mob/user)
@@ -58,7 +58,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/blue
-	colour = "blue"
+	slime_type = /datum/slime_type/blue
 	effect_desc = "Creates a potion that neuters the mutation chance of a slime, which passes on to new generations."
 
 /obj/item/slimecross/charged/blue/do_effect(mob/user)
@@ -67,7 +67,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/metal
-	colour = "metal"
+	slime_type = /datum/slime_type/metal
 	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
@@ -77,7 +77,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/yellow
-	colour = "yellow"
+	slime_type = /datum/slime_type/yellow
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
@@ -86,7 +86,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/darkpurple
-	colour = "dark purple"
+	slime_type = /datum/slime_type/darkpurple
 	effect_desc = "Creates several sheets of plasma."
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
@@ -95,7 +95,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/darkblue
-	colour = "dark blue"
+	slime_type = /datum/slime_type/darkblue
 	effect_desc = "Produces a pressure proofing potion."
 
 /obj/item/slimecross/charged/darkblue/do_effect(mob/user)
@@ -104,7 +104,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/silver
-	colour = "silver"
+	slime_type = /datum/slime_type/silver
 	effect_desc = "Creates a slime cake and some drinks."
 
 /obj/item/slimecross/charged/silver/do_effect(mob/user)
@@ -116,7 +116,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/bluespace
-	colour = "bluespace"
+	slime_type = /datum/slime_type/bluespace
 	effect_desc = "Makes a bluespace polycrystal."
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
@@ -125,7 +125,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/sepia
-	colour = "sepia"
+	slime_type = /datum/slime_type/sepia
 	effect_desc = "Creates a camera obscura."
 
 /obj/item/slimecross/charged/sepia/do_effect(mob/user)
@@ -134,7 +134,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/cerulean
-	colour = "cerulean"
+	slime_type = /datum/slime_type/cerulean
 	effect_desc = "Creates an extract enhancer, giving whatever it's used on five more uses."
 
 /obj/item/slimecross/charged/cerulean/do_effect(mob/user)
@@ -143,7 +143,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/pyrite
-	colour = "pyrite"
+	slime_type = /datum/slime_type/pyrite
 	effect_desc = "Creates bananium. Oh no."
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
@@ -152,7 +152,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/red
-	colour = "red"
+	slime_type = /datum/slime_type/red
 	effect_desc = "Produces a lavaproofing potion"
 
 /obj/item/slimecross/charged/red/do_effect(mob/user)
@@ -161,7 +161,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/green
-	colour = "green"
+	slime_type = /datum/slime_type/green
 	effect_desc = "Lets you choose what slime species you want to be."
 
 /obj/item/slimecross/charged/green/do_effect(mob/user)
@@ -183,7 +183,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/pink
-	colour = "pink"
+	slime_type = /datum/slime_type/pink
 	effect_desc = "Produces a... lovepotion..."
 
 /obj/item/slimecross/charged/pink/do_effect(mob/user)
@@ -192,7 +192,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/gold
-	colour = "gold"
+	slime_type = /datum/slime_type/gold
 	effect_desc = "Slowly spawns 10 hostile monsters."
 	var/max_spawn = 10
 	var/spawned = 0
@@ -219,7 +219,7 @@ Charged extracts:
 	return ..()
 
 /obj/item/slimecross/charged/oil
-	colour = "oil"
+	slime_type = /datum/slime_type/oil
 	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
@@ -231,7 +231,7 @@ Charged extracts:
 	qdel(src)
 
 /obj/item/slimecross/charged/black
-	colour = "black"
+	slime_type = /datum/slime_type/black
 	effect_desc = "Randomizes the user's species."
 
 /obj/item/slimecross/charged/black/do_effect(mob/user)
@@ -252,7 +252,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/lightpink
-	colour = "light pink"
+	slime_type = /datum/slime_type/lightpink
 	effect_desc = "Produces a pacification potion, which works on monsters and humanoids."
 
 /obj/item/slimecross/charged/lightpink/do_effect(mob/user)
@@ -261,7 +261,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/adamantine
-	colour = "adamantine"
+	slime_type = /datum/slime_type/adamantine
 	effect_desc = "Creates a completed golem shell."
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
@@ -270,12 +270,11 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/rainbow
-	colour = "rainbow"
+	slime_type = /datum/slime_type/rainbow
 	effect_desc = "Produces three living slimes of random colors."
 
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
-		var/mob/living/basic/slime/S = new(get_turf(user))
-		S.start_mutating(TRUE)
+		new /mob/living/basic/slime(get_turf(user), pick(subtypesof(/datum/slime_type)))
 	return ..()

@@ -45,6 +45,14 @@
 /datum/job/yellowclown/special_config_check()
 	return CONFIG_GET(flag/spooktober_enabled)
 
+// no map has yellow clown landmarks, so share the regular clown's
+/datum/job/yellowclown/get_default_roundstart_spawn_point(chosen_title)
+	. = ..()
+	if(.)
+		return
+	var/datum/job/clown/clown = SSjob.GetJobType(/datum/job/clown)
+	return clown?.get_default_roundstart_spawn_point()
+
 /datum/job/yellowclown/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
 	if(!ishuman(spawned))

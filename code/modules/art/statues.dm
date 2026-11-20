@@ -18,8 +18,10 @@
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
+	/// Set to true to prevent it from being carved out of a block
+	var/uncarveable = FALSE
 	/// Abstract root type
-	var/abstract_type = /obj/structure/statue
+	abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize(mapload)
 	. = ..()
@@ -247,7 +249,7 @@
 	custom_materials = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
 	impressiveness = 100
-	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
+	uncarveable = TRUE
 
 ///////////Goliath//////////////////////////////////////////////////
 /obj/structure/statue/goliath
@@ -265,7 +267,7 @@
 	icon_state = "shrimp"
 	max_integrity = 542149 // vaguely leet for SHRIMP. vaguely. barely.
 	impressiveness = 100
-	abstract_type = /obj/structure/statue/shrimp //This one is uncarvable
+	uncarveable = TRUE
 
 ///////////Other Stuff//////////////////////////////////////////////
 /obj/item/chisel
@@ -410,19 +412,22 @@ Moving interrupts
 	stop_sculpting()
 
 /obj/item/chisel/proc/show_generic_statues_prompt(mob/living/user)
+	var/obj/structure/carving_block/block = prepared_block
 	var/list/choices = list()
-	for(var/statue_path in prepared_block.get_possible_statues())
+	for(var/statue_path in block.get_possible_statues())
 		var/obj/structure/statue/abstract_statue = statue_path
 		choices[statue_path] = image(icon = initial(abstract_statue.icon), icon_state = initial(abstract_statue.icon_state))
-	if(!choices.len)
+	if(!length(choices))
 		user.balloon_alert(user, "no abstract statues for material!")
+		return
 
-	var/choice = show_radial_menu(user, prepared_block, choices, require_near = TRUE)
-	if(choice)
-		prepared_block.current_preset_type = choice
-		var/image/chosen_looks = choices[choice]
-		prepared_block.current_target = chosen_looks.appearance
-		user.balloon_alert(user, "abstract statue selected")
+	var/choice = show_radial_menu(user, block, choices, require_near = TRUE)
+	if(!choice || prepared_block != block)
+		return
+	block.current_preset_type = choice
+	var/image/chosen_looks = choices[choice]
+	block.current_target = chosen_looks.appearance
+	user.balloon_alert(user, "abstract statue selected")
 
 /obj/structure/carving_block
 	name = "block"
@@ -544,7 +549,7 @@ Moving interrupts
 	. = list()
 	for(var/statue_type in subtypesof(/obj/structure/statue) - /obj/structure/statue/custom)
 		var/obj/structure/statue/S = new statue_type()
-		if(!S.icon_state || S.abstract_type == S.type || !S.custom_materials)
+		if(!S.icon_state || S.abstract_type == S.type || S.uncarveable || !S.custom_materials)
 			continue
 		.[S.type] = S.custom_materials
 		qdel(S)

@@ -14,7 +14,8 @@
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -46,7 +47,8 @@
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -78,7 +80,8 @@
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -110,7 +113,8 @@
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -141,7 +145,8 @@
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -251,7 +256,8 @@
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -301,24 +307,31 @@
 			. += "It has two eye sockets occupied by flashes."
 		. += span_notice("You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.")
 
-/obj/item/bodypart/head/robot/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = weapon
+/obj/item/bodypart/head/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stock_parts/manipulator))
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return ITEM_INTERACT_BLOCKING
+		new /mob/living/basic/spiderbot(get_turf(loc))
+		qdel(tool)
+		qdel(src)
+		to_chat(user, span_notice("You install some manipulators and modify the head, creating a functional spider-bot!"))
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/assembly/flash/handheld))
+		var/obj/item/assembly/flash/handheld/flash = tool
 		if(flash1 && flash2)
 			to_chat(user, span_warning("You have already inserted the eyes!"))
-			return
-		else if(flash.burnt_out)
+			return ITEM_INTERACT_BLOCKING
+		if(flash.burnt_out)
 			to_chat(user, span_warning("You can't use a broken flash!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(flash, src))
+			return ITEM_INTERACT_BLOCKING
+		if(flash1)
+			flash2 = flash
 		else
-			if(!user.transferItemToLoc(flash, src))
-				return
-			if(flash1)
-				flash2 = flash
-			else
-				flash1 = flash
-			to_chat(user, span_notice("You insert the flash into the eye socket."))
-			return
+			flash1 = flash
+		to_chat(user, span_notice("You insert the flash into the eye socket."))
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/prytool)

@@ -142,3 +142,6 @@
 #define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"
 	/// Cancels update_appearance call in case you are somehow forced to call it manually to prevent dupe calls
 	#define COMPONENT_CANCEL_COLOR_APPEARANCE_UPDATE (1<<0)
+
+/// Called on [/atom/SpinAnimation()] : (speed, loops, segments, angle)
+#define COMSIG_ATOM_SPIN_ANIMATION "atom_spin_animation"

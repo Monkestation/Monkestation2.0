@@ -195,6 +195,7 @@
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
 	data["progression_points"] = uplink_handler.progression_points
+	data["joined_population"] = length(GLOB.alive_player_list)
 	data["current_expected_progression"] = SStraitor.current_global_progression
 	data["maximum_active_objectives"] = uplink_handler.maximum_active_objectives
 	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
@@ -252,6 +253,7 @@
 			"restricted_roles" = item.restricted_roles,
 			"restricted_species" = item.restricted_species,
 			"progression_minimum" = 0,
+			"population_minimum" = item.population_minimum,
 			"ref" = REF(item),
 		))
 
@@ -321,7 +323,7 @@
 			if (uplink_handler.telecrystals <= 0)
 				return
 			var/desired_amount = tgui_input_number(ui.user, "How many raw telecrystals to buy?", "Buy Raw TC", default = uplink_handler.telecrystals, max_value = uplink_handler.telecrystals)
-			if(!desired_amount || desired_amount < 1)
+			if(!desired_amount || desired_amount < 1 || isnan(desired_amount) || !isnum(desired_amount))
 				return
 			uplink_handler.purchase_raw_tc(ui.user, desired_amount, parent)
 		if("lock")

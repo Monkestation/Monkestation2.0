@@ -19,15 +19,14 @@
 	draw_color = "#[random_color()]"
 	imprint_on_next_insertion = FALSE
 
-/datum/bodypart_overlay/mutant/get_extended_overlay(layer, obj/item/bodypart/limb)
-	layer = bitflag_to_layer(layer)
+/datum/bodypart_overlay/mutant/get_extended_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	var/passed_color = sprite_datum.color_src ? draw_color : null
-	var/mob/living/carbon/human/owner = limb.owner
+	var/mob/living/carbon/human/owner = limb?.owner
 	if(!owner)
 		return
 	var/datum/species/owner_species = owner.dna.species
 
-	return owner_species.return_accessory_layer(-layer, sprite_datum, owner, passed_color)
+	return owner_species.return_accessory_layer(-layer_real, sprite_datum, owner, passed_color)
 
 
 ///Grab a random sprite
@@ -50,7 +49,7 @@
 	return sprite_datum.icon_state
 
 ///Get the image we need to draw on the person. Called from get_overlay() which is called from _bodyparts.dm. Limb can be null
-/datum/bodypart_overlay/mutant/get_image_inner(image_layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/get_image_inner(obj/item/bodypart/limb, layer_index, layer_real)
 	if(!sprite_datum)
 		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
 
@@ -62,11 +61,11 @@
 	icon_state_builder += sprite_datum.gender_specific ? gender : "m" //Male is default because sprite accessories are so ancient they predate the concept of not hardcoding gender
 	icon_state_builder += "[feature_key]inner"
 	icon_state_builder += get_base_icon_state()
-	icon_state_builder += mutant_bodyparts_layertext(image_layer)
+	icon_state_builder += layer_index
 
 	var/finished_icon_state = icon_state_builder.Join("_")
 
-	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = image_layer)
+	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = layer_real)
 
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
@@ -113,7 +112,7 @@
 	else
 		switch(color_source)
 			if(ORGAN_COLOR_OVERRIDE)
-				draw_color = override_color(ownerlimb.draw_color)
+				draw_color = override_color(ownerlimb)
 			if(ORGAN_COLOR_INHERIT)
 				draw_color = ownerlimb.draw_color
 			if(ORGAN_COLOR_HAIR)
@@ -122,10 +121,12 @@
 				var/mob/living/carbon/human/human_owner = ownerlimb.owner
 				var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as ownerlimb
 				//head hair color takes priority, owner hair color is a backup if we lack a head or something
-				if(my_head)
-					draw_color = my_head.hair_color
-				else
+				if(!my_head)
 					draw_color = human_owner.hair_color
+				else if(my_head.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR))
+					draw_color = my_head.fixed_hair_color || my_head.hair_color
+				else //inherit mutant color of the bodypart if the owner doesn't have hair.
+					draw_color = ownerlimb.draw_color
 			if(ORGAN_COLOR_ANIME)
 				if(!ishuman(ownerlimb.owner))
 					return

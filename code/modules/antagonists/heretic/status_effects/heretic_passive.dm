@@ -285,6 +285,8 @@
 	var/mob/living/carbon/human/fat_human = owner
 	fat_human.on_fat() // Make sure to update the movespeed modifier in case we gain the trait while already fat
 	var/obj/item/organ/internal/tongue/tongue = fat_human.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
 	tongue.liked_foodtypes = ALL
 	tongue.disliked_foodtypes = NONE
 	tongue.toxic_foodtypes = NONE
@@ -503,9 +505,7 @@
 
 	if(source.is_touching_rust())
 		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
-		owner.add_homeostasis_level(id, owner.standard_body_temperature, 5 KELVIN)
 	else
-		owner.remove_homeostasis_level(id)
 		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /**
@@ -539,6 +539,8 @@
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
+	// Slowly regulates your body temp
+	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature) / 5)
 	for(var/datum/reagent/reagent as anything in source.reagents?.reagent_list)
 		source.reagents.remove_reagent(reagent.type, delta_time)
 

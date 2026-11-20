@@ -83,15 +83,12 @@
 	var/fail_title = ""
 	var/fail_reason = ""
 	// Replace infusing_into with a [/datum/infuser_entry]
-	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
-		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
-			continue
-		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
-			if(entry.tier > max_tier_allowed)
-				fail_title = "Overcomplexity"
-				fail_reason = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
-			infusing_into = entry
-			break
+	var/datum/infuser_entry/entry = infusing_from.get_infusion_entry()
+	if(entry)
+		if(entry.tier > max_tier_allowed)
+			fail_title = "Overcomplexity"
+			fail_reason = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
+		infusing_into = entry
 	if(!infusing_into)
 		//no valid recipe, so you get a fly mutation
 		if(!fail_reason)
@@ -182,9 +179,9 @@
 /obj/machinery/dna_infuser/proc/pick_organ(mob/living/carbon/human/target)
 	if(!infusing_into)
 		return FALSE
-	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
+	var/list/obj/item/organ/potential_new_organs = infusing_into.get_output_organs(target, infusing_from)
 	// Remove organ typepaths from the list if they're incompatible with target.
-	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
+	for(var/obj/item/organ/new_organ as anything in potential_new_organs.Copy())
 		var/obj/item/organ/old_organ = target.get_organ_slot(initial(new_organ.slot))
 		if(old_organ)
 			if((old_organ.type != new_organ) && (!IS_ROBOTIC_ORGAN(old_organ) || IS_ORGAN_UNREMOVABLE(old_organ)))
@@ -304,7 +301,6 @@
 
 /// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
-	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
 		return FALSE
@@ -313,11 +309,8 @@
 		if(living_target.stat != DEAD)
 			balloon_alert(user, "only dead creatures!")
 			return FALSE
-	else if(food_comp)
-		if(!(food_comp.foodtypes & GORE))
-			balloon_alert(user, "only creatures!")
-			return FALSE
-	else
+	else if(!HAS_TRAIT(target, TRAIT_VALID_DNA_INFUSION))
+		balloon_alert(user, "only creatures!")
 		return FALSE
 	return TRUE
 

@@ -12,7 +12,7 @@
 	integrity_failure = 0
 	armor_type = /datum/armor/door_window
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = parent_type::flags_1 | ON_BORDER_1
 	opacity = FALSE
 	pass_flags_self = PASSGLASS | PASSDOORS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -227,7 +227,6 @@
 	sleep(1 SECONDS)
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	if(operating == 1) //emag again
 		operating = FALSE
@@ -270,7 +269,6 @@
 
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 	sleep(1 SECONDS)
 
 	operating = FALSE

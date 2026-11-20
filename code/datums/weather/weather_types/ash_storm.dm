@@ -57,41 +57,24 @@
 	GLOB.ash_storm_sounds += weak_sounds
 	return ..()
 
-/datum/weather/ash_storm/end()
-	GLOB.ash_storm_sounds -= weak_sounds
-	return ..()
-
 /datum/weather/ash_storm/can_weather_act(mob/living/mob_to_check)
 	. = ..()
 	if(!. || !ishuman(mob_to_check))
 		return
 	var/mob/living/carbon/human/human_to_check = mob_to_check
-	if(human_to_check.get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) == 1)
+	if(human_to_check.get_thermal_protection() >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 		return FALSE
 
 /datum/weather/ash_storm/weather_act(mob/living/victim)
 	victim.adjustFireLoss(4)
 
 /datum/weather/ash_storm/end()
-	. = ..()
+	GLOB.ash_storm_sounds -= weak_sounds
 	for(var/turf/open/misc/asteroid/basalt/basalt as anything in GLOB.dug_up_basalt)
 		if(!(basalt.loc in impacted_areas) || !(basalt.z in impacted_z_levels))
 			continue
 		basalt.refill_dug()
-
-///Refills the previously dug tile
-/turf/open/misc/asteroid/proc/refill_dug()
-	dug = FALSE
-	icon_state = base_icon_state
-	if(has_floor_variance && prob(floor_variance))
-		icon_state = "[base_icon_state][rand(0,12)]"
-	update_appearance()
-
-/turf/open/misc/asteroid/basalt/refill_dug()
-	. = ..()
-	GLOB.dug_up_basalt -= src
-	set_basalt_light(src)
-
+	return ..()
 
 //Emberfalls are the result of an ash storm passing by close to the playable area of lavaland. They have a 10% chance to trigger in place of an ash storm.
 /datum/weather/ash_storm/emberfall

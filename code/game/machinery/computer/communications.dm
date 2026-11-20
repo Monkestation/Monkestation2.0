@@ -305,6 +305,7 @@
 			SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
 			for(var/datum/round_event_control/shuttle_insurance/insurance_event in SSevents.control)
 				insurance_event.weight *= 20
+				insurance_event.calculated_weight = null
 			SSshuttle.unload_preview()
 			SSshuttle.existing_shuttle = SSshuttle.emergency
 			SSshuttle.action_load(shuttle, replace = TRUE)
@@ -358,7 +359,7 @@
 			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
 				return
 
-			var/message = trim(params["message"], MAX_MESSAGE_LEN)
+			var/message = trim(html_encode(params["message"]), MAX_MESSAGE_LEN)
 			if (!message)
 				return
 
@@ -372,13 +373,16 @@
 			if(soft_filter_result)
 				if(tgui_alert(user,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 					return
-				message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
+				message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
 				log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
 				GLOB.communications_controller.soft_filtering = TRUE
 
 			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			var/destination = params["destination"]
+			if (!(destination in CONFIG_GET(keyed_list/cross_server)) && destination != "all")
+				message_admins("[ADMIN_LOOKUPFLW(user)] has passed an invalid destination into comms console cross-sector message. Message: \"[message]\"")
+				return
 
 			user.log_message("is about to send the following message to [destination]: [message]", LOG_GAME)
 			to_chat(
@@ -387,7 +391,7 @@
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to send \
 					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
 					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
-					[html_encode(message)]" \
+					[message]" \
 				)
 			)
 
@@ -486,6 +490,8 @@
 				deadchat_broadcast(" enabled emergency maintenance access at [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
 		// Request codes for the Captain's Spare ID safe.
 		if("requestSafeCodes")
+			if(syndicate || !is_station_level(z))
+				return
 			if(SSjob.assigned_captain)
 				to_chat(user, span_warning("There is already an assigned Captain or Acting Captain on deck!"))
 				return
@@ -548,8 +554,8 @@
 	if(GLOB.communications_controller.soft_filtering)
 		payload["is_filtered"] = TRUE
 
-	send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
-	minor_announce(message, title = "Outgoing message to allied station")
+	send2otherserver(html_decode(station_name()), html_decode(message), "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
+	minor_announce(message, title = "Outgoing message to allied station", html_encode = FALSE)
 	user.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[user.real_name]", user, message_type = DEADCHAT_ANNOUNCEMENT)
@@ -567,7 +573,7 @@
 	var/has_connection = has_communication()
 	data["hasConnection"] = has_connection
 
-	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection)
+	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection && !syndicate && is_station_level(z))
 		data["canRequestSafeCode"] = TRUE
 		data["safeCodeDeliveryWait"] = 0
 	else
@@ -799,7 +805,7 @@
 	if(!GLOB.communications_controller.can_announce(user, is_ai))
 		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
 		return
-	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
+	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement", multiline = TRUE)
 	if(!input || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(user.try_speak(input))

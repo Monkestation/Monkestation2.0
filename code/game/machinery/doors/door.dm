@@ -14,7 +14,7 @@
 	max_integrity = 350
 	armor_type = /datum/armor/machinery_door
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1 | NAV_ALWAYS_CONDITIONAL_1
 	receive_ricochet_chance_mod = 0.8
 	damage_deflection = 10
 
@@ -89,7 +89,6 @@
 		set_bounds()
 		set_filler()
 		update_overlays()
-	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)
@@ -150,7 +149,6 @@
 		layer = initial(layer)
 
 /obj/machinery/door/Destroy()
-	update_freelook_sight()
 	if(elevator_mode)
 		GLOB.elevator_doors -= src
 	if(spark_system)
@@ -182,6 +180,9 @@
 
 	filler.density = density
 	filler.set_opacity(opacity)
+	var/turf/filler_turf = get_turf(filler)
+	if(filler_turf)
+		filler_turf.nav_dirty()
 
 /**
  * Checks which way the airlock is facing and adjusts the direction accordingly.
@@ -471,7 +472,6 @@
 	set_opacity(0)
 	operating = FALSE
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
 	SEND_SIGNAL(src, COMSIG_ATOM_DOOR_OPEN)
@@ -522,7 +522,6 @@
 		set_opacity(1)
 	operating = FALSE
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 
 	if(!can_crush)
 		return TRUE
@@ -577,10 +576,6 @@
 
 /obj/machinery/door/proc/hasPower()
 	return !(machine_stat & NOPOWER)
-
-/obj/machinery/door/proc/update_freelook_sight()
-	if(!glass && SScameras)
-		SScameras.update_visibility(src)
 
 /obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)

@@ -57,13 +57,12 @@
 
 	// note that these are fed into an exponent, so these are magnified
 	// monkestation edit: balance out TRAIT_EASILY_WOUNDED and TRAIT_HARDLY_WOUNDED
-	if(HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED))
-		if(!HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED))
-			damage *= 1.5
-	else if(HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED))
-		damage *= 0.85
-	else
-		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
+	var/considered_damage_cap = WOUND_MAX_CONSIDERED_DAMAGE
+	if(HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED) && !HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED))
+		considered_damage_cap *= 1.5
+	else if(HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED) && !HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED))
+		considered_damage_cap /= 2
+	damage = min(damage, considered_damage_cap)
 	// monkestation end
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))

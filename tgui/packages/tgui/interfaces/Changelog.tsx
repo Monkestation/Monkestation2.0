@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import dateformat from 'dateformat';
 import yaml from 'js-yaml';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Box,
   Button,
@@ -258,37 +258,45 @@ export const Changelog = (_props) => {
     act,
     data: { dates, testmerges },
   } = useBackend<ChangelogData>();
-  const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [data, setData] = useState('Loading changelog data...');
+  const requestedDate = useRef('');
+  const changesRef = useRef<HTMLDivElement>(null);
 
   const sortedDates = useMemo(() => dates.toSorted().toReversed(), [dates]);
   const dateChoices = useMemo(
     () => sortedDates.map((date) => dateformat(date, 'mmmm yyyy', true)),
     [sortedDates],
   );
+  const selectedDate = dateChoices[selectedIndex];
 
+  // the server can take ages to push the file over while a round is loading, so be patient
   const getData = (date: string, attemptNumber = 1) => {
-    const maxAttempts = 6;
+    const maxAttempts = 20;
 
+    if (requestedDate.current !== date) {
+      return;
+    }
     if (attemptNumber > maxAttempts) {
       return setData(`Failed to load data after ${maxAttempts} attempts`);
     }
 
-    act('get_month', { date });
+    fetchRetry(resolveAsset(`${date}.yml`), { cache: 'no-store' })
+      .then(async (response) => {
+        const result = await response.text();
+        // picked another month while this one was still loading
+        if (requestedDate.current !== date) {
+          return;
+        }
 
-    fetchRetry(resolveAsset(`${date}.yml`))
-      .then((changelogData) => changelogData.text())
-      .then((result) => {
-        const errorRegex = /^Cannot find/;
-
-        if (errorRegex.test(result)) {
-          const timeout = 50 + attemptNumber * 50;
-
-          setData(`Loading changelog data${'.'.repeat(attemptNumber + 3)}`);
-          setTimeout(() => {
-            getData(date, attemptNumber + 1);
-          }, timeout);
+        if (!response.ok || result.startsWith('Cannot find')) {
+          setData(
+            `Loading changelog data${'.'.repeat((attemptNumber % 3) + 1)}`,
+          );
+          setTimeout(
+            () => getData(date, attemptNumber + 1),
+            Math.min(attemptNumber * 250, 2000),
+          );
         } else {
           setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
         }
@@ -299,9 +307,18 @@ export const Changelog = (_props) => {
       });
   };
 
+  const selectMonth = (index: number) => {
+    const date = sortedDates[index];
+    requestedDate.current = date;
+    setData('Loading changelog data...');
+    setSelectedIndex(index);
+    changesRef.current?.scrollTo(0, 0);
+    act('get_month', { date });
+    getData(date);
+  };
+
   useEffect(() => {
-    setSelectedDate(dateChoices[0]);
-    getData(sortedDates[0]);
+    selectMonth(0);
   }, []);
 
   const dateDropdown = dateChoices.length > 0 && (
@@ -311,38 +328,14 @@ export const Changelog = (_props) => {
           className="Changelog__Button"
           disabled={selectedIndex === 0}
           icon={'chevron-left'}
-          onClick={() => {
-            const index = selectedIndex - 1;
-
-            setData('Loading changelog data...');
-            setSelectedIndex(index);
-            setSelectedDate(dateChoices[index]);
-            window.scrollTo(
-              0,
-              document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
-            );
-            return getData(sortedDates[index]);
-          }}
+          onClick={() => selectMonth(selectedIndex - 1)}
         />
       </Stack.Item>
       <Stack.Item>
         <Dropdown
           displayText={selectedDate}
           options={dateChoices}
-          onSelected={(value) => {
-            const index = dateChoices.indexOf(value);
-
-            setData('Loading changelog data...');
-            setSelectedIndex(index);
-            setSelectedDate(value);
-            window.scrollTo(
-              0,
-              document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
-            );
-            return getData(sortedDates[index]);
-          }}
+          onSelected={(value) => selectMonth(dateChoices.indexOf(value))}
           selected={selectedDate}
           width={'150px'}
         />
@@ -352,19 +345,7 @@ export const Changelog = (_props) => {
           className="Changelog__Button"
           disabled={selectedIndex === dateChoices.length - 1}
           icon={'chevron-right'}
-          onClick={() => {
-            const index = selectedIndex + 1;
-
-            setData('Loading changelog data...');
-            setSelectedIndex(index);
-            setSelectedDate(dateChoices[index]);
-            window.scrollTo(
-              0,
-              document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
-            );
-            return getData(sortedDates[index]);
-          }}
+          onClick={() => selectMonth(selectedIndex + 1)}
         />
       </Stack.Item>
     </Stack>
@@ -407,18 +388,22 @@ export const Changelog = (_props) => {
       width={testmerges.length > 0 ? 1000 : 675}
       height={650}
     >
-      <Window.Content scrollable>
-        <Header dropdown={dateDropdown} />
-        <Stack>
-          <Stack.Item grow>{changes}</Stack.Item>
+      <Window.Content>
+        <Stack fill>
+          <Stack.Item grow>
+            <div className="Changelog__Scroller" ref={changesRef}>
+              <Header dropdown={dateDropdown} />
+              {changes}
+              {typeof data === 'string' && <p>{data}</p>}
+              <Footer dropdown={dateDropdown} />
+            </div>
+          </Stack.Item>
           {testmerges.length > 0 && (
-            <Stack.Item width="50%">
+            <Stack.Item width="50%" overflowY="auto">
               <Testmerges />
             </Stack.Item>
           )}
         </Stack>
-        {typeof data === 'string' && <p>{data}</p>}
-        <Footer dropdown={dateDropdown} />
       </Window.Content>
     </Window>
   );

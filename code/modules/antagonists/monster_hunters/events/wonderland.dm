@@ -5,13 +5,14 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 	icon_state = "green"
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
-	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
+	area_flags = NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
-/datum/map_template/wonderland
-	name = "Wonderland"
-	mappath = "_maps/hunter_events/wonderland.dmm"
+/datum/lazy_template/wonderland
+	key = LAZY_TEMPLATE_KEY_WONDERLAND
+	map_dir = "_maps/hunter_events"
+	map_name = "wonderland"
 
 /obj/effect/mob_spawn/corpse/rabbit
 	mob_type = /mob/living/basic/rabbit

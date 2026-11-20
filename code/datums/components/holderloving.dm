@@ -50,8 +50,8 @@
 		COMSIG_ITEM_STORED,
 	))
 
-/datum/component/holderloving/PostTransfer()
-	if(!isitem(parent))
+/datum/component/holderloving/PostTransfer(datum/new_parent)
+	if(!isitem(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/holderloving/InheritComponent(datum/component/holderloving/friend, i_am_original, list/arguments)
