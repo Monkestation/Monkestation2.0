@@ -6,7 +6,7 @@
 //Have the liquid group handle the total reagents datum, and reactions too (apply fraction?)
 
 GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
-
+GLOBAL_VAR_INIT(liquid_pool_react, TRUE)
 /datum/liquid_group
 	///the generated color given to the group on creation for debugging
 	var/color
