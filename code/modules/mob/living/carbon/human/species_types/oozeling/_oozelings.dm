@@ -218,9 +218,9 @@
 		return NONE
 	if(HAS_TRAIT(slime, TRAIT_GODMODE)) // we're [title card]
 		return NONE
-	// thick clothing won't protect you if you just drink or inject tho
-	var/check_clothes = methods & ~(INGEST|INJECT)
-	if(!water_exposure(slime, check_clothes))
+	if(methods & (INGEST | INJECT))
+		return NONE
+	if(!water_exposure(slime))
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	return NONE
 
@@ -264,6 +264,7 @@
 	)
 	qdel(coin)
 
+/// Proc called when oozeling is exposed to water. check_clothes = FALSE to bypass clothing protection
 /datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
 	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
 		return FALSE

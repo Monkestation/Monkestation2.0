@@ -52,7 +52,11 @@
 		return owner
 
 	GLOB.dead_oozeling_cores -= src
-	set_organ_damage(0) // heals the brain fully
+	var/original_core_damage = damage
+	if(!nugget) // Non-nugget revivals are usually special.
+		set_organ_damage(0)
+	else if(damage > 180)
+		set_organ_damage(180) // Just so a new revival doesn't instantly die to brain damage.
 
 	if(istype(loc, /mob/living/basic/mining/legion))
 		var/mob/living/basic/mining/legion/legion = loc
@@ -131,6 +135,7 @@
 			if(istype(bodypart, /obj/item/bodypart/chest))
 				continue
 			bodypart.drop_limb() // Drop limb should delete the limb for oozelings unless someone changes it.
+		roll_organ_damage(new_body, original_core_damage)
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
 		//Make oozelings revive similar to other species.
@@ -154,6 +159,28 @@
 
 	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src, nugget)
 	return new_body
+
+/// Randomly damages chest organs based on the core's condition before revival.
+/obj/item/organ/internal/brain/slime/proc/roll_organ_damage(mob/living/carbon/human/new_body, original_core_damage)
+	if(original_core_damage <= 0)
+		return
+	var/damage_ratio = clamp(original_core_damage / maxHealth, 0, 1)
+	var/damage_chance = 90 * damage_ratio
+	var/min_damage_percent = round(5 + (45 * damage_ratio))
+	var/max_damage_percent = round(20 + (75 * damage_ratio))
+
+	for(var/obj/item/organ/internal/organ in new_body.organs)
+		if(organ == src || organ.zone != BODY_ZONE_CHEST)
+			continue
+		if(!prob(damage_chance))
+			continue
+
+		var/damage_percent = rand(min_damage_percent, max_damage_percent)
+		// Severely deteriorated cores can occasionally kill an organ.
+		if(original_core_damage > 160 && prob((original_core_damage - 160) / 4))
+			damage_percent = 100
+		var/organ_damage = round(organ.maxHealth * damage_percent / 100)
+		organ.apply_organ_damage(organ_damage)
 
 ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG)
 	VERB_ARG_TYPED(core, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj/item/organ/internal/brain/slime)
