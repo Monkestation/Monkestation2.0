@@ -259,23 +259,17 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	. += span_notice("The brain slot is [loaded_mmi ? "loaded with [loaded_mmi]" : "empty, it needs an MMI or positronic brain"].")
 	. += span_notice("<b>Alt-click</b> to remove whatever is loaded.")
 
-/obj/item/guardian_creator/tech/phantasmal/update_icon_state()
-	if(used)
-		icon_state = "holo_injector_spent"
-	else if(loaded_core && loaded_mmi)
-		icon_state = "holo_injector_ready"
-	else
-		icon_state = "holo_injector"
-	return ..()
-
 /obj/item/guardian_creator/tech/phantasmal/update_overlays()
 	. = ..()
-	if(used || (loaded_core && loaded_mmi))
+	if(used)
+		. += "holo_injector_spent"
 		return
 	if(loaded_mmi)
 		. += "holo_injector_brain"
 	if(loaded_core)
 		. += "holo_injector_core"
+	if(loaded_core && loaded_mmi)
+		. += "holo_injector_ready"
 
 /obj/item/guardian_creator/tech/phantasmal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(used || choosing)
@@ -288,6 +282,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 			return ITEM_INTERACT_BLOCKING
 		loaded_core = tool
 		balloon_alert(user, "core loaded")
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/mmi))
@@ -295,13 +290,14 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		if(loaded_mmi)
 			balloon_alert(user, "already has a brain!")
 			return ITEM_INTERACT_BLOCKING
-		if(!new_mmi.brainmob)
+		if(!new_mmi.brainmob?.key)
 			balloon_alert(user, "nobody inside!")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		loaded_mmi = new_mmi
 		balloon_alert(user, "brain loaded")
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	return NONE
@@ -316,6 +312,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	if(loaded_mmi)
 		user.put_in_hands(loaded_mmi)
 	balloon_alert(user, "unloaded")
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/guardian_creator/tech/phantasmal/attack_self(mob/living/user)

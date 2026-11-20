@@ -742,6 +742,8 @@
 	var/client/tracked_client
 	///Images of hidden mobs shown to the wearer. Assoc list of mob = image.
 	var/list/tracked_images = list()
+	///The appearance last copied into each image, so it is only redone when the mob actually changes. Assoc list of mob = appearance.
+	var/list/tracked_appearances = list()
 	///How far away from the wearer we look for hidden mobs.
 	var/tracking_range = 9
 
@@ -847,11 +849,21 @@
 
 /// Takes every image we showed off the client
 /obj/item/clothing/glasses/ghost_hunter/proc/clear_images()
-	if(tracked_client)
-		for(var/hidden_mob in tracked_images)
+	for(var/hidden_mob in tracked_images)
+		if(tracked_client)
 			tracked_client.images -= tracked_images[hidden_mob]
+		UnregisterSignal(hidden_mob, COMSIG_ATOM_DIR_CHANGE)
 	tracked_images.Cut()
+	tracked_appearances.Cut()
 	tracked_client = null
+
+/// Turns a shown image right away when its mob turns, instead of waiting for the next update
+/obj/item/clothing/glasses/ghost_hunter/proc/on_hidden_dir_change(atom/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
+	var/image/shown = tracked_images[source]
+	if(shown)
+		shown.dir = new_dir
 
 /// Mobs that are jaunting or cloaked are drawn on the wearer's screen at full strength
 /obj/item/clothing/glasses/ghost_hunter/process(seconds_per_tick)
@@ -870,16 +882,18 @@
 	for(var/obj/effect/dummy/phased_mob/jaunt in range(tracking_range, wearer))
 		if(ismob(jaunt.jaunter) && jaunt.jaunter != wearer)
 			hidden[jaunt.jaunter] = jaunt
-	// Cloaks fade the mob out with alpha, which seeing invisible doesn't cancel
+	// Cloaks fade the mob out with alpha, which seeing invisible doesn't cancel. That includes the wearer's own cloak
 	for(var/mob/living/cloaked in range(tracking_range, wearer))
-		if(cloaked != wearer && cloaked.alpha < 255)
+		if(cloaked.alpha < 255)
 			hidden[cloaked] = cloaked
 
 	for(var/hidden_mob in tracked_images.Copy())
 		if(hidden[hidden_mob])
 			continue
 		viewer.images -= tracked_images[hidden_mob]
+		UnregisterSignal(hidden_mob, COMSIG_ATOM_DIR_CHANGE)
 		tracked_images -= hidden_mob
+		tracked_appearances -= hidden_mob
 
 	for(var/mob/hidden_mob as anything in hidden)
 		var/atom/anchor = hidden[hidden_mob]
@@ -888,9 +902,19 @@
 			shown = image(loc = anchor)
 			tracked_images[hidden_mob] = shown
 			viewer.images += shown
-		shown.appearance = hidden_mob.appearance
+			RegisterSignal(hidden_mob, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_hidden_dir_change))
+		// Only moves when the mob hopped into a different jaunt holder, the image follows it by itself otherwise
+		if(shown.loc != anchor)
+			shown.loc = anchor
+		// Redoing the image every update restarts how it moves, so only do it when something changed
+		var/current_appearance = hidden_mob.appearance
+		if(tracked_appearances[hidden_mob] == current_appearance)
+			continue
+		tracked_appearances[hidden_mob] = current_appearance
+		shown.appearance = current_appearance
+		shown.override = TRUE
 		shown.alpha = 255
-		shown.loc = anchor
+		shown.dir = hidden_mob.dir
 
 /// Goggles but pre-installed with core.
 /obj/item/clothing/glasses/ghost_hunter/prebuilt/Initialize(mapload)
