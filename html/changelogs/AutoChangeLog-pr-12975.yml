@@ -1,0 +1,8 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Instead of just clicking rabbits, Monster Hunters must use their trick weapon to tear open rifts to wonderland across the station. This is very obvious, but others nearby will find themselves disoriented, do not worry about just being easily shoved."
+  - rscadd: "Opening a wonderland rift summons a small dimensional anomaly, alongside passive NPC rabbits around the station."
+  - rscadd: "If a monster target lingers near said rabbits for too long, the hunter will be alerted to their location, until they finally leave the gaze of the rabbits."
+  - rscadd: "Added a ton of cool animations and visual effects to Monster Hunter stuff."
+  - rscadd: "Added armor for monster hunters, the Queens' Huntsman set. It is dropped by the third rabbit. Sprites by BucketOKirbys."
