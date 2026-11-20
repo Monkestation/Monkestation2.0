@@ -151,6 +151,7 @@
 
 	playsound(source, 'sound/items/tools/drill_use.ogg', tool.get_clamped_volume(), TRUE, -1)
 	INVOKE_ASYNC(src, PROC_REF(uninstall_camera), source, user)
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * On Attackby
