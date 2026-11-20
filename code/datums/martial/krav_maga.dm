@@ -69,6 +69,7 @@
 	neckchop.Remove(owner)
 	legsweep.Remove(owner)
 	lungpunch.Remove(owner)
+	return ..()
 
 /datum/martial_art/krav_maga/proc/check_streak(mob/living/attacker, mob/living/defender)
 	switch(streak)

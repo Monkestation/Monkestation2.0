@@ -482,19 +482,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 			see += turf
 		pos.luminosity = lum
 
-	if(check_lower || check_higher)
-		// Haha datum var access KILL ME
-		for(var/turf/seen as anything in see)
-			if(check_lower)
-				var/turf/below = seen
-				// A transparent turf can be the bottom zlevel
-				while(istransparentturf(below) && (below = GET_TURF_BELOW(below)))
-					see += RANGE_TURFS(1, below)
-			if(check_higher)
-				var/turf/above = GET_TURF_ABOVE(seen)
-				while(above && istransparentturf(above))
-					see += RANGE_TURFS(1, above)
-					above = GET_TURF_ABOVE(above)
+	if(!check_lower && !check_higher)
+		return see
+
+	// everything in see is on our z, and check_lower/check_higher already proved it links down/up, so the first step skips the GET_TURF_* lookup
+	var/alist/holes = alist()
+	// Haha datum var access KILL ME
+	for(var/turf/seen as anything in see)
+		if(check_lower && istransparentturf(seen))
+			var/turf/below = get_step(seen, DOWN)
+			holes[below] = TRUE
+			// A transparent turf can be the bottom zlevel
+			while(istransparentturf(below) && (below = GET_TURF_BELOW(below)))
+				holes[below] = TRUE
+		if(check_higher)
+			var/turf/above = get_step(seen, UP)
+			while(above && istransparentturf(above))
+				holes[above] = TRUE
+				above = GET_TURF_ABOVE(above)
+
+	// one 3-tall strip per horizontal run of holes, a 3x3 per hole mostly overlaps its neighbors
+	for(var/turf/hole as anything in holes)
+		if(holes[get_step(hole, WEST)])
+			continue
+		var/turf/run_end = hole
+		var/turf/next = get_step(hole, EAST)
+		while(holes[next])
+			run_end = next
+			next = get_step(next, EAST)
+		see += block(hole.x - 1, hole.y - 1, hole.z, run_end.x + 1, hole.y + 1, hole.z)
 
 	return see
 

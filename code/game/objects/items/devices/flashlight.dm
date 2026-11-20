@@ -499,7 +499,8 @@
 /obj/item/flashlight/flare/proc/on_light_eater(atom/source, datum/light_eater)
 	SIGNAL_HANDLER
 	if(light_on)
-		new trash_type(loc)
+		if(trash_type)
+			new trash_type(loc)
 		qdel(src)
 	return COMPONENT_BLOCK_LIGHT_EATER
 
@@ -527,6 +528,14 @@
 
 	/// Pollutant type for scented candles
 	var/scented_type
+
+/obj/item/flashlight/flare/candle/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(src_location == over_location)
+		var/list/modifiers = params2list(params)
+		if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
+			var/x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), (ICON_SIZE_X/2))
+			var/y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), (ICON_SIZE_Y/2))
+			user.transfer_item_to_turf(src, src_location, x_offset, y_offset, silent = FALSE)
 
 /obj/item/flashlight/flare/candle/Initialize(mapload)
 	. = ..()
@@ -633,6 +642,25 @@
 	on = TRUE
 	randomize_fuel = FALSE
 	can_be_extinguished = FALSE
+
+/obj/item/flashlight/flare/candle/holo_candle
+	name = "red candle"
+	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \
+		humankind. The jewelry he kept for himself. Seems this one is actually a hologram though...."
+	heat = 0 //its a hologram
+	icon_state = "holo_candle1"
+	base_icon_state = "holo_candle"
+	anchored = TRUE
+	trash_type = null
+	fuel = INFINITY
+	on = TRUE
+	randomize_fuel = FALSE
+	can_be_extinguished = FALSE
+
+/obj/item/flashlight/flare/candle/holo_candle/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state][current_wax_level][on ? "_lit" : ""]"
+	inhand_icon_state = "[base_icon_state][on ? "_lit" : ""]"
 
 /obj/item/flashlight/flare/torch
 	name = "torch"

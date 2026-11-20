@@ -35,6 +35,8 @@
 
 /datum/nifsoft/soul_poem/New()
 	. = ..()
+	if(QDELETED(src))
+		return
 
 	if(!transmitted_name)
 		transmitted_name = linked_mob.name
