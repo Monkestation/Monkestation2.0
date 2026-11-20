@@ -274,11 +274,11 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!usr.client)
 		return FALSE
 	if(state != AHELP_ACTIVE)
-		to_chat(usr, span_notice("This ticket is not active!"))
+		to_chat(usr, span_notice("This ticket is not active!"), confidential = TRUE)
 		return
 	if(handling_admin_ckey)
 		if(handling_admin_ckey == usr.ckey)
-			to_chat(usr, span_notice("This ticket is already yours."))
+			to_chat(usr, span_notice("This ticket is already yours."), confidential = TRUE)
 			return FALSE
 		if(tgui_alert(usr, "This ticket has already been claimed by [handling_admin_ckey], are you sure you wish to continue?", "Confirm", list("Yes", "No")) != "Yes")
 			return FALSE
@@ -300,10 +300,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!usr.client)
 		return FALSE
 	if(state != AHELP_ACTIVE)
-		to_chat(usr, span_notice("This ticket is not active!"))
+		to_chat(usr, span_notice("This ticket is not active!"), confidential = TRUE)
 		return
 	if(!handling_admin_ckey)
-		to_chat(usr, span_notice("This ticket is not claimed."))
+		to_chat(usr, span_notice("This ticket is not claimed."), confidential = TRUE)
 		return
 	var/msg = "[usr.ckey]/([usr]) has unclaimed [TicketHref("ticket #[id]")]"
 	if(handling_admin_ckey != usr.ckey)
@@ -402,7 +402,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	if(urgent)
 		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
-		to_chat(initiator, span_boldwarning("Notified admins to prioritize your ticket"))
+		to_chat(initiator, span_boldwarning("Notified admins to prioritize your ticket"), confidential = TRUE)
 		var/datum/discord_embed/embed = format_embed_discord(message)
 		embed.content = extra_message
 		embed.footer = "This player requested an admin"
