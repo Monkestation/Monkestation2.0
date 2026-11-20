@@ -247,7 +247,7 @@
 					ae.forceMove(drop_location())
 
 			else if(IS_WRITING_UTENSIL(attacking_item))
-				var/t = tgui_input_text(user, "Enter the name for the door", "Windoor Renaming", created_name, MAX_NAME_LEN)
+				var/t = tgui_input_text(user, "Enter the name for the door", "Windoor Renaming", html_decode(created_name), MAX_NAME_LEN)
 				if(!t)
 					return
 				if(!in_range(src, usr) && loc != usr)

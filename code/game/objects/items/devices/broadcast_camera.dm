@@ -57,7 +57,7 @@
 
 /obj/item/broadcast_camera/attack_self_secondary(mob/user, modifiers)
 	. = ..()
-	broadcast_name = tgui_input_text(user = user, title = "Broadcast Name", message = "What will be the name of your broadcast?", default = "[broadcast_name]", max_length = MAX_CHARTER_LEN)
+	broadcast_name = tgui_input_text(user = user, title = "Broadcast Name", message = "What will be the name of your broadcast?", default = html_decode(broadcast_name), max_length = MAX_CHARTER_LEN)
 
 /obj/item/broadcast_camera/examine(mob/user)
 	. = ..()

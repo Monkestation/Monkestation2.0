@@ -481,7 +481,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/teleportnames = list()
 	for(var/obj/effect/rune/teleport/teleport_rune as anything in GLOB.teleport_runes)
 		if(teleport_rune != src && !is_away_level(teleport_rune.z))
-			potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
+			potential_runes[avoid_assoc_duplicate_keys(html_decode(teleport_rune.listkey), teleportnames)] = teleport_rune
 
 	if(!length(potential_runes))
 		to_chat(user, span_warning("There are no valid runes to teleport to!"))

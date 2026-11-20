@@ -340,7 +340,7 @@
 		if("setid")
 			var/new_id
 			if(pda)
-				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
+				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN, encode = FALSE)
 			else
 				new_id = params["value"]
 			if(new_id)
@@ -479,7 +479,7 @@
 	else
 		. += text("No Cell Inserted!")
 	if(load)
-		. += "Current Load: [get_load_name()]"
+		. += "Current Load: [html_decode(get_load_name())]"
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
