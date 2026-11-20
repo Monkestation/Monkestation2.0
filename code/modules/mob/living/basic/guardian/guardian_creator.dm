@@ -371,6 +371,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		to_chat(user, failure_message)
 		return
 	summoned_guardian.log_message("was piloted by the brain of [key_name_pilot] through a phantasmal injector.", LOG_GAME)
+	pilot.mind?.transfer_to(summoned_guardian)
 	// The core and the brain are used up, the occupant now lives in the guardian
 	QDEL_NULL(loaded_core)
 	QDEL_NULL(loaded_mmi)
