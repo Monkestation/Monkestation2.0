@@ -1,25 +1,21 @@
 GLOBAL_VAR(admin_approving_headshot)
-
 #define APPROVED_HEADSHOTS_FILE "data/approved_headshots.json"
+GLOBAL_LIST_INIT(approved_headshots, load_approved_headshots())
 
-/proc/get_approved_headshots()
-	var/static/list/approved_headshots
-	if(!approved_headshots)
-		approved_headshots = list()
-		if(fexists(APPROVED_HEADSHOTS_FILE))
-			var/raw_json = file2text(APPROVED_HEADSHOTS_FILE)
-			if(length(raw_json))
-				var/list/loaded = json_decode(raw_json)
-				if(islist(loaded))
-					approved_headshots = loaded
-	return approved_headshots
+/proc/load_approved_headshots()
+	. = list()
+	if(fexists(APPROVED_HEADSHOTS_FILE))
+		var/raw_json = file2text(APPROVED_HEADSHOTS_FILE)
+		if(length(raw_json))
+			var/list/loaded = json_decode(raw_json)
+			if(islist(loaded))
+				. = loaded
 
 /proc/cache_approved_headshot(url)
-	var/list/approved_headshots = get_approved_headshots()
-	if(approved_headshots[url])
+	if(GLOB.approved_headshots[url])
 		return
-	approved_headshots[url] = TRUE
-	rustg_file_write(json_encode(approved_headshots), APPROVED_HEADSHOTS_FILE)
+	GLOB.approved_headshots[url] = TRUE
+	rustg_file_write(json_encode(GLOB.approved_headshots), APPROVED_HEADSHOTS_FILE)
 
 /datum/preference/text/headshot
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
@@ -54,8 +50,7 @@ GLOBAL_VAR(admin_approving_headshot)
 		return FALSE
 
 	if(usr)
-		var/list/approved_headshots = get_approved_headshots()
-		if(approved_headshots[value] || GLOB.admin_approving_headshot == value)
+		if(GLOB.approved_headshots[value] || GLOB.admin_approving_headshot == value)
 			return TRUE
 
 		logger.Log(LOG_CATEGORY_HEADSHOT, "\[[time2text(world.realtime,"YYYY-MM-DD hh:mm:ss")]\] [key_name(usr)] submitted a new headshot for approval: [value]")
@@ -118,3 +113,5 @@ GLOBAL_VAR(admin_approving_headshot)
 	savefile_key = "see_headshots"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = TRUE
+
+#undef APPROVED_HEADSHOTS_FILE
