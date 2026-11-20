@@ -613,8 +613,8 @@ SUBSYSTEM_DEF(navmap)
 		if(index[fingerprint] == output_path)
 			index -= fingerprint
 	index[map_fingerprint] = output_path
-	rustg_file_write(output_text + "\n", output_path)
-	rustg_file_write(json_encode(sort_list(index)) + "\n", index_path)
+	aneri_file_write(output_path, output_text + "\n")
+	aneri_file_write(index_path, json_encode(sort_list(index)) + "\n")
 	log_world("Saved navmap to [output_path]")
 	#endif
 	return fexists(output_path)

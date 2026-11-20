@@ -34,10 +34,10 @@ SUBSYSTEM_DEF(cassettes)
 /// This does not check the SScassettes.cassettes cache, and you should not use this - this is only used to initialize SScassettes.cassettes
 /datum/controller/subsystem/cassettes/proc/load_cassette_from_json_raw(id) as /datum/cassette
 	var/cassette_file = CASSETTE_FILE(id)
-	if(!rustg_file_exists(cassette_file))
+	if(!aneri_file_exists(cassette_file))
 		return null
-	var/cassette_file_data = rustg_file_read(cassette_file)
-	if(!rustg_json_is_valid(cassette_file_data))
+	var/cassette_file_data = aneri_file_read(cassette_file)
+	if(!aneri_json_is_valid(cassette_file_data))
 		CRASH("Cassette file [cassette_file] had invalid JSON!")
 	var/list/cassette_json = json_decode(cassette_file_data)
 	var/datum/cassette/cassette_data = new
@@ -49,9 +49,9 @@ SUBSYSTEM_DEF(cassettes)
 /// This uses JSON files.
 /datum/controller/subsystem/cassettes/proc/load_all_cassettes_from_json()
 	. = FALSE
-	if(!rustg_file_exists(CASSETTE_ID_FILE)) // this just means there's no cassettes at all i guess? which is valid.
+	if(!aneri_file_exists(CASSETTE_ID_FILE)) // this just means there's no cassettes at all i guess? which is valid.
 		return TRUE
-	var/list/ids = json_decode(rustg_file_read(CASSETTE_ID_FILE))
+	var/list/ids = json_decode(aneri_file_read(CASSETTE_ID_FILE))
 	for(var/id in ids)
 		if(!ids)
 			continue
@@ -65,10 +65,10 @@ SUBSYSTEM_DEF(cassettes)
 /// Updates the ids.json file on-disk.
 /datum/controller/subsystem/cassettes/proc/save_ids_json()
 	var/list/ids = list()
-	if(rustg_file_exists(CASSETTE_ID_FILE))
+	if(aneri_file_exists(CASSETTE_ID_FILE))
 		// Verify that each cassette ID still exists and is still considered "approved" before adding them to the list.
-		for(var/id in json_decode(rustg_file_read(CASSETTE_ID_FILE)))
-			if(!rustg_file_exists(CASSETTE_FILE(id)))
+		for(var/id in json_decode(aneri_file_read(CASSETTE_ID_FILE)))
+			if(!aneri_file_exists(CASSETTE_FILE(id)))
 				continue
 			ids += id
 	for(var/id, value in cassettes)
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(cassettes)
 			ids -= id
 		else
 			ids |= id
-	rustg_file_write(json_encode(ids), CASSETTE_ID_FILE)
+	aneri_file_write(CASSETTE_ID_FILE, json_encode(ids))
 
 /// Returns all the cassettes that match the given arguments.
 /datum/controller/subsystem/cassettes/proc/filtered_cassettes(status, user_ckey, list/id_blacklist) as /list

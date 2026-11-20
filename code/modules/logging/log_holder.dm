@@ -119,7 +119,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN | R_DEBUG, FALSE, "View Round Logs", "View th
 		CRASH("Attempted to call init_logging twice!")
 
 	round_id = GLOB.round_id
-	logging_start_timestamp = rustg_unix_timestamp()
+	logging_start_timestamp = aneri_unix_timestamp()
 	log_categories = list()
 	disabled_categories = list()
 
@@ -204,41 +204,14 @@ ADMIN_VERB(log_viewer_new, R_ADMIN | R_DEBUG, FALSE, "View Round Logs", "View th
 
 	return category_tree
 
-/// Log entry header used to mark a file is being reset
-#define LOG_CATEGORY_RESET_FILE_MARKER "{\"LOG FILE RESET -- THIS IS AN ERROR\"}"
-#define LOG_CATEGORY_RESET_FILE_MARKER_READABLE "LOG FILE RESET -- THIS IS AN ERROR"
-/// Gets a recovery file for the given path. Caches the last known recovery path for each path.
-/datum/log_holder/proc/get_recovery_file_for(path)
-	var/static/cache
-	if(isnull(cache))
-		cache = list()
-
-	var/count = cache[path] || 0
-	while(fexists("[path].rec[count]"))
-		count++
-	cache[path] = count
-
-	return "[path].rec[count]"
-
 /// Sets up the given category's file and header.
 /datum/log_holder/proc/init_category_file(datum/log_category/category)
-	var/file_path = category.get_output_file(null)
-	if(fexists(file_path)) // already exists? implant a reset marker
-		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER, file_path)
-		fcopy(file_path, get_recovery_file_for(file_path))
-	rustg_file_write("[json_encode(category.category_header)]\n", file_path)
+	aneri_file_write(category.get_output_file(null), "[json_encode(category.category_header)]\n")
 
 	if(!human_readable_enabled)
 		return
 
-	file_path = category.get_output_file(null, "log")
-	if(fexists(file_path))
-		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
-		fcopy(file_path, get_recovery_file_for(file_path))
-	rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
-
-#undef LOG_CATEGORY_RESET_FILE_MARKER
-#undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
+	aneri_file_write(category.get_output_file(null, "log"), "\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n")
 
 /// Initializes the given log category and populates the list of contained categories based on the sub category list
 /datum/log_holder/proc/init_log_category(datum/log_category/category_type, list/datum/log_category/sub_categories)
@@ -277,7 +250,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN | R_DEBUG, FALSE, "View Round Logs", "View th
 	init_category_file(category_instance, category_header)
 
 /datum/log_holder/proc/human_readable_timestamp()
-	return rustg_formatted_timestamp("%Y-%m-%d %H:%M:%S%.3f")
+	return aneri_format_timestamp("%Y-%m-%d %H:%M:%S%.3f", null)
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.

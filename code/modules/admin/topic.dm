@@ -1402,19 +1402,18 @@
 		var/ckey = href_list["centcomlookup"]
 
 		// Make the request
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)]/[ckey]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete() || !usr)
+		var/datum/http_request/request = new("[CONFIG_GET(string/centcom_ban_db)]/[ckey]")
+		request.send()
+		UNTIL(!request.id || !usr)
 		if (!usr)
 			return
-		var/datum/http_response/response = request.into_response()
+		var/datum/http_response/response = request.response
 
 		var/list/bans
 
 		var/list/dat = list("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><body>")
 
-		if(response.errored)
+		if(response.error)
 			dat += "<br>Failed to connect to CentCom."
 		else if(response.status_code != 200)
 			dat += "<br>Failed to connect to CentCom. Status code: [response.status_code]"

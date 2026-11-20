@@ -433,13 +433,14 @@ Example config:
 		return
 
 	log_config("Loading config file word_filter.toml...")
-	var/list/result = rustg_raw_read_toml_file("[directory]/word_filter.toml")
-	if(!result["success"])
-		var/message = "The word filter is not configured correctly! [result["content"]]"
+	var/list/word_filter
+	try
+		word_filter = aneri_toml_decode_file("[directory]/word_filter.toml")
+	catch(var/exception/error)
+		var/message = "The word filter is not configured correctly! [error.name]"
 		log_config(message)
 		DelayedMessageAdmins(message)
 		return
-	var/list/word_filter = json_decode(result["content"])
 
 	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
 	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
@@ -547,9 +548,10 @@ Example config:
 		DelayedMessageAdmins(span_notice(message))
 		return
 
-	var/list/result = rustg_raw_read_toml_file(config_toml)
-	if(!result["success"])
-		message += "The job config (jobconfig.toml) is not configured correctly! [result["content"]]"
+	try
+		aneri_toml_decode_file(config_toml)
+	catch(var/exception/error)
+		message += "The job config (jobconfig.toml) is not configured correctly! [error.name]"
 		log_config(message)
 		DelayedMessageAdmins(span_notice(message))
 
@@ -563,12 +565,13 @@ Example config:
 		log_config("relays.toml does not exist.")
 		return
 
-	var/list/result = rustg_raw_read_toml_file(config_path)
-	if(!result["success"])
-		log_config("Notify Server Operators: The relay config (relays.toml) is not configured correctly! [result["content"]]")
+	var/list/content
+	try
+		content = aneri_toml_decode_file(config_path)
+	catch(var/exception/error)
+		log_config("Notify Server Operators: The relay config (relays.toml) is not configured correctly! [error.name]")
 		return
 
-	var/list/content = json_decode(result["content"])
 	if(!length(content))
 		return
 

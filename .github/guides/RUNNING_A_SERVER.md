@@ -38,10 +38,11 @@ byondkey = Rank
 
 where the admin rank must be properly capitalised.
 
-This codebase also depends on a native library called rust-g. A precompiled
-Windows DLL is included in this repository, but Linux users will need to build
-and install it themselves. Directions can be found at the [rust-g
-repo](https://github.com/tgstation/rust-g).
+This codebase also depends on two native libraries, rust-g and aneri. Precompiled
+Windows DLLs for both are included in this repository, but Linux users will need to
+build and install them themselves. Directions can be found at the [rust-g
+repo](https://github.com/tgstation/rust-g) and the [aneri
+repo](https://github.com/Absolucy/aneri).
 
 Finally, to start the server, run Dream Daemon and enter the path to your
 compiled tgstation.dmb file. Make sure to set the port to the one you
@@ -71,7 +72,7 @@ If you decide to go this route, here are /tg/ specific details on hosting with T
 - We have two directories which should be setup in the instance's `Configuration/GameStaticFiles` directory:
   - `config` should be where you place your production configuration. Overwrites the default contents of the repo's [config](../../config) directory.
   - `data` should be initially created as an empty directory. The game stores persistent data here.
-- You should incorporate our [custom build scripts for TGS4](../../tools/tgs4_scripts) in the instance's `Configuration/EventScripts` directory. These handle including TGUI in the build and setting up rust-g on Linux.
+- You should incorporate our [custom build scripts for TGS4](../../tools/tgs4_scripts) in the instance's `Configuration/EventScripts` directory. These handle including TGUI in the build and setting up rust-g and aneri on Linux.
 - Deployment security level must be set to `Trusted` or it will likely fail due to our native library usage.
 - We highly recommend using the BYOND version specified in [dependencies.sh](../../dependencies.sh) to avoid potential unrecorded issues.
 

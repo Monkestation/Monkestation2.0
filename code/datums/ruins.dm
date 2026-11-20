@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(ruin_config, load_ruin_config())
 	if(!fexists(RUIN_CONFIG_FILE))
 		log_config("No ruin config file found, using empty config.")
 		return
-	var/list/ruin_config = rustg_read_toml_file(RUIN_CONFIG_FILE)
+	var/list/ruin_config = aneri_toml_decode_file(RUIN_CONFIG_FILE)
 	if(!length(ruin_config))
 		log_config("ruin token config file is empty, using empty config.")
 		return

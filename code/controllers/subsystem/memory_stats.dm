@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(memory_stats)
 		can_fire = FALSE
 
 /datum/controller/subsystem/memory_stats/Initialize()
-	if(!rustg_file_exists(MEMORYSTATS_DLL_PATH))
+	if(!aneri_file_exists(MEMORYSTATS_DLL_PATH))
 		flags |= SS_NO_FIRE
 		return SS_INIT_NO_NEED
 	fire()
@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(memory_stats)
 	var/memory_summary = get_memory_stats()
 	if(memory_summary)
 		var/timestamp = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
-		rustg_file_write(memory_summary, "[GLOB.log_directory]/profiler/memstat-[timestamp].txt")
+		aneri_file_write("[GLOB.log_directory]/profiler/memstat-[timestamp].txt", memory_summary)
 
 /datum/controller/subsystem/memory_stats/proc/get_memory_stats()
 	var/result = trimtext(call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")())

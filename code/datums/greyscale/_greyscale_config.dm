@@ -112,13 +112,13 @@
 		var/changed = FALSE
 
 		json_config = file(string_json_config)
-		var/json_hash = rustg_hash_file("md5", string_json_config)
+		var/json_hash = aneri_hash_file("md5", string_json_config)
 		if(json_config_hash != json_hash)
 			json_config_hash = json_hash
 			changed = TRUE
 
 		icon_file = file(string_icon_file)
-		var/icon_hash = rustg_hash_file("md5", icon_file)
+		var/icon_hash = aneri_hash_file("md5", "[icon_file]")
 		if(icon_file_hash != icon_hash)
 			icon_file_hash = icon_hash
 			changed = TRUE
@@ -130,7 +130,7 @@
 		if(!changed)
 			return FALSE
 
-	raw_json_string = rustg_file_read(string_json_config)
+	raw_json_string = aneri_file_read(string_json_config)
 	var/list/raw = json_decode(raw_json_string)
 	ReadIconStateConfiguration(raw)
 

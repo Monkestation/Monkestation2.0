@@ -161,7 +161,7 @@ GAME_VERB_DESC(/client, trigger_token_event, "Trigger Token Event", "Opens a ui 
 	if(!fexists(ANTAG_TOKEN_CONFIG_FILE))
 		log_config("No antag token config file found, using default config.")
 		return default_config
-	var/list/token_config = rustg_read_toml_file(ANTAG_TOKEN_CONFIG_FILE)
+	var/list/token_config = aneri_toml_decode_file(ANTAG_TOKEN_CONFIG_FILE)
 	if(!length(token_config))
 		log_config("Antag token config file is empty, using default config.")
 		return default_config

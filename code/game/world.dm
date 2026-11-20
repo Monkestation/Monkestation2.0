@@ -125,6 +125,7 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
+	aneri_cleanup()
 	log_world("World loaded at [time_stamp()]!")
 
 	// From a really fucking old commit (91d7150)
@@ -202,7 +203,7 @@ GLOBAL_VAR(restart_counter)
 	data["tick_usage"] = world.tick_usage
 	data["tick_lag"] = world.tick_lag
 	data["time"] = world.time
-	data["timestamp"] = rustg_unix_timestamp()
+	data["timestamp"] = aneri_unix_timestamp()
 	return data
 
 /world/proc/SetupLogs()
@@ -227,10 +228,11 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
+	aneri_set_panic_output_folder(GLOB.log_directory)
 	logger.init_logging()
 
 	if(Tracy.trace_path)
-		rustg_file_write("[Tracy.trace_path]", "[GLOB.log_directory]/tracy.loc")
+		aneri_file_write("[GLOB.log_directory]/tracy.loc", "[Tracy.trace_path]")
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
@@ -291,7 +293,7 @@ GLOBAL_VAR(restart_counter)
 
 	var/log_directory = query_log_directory.item[1]
 	QDEL_NULL(query_log_directory)
-	if(!rustg_file_exists(log_directory))
+	if(!aneri_file_exists("[log_directory]"))
 		CRASH("Log directory '[log_directory]' for round ID [round_id] doesn't exist!")
 
 	return log_directory
@@ -410,6 +412,7 @@ GLOBAL_VAR(restart_counter)
 /world/Del()
 	QDEL_NULL(Tracy)
 	QDEL_NULL(Debugger)
+	aneri_cleanup()
 	. = ..()
 
 /world/proc/update_status()

@@ -895,7 +895,7 @@ ADMIN_VERB(start_tracy, R_DEBUG, FALSE, "Run Tracy Now", "Start running the byon
 	message_admins(span_adminnotice("[key_name_admin(user)] started the byond-tracy profiler."))
 	log_admin("[key_name(user)] started the byond-tracy profiler.")
 	if(Tracy.trace_path)
-		rustg_file_write("[Tracy.trace_path]", "[GLOB.log_directory]/tracy.loc")
+		aneri_file_write("[GLOB.log_directory]/tracy.loc", "[Tracy.trace_path]")
 
 ADMIN_VERB_CUSTOM_EXIST_CHECK(start_tracy)
 	return CONFIG_GET(flag/allow_tracy_start) && fexists(TRACY_DLL_PATH)
@@ -904,7 +904,7 @@ ADMIN_VERB(queue_tracy, R_DEBUG, FALSE, "Toggle Tracy Next Round", "Toggle runni
 	if(fexists(TRACY_ENABLE_PATH))
 		fdel(TRACY_ENABLE_PATH)
 	else
-		rustg_file_write("[user.ckey]", TRACY_ENABLE_PATH)
+		aneri_file_write(TRACY_ENABLE_PATH, "[user.ckey]")
 	message_admins(span_adminnotice("[key_name_admin(user)] [fexists(TRACY_ENABLE_PATH) ? "enabled" : "disabled"] the byond-tracy profiler for next round."))
 	log_admin("[key_name(user)] [fexists(TRACY_ENABLE_PATH) ? "enabled" : "disabled"] the byond-tracy profiler for next round.")
 

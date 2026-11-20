@@ -32,15 +32,14 @@
 		request_body["required_roleid"] = required_roleid
 
 	var/datum/http_request/request = new(
-		RUSTG_HTTP_METHOD_POST,
 		"[base_url]/lookupckey",
+		"POST",
 		json_encode(request_body),
 		default_headers,
 	)
-	request.begin_async()
-	UNTIL_OR_TIMEOUT(request.is_complete(), 5 SECONDS)
-	var/datum/http_response/response = request.into_response()
-	if (response.errored)
+	request.timeout = 5
+	var/datum/http_response/response = request.send().wait()
+	if (response.error)
 		stack_trace(response.body)
 		plexora_is_alive = FALSE
 		log_access("Plexora is down. Failed to poll ckey [ckey]")

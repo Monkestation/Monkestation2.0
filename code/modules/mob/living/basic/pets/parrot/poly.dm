@@ -171,7 +171,7 @@
 	var/formatted_data
 	formatted_data = json_encode(file_data, JSON_PRETTY_PRINT)
 
-	rustg_file_write(formatted_data, file_path)
+	aneri_file_write(file_path, formatted_data)
 	memory_saved = TRUE
 	return TRUE
 

@@ -21,7 +21,7 @@
 
 	// Build Glitchtip/Sentry event payload
 	var/list/event_data = list()
-	event_data["event_id"] = rustg_generate_uuid_v4()
+	event_data["event_id"] = aneri_uuid_v4()
 	event_data["timestamp"] = time_stamp_metric()
 	event_data["level"] = "error"
 	event_data["platform"] = world.system_type
@@ -231,10 +231,9 @@
 	// Glitchtip/Sentry auth header - According to docs this needs to be like this
 	var/auth_header = "Sentry sentry_version=7, sentry_client=byond-glitchtip/1.0.0, sentry_key=[key], sentry_timestamp=[time_stamp_metric()]"
 
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_POST, glitchtip_url, json_payload, list(
+	var/datum/http_request/request = new(glitchtip_url, "POST", json_payload, list(
 		"X-Sentry-Auth" = auth_header,
 		"Content-Type" = "application/json",
 		"User-Agent" = get_useragent("Glitchtip-Implementation")
 	))
-	request.fire_and_forget()
+	request.send_and_forget()
