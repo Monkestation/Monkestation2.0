@@ -26,6 +26,10 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 		req_access = null
 		req_one_access = list(ACCESS_AWAY_GENERAL)
 
+/obj/machinery/computer/ai_control_console/Destroy(force)
+	stop_download(silent = TRUE)
+	return ..()
+
 /obj/machinery/computer/ai_control_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/aicard))
 		if(intellicard)
@@ -245,6 +249,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 	if(!silent)
 		var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
 		to_chat(message_target, span_userdanger("Download stopped."))
+	downloading.download_sources -= src
 	downloading = null
 	user_downloading = null
 	download_progress = 0
@@ -339,6 +344,7 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 				return
 			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 			downloading = target
+			downloading.download_sources += src
 			var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
 			to_chat(message_target, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='byond://?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here [downloading.deployed_shell ? "while in your core " : ""]to finish download instantly</a>)"))
 			message_target.playsound_local(message_target, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)

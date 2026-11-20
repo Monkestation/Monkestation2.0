@@ -187,6 +187,38 @@
 	var/mob/living/silicon/ai/AI = usr
 	AI.drop_new_multicam()
 
+/atom/movable/screen/ai_download_alarm
+	icon = null
+	icon_state = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	maptext_width = 480
+	maptext_height = 64 //holds about... 4? 5? downloads? bigger issues if you get past this point.
+	maptext = ""
+	layer = SCREENTIP_LAYER
+	var/mob/living/silicon/ai/AI
+
+/atom/movable/screen/ai_download_alarm/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	AI = hud_owner?.mymob
+	if(!AI)
+		return INITIALIZE_HINT_QDEL //this is probably a bad idea ingame, but... hey if it works for unit tests? (does not know if itll work)
+	START_PROCESSING(SSobj, src) //SSobj sounds good. The things that download are also on the same subsystem.
+
+/atom/movable/screen/ai_download_alarm/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/atom/movable/screen/ai_download_alarm/process(seconds_per_tick)
+	var/message
+	if(!isvalidAIloc(AI.loc) || !length(AI.download_sources)) //Already carded? Nothing attacking? who cares dude
+		message = null
+	else
+		message = "<font color='[COLOR_SYNDIE_RED]'>-!-YOU ARE UNDER ATTACK-!-</font>"
+		for(var/obj/machinery/computer/ai_control_console/downloader in AI.download_sources)
+			message += "<br>[get_area(downloader)] - [downloader.download_progress]% downloaded"
+
+	maptext = MAPTEXT(message)
+
 
 /datum/hud/ai
 	ui_style = 'icons/hud/screen_ai.dmi'
@@ -288,3 +320,9 @@
 	using = new /atom/movable/screen/ai/add_multicam(null, src)
 	using.screen_loc = ui_ai_add_multicam
 	static_inventory += using
+
+//Download warnings
+	using = new /atom/movable/screen/ai_download_alarm(null, src)
+	using.screen_loc = ui_ai_download_alarm
+	static_inventory += using
+
