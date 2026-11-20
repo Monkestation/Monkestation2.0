@@ -34,7 +34,7 @@
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
-	if(master.orbiters == src)
+	if(master?.orbiters == src)
 		master.orbiters = null
 	for(var/i in orbiter_list)
 		end_orbit(i)

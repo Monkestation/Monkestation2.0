@@ -132,7 +132,7 @@
 	//add circuit board as the first component to the list of components
 	//required for part_replacer to locate it while exchanging parts so it does not early return in /obj/machinery/proc/exchange_parts
 	components += circuit
-	req_components = board.req_components.Copy()
+	req_components = LAZYCOPY(board.req_components)
 	update_namelist(board.specific_parts)
 	return TRUE
 

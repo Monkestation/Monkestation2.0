@@ -1,5 +1,5 @@
 /datum/config_entry/string/comms_key
-	protection = CONFIG_ENTRY_HIDDEN
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/string/comms_key/ValidateAndSet(str_val)
 	return str_val != "default_pwd" && length(str_val) > 6 && ..()

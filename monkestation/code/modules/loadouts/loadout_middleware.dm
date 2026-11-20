@@ -102,6 +102,10 @@
 		message_admins("LOADOUT SYSTEM: Possible exploit detected, [preferences.parent_ckey] has tried loading [interacted_item.item_path], but does not own that item.")
 		return null
 
+	if((interacted_item.admin_only || (interacted_item.mentor_only && !is_mentor(preferences.parent))) && !is_admin(preferences.parent))
+		message_admins("LOADOUT SYSTEM: Possible exploit detected, [preferences.parent_ckey] has tried loading [interacted_item.item_path], but this is staff only.")
+		return null
+
 	return interacted_item
 
 /datum/preference_middleware/loadout/proc/select_item(list/params, mob/user)

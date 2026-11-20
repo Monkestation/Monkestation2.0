@@ -48,6 +48,7 @@
 	)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/layer_adapter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -69,6 +70,7 @@
 	)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/color_adapter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -90,6 +92,7 @@
 	)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/he_pipe/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -111,6 +114,7 @@
 	)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/he_junction/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -133,6 +137,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/pressure_pump/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -154,6 +159,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/manual_valve/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -176,6 +182,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/vent/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -198,6 +205,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/scrubber/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -220,6 +228,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/filter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -242,6 +251,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/mixer/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -263,6 +273,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/connector/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -284,6 +295,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/passive_vent/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -306,6 +318,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/injector/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -327,6 +340,7 @@
 	)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/he_exchanger/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -372,6 +386,7 @@
 		/obj/item/analyzer = 1,
 	)
 	category = CAT_ATMOSPHERIC
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/airlock_pump/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
