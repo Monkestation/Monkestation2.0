@@ -950,6 +950,19 @@
       no longer delete the gas inside them when destroyed or deconstructed. the gas
       now goes into the pipes they're connected to, or onto the floor if they aren't
       connected.
+  - bugfix: Fixed a bunch of things mangling apostrophes and such.
+  - rscadd: Instead of just clicking rabbits, Monster Hunters must use their trick
+      weapon to tear open rifts to wonderland across the station. This is very obvious,
+      but others nearby will find themselves disoriented, do not worry about just
+      being easily shoved.
+  - rscadd: Opening a wonderland rift summons a small dimensional anomaly, alongside
+      passive NPC rabbits around the station.
+  - rscadd: If a monster target lingers near said rabbits for too long, the hunter
+      will be alerted to their location, until they finally leave the gaze of the
+      rabbits.
+  - rscadd: Added a ton of cool animations and visual effects to Monster Hunter stuff.
+  - rscadd: Added armor for monster hunters, the Queens' Huntsman set. It is dropped
+      by the third rabbit. Sprites by BucketOKirbys.
   EnterTheJake:
   - bugfix: The Jabberwocky's killer rabbits now actually chase people down instead
       of standing around.
@@ -965,6 +978,8 @@
   - bugfix: The round-end jingle no longer plays for players who have muted lobby
       music.
   - bugfix: Players with a fresh character save no longer spawn as ghosts at roundstart.
+  Singul0:
+  - rscadd: Adds Fax Machine upgrade for AI
   V2LenKagamine:
   - rscadd: Holo-candle projector! It makes candles [fake] that dont burn! Buy now
       for 1500 coins!
@@ -980,6 +995,8 @@
       tiny pentagram!
   - bugfix: Holo-sign projector items now obey how many they are allowed to create,
       and remember which ones they have.
+  chumtoadmonke:
+  - balance: poplocks a bunch of traitor items
   notghosti:
   - rscadd: Most mobs that can be carried can now attempt to crawl into someone's
       hands to be carried.
