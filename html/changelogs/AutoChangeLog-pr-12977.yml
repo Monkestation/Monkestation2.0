@@ -1,9 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed a visual bug with items in bags (i.e science bags) visually appearing in your hand slot when the bag is open, despite being actually in the bag."
-  - rscdel: "Disabled mindswap artifacts."
-  - bugfix: "(Melbert) Digital clocks should report more accurate times in the hours position (before, it mirrored one of the minute's times)"
-  - code_imp: "(Melbert) Cleaned up digital clock code a bit, report if they seem to be reporting weird numbers"
-  - bugfix: "(vinylspiders) atmos machines destroyed in explosions now release the gas inside them instead of sometimes deleting it."
-  - bugfix: "(vinylspiders) thermoelectric generator circulators (both hot and cold) no longer delete the gas inside them when destroyed or deconstructed. the gas now goes into the pipes they're connected to, or onto the floor if they aren't connected."

@@ -1,9 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "The Jabberwocky's killer rabbits now actually chase people down instead of standing around."
-  - bugfix: "Killer rabbits can path around walls and furniture."
-  - bugfix: "Killer rabbits no longer side with the crew if something other than the Jabberwocky summons them."
-  - balance: "Killer rabbits spot targets from up to 10 tiles away and move a bit faster."
-  - balance: "Killer rabbit explosions now knock down and launch everyone nearby."
-  - balance: "The Jabberwocky has full night vision."
