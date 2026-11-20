@@ -373,16 +373,11 @@
  * * lum_shift - A value between 0 and 1 that will be multiplied against the luminescence
  */
 /datum/chatmessage/proc/colorize_string(name, sat_shift = 1, lum_shift = 1)
-	// seed to help randomness
-	var/static/rseed = rand(1,26)
+	var/hash = md5(name + GLOB.round_id)
+	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 256)
+	var/s = lerp(CM_COLOR_SAT_MIN, CM_COLOR_SAT_MAX, hex2num(copytext(hash, 3, 5)) / 255)
+	var/l = lerp(CM_COLOR_LUM_MIN, CM_COLOR_LUM_MAX, hex2num(copytext(hash, 5, 7)) / 255)
 
-	// get hsl using the selected 6 characters of the md5 hash
-	var/hash = copytext(md5(name + GLOB.round_id), rseed, rseed + 6)
-	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
-	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
-	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
-
-	// adjust for shifts
 	s *= clamp(sat_shift, 0, 1)
 	l = max(l * clamp(lum_shift, 0, 1), 0.5)
 

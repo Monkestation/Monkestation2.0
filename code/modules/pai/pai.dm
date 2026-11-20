@@ -28,6 +28,7 @@
 	pull_force = 0
 	radio = /obj/item/radio/headset/silicon/pai
 	worn_slot_flags = ITEM_SLOT_HEAD
+	interaction_flags_atom = ALLOW_PAI
 
 	/// If someone has enabled/disabled the pAIs ability to holo
 	var/can_holo = TRUE

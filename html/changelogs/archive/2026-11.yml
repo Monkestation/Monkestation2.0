@@ -935,3 +935,45 @@
       give lungs to species that don't breathe oxygen
   tattax:
   - bugfix: fix trasenknox pull icon sometimes showing up as the righthand cuff spritte
+2026-11-20:
+  Absolucy:
+  - bugfix: Fixed a visual bug with items in bags (i.e science bags) visually appearing
+      in your hand slot when the bag is open, despite being actually in the bag.
+  - rscdel: Disabled mindswap artifacts.
+  - bugfix: (Melbert) Digital clocks should report more accurate times in the hours
+      position (before, it mirrored one of the minute's times)
+  - code_imp: (Melbert) Cleaned up digital clock code a bit, report if they seem to
+      be reporting weird numbers
+  - bugfix: (vinylspiders) atmos machines destroyed in explosions now release the
+      gas inside them instead of sometimes deleting it.
+  - bugfix: (vinylspiders) thermoelectric generator circulators (both hot and cold)
+      no longer delete the gas inside them when destroyed or deconstructed. the gas
+      now goes into the pipes they're connected to, or onto the floor if they aren't
+      connected.
+  EnterTheJake:
+  - bugfix: The Jabberwocky's killer rabbits now actually chase people down instead
+      of standing around.
+  - bugfix: Killer rabbits can path around walls and furniture.
+  - bugfix: Killer rabbits no longer side with the crew if something other than the
+      Jabberwocky summons them.
+  - balance: Killer rabbits spot targets from up to 10 tiles away and move a bit faster.
+  - balance: Killer rabbit explosions now knock down and launch everyone nearby.
+  - balance: The Jabberwocky has full night vision.
+  V2LenKagamine:
+  - rscadd: Holo-candle projector! It makes candles [fake] that dont burn! Buy now
+      for 1500 coins!
+  - rscadd: Holo-candle projector can be boughted by chaplain!
+  - balance: Holosign projectors can now be put on the belt slot, because... really
+      theres better options for a belt item. I imagine they have a tiny clip to go
+      on your pants.
+  - code_imp: objects deriving from `/obj/item/flashlight` now ensure there IS a trash
+      type before trying to spawn it when light eater'd
+  - code_imp: Holosign projectors now have a new var allowing them to project multiple
+      of the hologram on the same tile. FALSE by default.
+  - qol: candles can now be drag-repositioned on tiles regardless of table, make a
+      tiny pentagram!
+  - bugfix: Holo-sign projector items now obey how many they are allowed to create,
+      and remember which ones they have.
+  notghosti:
+  - rscadd: Most mobs that can be carried can now attempt to crawl into someone's
+      hands to be carried.

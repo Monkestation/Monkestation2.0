@@ -1,7 +1,7 @@
 // This might be compatible with sentry, I'm not sure, my trial period expired so I can't test lol
 // Configuration options are in entries/general.dm
 
-/proc/send_to_glitchtip(exception/E, list/extra_data = null)
+/proc/send_to_glitchtip(exception/E, callee/source, list/extra_data = null)
 	#if !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
 	var/glitchtip_dsn = CONFIG_GET(string/glitchtip_dsn)
 	if(!glitchtip_dsn)
@@ -43,18 +43,10 @@
 	// Build stack trace using caller/callee chain
 	var/list/frames = list()
 
-	// Add the error location as the first frame
-	var/list/error_frame = list()
-	error_frame["filename"] = E.file || "unknown"
-	error_frame["lineno"] = E.line || 0
-	error_frame["function"] = "runtime_error"
-	error_frame["in_app"] = TRUE
-	frames += list(error_frame)
-
 	// Walk the call stack using callee objects
 	var/frame_count = 0
 	var/max_frames = 50 // Prevent infinite loops or excessive data
-	for(var/callee/p = caller; p && frame_count < max_frames; p = p.caller)
+	for(var/callee/p = source; p && frame_count < max_frames; p = p.caller)
 		frame_count++
 		var/proc_name = "unknown"
 		var/file_name = "unknown"

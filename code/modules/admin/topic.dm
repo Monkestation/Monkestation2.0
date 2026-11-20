@@ -63,6 +63,12 @@
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
+	else if(href_list["diseasepanel_examine"])
+		if(!check_rights(R_ADMIN))
+			return
+		viewingID = href_list["diseasepanel_examine"]
+		diseases_panel()
+
 	else if(href_list["gamemode_panel"])
 		if(!check_rights(R_ADMIN))
 			return

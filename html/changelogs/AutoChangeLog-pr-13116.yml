@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "fix: False Alarm no longer silently fails when it picks Shuttle Catastrophe."

@@ -528,7 +528,7 @@
 	if(!isliving(examined) || !examined.mind)
 		return
 	var/datum/antagonist/heretic_monster/monster = examined.mind.has_antag_datum(/datum/antagonist/heretic_monster)
-	if(monster.master == owner)
+	if(monster?.master == owner)
 		examine_text += span_heretic_master("[examined.p_They()] [examined.p_are()] your servant!")
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
