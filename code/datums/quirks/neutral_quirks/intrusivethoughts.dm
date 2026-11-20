@@ -7,7 +7,7 @@
 	/// Weakref to the trauma we give out
 	var/datum/weakref/added_trama_ref
 
-/datum/quirk/intrusivethoughts/add(client/client_source)
+/datum/quirk/intrusivethoughts/post_add()
 	if(!iscarbon(quirk_holder))
 		return
 	/// Character with the quirk
