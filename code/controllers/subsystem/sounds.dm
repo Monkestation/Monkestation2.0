@@ -248,12 +248,15 @@ SUBSYSTEM_DEF(sounds)
 	if(!isnull(cached_length))
 		return cached_length
 
+// tools/deploy.sh only copies sound/runtime, so ci has nothing on disk to measure
+#ifndef UNIT_TESTS
 	var/length = aneri_audio_length(file_path)
 	if(isnull(length))
 		CRASH("get_sound_length error: [file_path] has no length in its header")
 
 	sound_lengths[file_path] = length
 	return length
+#endif
 
 ///Call to free all channels reserved by a datum.
 /datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/channel_owner)

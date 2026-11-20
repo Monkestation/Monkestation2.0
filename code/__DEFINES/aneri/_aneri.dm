@@ -7,7 +7,7 @@
 		return __aneri = "aneri"
 
 #define ANERI (__aneri || __detect_aneri())
-#define ANERI_CALL(name, args...) call_ext(__aneri_##name ||= load_ext(ANERI, "byond:" + #name))(args)
+#define ANERI_CALL(name, args...) __ANERI_EXT(__aneri_##name, "byond:" + #name)(args)
 
 /// Deletes every Rust-side object, cancels background work, and closes log files.
 /// Call it first thing in `/world/New()` and `/world/Del()`.

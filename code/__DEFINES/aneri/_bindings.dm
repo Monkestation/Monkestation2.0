@@ -5,13 +5,20 @@
 #define ANERI (world.system_type == MS_WINDOWS ? "aneri" : "libaneri")
 #endif
 
+// OpenDream has no load_ext, so look the function up on every call there
+#ifdef OPENDREAM
+#define __ANERI_EXT(handle, symbol) call_ext(ANERI, symbol)
+#else
+#define __ANERI_EXT(handle, symbol) call_ext(handle ||= load_ext(ANERI, symbol))
+#endif
+
 /// A random whole number from 0 to 255.
 ///
 /// Arguments:
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn random_byte(secure: Option<bool>) -> u8`
-#define aneri_rand_byte(secure...) call_ext(__aneri_random_byte ||= load_ext(ANERI, "byond:random_byte"))(secure)
+#define aneri_rand_byte(secure...) __ANERI_EXT(__aneri_random_byte, "byond:random_byte")(secure)
 /* This comment bypasses grep checks */ var/static/__aneri_random_byte
 
 /// A random number from 0 up to, but not including, 1.
@@ -20,7 +27,7 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn random_float(secure: Option<bool>) -> f32`
-#define aneri_rand_float(secure...) call_ext(__aneri_random_float ||= load_ext(ANERI, "byond:random_float"))(secure)
+#define aneri_rand_float(secure...) __ANERI_EXT(__aneri_random_float, "byond:random_float")(secure)
 /* This comment bypasses grep checks */ var/static/__aneri_random_float
 
 /// A random whole number from -2147483648 to 2147483647.
@@ -30,7 +37,7 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn random_int_signed(secure: Option<bool>) -> i32`
-#define aneri_rand_int(secure...) call_ext(__aneri_random_int_signed ||= load_ext(ANERI, "byond:random_int_signed"))(secure)
+#define aneri_rand_int(secure...) __ANERI_EXT(__aneri_random_int_signed, "byond:random_int_signed")(secure)
 /* This comment bypasses grep checks */ var/static/__aneri_random_int_signed
 
 /// Returns true `probability` percent of the time, like DM's `prob()`.
@@ -40,7 +47,7 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn prob(probability: f64, secure: Option<bool>) -> bool`
-#define aneri_rand_prob(probability, secure...) call_ext(__aneri_prob ||= load_ext(ANERI, "byond:prob"))(probability, secure)
+#define aneri_rand_prob(probability, secure...) __ANERI_EXT(__aneri_prob, "byond:prob")(probability, secure)
 /* This comment bypasses grep checks */ var/static/__aneri_prob
 
 /// Returns true `numerator` in `denominator` times,
@@ -53,7 +60,7 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn prob_ratio(numerator: u32, denominator: u32, secure: Option<bool>) -> bool`
-#define aneri_rand_prob_ratio(numerator, denominator, secure...) call_ext(__aneri_prob_ratio ||= load_ext(ANERI, "byond:prob_ratio"))(numerator, denominator, secure)
+#define aneri_rand_prob_ratio(numerator, denominator, secure...) __ANERI_EXT(__aneri_prob_ratio, "byond:prob_ratio")(numerator, denominator, secure)
 /* This comment bypasses grep checks */ var/static/__aneri_prob_ratio
 
 /// A random whole number from 0 to 4294967295.
@@ -63,19 +70,19 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn random_int_unsigned(secure: Option<bool>) -> u32`
-#define aneri_rand_uint(secure...) call_ext(__aneri_random_int_unsigned ||= load_ext(ANERI, "byond:random_int_unsigned"))(secure)
+#define aneri_rand_uint(secure...) __ANERI_EXT(__aneri_random_int_unsigned, "byond:random_int_unsigned")(secure)
 /* This comment bypasses grep checks */ var/static/__aneri_random_int_unsigned
 
 /// The Cargo features this build was compiled with, comma-separated.
 ///
 /// Rust: `fn aneri_features() -> &'static str`
-#define aneri_raw_aneri_features(...) call_ext(__aneri_aneri_features ||= load_ext(ANERI, "byond:aneri_features"))()
+#define aneri_raw_aneri_features(...) __ANERI_EXT(__aneri_aneri_features, "byond:aneri_features")()
 /* This comment bypasses grep checks */ var/static/__aneri_aneri_features
 
 /// The library's name, version and git commit, like `aneri v1.2.3 (abc1234)`.
 ///
 /// Rust: `fn aneri_version() -> &'static str`
-#define aneri_raw_aneri_version(...) call_ext(__aneri_aneri_version ||= load_ext(ANERI, "byond:aneri_version"))()
+#define aneri_raw_aneri_version(...) __ANERI_EXT(__aneri_aneri_version, "byond:aneri_version")()
 /* This comment bypasses grep checks */ var/static/__aneri_aneri_version
 
 /// How long each sound file in a list is, in deciseconds.
@@ -85,7 +92,7 @@
 /// Files are read in parallel. Runtimes if an entry isn't a string.
 ///
 /// Rust: `fn audio_length_list(paths: Vec<String>) -> ByondResult<Vec<(&'static str, ByondValue)>>`
-#define aneri_raw_audio_length_list(paths) call_ext(__aneri_audio_length_list ||= load_ext(ANERI, "byond:audio_length_list"))(paths)
+#define aneri_raw_audio_length_list(paths) __ANERI_EXT(__aneri_audio_length_list, "byond:audio_length_list")(paths)
 /* This comment bypasses grep checks */ var/static/__aneri_audio_length_list
 
 /// Deletes every Rust-side object, cancels background work,
@@ -93,14 +100,14 @@
 /// `/world/New()` and `/world/Del()` already call this.
 ///
 /// Rust: `fn cleanup()`
-#define aneri_raw_cleanup(...) call_ext(__aneri_cleanup ||= load_ext(ANERI, "byond:cleanup"))()
+#define aneri_raw_cleanup(...) __ANERI_EXT(__aneri_cleanup, "byond:cleanup")()
 /* This comment bypasses grep checks */ var/static/__aneri_cleanup
 
 /// Lists the icon state names in a .dmi file without decoding its pixels.
 /// Runtimes if the file can't be read or isn't a PNG.
 ///
 /// Rust: `fn dmi_read_states(path: PathBuf) -> ByondResult<Vec<String>>`
-#define aneri_raw_dmi_read_states(path) call_ext(__aneri_dmi_read_states ||= load_ext(ANERI, "byond:dmi_read_states"))(path)
+#define aneri_raw_dmi_read_states(path) __ANERI_EXT(__aneri_dmi_read_states, "byond:dmi_read_states")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_dmi_read_states
 
 /// Cancels a request started with `aneri_raw_http_send`.
@@ -108,7 +115,7 @@
 /// Returns false if the request already finished.
 ///
 /// Rust: `fn http_cancel(id: String) -> bool`
-#define aneri_raw_http_cancel(id) call_ext(__aneri_http_cancel ||= load_ext(ANERI, "byond:http_cancel"))(id)
+#define aneri_raw_http_cancel(id) __ANERI_EXT(__aneri_http_cancel, "byond:http_cancel")(id)
 /* This comment bypasses grep checks */ var/static/__aneri_http_cancel
 
 /// Starts an HTTP request in the background and returns its id.
@@ -125,7 +132,7 @@
 /// * timeout - (optional) Seconds the whole request may take, body included. Null waits forever.
 ///
 /// Rust: `fn http_send(method: String, url: String, headers: Option<Vec<(String, String)>>, body: Option<String>, body_file: Option<PathBuf>, output_file: Option<PathBuf>, timeout: Option<f32>) -> String`
-#define aneri_raw_http_send(method, url, headers...) call_ext(__aneri_http_send ||= load_ext(ANERI, "byond:http_send"))(method, url, headers)
+#define aneri_raw_http_send(method, url, headers...) __ANERI_EXT(__aneri_http_send, "byond:http_send")(method, url, headers)
 /* This comment bypasses grep checks */ var/static/__aneri_http_send
 
 /// Starts an HTTP request in the background and never reports back.
@@ -141,7 +148,7 @@
 /// * timeout - (optional) Seconds the whole request may take, body included. Null waits forever.
 ///
 /// Rust: `fn http_send_and_forget(method: String, url: String, headers: Option<Vec<(String, String)>>, body: Option<String>, body_file: Option<PathBuf>, output_file: Option<PathBuf>, timeout: Option<f32>)`
-#define aneri_raw_http_send_and_forget(method, url, headers...) call_ext(__aneri_http_send_and_forget ||= load_ext(ANERI, "byond:http_send_and_forget"))(method, url, headers)
+#define aneri_raw_http_send_and_forget(method, url, headers...) __ANERI_EXT(__aneri_http_send_and_forget, "byond:http_send_and_forget")(method, url, headers)
 /* This comment bypasses grep checks */ var/static/__aneri_http_send_and_forget
 
 /// Runs an HTTP request and waits for it, freezing the server until it is done.
@@ -157,126 +164,126 @@
 /// * timeout - (optional) Seconds the whole request may take, body included. Null waits forever.
 ///
 /// Rust: `fn http_send_blocking(method: String, url: String, headers: Option<Vec<(String, String)>>, body: Option<String>, body_file: Option<PathBuf>, output_file: Option<PathBuf>, timeout: Option<f32>) -> ByondResult<[ByondValue; 4]>`
-#define aneri_raw_http_send_blocking(method, url, headers...) call_ext(__aneri_http_send_blocking ||= load_ext(ANERI, "byond:http_send_blocking"))(method, url, headers)
+#define aneri_raw_http_send_blocking(method, url, headers...) __ANERI_EXT(__aneri_http_send_blocking, "byond:http_send_blocking")(method, url, headers)
 /* This comment bypasses grep checks */ var/static/__aneri_http_send_blocking
 
 /// `aneri_rand_pick` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_pick(src: ByondSlotKey, options: ByondValue) -> ByondResult<Option<ByondValue>>`
-#define aneri_raw_instanced_pick(src, options) call_ext(__aneri_instanced_pick ||= load_ext(ANERI, "byond:instanced_pick"))(src, options)
+#define aneri_raw_instanced_pick(src, options) __ANERI_EXT(__aneri_instanced_pick, "byond:instanced_pick")(src, options)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_pick
 
 /// `aneri_rand_pick_weighted` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_pick_weighted(src: ByondSlotKey, options: ByondValue) -> ByondResult<Option<ByondValue>>`
-#define aneri_raw_instanced_pick_weighted(src, options) call_ext(__aneri_instanced_pick_weighted ||= load_ext(ANERI, "byond:instanced_pick_weighted"))(src, options)
+#define aneri_raw_instanced_pick_weighted(src, options) __ANERI_EXT(__aneri_instanced_pick_weighted, "byond:instanced_pick_weighted")(src, options)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_pick_weighted
 
 /// `aneri_rand_prob` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_prob(src: ByondSlotKey, probability: f64) -> Option<bool>`
-#define aneri_raw_instanced_prob(src, probability) call_ext(__aneri_instanced_prob ||= load_ext(ANERI, "byond:instanced_prob"))(src, probability)
+#define aneri_raw_instanced_prob(src, probability) __ANERI_EXT(__aneri_instanced_prob, "byond:instanced_prob")(src, probability)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_prob
 
 /// `aneri_rand_prob_ratio` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_prob_ratio(src: ByondSlotKey, numerator: u32, denominator: u32) -> Option<bool>`
-#define aneri_raw_instanced_prob_ratio(src, numerator, denominator) call_ext(__aneri_instanced_prob_ratio ||= load_ext(ANERI, "byond:instanced_prob_ratio"))(src, numerator, denominator)
+#define aneri_raw_instanced_prob_ratio(src, numerator, denominator) __ANERI_EXT(__aneri_instanced_prob_ratio, "byond:instanced_prob_ratio")(src, numerator, denominator)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_prob_ratio
 
 /// `aneri_rand_byte` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_random_byte(src: ByondSlotKey) -> Option<u8>`
-#define aneri_raw_instanced_random_byte(src) call_ext(__aneri_instanced_random_byte ||= load_ext(ANERI, "byond:instanced_random_byte"))(src)
+#define aneri_raw_instanced_random_byte(src) __ANERI_EXT(__aneri_instanced_random_byte, "byond:instanced_random_byte")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_random_byte
 
 /// `aneri_rand_float` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_random_float(src: ByondSlotKey) -> Option<f32>`
-#define aneri_raw_instanced_random_float(src) call_ext(__aneri_instanced_random_float ||= load_ext(ANERI, "byond:instanced_random_float"))(src)
+#define aneri_raw_instanced_random_float(src) __ANERI_EXT(__aneri_instanced_random_float, "byond:instanced_random_float")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_random_float
 
 /// `aneri_rand_int` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_random_int_signed(src: ByondSlotKey) -> Option<i32>`
-#define aneri_raw_instanced_random_int_signed(src) call_ext(__aneri_instanced_random_int_signed ||= load_ext(ANERI, "byond:instanced_random_int_signed"))(src)
+#define aneri_raw_instanced_random_int_signed(src) __ANERI_EXT(__aneri_instanced_random_int_signed, "byond:instanced_random_int_signed")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_random_int_signed
 
 /// `aneri_rand_uint` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_random_int_unsigned(src: ByondSlotKey) -> Option<u32>`
-#define aneri_raw_instanced_random_int_unsigned(src) call_ext(__aneri_instanced_random_int_unsigned ||= load_ext(ANERI, "byond:instanced_random_int_unsigned"))(src)
+#define aneri_raw_instanced_random_int_unsigned(src) __ANERI_EXT(__aneri_instanced_random_int_unsigned, "byond:instanced_random_int_unsigned")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_random_int_unsigned
 
 /// `aneri_rand_ranged_int` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_random_range_int_signed(src: ByondSlotKey, min: i32, max: i32) -> Option<i32>`
-#define aneri_raw_instanced_random_range_int_signed(src, min, max) call_ext(__aneri_instanced_random_range_int_signed ||= load_ext(ANERI, "byond:instanced_random_range_int_signed"))(src, min, max)
+#define aneri_raw_instanced_random_range_int_signed(src, min, max) __ANERI_EXT(__aneri_instanced_random_range_int_signed, "byond:instanced_random_range_int_signed")(src, min, max)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_random_range_int_signed
 
 /// `aneri_rand_ranged_uint` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_random_range_int_unsigned(src: ByondSlotKey, min: u32, max: u32) -> Option<u32>`
-#define aneri_raw_instanced_random_range_int_unsigned(src, min, max) call_ext(__aneri_instanced_random_range_int_unsigned ||= load_ext(ANERI, "byond:instanced_random_range_int_unsigned"))(src, min, max)
+#define aneri_raw_instanced_random_range_int_unsigned(src, min, max) __ANERI_EXT(__aneri_instanced_random_range_int_unsigned, "byond:instanced_random_range_int_unsigned")(src, min, max)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_random_range_int_unsigned
 
 /// `aneri_rand_string` on a `/datum/rng`.
 /// Null if the generator was deleted.
 ///
 /// Rust: `fn instanced_random_string_alphanumeric(src: ByondSlotKey, length: usize) -> Option<String>`
-#define aneri_raw_instanced_random_string_alphanumeric(src, length) call_ext(__aneri_instanced_random_string_alphanumeric ||= load_ext(ANERI, "byond:instanced_random_string_alphanumeric"))(src, length)
+#define aneri_raw_instanced_random_string_alphanumeric(src, length) __ANERI_EXT(__aneri_instanced_random_string_alphanumeric, "byond:instanced_random_string_alphanumeric")(src, length)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_random_string_alphanumeric
 
 /// `aneri_regex_find` on a `/datum/regex`.
 /// Null if the regex was deleted.
 ///
 /// Rust: `fn instanced_regex_find(src: ByondSlotKey, haystack: String) -> ByondResult<ByondValue>`
-#define aneri_raw_instanced_regex_find(src, haystack) call_ext(__aneri_instanced_regex_find ||= load_ext(ANERI, "byond:instanced_regex_find"))(src, haystack)
+#define aneri_raw_instanced_regex_find(src, haystack) __ANERI_EXT(__aneri_instanced_regex_find, "byond:instanced_regex_find")(src, haystack)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_regex_find
 
 /// `aneri_regex_is_match` on a `/datum/regex`.
 /// Null if the regex was deleted.
 ///
 /// Rust: `fn instanced_regex_is_match(src: ByondSlotKey, haystack: String) -> Option<bool>`
-#define aneri_raw_instanced_regex_is_match(src, haystack) call_ext(__aneri_instanced_regex_is_match ||= load_ext(ANERI, "byond:instanced_regex_is_match"))(src, haystack)
+#define aneri_raw_instanced_regex_is_match(src, haystack) __ANERI_EXT(__aneri_instanced_regex_is_match, "byond:instanced_regex_is_match")(src, haystack)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_regex_is_match
 
 /// `aneri_regex_replace` on a `/datum/regex`.
 /// Null if the regex was deleted.
 ///
 /// Rust: `fn instanced_regex_replace(src: ByondSlotKey, haystack: String, with: String) -> ByondResult<ByondValue>`
-#define aneri_raw_instanced_regex_replace(src, haystack, with) call_ext(__aneri_instanced_regex_replace ||= load_ext(ANERI, "byond:instanced_regex_replace"))(src, haystack, with)
+#define aneri_raw_instanced_regex_replace(src, haystack, with) __ANERI_EXT(__aneri_instanced_regex_replace, "byond:instanced_regex_replace")(src, haystack, with)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_regex_replace
 
 /// `aneri_regex_replace_all` on a `/datum/regex`.
 /// Null if the regex was deleted.
 ///
 /// Rust: `fn instanced_regex_replace_all(src: ByondSlotKey, haystack: String, with: String) -> ByondResult<ByondValue>`
-#define aneri_raw_instanced_regex_replace_all(src, haystack, with) call_ext(__aneri_instanced_regex_replace_all ||= load_ext(ANERI, "byond:instanced_regex_replace_all"))(src, haystack, with)
+#define aneri_raw_instanced_regex_replace_all(src, haystack, with) __ANERI_EXT(__aneri_instanced_regex_replace_all, "byond:instanced_regex_replace_all")(src, haystack, with)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_regex_replace_all
 
 /// `aneri_regex_split` on a `/datum/regex`.
 /// Null if the regex was deleted.
 ///
 /// Rust: `fn instanced_regex_split(src: ByondSlotKey, haystack: String) -> ByondResult<ByondValue>`
-#define aneri_raw_instanced_regex_split(src, haystack) call_ext(__aneri_instanced_regex_split ||= load_ext(ANERI, "byond:instanced_regex_split"))(src, haystack)
+#define aneri_raw_instanced_regex_split(src, haystack) __ANERI_EXT(__aneri_instanced_regex_split, "byond:instanced_regex_split")(src, haystack)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_regex_split
 
 /// `aneri_regex_splitn` on a `/datum/regex`.
 /// Null if the regex was deleted.
 ///
 /// Rust: `fn instanced_regex_splitn(src: ByondSlotKey, haystack: String, limit: usize) -> ByondResult<ByondValue>`
-#define aneri_raw_instanced_regex_splitn(src, haystack, limit) call_ext(__aneri_instanced_regex_splitn ||= load_ext(ANERI, "byond:instanced_regex_splitn"))(src, haystack, limit)
+#define aneri_raw_instanced_regex_splitn(src, haystack, limit) __ANERI_EXT(__aneri_instanced_regex_splitn, "byond:instanced_regex_splitn")(src, haystack, limit)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_regex_splitn
 
 /// `aneri_rand_replace_chars_prob` on a `/datum/rng`.
@@ -290,55 +297,55 @@
 /// * skip_whitespace - (optional)
 ///
 /// Rust: `fn instanced_replace_chars_prob(src: ByondSlotKey, input: String, replacement: String, prob: f32, skip_whitespace: Option<bool>) -> Option<String>`
-#define aneri_raw_instanced_replace_chars_prob(src, input, replacement, prob, skip_whitespace...) call_ext(__aneri_instanced_replace_chars_prob ||= load_ext(ANERI, "byond:instanced_replace_chars_prob"))(src, input, replacement, prob, skip_whitespace)
+#define aneri_raw_instanced_replace_chars_prob(src, input, replacement, prob, skip_whitespace...) __ANERI_EXT(__aneri_instanced_replace_chars_prob, "byond:instanced_replace_chars_prob")(src, input, replacement, prob, skip_whitespace)
 /* This comment bypasses grep checks */ var/static/__aneri_instanced_replace_chars_prob
 
 /// Deletes the stopwatch behind a `/datum/instant`.
 /// Returns false if it was already gone.
 ///
 /// Rust: `fn instant_del(src: ByondSlotKey) -> bool`
-#define aneri_raw_instant_del(src) call_ext(__aneri_instant_del ||= load_ext(ANERI, "byond:instant_del"))(src)
+#define aneri_raw_instant_del(src) __ANERI_EXT(__aneri_instant_del, "byond:instant_del")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instant_del
 
 /// Microseconds since the stopwatch started or was reset.
 /// Null if it was deleted.
 ///
 /// Rust: `fn instant_microseconds(src: ByondSlotKey) -> Option<f64>`
-#define aneri_raw_instant_microseconds(src) call_ext(__aneri_instant_microseconds ||= load_ext(ANERI, "byond:instant_microseconds"))(src)
+#define aneri_raw_instant_microseconds(src) __ANERI_EXT(__aneri_instant_microseconds, "byond:instant_microseconds")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instant_microseconds
 
 /// Milliseconds since the stopwatch started or was reset.
 /// Null if it was deleted.
 ///
 /// Rust: `fn instant_milliseconds(src: ByondSlotKey) -> Option<f64>`
-#define aneri_raw_instant_milliseconds(src) call_ext(__aneri_instant_milliseconds ||= load_ext(ANERI, "byond:instant_milliseconds"))(src)
+#define aneri_raw_instant_milliseconds(src) __ANERI_EXT(__aneri_instant_milliseconds, "byond:instant_milliseconds")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instant_milliseconds
 
 /// Nanoseconds since the stopwatch started or was reset.
 /// Null if it was deleted.
 ///
 /// Rust: `fn instant_nanoseconds(src: ByondSlotKey) -> Option<f64>`
-#define aneri_raw_instant_nanoseconds(src) call_ext(__aneri_instant_nanoseconds ||= load_ext(ANERI, "byond:instant_nanoseconds"))(src)
+#define aneri_raw_instant_nanoseconds(src) __ANERI_EXT(__aneri_instant_nanoseconds, "byond:instant_nanoseconds")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instant_nanoseconds
 
 /// Starts the stopwatch behind a `/datum/instant` and stores its key on `src`.
 ///
 /// Rust: `fn instant_new(mut src: ByondValue) -> ByondResult<()>`
-#define aneri_raw_instant_new(src) call_ext(__aneri_instant_new ||= load_ext(ANERI, "byond:instant_new"))(src)
+#define aneri_raw_instant_new(src) __ANERI_EXT(__aneri_instant_new, "byond:instant_new")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instant_new
 
 /// Restarts the stopwatch from 0.
 /// Returns false if it was deleted.
 ///
 /// Rust: `fn instant_reset(src: ByondSlotKey) -> bool`
-#define aneri_raw_instant_reset(src) call_ext(__aneri_instant_reset ||= load_ext(ANERI, "byond:instant_reset"))(src)
+#define aneri_raw_instant_reset(src) __ANERI_EXT(__aneri_instant_reset, "byond:instant_reset")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instant_reset
 
 /// Seconds since the stopwatch started or was reset, with a fraction.
 /// Null if it was deleted.
 ///
 /// Rust: `fn instant_seconds(src: ByondSlotKey) -> Option<f32>`
-#define aneri_raw_instant_seconds(src) call_ext(__aneri_instant_seconds ||= load_ext(ANERI, "byond:instant_seconds"))(src)
+#define aneri_raw_instant_seconds(src) __ANERI_EXT(__aneri_instant_seconds, "byond:instant_seconds")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_instant_seconds
 
 /// Generates a procedural dungeon map using BSP tree partitioning, prefab placement,
@@ -379,7 +386,7 @@
 /// * seed - (optional)
 ///
 /// Rust: `fn noise_cave_system(width: u32, height: u32, settings: Option<ByondValue>, prefabs: Option<ByondValue>, seed: Option<u32>) -> ByondResult<Vec<u8>>`
-#define aneri_raw_noise_cave_system(width, height, settings...) call_ext(__aneri_noise_cave_system ||= load_ext(ANERI, "byond:noise_cave_system"))(width, height, settings)
+#define aneri_raw_noise_cave_system(width, height, settings...) __ANERI_EXT(__aneri_noise_cave_system, "byond:noise_cave_system")(width, height, settings)
 /* This comment bypasses grep checks */ var/static/__aneri_noise_cave_system
 
 /// Generates a cellular automata noise grid, which can be used in procedural generation methods.
@@ -412,7 +419,7 @@
 /// * seed - (optional)
 ///
 /// Rust: `fn noise_cellular_automata(width: u32, height: u32, fill_percent: f32, iterations: u32, birth_limit: u32, survival_limit: u32, edges_alive: Option<bool>, seed: Option<u32>) -> Vec<u8>`
-#define aneri_raw_noise_cellular_automata(width, height, fill_percent, iterations, birth_limit, survival_limit, edges_alive...) call_ext(__aneri_noise_cellular_automata ||= load_ext(ANERI, "byond:noise_cellular_automata"))(width, height, fill_percent, iterations, birth_limit, survival_limit, edges_alive)
+#define aneri_raw_noise_cellular_automata(width, height, fill_percent, iterations, birth_limit, survival_limit, edges_alive...) __ANERI_EXT(__aneri_noise_cellular_automata, "byond:noise_cellular_automata")(width, height, fill_percent, iterations, birth_limit, survival_limit, edges_alive)
 /* This comment bypasses grep checks */ var/static/__aneri_noise_cellular_automata
 
 /// Generates a grid of noise values, each from 0 to 1.
@@ -440,7 +447,7 @@
 /// * octaves - (optional)
 ///
 /// Rust: `fn noise_grid(kind: String, seed: u32, width: u32, height: u32, frequency: Option<f32>, octaves: Option<u32>) -> ByondResult<Vec<f32>>`
-#define aneri_raw_noise_grid(kind, seed, width, height, frequency...) call_ext(__aneri_noise_grid ||= load_ext(ANERI, "byond:noise_grid"))(kind, seed, width, height, frequency)
+#define aneri_raw_noise_grid(kind, seed, width, height, frequency...) __ANERI_EXT(__aneri_noise_grid, "byond:noise_grid")(kind, seed, width, height, frequency)
 /* This comment bypasses grep checks */ var/static/__aneri_noise_grid
 
 /// Generates a 2D poisson disk distribution ('blue noise'), which is relatively uniform.
@@ -462,7 +469,7 @@
 /// * seed - (optional)
 ///
 /// Rust: `fn noise_poisson(width: u32, height: u32, radius: f32, seed: Option<u32>) -> Vec<[u32; 2]>`
-#define aneri_raw_noise_poisson(width, height, radius, seed...) call_ext(__aneri_noise_poisson ||= load_ext(ANERI, "byond:noise_poisson"))(width, height, radius, seed)
+#define aneri_raw_noise_poisson(width, height, radius, seed...) __ANERI_EXT(__aneri_noise_poisson, "byond:noise_poisson")(width, height, radius, seed)
 /* This comment bypasses grep checks */ var/static/__aneri_noise_poisson
 
 /// A random item from a list.
@@ -473,7 +480,7 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn pick(options: ByondValue, secure: Option<bool>) -> ByondResult<ByondValue>`
-#define aneri_raw_pick(options, secure...) call_ext(__aneri_pick ||= load_ext(ANERI, "byond:pick"))(options, secure)
+#define aneri_raw_pick(options, secure...) __ANERI_EXT(__aneri_pick, "byond:pick")(options, secure)
 /* This comment bypasses grep checks */ var/static/__aneri_pick
 
 /// A random key from an assoc list of item to weight.
@@ -486,7 +493,7 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn pick_weighted(options: ByondValue, secure: Option<bool>) -> ByondResult<ByondValue>`
-#define aneri_raw_pick_weighted(options, secure...) call_ext(__aneri_pick_weighted ||= load_ext(ANERI, "byond:pick_weighted"))(options, secure)
+#define aneri_raw_pick_weighted(options, secure...) __ANERI_EXT(__aneri_pick_weighted, "byond:pick_weighted")(options, secure)
 /* This comment bypasses grep checks */ var/static/__aneri_pick_weighted
 
 /// A random whole number from `min` to `max`, both included.
@@ -499,7 +506,7 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn random_range_int_signed(min: i32, max: i32, secure: Option<bool>) -> i32`
-#define aneri_raw_random_range_int_signed(min, max, secure...) call_ext(__aneri_random_range_int_signed ||= load_ext(ANERI, "byond:random_range_int_signed"))(min, max, secure)
+#define aneri_raw_random_range_int_signed(min, max, secure...) __ANERI_EXT(__aneri_random_range_int_signed, "byond:random_range_int_signed")(min, max, secure)
 /* This comment bypasses grep checks */ var/static/__aneri_random_range_int_signed
 
 /// A random whole number from `min` to `max`, both included.
@@ -512,7 +519,7 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn random_range_int_unsigned(min: u32, max: u32, secure: Option<bool>) -> u32`
-#define aneri_raw_random_range_int_unsigned(min, max, secure...) call_ext(__aneri_random_range_int_unsigned ||= load_ext(ANERI, "byond:random_range_int_unsigned"))(min, max, secure)
+#define aneri_raw_random_range_int_unsigned(min, max, secure...) __ANERI_EXT(__aneri_random_range_int_unsigned, "byond:random_range_int_unsigned")(min, max, secure)
 /* This comment bypasses grep checks */ var/static/__aneri_random_range_int_unsigned
 
 /// A random string of `length` letters and digits (`A-Z`, `a-z`, `0-9`).
@@ -522,14 +529,14 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn random_string_alphanumeric(length: usize, secure: Option<bool>) -> String`
-#define aneri_raw_random_string_alphanumeric(length, secure...) call_ext(__aneri_random_string_alphanumeric ||= load_ext(ANERI, "byond:random_string_alphanumeric"))(length, secure)
+#define aneri_raw_random_string_alphanumeric(length, secure...) __ANERI_EXT(__aneri_random_string_alphanumeric, "byond:random_string_alphanumeric")(length, secure)
 /* This comment bypasses grep checks */ var/static/__aneri_random_string_alphanumeric
 
 /// Deletes the compiled pattern behind a `/datum/regex`.
 /// Returns false if it was already gone.
 ///
 /// Rust: `fn regex_del(src: ByondSlotKey) -> bool`
-#define aneri_raw_regex_del(src) call_ext(__aneri_regex_del ||= load_ext(ANERI, "byond:regex_del"))(src)
+#define aneri_raw_regex_del(src) __ANERI_EXT(__aneri_regex_del, "byond:regex_del")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_del
 
 /// Every match of `regex` in `haystack`, as a list of `/datum/regex_match`.
@@ -537,21 +544,21 @@
 /// Runtimes on an invalid pattern.
 ///
 /// Rust: `fn regex_find(regex: String, haystack: String) -> ByondResult<ByondValue>`
-#define aneri_raw_regex_find(regex, haystack) call_ext(__aneri_regex_find ||= load_ext(ANERI, "byond:regex_find"))(regex, haystack)
+#define aneri_raw_regex_find(regex, haystack) __ANERI_EXT(__aneri_regex_find, "byond:regex_find")(regex, haystack)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_find
 
 /// Compiles the pattern behind a `/datum/regex` and stores its key on `src`.
 /// Runtimes on an invalid pattern.
 ///
 /// Rust: `fn regex_new(mut src: ByondValue, regex: String) -> ByondResult<()>`
-#define aneri_raw_regex_new(src, regex) call_ext(__aneri_regex_new ||= load_ext(ANERI, "byond:regex_new"))(src, regex)
+#define aneri_raw_regex_new(src, regex) __ANERI_EXT(__aneri_regex_new, "byond:regex_new")(src, regex)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_new
 
 /// Like `aneri_regex_split`, but returns at most `limit` pieces.
 /// The last piece holds the rest of the text, unsplit.
 ///
 /// Rust: `fn regex_splitn(regex: String, haystack: String, limit: usize) -> ByondResult<ByondValue>`
-#define aneri_raw_regex_splitn(regex, haystack, limit) call_ext(__aneri_regex_splitn ||= load_ext(ANERI, "byond:regex_splitn"))(regex, haystack, limit)
+#define aneri_raw_regex_splitn(regex, haystack, limit) __ANERI_EXT(__aneri_regex_splitn, "byond:regex_splitn")(regex, haystack, limit)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_splitn
 
 /// Replaces each character of `input` with `replacement`, each with a `prob` percent chance.
@@ -565,14 +572,14 @@
 /// * secure - (optional) Use the slower, cryptographically secure generator, default false.
 ///
 /// Rust: `fn replace_chars_prob(input: String, replacement: String, prob: f32, skip_whitespace: Option<bool>, secure: Option<bool>) -> String`
-#define aneri_raw_replace_chars_prob(input, replacement, prob, skip_whitespace...) call_ext(__aneri_replace_chars_prob ||= load_ext(ANERI, "byond:replace_chars_prob"))(input, replacement, prob, skip_whitespace)
+#define aneri_raw_replace_chars_prob(input, replacement, prob, skip_whitespace...) __ANERI_EXT(__aneri_replace_chars_prob, "byond:replace_chars_prob")(input, replacement, prob, skip_whitespace)
 /* This comment bypasses grep checks */ var/static/__aneri_replace_chars_prob
 
 /// Deletes the generator behind a `/datum/rng`.
 /// Returns false if it was already gone.
 ///
 /// Rust: `fn rng_del(src: ByondSlotKey) -> bool`
-#define aneri_raw_rng_del(src) call_ext(__aneri_rng_del ||= load_ext(ANERI, "byond:rng_del"))(src)
+#define aneri_raw_rng_del(src) __ANERI_EXT(__aneri_rng_del, "byond:rng_del")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_rng_del
 
 /// Creates the generator behind a `/datum/rng` and stores its key on `src`.
@@ -583,21 +590,21 @@
 /// * seed - (optional) The same seed always gives the same numbers. Null picks a random seed.
 ///
 /// Rust: `fn rng_new(mut src: ByondValue, secure: Option<bool>, seed: Option<u32>) -> ByondResult<()>`
-#define aneri_raw_rng_new(src, secure...) call_ext(__aneri_rng_new ||= load_ext(ANERI, "byond:rng_new"))(src, secure)
+#define aneri_raw_rng_new(src, secure...) __ANERI_EXT(__aneri_rng_new, "byond:rng_new")(src, secure)
 /* This comment bypasses grep checks */ var/static/__aneri_rng_new
 
 /// Sets the folder where panic reports are written, creating it if needed.
 /// If that fails, reports go to the current folder.
 ///
 /// Rust: `fn set_panic_output_folder(path: String)`
-#define aneri_raw_set_panic_output_folder(path) call_ext(__aneri_set_panic_output_folder ||= load_ext(ANERI, "byond:set_panic_output_folder"))(path)
+#define aneri_raw_set_panic_output_folder(path) __ANERI_EXT(__aneri_set_panic_output_folder, "byond:set_panic_output_folder")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_set_panic_output_folder
 
 /// Cancels a background query that is not part of a transaction.
 /// Its finish proc will not be called.
 ///
 /// Rust: `fn sql_cancel(id: String) -> bool`
-#define aneri_raw_sql_cancel(id) call_ext(__aneri_sql_cancel ||= load_ext(ANERI, "byond:sql_cancel"))(id)
+#define aneri_raw_sql_cancel(id) __ANERI_EXT(__aneri_sql_cancel, "byond:sql_cancel")(id)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_cancel
 
 /// Runs a statement on a pool or in a transaction.
@@ -612,13 +619,13 @@
 /// * timeout - (optional) Seconds for getting a connection plus running the query. Null waits forever.
 ///
 /// Rust: `fn sql_execute(mode: u8, pool: Option<ByondSlotKey>, transaction: Option<ByondSlotKey>, sql: String, arguments: ByondValue, timeout: Option<f32>) -> ByondResult<ByondValue>`
-#define aneri_raw_sql_execute(mode, pool, transaction, sql, arguments, timeout...) call_ext(__aneri_sql_execute ||= load_ext(ANERI, "byond:sql_execute"))(mode, pool, transaction, sql, arguments, timeout)
+#define aneri_raw_sql_execute(mode, pool, transaction, sql, arguments, timeout...) __ANERI_EXT(__aneri_sql_execute, "byond:sql_execute")(mode, pool, transaction, sql, arguments, timeout)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_execute
 
 /// How many fire-and-forget queries are still running or waiting.
 ///
 /// Rust: `fn sql_forgotten_in_flight() -> f32`
-#define aneri_raw_sql_forgotten_in_flight(...) call_ext(__aneri_sql_forgotten_in_flight ||= load_ext(ANERI, "byond:sql_forgotten_in_flight"))()
+#define aneri_raw_sql_forgotten_in_flight(...) __ANERI_EXT(__aneri_sql_forgotten_in_flight, "byond:sql_forgotten_in_flight")()
 /* This comment bypasses grep checks */ var/static/__aneri_sql_forgotten_in_flight
 
 /// Inserts many rows in one statement, like tgstation's `SSdbcore.MassInsert`.
@@ -636,13 +643,13 @@
 /// * timeout - (optional) Seconds for getting a connection plus running the query. Null waits forever.
 ///
 /// Rust: `fn sql_insert(mode: u8, pool: Option<ByondSlotKey>, transaction: Option<ByondSlotKey>, table: String, rows: ByondValue, duplicate_key: ByondValue, ignore_errors: bool, special_columns: Option<Vec<(String, String)>>, timeout: Option<f32>) -> ByondResult<ByondValue>`
-#define aneri_raw_sql_insert(mode, pool, transaction, table, rows, duplicate_key, ignore_errors, special_columns...) call_ext(__aneri_sql_insert ||= load_ext(ANERI, "byond:sql_insert"))(mode, pool, transaction, table, rows, duplicate_key, ignore_errors, special_columns)
+#define aneri_raw_sql_insert(mode, pool, transaction, table, rows, duplicate_key, ignore_errors, special_columns...) __ANERI_EXT(__aneri_sql_insert, "byond:sql_insert")(mode, pool, transaction, table, rows, duplicate_key, ignore_errors, special_columns)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_insert
 
 /// Closes a pool. Queries already running on it still finish.
 ///
 /// Rust: `fn sql_pool_del(src: ByondSlotKey) -> bool`
-#define aneri_raw_sql_pool_del(src) call_ext(__aneri_sql_pool_del ||= load_ext(ANERI, "byond:sql_pool_del"))(src)
+#define aneri_raw_sql_pool_del(src) __ANERI_EXT(__aneri_sql_pool_del, "byond:sql_pool_del")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_pool_del
 
 /// Creates the pool behind a `/datum/sql_pool` and stores its key on `src`.
@@ -662,7 +669,7 @@
 /// * tls_insecure - Accept any server certificate.
 ///
 /// Rust: `fn sql_pool_new(mut src: ByondValue, host: String, port: u16, user: Option<String>, password: Option<String>, database: Option<String>, min_connections: usize, max_connections: usize, tls: bool, tls_ca_file: Option<PathBuf>, tls_insecure: bool) -> ByondResult<()>`
-#define aneri_raw_sql_pool_new(src, host, port, user, password, database, min_connections, max_connections, tls, tls_ca_file, tls_insecure) call_ext(__aneri_sql_pool_new ||= load_ext(ANERI, "byond:sql_pool_new"))(src, host, port, user, password, database, min_connections, max_connections, tls, tls_ca_file, tls_insecure)
+#define aneri_raw_sql_pool_new(src, host, port, user, password, database, min_connections, max_connections, tls, tls_ca_file, tls_insecure) __ANERI_EXT(__aneri_sql_pool_new, "byond:sql_pool_new")(src, host, port, user, password, database, min_connections, max_connections, tls, tls_ca_file, tls_insecure)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_pool_new
 
 /// Lets go of a transaction.
@@ -670,7 +677,7 @@
 /// then it rolls back unless it was committed.
 ///
 /// Rust: `fn sql_transaction_del(src: ByondSlotKey) -> bool`
-#define aneri_raw_sql_transaction_del(src) call_ext(__aneri_sql_transaction_del ||= load_ext(ANERI, "byond:sql_transaction_del"))(src)
+#define aneri_raw_sql_transaction_del(src) __ANERI_EXT(__aneri_sql_transaction_del, "byond:sql_transaction_del")(src)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_transaction_del
 
 /// Commits or rolls back a transaction in the background.
@@ -682,7 +689,7 @@
 /// * timeout - (optional)
 ///
 /// Rust: `fn sql_transaction_end(transaction: Option<ByondSlotKey>, commit: bool, timeout: Option<f32>) -> String`
-#define aneri_raw_sql_transaction_end(transaction, commit, timeout...) call_ext(__aneri_sql_transaction_end ||= load_ext(ANERI, "byond:sql_transaction_end"))(transaction, commit, timeout)
+#define aneri_raw_sql_transaction_end(transaction, commit, timeout...) __ANERI_EXT(__aneri_sql_transaction_end, "byond:sql_transaction_end")(transaction, commit, timeout)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_transaction_end
 
 /// Starts a transaction on a pool, for a `/datum/sql_transaction`.
@@ -694,21 +701,21 @@
 /// * idle_timeout - (optional) Seconds with no new statement before it rolls back by itself.
 ///
 /// Rust: `fn sql_transaction_new(mut src: ByondValue, pool: Option<ByondSlotKey>, timeout: Option<f32>, idle_timeout: Option<f32>) -> ByondResult<()>`
-#define aneri_raw_sql_transaction_new(src, pool...) call_ext(__aneri_sql_transaction_new ||= load_ext(ANERI, "byond:sql_transaction_new"))(src, pool)
+#define aneri_raw_sql_transaction_new(src, pool...) __ANERI_EXT(__aneri_sql_transaction_new, "byond:sql_transaction_new")(src, pool)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_transaction_new
 
 /// Decodes a TOML file into an assoc list.
 /// Runtimes if it can't be read or isn't valid TOML.
 ///
 /// Rust: `fn toml_decode_file(path: PathBuf) -> ByondResult<ByondValue>`
-#define aneri_raw_toml_decode_file(path) call_ext(__aneri_toml_decode_file ||= load_ext(ANERI, "byond:toml_decode_file"))(path)
+#define aneri_raw_toml_decode_file(path) __ANERI_EXT(__aneri_toml_decode_file, "byond:toml_decode_file")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_toml_decode_file
 
 /// Whether the file at `path` is a valid TOML document.
 /// Returns false if it can't be read.
 ///
 /// Rust: `fn toml_file_is_valid(path: PathBuf) -> bool`
-#define aneri_raw_toml_file_is_valid(path) call_ext(__aneri_toml_file_is_valid ||= load_ext(ANERI, "byond:toml_file_is_valid"))(path)
+#define aneri_raw_toml_file_is_valid(path) __ANERI_EXT(__aneri_toml_file_is_valid, "byond:toml_file_is_valid")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_toml_file_is_valid
 
 /// How long a sound file is, in deciseconds.
@@ -717,7 +724,7 @@
 /// Runtimes if the file can't be opened or isn't a format it knows.
 ///
 /// Rust: `fn audio_length(path: PathBuf) -> ByondResult<Option<f32>>`
-#define aneri_audio_length(path) call_ext(__aneri_audio_length ||= load_ext(ANERI, "byond:audio_length"))(path)
+#define aneri_audio_length(path) __ANERI_EXT(__aneri_audio_length, "byond:audio_length")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_audio_length
 
 /// Decodes standard base64 (padding required) into text.
@@ -725,13 +732,13 @@
 /// Returns null if the input isn't valid base64.
 ///
 /// Rust: `fn base64_decode(data: String) -> Option<String>`
-#define aneri_base64_decode(data) call_ext(__aneri_base64_decode ||= load_ext(ANERI, "byond:base64_decode"))(data)
+#define aneri_base64_decode(data) __ANERI_EXT(__aneri_base64_decode, "byond:base64_decode")(data)
 /* This comment bypasses grep checks */ var/static/__aneri_base64_decode
 
 /// Encodes text as standard base64, with `=` padding.
 ///
 /// Rust: `fn base64_encode(data: String) -> String`
-#define aneri_base64_encode(data) call_ext(__aneri_base64_encode ||= load_ext(ANERI, "byond:base64_encode"))(data)
+#define aneri_base64_encode(data) __ANERI_EXT(__aneri_base64_encode, "byond:base64_encode")(data)
 /* This comment bypasses grep checks */ var/static/__aneri_base64_encode
 
 /// Decodes URL-safe base64 (padding required) into text.
@@ -739,14 +746,14 @@
 /// Returns null if the input isn't valid base64.
 ///
 /// Rust: `fn base64url_decode(data: String) -> Option<String>`
-#define aneri_base64url_decode(data) call_ext(__aneri_base64url_decode ||= load_ext(ANERI, "byond:base64url_decode"))(data)
+#define aneri_base64url_decode(data) __ANERI_EXT(__aneri_base64url_decode, "byond:base64url_decode")(data)
 /* This comment bypasses grep checks */ var/static/__aneri_base64url_decode
 
 /// Encodes text as URL-safe base64, with `=` padding.
 /// It uses `-` and `_` instead of `+` and `/`.
 ///
 /// Rust: `fn base64url_encode(data: String) -> String`
-#define aneri_base64url_encode(data) call_ext(__aneri_base64url_encode ||= load_ext(ANERI, "byond:base64url_encode"))(data)
+#define aneri_base64url_encode(data) __ANERI_EXT(__aneri_base64url_encode, "byond:base64url_encode")(data)
 /* This comment bypasses grep checks */ var/static/__aneri_base64url_encode
 
 /// A random, URL-safe id made of lowercase letters and digits,
@@ -756,14 +763,14 @@
 /// * length - (optional) How many characters. Null or 0 uses the default of 24.
 ///
 /// Rust: `fn cuid2(length: Option<u16>) -> String`
-#define aneri_cuid2(length...) call_ext(__aneri_cuid2 ||= load_ext(ANERI, "byond:cuid2"))(length)
+#define aneri_cuid2(length...) __ANERI_EXT(__aneri_cuid2, "byond:cuid2")(length)
 /* This comment bypasses grep checks */ var/static/__aneri_cuid2
 
 /// Like `aneri_levenshtein`,
 /// but swapping two characters next to each other also counts as one edit.
 ///
 /// Rust: `fn damerau_levenshtein(a: String, b: String) -> usize`
-#define aneri_damerau_levenshtein(a, b) call_ext(__aneri_damerau_levenshtein ||= load_ext(ANERI, "byond:damerau_levenshtein"))(a, b)
+#define aneri_damerau_levenshtein(a, b) __ANERI_EXT(__aneri_damerau_levenshtein, "byond:damerau_levenshtein")(a, b)
 /* This comment bypasses grep checks */ var/static/__aneri_damerau_levenshtein
 
 /// Turns Unicode text into plain ASCII, like `Æneid` into `AEneid`.
@@ -773,7 +780,7 @@
 /// * placeholder - (optional) Text for characters it can't convert, default `[?]`.
 ///
 /// Rust: `fn deunicode(string: String, placeholder: Option<String>) -> String`
-#define aneri_deunicode(string, placeholder...) call_ext(__aneri_deunicode ||= load_ext(ANERI, "byond:deunicode"))(string, placeholder)
+#define aneri_deunicode(string, placeholder...) __ANERI_EXT(__aneri_deunicode, "byond:deunicode")(string, placeholder)
 /* This comment bypasses grep checks */ var/static/__aneri_deunicode
 
 /// Resizes a PNG or DMI and saves it over the original file.
@@ -788,7 +795,7 @@
 /// * filter - (optional) One of the `ANERI_RESIZE_*` defines: `catmull`, `triangle`, `gaussian` or `lanczos3`. Anything else is nearest-neighbor.
 ///
 /// Rust: `fn dmi_resize_png(path: PathBuf, width: u32, height: u32, filter: Option<String>) -> ByondResult<()>`
-#define aneri_dmi_resize_png(path, width, height, filter...) call_ext(__aneri_dmi_resize_png ||= load_ext(ANERI, "byond:dmi_resize_png"))(path, width, height, filter)
+#define aneri_dmi_resize_png(path, width, height, filter...) __ANERI_EXT(__aneri_dmi_resize_png, "byond:dmi_resize_png")(path, width, height, filter)
 /* This comment bypasses grep checks */ var/static/__aneri_dmi_resize_png
 
 /// Adds text to the end of a file, creating it and any missing parent folders.
@@ -796,20 +803,20 @@
 /// Returns false on failure.
 ///
 /// Rust: `fn file_append(path: PathBuf, data: String) -> bool`
-#define aneri_file_append(path, data) call_ext(__aneri_file_append ||= load_ext(ANERI, "byond:file_append"))(path, data)
+#define aneri_file_append(path, data) __ANERI_EXT(__aneri_file_append, "byond:file_append")(path, data)
 /* This comment bypasses grep checks */ var/static/__aneri_file_append
 
 /// Deletes a file.
 /// Returns false on failure, including when it didn't exist.
 ///
 /// Rust: `fn file_delete(path: PathBuf) -> bool`
-#define aneri_file_delete(path) call_ext(__aneri_file_delete ||= load_ext(ANERI, "byond:file_delete"))(path)
+#define aneri_file_delete(path) __ANERI_EXT(__aneri_file_delete, "byond:file_delete")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_file_delete
 
 /// Whether a file or folder exists at `path`.
 ///
 /// Rust: `fn file_exists(path: PathBuf) -> bool`
-#define aneri_file_exists(path) call_ext(__aneri_file_exists ||= load_ext(ANERI, "byond:file_exists"))(path)
+#define aneri_file_exists(path) __ANERI_EXT(__aneri_file_exists, "byond:file_exists")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_file_exists
 
 /// Counts the `\n` characters in a file,
@@ -817,7 +824,7 @@
 /// Returns null if the file can't be opened.
 ///
 /// Rust: `fn file_get_line_count(path: PathBuf) -> Option<usize>`
-#define aneri_file_get_line_count(path) call_ext(__aneri_file_get_line_count ||= load_ext(ANERI, "byond:file_get_line_count"))(path)
+#define aneri_file_get_line_count(path) __ANERI_EXT(__aneri_file_get_line_count, "byond:file_get_line_count")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_file_get_line_count
 
 /// Reads a whole text file.
@@ -825,7 +832,7 @@
 /// Returns null if the file can't be read or isn't valid UTF-8.
 ///
 /// Rust: `fn file_read(path: PathBuf) -> Option<String>`
-#define aneri_file_read(path) call_ext(__aneri_file_read ||= load_ext(ANERI, "byond:file_read"))(path)
+#define aneri_file_read(path) __ANERI_EXT(__aneri_file_read, "byond:file_read")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_file_read
 
 /// Reads one line of a file, without its line ending.
@@ -838,7 +845,7 @@
 /// * line - Which line, counting from 0.
 ///
 /// Rust: `fn file_seek_line(path: PathBuf, line: usize) -> Option<String>`
-#define aneri_file_seek_line(path, line) call_ext(__aneri_file_seek_line ||= load_ext(ANERI, "byond:file_seek_line"))(path, line)
+#define aneri_file_seek_line(path, line) __ANERI_EXT(__aneri_file_seek_line, "byond:file_seek_line")(path, line)
 /* This comment bypasses grep checks */ var/static/__aneri_file_seek_line
 
 /// Writes text to a file, replacing what was there.
@@ -846,7 +853,7 @@
 /// Returns false on failure.
 ///
 /// Rust: `fn file_write(path: PathBuf, data: String) -> bool`
-#define aneri_file_write(path, data) call_ext(__aneri_file_write ||= load_ext(ANERI, "byond:file_write"))(path, data)
+#define aneri_file_write(path, data) __ANERI_EXT(__aneri_file_write, "byond:file_write")(path, data)
 /* This comment bypasses grep checks */ var/static/__aneri_file_write
 
 /// The current time, formatted with a strftime-style string,
@@ -859,7 +866,7 @@
 /// * offset - (optional) Hours from UTC, like -5. Null uses the server's own time zone.
 ///
 /// Rust: `fn format_timestamp(format: String, offset: Option<i32>) -> Option<String>`
-#define aneri_format_timestamp(format, offset...) call_ext(__aneri_format_timestamp ||= load_ext(ANERI, "byond:format_timestamp"))(format, offset)
+#define aneri_format_timestamp(format, offset...) __ANERI_EXT(__aneri_format_timestamp, "byond:format_timestamp")(format, offset)
 /* This comment bypasses grep checks */ var/static/__aneri_format_timestamp
 
 /// The commit date of a git revision, in UTC.
@@ -871,7 +878,7 @@
 /// * format - (optional) A strftime-style string, like `%Y-%m-%d %H:%M`. Null gives `%F`, which is `YYYY-MM-DD`.
 ///
 /// Rust: `fn git_commit_date(rev: String, format: Option<String>) -> Option<String>`
-#define aneri_git_commit_date(rev, format...) call_ext(__aneri_git_commit_date ||= load_ext(ANERI, "byond:git_commit_date"))(rev, format)
+#define aneri_git_commit_date(rev, format...) __ANERI_EXT(__aneri_git_commit_date, "byond:git_commit_date")(rev, format)
 /* This comment bypasses grep checks */ var/static/__aneri_git_commit_date
 
 /// When `HEAD` last moved, in UTC.
@@ -884,7 +891,7 @@
 /// * format - (optional) A strftime-style string, like `%Y-%m-%d %H:%M`. Null gives `%F`, which is `YYYY-MM-DD`.
 ///
 /// Rust: `fn git_commit_date_head(format: Option<String>) -> Option<String>`
-#define aneri_git_commit_date_head(format...) call_ext(__aneri_git_commit_date_head ||= load_ext(ANERI, "byond:git_commit_date_head"))(format)
+#define aneri_git_commit_date_head(format...) __ANERI_EXT(__aneri_git_commit_date_head, "byond:git_commit_date_head")(format)
 /* This comment bypasses grep checks */ var/static/__aneri_git_commit_date_head
 
 /// The full hash of a git revision, like `HEAD` or `master~3`.
@@ -894,14 +901,14 @@
 /// * rev - Anything `git rev-parse` accepts.
 ///
 /// Rust: `fn git_revparse(rev: String) -> Option<String>`
-#define aneri_git_revparse(rev) call_ext(__aneri_git_revparse ||= load_ext(ANERI, "byond:git_revparse"))(rev)
+#define aneri_git_revparse(rev) __ANERI_EXT(__aneri_git_revparse, "byond:git_revparse")(rev)
 /* This comment bypasses grep checks */ var/static/__aneri_git_revparse
 
 /// How many positions have a different character in `a` and `b`.
 /// Returns null if they aren't the same length.
 ///
 /// Rust: `fn hamming(a: String, b: String) -> Option<usize>`
-#define aneri_hamming(a, b) call_ext(__aneri_hamming ||= load_ext(ANERI, "byond:hamming"))(a, b)
+#define aneri_hamming(a, b) __ANERI_EXT(__aneri_hamming, "byond:hamming")(a, b)
 /* This comment bypasses grep checks */ var/static/__aneri_hamming
 
 /// Hashes text and returns the hash as lowercase hex.
@@ -914,7 +921,7 @@
 /// * data
 ///
 /// Rust: `fn hash(algorithm: String, data: String) -> Option<String>`
-#define aneri_hash(algorithm, data) call_ext(__aneri_hash ||= load_ext(ANERI, "byond:hash"))(algorithm, data)
+#define aneri_hash(algorithm, data) __ANERI_EXT(__aneri_hash, "byond:hash")(algorithm, data)
 /* This comment bypasses grep checks */ var/static/__aneri_hash
 
 /// Hashes a file and returns the hash as lowercase hex, like `aneri_hash`.
@@ -926,7 +933,7 @@
 /// * file
 ///
 /// Rust: `fn hash_file(algorithm: String, file: PathBuf) -> Option<String>`
-#define aneri_hash_file(algorithm, file) call_ext(__aneri_hash_file ||= load_ext(ANERI, "byond:hash_file"))(algorithm, file)
+#define aneri_hash_file(algorithm, file) __ANERI_EXT(__aneri_hash_file, "byond:hash_file")(algorithm, file)
 /* This comment bypasses grep checks */ var/static/__aneri_hash_file
 
 /// Decodes hex into text.
@@ -934,7 +941,7 @@
 /// Returns null if the input isn't valid hex.
 ///
 /// Rust: `fn hex_decode(input: String) -> Option<String>`
-#define aneri_hex_decode(input) call_ext(__aneri_hex_decode ||= load_ext(ANERI, "byond:hex_decode"))(input)
+#define aneri_hex_decode(input) __ANERI_EXT(__aneri_hex_decode, "byond:hex_decode")(input)
 /* This comment bypasses grep checks */ var/static/__aneri_hex_decode
 
 /// Encodes text as hex, two characters per byte.
@@ -944,28 +951,28 @@
 /// * upper - (optional) Use `A-F` instead of `a-f`, default false.
 ///
 /// Rust: `fn hex_encode(input: String, upper: Option<bool>) -> String`
-#define aneri_hex_encode(input, upper...) call_ext(__aneri_hex_encode ||= load_ext(ANERI, "byond:hex_encode"))(input, upper)
+#define aneri_hex_encode(input, upper...) __ANERI_EXT(__aneri_hex_encode, "byond:hex_encode")(input, upper)
 /* This comment bypasses grep checks */ var/static/__aneri_hex_encode
 
 /// The current UTC time, like `2026-11-19 14:03:27.512`.
 /// Same format as the timestamps in `aneri_log_write`.
 ///
 /// Rust: `fn human_readable_timestamp() -> String`
-#define aneri_human_readable_timestamp(...) call_ext(__aneri_human_readable_timestamp ||= load_ext(ANERI, "byond:human_readable_timestamp"))()
+#define aneri_human_readable_timestamp(...) __ANERI_EXT(__aneri_human_readable_timestamp, "byond:human_readable_timestamp")()
 /* This comment bypasses grep checks */ var/static/__aneri_human_readable_timestamp
 
 /// Whether `json` is valid JSON.
 /// Use DM's `json_decode()` to actually decode it.
 ///
 /// Rust: `fn json_is_valid(json: String) -> bool`
-#define aneri_json_is_valid(json) call_ext(__aneri_json_is_valid ||= load_ext(ANERI, "byond:json_is_valid"))(json)
+#define aneri_json_is_valid(json) __ANERI_EXT(__aneri_json_is_valid, "byond:json_is_valid")(json)
 /* This comment bypasses grep checks */ var/static/__aneri_json_is_valid
 
 /// How many single-character inserts, deletes or substitutions
 /// turn `a` into `b`.
 ///
 /// Rust: `fn levenshtein(a: String, b: String) -> usize`
-#define aneri_levenshtein(a, b) call_ext(__aneri_levenshtein ||= load_ext(ANERI, "byond:levenshtein"))(a, b)
+#define aneri_levenshtein(a, b) __ANERI_EXT(__aneri_levenshtein, "byond:levenshtein")(a, b)
 /* This comment bypasses grep checks */ var/static/__aneri_levenshtein
 
 /// Finishes writing every queued message, then closes all log files.
@@ -973,7 +980,7 @@
 /// The next `aneri_log_write` to a path opens it again.
 ///
 /// Rust: `fn log_close_all()`
-#define aneri_log_close_all(...) call_ext(__aneri_log_close_all ||= load_ext(ANERI, "byond:log_close_all"))()
+#define aneri_log_close_all(...) __ANERI_EXT(__aneri_log_close_all, "byond:log_close_all")()
 /* This comment bypasses grep checks */ var/static/__aneri_log_close_all
 
 /// Queues a message to be appended to a log file.
@@ -986,14 +993,14 @@
 /// * format - (optional) When true (the default), the first line gets a UTC timestamp, later lines start with ` - `, and a newline is added. False writes `message` exactly as given.
 ///
 /// Rust: `fn log_write(path: PathBuf, message: String, format: Option<bool>) -> bool`
-#define aneri_log_write(path, message, format...) call_ext(__aneri_log_write ||= load_ext(ANERI, "byond:log_write"))(path, message, format)
+#define aneri_log_write(path, message, format...) __ANERI_EXT(__aneri_log_write, "byond:log_write")(path, message, format)
 /* This comment bypasses grep checks */ var/static/__aneri_log_write
 
 /// Creates a folder and any missing parents.
 /// Returns true if the folder exists afterwards, even if it already did.
 ///
 /// Rust: `fn mkdir(path: PathBuf) -> bool`
-#define aneri_mkdir(path) call_ext(__aneri_mkdir ||= load_ext(ANERI, "byond:mkdir"))(path)
+#define aneri_mkdir(path) __ANERI_EXT(__aneri_mkdir, "byond:mkdir")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_mkdir
 
 /// Noise value at one point, from 0 to 1.
@@ -1012,21 +1019,21 @@
 /// * octaves - (optional)
 ///
 /// Rust: `fn noise_at(kind: String, seed: u32, x: f32, y: f32, frequency: Option<f32>, octaves: Option<u32>) -> ByondResult<f32>`
-#define aneri_noise_at(kind, seed, x, y, frequency...) call_ext(__aneri_noise_at ||= load_ext(ANERI, "byond:noise_at"))(kind, seed, x, y, frequency)
+#define aneri_noise_at(kind, seed, x, y, frequency...) __ANERI_EXT(__aneri_noise_at, "byond:noise_at")(kind, seed, x, y, frequency)
 /* This comment bypasses grep checks */ var/static/__aneri_noise_at
 
 /// `aneri_damerau_levenshtein` scaled from 0 to 1,
 /// where 1 means the strings are the same.
 ///
 /// Rust: `fn normalized_damerau_levenshtein(a: String, b: String) -> f32`
-#define aneri_normalized_damerau_levenshtein(a, b) call_ext(__aneri_normalized_damerau_levenshtein ||= load_ext(ANERI, "byond:normalized_damerau_levenshtein"))(a, b)
+#define aneri_normalized_damerau_levenshtein(a, b) __ANERI_EXT(__aneri_normalized_damerau_levenshtein, "byond:normalized_damerau_levenshtein")(a, b)
 /* This comment bypasses grep checks */ var/static/__aneri_normalized_damerau_levenshtein
 
 /// `aneri_levenshtein` scaled from 0 to 1,
 /// where 1 means the strings are the same.
 ///
 /// Rust: `fn normalized_levenshtein(a: String, b: String) -> f32`
-#define aneri_normalized_levenshtein(a, b) call_ext(__aneri_normalized_levenshtein ||= load_ext(ANERI, "byond:normalized_levenshtein"))(a, b)
+#define aneri_normalized_levenshtein(a, b) __ANERI_EXT(__aneri_normalized_levenshtein, "byond:normalized_levenshtein")(a, b)
 /* This comment bypasses grep checks */ var/static/__aneri_normalized_levenshtein
 
 /// Escapes each string in `patterns` and joins them with `|`.
@@ -1034,14 +1041,14 @@
 /// One call instead of calling `aneri_regex_escape` in a loop.
 ///
 /// Rust: `fn regex_combine_list(patterns: Vec<String>) -> String`
-#define aneri_regex_combine_list(patterns) call_ext(__aneri_regex_combine_list ||= load_ext(ANERI, "byond:regex_combine_list"))(patterns)
+#define aneri_regex_combine_list(patterns) __ANERI_EXT(__aneri_regex_combine_list, "byond:regex_combine_list")(patterns)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_combine_list
 
 /// Escapes every special regex character in `pattern`.
 /// The result matches `pattern` as plain text.
 ///
 /// Rust: `fn regex_escape(pattern: String) -> String`
-#define aneri_regex_escape(pattern) call_ext(__aneri_regex_escape ||= load_ext(ANERI, "byond:regex_escape"))(pattern)
+#define aneri_regex_escape(pattern) __ANERI_EXT(__aneri_regex_escape, "byond:regex_escape")(pattern)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_escape
 
 /// Whether `regex` matches anywhere in `haystack`.
@@ -1050,7 +1057,7 @@
 /// The last 32 patterns stay compiled, so reusing one is cheap.
 ///
 /// Rust: `fn regex_is_match(regex: String, haystack: String) -> ByondResult<bool>`
-#define aneri_regex_is_match(regex, haystack) call_ext(__aneri_regex_is_match ||= load_ext(ANERI, "byond:regex_is_match"))(regex, haystack)
+#define aneri_regex_is_match(regex, haystack) __ANERI_EXT(__aneri_regex_is_match, "byond:regex_is_match")(regex, haystack)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_is_match
 
 /// Replaces the first match of `regex` in `haystack`.
@@ -1062,7 +1069,7 @@
 /// * with - The replacement. `$1` or `$name` inserts a capture group, `$$` is a literal `$`.
 ///
 /// Rust: `fn regex_replace(regex: String, haystack: String, with: String) -> ByondResult<ByondValue>`
-#define aneri_regex_replace(regex, haystack, with) call_ext(__aneri_regex_replace ||= load_ext(ANERI, "byond:regex_replace"))(regex, haystack, with)
+#define aneri_regex_replace(regex, haystack, with) __ANERI_EXT(__aneri_regex_replace, "byond:regex_replace")(regex, haystack, with)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_replace
 
 /// Replaces every match of `regex` in `haystack`.
@@ -1074,34 +1081,34 @@
 /// * with - The replacement. `$1` or `$name` inserts a capture group, `$$` is a literal `$`.
 ///
 /// Rust: `fn regex_replace_all(regex: String, haystack: String, with: String) -> ByondResult<ByondValue>`
-#define aneri_regex_replace_all(regex, haystack, with) call_ext(__aneri_regex_replace_all ||= load_ext(ANERI, "byond:regex_replace_all"))(regex, haystack, with)
+#define aneri_regex_replace_all(regex, haystack, with) __ANERI_EXT(__aneri_regex_replace_all, "byond:regex_replace_all")(regex, haystack, with)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_replace_all
 
 /// Splits `haystack` on every match of `regex` and returns the pieces.
 /// Runtimes on an invalid pattern.
 ///
 /// Rust: `fn regex_split(regex: String, haystack: String) -> ByondResult<ByondValue>`
-#define aneri_regex_split(regex, haystack) call_ext(__aneri_regex_split ||= load_ext(ANERI, "byond:regex_split"))(regex, haystack)
+#define aneri_regex_split(regex, haystack) __ANERI_EXT(__aneri_regex_split, "byond:regex_split")(regex, haystack)
 /* This comment bypasses grep checks */ var/static/__aneri_regex_split
 
 /// Deletes a folder and everything inside it.
 /// Returns false on failure.
 ///
 /// Rust: `fn rmdir(path: PathBuf) -> bool`
-#define aneri_rmdir(path) call_ext(__aneri_rmdir ||= load_ext(ANERI, "byond:rmdir"))(path)
+#define aneri_rmdir(path) __ANERI_EXT(__aneri_rmdir, "byond:rmdir")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_rmdir
 
 /// Decodes a TOML document into an assoc list.
 /// Runtimes if it isn't valid TOML.
 ///
 /// Rust: `fn toml_decode(toml: String) -> ByondResult<ByondValue>`
-#define aneri_toml_decode(toml) call_ext(__aneri_toml_decode ||= load_ext(ANERI, "byond:toml_decode"))(toml)
+#define aneri_toml_decode(toml) __ANERI_EXT(__aneri_toml_decode, "byond:toml_decode")(toml)
 /* This comment bypasses grep checks */ var/static/__aneri_toml_decode
 
 /// Whether `toml` is a valid TOML document.
 ///
 /// Rust: `fn toml_is_valid(toml: String) -> bool`
-#define aneri_toml_is_valid(toml) call_ext(__aneri_toml_is_valid ||= load_ext(ANERI, "byond:toml_is_valid"))(toml)
+#define aneri_toml_is_valid(toml) __ANERI_EXT(__aneri_toml_is_valid, "byond:toml_is_valid")(toml)
 /* This comment bypasses grep checks */ var/static/__aneri_toml_is_valid
 
 /// Checks a TOTP code against a secret, using HMAC-SHA1.
@@ -1116,7 +1123,7 @@
 /// * step - (optional) Seconds each code lasts, default 30.
 ///
 /// Rust: `fn totp_check_sha1(token: String, secret: String, digits: Option<usize>, skew: Option<u8>, step: Option<u64>) -> Option<bool>`
-#define aneri_totp_check_sha1(token, secret, digits...) call_ext(__aneri_totp_check_sha1 ||= load_ext(ANERI, "byond:totp_check_sha1"))(token, secret, digits)
+#define aneri_totp_check_sha1(token, secret, digits...) __ANERI_EXT(__aneri_totp_check_sha1, "byond:totp_check_sha1")(token, secret, digits)
 /* This comment bypasses grep checks */ var/static/__aneri_totp_check_sha1
 
 /// Checks a TOTP code against a secret, using HMAC-SHA256.
@@ -1130,7 +1137,7 @@
 /// * step - (optional) Seconds each code lasts, default 30.
 ///
 /// Rust: `fn totp_check_sha256(token: String, secret: String, digits: Option<usize>, skew: Option<u8>, step: Option<u64>) -> Option<bool>`
-#define aneri_totp_check_sha256(token, secret, digits...) call_ext(__aneri_totp_check_sha256 ||= load_ext(ANERI, "byond:totp_check_sha256"))(token, secret, digits)
+#define aneri_totp_check_sha256(token, secret, digits...) __ANERI_EXT(__aneri_totp_check_sha256, "byond:totp_check_sha256")(token, secret, digits)
 /* This comment bypasses grep checks */ var/static/__aneri_totp_check_sha256
 
 /// Checks a TOTP code against a secret, using HMAC-SHA512.
@@ -1144,7 +1151,7 @@
 /// * step - (optional) Seconds each code lasts, default 30.
 ///
 /// Rust: `fn totp_check_sha512(token: String, secret: String, digits: Option<usize>, skew: Option<u8>, step: Option<u64>) -> Option<bool>`
-#define aneri_totp_check_sha512(token, secret, digits...) call_ext(__aneri_totp_check_sha512 ||= load_ext(ANERI, "byond:totp_check_sha512"))(token, secret, digits)
+#define aneri_totp_check_sha512(token, secret, digits...) __ANERI_EXT(__aneri_totp_check_sha512, "byond:totp_check_sha512")(token, secret, digits)
 /* This comment bypasses grep checks */ var/static/__aneri_totp_check_sha512
 
 /// The current TOTP code for a secret, using HMAC-SHA1.
@@ -1158,7 +1165,7 @@
 /// * step - (optional) Seconds each code lasts, default 30.
 ///
 /// Rust: `fn totp_gen_sha1(secret: String, digits: Option<usize>, skew: Option<u8>, step: Option<u64>) -> String`
-#define aneri_totp_gen_sha1(secret, digits...) call_ext(__aneri_totp_gen_sha1 ||= load_ext(ANERI, "byond:totp_gen_sha1"))(secret, digits)
+#define aneri_totp_gen_sha1(secret, digits...) __ANERI_EXT(__aneri_totp_gen_sha1, "byond:totp_gen_sha1")(secret, digits)
 /* This comment bypasses grep checks */ var/static/__aneri_totp_gen_sha1
 
 /// The current TOTP code for a secret, using HMAC-SHA256.
@@ -1171,7 +1178,7 @@
 /// * step - (optional) Seconds each code lasts, default 30.
 ///
 /// Rust: `fn totp_gen_sha256(secret: String, digits: Option<usize>, skew: Option<u8>, step: Option<u64>) -> String`
-#define aneri_totp_gen_sha256(secret, digits...) call_ext(__aneri_totp_gen_sha256 ||= load_ext(ANERI, "byond:totp_gen_sha256"))(secret, digits)
+#define aneri_totp_gen_sha256(secret, digits...) __ANERI_EXT(__aneri_totp_gen_sha256, "byond:totp_gen_sha256")(secret, digits)
 /* This comment bypasses grep checks */ var/static/__aneri_totp_gen_sha256
 
 /// The current TOTP code for a secret, using HMAC-SHA512.
@@ -1184,39 +1191,39 @@
 /// * step - (optional) Seconds each code lasts, default 30.
 ///
 /// Rust: `fn totp_gen_sha512(secret: String, digits: Option<usize>, skew: Option<u8>, step: Option<u64>) -> String`
-#define aneri_totp_gen_sha512(secret, digits...) call_ext(__aneri_totp_gen_sha512 ||= load_ext(ANERI, "byond:totp_gen_sha512"))(secret, digits)
+#define aneri_totp_gen_sha512(secret, digits...) __ANERI_EXT(__aneri_totp_gen_sha512, "byond:totp_gen_sha512")(secret, digits)
 /* This comment bypasses grep checks */ var/static/__aneri_totp_gen_sha512
 
 /// Seconds since 1970 in UTC, with microseconds, like `1763500000.123456`.
 /// It's text because a DM number can't hold that many digits.
 ///
 /// Rust: `fn unix_timestamp() -> String`
-#define aneri_unix_timestamp(...) call_ext(__aneri_unix_timestamp ||= load_ext(ANERI, "byond:unix_timestamp"))()
+#define aneri_unix_timestamp(...) __ANERI_EXT(__aneri_unix_timestamp, "byond:unix_timestamp")()
 /* This comment bypasses grep checks */ var/static/__aneri_unix_timestamp
 
 /// Decodes a URL-encoded string, turning `+` into a space.
 /// Never fails: bad `%` sequences are left as they are.
 ///
 /// Rust: `fn url_decode(encoded: String) -> String`
-#define aneri_url_decode(encoded) call_ext(__aneri_url_decode ||= load_ext(ANERI, "byond:url_decode"))(encoded)
+#define aneri_url_decode(encoded) __ANERI_EXT(__aneri_url_decode, "byond:url_decode")(encoded)
 /* This comment bypasses grep checks */ var/static/__aneri_url_decode
 
 /// Encodes text for a URL query string or form body.
 /// Spaces become `+`.
 ///
 /// Rust: `fn url_encode(data: String) -> String`
-#define aneri_url_encode(data) call_ext(__aneri_url_encode ||= load_ext(ANERI, "byond:url_encode"))(data)
+#define aneri_url_encode(data) __ANERI_EXT(__aneri_url_encode, "byond:url_encode")(data)
 /* This comment bypasses grep checks */ var/static/__aneri_url_encode
 
 /// A random UUID, like `67e55044-10b1-426f-9247-bb680e5fe0c8`.
 ///
 /// Rust: `fn uuid_v4() -> String`
-#define aneri_uuid_v4(...) call_ext(__aneri_uuid_v4 ||= load_ext(ANERI, "byond:uuid_v4"))()
+#define aneri_uuid_v4(...) __ANERI_EXT(__aneri_uuid_v4, "byond:uuid_v4")()
 /* This comment bypasses grep checks */ var/static/__aneri_uuid_v4
 
 /// A UUID that starts with the current time,
 /// so newer ones sort after older ones.
 ///
 /// Rust: `fn uuid_v7() -> String`
-#define aneri_uuid_v7(...) call_ext(__aneri_uuid_v7 ||= load_ext(ANERI, "byond:uuid_v7"))()
+#define aneri_uuid_v7(...) __ANERI_EXT(__aneri_uuid_v7, "byond:uuid_v7")()
 /* This comment bypasses grep checks */ var/static/__aneri_uuid_v7
