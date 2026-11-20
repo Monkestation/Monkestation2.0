@@ -444,6 +444,24 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/ghost_hunter_goggles
+	name = "Ghost Hunter Goggles"
+	desc = "Experimental goggles that utilize an ectoplasm anomaly core to allow the wearer see through walls, darkness, cloaking fields and phased bodies."
+	id = "ghost_hunter_goggles"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/clothing/glasses/ghost_hunter
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/donksoft_refill
 	name = "Donksoft Toy Vendor Refill"
 	desc = "A refill canister for Donksoft Toy Vendors."

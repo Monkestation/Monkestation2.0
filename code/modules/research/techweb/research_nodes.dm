@@ -124,6 +124,7 @@
 		"phantasmal_injector",
 		"cybernetic_heart_anomalock",
 		"cybernetic_liver_bioscrambler",
+		"ghost_hunter_goggles",
 		"space_furnace",
 		//"artifact_heater", //MONKESTATION EDIT REMOVAL
 		//"artifact_xray",	//MONKESTATION EDIT REMOVAL

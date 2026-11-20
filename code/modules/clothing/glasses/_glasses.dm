@@ -720,3 +720,181 @@
 /obj/item/clothing/glasses/nightmare_vision/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, 13)
+
+/obj/item/clothing/glasses/ghost_hunter
+	name = "ghost hunter goggles"
+	desc = "Goggles tuned to the spectral energy of an ectoplasm anomaly core. This makes walls, darkness, cloaking fields, and jaunting entities visible. Nothing can hide from the wearer.(Except hiding in a locker). Requires an ectoplasm core to function."
+	icon = 'icons/obj/clothing/ghost_hunter_goggles.dmi'
+	worn_icon = 'icons/mob/clothing/ghost_hunter_goggles.dmi'
+	icon_state = "ghostgoggles"
+	worn_icon_state = "ghostgoggles_on"
+	inhand_icon_state = "glasses"
+
+	///The core item the goggles run off.
+	var/obj/item/assembly/signaler/anomaly/core
+	///Accepted type of anomaly core.
+	var/required_anomaly = /obj/item/assembly/signaler/anomaly/ectoplasm
+	///If the core is removable once socketed.
+	var/core_removable = TRUE
+	///Who is wearing the goggles.
+	var/mob/living/carbon/human/wearer
+	///The client we have put our images on.
+	var/client/tracked_client
+	///Images of hidden mobs shown to the wearer. Assoc list of mob = image.
+	var/list/tracked_images = list()
+	///How far away from the wearer we look for hidden mobs.
+	var/tracking_range = 9
+
+/obj/item/clothing/glasses/ghost_hunter/Destroy()
+	stop_tracking()
+	wearer = null
+	core = null
+	return ..()
+
+/obj/item/clothing/glasses/ghost_hunter/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state) + (core ? "_on" : "")
+
+// No putting on without inserting core first
+/obj/item/clothing/glasses/ghost_hunter/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+	if((slot & ITEM_SLOT_EYES) && !core)
+		if(!disable_warning && M)
+			M.balloon_alert(M, "needs an ectoplasm core!")
+		return FALSE
+	return ..()
+
+/obj/item/clothing/glasses/ghost_hunter/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_EYES) || !istype(user))
+		return
+	wearer = user
+	if(core)
+		ADD_TRAIT(wearer, TRAIT_XRAY_VISION, REF(src))
+		start_tracking()
+
+/obj/item/clothing/glasses/ghost_hunter/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(!wearer)
+		return
+	REMOVE_TRAIT(wearer, TRAIT_XRAY_VISION, REF(src))
+	stop_tracking()
+	wearer = null
+
+/obj/item/clothing/glasses/ghost_hunter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, required_anomaly))
+		return NONE
+	if(core)
+		balloon_alert(user, "core already in!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	core = tool
+	balloon_alert(user, "core installed")
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	set_core_effects(TRUE)
+	update_icon_state()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/clothing/glasses/ghost_hunter/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!core)
+		balloon_alert(user, "no core!")
+		return
+	if(wearer)
+		balloon_alert(user, "take them off first!")
+		return
+	if(!core_removable)
+		balloon_alert(user, "can't remove core!")
+		return
+	balloon_alert(user, "removing core...")
+	if(!do_after(user, 3 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
+		return
+	balloon_alert(user, "core removed")
+	core.forceMove(drop_location())
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(core)
+	core = null
+	set_core_effects(FALSE)
+	update_icon_state()
+
+/// Sets the goggles' powered vision on or off, and refreshes the wearer's sight
+/obj/item/clothing/glasses/ghost_hunter/proc/set_core_effects(active)
+	if(active)
+		vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
+		lighting_cutoff = LIGHTING_CUTOFF_HIGH
+		invis_override = SEE_INVISIBLE_OBSERVER
+	else
+		vision_flags = initial(vision_flags)
+		lighting_cutoff = initial(lighting_cutoff)
+		invis_override = initial(invis_override)
+	if(!wearer)
+		return
+	if(active)
+		ADD_TRAIT(wearer, TRAIT_XRAY_VISION, REF(src))
+		start_tracking()
+	else
+		REMOVE_TRAIT(wearer, TRAIT_XRAY_VISION, REF(src))
+		stop_tracking()
+	wearer.update_sight()
+
+/obj/item/clothing/glasses/ghost_hunter/proc/start_tracking()
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/clothing/glasses/ghost_hunter/proc/stop_tracking()
+	STOP_PROCESSING(SSfastprocess, src)
+	clear_images()
+
+/// Takes every image we showed off the client
+/obj/item/clothing/glasses/ghost_hunter/proc/clear_images()
+	if(tracked_client)
+		for(var/hidden_mob in tracked_images)
+			tracked_client.images -= tracked_images[hidden_mob]
+	tracked_images.Cut()
+	tracked_client = null
+
+/// Mobs that are jaunting or cloaked are drawn on the wearer's screen at full strength
+/obj/item/clothing/glasses/ghost_hunter/process(seconds_per_tick)
+	if(QDELETED(wearer) || !core)
+		stop_tracking()
+		return
+	var/client/viewer = wearer.client
+	if(viewer != tracked_client)
+		clear_images()
+		tracked_client = viewer
+	if(!viewer)
+		return
+
+	// Mob = the thing to anchor its image to. Jaunters are inside a phased mob dummy, so they have to be looked for through it
+	var/list/hidden = list()
+	for(var/obj/effect/dummy/phased_mob/jaunt in range(tracking_range, wearer))
+		if(ismob(jaunt.jaunter) && jaunt.jaunter != wearer)
+			hidden[jaunt.jaunter] = jaunt
+	// Cloaks fade the mob out with alpha, which seeing invisible doesn't cancel
+	for(var/mob/living/cloaked in range(tracking_range, wearer))
+		if(cloaked != wearer && cloaked.alpha < 255)
+			hidden[cloaked] = cloaked
+
+	for(var/hidden_mob in tracked_images.Copy())
+		if(hidden[hidden_mob])
+			continue
+		viewer.images -= tracked_images[hidden_mob]
+		tracked_images -= hidden_mob
+
+	for(var/mob/hidden_mob as anything in hidden)
+		var/atom/anchor = hidden[hidden_mob]
+		var/image/shown = tracked_images[hidden_mob]
+		if(!shown)
+			shown = image(loc = anchor)
+			tracked_images[hidden_mob] = shown
+			viewer.images += shown
+		shown.appearance = hidden_mob.appearance
+		shown.alpha = 255
+		shown.loc = anchor
+
+/// Goggles but pre-installed with core.
+/obj/item/clothing/glasses/ghost_hunter/prebuilt/Initialize(mapload)
+	. = ..()
+	core = new required_anomaly(src)
+	set_core_effects(TRUE)
+	update_icon_state()

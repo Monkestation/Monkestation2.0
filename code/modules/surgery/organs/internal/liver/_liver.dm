@@ -384,12 +384,6 @@
 	///Stops a burst of EMPs from stacking a pile of mutations at once.
 	COOLDOWN_DECLARE(emp_mutation_cooldown)
 
-/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/examine(mob/user)
-	. = ..()
-	. += span_notice("The core socket is [core ? "loaded" : "empty, it needs a bioscrambler anomaly core"].")
-	if(core && core_removable)
-		. += span_notice("The core can be removed with a <b>screwdriver</b>.")
-
 /obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(core)
@@ -462,9 +456,6 @@
 	. = ..()
 	if(!core)
 		balloon_alert(user, "no core!")
-		return
-	if(owner)
-		balloon_alert(user, "remove the liver first!")
 		return
 	if(!core_removable)
 		balloon_alert(user, "can't remove core!")
