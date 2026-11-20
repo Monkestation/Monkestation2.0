@@ -47,7 +47,6 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 		var/datum/uplink_purchase_entry/UPE = purchase_log[hash]
 		var/purchase_html = "<span class='tooltip_container'>\[[UPE.icon_b64][show_key?"([owner])":""]<span class='tooltip_hover'><b>[UPE.name]</b><br>[UPE.spent_cost ? "[UPE.spent_cost] TC" : "[UPE.base_cost] TC<br>(Surplus)"]<br>[UPE.desc]</span>[(UPE.amount_purchased > 1) ? "x[UPE.amount_purchased]" : ""]\]</span>"
 		var/contents_html = UPE.get_contents_render()
-		// A kit or crate gets its own row so it's clear which items came out of it
 		. += contents_html ? "<div class='purchase_row'>[purchase_html][contents_html]</div>" : purchase_html
 
 /// bought_contents is what a kit or crate held, as name = list(amount, icon html, TC cost, description)
@@ -85,7 +84,6 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 	/// What the kit or crate held, as name = list(amount, icon html, TC cost, description). Added up if it was bought more than once
 	var/list/contents_list = list()
 
-/// Adds what was found in a kit or crate to what we know it held
 /datum/uplink_purchase_entry/proc/add_contents(item_name, list/contents_entry)
 	var/list/existing = contents_list[item_name]
 	if(existing)
@@ -93,7 +91,6 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 	else
 		contents_list[item_name] = contents_entry.Copy()
 
-/// The contents as icons shown right next to the purchase, each with its name on hover
 /datum/uplink_purchase_entry/proc/get_contents_render()
 	if(!length(contents_list))
 		return ""

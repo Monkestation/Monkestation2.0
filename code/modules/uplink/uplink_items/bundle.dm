@@ -113,7 +113,6 @@
 		return null
 	return uplink_item
 
-/// Remembers what ended up in the crate so the round end log can show it.
 /datum/uplink_item/bundles_tc/surplus/proc/log_crate_contents(datum/uplink_handler/handler, obj/structure/closet/crate/surplus_crate)
 	var/list/crate_items = surplus_crate.contents.Copy()
 	// United surplus crates still show you their contents at roundend even when you haven't opened it, so it shows you what you missed out on and can salt about it.
