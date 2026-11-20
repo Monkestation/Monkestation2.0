@@ -75,7 +75,7 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
 	// a floating layer would draw these over the adapter body, they need to sit just under it
-	var/mutable_appearance/muta = mutable_appearance('icons/obj/pipes_n_cables/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = layer - 0.01, appearance_flags = RESET_COLOR|KEEP_APART)
+	var/mutable_appearance/muta = mutable_appearance('icons/obj/pipes_n_cables/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = layer - 0.01, offset_spokesman = src, plane = PLANE_TO_TRUE(plane) == FLOOR_PLANE ? FLOOR_PLANE : FLOAT_PLANE, appearance_flags = RESET_COLOR|KEEP_APART)
 	muta.color = p_color
 	return muta
 
