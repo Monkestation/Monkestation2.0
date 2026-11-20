@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Players with a fresh character save no longer spawn as ghosts at roundstart."
