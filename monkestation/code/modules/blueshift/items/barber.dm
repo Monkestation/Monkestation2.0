@@ -578,6 +578,8 @@
 
 
 /obj/item/razor/attack(mob/attacked_mob, mob/living/user)
+	if(SEND_SIGNAL(attacked_mob, COMSIG_MOB_SHEARED, toolspeed, src, user))
+		return
 	if(!ishuman(attacked_mob))
 		return ..()
 

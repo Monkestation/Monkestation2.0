@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "the Electric-Buzz lure, artificial minnow, plug lure and Indy spoon actually attract fish again, and examining them lists what they catch"

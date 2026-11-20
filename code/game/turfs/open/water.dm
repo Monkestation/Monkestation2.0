@@ -15,7 +15,6 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
-	astar_weight = 75
 	///Do we give the player_sink component
 	var/sinking = FALSE
 	///If we have one then what should our player_sink max_sinkage be set to, leave unset for default sinkage

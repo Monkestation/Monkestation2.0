@@ -55,6 +55,7 @@
 	name = "Syndicate Infiltrator EVA"
 
 /area/shuttle/syndicate/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Syndicate Infiltrator Hall"
 
 /area/shuttle/syndicate/engineering
@@ -72,6 +73,10 @@
 /area/shuttle/pirate/flying_dutchman
 	name = "Flying Dutchman"
 	requires_power = FALSE
+
+/area/shuttle/pirate/siren
+	has_gravity = FALSE
+	area_flags = NO_GRAVITY
 
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
