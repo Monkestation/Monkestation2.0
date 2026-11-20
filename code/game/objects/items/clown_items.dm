@@ -4,6 +4,7 @@
  * Bike Horns
  * Air Horns
  * Canned Laughter
+ * Noisemaker
  */
 
 /*
@@ -242,3 +243,77 @@
 	icon_state = "laughter"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/laughter = 50)
+/*
+ * Noisemaker - Clown Soundboard
+ */
+/obj/item/noisemaker
+	name = "\improper noisemaker"
+	desc = "A revolutionary technology imported directly from Clown Plant. The label says \"Right click on this to change the selected sound effect.\""
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "noisemaker"
+	inhand_icon_state = "noisemaker"
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_POCKETS
+	w_class = WEIGHT_CLASS_SMALL
+	throw_speed = 3
+	throw_range = 7
+	attack_verb_continuous = list("POWS")
+	attack_verb_simple = list("POW")
+	COOLDOWN_DECLARE(noisemaker_cooldown)
+	var/sound_effects = list(
+							"Bikehorn" = 'sound/items/bikehorn.ogg',
+							"Airhorn" = 'sound/items/airhorn/airhorn2.ogg',
+							"Behind You" = 'sound/effects/hallucinations/behind_you1.ogg',
+							"I am the Law" = 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg',
+							"Prepare for Justice" = 'sound/mobs/non-humanoids/beepsky/justice.ogg',
+							"Cluwne Laugh 1" = 'sound/mobs/humanoids/cluwne/laugh/cluwne_laugh1.ogg',
+							"Cluwne Laugh 2" = 'sound/mobs/humanoids/cluwne/laugh/cluwne_laugh2.ogg',
+							"Cluwne Scream 1" = 'sound/mobs/humanoids/cluwne/scream/cluwne_scream1.ogg',
+							"Cluwne Scream 2" = 'sound/mobs/humanoids/cluwne/scream/cluwne_scream2.ogg',
+							"Scary Horn" = 'sound/misc/scary_horn.ogg',
+							"Terror" = 'sound/voice/terror.ogg',
+							"Weh" = 'sound/mobs/humanoids/lizard/weh.ogg',
+							"Flash" = 'sound/items/weapons/flash.ogg',
+							"Laser" = 'sound/items/weapons/laser.ogg',
+							"Smash" = 'sound/items/weapons/smash.ogg',
+							"Anime" = 'sound/misc/anime.ogg',
+							"Bang" = 'sound/misc/bang.ogg',
+							"Guitar Reverb" = 'sound/misc/guitarreverb.ogg',
+							"Monkeystorm" = 'sound/misc/monkeystorm.ogg',
+							"Emergency Meeting" = 'sound/misc/emergency_meeting.ogg',
+							"Skeletal Laugh" = 'sound/misc/spinal_laugh.ogg',
+							"Bwoink" = 'sound/effects/adminhelp.ogg',
+							"Supermatter" = 'sound/effects/supermatter.ogg',
+							)
+	var/current_sound = 'sound/items/bikehorn.ogg'
+	var/cooldown_time = 5 SECONDS //Subject to change
+	var/extra_sound_range = 0
+	var/sound_volume = 30
+
+/obj/item/noisemaker/attack_self(mob/user)
+	make_noise()
+	..()
+
+/obj/item/noisemaker/afterattack()
+	make_noise()
+	..()
+
+/obj/item/noisemaker/proc/make_noise()
+	if(!COOLDOWN_FINISHED(src, noisemaker_cooldown))
+		return
+	COOLDOWN_START(src, noisemaker_cooldown, cooldown_time)
+	playsound(src, current_sound, sound_volume, FALSE, extra_sound_range, channel = CHANNEL_INSTRUMENTS)
+
+/obj/item/noisemaker/attack_self_secondary(mob/user) //Selecting the sound to play
+	current_sound = sound_effects[tgui_input_list(user, "Select a sound", "Noisemaker", sort_list(sound_effects))]
+
+/obj/item/noisemaker/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] sticks [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(src, current_sound, sound_volume * 2, FALSE, 10) //Play the selected sfx at double volume and add 10 to the range
+	return BRUTELOSS
+
+/obj/item/noisemaker/emag_act(mob/living/user)
+	user.visible_message(span_warning("The [src] flashes wildly!"))
+	cooldown_time = 0.5 SECONDS //Lower the cooldown to half a second
+	extra_sound_range = 5 //Adds 5 tiles to the sound's range
+	sound_volume = 60 //Sets the double to triple the normal
+
