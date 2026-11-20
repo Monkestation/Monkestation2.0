@@ -21,4 +21,5 @@
 
 
 /datum/quirk/intrusivethoughts/remove()
-	QDEL_NULL(added_trama_ref)
+	qdel(added_trama_ref?.resolve())
+	added_trama_ref = null
