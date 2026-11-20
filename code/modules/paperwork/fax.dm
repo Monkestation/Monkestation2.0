@@ -236,7 +236,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if(FAX.fax_id == fax_id) //skip yourself
 			continue
 		var/list/fax_data = list()
-		fax_data["fax_name"] = FAX.fax_name
+		fax_data["fax_name"] = html_decode(FAX.fax_name)
 		fax_data["fax_id"] = FAX.fax_id
 		fax_data["visible"] = FAX.visible_to_network
 		fax_data["has_paper"] = !!FAX.loaded_item_ref?.resolve()
@@ -246,7 +246,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 	// Own data
 	data["fax_id"] = fax_id
-	data["fax_name"] = fax_name
+	data["fax_name"] = html_decode(fax_name)
 	data["visible"] = visible_to_network
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
@@ -454,7 +454,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/proc/history_add(history_type = "Send", history_fax_name)
 	var/list/history_data = list()
 	history_data["history_type"] = history_type
-	history_data["history_fax_name"] = history_fax_name
+	history_data["history_fax_name"] = html_decode(history_fax_name)
 	history_data["history_time"] = station_time_timestamp()
 	fax_history += list(history_data)
 

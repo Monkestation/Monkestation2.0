@@ -117,7 +117,7 @@
 
 /datum/antagonist/nukeop/commando/leader/proc/ask_name()
 	var/randomname = pick(GLOB.operative_aliases)
-	var/newname = tgui_input_text(owner.current, "You are the commando operative [title]. Please choose an operator name for your team.", "Name change", randomname, MAX_NAME_LEN)
+	var/newname = tgui_input_text(owner.current, "You are the commando operative [title]. Please choose an operator name for your team.", "Name change", randomname, MAX_NAME_LEN, encode = FALSE)
 	if (!newname)
 		newname = randomname
 	else

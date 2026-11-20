@@ -23,7 +23,7 @@
 
 		var/ticket_data = list()
 		ticket_data["id"] = ahelp.id
-		ticket_data["name"] = ahelp.name
+		ticket_data["name"] = html_decode(ahelp.name)
 		ticket_data["admin_key"] = ahelp.handling_admin_ckey
 		ticket_data["initiator_key_name"] = ahelp.initiator_key_name
 		ticket_data["initiator_ckey"] = ahelp.initiator_ckey
@@ -128,7 +128,7 @@
 			if(!istype(ahelp)) continue
 			var/ticket_data = list()
 			ticket_data["id"] = ahelp.id
-			ticket_data["title"] = ahelp.name
+			ticket_data["title"] = html_decode(ahelp.name)
 			.["related_tickets"] += list(ticket_data)
 
 /datum/admin_help/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

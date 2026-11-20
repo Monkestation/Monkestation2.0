@@ -450,26 +450,27 @@ GLOBAL_VAR(round_default_lawset)
 /datum/ai_laws/proc/get_law_list(include_zeroth = FALSE, show_numbers = TRUE, render_html = TRUE)
 	var/list/data = list()
 
+	// laws are stored html-escaped, so the plain text version has to undo that
 	if (include_zeroth && zeroth)
-		data += "[show_numbers ? "0:" : ""] [render_html ? "<font color='#ff0000'><b>[zeroth]</b></font>" : zeroth]"
+		data += "[show_numbers ? "0:" : ""] [render_html ? "<font color='#ff0000'><b>[zeroth]</b></font>" : html_decode(zeroth)]"
 
 	for(var/law in hacked)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#c00000'>[law]</font>" : law]"
+			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#c00000'>[law]</font>" : html_decode(law)]"
 
 	for(var/law in ion)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#547DFE'>[law]</font>" : law]"
+			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#547DFE'>[law]</font>" : html_decode(law)]"
 
 	var/number = 1
 	for(var/law in inherent)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [law]"
+			data += "[show_numbers ? "[number]:" : ""] [render_html ? law : html_decode(law)]"
 			number++
 
 	for(var/law in supplied)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
+			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : html_decode(law)]"
 			number++
 	return data
 

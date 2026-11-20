@@ -219,7 +219,7 @@
 	data["comms"] = TRUE
 	data["code"] = code
 	data["relay_code"] = relay_code
-	data["message"] = comm_message
+	data["message"] = html_decode(comm_message)
 	data["mode"] = mode
 	data["locked"] = locked
 	data["saved_settings"] = saved_settings

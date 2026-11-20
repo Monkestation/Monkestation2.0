@@ -85,7 +85,7 @@
 				avoid_highlighting = TRUE,
 				confidential = TRUE)
 			var/datum/request/request = chosen_requests[chosen_requests_len]
-			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, msg)
+			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, html_decode(msg))
 	else
 		if(check_mentor_rights_for(src, R_MENTOR))
 			/// Reciever is a Non-Mentor - Left unsorted so people that Mentorhelp with Mod chat off will still get it, otherwise they'll complain.

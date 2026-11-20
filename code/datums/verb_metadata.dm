@@ -29,9 +29,9 @@
 	if(arg_type & VERB_ARG_TYPE_NUM)
 		return tgui_input_number(user, name, verb_name)
 	if(arg_type & VERB_ARG_TYPE_TEXT)
-		return tgui_input_text(user, name, verb_name)
+		return tgui_input_text(user, name, verb_name, encode = FALSE)
 	if(arg_type & VERB_ARG_TYPE_MESSAGE)
-		return tgui_input_text(user, name, verb_name, multiline = TRUE)
+		return tgui_input_text(user, name, verb_name, multiline = TRUE, encode = FALSE)
 	if(arg_type & VERB_ARG_TYPE_SOUND)
 		return input(user, name, verb_name) as null|sound
 	if(arg_type & VERB_ARG_TYPE_TYPEPATH)
