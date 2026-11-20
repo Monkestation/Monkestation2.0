@@ -99,6 +99,8 @@
 			continue
 		if(!uplink_item.surplus)
 			continue
+		if(handler.not_enough_population(uplink_item))
+			continue
 		possible_items += uplink_item
 	return possible_items
 
@@ -110,6 +112,15 @@
 	if(tc_budget < uplink_item.cost)
 		return null
 	return uplink_item
+
+/// Remembers what ended up in the crate so the round end log can show it.
+/datum/uplink_item/bundles_tc/surplus/proc/log_crate_contents(datum/uplink_handler/handler, obj/structure/closet/crate/surplus_crate)
+	var/list/crate_items = surplus_crate.contents.Copy()
+	// United surplus crates still show you their contents at roundend even when you haven't opened it, so it shows you what you missed out on and can salt about it.
+	if(istype(surplus_crate, /obj/structure/closet/crate/syndicrate))
+		var/obj/structure/closet/crate/syndicrate/locked_crate = surplus_crate
+		crate_items += locked_crate.unlock_contents
+	handler.logged_purchase_contents = summarize_contents(crate_items)
 
 /// fills the crate that will be given to the traitor, edit this to change the crate and how the item is filled
 /datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items)
@@ -136,6 +147,7 @@
 		CRASH("surplus crate failed to generate possible items")
 //monkestation edit end
 	fill_crate(surplus_crate, possible_items)
+	log_crate_contents(handler, surplus_crate)
 
 	podspawn(list(
 		"target" = get_turf(user),
@@ -249,6 +261,7 @@
 		CRASH("lootbox crate failed to generate possible items")
 
 	fill_crate(surplus_crate, possible_items)
+	log_crate_contents(handler, surplus_crate)
 
 	// unlike other chests, lets give them the chest with STYLE by droppodding in a STYLIZED pod
 	podspawn(list(

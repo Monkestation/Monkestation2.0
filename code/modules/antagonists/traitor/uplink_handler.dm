@@ -16,6 +16,8 @@
 	var/progression_points = 0
 	/// The purchase log of this uplink handler
 	var/datum/uplink_purchase_log/purchase_log
+	/// What a crate from the purchase being made held, as name = amount. Only set by purchases that don't hand back the crate, and cleared once logged
+	var/list/logged_purchase_contents
 	/// Associative array of stock keys = stock left. For items that don't share stock, the key is their typepath
 	var/list/item_stock = list(UPLINK_SHARED_STOCK_KITS = 1 , UPLINK_SHARED_STOCK_SURPLUS = 1)
 	/// Extra stuff that can be purchased by an uplink, regardless of flag.
