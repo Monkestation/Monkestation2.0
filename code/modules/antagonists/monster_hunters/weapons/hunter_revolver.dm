@@ -79,9 +79,27 @@
 	name = "bloodsilver bullet"
 	damage = 3
 	ricochets_max = 4
-	ricochet_chance = 50
-	ricochet_auto_aim_range = 5
-	ricochet_shoots_firer = FALSE
+	ricochet_chance = 100
+	ricochet_decay_chance = 1
+	ricochet_incidence_leeway = 0
+
+/obj/projectile/bullet/bloodsilver/on_ricochet(atom/target)
+	. = ..()
+	var/list/valid_prey = list()
+	for(var/mob/living/prey in range(7, loc))
+		if(prey.stat == DEAD || !is_in_sight(src, prey) || !is_monster_hunter_prey(prey))
+			continue
+		valid_prey += prey
+	var/mob/living/closest_prey = get_closest_atom(/mob/living, valid_prey, src)
+	if(!closest_prey)
+		return
+	set_angle_centered(loc, get_angle(loc, closest_prey.loc))
+	original = closest_prey
+
+/obj/projectile/bullet/bloodsilver/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
+	if(target == firer)
+		return FALSE
+	return ..()
 
 /obj/projectile/bullet/bloodsilver/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()

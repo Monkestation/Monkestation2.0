@@ -30,7 +30,6 @@
 	new /obj/effect/temp_visual/wonderland_hole(original_loc)
 	new /obj/effect/temp_visual/rabbit_hole_stand_in(original_loc, owner)
 	owner.forceMove(land_mark) ///the user remains safe in the wonderland
-	owner.transfer_observers_to(bunny)
 	owner.mind.transfer_to(bunny)
 	addtimer(CALLBACK(src, PROC_REF(return_to_station), owner, bunny, theplace), 5 SECONDS)
 	StartCooldown()
@@ -40,7 +39,6 @@
 	var/new_y = bunny.y - mark.y
 	var/turf/new_location = locate((original_loc.x + new_x) , (original_loc.y + new_y) , original_loc.z)
 	user.forceMove(new_location)
-	bunny.transfer_observers_to(user)
 	bunny.mind.transfer_to(user)
 	user.remove_traits(list(TRAIT_NO_TRANSFORM, TRAIT_GODMODE), REF(src))
 	new /obj/effect/temp_visual/wonderland_hole(new_location)
