@@ -815,6 +815,20 @@
       nebulae colouring is less likely.
   Absolucy:
   - bugfix: maybe fixes roundend/reboot sounds not playing
+  - rscadd: Added lavaland versions of iron, uranium, diamond, silver, titanium, plasma
+      and bananium rock for mappers
+  - image: Mining scanner ore overlays have new sprites
+  - bugfix: Mining scanner radar ping volume now depends on how close a vent is
+  - bugfix: Basic mobs can't pull boulders out of vents anymore
+  - bugfix: Ore vents clear the walls around the vent instead of around the player
+  - bugfix: The hunter blood-drunk miner dashes after hitting you again
+  - bugfix: Bosses stop firing volleys once they're dead
+  - bugfix: Cursed tendrils curse people near the tendril, and ash walker nest logs
+      list the right people
+  - bugfix: Regrown mining rock gets richer ore once lavaland points are high enough
+  - bugfix: Cliffs no longer smooth into elevated floors
+  - bugfix: Snowy and ash rock join station walls like they should
+  - bugfix: Fixed ore asteroid rock draws properly
   AitorLogedo:
   - bugfix: Regenerative Coma and Plasma Fixation no longer keep their effects after
       you're cured.
