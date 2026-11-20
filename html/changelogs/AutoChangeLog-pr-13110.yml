@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "The round-end jingle no longer plays for players who have muted lobby music."

@@ -959,6 +959,12 @@
   - balance: Killer rabbits spot targets from up to 10 tiles away and move a bit faster.
   - balance: Killer rabbit explosions now knock down and launch everyone nearby.
   - balance: The Jabberwocky has full night vision.
+  - bugfix: Heretic-infused fishing rods no longer get harder to fish with every catch
+      after the infusion wears off.
+  - bugfix: 'fix: False Alarm no longer silently fails when it picks Shuttle Catastrophe.'
+  - bugfix: The round-end jingle no longer plays for players who have muted lobby
+      music.
+  - bugfix: Players with a fresh character save no longer spawn as ghosts at roundstart.
   V2LenKagamine:
   - rscadd: Holo-candle projector! It makes candles [fake] that dont burn! Buy now
       for 1500 coins!
