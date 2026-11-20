@@ -76,6 +76,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// This atom is always a live navmap blocker, regardless of density.
 #define NAV_ALWAYS_CONDITIONAL_1 (1<<23)
 
+/// This is for flags_2
+/// Whether this atom should be ignored when enumerating storage inventory contents.
+#define IGNORE_STORAGE_INVENTORY_2 (1<<0)
+
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
 #define UPDATE_NAME (1<<0)
@@ -244,6 +248,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FREEZE_PROOF (1<<7)
 /// can't be shuttle crushed.
 #define SHUTTLE_CRUSH_PROOF (1<<8)
+/// Indicates that the examination resistance flags have been overridden.
+#define EXAMINE_RESISTANCE_OVERRIDE (1<<23)
 
 //tesla_zap
 #define ZAP_MACHINE_EXPLOSIVE (1<<0)

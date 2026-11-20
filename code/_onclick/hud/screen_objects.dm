@@ -753,6 +753,40 @@
 	screen_loc = ui_living_healthdoll
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
+/atom/movable/screen/healthdoll/living/disguise
+	name = "disguise integrity"
+	icon_state = "living0"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/healthdoll/living/disguise/proc/set_disguise_icon(obj/disguise)
+	if(!disguise?.icon)
+		return
+
+	var/icon/disguise_mask = icon(disguise.icon, disguise.icon_state, SOUTH)
+
+	add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = disguise_mask))
+	add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
+
+/atom/movable/screen/healthdoll/living/disguise/proc/update_disguise_integrity(integrity_percentage)
+	var/severity = 0
+	switch(integrity_percentage)
+		if(1 to INFINITY)
+			severity = 0
+		if(0.8 to 1)
+			severity = 1
+		if(0.6 to 0.8)
+			severity = 2
+		if(0.4 to 0.6)
+			severity = 3
+		if(0.2 to 0.4)
+			severity = 4
+		if(0.01 to 0.2)
+			severity = 5
+		else
+			severity = 6
+
+	icon_state = "living[severity]"
+
 /atom/movable/screen/healthdoll/human
 	/// Tracks components of our doll, each limb is a separate atom in our vis_contents
 	VAR_PRIVATE/list/atom/movable/screen/limbs

@@ -110,6 +110,8 @@
 			storage_contents[numberdisplay.sample_object] = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
 	else
 		for(var/obj/item as anything in real_location)
+			if(item.flags_2 & IGNORE_STORAGE_INVENTORY_2)
+				continue
 			storage_contents[item] = ""
 
 	for(var/obj/item as anything in storage_contents)
