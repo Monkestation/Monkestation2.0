@@ -495,6 +495,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	fire_delay = 1 SECONDS
 	recoil = 0.4
 	wield_recoil = 0
+	COOLDOWN_DECLARE(fan_cd)
 
 /obj/item/gun/ballistic/revolver/big_iron/attack_self(mob/living/user)
 	var/reload_delay = 2.75 SECONDS
@@ -509,25 +510,24 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 
 /obj/item/gun/ballistic/revolver/big_iron/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ITEM_INTERACT_SUCCESS
+	if(!COOLDOWN_FINISHED(src,fan_cd))
+		return
 	var/params = list2params(modifiers)
 	fire_delay = 0
 	try_fire_gun(interacting_with,user,params)
 	addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),1.2)
 	addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),2.4)
-	var/semidelay = 3
+	var/semidelay = 2.3
 	if(HAS_TRAIT(src,TRAIT_WIELDED))
 		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),3.6)
 		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),4.8)
 		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),6)
-		semidelay = 6.2
-	semicd = TRUE
-	addtimer(CALLBACK(src,PROC_REF(reset_semicd)),semidelay)
+		semidelay = 5.9
+	COOLDOWN_START(src,fan_cd,semidelay)
 
 /obj/item/gun/ballistic/revolver/big_iron/proc/try_fan_hammer(atom/at,mob/living/user,params)
 	if(user.is_holding(src))
-		fire_delay = 0//Dont ask why but if I dont re-set it here it only fires 2, comment out and try for yourself!
 		try_fire_gun(at,user,params)
+	if(COOLDOWN_FINISHED(src,fan_cd))
+		fire_delay = initial(fire_delay)
 
-/obj/item/gun/ballistic/revolver/big_iron/reset_semicd()
-	. = ..()
-	fire_delay = initial(fire_delay)
