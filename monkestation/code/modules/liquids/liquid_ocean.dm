@@ -731,6 +731,12 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 /// For each set of this amount of points beyond LAVALAND_POINTS_CHANCE_THRESHOLD, the mineral chance increases by 1.
 #define LAVALAND_POINTS_PER_CHANCE 1000
 
+/turf/closed/mineral/random/regrowth/Initialize(mapload)
+	if(GLOB.lavaland_points_generated > LAVALAND_POINTS_CHANCE_THRESHOLD)
+		var/mineral_increase = (GLOB.lavaland_points_generated - LAVALAND_POINTS_CHANCE_THRESHOLD) / LAVALAND_POINTS_PER_CHANCE
+		mineralChance = clamp(mineralChance + mineral_increase, 0, 100)
+	return ..()
+
 /turf/closed/mineral/random/regrowth/Destroy(force)
 	. = ..()
 	var/timer = max(1 MINUTES - round(max(1, GLOB.lavaland_points_generated) / LAVALAND_POINTS_PER_SECOND), 5 SECONDS)
@@ -738,11 +744,7 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 
 /// Creates a regrowth material turf ontop of an another turf.
 /proc/regrow_mineral(turf/location)
-	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.place_on_top(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
-	if(GLOB.lavaland_points_generated <= LAVALAND_POINTS_CHANCE_THRESHOLD)
-		return
-	var/mineral_increase = (GLOB.lavaland_points_generated - LAVALAND_POINTS_CHANCE_THRESHOLD) / LAVALAND_POINTS_PER_CHANCE
-	regrowth_turf.mineralChance = clamp(initial(regrowth_turf.mineralChance) + mineral_increase, 0, 100)
+	location.place_on_top(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
 
 #undef LAVALAND_POINTS_CHANCE_THRESHOLD
 #undef LAVALAND_POINTS_PER_SECOND
