@@ -179,7 +179,7 @@
 				return
 
 	if(attacking_item.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING) //you can rename turrets like bots!
-		var/choice = tgui_input_text(user, "Enter a new turret name", "Turret Classification", finish_name, MAX_NAME_LEN)
+		var/choice = tgui_input_text(user, "Enter a new turret name", "Turret Classification", html_decode(finish_name), MAX_NAME_LEN)
 		if(!choice)
 			return
 		if(!user.can_perform_action(src))

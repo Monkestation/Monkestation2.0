@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile/megafauna
+	abstract_type = /mob/living/simple_animal/hostile/megafauna
 	name = "boss of this gym"
 	desc = "Attack the weak point for massive damage."
 	health = 1000
@@ -31,7 +32,7 @@
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	life_subsystem_type = /datum/controller/subsystem/mobs/megafauna
 	turns_per_move = 10
 	/// Crusher loot dropped when the megafauna is killed with a crusher

@@ -44,7 +44,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, FALSE, "Fax Panel", "View and respond to faxes se
 	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
 		var/obj/machinery/fax/potential_fax = weakrefed_fax.resolve()
 		if(potential_fax && istype(potential_fax))
-			if(potential_fax.fax_name == name)
+			if(html_decode(potential_fax.fax_name) == name)
 				return potential_fax
 	return null
 
@@ -69,7 +69,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, FALSE, "Fax Panel", "View and respond to faxes se
 	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
 		var/obj/machinery/fax/another_fax = weakrefed_fax.resolve()
 		if(another_fax && istype(another_fax))
-			data["faxes"] += list(another_fax.fax_name)
+			data["faxes"] += list(html_decode(another_fax.fax_name))
 
 	return data
 

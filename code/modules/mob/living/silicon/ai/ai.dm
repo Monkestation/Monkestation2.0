@@ -158,6 +158,9 @@
 	///How much ai's client view_range should be adjusted by with view_size.setTo(). 0 Is default view size.
 	var/view_range_boost = 0
 
+	///AI pen, if it somehow gets into range of one.
+	var/obj/item/pen/silicon/ai_pen
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -220,6 +223,7 @@
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
+	ai_pen = new/obj/item/pen/silicon(src)
 
 	deploy_action.Grant(src)
 
@@ -240,10 +244,11 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
+	//They aren't given a c_tag so they don't show up in camera consoles
 	builtInCamera = new(src)
-	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 
 	ai_tracking_tool = new(src)
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_STARTED, PROC_REF(on_track_started))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
@@ -298,6 +303,7 @@
 	QDEL_NULL(dashboard)
 	QDEL_NULL(nanite_menu)
 	QDEL_NULL(nanite_remote)
+	QDEL_NULL(ai_pen)
 	malfhack = null
 	current = null
 	bot_ref = null
@@ -505,6 +511,12 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 
 	ai_tracking_tool.track_input(src)
 
+///Called when an AI starts tracking a new target, before the eye moves. Saves the return point for the "last camera" hotkey.
+/mob/living/silicon/ai/proc/on_track_started(datum/trackable/source, atom/movable/target)
+	SIGNAL_HANDLER
+	if(eyeobj)
+		cam_prev = get_turf(eyeobj)
+
 ///Called when an AI finds their tracking target.
 /mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, atom/movable/target)
 	SIGNAL_HANDLER
@@ -539,17 +551,17 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
 		if(!cyborg)
 			return
-		ai_tracking_tool.set_tracked_target(cyborg)
+		ai_tracking_tool.set_tracked_target(cyborg, src)
 	if(href_list["track_ipc"])
 		var/mob/living/carbon/human/connected_ipc = locate(href_list["track_ipc"]) in connected_ipcs
 		if(!connected_ipc)
 			return
-		ai_tracking_tool.set_tracked_target(connected_ipc)
+		ai_tracking_tool.set_tracked_target(connected_ipc, src)
 	if(href_list["track_target"])
 		var/mob/living/carbon/human/target_lock = locate(href_list["track_target"]) in target_list
 		if(!target_lock)
 			return
-		ai_tracking_tool.set_tracked_target(target_lock)
+		ai_tracking_tool.set_tracked_target(target_lock, src)
 	if (href_list["mach_close"])
 		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
@@ -570,7 +582,7 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
 	if(href_list["project_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type(/obj/machinery/holopad)
+		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad)
 		if(Holopad)
 			lastloc = get_turf(eyeobj)
 			Holopad.attack_ai_secondary(src) //may as well recycle

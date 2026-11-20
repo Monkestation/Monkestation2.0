@@ -1,4 +1,5 @@
 /obj/item/ammo_box/magazine/toy
+	abstract_type = /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"
 	ammo_type = /obj/item/ammo_casing/foam_dart
 	caliber = CALIBER_FOAM

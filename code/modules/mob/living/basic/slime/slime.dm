@@ -147,7 +147,7 @@
 
 	if(isnull(possible_slime_types))
 		possible_slime_types = alist()
-		for(var/datum/slime_type/slime_type as anything in subtypesof(/datum/slime_type))
+		for(var/datum/slime_type/slime_type as anything in valid_subtypesof(/datum/slime_type))
 			possible_slime_types[slime_type] = new slime_type
 
 	set_life_stage(new_life_stage)
@@ -211,7 +211,7 @@
 		picked_type = /datum/ai_movement/basic_avoidance/adaptive/follow
 		leash = SLIME_SEEK_PATH_LENGTH
 	else if(ai_controller.blackboard_key_exists(BB_SLIME_ROAM_TARGET))
-		picked_type = /datum/ai_movement/astar/slime
+		picked_type = /datum/ai_movement/navmap_astar/slime
 		leash = SLIME_SEEK_PATH_LENGTH
 	else if(cleaner_slime)
 		picked_type = /datum/ai_movement/basic_avoidance/adaptive
@@ -507,7 +507,7 @@
 		return
 
 	var/list/types_by_color = list()
-	for(var/datum/slime_type/type_path as anything in subtypesof(/datum/slime_type))
+	for(var/datum/slime_type/type_path as anything in valid_subtypesof(/datum/slime_type))
 		types_by_color[type_path::color] = type_path
 
 	var/chosen_color = tgui_input_list(admin, "Which slime type?", "Set Slime Type", types_by_color, default = slime_type.color)

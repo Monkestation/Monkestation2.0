@@ -365,9 +365,11 @@ ROUNDSTART_RACES ethereal
 ROUNDSTART_RACES goblin
 ROUNDSTART_RACES oni
 ROUNDSTART_RACES floran
+ROUNDSTART_RACES cerulean
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES abductor
 #ROUNDSTART_RACES synth
+ROUNDSTART_RACES shadekin
 
 ## Including all the various golem subtypes that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES iron_golem
@@ -546,10 +548,30 @@ MAXFINE 2000
 ## don't need (or want) this.
 #GIVE_TUTORIALS_WITHOUT_DB
 
+## Configuration for station traits of each type.
+## The first value (key) is the budget, or the space available to use for station traits of that type. Some take more space than others.
+## The second value (assoc) is the weight associated with said budget compared to the rest for that type.
+POSITIVE_STATION_TRAITS 0 8
+POSITIVE_STATION_TRAITS 1 4
+POSITIVE_STATION_TRAITS 2 2
+POSITIVE_STATION_TRAITS 3 1
+
+NEUTRAL_STATION_TRAITS 0 10
+NEUTRAL_STATION_TRAITS 1 10
+NEUTRAL_STATION_TRAITS 2 3
+NEUTRAL_STATION_TRAITS 2.5 1
+
+NEGATIVE_STATION_TRAITS 0 8
+NEGATIVE_STATION_TRAITS 1 4
+NEGATIVE_STATION_TRAITS 2 2
+NEGATIVE_STATION_TRAITS 3 1
+
 ## Put the name of your custom currency here
 METACURRENCY_NAME Metacoin
 
-TWITCH_KEY mrhouse
+## Secret that the Twitch events bot must send with every request. Twitch events stay disabled until this is set.
+## Use a long random value and keep it out of public repos.
+#TWITCH_KEY changethisplease
 
 ## How long (in minutes) after roundstart should the server start an automatic crew transfer vote?
 ## Defaults to 90 minutes. Set to 0 to completely disable automatic crew transfer votes.

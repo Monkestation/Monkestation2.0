@@ -42,6 +42,10 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/plasmaman,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
 	)
+	survival_box_overrides = list(
+		SURVIVAL_INTERNALS_TYPE = /obj/item/tank/internals/plasmaman/belt,
+		SURVIVAL_MEDIPEN_TYPE = /obj/item/reagent_containers/medipen,
+	)
 
 	// Body temperature for Plasmen is much lower human as they can handle colder environments
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
@@ -106,7 +110,7 @@
 	else if(H.fire_stacks)
 		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
 		if(istype(P))
-			P.Extinguish(H)
+			P.suit_extinguish(H)
 			internal_fire = FALSE
 	else
 		internal_fire = FALSE

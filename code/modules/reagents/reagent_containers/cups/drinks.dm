@@ -2,6 +2,7 @@
 /// Drinks.
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/reagent_containers/cup/glass
+	abstract_type = /obj/item/reagent_containers/cup/glass
 	name = "drink"
 	desc = "yummy"
 	icon = 'icons/obj/drinks/drinks.dmi'
@@ -486,7 +487,7 @@
 		balloon_alert(user, "custom drinks disabled")
 		return CLICK_ACTION_BLOCKING
 
-	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
+	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", html_decode(custom_drink_name), 45, FALSE), 64)
 	if(!new_name)
 		balloon_alert(user, "invalid drink name!")
 		using_custom_drinks = FALSE
@@ -495,7 +496,7 @@
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return CLICK_ACTION_BLOCKING
 
-	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", html_decode(custom_drink_desc), 64, TRUE), 128)
 	if(!new_desc)
 		balloon_alert(user, "invalid drink description!")
 		using_custom_drinks = FALSE

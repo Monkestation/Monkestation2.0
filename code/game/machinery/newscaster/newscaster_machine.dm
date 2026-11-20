@@ -64,7 +64,7 @@
 	acid = 30
 
 /obj/machinery/newscaster/pai/ui_state(mob/user)
-	return GLOB.reverse_contained_state
+	return GLOB.deep_inventory_state
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
@@ -171,16 +171,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	//Here is all the UI_data sent about the current wanted issue, as well as making a new one in the UI.
 	data["making_wanted_issue"] = !(GLOB.news_network.wanted_issue?.active)
-	data["criminal_name"] = criminal_name
-	data["crime_description"] = crime_description
+	data["criminal_name"] = html_decode(criminal_name)
+	data["crime_description"] = html_decode(crime_description)
 	var/list/wanted_info = list()
 	if(GLOB.news_network.wanted_issue)
 		if(GLOB.news_network.wanted_issue.img)
 			user << browse_rsc(GLOB.news_network.wanted_issue.img, "wanted_photo.png")
 		wanted_info = list(list(
 			"active" = GLOB.news_network.wanted_issue.active,
-			"criminal" = GLOB.news_network.wanted_issue.criminal,
-			"crime" = GLOB.news_network.wanted_issue.body,
+			"criminal" = html_decode(GLOB.news_network.wanted_issue.criminal),
+			"crime" = html_decode(GLOB.news_network.wanted_issue.body),
 			"author" = GLOB.news_network.wanted_issue.scanned_user,
 			"image" = "wanted_photo.png"
 		))
@@ -305,13 +305,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("setChannelName")
-			var/pre_channel_name = params["channeltext"]
+			var/pre_channel_name = reject_bad_text(params["channeltext"], max_length = MAX_NAME_LEN)
 			if(!pre_channel_name)
 				return TRUE
 			channel_name = pre_channel_name
 
 		if("setChannelDesc")
-			var/pre_channel_desc = params["channeldesc"]
+			var/pre_channel_desc = reject_bad_text(params["channeldesc"], max_length = MAX_BROADCAST_LEN)
 			if(!pre_channel_desc)
 				return TRUE
 			channel_desc = pre_channel_desc

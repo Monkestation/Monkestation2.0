@@ -1,4 +1,5 @@
 /obj/item/clothing/gloves
+	abstract_type = /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
@@ -40,7 +41,7 @@
 	user.visible_message(span_suicide("\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!"))
 	return OXYLOSS
 
-/obj/item/clothing/gloves/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/gloves/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return

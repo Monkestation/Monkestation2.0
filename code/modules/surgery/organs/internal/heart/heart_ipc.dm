@@ -1,0 +1,52 @@
+/obj/item/organ/internal/heart/clockwork //this heart doesnt have the fancy bits normal cyberhearts do. However, it also doesnt fucking kill you when EMPd
+	name = "biomechanical pump"
+	desc = "A complex, multi-valved hydraulic pump, which fits perfectly where a heart normally would."
+	icon = 'icons/obj/medical/organs/organs.dmi'
+	icon_state = "heart-clock"
+	organ_flags = ORGAN_ROBOTIC
+
+/obj/item/organ/internal/heart/slime
+	name = "slime heart"
+	heart_bloodtype = BLOOD_TYPE_TOX
+
+/obj/item/organ/internal/heart/synth
+	name = "hydraulic pump engine"
+	desc = "An electronic device that handles the hydraulic pumps, powering one's robotic limbs. Without this, synthetics are unable to move."
+	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
+	icon = 'icons/obj/medical/ipc_organs.dmi'
+	icon_state = "heart-ipc-on"
+	base_icon_state = "heart-ipc"
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD // 1.5x due to synthcode.tm being weird
+	zone = BODY_ZONE_CHEST
+	slot = ORGAN_SLOT_HEART
+	var/last_message_time = 0
+
+/obj/item/organ/internal/heart/synth/emp_act(severity)
+	. = ..()
+
+	if((. & EMP_PROTECT_SELF) || !owner)
+		return
+
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
+
+	switch(severity)
+		if(EMP_HEAVY)
+			to_chat(owner, span_warning("Alert: Main hydraulic pump control has taken severe damage, seek maintenance immediately. Error code: HP300-10."))
+			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maximum = maxHealth, required_organ_flag = ORGAN_ROBOTIC)
+		if(EMP_LIGHT)
+			to_chat(owner, span_warning("Alert: Main hydraulic pump control has taken light damage, seek maintenance immediately. Error code: HP300-05."))
+			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum = maxHealth, required_organ_flag = ORGAN_ROBOTIC)
+
+/obj/item/organ/internal/heart/synth/abandoned
+	name = "faulty hydraulic pump engine"
+	desc = "A strange and older version of a synth heart, it appears damaged, but still functional."
+	icon_state = "abandoned_heart_on"
+	base_icon_state = "abandoned_heart_off"
+	//Prob to craete sparks on life, when implanted in a person
+	var/spark_prob = 15
+
+/obj/item/organ/internal/heart/synth/abandoned/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(spark_prob, seconds_per_tick))
+		do_sparks(1, FALSE, owner)
+	return ..()

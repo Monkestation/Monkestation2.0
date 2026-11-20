@@ -199,6 +199,7 @@
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	worn_icon = 'icons/mob/clothing/suits/ctf.dmi'
 	SETUP_MAP_ICONS("standard", "/obj/item/clothing/suit/armor/vest/ctf")
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	greyscale_config = /datum/greyscale_config/ctf_standard
 	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
 	greyscale_colors = "#ffffff"
@@ -230,6 +231,7 @@
 	desc = "Lightweight vest for playing capture the flag."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	SETUP_MAP_ICONS("light", "/obj/item/clothing/suit/armor/vest/ctf/light")
+	body_parts_covered = CHEST|GROIN|ARMS
 	greyscale_config = /datum/greyscale_config/ctf_light
 	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
 	slowdown = -0.25

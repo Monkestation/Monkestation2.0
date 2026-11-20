@@ -1,4 +1,5 @@
 /obj/item/clothing/head/hats
+	abstract_type = /obj/item/clothing/head/hats
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 
@@ -58,6 +59,7 @@
 	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
+	texture_type = /datum/bodypart_texture/mesh/black
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -304,6 +306,9 @@
 		inhand_icon_state = downsprite
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
+
+/obj/item/clothing/head/costume/nightcap
+	abstract_type = /obj/item/clothing/head/costume/nightcap
 
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"

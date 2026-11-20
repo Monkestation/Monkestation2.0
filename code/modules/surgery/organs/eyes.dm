@@ -159,8 +159,7 @@
 			eye_right.color = parent.get_right_eye_color() || eye_color_right
 			eye_left.color = parent.get_left_eye_color() || eye_color_left
 
-		var/obscured = parent.check_obscured_slots()
-		if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
+		if(overlay_ignore_lighting && !(parent.obscured_slots & HIDEEYES))
 			overlays += emissive_appearance_copy(eye_left, src, NONE)
 			overlays += emissive_appearance_copy(eye_right, src, NONE)
 
@@ -706,6 +705,16 @@
 	else
 		eye_icon_state = initial(eye_icon_state)
 	return ..()
+
+/obj/item/organ/internal/eyes/shadekin
+	name = "shadekin eyes"
+	desc = "The eyes of a shadekin, you heard they are adapted to darkness better than most other species, however they are also more sensitive to light."
+	icon = 'icons/obj/medical/organs/organs.dmi'
+	eye_icon_state = "shadekin_eyes"
+	icon_state = "eyeballs-shadekin"
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	overlay_ignore_lighting = TRUE
 
 /obj/item/organ/internal/eyes/lizard
 	name = "lizard eyes"

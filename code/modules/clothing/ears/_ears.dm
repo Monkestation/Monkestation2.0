@@ -1,6 +1,7 @@
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
+	abstract_type = /obj/item/clothing/ears
 	name = "ears"
 	lefthand_file = 'icons/mob/inhands/clothing/ears_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/ears_righthand.dmi'
@@ -23,6 +24,7 @@
 
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
 	AddElement(/datum/element/earhealing)
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 

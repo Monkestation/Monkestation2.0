@@ -89,10 +89,10 @@
 	))
 	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, REF(src))
 
-/datum/component/customizable_reagent_holder/PostTransfer()
-	if(!isatom(parent))
+/datum/component/customizable_reagent_holder/PostTransfer(datum/new_parent)
+	if(!isatom(new_parent))
 		return COMPONENT_INCOMPATIBLE
-	var/atom/atom_parent = parent
+	var/atom/atom_parent = new_parent
 	if (!atom_parent.reagents)
 		return COMPONENT_INCOMPATIBLE
 
@@ -155,9 +155,8 @@
 		handle_reagents(atom_parent)
 		qdel(atom_parent)
 
-	if(job && job_xp)
-		if(attacker.client?.prefs)
-			add_jobxp_chance_delayed_check(attacker.client, job_xp, job, 40, FALSE)
+	if(job && job_xp) // monkestation edit
+		add_jobxp_chance(attacker.client, job_xp, job, 40)
 
 	handle_reagents(ingredient)
 	add_ingredient(ingredient)

@@ -144,7 +144,7 @@
 		ITEM_SLOT_HANDCUFFED,
 		ITEM_SLOT_LEGCUFFED,
 	)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = hidden_slots_to_inventory_slots(obscured_slots)
 	var/list/visible_items = list()
 	for (var/slot in visible_slots)
 		if (obscured & slot)
@@ -258,7 +258,6 @@
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
-	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
 	if(I == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
@@ -327,18 +326,16 @@
 		s_store = null
 		if(!QDELETED(src))
 			update_suit_storage()
-	else
-		not_handled = TRUE
 
 	// Send a signal for when we unequip an item that used to cover our feet/shoes. Used for bloody feet
 	if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
 		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_SHOECOVER, I, force, newloc, no_move, invdrop, silent)
 
-	if(not_handled)
-		return
-
-	update_equipment_speed_mods()
-	update_obscured_slots(I.flags_inv)
+/mob/living/carbon/human/item_coverage_changed(added_slots, removed_slots)
+	. = ..()
+	if((added_slots|removed_slots) & HIDEFACE)
+		sec_hud_set_security_status()
+		name = get_visible_name()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.
@@ -403,15 +400,18 @@
 	return outfit_to_equip.equip(src, visualsOnly)
 
 
-//delete all equipment without dropping anything
+///delete all equipment and cybernetics without dropping anything, implants dont replace organs so we should be fine doing this.
 /mob/living/carbon/human/proc/delete_equipment()
 	for(var/slot in get_equipped_items(INCLUDE_POCKETS))//order matters, dependant slots go first
 		qdel(slot)
 	for(var/obj/item/held_item in held_items)
 		qdel(held_item)
+	for(var/obj/item/organ/internal/cyberimp/cybernetic in organs)
+		qdel(cybernetic)
+	for(var/obj/item/implant/imp in implants)
+		qdel(imp)
 
 /// take the most recent item out of a slot or place held item in a slot
-
 /mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt")
 	if(incapacitated())
 		return

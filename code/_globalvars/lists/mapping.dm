@@ -12,6 +12,10 @@ GLOBAL_LIST_INIT(cardinals_multiz, list(
 	UP,
 	DOWN,
 ))
+GLOBAL_LIST_INIT(verticals, list(
+	UP,
+	DOWN,
+))
 GLOBAL_LIST_INIT(diagonals, list(
 	NORTHEAST,
 	NORTHWEST,
@@ -114,6 +118,7 @@ GLOBAL_LIST_EMPTY(generic_event_spawns)
 /// essentially allowing a user to override generic job spawnpoints with a specific one
 GLOBAL_LIST_EMPTY(jobspawn_overrides)
 
+GLOBAL_LIST_EMPTY(gorilla_start)
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)
 GLOBAL_LIST_EMPTY(nukeop_leader_start)

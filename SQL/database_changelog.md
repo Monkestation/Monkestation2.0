@@ -2,20 +2,33 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 6.0; The query to update the schema revision table is:
+The latest database version is 6.2; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (6, 0);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (6, 2);
 ```
 
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (6, 0);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (6, 2);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
 
+---
+
+Version 6.2 1 November 2026, by Ghommie
+Added `fish_progress` as the first 'progress' subtype of 'datum/award/scores'
+
+```sql
+CREATE TABLE IF NOT EXISTS `fish_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`progress_entry`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 ---
 
 Version 6.1 6 January 2026, by iliyaxox

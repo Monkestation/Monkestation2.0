@@ -1,4 +1,5 @@
 /obj/item/clothing/under/rank/centcom
+	abstract_type = /obj/item/clothing/under/rank/centcom
 	icon = 'icons/obj/clothing/under/centcom.dmi'
 	worn_icon = 'icons/mob/clothing/under/centcom.dmi'
 
@@ -53,8 +54,9 @@
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/centcom/officer/skirt/replica
 	name = "\improper CentCom turtleneck suitskirt replica"
@@ -104,6 +106,7 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/centcom/admiral
+	can_adjust = FALSE
 	name = "\improper CentCom Admiral's suit"
 	desc = "It's a suit worn by a higher authority than any could imagine."
 	icon_state = "admiral"
@@ -128,4 +131,4 @@
 	inhand_icon_state = "dg_suit"
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'icons/mob/clothing/uniform.dmi'
-	can_adjust = TRUE
+	can_adjust = FALSE

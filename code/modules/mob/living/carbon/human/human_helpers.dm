@@ -65,7 +65,7 @@
 /mob/living/carbon/human/get_face_name(if_no_face = "Unknown")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return if_no_face //We're Unknown, no face information for you
-	if(!is_face_visible()) //Wearing something which hides our face, use id-name if possible
+	if(obscured_slots & HIDEFACE) //Wearing something which hides our face, use id-name if possible
 		return if_no_face
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
 	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible

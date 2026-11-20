@@ -28,7 +28,7 @@ ADMIN_VERB(station_traits_panel, R_FUN, FALSE, "Modify Station Traits", "Modify 
 
 	var/list/valid_station_traits = list()
 
-	for (var/datum/station_trait/station_trait_path as anything in subtypesof(/datum/station_trait))
+	for (var/datum/station_trait/station_trait_path as anything in valid_subtypesof(/datum/station_trait))
 		valid_station_traits += list(list(
 			"name" = initial(station_trait_path.name),
 			"path" = station_trait_path,
@@ -79,7 +79,7 @@ ADMIN_VERB(station_traits_panel, R_FUN, FALSE, "Modify Station Traits", "Modify 
 
 			for (var/station_trait_text in params["station_traits"])
 				var/datum/station_trait/station_trait_path = text2path(station_trait_text)
-				if (!ispath(station_trait_path, /datum/station_trait) || station_trait_path == /datum/station_trait)
+				if (!ispath(station_trait_path, /datum/station_trait) || station_trait_path::abstract_type == station_trait_path)
 					log_admin("[key_name(usr)] tried to set an invalid future station trait: [station_trait_text]")
 					to_chat(usr, span_warning("Invalid future station trait: [station_trait_text]"))
 					return TRUE

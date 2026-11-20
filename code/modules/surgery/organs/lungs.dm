@@ -378,6 +378,8 @@
 
 /// Maximum Plasma effects. "Too much Plasma!"
 /obj/item/organ/internal/lungs/proc/too_much_plasma(mob/living/carbon/breather, datum/gas_mixture/breath, plasma_pp, old_plasma_pp)
+	if(!safe_plasma_max)
+		return
 	if(plasma_pp <= safe_plasma_max)
 		if(old_plasma_pp > safe_plasma_max)
 			return BREATH_LOST
@@ -1090,7 +1092,7 @@
 	CACHE_PLANETARY_ATMOS(LAVALAND_DEFAULT_ATMOS)
 	var/datum/gas_mixture/immutable/planetary/mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
 
-	if(!mix?.total_moles()) // this typically means we didn't load lavaland, like if we're using the LOWMEMORYMODE define
+	if(!mix?.total_moles()) // this typically means we didn't load lavaland, like if we're using the SKIP_LAVALAND define
 		return ..()
 
 	// Take a "breath" of the air

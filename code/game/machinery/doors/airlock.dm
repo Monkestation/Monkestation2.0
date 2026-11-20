@@ -114,7 +114,7 @@
 	interaction_flags_click = ALLOW_SILICON_REACH
 	blocks_emissive = EMISSIVE_BLOCK_NONE // Custom emissive blocker. We don't want the normal behavior.
 
-	flags_1 = HTML_USE_INITAL_ICON_1
+	flags_1 = parent_type::flags_1 | HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	align_to_windows = TRUE
@@ -1505,7 +1505,7 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 
 	var/turf/open/open_turf = get_turf(src)
-	if(!QDELETED(open_turf.liquids))
+	if(!QDELETED(open_turf?.liquids))
 		var/datum/liquid_group/turfs_group = open_turf.liquids.liquid_group
 		if(!QDELETED(turfs_group))
 			turfs_group.remove_from_group(open_turf)
@@ -1523,14 +1523,14 @@
 	if(air_tight)
 		set_density(TRUE)
 		if(multi_tile)
-			filler.density = TRUE
+			filler.set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	sleep(0.1 SECONDS)
 	if(!air_tight)
 		set_density(TRUE)
 		if(multi_tile)
-			filler.density = TRUE
+			filler.set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	sleep(0.4 SECONDS)

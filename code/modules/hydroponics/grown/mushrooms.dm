@@ -1,4 +1,5 @@
 /obj/item/food/grown/mushroom
+	abstract_type = /obj/item/food/grown/mushroom
 	name = "mushroom"
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES

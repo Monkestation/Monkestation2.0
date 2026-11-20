@@ -39,7 +39,6 @@
 		JOB_DETECTIVE,
 		JOB_WARDEN,
 		JOB_SECURITY_OFFICER,
-		JOB_SECURITY_ASSISTANT,
 		JOB_BRIG_PHYSICIAN,
 	)
 	extra_spawned_events = list(
@@ -52,6 +51,9 @@
 	name = "Sleeper Agents (Blood Brothers)"
 	prompted_picking = TRUE
 	required_enemies = 2
+	roundstart = FALSE
+	earliest_start = 20 MINUTES
+	extra_spawned_events = null
 
 /datum/round_event/antagonist/brother/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/team/brother_team/team = new

@@ -4,6 +4,7 @@
 
 //Elite mining mobs
 /mob/living/simple_animal/hostile/asteroid/elite
+	abstract_type = /mob/living/simple_animal/hostile/asteroid/elite
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'

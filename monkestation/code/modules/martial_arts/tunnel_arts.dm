@@ -61,7 +61,7 @@
 	)
 	to_chat(attacker, span_danger("You uppercut [defender]!"), type = MESSAGE_TYPE_COMBAT)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
+	log_combat(attacker, defender, "god fist (The Tunnel Arts)")
 	defender.apply_damage(30, attacker.get_attack_type(), affecting, blocked = def_check)
 	defender.emote("flip")
 	defender.emote("spin")
@@ -82,7 +82,7 @@
 	)
 	to_chat(attacker, span_danger("You palm strike [defender], corrupting [defender.p_their()] Chi energy!"), type = MESSAGE_TYPE_COMBAT)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
+	log_combat(attacker, defender, "chaos punch (The Tunnel Arts)")
 	defender.apply_damage(45, attacker.get_attack_type(), affecting, blocked = def_check)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	defender.throw_at(throw_target, 3, 4, attacker)
@@ -108,7 +108,7 @@
 	for(var/sounds in 1 to 4)
 		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), defender.loc), sounds DECISECONDS, TIMER_DELETE_ME)
 
-	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
+	log_combat(attacker, defender, "thousand fists (The Tunnel Arts)")
 	defender.apply_damage(25, attacker.get_attack_type(), affecting, blocked = def_check)
 
 	if(!defender.mind || defender.stat != CONSCIOUS || prob(50))

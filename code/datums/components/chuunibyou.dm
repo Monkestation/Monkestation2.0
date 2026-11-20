@@ -60,11 +60,11 @@
 	REMOVE_TRAIT(parent, TRAIT_CHUUNIBYOU, REF(src))
 
 /// signal sent when the parent tries to speak. we let speech pass if we are casting a spell so mimes still chuuni their spellcasts
-/// (this may end in the mime dying)
-/datum/component/chuunibyou/proc/on_try_speech(datum/source, message, ignore_spam, forced)
+/// (this may end in the mime dying), but not if they are actually mute or muzzled
+/datum/component/chuunibyou/proc/on_try_speech(mob/living/source, message, ignore_spam, forced)
 	SIGNAL_HANDLER
 
-	if(casting_spell)
+	if(casting_spell && source.can_speak(allow_mimes = TRUE))
 		return COMPONENT_CAN_ALWAYS_SPEAK
 
 ///signal sent when the parent casts a spell that has a projectile
@@ -74,7 +74,7 @@
 	playsound(to_fire,'sound/effects/magic/staff_change.ogg', 75, TRUE)
 	to_fire.color = "#f825f8"
 	to_fire.name = "chuuni-[to_fire.name]"
-	to_fire.set_light(2, 2, LIGHT_COLOR_PINK, TRUE)
+	to_fire.set_light(l_outer_range = 2, l_power = 2, l_color = LIGHT_COLOR_PINK, l_on = TRUE)
 
 ///signal sent before parent invokes a spell
 /datum/component/chuunibyou/proc/on_pre_invocation(mob/living/source, datum/action/cooldown/spell/spell, list/invocation_list)

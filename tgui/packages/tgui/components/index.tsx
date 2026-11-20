@@ -52,6 +52,8 @@ import {
   TrackOutsideClicks,
 } from 'tgui-core/components';
 
+export { Button } from './Button';
+export { KeyListener } from './KeyListener';
 export {
   AnimatedNumber,
   Autofocus,
@@ -99,6 +101,3 @@ export {
   Tooltip,
   TrackOutsideClicks,
 };
-
-export { Button } from './Button';
-export { KeyListener } from './KeyListener';

@@ -680,3 +680,72 @@
 /datum/status_effect/gutted/proc/stop_gutting()
 	SIGNAL_HANDLER
 	qdel(src)
+
+/datum/status_effect/washing_regen
+	id = "shower_regen"
+	duration = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/washing_regen
+	///The screen alert shown if you hate water
+	var/hater_alert = /atom/movable/screen/alert/status_effect/washing_regen/hater
+	/// How much stamina we regain from washing
+	var/stamina_heal_per_tick = -4
+	/// How much brute, tox and fie damage we heal from this
+	var/heal_per_tick = 0
+
+/datum/status_effect/washing_regen/on_apply()
+	. = ..()
+	if(owner.is_cat_enough(include_all_anime = TRUE) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
+		alert_type = hater_alert
+
+/datum/status_effect/washing_regen/tick(seconds_between_ticks)
+	. = ..()
+	var/water_adaptation = HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION)
+	var/water_hater = owner.is_cat_enough(include_all_anime = TRUE)
+	var/stam_recovery = (water_hater && !water_adaptation ? -stamina_heal_per_tick : stamina_heal_per_tick) * seconds_between_ticks
+	var/recovery = heal_per_tick
+	if(water_adaptation)
+		recovery -= 1
+		stam_recovery *= 1.5
+	else if(water_hater)
+		recovery *= 0
+	recovery *= seconds_between_ticks
+
+	var/healed = 0
+	if(recovery) //very mild healing for those with the water adaptation trait (fish infusion)
+		healed += owner.adjustOxyLoss(recovery * (water_adaptation ? 1.5 : 1), updating_health = FALSE, required_biotype = MOB_ORGANIC)
+		healed += owner.adjustFireLoss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		healed += owner.adjustToxLoss(recovery, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+		healed += owner.adjustBruteLoss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+	owner.stamina.adjust(-stam_recovery) // MONKESTATION EDIT: stamina component
+	if(healed)
+		owner.updatehealth()
+
+/atom/movable/screen/alert/status_effect/washing_regen
+	name = "Washing"
+	desc = "A good wash fills me with energy!"
+	icon_state = "shower_regen"
+
+/atom/movable/screen/alert/status_effect/washing_regen/hater
+	desc = "Waaater... Fuck this WATER!!"
+	icon_state = "shower_regen_catgirl"
+
+/datum/status_effect/washing_regen/hot_spring
+	alert_type = /atom/movable/screen/alert/status_effect/washing_regen/hotspring
+	hater_alert = /atom/movable/screen/alert/status_effect/washing_regen/hotspring/hater
+	stamina_heal_per_tick = -4.5
+	heal_per_tick = -0.4
+
+/datum/status_effect/washing_regen/hot_spring/tick(seconds_between_ticks)
+	. = ..()
+	owner.adjust_bodytemperature(10 * seconds_between_ticks, 0, T0C + 45)
+
+/atom/movable/screen/alert/status_effect/washing_regen/hotspring
+	name = "Hotspring"
+	desc = "Hot Springs are so relaxing..."
+	icon_state = "hotspring_regen"
+
+/atom/movable/screen/alert/status_effect/washing_regen/hotspring/hater
+	name = "Hotspring"
+	desc = "Waaater... FUCK THIS HOT WATER!!"
+	icon_state = "hotspring_regen_catgirl"

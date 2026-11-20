@@ -96,7 +96,7 @@
 	data["legend_viewing_list"] = LEGEND_VIEWING_LIST
 	data["legend_off"] = LEGEND_OFF
 	data["fluff_notice"] = fluffnotice
-	data["station_name"] = station_name()
+	data["station_name"] = html_decode(station_name())
 	data["wire_devices"] = list()
 	for(var/wireset in GLOB.wire_color_directory)
 		data["wire_devices"] += list(list(
@@ -233,7 +233,15 @@
 	name = "land claim"
 	desc = "Use it to build new structures in the wastes."
 	fluffnotice = "In memory of the Liberator's brother, Delaminator, and his Scarlet Macaw-iathan, from which this artifact was stolen."
-	/* new_area_type = /area/golem */
+	new_area_type = /area/ruin/powered/golem_ship
+
+/obj/item/blueprints/golem/ui_interact(mob/user, datum/tgui/ui)
+	if(iscarbon(user))
+		var/mob/living/carbon/boi = user
+		if(!istype(boi.mind?.assigned_role, /datum/job/free_golem) && !HAS_TRAIT(boi, TRAIT_NUKEIMMUNE)) //ok if they're nuke immune probably an admin so.
+			balloon_alert(user,"nope!")
+			return
+		. = ..()
 
 ///Slime blueprints - Makes areas colored and compatible with xenobiology camera consoles, one time use.
 /obj/item/blueprints/slime

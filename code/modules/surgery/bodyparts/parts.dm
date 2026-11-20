@@ -171,6 +171,7 @@
 
 /// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
+	abstract_type = /obj/item/bodypart/leg
 	name = "leg"
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
@@ -197,6 +198,12 @@
 	QDEL_NULL(worn_foot_offset)
 	return ..()
 
+/// block attachment of legs if the owner has the related trait
+/obj/item/bodypart/leg/can_attach_limb(mob/living/carbon/owner, special)
+	if(!special && HAS_TRAIT(owner, TRAIT_BLOCK_ATTACHING_LEGS))
+		return FALSE
+	return ..()
+
 /obj/item/bodypart/leg/left
 	name = "left leg"
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
@@ -207,7 +214,6 @@
 	plaintext_zone = "left leg"
 	px_x = -2
 	px_y = 12
-	can_be_disabled = TRUE
 	bodypart_trait_source = LEFT_LEG_TRAIT
 
 /obj/item/bodypart/leg/left/set_owner(new_owner)

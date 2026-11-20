@@ -1,4 +1,4 @@
-GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE, COLOR_RED, COLOR_BLUE, COLOR_GREEN, COLOR_MAGENTA)) //monkestation addition
+GLOBAL_VAR_INIT(starlight_color, pick(100;COLOR_SPACE_BLUE, 75;COLOR_BLUE, 25;COLOR_TEAL, 25;COLOR_CYAN, 10;COLOR_PURPLE, 10;COLOR_MAGENTA, 10;COLOR_GREEN, 5;COLOR_ORANGE, 5;COLOR_RED,)) //monkestation addition
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
@@ -12,26 +12,21 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
-	var/destination_z
-	var/destination_x
-	var/destination_y
-
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
 	// We do NOT want atmos adjacent turfs
 	init_air = FALSE
 	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
-	light_power = 0.75
+	light_power = 1
 	light_inner_range = 0.1
 	light_outer_range = 4
-	light_falloff_curve = 5
+	light_height = LIGHTING_HEIGHT_SPACE
 	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
-	astar_weight = 200
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)
@@ -85,12 +80,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 
 	return INITIALIZE_HINT_NORMAL
 
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-/turf/open/space/attack_ghost(mob/dead/observer/user)
-	if(destination_z)
-		var/turf/T = locate(destination_x, destination_y, destination_z)
-		user.forceMove(T)
-
 /turf/open/space/TakeTemperature(temp)
 
 /turf/open/space/RemoveLattice()
@@ -134,11 +123,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/turf/open/space/proc/CanBuildHere()
-	if(destination_z)
-		return FALSE
-	return TRUE
-
 /turf/open/space/handle_slip()
 	return
 
@@ -151,40 +135,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	else if(istype(C, /obj/item/stack/tile/iron))
 		build_with_floor_tiles(C, user)
 
-
-/turf/open/space/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(!arrived || src != arrived.loc)
-		return
-
-	if(destination_z && destination_x && destination_y && !arrived.pulledby && !arrived.currently_z_moving)
-		var/tx = destination_x
-		var/ty = destination_y
-		var/turf/DT = locate(tx, ty, destination_z)
-		var/itercount = 0
-		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
-			if (itercount++ >= 100)
-				log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [arrived] within 100 iterations.")
-				break
-			if (tx < 128)
-				tx++
-			else
-				tx--
-			if (ty < 128)
-				ty++
-			else
-				ty--
-			DT = locate(tx, ty, destination_z)
-
-		arrived.zMove(null, DT, ZMOVE_ALLOW_BUCKLED)
-
-		var/atom/movable/current_pull = arrived.pulling
-		while (current_pull)
-			var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
-			current_pull.zMove(null, target_turf, ZMOVE_ALLOW_BUCKLED)
-			current_pull = current_pull.pulling
-
-
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
@@ -196,11 +146,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 		return TRUE
 	return FALSE
 
-/turf/open/space/is_transition_turf()
-	if(destination_x || destination_y || destination_z)
-		return TRUE
-
-
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return FALSE
 
@@ -210,9 +155,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 
 
 /turf/open/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)

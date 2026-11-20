@@ -67,10 +67,12 @@
 	icon_state = "ai"
 
 /area/station/ai_monitored/turret_protected/aisat/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper AI Satellite Hallway"
 	icon_state = "ai"
 
 /area/station/ai_monitored/turret_protected/aisat/maint
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper AI Satellite Maintenance"
 	icon_state = "ai_maint"
 

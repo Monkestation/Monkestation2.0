@@ -280,6 +280,4 @@
 #define PLASMIC_FUSION_TOROID_VOLUME_BREAKEVEN 1000
 /// Determines how much the specific fusion power of the gas mix contributes.
 #define PLASMIC_FUSION_INSTABILITY_GAS_POWER_FACTOR 0.003
-/// A base value modified by instability to determine the strength of the radiation pulse emitted.
-#define PLASMIC_FUSION_RAD_COEFFICIENT (-1000)
 

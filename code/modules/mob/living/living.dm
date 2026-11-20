@@ -23,6 +23,7 @@
 	gravity_setup()
 	if(!blood_volume)
 		ADD_TRAIT(src, TRAIT_NOBLOOD, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_UNIQUE_IMMERSE, INNATE_TRAIT)
 
 /mob/living/prepare_huds()
 	..()
@@ -1889,6 +1890,30 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	mob_pickup(user)
 	return TRUE
 
+///Attempts to stash the mob into a human's hands if able.
+/mob/living/proc/mob_try_stash(mob/living/carrier, instant=FALSE)
+	if(!(Adjacent(carrier)))
+		return
+	if(!ishuman(carrier))
+		return
+	if(IS_DEAD_OR_INCAP(carrier))
+		to_chat(src, span_warning("[carrier] is unable to hold on to you!"))
+		return
+	if(!length(carrier.get_empty_held_indexes()))
+		to_chat(src, span_warning("[carrier]'s hands are full!"))
+		return FALSE
+	if(buckled)
+		to_chat(src, span_warning("You are buckled to something!"))
+		return FALSE
+	if(!instant)
+		carrier.visible_message(span_warning("[src] starts trying to crawl into [carrier]'s hands!"), \
+						span_danger("[src] starts trying to crawl into your hands..."), null, null, src)
+		to_chat(src, span_userdanger("You start trying to crawl into [carrier]'s hands!"))
+		if(!do_after(src, 5 SECONDS, target = carrier))
+			return FALSE
+	mob_pickup(carrier)
+	return TRUE
+
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))
 		return
@@ -2254,10 +2279,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(GRAB_KILL)
 			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
-
-/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
-/mob/living/proc/is_face_visible()
-	return TRUE
 
 
 ///Proc to modify the value of num_legs and hook behavior associated to this event.
@@ -2692,3 +2713,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return TRUE
 
 	return FALSE
+
+/// Makes the mob scream in pain, unless it can't feel pain
+/mob/living/proc/painful_scream(force = FALSE)
+	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
+		return
+	INVOKE_ASYNC(src, PROC_REF(emote), "scream")

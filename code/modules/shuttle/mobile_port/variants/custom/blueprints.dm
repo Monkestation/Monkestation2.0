@@ -207,7 +207,7 @@
 /obj/item/shuttle_blueprints/proc/christen(mob/living/user, obj/docking_port/mobile/custom/shuttle, atom/attacked, hand)
 	var/trait_source = REF(shuttle)
 	ADD_TRAIT(user, TRAIT_ATTEMPTING_CHRISTENING, trait_source)
-	var/new_name = reject_bad_name(tgui_input_text(user, "What would you like to rechristen \the [shuttle] as?", "Shuttle Rechristening", max_length = 128), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
+	var/new_name = reject_bad_name(tgui_input_text(user, "What would you like to rechristen \the [shuttle] as?", "Shuttle Rechristening", max_length = 128, encode = FALSE), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
 	if(QDELETED(user))
 		return
 	REMOVE_TRAIT(user, TRAIT_ATTEMPTING_CHRISTENING, trait_source)
@@ -347,7 +347,7 @@
 			data["apcInMergeRegion"] = shuttle.default_area.apc && room_turfs[get_turf(shuttle.default_area.apc)]
 			var/list/area_refs = list()
 			for(var/area/neighboring_area in neighboring_areas)
-				area_refs[REF(neighboring_area)] = neighboring_area.name
+				area_refs[REF(neighboring_area)] = html_decode(neighboring_area.name)
 			data["neighboringAreas"] = area_refs
 	return data
 
@@ -381,7 +381,7 @@
 		var/area/default_area = linked_shuttle.default_area
 		data["onShuttle"] = linked_shuttle.shuttle_areas[current_area]
 		data["inDefaultArea"] = default_area == current_area
-		data["currentArea"] = list(name = current_area.name, ref = REF(current_area))
+		data["currentArea"] = list(name = html_decode(current_area.name), ref = REF(current_area))
 		data["defaultApc"] = !!default_area.apc
 		var/list/apcs = list()
 		for(var/area/area as anything in linked_shuttle.shuttle_areas - default_area)
@@ -580,7 +580,7 @@
 			if(!shuttle)
 				balloon_alert(usr, "not linked!")
 				return TRUE
-			var/area_name = params["name"]
+			var/area_name = html_encode(params["name"])
 			if(!area_name)
 				balloon_alert(usr, "no name given!")
 				return TRUE
@@ -673,7 +673,7 @@
 			if(current_area == default_area)
 				balloon_alert(usr, "can't rename default area!")
 				return TRUE
-			var/new_name = params["name"]
+			var/new_name = html_encode(params["name"])
 			if(!new_name)
 				balloon_alert(usr, "no name given!")
 				return TRUE

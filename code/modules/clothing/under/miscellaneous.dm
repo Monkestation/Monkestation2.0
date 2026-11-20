@@ -1,4 +1,5 @@
 /obj/item/clothing/under/misc
+	abstract_type = /obj/item/clothing/under/misc
 	icon = 'icons/obj/clothing/under/misc.dmi'
 	worn_icon = 'icons/mob/clothing/under/misc.dmi'
 
@@ -215,3 +216,8 @@
 	desc = "A blue and black uniform worn by W Corp's employees."
 	icon_state = "wuniform"
 	can_adjust = FALSE
+
+
+/obj/item/clothing/under/misc/adminsuit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -25)

@@ -3,6 +3,7 @@
 	can_adjust = FALSE
 	body_parts_covered = CHEST|ARMS|GROIN
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 	icon = 'icons/obj/clothing/under/dress.dmi'
 	worn_icon = 'icons/mob/clothing/under/dress.dmi'
 
@@ -10,6 +11,7 @@
 	name = "striped dress"
 	desc = "Fashion in space."
 	icon_state = "striped_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
 	inhand_icon_state = null
 	female_sprite_flags = FEMALE_UNIFORM_FULL
 
@@ -17,6 +19,7 @@
 	name = "sailor dress"
 	desc = "Formal wear for a leading lady."
 	icon_state = "sailor_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
 	inhand_icon_state = null
 
 /obj/item/clothing/under/dress/wedding_dress
@@ -151,6 +154,7 @@
 	name = "lace angel dress"
 	desc = "I can be your angle or your debil."
 	icon_state = "angeldress"
+	body_parts_covered = CHEST|GROIN|ARMS
 	inhand_icon_state = "angeldress"
 
 /obj/item/clothing/under/dress/angel/alt
@@ -200,3 +204,8 @@
 	icon_state = "hulaskirt"
 	inhand_icon_state = "hulaskirt"
 	body_parts_covered = GROIN|LEGS
+
+
+/obj/item/clothing/under/dress/wedding_dress/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?

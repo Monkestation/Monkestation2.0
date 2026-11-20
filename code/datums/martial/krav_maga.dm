@@ -69,6 +69,7 @@
 	neckchop.Remove(owner)
 	legsweep.Remove(owner)
 	lungpunch.Remove(owner)
+	return ..()
 
 /datum/martial_art/krav_maga/proc/check_streak(mob/living/attacker, mob/living/defender)
 	switch(streak)
@@ -166,6 +167,7 @@
 //Krav Maga Gloves
 
 /obj/item/clothing/gloves/krav_maga
+	abstract_type = /obj/item/clothing/gloves/krav_maga
 	var/datum/martial_art/krav_maga/style = new
 	clothing_traits = list(TRAIT_FAST_CUFFING)
 

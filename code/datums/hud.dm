@@ -407,7 +407,8 @@ GLOBAL_ALIST_INIT(huds, alist(
 		hud_exceptions[hud_user] += hidden_atom
 
 /datum/atom_hud/proc/unhide_single_atomhud_from(mob/hud_user, atom/hidden_atom)
-	hud_exceptions[hud_user] -= hidden_atom
+	if(hud_exceptions[hud_user])
+		hud_exceptions[hud_user] -= hidden_atom
 
 	var/turf/hud_atom_turf = get_turf(hidden_atom)
 

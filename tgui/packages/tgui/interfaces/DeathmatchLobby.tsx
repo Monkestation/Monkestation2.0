@@ -108,7 +108,7 @@ export function DeathmatchLobby(props) {
                 </Stack.Item>
                 <Stack.Item>
                   <Button
-                    color={rejoin ? "good" : "bad"}
+                    color={rejoin ? 'good' : 'bad'}
                     tooltip="Automatically joins the lobby and opens the deathmatch menu for you when the game ends"
                     onClick={() => act('rejoin')}
                   >
@@ -120,10 +120,7 @@ export function DeathmatchLobby(props) {
                   <Button color="bad" onClick={() => act('leave_game')}>
                     Leave Game
                   </Button>
-                  <Button
-                    color="good"
-                    onClick={() => act('start_game')}
-                  >
+                  <Button color="good" onClick={() => act('start_game')}>
                     Start Game
                   </Button>
                 </Stack.Item>
@@ -288,7 +285,15 @@ function PlayerColumn(props) {
 
 function HostControls(props) {
   const { act, data } = useBackend<Data>();
-  const { active_mods = [], admin, host, loadoutdesc, playing, players, map } = data;
+  const {
+    active_mods = [],
+    admin,
+    host,
+    loadoutdesc,
+    playing,
+    players,
+    map,
+  } = data;
 
   const fullAccess = !!host || !!admin;
 
@@ -311,7 +316,8 @@ function HostControls(props) {
         <>
           <Divider />
           <Box textAlign="center" color="average">
-            Player count over maps recommended limit, players may spawn together.
+            Player count over maps recommended limit, players may spawn
+            together.
           </Box>
         </>
       )}

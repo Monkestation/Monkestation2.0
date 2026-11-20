@@ -569,6 +569,16 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/voltaic = list(LANGUAGE_ATOM),
 	)
 
+/datum/language_holder/cerulean
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+
 /datum/language_holder/golem
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
@@ -724,6 +734,12 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	understood_languages = list(/datum/language/common = list(LANGUAGE_MIND),
 								/datum/language/wawa = list(LANGUAGE_MIND))
 	spoken_languages = list(/datum/language/wawa = list(LANGUAGE_MIND))
+
+/datum/language_holder/shadekin
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/marish = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/marish = list(LANGUAGE_ATOM))
 
 /datum/language_holder/empty
 	understood_languages = null

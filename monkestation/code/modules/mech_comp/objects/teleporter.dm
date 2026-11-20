@@ -42,12 +42,12 @@ GLOBAL_LIST_INIT(live_teleporters, list())
 	return TRUE
 
 /obj/item/mcobject/teleporter/proc/set_id(mob/user, obj/item/tool)
-	var/idx = tgui_input_text(user, "Set index", "Configure Component", teleID)
+	var/idx = tgui_input_text(user, "Set index", "Configure Component", teleID, encode = FALSE)
 	if(isnull(idx))
 		return
 
 	teleID = idx
-	to_chat(user, span_notice("You set [src]'s id to [teleID]."))
+	to_chat(user, span_notice("You set [src]'s id to [html_encode(teleID)]."))
 	return TRUE
 
 /obj/item/mcobject/teleporter/proc/activate()

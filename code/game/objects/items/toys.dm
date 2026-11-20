@@ -28,6 +28,7 @@
  * Heretic Replica Blades
  */
 /obj/item/toy
+	abstract_type = /obj/item/toy
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -263,6 +264,7 @@
 */
 
 /obj/item/toy/balloon_animal
+	abstract_type = /obj/item/toy/balloon_animal
 	name = "balloon animal"
 	desc = "You shouldn't have this."
 	icon = 'icons/obj/toys/balloons.dmi'
@@ -520,6 +522,9 @@
 		span_danger("You fire [src] at [interacting_with]!"), \
 		span_hear("You hear a gunshot!"))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/toy/ammo
+	abstract_type = /obj/item/toy/ammo
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -1392,7 +1397,7 @@
 
 //Add changing looks when i feel suicidal about making 20 inhands for these.
 /obj/item/toy/dummy/attack_self(mob/user)
-	var/new_name = tgui_input_text(usr, "What would you like to name the dummy?", "Doll Name", doll_name, MAX_NAME_LEN)
+	var/new_name = tgui_input_text(usr, "What would you like to name the dummy?", "Doll Name", html_decode(doll_name), MAX_NAME_LEN)
 	if(!new_name)
 		return
 	doll_name = new_name
