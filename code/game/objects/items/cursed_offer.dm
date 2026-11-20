@@ -59,4 +59,5 @@
 	switch(action)
 		if("sign")
 			signed_by = WEAKREF(user)
+			message_admins("[key_name(user)] has signed an admin bargain! The terms: [admin_offers] for [admin_receives]")
 			log_admin("[key_name(user)] has signed an admin bargain! The terms: [admin_offers] for [admin_receives]")
