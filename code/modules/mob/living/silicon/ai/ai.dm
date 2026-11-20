@@ -158,6 +158,9 @@
 	///How much ai's client view_range should be adjusted by with view_size.setTo(). 0 Is default view size.
 	var/view_range_boost = 0
 
+	///AI pen, if it somehow gets into range of one.
+	var/obj/item/pen/silicon/ai_pen
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -220,6 +223,7 @@
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
+	ai_pen = new/obj/item/pen/silicon(src)
 
 	deploy_action.Grant(src)
 
@@ -299,6 +303,7 @@
 	QDEL_NULL(dashboard)
 	QDEL_NULL(nanite_menu)
 	QDEL_NULL(nanite_remote)
+	QDEL_NULL(ai_pen)
 	malfhack = null
 	current = null
 	bot_ref = null
