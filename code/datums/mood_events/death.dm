@@ -13,7 +13,7 @@
 	return TRUE
 
 /datum/mood_event/conditional/see_death/add_effects(mob/dead_mob, dusted, gibbed)
-	update_effect(dead_mob)
+	update_effect(dead_mob, dusted, gibbed)
 
 	if(HAS_PERSONALITY(owner, /datum/personality/compassionate) && mood_change < 0)
 		mood_change *= 1.5
@@ -34,7 +34,7 @@
 	description = capitalize(replacetext(description, "%DEAD_MOB%", get_descriptor(dead_mob)))
 
 /// Blank proc which allows conditional effects to modify mood, timeout, or description before the main effect is applied
-/datum/mood_event/conditional/see_death/proc/update_effect(mob/dead_mob)
+/datum/mood_event/conditional/see_death/proc/update_effect(mob/dead_mob, dusted, gibbed)
 	return
 
 /// Checks if the dead mob is a pet
@@ -75,7 +75,7 @@
 /datum/mood_event/conditional/see_death/naive/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
 	return HAS_TRAIT(who, TRAIT_NAIVE) && !dusted && !gibbed
 
-/datum/mood_event/conditional/see_death/naive/update_effect(mob/dead_mob)
+/datum/mood_event/conditional/see_death/naive/update_effect(mob/dead_mob, dusted, gibbed)
 	description = "Have a good nap, [get_descriptor(dead_mob)]."
 
 /// Cultists are super brainwashed so they get buffs instead
@@ -99,7 +99,7 @@
 /datum/mood_event/conditional/see_death/revolutionary/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
 	return IS_REVOLUTIONARY(who) && (dead_mob.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 
-/datum/mood_event/conditional/see_death/revolutionary/update_effect(mob/dead_mob)
+/datum/mood_event/conditional/see_death/revolutionary/update_effect(mob/dead_mob, dusted, gibbed)
 	var/datum/job/possible_head_job = dead_mob.mind?.assigned_role
 	description = "[possible_head_job.title ? "The [LOWER_TEXT(possible_head_job.title)]" : "Another head of staff"] is dead! Long live the revolution!"
 
