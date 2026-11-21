@@ -31,11 +31,14 @@
 			string += ","
 		string += "Round End"
 	if(checks_antag_cap)
-		if(!roundstart && !SSgamemode.can_inject_antags())
+		if(!roundstart && !SSgamemode.can_inject_antags(get_antag_cap_cost()))
 			if(string)
 				string += ","
 			string += "Too Many Antags"
 	return string
+
+/datum/round_event_control/proc/get_antag_cap_cost()
+	return 0
 
 /// Check if our enemy_roles requirement is met, if return_players is set then we will return the list of enemy players instead
 /datum/round_event_control/proc/check_enemies(return_players = FALSE)
@@ -132,6 +135,9 @@
 		. += "Not Enough Candidates!"
 	return .
 
+/datum/round_event_control/antagonist/get_antag_cap_cost()
+	return antag_datum ? antag_datum::antag_count_points : 0
+
 /datum/round_event_control/antagonist/generate_image(list/mobs)
 	SScredits.generate_major_icon(mobs, event_icon_state)
 
@@ -147,6 +153,8 @@
 
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates(candidate_pool)
+	if(prompted_picking)
+		candidates = SSgamemode.remove_recent_decliners(candidates)
 	if(length(candidates) < antag_amt)
 		return FALSE
 
@@ -229,12 +237,10 @@
 		return amount
 
 	var/point_cost = antag_datum::antag_count_points
+	if(!point_cost)
+		return amount
 	var/points_left = SSgamemode.get_antag_cap() - SSgamemode.get_antag_count()
-	for(var/i in 1 to amount) //due to being inclusive this means we will always spawn at least one
-		points_left -= point_cost
-		if(points_left <= 0)
-			return i
-	return amount
+	return clamp(FLOOR(points_left / point_cost, 1), 1, amount)
 
 /datum/round_event_control/antagonist/proc/get_candidates(list/candidate_pool)
 	var/round_started = SSticker.HasRoundStarted()
