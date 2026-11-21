@@ -516,7 +516,7 @@
 /datum/chemical_reaction/slime/slimestop/proc/slime_stop(datum/reagents/holder)
 	var/obj/item/slime_extract/sepia/extract = holder.my_atom
 	var/turf/T = get_turf(holder.my_atom)
-	new /obj/effect/timestop(T, 2, 9 SECONDS, null)
+	new /obj/effect/timestop(T, 2, 7 SECONDS, null)
 	if(istype(extract))
 		if(extract.Uses > 0)
 			var/mob/lastheld = get_mob_by_key(holder.my_atom.fingerprintslast)
