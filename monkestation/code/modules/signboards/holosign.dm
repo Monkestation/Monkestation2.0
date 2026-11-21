@@ -210,7 +210,7 @@
 
 	var/edited_message = replacetextEx_char(message.value, "<br>", "\n")
 	if(connected_display.set_text(edited_message))
-		investigate_log("Circuit USB ([parent.get_creator()]) set text to \"[connected_display.sign_text || "(none)"]\"", INVESTIGATE_SIGNBOARD)
+		investigate_log("Circuit USB ([parent.get_creator()]) set text to \"[html_encode(connected_display.sign_text) || "(none)"]\"", INVESTIGATE_SIGNBOARD)
 		if(is_soft_ic_filtered(message.value))
 			message_admins("A circuit component (by [parent.get_creator_admin()]) added a soft filtered message to a signboard. [ADMIN_COORDJMP(src)]")
 	else

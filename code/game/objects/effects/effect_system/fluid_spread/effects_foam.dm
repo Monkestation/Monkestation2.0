@@ -277,7 +277,9 @@
 		var/obj/effect/decal/cleanable/plasma/reagentdecal = new(exposed_turf)
 		reagentdecal = locate() in exposed_turf
 		if(reagentdecal)
-			reagentdecal.reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
+			var/datum/reagents/decal_reagents = reagentdecal.lazy_init_reagents()
+			decal_reagents.maximum_volume += absorbed_plasma
+			decal_reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
 			absorbed_plasma = 0
 //MONKESTATION EDIT STOP
 

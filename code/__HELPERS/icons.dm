@@ -583,6 +583,8 @@ world
 						add.MapColors(arglist(appearance.color))
 					else
 						add.Blend(appearance.color, ICON_MULTIPLY)
+				if(!(appearance.appearance_flags & KEEP_TOGETHER))
+					add = flatten_height_filter(add, appearance)
 			else // 'I' is an appearance object.
 				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim, next_parentcolor)
 
@@ -618,6 +620,9 @@ world
 			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
 
 
+		if(appearance.appearance_flags & KEEP_TOGETHER)
+			flat = flatten_height_filter(flat, appearance)
+
 		if(appearance.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, appearance.alpha), ICON_MULTIPLY)
 
@@ -630,6 +635,7 @@ world
 			return icon(flat, "", SOUTH)
 	else if (render_icon) // There's no overlays.
 		var/icon/final_icon = icon(icon(curicon, curstate, base_icon_dir), "", SOUTH, no_anim ? TRUE : null)
+		final_icon = flatten_height_filter(final_icon, appearance)
 
 		if (appearance.alpha < 255)
 			final_icon.Blend(rgb(255,255,255, appearance.alpha), ICON_MULTIPLY)
@@ -643,6 +649,50 @@ world
 		return final_icon
 
 	#undef PROCESS_OVERLAYS_OR_UNDERLAYS
+
+/// Icon procs ignore filters, so this redoes an appearance's height filter (see apply_height_filter) on its flattened icon. Returns the icon to use.
+/proc/flatten_height_filter(icon/flat, image/appearance)
+	if(!length(appearance.filters))
+		return flat
+	var/dm_filter/height_filter = appearance.filters["height_displacement"]
+	if(!height_filter)
+		return flat
+
+	// green 128 + n on a mask row moves that row by n pixels, and every height mask moves whole rows
+	var/static/alist/mask_rows_cache = alist()
+	var/mask = height_filter.icon
+	var/list/mask_rows = mask_rows_cache[mask]
+	if(isnull(mask_rows))
+		var/icon/mask_icon = icon(mask)
+		mask_rows = list()
+		for(var/row in 1 to mask_icon.Height())
+			var/pixel = mask_icon.GetPixel(1, row)
+			var/list/channels = pixel ? rgb2num(pixel) : null
+			mask_rows += channels ? channels[2] - 128 : 0
+		mask_rows_cache[mask] = mask_rows
+
+	var/width = flat.Width()
+	var/height = flat.Height()
+	var/list/shifts = list()
+	for(var/row in 1 to height)
+		var/mask_row = row - height_filter.y
+		var/mask_shift = (mask_row >= 1 && mask_row <= length(mask_rows)) ? mask_rows[mask_row] : 0
+		shifts += round(mask_shift * height_filter.size / 127, 1)
+
+	var/icon/displaced = icon(flat)
+	displaced.Blend(rgb(255, 255, 255, 0), ICON_MULTIPLY)
+	var/band_start = 1
+	for(var/row in 1 to height)
+		if(row < height && shifts[row + 1] == shifts[row])
+			continue
+		var/icon/band = icon(flat)
+		var/shift = shifts[row]
+		if(shift)
+			band.Shift(shift < 0 ? SOUTH : NORTH, abs(shift))
+		band.Crop(1, band_start, width, row)
+		displaced.Blend(band, ICON_OVERLAY, 1, band_start)
+		band_start = row + 1
+	return displaced
 
 /proc/getIconMask(atom/atom_to_mask)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(atom_to_mask.icon, atom_to_mask.icon_state)//So we want the default icon and icon state of atom_to_mask.

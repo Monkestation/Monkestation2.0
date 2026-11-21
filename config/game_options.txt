@@ -569,7 +569,9 @@ NEGATIVE_STATION_TRAITS 3 1
 ## Put the name of your custom currency here
 METACURRENCY_NAME Metacoin
 
-TWITCH_KEY mrhouse
+## Secret that the Twitch events bot must send with every request. Twitch events stay disabled until this is set.
+## Use a long random value and keep it out of public repos.
+#TWITCH_KEY changethisplease
 
 ## How long (in minutes) after roundstart should the server start an automatic crew transfer vote?
 ## Defaults to 90 minutes. Set to 0 to completely disable automatic crew transfer votes.

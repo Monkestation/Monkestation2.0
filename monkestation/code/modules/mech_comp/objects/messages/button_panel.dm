@@ -15,7 +15,7 @@
 	. = ..()
 	. += "<b>Buttons</b>:"
 	for(var/name in active_buttons)
-		. += "<b>Label</b>: [name] | <b>Signal</b>: [active_buttons[name]]"
+		. += "<b>Label</b>: [html_encode(name)] | <b>Signal</b>: [html_encode(active_buttons[name])]"
 
 /obj/item/mcobject/messaging/button_panel/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -41,10 +41,10 @@
 	forceMove(target)
 
 /obj/item/mcobject/messaging/button_panel/proc/add_button(mob/user, obj/item/tool)
-	var/button_label = tgui_input_text(user, "Enter the Name of the button", "Button Panel")
+	var/button_label = tgui_input_text(user, "Enter the Name of the button", "Button Panel", encode = FALSE)
 	if(!button_label)
 		return
-	var/button_signal = tgui_input_text(user, "Enter the Signal of the button", "Button Panel")
+	var/button_signal = tgui_input_text(user, "Enter the Signal of the button", "Button Panel", encode = FALSE)
 	if(!button_signal)
 		return
 	if(button_label in active_buttons)

@@ -350,6 +350,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += subtypesof(/obj/machinery/airlock_controller)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
 	ignore += subtypesof(/atom/movable/screen/escape_menu)
+	// Needs a hud and a minimap to be passed in
+	ignore += typesof(/atom/movable/screen/minimap_display)
+	ignore += typesof(/atom/movable/screen/minimap_z_indicator)
 	///we generate mobs in these and create destroy does this in null space
 	ignore += typesof(/obj/item/loot_table_maker)
 

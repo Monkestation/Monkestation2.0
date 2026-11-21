@@ -812,8 +812,10 @@ SUBSYSTEM_DEF(ticker)
 	var/client/player_client = player?.client
 	if(!player_client)
 		return
-	var/volume = clamp(calculate_mixed_volume(player_client, 100, CHANNEL_LOBBYMUSIC), 15, 100)
-	SEND_SOUND(player_client, sound(round_end_sound, wait = 0, channel = CHANNEL_LOBBYMUSIC, volume = volume))
+	var/volume = calculate_mixed_volume(player_client, 100, CHANNEL_LOBBYMUSIC)
+	if(!volume)
+		return
+	SEND_SOUND(player_client, sound(round_end_sound, wait = 0, channel = CHANNEL_LOBBYMUSIC, volume = clamp(volume, 15, 100)))
 
 /datum/controller/subsystem/ticker/proc/Reboot(reason, end_string, delay)
 	set waitfor = FALSE
@@ -830,15 +832,14 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, span_boldannounce("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
 
-	var/start_wait = world.time
+	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), delay, TIMER_STOPPABLE)
+	// SetRoundEndSound() schedules the sound itself once every client has it
 	if(!round_end_sound)
 		var/song = choose_round_end_song()
 		if(song)
 			SetRoundEndSound(song)
-	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
-	var/time_left = delay - (world.time - start_wait)
-	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), time_left, TIMER_STOPPABLE)
-	schedule_round_end_sound(time_left)
+	else if(round_end_sound_sent)
+		schedule_round_end_sound(delay)
 
 
 /datum/controller/subsystem/ticker/proc/reboot_callback(reason, end_string)

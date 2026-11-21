@@ -51,6 +51,8 @@
 	do_spawn_mob(get_turf(target), firer)
 
 /datum/component/summoning/proc/do_spawn_mob(atom/spawn_location, summoner)
+	if(!spawn_location)
+		return
 	if(spawned_mobs.len >= max_mobs)
 		return
 	if(last_spawned_time > world.time)
