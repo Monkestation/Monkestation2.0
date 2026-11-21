@@ -1,4 +1,3 @@
-import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -10,28 +9,28 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 
+type Beaker = {
+  maxVolume: number;
+  currentVolume: number;
+  contents: { name: string; volume: number }[];
+};
+
 type Data = {
   amount: number;
   purity: number;
-  beakerCurrentVolume: number;
-  beakerMaxVolume: number;
-  isBeakerLoaded: BooleanLike;
-  beakerContents: { name: string; volume: number }[];
+  beaker: Beaker | null;
 };
 
 export const ChemDebugSynthesizer = (props) => {
   const { act, data } = useBackend<Data>();
-  const {
-    amount,
-    purity,
-    beakerCurrentVolume,
-    beakerMaxVolume,
-    isBeakerLoaded,
-    beakerContents = [],
-  } = data;
+  const { amount, purity, beaker } = data;
+  const isBeakerLoaded = !!beaker;
+  const beakerCurrentVolume = beaker?.currentVolume || 0;
+  const beakerMaxVolume = beaker?.maxVolume || 0;
+  const beakerContents = beaker?.contents || [];
 
   return (
-    <Window width={390} height={330}>
+    <Window width={520} height={330}>
       <Window.Content scrollable>
         <Section
           title="Recipient"
@@ -73,6 +72,11 @@ export const ChemDebugSynthesizer = (props) => {
                   icon="plus"
                   content="Input"
                   onClick={() => act('input')}
+                />
+                <Button
+                  icon="search"
+                  content="Search Reagent"
+                  onClick={() => act('search')}
                 />
               </>
             ) : (
