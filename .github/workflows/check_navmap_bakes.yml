@@ -42,6 +42,10 @@ jobs:
         if: steps.maps.outputs.maps != '[]'
         run: bash tools/ci/install_rust_g.sh
 
+      - name: Install aneri
+        if: steps.maps.outputs.maps != '[]'
+        run: bash tools/ci/install_aneri.sh
+
       - name: Install DreamLuau
         if: steps.maps.outputs.maps != '[]'
         run: bash tools/ci/install_dreamluau.sh

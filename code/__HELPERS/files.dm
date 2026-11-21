@@ -80,7 +80,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
 		if(copytext_char(path, -1) != "/") //didn't choose a directory, no need to iterate again
 			break
-	if(!rustg_file_exists(path) || !valid_ext_regex.Find(path))
+	if(!aneri_file_exists(path) || !valid_ext_regex.Find(path))
 		to_chat(src, "<font color='red'>Error: browse_files(): File not found/Invalid file([path]).</font>")
 		return
 
@@ -147,7 +147,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 	var/filename = "tmp/md5asfile.[world.realtime].[world.timeofday].[world.time].[world.tick_usage].[notch]"
 	notch = WRAP(notch+1, 0, 2**15)
 	fcopy(file, filename)
-	. = rustg_hash_file(RUSTG_HASH_MD5, filename)
+	. = aneri_hash_file("md5", filename)
 	fdel(filename)
 
 /**

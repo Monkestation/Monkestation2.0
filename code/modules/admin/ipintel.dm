@@ -84,13 +84,14 @@
 	if (!SSipintel.enabled)
 		return
 
-	var/list/http[] = world.Export("http://[CONFIG_GET(string/ipintel_domain)]/check.php?ip=[ip]&contact=[CONFIG_GET(string/ipintel_email)]&format=json&flags=f")
+	var/datum/http_request/request = new("http://[CONFIG_GET(string/ipintel_domain)]/check.php?ip=[ip]&contact=[CONFIG_GET(string/ipintel_email)]&format=json&flags=f")
+	var/datum/http_response/http = request.send().wait()
 
-	if (http)
-		var/status = text2num(http["STATUS"])
+	if (!http.error)
+		var/status = http.status_code
 
 		if (status == 200)
-			var/response = json_decode(file2text(http["CONTENT"]))
+			var/response = json_decode(http.body)
 			if (response)
 				if (response["status"] == "success")
 					var/intelnum = text2num(response["result"])

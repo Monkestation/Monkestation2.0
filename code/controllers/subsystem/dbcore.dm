@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(dbcore)
 	var/shutting_down = FALSE
 
 
-	var/connection  // Arbitrary handle returned from rust_g.
+	var/datum/sql_pool/pool
 
 	var/db_daemon_started = FALSE
 
@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/run_query(datum/db_query/query)
 	if(IsAdminAdvancedProcCall())
 		return
-	query.job_id = rustg_sql_query_async(connection, query.sql, json_encode(query.arguments))
+	query.start_inner().execute()
 
 /datum/controller/subsystem/dbcore/proc/queue_query(datum/db_query/query)
 	if(IsAdminAdvancedProcCall())
@@ -184,7 +184,7 @@ SUBSYSTEM_DEF(dbcore)
 	queries_standby |= query
 
 /datum/controller/subsystem/dbcore/Recover()
-	connection = SSdbcore.connection
+	pool = SSdbcore.pool
 
 /datum/controller/subsystem/dbcore/Shutdown()
 	shutting_down = TRUE
@@ -226,7 +226,7 @@ SUBSYSTEM_DEF(dbcore)
 
 //nu
 /datum/controller/subsystem/dbcore/can_vv_get(var_name)
-	if(var_name == NAMEOF(src, connection))
+	if(var_name == NAMEOF(src, pool))
 		return FALSE
 	if(var_name == NAMEOF(src, all_queries))
 		return FALSE
@@ -240,7 +240,7 @@ SUBSYSTEM_DEF(dbcore)
 	return ..()
 
 /datum/controller/subsystem/dbcore/vv_edit_var(var_name, var_value)
-	if(var_name == NAMEOF(src, connection))
+	if(var_name == NAMEOF(src, pool))
 		return FALSE
 	if(var_name == NAMEOF(src, all_queries))
 		return FALSE
@@ -258,9 +258,9 @@ SUBSYSTEM_DEF(dbcore)
 	if(IsConnected())
 		return TRUE
 
-	if(connection)
-		Disconnect() //clear the current connection handle so isconnected() calls stop invoking rustg
-		connection = null //make sure its cleared even if runtimes happened
+	if(pool)
+		Disconnect()
+		pool = null //make sure its cleared even if runtimes happened
 
 	if(failed_connection_timeout <= world.time) //it's been long enough since we failed to connect, reset the counter
 		failed_connections = 0
@@ -283,23 +283,16 @@ SUBSYSTEM_DEF(dbcore)
 	var/min_sql_connections = CONFIG_GET(number/pooling_min_sql_connections)
 	var/max_sql_connections = CONFIG_GET(number/pooling_max_sql_connections)
 
-	var/result = json_decode(rustg_sql_connect_pool(json_encode(list(
-		"host" = address,
-		"port" = port,
-		"user" = user,
-		"pass" = pass,
-		"db_name" = db,
-		"read_timeout" = timeout,
-		"write_timeout" = timeout,
-		"min_threads" = min_sql_connections,
-		"max_threads" = max_sql_connections,
-	))))
-	. = (result["status"] == "ok")
-	if (.)
-		connection = result["handle"]
-	else
-		connection = null
-		last_error = result["data"]
+	pool = new /datum/sql_pool(address, port, user, pass, db, min_sql_connections, max_sql_connections)
+	// aneri pools don't connect until the first query, so ping now or a dead db only shows up as failing queries
+	var/datum/sql_query/ping = pool.query("DO 1")
+	ping.timeout = timeout
+	ping.execute_blocking()
+	. = !ping.last_error
+	if (!.)
+		pool.close()
+		pool = null
+		last_error = ping.last_error
 		log_sql("Connect() failed | [last_error]")
 		++failed_connections
 		//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for a time.
@@ -364,16 +357,13 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
 	failed_connections = 0
-	if (connection)
-		rustg_sql_disconnect_pool(connection)
-	connection = null
+	pool?.close()
+	pool = null
 
 /datum/controller/subsystem/dbcore/proc/IsConnected()
 	if (!CONFIG_GET(flag/sql_enabled))
 		return FALSE
-	if (!connection)
-		return FALSE
-	return json_decode(rustg_sql_connected(connection))["status"] == "online"
+	return !!(pool && !pool.closed)
 
 /datum/controller/subsystem/dbcore/proc/ErrorMsg()
 	if(!CONFIG_GET(flag/sql_enabled))
@@ -392,7 +382,7 @@ SUBSYSTEM_DEF(dbcore)
 		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
 		return FALSE
-	return new /datum/db_query(connection, sql_query, arguments)
+	return new /datum/db_query(pool, sql_query, arguments)
 
 /**
  * Creates and executes a query without waiting for or tracking the results.
@@ -553,7 +543,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 
 /datum/db_query
 	// Inputs
-	var/connection
+	var/datum/sql_pool/pool
 	var/sql
 	var/arguments
 
@@ -563,8 +553,8 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	// Status information
 	/// Current status of the query.
 	var/status
-	/// Job ID of the query passed by rustg.
-	var/job_id
+	/// The aneri query for the current run. Its `id` is set while it's still running.
+	var/datum/sql_query/inner
 	var/last_error
 	var/last_activity
 	var/last_activity_time
@@ -577,7 +567,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 
 	var/list/item  //list of data values populated by NextRow()
 
-/datum/db_query/New(connection, sql, arguments)
+/datum/db_query/New(pool, sql, arguments)
 	if(IsAdminAdvancedProcCall())
 		CRASH("Advanced admin proc call tried to create a db query directly: [sql]")
 	SSdbcore.all_queries += src
@@ -585,11 +575,12 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	Activity("Created")
 	item = list()
 
-	src.connection = connection
+	src.pool = pool
 	src.sql = sql
 	src.arguments = arguments
 
 /datum/db_query/Destroy()
+	inner?.cancel()
 	Close()
 	SSdbcore.all_queries -= src
 	SSdbcore.queries_standby -= src
@@ -605,6 +596,15 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	return FALSE
 
 /datum/db_query/can_vv_get(var_name)
+	return FALSE
+
+/datum/sql_pool/CanProcCall(proc_name)
+	return FALSE
+
+/datum/sql_query/CanProcCall(proc_name)
+	return FALSE
+
+/datum/sql_transaction/CanProcCall(proc_name)
 	return FALSE
 
 /datum/db_query/proc/Activity(activity)
@@ -637,11 +637,11 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 			SSdbcore.queue_query(src)
 		sync()
 	else
-		var/job_result_str = rustg_sql_query_blocking(connection, sql, json_encode(arguments))
-		store_data(json_decode(job_result_str))
+		start_inner().execute_blocking()
+		store_data()
 
 	. = (status != DB_QUERY_BROKEN)
-	var/timed_out = !. && findtext(last_error, "Operation timed out")
+	var/timed_out = !. && findtext(last_error, "timed out")
 	if(!. && log_error)
 		logger.Log(LOG_CATEGORY_DEBUG_SQL, "sql query failed", list(
 			"query" = sql,
@@ -667,29 +667,43 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 		return TRUE // we are done processing after all
 
 	status = DB_QUERY_STARTED
-	var/job_result = rustg_sql_check_query(job_id)
-	if(job_result == RUSTG_JOB_NO_RESULTS_YET)
+	if(inner.id)
 		return FALSE //no results yet
 
-	store_data(json_decode(job_result))
+	store_data()
 	return TRUE
 
-/datum/db_query/proc/store_data(result)
-	switch(result["status"])
-		if("ok")
-			rows = result["rows"]
-			affected = result["affected"]
-			last_insert_id = result["last_insert_id"]
-			status = DB_QUERY_FINISHED
-			return
-		if("err")
-			last_error = result["data"]
-			status = DB_QUERY_BROKEN
-			return
-		if("offline")
-			last_error = "CONNECTION OFFLINE"
-			status = DB_QUERY_BROKEN
-			return
+/// Makes a fresh aneri query for this run and returns it, unstarted.
+/datum/db_query/proc/start_inner() as /datum/sql_query
+	inner = pool.query(sql, coerce_arguments(arguments))
+	inner.timeout = max(CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
+	return inner
+
+/// Copies the arguments, turning anything aneri can't bind (typepaths, datums) into text like json_encode() used to.
+/datum/db_query/proc/coerce_arguments(list/arguments)
+	if(!islist(arguments))
+		return arguments
+	var/list/coerced = arguments.Copy()
+	for(var/i in 1 to length(coerced))
+		var/entry = coerced[i]
+		if(istext(entry))
+			// assoc key, or a plain text value. a plain value has no assoc value, so this skips it
+			var/value = coerced[entry]
+			if(!isnull(value) && !istext(value) && !isnum(value))
+				coerced[entry] = "[value]"
+		else if(!isnull(entry) && !isnum(entry))
+			coerced[i] = "[entry]"
+	return coerced
+
+/datum/db_query/proc/store_data()
+	if(inner.last_error)
+		last_error = inner.last_error
+		status = DB_QUERY_BROKEN
+		return
+	rows = inner.rows
+	affected = inner.affected
+	last_insert_id = inner.last_insert_id
+	status = DB_QUERY_FINISHED
 
 
 /datum/db_query/proc/slow_query_check()

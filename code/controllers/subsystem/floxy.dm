@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(floxy)
 /datum/controller/subsystem/floxy/fire(resumed)
 	renew_if_needed()
 	for(var/id in pending_ids)
-		var/list/info = http_basicasync("api/media/[id]", method = RUSTG_HTTP_METHOD_GET)
+		var/list/info = http_basicasync("api/media/[id]", method = "GET")
 		if(!info)
 			pending_ids -= id
 			continue
@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(floxy)
 		params["force"] = "true"
 	if(hard)
 		params["hard"] = "true"
-	var/datum/http_response/response = http_basicasync("api/media/[id]?[list2params(params)]", method = RUSTG_HTTP_METHOD_DELETE, just_response = TRUE)
+	var/datum/http_response/response = http_basicasync("api/media/[id]?[list2params(params)]", method = "DELETE", just_response = TRUE)
 	if(!response)
 		return FALSE
 	pending_ids -= id
@@ -159,7 +159,7 @@ SUBSYSTEM_DEF(floxy)
 	var/list/params = list("url" = url)
 	if(!clean_title)
 		params["dontCleanTitle"] = "true"
-	var/list/metadata = http_basicasync("api/ytdlp?[list2params(params)]", method = RUSTG_HTTP_METHOD_GET, timeout = 15 SECONDS)
+	var/list/metadata = http_basicasync("api/ytdlp?[list2params(params)]", method = "GET", timeout = 15 SECONDS)
 	if(metadata)
 		cached_metadata[url] = metadata
 		return metadata
@@ -219,21 +219,20 @@ SUBSYSTEM_DEF(floxy)
 	else
 		auth_expiry = null
 
-/datum/controller/subsystem/floxy/proc/http_basicasync(path, list/body, method = RUSTG_HTTP_METHOD_POST, decode_json = TRUE, timeout = 10 SECONDS, auth = TRUE, just_response = FALSE)
+/datum/controller/subsystem/floxy/proc/http_basicasync(path, list/body, method = "POST", decode_json = TRUE, timeout = 10 SECONDS, auth = TRUE, just_response = FALSE)
 	var/list/headers = default_headers
 	if(auth)
 		headers = default_headers.Copy()
 		headers["Authorization"] = "Bearer [auth_token]"
 	var/datum/http_request/request = new(
-		method,
 		"[base_url]/[path]",
+		method,
 		json_encode(body),
 		headers
 	)
-	request.begin_async()
-	UNTIL_OR_TIMEOUT(request.is_complete(), timeout)
-	var/datum/http_response/response = request.into_response()
-	if(response.errored)
+	request.timeout = timeout / (1 SECONDS)
+	var/datum/http_response/response = request.send().wait()
+	if(response.error)
 		log_floxy("Floxy response errored: [response.error || "N/A"]")
 		CRASH("Floxy response errored: [response.error || "N/A"]")
 	else if(decode_json)

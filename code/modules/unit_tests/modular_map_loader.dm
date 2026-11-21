@@ -7,5 +7,5 @@
 		if (!fexists(config_file))
 			TEST_FAIL("[map_root_type] points to a config file which does not exist!")
 			continue
-		if (rustg_read_toml_file(config_file) == null)
+		if (aneri_toml_decode_file(config_file) == null)
 			TEST_FAIL("[map_root_type] points to a config file which is invalid!")

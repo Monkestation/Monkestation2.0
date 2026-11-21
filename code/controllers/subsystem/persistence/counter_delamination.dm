@@ -13,9 +13,9 @@
 
 
 /datum/controller/subsystem/persistence/proc/save_delamination_counter()
-	rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
+	aneri_file_write(DELAMINATION_COUNT_FILEPATH, "[rounds_since_engine_exploded + 1]")
 	if((rounds_since_engine_exploded + 1) > delam_highscore)
-		rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_HIGHSCORE_FILEPATH)
+		aneri_file_write(DELAMINATION_HIGHSCORE_FILEPATH, "[rounds_since_engine_exploded + 1]")
 
 #undef DELAMINATION_COUNT_FILEPATH
 #undef DELAMINATION_HIGHSCORE_FILEPATH

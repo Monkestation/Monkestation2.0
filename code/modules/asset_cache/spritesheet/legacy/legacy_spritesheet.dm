@@ -108,14 +108,14 @@
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/file_path = size[SPRSZ_STRIPPED]
-		var/file_hash = rustg_hash_file(RUSTG_HASH_MD5, file_path)
+		var/file_hash = aneri_hash_file("md5", "[file_path]")
 		SSassets.transport.register_asset("[name]_[size_id].png", file_path, file_hash=file_hash)
 	var/css_name = "spritesheet_[name].css"
 	var/file_directory = "data/spritesheets/[css_name]"
 	fdel(file_directory)
 	var/css = generate_css()
-	rustg_file_write(css, file_directory)
-	var/css_hash = rustg_hash_string(RUSTG_HASH_MD5, css)
+	aneri_file_write(file_directory, css)
+	var/css_hash = aneri_hash("md5", css)
 	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory), file_hash=css_hash)
 
 	if(CONFIG_GET(flag/save_spritesheets))
@@ -216,14 +216,14 @@
 	return read_css_from_cache() && read_data_from_cache()
 
 /datum/asset/spritesheet/proc/read_css_from_cache()
-	var/replaced_css = rustg_file_read(css_cache_filename())
+	var/replaced_css = aneri_file_read(css_cache_filename())
 
 	var/regex/find_background_urls = regex(@"background-image:url\('%(.+?)%'\)", "g")
 	while (find_background_urls.Find(replaced_css))
 		var/asset_id = find_background_urls.group[1]
 		var/file_path = "[ASSET_CROSS_ROUND_CACHE_DIRECTORY]/spritesheet.[asset_id]"
 		// Hashing it here is a *lot* faster.
-		var/hash = rustg_hash_file(RUSTG_HASH_MD5, file_path)
+		var/hash = aneri_hash_file("md5", file_path)
 		var/asset_cache_item = SSassets.transport.register_asset(asset_id, file_path, file_hash=hash)
 		var/asset_url = SSassets.transport.get_asset_url(asset_cache_item = asset_cache_item)
 		replaced_css = replacetext(replaced_css, find_background_urls.match, "background-image:url('[asset_url]')")
@@ -231,8 +231,8 @@
 
 	var/finalized_name = "spritesheet_[name].css"
 	var/replaced_css_filename = "data/spritesheets/[finalized_name]"
-	var/css_hash = rustg_hash_string(RUSTG_HASH_MD5, replaced_css)
-	rustg_file_write(replaced_css, replaced_css_filename)
+	var/css_hash = aneri_hash("md5", replaced_css)
+	aneri_file_write(replaced_css_filename, replaced_css)
 	SSassets.transport.register_asset(finalized_name, replaced_css_filename, file_hash=css_hash)
 
 	if(CONFIG_GET(flag/save_spritesheets))
@@ -243,7 +243,7 @@
 	return TRUE
 
 /datum/asset/spritesheet/proc/read_data_from_cache()
-	var/json = json_decode(rustg_file_read(data_cache_filename()))
+	var/json = json_decode(aneri_file_read(data_cache_filename()))
 
 	if (islist(json["sprites"]))
 		sprites = json["sprites"]
@@ -276,12 +276,12 @@
 	var/mock_css = generate_css()
 	generating_cache = FALSE
 
-	rustg_file_write(mock_css, css_cache_filename())
+	aneri_file_write(css_cache_filename(), mock_css)
 
 /datum/asset/spritesheet/proc/write_data_to_cache()
-	rustg_file_write(json_encode(list(
+	aneri_file_write(data_cache_filename(), json_encode(list(
 		"sprites" = sprites,
-	)), data_cache_filename())
+	)))
 
 /datum/asset/spritesheet/proc/get_cached_url_mappings()
 	var/list/mappings = list()

@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(media_tracks)
 		return
 
 	var/list/json
-	if(rustg_json_is_valid(url))
+	if(aneri_json_is_valid(url))
 		json = json_decode(url)
 
 	/**

@@ -104,8 +104,8 @@
 	if(!id)
 		CRASH("Attempted to save cassette without an ID to disk")
 	log_music("Saving cassette [id] to [CASSETTE_FILE(id)]")
-	rustg_file_write(json_encode(export(), JSON_PRETTY_PRINT), CASSETTE_FILE(id))
-	if(!rustg_file_exists(CASSETTE_FILE(id)))
+	aneri_file_write(CASSETTE_FILE(id), json_encode(export(), JSON_PRETTY_PRINT))
+	if(!aneri_file_exists(CASSETTE_FILE(id)))
 		CRASH("okay wtf we failed to save cassette [id], check folder permissions!!")
 
 /// Simple helper to get a side of the cassette.

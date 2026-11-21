@@ -18,7 +18,7 @@
 		GLOB.voice_pack_groups_all[voicepack.group_name] = list(voicepack)
 		GLOB.random_voice_packs = list(voicepack.id)
 		return list(voicepack.id = voicepack)
-	var/output = rustg_read_toml_file(VOICE_PACKS_FILE)
+	var/output = aneri_toml_decode_file(VOICE_PACKS_FILE)
 
 	var/list/voice_pack_list = list()
 

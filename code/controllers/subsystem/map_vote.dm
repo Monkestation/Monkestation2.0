@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(map_vote)
 	var/tally_printout = span_red("Loading...")
 
 /datum/controller/subsystem/map_vote/Initialize()
-	if(rustg_file_exists(MAP_VOTE_CACHE_LOCATION))
+	if(aneri_file_exists(MAP_VOTE_CACHE_LOCATION))
 		map_vote_cache = json_decode(file2text(MAP_VOTE_CACHE_LOCATION))
 		var/carryover = CONFIG_GET(number/map_vote_tally_carryover_percentage)
 		for(var/map_id in map_vote_cache)
@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(map_vote)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/map_vote/proc/write_cache()
-	rustg_file_write(json_encode(map_vote_cache), MAP_VOTE_CACHE_LOCATION)
+	aneri_file_write(MAP_VOTE_CACHE_LOCATION, json_encode(map_vote_cache))
 
 /datum/controller/subsystem/map_vote/proc/sanitize_cache()
 	var/max = CONFIG_GET(number/map_vote_maximum_tallies)

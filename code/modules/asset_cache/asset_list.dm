@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/json/register()
 	var/filename = "data/[name].json"
 	fdel(filename)
-	rustg_file_write(json_encode(generate()), filename)
+	aneri_file_write(filename, json_encode(generate()))
 	SSassets.transport.register_asset("[name].json", fcopy_rsc(filename))
 	fdel(filename)
 

@@ -121,12 +121,11 @@ GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", null)
 		"title" = issue_title,
 		"body" = issue_body
 	)
-	var/datum/http_request/issue_report = new
-	rustg_file_write(issue_body, "[GLOB.log_directory]/issue_reports/[ckey]-[world.time]-[SANITIZE_FILENAME(issue_title)].txt")
+	aneri_file_write("[GLOB.log_directory]/issue_reports/[ckey]-[world.time]-[SANITIZE_FILENAME(issue_title)].txt", issue_body)
 	message_admins("BUGREPORT: Bug report filed by [ADMIN_LOOKUPFLW(src)], Title: [strip_html(issue_title)]")
-	issue_report.prepare(
-		RUSTG_HTTP_METHOD_POST,
+	var/datum/http_request/issue_report = new(
 		"https://api.github.com/repos/[CONFIG_GET(string/issue_slug)]/issues",
+		"POST",
 		json_encode(body_structure), //this is slow slow slow but no other options buckaroo
 		list(
 			"Accept"="application/vnd.github+json",
@@ -136,20 +135,19 @@ GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", null)
 	)
 	to_chat(src, span_notice("Sending issue report..."))
 	SEND_SOUND(src, 'sound/machines/compiler/compiler-stage1.ogg')
-	issue_report.begin_async()
-	UNTIL(issue_report.is_complete() || !src) //Client fuckery.
-	var/datum/http_response/issue_response = issue_report.into_response()
-	if(issue_response.errored || issue_response.status_code != 201)
+	issue_report.send()
+	UNTIL(!issue_report.id || !src) //Client fuckery.
+	var/datum/http_response/issue_response = issue_report.response
+	if(issue_response.error || issue_response.status_code != 201)
 		SEND_SOUND(src, 'sound/machines/compiler/compiler-failure.ogg')
 		to_chat(src, "[span_alertwarning("Bug report FAILED!")]\n\
 		[span_warning("Please adminhelp immediately!")]\n\
 		[span_notice("Code:[issue_response.status_code || "9001 CATASTROPHIC ERROR"]")]")
 
 		log_runtime(
-			"Failed to send issue report. errored=[issue_response.errored], status_code=[isnull(issue_response.status_code) ? "(null)" : issue_response.status_code]",
+			"Failed to send issue report. error=[issue_response.error || "(null)"], status_code=[isnull(issue_response.status_code) ? "(null)" : issue_response.status_code]",
 			list(
 				"status_code" = issue_response.status_code,
-				"errored" = issue_response.errored,
 				"headers" = issue_response.headers?.Copy(),
 				"error" = issue_response.error,
 				"body" = issue_report.body,

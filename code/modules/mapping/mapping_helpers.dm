@@ -750,14 +750,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		icon_file = icon_cache[icon_url]
 		return TRUE
 	log_asset("Custom Icon Helper fetching dmi from: [icon_url]")
-	var/datum/http_request/request = new()
+	var/datum/http_request/request = new(icon_url)
 	var/file_name = "tmp/custom_map_icon.dmi"
-	request.prepare(RUSTG_HTTP_METHOD_GET, icon_url, "", "", file_name)
+	request.output_file = file_name
 	query_in_progress = TRUE
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-	if(response.errored || response.status_code != 200)
+	var/datum/http_response/response = request.send().wait()
+	if(response.error || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom icon from url [icon_url], code: [response.status_code], error: [response.error]")
 	var/icon/new_icon = new(file_name)
@@ -795,14 +793,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		sound_file = sound_cache[sound_url]
 		return TRUE
 	log_asset("Custom Sound Helper fetching sound from: [sound_url]")
-	var/datum/http_request/request = new()
+	var/datum/http_request/request = new(sound_url)
 	var/file_name = "tmp/custom_map_sound.ogg"
-	request.prepare(RUSTG_HTTP_METHOD_GET, sound_url, "", "", file_name)
+	request.output_file = file_name
 	query_in_progress = TRUE
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-	if(response.errored || response.status_code != 200)
+	var/datum/http_response/response = request.send().wait()
+	if(response.error || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom sound from url [sound_url], code: [response.status_code], error: [response.error]")
 	var/sound/new_sound = new(file_name)
@@ -1146,13 +1142,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(json_cache[json_url])
 		return json_cache[json_url]
 	log_asset("Circuit Spawner fetching json from: [json_url]")
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, json_url, "")
+	var/datum/http_request/request = new(json_url)
 	query_in_progress = TRUE
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-	if(response.errored || response.status_code != 200)
+	var/datum/http_response/response = request.send().wait()
+	if(response.error || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
 	var/json_data = response.body

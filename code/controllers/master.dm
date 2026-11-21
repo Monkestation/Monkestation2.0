@@ -499,14 +499,15 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 		return
 
 	current_initializing_subsystem = subsystem
-	rustg_time_reset(SS_INIT_TIMER_KEY)
+	var/datum/instant/init_timer = new
 	if(!(subsystem.flags & SS_NO_INIT_MESSAGE))
 		SStitle.add_init_text(subsystem.type, "- [subsystem.name]", "<font color='yellow'>INITIALIZING...</font>")
 
 	var/result = subsystem.Initialize()
 
 	// Capture end time
-	var/time = rustg_time_milliseconds(SS_INIT_TIMER_KEY)
+	var/time = init_timer.milliseconds()
+	qdel(init_timer)
 	var/seconds = round(time / 1000, 0.01)
 
 	// Always update the blackbox tally regardless.

@@ -63,7 +63,7 @@
 	if(!fexists("data/spritesheets/spritesheet_[name].css"))
 		return CACHE_INVALID
 	if(isnull(cache_data) || isnull(cache_dmi_hashes_json))
-		cache_data = rustg_file_read("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[name].json")
+		cache_data = aneri_file_read("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[name].json")
 		if(!findtext(cache_data, "{", 1, 2)) // cache isn't valid JSON
 			log_asset("Cache for spritesheet_[name] was not valid JSON. This is abnormal. Likely tampered with or IO failure.")
 			return CACHE_INVALID
@@ -107,8 +107,8 @@
 	if (data_out == RUSTG_JOB_ERROR)
 		CRASH("Spritesheet [name] cache JOB PANIC")
 	else if(!findtext(data_out, "{", 1, 2))
-		rustg_file_write(cache_data, "[GLOB.log_directory]/spritesheet_cache_debug.[name].json")
-		rustg_file_write(entries_json, "[GLOB.log_directory]/spritesheet_debug_[name].json")
+		aneri_file_write("[GLOB.log_directory]/spritesheet_cache_debug.[name].json", cache_data)
+		aneri_file_write("[GLOB.log_directory]/spritesheet_debug_[name].json", entries_json)
 		CRASH("Spritesheet [name] cache check UNKNOWN ERROR: [data_out]")
 	var/result = json_decode(data_out)
 	var/fail = result["fail_reason"]
@@ -206,7 +206,7 @@
 	if (data_out == RUSTG_JOB_ERROR)
 		CRASH("Spritesheet [name] JOB PANIC")
 	else if(!findtext(data_out, "{", 1, 2))
-		rustg_file_write(entries_json, "[GLOB.log_directory]/spritesheet_debug_[name].json")
+		aneri_file_write("[GLOB.log_directory]/spritesheet_debug_[name].json", entries_json)
 		CRASH("Spritesheet [name] UNKNOWN ERROR: [data_out]")
 	var/data = json_decode(data_out)
 	sizes = data["sizes"]
@@ -217,7 +217,7 @@
 	for(var/size_id in sizes)
 		var/png_name = "[name]_[size_id].png"
 		var/file_directory = "data/spritesheets/[png_name]"
-		var/file_hash = rustg_hash_file(RUSTG_HASH_MD5, file_directory)
+		var/file_hash = aneri_hash_file("md5", file_directory)
 		SSassets.transport.register_asset(png_name, fcopy_rsc(file_directory), file_hash)
 		if(CONFIG_GET(flag/save_spritesheets))
 			save_to_logs(file_name = png_name, file_location = file_directory)
@@ -226,8 +226,8 @@
 
 	fdel(file_directory)
 	var/css = generate_css()
-	rustg_file_write(css, file_directory)
-	var/css_hash = rustg_hash_string(RUSTG_HASH_MD5, css)
+	aneri_file_write(file_directory, css)
+	var/css_hash = aneri_hash("md5", css)
 	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory), file_hash=css_hash)
 
 	if(CONFIG_GET(flag/save_spritesheets))
@@ -302,11 +302,11 @@
 		if(!fexists(fname))
 			return FALSE
 
-	var/css_hash = rustg_hash_file(RUSTG_HASH_MD5, css_file_directory)
+	var/css_hash = aneri_hash_file("md5", css_file_directory)
 	SSassets.transport.register_asset(css_name, fcopy_rsc(css_file_directory), file_hash=css_hash)
 	for(var/size_id in sizes)
 		var/fname = "data/spritesheets/[name]_[size_id].png"
-		var/hash = rustg_hash_file(RUSTG_HASH_MD5, fname)
+		var/hash = aneri_hash_file("md5", fname)
 		SSassets.transport.register_asset("[name]_[size_id].png", fcopy_rsc(fname), file_hash=hash)
 
 	if(CONFIG_GET(flag/save_spritesheets))
@@ -327,7 +327,7 @@
 		"rustg_version" = rustg_get_version(),
 		"dm_version" = SPRITESHEET_SYSTEM_VERSION,
 	)
-	rustg_file_write(json_encode(cache_data), "[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[name].json")
+	aneri_file_write("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[name].json", json_encode(cache_data))
 
 /**
  * Third party helpers

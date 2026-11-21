@@ -1256,9 +1256,8 @@ SUBSYSTEM_DEF(ticker)
 	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
-	request.begin_async()
+	var/datum/http_request/request = new(webhook, "POST", json_encode(webhook_info), headers)
+	request.send_and_forget()
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	Tracy.flush()
@@ -1888,7 +1887,7 @@ SUBSYSTEM_DEF(ticker)
 #undef DISCORD_SUPPRESS_NOTIFICATIONS
 
 /datum/controller/subsystem/ticker/proc/save_tokens()
-	rustg_file_write(json_encode(GLOB.saved_token_values), "[GLOB.log_directory]/tokens.json")
+	aneri_file_write("[GLOB.log_directory]/tokens.json", json_encode(GLOB.saved_token_values))
 
 /datum/controller/subsystem/ticker/proc/calculate_rewards()
 	. = list()

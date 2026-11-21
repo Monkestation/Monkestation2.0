@@ -318,8 +318,7 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 	if(!NAV_IS_FLYING(info))
 		nav_cost_modifiers = alist(NAV_COST_LAVA = 99999)
 	var/use_native_pathfinder = navmap_pathfinder_available()
-	var/timer_id = "path_debug_[REF(src)]"
-	rustg_time_reset(timer_id)
+	var/datum/instant/timer = new
 	var/list/path = navmap_pathfinder_blocking(
 		requester = middle_man,
 		start_turf = source_turf,
@@ -335,7 +334,8 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 		allow_nav_links = TRUE,
 		nav_cost_modifiers = nav_cost_modifiers,
 	)
-	var/search_time_ms = round(rustg_time_microseconds(timer_id) / 1000, 0.001)
+	var/search_time_ms = round(timer.microseconds() / 1000, 0.001)
+	qdel(timer)
 	var/backend = use_native_pathfinder ? "native DLL v[GLOB.navmap_pathfinder_version]" : "DM fallback: [GLOB.navmap_pathfinder_error]"
 	to_chat(owner, span_notice("Navmap pathfinding used [backend] and took [search_time_ms] ms."))
 	display_turfs = islist(path) ? path : list()

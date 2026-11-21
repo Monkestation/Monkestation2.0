@@ -96,7 +96,7 @@ ADMIN_VERB(station_traits_panel, R_FUN, FALSE, "Modify Station Traits", "Modify 
 			message_admins(message)
 
 			future_traits = new_future_traits
-			rustg_file_write(json_encode(params["station_traits"]), FUTURE_STATION_TRAITS_FILE)
+			aneri_file_write(FUTURE_STATION_TRAITS_FILE, json_encode(params["station_traits"]))
 
 			return TRUE
 		if ("clear_future_traits")

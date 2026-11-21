@@ -283,7 +283,7 @@
 	if(!isfile(curicon) || string_curicon == "/icon" || string_curicon == "/image" || !length(string_curicon))
 		var/file_path_tmp = "tmp/uni_icon-tmp-[rand(1, 999)].dmi" // this filename is temporary.
 		fcopy(curicon, file_path_tmp)
-		var/file_hash = rustg_hash_file(RUSTG_HASH_MD5, file_path_tmp)
+		var/file_hash = aneri_hash_file("md5", file_path_tmp)
 		// Use the hash as its new filename - this allows the uni_icon to be smart cached, because the filename will be consistent between runs if the content is the same
 		var/file_path = "tmp/uni_icon-[file_hash].dmi"
 		fcopy(file_path_tmp, file_path)

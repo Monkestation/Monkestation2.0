@@ -50,9 +50,8 @@
 	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_POST, webhook_url, json_encode(webhook_info), headers, "tmp/response.json")
-	request.begin_async()
+	var/datum/http_request/request = new(webhook_url, "POST", json_encode(webhook_info), headers)
+	request.send_and_forget()
 
 /datum/world_topic/reply_mentor
 	keyword = "mentor_reply"
