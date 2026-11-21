@@ -63,6 +63,7 @@
 /datum/config_entry/number/max_concurrent_queries
 	default = 25
 	min_val = 1
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/max_concurrent_queries/ValidateAndSet(str_val)
 	. = ..()

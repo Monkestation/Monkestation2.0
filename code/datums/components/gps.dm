@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/item/ui_data(mob/user)
 	var/list/data = list()
 	data["power"] = tracking
-	data["tag"] = gpstag
+	data["tag"] = html_decode(gpstag)
 	data["updating"] = updating
 	data["globalmode"] = global_mode
 	if(!tracking || emped) //Do not bother scanning if the GPS is off or EMPed
@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if(!pos || (!global_mode && pos.z != curr.z))
 			continue
 		var/list/signal = list()
-		signal["entrytag"] = gps.gpstag //Name or 'tag' of the GPS
+		signal["entrytag"] = html_decode(gps.gpstag) //Name or 'tag' of the GPS
 		signal["coords"] = "[pos.x], [pos.y], [pos.z]"
 		// Distance is calculated for the same z-level only, and direction is calculated for crosslinked/neighboring and same z-levels.
 		if(pos.z == curr.z)
@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	switch(action)
 		if("rename")
 			var/atom/parentasatom = parent
-			var/a = tgui_input_text(usr, "Enter the desired tag", "GPS Tag", gpstag, 20)
+			var/a = tgui_input_text(usr, "Enter the desired tag", "GPS Tag", html_decode(gpstag), 20)
 
 			if (!a)
 				return
@@ -306,7 +306,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		jamming_gps_device = jamming_gps.parent
 		if(jamming_gps_device.can_play_jam_sound)
 			playsound(jamming_gps_device, 'sound/items/gps/radio_jammer.ogg', 35, TRUE)
-			jamming_gps_device.say("[Gibberish("///%<SIGNAL INTERCEPTED>{SEND}source.create_feedback_loop", TRUE, 50)] [gpstag]: [alert_text] ([get_area_name(our_gps_turf, TRUE)]) ([our_gps_turf.x], [our_gps_turf.y], [our_gps_turf.z])")
+			jamming_gps_device.say("[Gibberish("///%<SIGNAL INTERCEPTED>{SEND}source.create_feedback_loop", TRUE, 50)] [html_decode(gpstag)]: [alert_text] ([get_area_name(our_gps_turf, TRUE)]) ([our_gps_turf.x], [our_gps_turf.y], [our_gps_turf.z])")
 			jamming_gps_device.can_play_jam_sound = FALSE
 			addtimer(CALLBACK(src, PROC_REF(reset_jam_sound), jamming_gps_device), 1 SECONDS)
 		jammed_signal = TRUE
@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if(jammed_signal)
 			our_gps_turf = get_turf(jamming_gps_device)
 		var/obj/item/gps/security/other_gps_device = other_gps.parent
-		var/full_alert_text = "Alert. [gpstag]: [alert_text] ([get_area_name(our_gps_turf, TRUE)]) ([our_gps_turf.x], [our_gps_turf.y], [our_gps_turf.z])"
+		var/full_alert_text = "Alert. [html_decode(gpstag)]: [alert_text] ([get_area_name(our_gps_turf, TRUE)]) ([our_gps_turf.x], [our_gps_turf.y], [our_gps_turf.z])"
 		other_gps_device.say(full_alert_text)
 		playsound(other_gps_device , 'sound/items/gps/one_ping.ogg', 35, TRUE)
 

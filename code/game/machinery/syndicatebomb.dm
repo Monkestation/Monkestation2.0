@@ -19,7 +19,7 @@
 	/// What is the lowest amount of time we can set the timer to?
 	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
 	/// What is the highest amount of time we can set the timer to?
-	var/maximum_timer = 100 MINUTES
+	var/maximum_timer = SYNDIEBOMB_MAX_TIMER_SECONDS
 	/// What is the default amount of time we set the timer to?
 	var/timer_set = SYNDIEBOMB_MIN_TIMER_SECONDS
 	/// Can we be unanchored?
@@ -259,7 +259,7 @@
 	activate()
 	add_fingerprint(user)
 	// We don't really concern ourselves with duds or fakes after this
-	if(isnull(payload) || istype(payload, /obj/machinery/syndicatebomb/training))
+	if(isnull(payload) || istype(payload, /obj/item/bombcore/training))
 		return
 
 	notify_ghosts(

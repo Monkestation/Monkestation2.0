@@ -603,14 +603,22 @@
 	SIGNAL_HANDLER
 	if(final_death || handling_death || istype(my_clan, /datum/bloodsucker_clan/vassal))
 		return
-	if(broke_masquerade || length(vassals) || total_blood_level_gain >= 250) // arbitrary number but whatever
-		prey += owner
+	var/bought_ranks = blood_level_gain_amount
+	var/vassal_count = length(vassals)
+	if(bought_ranks >= 4 || (bought_ranks >= 2 && vassal_count >= 3))
+		prey[owner] = MONSTER_THREAT_HIGH
+	else if(bought_ranks >= 2 || vassal_count >= 2)
+		prey[owner] = MONSTER_THREAT_MEDIUM
+	else if(broke_masquerade || vassal_count || total_blood_level_gain >= 250) // arbitrary number but whatever
+		prey[owner] = MONSTER_THREAT_LOW
+	else
+		prey[owner] = 0
 
 /datum/antagonist/bloodsucker/proc/on_update_sight(mob/user)
 	SIGNAL_HANDLER
 	user.add_sight(SEE_MOBS)
 	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
-	user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5))
+	user.lighting_color_cutoffs = user.lighting_color_cutoffs ? blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5)) : list(25, 8, 5)
 
 /datum/antagonist/bloodsucker/proc/on_bloodsilver_hit(mob/living/source)
 	SIGNAL_HANDLER

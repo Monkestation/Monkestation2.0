@@ -27,6 +27,12 @@ SUBSYSTEM_DEF(ticker)
 	var/login_music_done = FALSE // monkestation edit: : fix-lobby-music
 	var/round_end_sound //music/jingle played when the world reboots
 	var/round_end_sound_sent = TRUE //If all clients have loaded it
+	/// How long the round end sound is, in deciseconds. 0 when rustg can't measure it, like admin uploads.
+	var/round_end_sound_length = 0
+	/// Timer that plays the round end sound so it finishes right as the world reboots.
+	var/round_end_sound_timer
+	/// Whether the round end sound already played, so Shutdown() doesn't play it twice.
+	var/round_end_sound_played = FALSE
 
 	var/list/datum/mind/minds = list() //The characters in the game. Used for objective tracking.
 
@@ -780,6 +786,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/SetRoundEndSound(the_sound)
 	set waitfor = FALSE
 	round_end_sound_sent = FALSE
+	round_end_sound_length = SSsounds.get_sound_length(the_sound)
 	round_end_sound = fcopy_rsc(the_sound)
 	for(var/thing in GLOB.clients)
 		var/client/C = thing
@@ -787,6 +794,32 @@ SUBSYSTEM_DEF(ticker)
 			continue
 		C.Export("##action=load_rsc", round_end_sound)
 	round_end_sound_sent = TRUE
+	if(reboot_timer)
+		schedule_round_end_sound(timeleft(reboot_timer))
+
+/datum/controller/subsystem/ticker/proc/schedule_round_end_sound(time_left)
+	deltimer(round_end_sound_timer)
+	// no idea how long it is, so play it now while the server's still around to send it
+	var/wait = round_end_sound_length ? max(time_left - round_end_sound_length, 0) : 0
+	round_end_sound_timer = addtimer(CALLBACK(src, PROC_REF(play_round_end_sound)), wait, TIMER_STOPPABLE)
+
+/// Plays the round end sound to everyone with lobby music turned on.
+/datum/controller/subsystem/ticker/proc/play_round_end_sound()
+	round_end_sound_played = TRUE
+	if(!round_end_sound)
+		round_end_sound = choose_round_end_song()
+	for(var/mob/player as anything in GLOB.player_list)
+		play_round_end_sound_to(player)
+
+/// Its own proc so one player's client runtiming only skips that player, not everyone after them.
+/datum/controller/subsystem/ticker/proc/play_round_end_sound_to(mob/player)
+	var/client/player_client = player?.client
+	if(!player_client)
+		return
+	var/volume = calculate_mixed_volume(player_client, 100, CHANNEL_LOBBYMUSIC)
+	if(!volume)
+		return
+	SEND_SOUND(player_client, sound(round_end_sound, wait = 0, channel = CHANNEL_LOBBYMUSIC, volume = clamp(volume, 15, 100)))
 
 /datum/controller/subsystem/ticker/proc/Reboot(reason, end_string, delay)
 	set waitfor = FALSE
@@ -804,8 +837,14 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, span_boldannounce("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
 
 	var/start_wait = world.time
+	if(!round_end_sound)
+		var/song = choose_round_end_song()
+		if(song)
+			SetRoundEndSound(song)
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
-	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), delay - (world.time - start_wait), TIMER_STOPPABLE)
+	var/time_left = delay - (world.time - start_wait)
+	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), time_left, TIMER_STOPPABLE)
+	schedule_round_end_sound(time_left)
 
 
 /datum/controller/subsystem/ticker/proc/reboot_callback(reason, end_string)
@@ -836,6 +875,8 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, span_boldannounce("An admin has delayed the round end."))
 	deltimer(reboot_timer)
 	reboot_timer = null
+	deltimer(round_end_sound_timer)
+	round_end_sound_timer = null
 	return TRUE
 
 /datum/controller/subsystem/ticker/Shutdown()
@@ -843,14 +884,8 @@ SUBSYSTEM_DEF(ticker)
 	save_admin_data()
 	update_everything_flag_in_db()
 	save_mentor_data() //MONKE EDIT
-	if(!round_end_sound)
-		round_end_sound = choose_round_end_song()
-	///The reference to the end of round sound that we have chosen.
-	var/sound/end_of_round_sound_ref = sound(round_end_sound)
-	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs?.channel_volume["[CHANNEL_LOBBYMUSIC]"])
-			end_of_round_sound_ref.volume = calculate_mixed_volume(M.client, 100, CHANNEL_LOBBYMUSIC)
-			SEND_SOUND(M.client, end_of_round_sound_ref)
+	if(!round_end_sound_played)
+		play_round_end_sound()
 
 	// monkestation removal start: fix-lobby-music
 	// text2file(login_music, "data/last_round_lobby_music.txt")

@@ -571,6 +571,8 @@
 	)
 	cut_overlays()
 	stoplag(0.7 SECONDS)
+	if(QDELETED(src))
+		return
 	if(prob(30))
 		do_sparks(number = 2, cardinal_only = TRUE, source = src)
 
@@ -580,6 +582,8 @@
 		flickering = !flickering
 		update(FALSE)
 		stoplag(pick(list(2 SECONDS, 4 SECONDS, 6 SECONDS)))
+		if(QDELETED(src))
+			return
 
 	if(has_power())
 		on = (status == LIGHT_OK)

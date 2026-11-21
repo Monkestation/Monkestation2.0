@@ -25,9 +25,9 @@
 /obj/item/cursed_offer/examine(mob/user)
 	. = ..()
 	if(isAdminObserver(user) && tgui_alert(user, "Edit Contract?", "Edit",list("Yes","No")) == "Yes")
-		admin_offers = tgui_input_text(user,"What do you offer?","Set Offer",admin_offers, multiline = TRUE, encode =TRUE)
-		admin_receives = tgui_input_text(user,"What do you get to do in return?","Set penalty",admin_receives, multiline = TRUE, encode =TRUE)
-		admin_sign_name = tgui_input_text(user,"What do you sign this as?","Set Signee",admin_sign_name, encode =TRUE)
+		admin_offers = tgui_input_text(user,"What do you offer?","Set Offer",html_decode(admin_offers), multiline = TRUE, encode =TRUE)
+		admin_receives = tgui_input_text(user,"What do you get to do in return?","Set penalty",html_decode(admin_receives), multiline = TRUE, encode =TRUE)
+		admin_sign_name = tgui_input_text(user,"What do you sign this as?","Set Signee",html_decode(admin_sign_name), encode =TRUE)
 		name = tgui_input_text(user,"What do you name this item?","Set Item Name","Strange Contract", encode =TRUE)
 		if(signed_by)
 			signed_by = null

@@ -90,7 +90,7 @@
 
 /obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
-	items += "Internal Atmosphere Info: [name]"
+	items += "Internal Atmosphere Info: [html_decode(name)]"
 	items += "Tank Pressure: [air_contents.return_pressure()] kPa"
 	items += "Distribution Pressure: [distribute_pressure] kPa"
 

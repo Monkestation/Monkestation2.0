@@ -1069,6 +1069,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		owner.abstract_move(target_turf)
 
 /atom/movable/screen/alert/poll_alert/Topic(href, href_list)
+	if(usr != owner)
+		return
 	if(href_list["never"])
 		set_never_round()
 		return
