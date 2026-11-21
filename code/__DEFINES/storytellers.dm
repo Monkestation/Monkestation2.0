@@ -79,7 +79,7 @@
 
 /// Defines for the antag cap to prevent midround injections.
 #define ANTAG_CAP_OFFSET 5
-#define ANTAG_CAP_LOWPOP_MULT (31 / 36)
+#define ANTAG_CAP_LOWPOP_MULT 0.85
 #define ANTAG_DECLINE_COOLDOWN (20 MINUTES)
 
 ///Below are defines for roundstart point pool. The GAIN ones are multiplied by ready population

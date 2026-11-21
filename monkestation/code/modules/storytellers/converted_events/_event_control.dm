@@ -153,6 +153,8 @@
 
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates(candidate_pool)
+	if(prompted_picking)
+		candidates = SSgamemode.remove_recent_decliners(candidates)
 	if(length(candidates) < antag_amt)
 		return FALSE
 
@@ -240,7 +242,7 @@
 	var/points_left = SSgamemode.get_antag_cap() - SSgamemode.get_antag_count()
 	return clamp(FLOOR(points_left / point_cost, 1), 1, amount)
 
-/datum/round_event_control/antagonist/proc/get_candidates(list/candidate_pool, include_decliners = FALSE)
+/datum/round_event_control/antagonist/proc/get_candidates(list/candidate_pool)
 	var/round_started = SSticker.HasRoundStarted()
 	var/new_players_arg = round_started ? FALSE : TRUE
 	var/living_players_arg = round_started ? TRUE : FALSE
@@ -249,13 +251,11 @@
 	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, FALSE, new_players_arg, living_players_arg, midround_antag_pref = midround_antag_pref_arg, \
 													restricted_roles = restricted_roles, required_roles = required_roles, candidate_pool = candidate_pool)
 	candidates = trim_candidates(candidates)
-	if(prompted_picking && !include_decliners)
-		candidates = SSgamemode.remove_recent_decliners(candidates)
 	return candidates
 
 /datum/round_event_control/antagonist/from_ghosts
 
-/datum/round_event_control/antagonist/from_ghosts/get_candidates(list/candidate_pool, include_decliners = FALSE)
+/datum/round_event_control/antagonist/from_ghosts/get_candidates()
 	var/round_started = SSticker.HasRoundStarted()
 	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
 

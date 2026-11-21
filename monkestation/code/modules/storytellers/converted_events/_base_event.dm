@@ -38,7 +38,7 @@
 	antag_datum = cast_control.antag_datum
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
-	var/list/possible_candidates = cast_control.get_candidates(candidate_pool, include_decliners = TRUE)
+	var/list/possible_candidates = cast_control.get_candidates(candidate_pool)
 	candidate_pool = null
 	var/list/candidates = list()
 	if(cast_control == SSgamemode.current_roundstart_event && length(SSgamemode.roundstart_antag_minds))
