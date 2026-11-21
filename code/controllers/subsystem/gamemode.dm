@@ -248,8 +248,8 @@ SUBSYSTEM_DEF(gamemode)
 		. += points
 
 /// Whether events can inject more antagonists into the round
-/datum/controller/subsystem/gamemode/proc/can_inject_antags(next_cost = 0)
-	return get_antag_count() + next_cost <= get_antag_cap()
+/datum/controller/subsystem/gamemode/proc/can_inject_antags()
+	return (get_antag_cap() > get_antag_count())
 
 /datum/controller/subsystem/gamemode/proc/remove_recent_decliners(list/candidates)
 	. = list()
