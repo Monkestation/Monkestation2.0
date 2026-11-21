@@ -18,7 +18,7 @@ Difficulty: Extremely Hard
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummels"
 	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_MINING
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL|MOB_MINING
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
