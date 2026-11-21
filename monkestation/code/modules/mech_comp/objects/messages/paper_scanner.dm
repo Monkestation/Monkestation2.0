@@ -23,7 +23,7 @@
 		return
 
 	flick("comp_pscan1", src)
-	var/sanitized_string = strip_html(html_encode(attacked_paper.get_raw_text()))
+	var/sanitized_string = STRIP_HTML_SIMPLE(attacked_paper.get_raw_text(), MAX_MESSAGE_LEN)
 	if(!sanitized_string)
 		return
 	fire(sanitized_string)

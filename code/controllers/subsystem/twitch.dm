@@ -44,7 +44,8 @@ SUBSYSTEM_DEF(twitch)
 		running_events -= running_events
 
 /datum/controller/subsystem/twitch/proc/handle_topic(list/incoming)
-	if(incoming[2] != CONFIG_GET(string/twitch_key))
+	var/twitch_key = CONFIG_GET(string/twitch_key)
+	if(!twitch_key || length(incoming) < 4 || incoming[2] != twitch_key)
 		return
 
 	var/datum/twitch_event/chosen_one

@@ -66,33 +66,20 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 45
+	damage = 60
 	speed = 1.6
-	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
 	max_pierces = 3
 	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE
-	armour_penetration = 75 //very pointy.
-	projectile_piercing = PASSMOB //felt this might have been a nice compromise for the lower damage for the difficulty of getting it
+	armour_penetration = 100 //very pointy.
+	projectile_piercing = PASSMOB|PASSVEHICLE
 	wound_bonus = -15
 	bare_wound_bonus = 10
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
-	embed_type = /datum/embedding/hydrogen
-	embed_falloff_tile = -3
-	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
+	embed_type = null
 	accurate_range = 205 //15 tiles before falloff starts to kick in
-
-/datum/embedding/hydrogen
-	embed_chance = 50
-	fall_chance = 2
-	jostle_chance = 3
-	ignore_throwspeed_threshold = TRUE
-	pain_stam_pct = 0.6
-	pain_mult = 4
-	jostle_pain_mult = 2
-	rip_time = 18
 
 /obj/projectile/bullet/rebar/hydrogen/impact(atom/A) // TODO projectile refactor
 	. = ..()
@@ -123,9 +110,9 @@
 	var/mob/living/breather = target
 	breather.SetSleeping(3 SECONDS)
 	breather.adjustFireLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-	breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC)
+	breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = MOB_ORGANIC)
 	breather.adjustBruteLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-	breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC, required_respiration_type = ALL)
+	breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = MOB_ORGANIC, required_respiration_type = ALL)
 
 	return BULLET_ACT_HIT
 

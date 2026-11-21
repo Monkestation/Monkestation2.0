@@ -493,6 +493,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 // Monster Hunter stuff
 #define UPGRADED_VAL(x,y) ( CEILING((x * (1.07 ** y)), 1) )
 #define CALIBER_BLOODSILVER "bloodsilver"
+#define MONSTER_THREAT_LOW 2
+#define MONSTER_THREAT_MEDIUM 3
+#define MONSTER_THREAT_HIGH 4
+#define MONSTER_HUNTER_THREAT_REQUIRED 6
+#define MONSTER_HUNTER_PREY_REQUIRED 2
 
 ///Whether a mob is a Monster Hunter
 #define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter))

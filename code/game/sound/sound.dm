@@ -209,7 +209,7 @@
 
 	GLOB.lobby_media.add_listener(mob)
 	var/datum/media_track/track = SSmedia_tracks.current_lobby_track
-	to_chat(src, span_notice("Lobby music: <b>[track.title]</b> by <b>[track.artist]</b>."))
+	to_chat(src, span_notice("Lobby music: <b>[html_encode(track.title)]</b> by <b>[html_encode(track.artist)]</b>."))
 
 /proc/get_rand_frequency()
 	return rand(73, 125) / 100 // multiplier, so it works with any sample rate
