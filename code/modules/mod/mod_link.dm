@@ -336,7 +336,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 				balloon_alert(user, "frequency set")
 				. = ITEM_INTERACT_SUCCESS
 
-/obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!QDELETED(mod_link.link_call))
 		. += mutable_appearance('icons/mob/clothing/neck.dmi', "modlink_active")

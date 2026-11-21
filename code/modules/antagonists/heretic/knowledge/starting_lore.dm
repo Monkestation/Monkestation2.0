@@ -56,6 +56,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		item.remove_filter("mansus_infusion")
 		REMOVE_TRAIT(item, TRAIT_ROD_MANSUS_INFUSED, REF(item))
 		item.difficulty_modifier += 20
+		UnregisterSignal(item, COMSIG_FISHING_ROD_CAUGHT_FISH)
 
 /**
  * The Living Heart heretic knowledge.

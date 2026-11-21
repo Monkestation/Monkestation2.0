@@ -168,6 +168,8 @@
 	set_content(output)
 
 /datum/browser/modal/alert/Topic(href,href_list)
+	if (user?.client && usr?.client != user.client)
+		return
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return
@@ -296,6 +298,8 @@
 	set_content(output)
 
 /datum/browser/modal/listpicker/Topic(href,href_list)
+	if (user?.client && usr?.client != user.client)
+		return
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return
@@ -394,6 +398,8 @@
 	return dat
 
 /datum/browser/modal/preflikepicker/Topic(href,href_list)
+	if (user?.client && usr?.client != user.client)
+		return
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return

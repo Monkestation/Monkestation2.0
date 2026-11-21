@@ -33,6 +33,11 @@ jobs:
     needs: start_gate
     uses: ./.github/workflows/run_linters.yml
 
+  check_navmap_bakes:
+    name: Check generated navmaps
+    needs: start_gate
+    uses: ./.github/workflows/check_navmap_bakes.yml
+
   changes:
     name: Detect Changes
     needs: start_gate
@@ -113,6 +118,7 @@ jobs:
     needs:
       [
         changes,
+        check_navmap_bakes,
         collect_data,
         compare_screenshots,
         compile_all_maps,

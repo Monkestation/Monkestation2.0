@@ -110,17 +110,17 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(59) ///turf/closed/wall/mineral/titanium/survival
 #define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(60) ///turf/open/cliff
 
-#define SMOOTH_GROUP_ELEVATED_PLASTEEL S_TURF(60)
-#define SMOOTH_GROUP_LOWERED_PLASTEEL S_TURF(61)
-#define SMOOTH_GROUP_FISSURE S_TURF(62)
+#define SMOOTH_GROUP_ELEVATED_PLASTEEL S_TURF(61)
+#define SMOOTH_GROUP_LOWERED_PLASTEEL S_TURF(62)
+#define SMOOTH_GROUP_FISSURE S_TURF(63)
 
 // Monkestation edit start
-#define SMOOTH_GROUP_FLOOR_BLOODLING S_TURF(63) ////turf/open/floor/bloodling
+#define SMOOTH_GROUP_FLOOR_BLOODLING S_TURF(64) ////turf/open/floor/bloodling
 
-#define SMOOTH_GROUP_MUSHROOM S_TURF(64)
-#define SMOOTH_GROUP_CARPET_GRIMEY S_TURF(65) ///turf/open/floor/carpet/grimey
+#define SMOOTH_GROUP_MUSHROOM S_TURF(65)
+#define SMOOTH_GROUP_CARPET_GRIMEY S_TURF(66) ///turf/open/floor/carpet/grimey
 
-#define MAX_S_TURF 65 //Always match this value with the one above it.
+#define MAX_S_TURF 66 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */

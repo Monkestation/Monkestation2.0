@@ -10,6 +10,7 @@
 /datum/config_entry/string/twitch_link_website
 
 /datum/config_entry/string/regular_roundend_webhook_url
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/string/roundend_webhook_pfp
 
@@ -24,10 +25,11 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/bot_dump_url
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 //API key for Github Issues.
 /datum/config_entry/string/issue_key
-	protection = CONFIG_ENTRY_HIDDEN
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 //Endpoint for Github Issues, the `owner/repo` part.
 /datum/config_entry/string/issue_slug
@@ -93,6 +95,7 @@
 
 /datum/config_entry/string/plexora_url
 	default = "http://127.0.0.1:1330"
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/plexora_url/ValidateAndSet(str_val)
 	if(!is_http_protocol(str_val))

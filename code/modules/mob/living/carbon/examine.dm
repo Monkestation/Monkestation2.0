@@ -522,14 +522,14 @@
 		if(istype(id_slot, /obj/item/changeling/id))
 			var/obj/item/changeling/id/flesh_id = id_slot
 			if(flesh_id && get_dist(user, src) <= ID_EXAMINE_DISTANCE)
-				var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(flesh_id)];id_name=[flesh_id.stored_name];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
+				var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(flesh_id)];id_name=[url_encode(flesh_id.stored_name)];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
 				. += "[t_He] [t_is] wearing [id_href]."
 			else
 				. += "[t_He] [t_is] wearing [wear_id.examine_title(user)]."
 		else
 			var/obj/item/card/id/id = wear_id.GetID()
 			if(id && get_dist(user, src) <= ID_EXAMINE_DISTANCE)
-				var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(id)];id_name=[id.registered_name];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
+				var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(id)];id_name=[url_encode(id.registered_name)];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
 				. += "[t_He] [t_is] wearing [id_href]."
 
 			else

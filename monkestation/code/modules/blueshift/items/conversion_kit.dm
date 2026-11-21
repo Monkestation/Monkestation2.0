@@ -32,6 +32,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 30 SECONDS
 	category = CAT_WEAPON_RANGED
+	collect_requirements = TRUE
 
 /datum/crafting_recipe/mosin_pro/New()
 	..()

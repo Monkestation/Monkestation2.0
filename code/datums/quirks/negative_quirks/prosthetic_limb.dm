@@ -13,9 +13,18 @@
 	species_blacklist = list(SPECIES_OOZELING)
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
-	limb_zone = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/limb/prosthetic)]
-	if (isnull(limb_zone))  //Client gone or they chose a random limb
-		limb_zone = GLOB.limb_choice[pick(GLOB.limb_choice)]
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/list/zone_options = list()
+	for(var/choice in GLOB.limb_choice)
+		var/zone = GLOB.limb_choice[choice]
+		if(human_holder.get_bodypart(zone))
+			zone_options += zone
+
+	if(!length(zone_options)) // you get NOTHING I guess
+		CRASH("Prosthetic limb applied to a mob who had no available places to put one, consider blacklisting their species ([human_holder.dna.species.type]) from this quirk")
+
+	var/preferred_zone = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/limb/prosthetic)]
+	limb_zone = (preferred_zone in zone_options) ? preferred_zone : pick(zone_options)
 	slot_string = body_zone_as_plaintext(limb_zone)
 
 	var/obj/item/bodypart/surplus
@@ -29,7 +38,6 @@
 		if (BODY_ZONE_R_LEG)
 			surplus = new /obj/item/bodypart/leg/right/robot/surplus()
 	medical_record_text = "Patient uses a low-budget prosthetic on the [slot_string]."
-	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.del_and_replace_bodypart(surplus, special = TRUE)
 
 /datum/quirk/prosthetic_limb/add()
@@ -57,4 +65,7 @@
 	if(QDELETED(quirk_holder))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
+	// the species might not have this limb anymore (ceruleans have no legs)
+	if(isnull(limb_zone) || !human_holder.dna?.species?.bodypart_overrides[limb_zone])
+		return
 	human_holder.reset_to_original_bodypart(limb_zone)

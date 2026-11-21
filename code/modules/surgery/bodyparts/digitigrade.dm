@@ -1,4 +1,4 @@
-/obj/item/bodypart/leg/get_bodypart_damage_state()
+/obj/item/bodypart/leg/get_bodypart_damage_state(damage_icon)
 	if(!(bodyshape & BODYSHAPE_DIGITIGRADE))
 		return ..()
 	. = ..()

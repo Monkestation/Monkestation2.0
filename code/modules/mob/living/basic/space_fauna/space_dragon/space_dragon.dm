@@ -17,7 +17,7 @@
 	icon_dead = "spacedragon_dead"
 	health_doll_icon = "spacedragon"
 	faction = list(FACTION_CARP)
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
 	maxHealth = 400
 	health = 400
@@ -123,7 +123,7 @@
 
 /// Allows the space dragon to pick a funny name
 /mob/living/basic/space_dragon/proc/rename_dragon()
-	var/chosen_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+	var/chosen_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN, encode = FALSE)))
 	if(!chosen_name) // Null or empty or rejected
 		to_chat(src, span_warning("Not a valid name, please try again."))
 		rename_dragon()
