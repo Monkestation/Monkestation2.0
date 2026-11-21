@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Bloodsuckers no longer need 5 \"enemies\" to roll, and should roll more often now."

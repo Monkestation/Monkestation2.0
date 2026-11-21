@@ -153,7 +153,7 @@
 		if("PRG_setpassword")
 			if(!authed)
 				return
-			var/new_password = sanitize(params["new_password"])
+			var/new_password = sanitize(params["new_password"], encode = FALSE)
 			if(!authed)
 				return
 			channel.password = new_password

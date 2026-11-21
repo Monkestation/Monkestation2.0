@@ -169,7 +169,7 @@
 
 /obj/structure/spawner/lavaland/Destroy()
 	if(cursed)
-		for(var/mob/living/carbon/human/selected_human in range(7))
+		for(var/mob/living/carbon/human/selected_human in range(7, src))
 			if(is_species(selected_human, /datum/species/lizard/ashwalker))
 				continue
 			selected_human.AddComponent(/datum/component/ash_cursed)
@@ -607,7 +607,7 @@
 	var/compiled_string = "The [src] has been destroyed at [loc_name(src.loc)], nearest mobs are "
 	var/found_anyone = FALSE
 
-	for(var/mob/living/carbon/carbons_nearby in range(7))
+	for(var/mob/living/carbon/carbons_nearby in range(7, src))
 		compiled_string += "[key_name(carbons_nearby)],"
 		found_anyone = TRUE
 

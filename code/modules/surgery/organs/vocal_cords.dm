@@ -35,7 +35,7 @@
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger(trigger_flags)
 	if(!IsAvailable(feedback = TRUE))
 		return
-	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems", "Resonate")
+	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems", "Resonate", encode = FALSE)
 	if(!message)
 		return
 	if(QDELETED(src) || QDELETED(owner))
@@ -96,7 +96,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/command = tgui_input_text(owner, "Speak with the Voice of God", "Command")
+	var/command = tgui_input_text(owner, "Speak with the Voice of God", "Command", encode = FALSE)
 	if(!command)
 		return
 	if(QDELETED(src) || QDELETED(owner))

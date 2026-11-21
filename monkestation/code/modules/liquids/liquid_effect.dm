@@ -204,6 +204,8 @@
 			liquid_group.expose_atom(stepped_human, 1, TOUCH)
 	else if (isliving(AM))
 		var/mob/living/L = AM
+		if(iscarbon(L) && has_fish_tail(L))
+			L.apply_status_effect(/datum/status_effect/water_affected)
 		if(liquid_group.slippery)
 			if(L.m_intent == MOVE_INTENT_SPRINT && !(L.movement_type & FLYING) && L.body_position == STANDING_UP)
 				L.slip(30, T, NO_SLIP_WHEN_WALKING, 0, TRUE)

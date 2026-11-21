@@ -175,7 +175,7 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = tgui_input_text(usr, "Enter your line ", parent.name, lines[num], MUSIC_MAXLINECHARS)
+		var/content = tgui_input_text(usr, "Enter your line ", parent.name, html_decode(lines[num]), MUSIC_MAXLINECHARS)
 		if(!content || (!in_range(parent, usr) && cares_about_distance))
 			return
 		if(num > lines.len || num < 1)

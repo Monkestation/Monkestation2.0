@@ -39,6 +39,7 @@
 	icon_state = "mining_eva"
 
 /area/mine/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "Mining Station Maintenance"
 
 /area/mine/maintenance/production
@@ -115,6 +116,7 @@
 	ambience_index = AMBIENCE_DANGER
 
 /area/mine/laborcamp/security/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "Labor Camp Security Maintenance"
 	icon_state = "labor_camp_security"
 	ambience_index = AMBIENCE_DANGER
@@ -196,6 +198,7 @@
 	sound_environment = SOUND_AREA_ICEMOON
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
 	allow_shuttle_docking = TRUE
+	skip_minimap_rendering = TRUE
 
 /area/icemoon/surface
 	name = "Icemoon"
@@ -226,10 +229,14 @@
 	. = ..()
 	// this area SOMETIMES does map generation. Often it doesn't at all
 	// so it SHOULD NOT be used with the genturf turf type, as it is not always replaced
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
-		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
-		// flip this on, the generator has already disabled dangerous fauna
-		area_flags_mapping = MOB_SPAWN_ALLOWED | FLORA_ALLOWED
+	// one navmap bake covers every round, so the bake always assumes the forest showed up
+	#ifndef NAVMAP_BAKE_GENERATION
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
+		return
+	#endif
+	map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+	// flip this on, the generator has already disabled dangerous fauna
+	area_flags_mapping = MOB_SPAWN_ALLOWED | FLORA_ALLOWED
 
 /area/icemoon/surface/outdoors/always_forested
 	icon_state = "forest"

@@ -33,4 +33,5 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+	cerulean_flipper_palette = "#86563b"
 	fishing_modifier = -3

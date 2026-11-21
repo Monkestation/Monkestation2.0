@@ -129,7 +129,7 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
-	ai_controller?.change_ai_movement_type(/datum/ai_movement/jps)
+	ai_controller?.change_ai_movement_type(/datum/ai_movement/navmap_astar)
 	if (!feedback)
 		return
 	spin(spintime = 10, speed = 1)
@@ -232,6 +232,8 @@
 	var/datum/callback/got_disk = CALLBACK(src, PROC_REF(got_disk))
 	var/datum/callback/display_disk = CALLBACK(src, PROC_REF(display_disk))
 	AddComponent(/datum/component/nuclear_bomb_operator, got_disk, display_disk)
+	var/obj/item/implant/implanter = SSwardrobe.provide_type(/obj/item/implant/tacmap/nuclear/cayenne, src)
+	implanter.implant(src, null, TRUE)
 
 /mob/living/basic/carp/pet/cayenne/apply_colour()
 	if (prob(RARE_CAYENNE_CHANCE))

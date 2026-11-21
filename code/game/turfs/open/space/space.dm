@@ -1,4 +1,4 @@
-GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE, COLOR_RED, COLOR_BLUE, COLOR_GREEN, COLOR_MAGENTA)) //monkestation addition
+GLOBAL_VAR_INIT(starlight_color, pick(100;COLOR_SPACE_BLUE, 75;COLOR_BLUE, 25;COLOR_TEAL, 25;COLOR_CYAN, 10;COLOR_PURPLE, 10;COLOR_MAGENTA, 10;COLOR_GREEN, 5;COLOR_ORANGE, 5;COLOR_RED,)) //monkestation addition
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
@@ -27,7 +27,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
-	astar_weight = 200
+	skip_minimap_rendering = TRUE
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)

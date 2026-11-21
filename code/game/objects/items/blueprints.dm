@@ -96,7 +96,7 @@
 	data["legend_viewing_list"] = LEGEND_VIEWING_LIST
 	data["legend_off"] = LEGEND_OFF
 	data["fluff_notice"] = fluffnotice
-	data["station_name"] = station_name()
+	data["station_name"] = html_decode(station_name())
 	data["wire_devices"] = list()
 	for(var/wireset in GLOB.wire_color_directory)
 		data["wire_devices"] += list(list(

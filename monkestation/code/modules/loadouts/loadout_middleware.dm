@@ -102,6 +102,10 @@
 		message_admins("LOADOUT SYSTEM: Possible exploit detected, [preferences.parent_ckey] has tried loading [interacted_item.item_path], but does not own that item.")
 		return null
 
+	if((interacted_item.admin_only || (interacted_item.mentor_only && !is_mentor(preferences.parent))) && !is_admin(preferences.parent))
+		message_admins("LOADOUT SYSTEM: Possible exploit detected, [preferences.parent_ckey] has tried loading [interacted_item.item_path], but this is staff only.")
+		return null
+
 	return interacted_item
 
 /datum/preference_middleware/loadout/proc/select_item(list/params, mob/user)
@@ -194,7 +198,7 @@
 	if(INFO_NAMED in preferences.loadout_list[item.item_path])
 		current_name = preferences.loadout_list[item.item_path][INFO_NAMED]
 
-	var/input_name = stripped_input(preferences.parent, "What name do you want to give [item.name]? Leave blank to clear.", "[item.name] name", current_name, MAX_NAME_LEN)
+	var/input_name = stripped_input(preferences.parent, "What name do you want to give [item.name]? Leave blank to clear.", "[item.name] name", html_decode(current_name), MAX_NAME_LEN)
 	if(QDELETED(src) || QDELETED(preferences.parent) || QDELETED(preferences))
 		return
 

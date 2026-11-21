@@ -1,4 +1,5 @@
 /area/station/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
@@ -8,10 +9,10 @@
 	mood_trait = TRAIT_MAINTENANCE_DWELLER
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_ENVIRONMENT_HALLWAY
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 	forced_ambience = TRUE
 	ambient_buzz = 'sound/ambience/maintenance/source_corridor2.ogg'
 	ambient_buzz_vol = 50
-	astar_weight = 10
 	anchor_roundstart_lockers = FALSE
 
 /*
@@ -256,6 +257,7 @@
 /area/station/maintenance/disposal/incinerator
 	name = "\improper Incinerator"
 	icon_state = "incinerator"
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/maintenance/space_hut
 	name = "\improper Space Hut"

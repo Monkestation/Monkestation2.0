@@ -3,6 +3,7 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/engineering/engine_smes
 	name = "\improper Engineering SMES"
@@ -13,6 +14,7 @@
 	icon_state = "engine"
 
 /area/station/engineering/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Engineering Hallway"
 	icon_state = "engine_hallway"
 
@@ -122,6 +124,7 @@
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/construction/mining/aux_base
 	name = "Auxiliary Base Construction"

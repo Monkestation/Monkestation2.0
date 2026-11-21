@@ -170,7 +170,7 @@ GLOBAL_PROTECT(mentor_href_token)
 		key = user.key
 		ckey = user.ckey
 	else if(istext(whom))
-		key = whom
+		key = html_encode(whom)
 		ckey = ckey(whom)
 		chosen_client = GLOB.directory[ckey]
 		if(chosen_client)
