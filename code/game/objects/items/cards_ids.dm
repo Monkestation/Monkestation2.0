@@ -137,6 +137,7 @@
 	if(create_bank_on_init)
 		var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
 		registered_account = blank_bank_account
+		blank_bank_account.bank_cards += src
 		blank_bank_account.account_job = new /datum/job/unassigned
 		registered_account.replaceable = TRUE
 
@@ -650,6 +651,9 @@
 	if(!cash_money)
 		to_chat(user, span_warning("[money] doesn't seem to be worth anything!"))
 		return FALSE
+	// Also repair older or externally assigned links before tracking a deposit.
+	registered_account.bank_cards |= src
+	SEND_SIGNAL(money, COMSIG_CREDITS_TRANSFERRED, registered_account, cash_money)
 	registered_account.adjust_money(cash_money, "System: Deposit")
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
@@ -683,6 +687,9 @@
 		total += physical_money.get_item_credit_value()
 		CHECK_TICK
 
+	registered_account.bank_cards |= src
+	for(var/obj/item/physical_money in money)
+		SEND_SIGNAL(physical_money, COMSIG_CREDITS_TRANSFERRED, registered_account, physical_money.get_item_credit_value())
 	registered_account.adjust_money(total, "System: Deposit")
 	SSblackbox.record_feedback("amount", "credits_inserted", total)
 	log_econ("[total] credits were inserted into [src] owned by [src.registered_name]")
@@ -757,11 +764,12 @@
 		return CLICK_ACTION_BLOCKING
 	if(!alt_click_can_use_id(user))
 		return CLICK_ACTION_BLOCKING
-	if(!registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
+	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
+	if(!registered_account.adjust_money(-amount_to_remove, "System: Withdrawal", recipient = holochip))
+		qdel(holochip)
 		var/difference = amount_to_remove - registered_account.account_balance
 		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
 		return CLICK_ACTION_BLOCKING
-	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 	user.put_in_hands(holochip)
 	to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
 	SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)

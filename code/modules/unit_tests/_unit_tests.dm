@@ -158,6 +158,7 @@
 #include "hydroponics_extractor_storage.dm"
 #include "hydroponics_validate_genes.dm"
 #include "id_access.dm"
+#include "immortal_snail.dm"
 #include "inhands.dm"
 #include "ipc_brain_installation.dm"
 #include "ipc_construction.dm"
