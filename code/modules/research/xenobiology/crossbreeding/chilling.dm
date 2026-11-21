@@ -191,7 +191,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/sepia
 	slime_type = /datum/slime_type/sepia
-	effect_desc = "Touching someone with it adds/removes them from a list. Activating the extract stops time for 30 seconds, and everyone on the list is immune, except the user."
+	effect_desc = "Touching someone with it adds/removes them from a list. Activating the extract stops time for 9 seconds, and everyone on the list is immune, except the user."
 	var/list/allies = list()
 
 /obj/item/slimecross/chilling/sepia/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -209,7 +209,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/sepia/do_effect(mob/user)
 	user.visible_message(span_warning("[src] shatters, freezing time itself!"))
 	allies -= user //support class
-	new /obj/effect/timestop(get_turf(user), 2, 300, allies)
+	new /obj/effect/timestop(get_turf(user), 2, 9 SECONDS, allies)
 	..()
 
 /obj/item/slimecross/chilling/cerulean

@@ -506,7 +506,7 @@
 
 //Sepia
 /datum/chemical_reaction/slime/slimestop
-	desc = "After 5 seconds, stops time around it."
+	desc = "After 5 seconds, stops time around it for 9 seconds."
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/sepia
 
@@ -516,7 +516,7 @@
 /datum/chemical_reaction/slime/slimestop/proc/slime_stop(datum/reagents/holder)
 	var/obj/item/slime_extract/sepia/extract = holder.my_atom
 	var/turf/T = get_turf(holder.my_atom)
-	new /obj/effect/timestop(T, null, null, null)
+	new /obj/effect/timestop(T, 2, 7 SECONDS, null)
 	if(istype(extract))
 		if(extract.Uses > 0)
 			var/mob/lastheld = get_mob_by_key(holder.my_atom.fingerprintslast)
