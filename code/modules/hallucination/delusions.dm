@@ -120,7 +120,7 @@
 		qdel(src)
 		return
 
-	hallucinator.client.images -= delusions[source]
+	hallucinator.client?.images -= delusions[source]
 	LAZYREMOVE(delusions, source)
 
 /datum/hallucination/delusion/proc/on_z_change(mob/living/carbon/human/source)
