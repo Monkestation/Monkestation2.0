@@ -27,7 +27,7 @@
 	COOLDOWN_START(src, print_cooldown, 5 SECONDS)
 
 /obj/item/mcobject/thermal_printer/proc/set_paper_name(mob/user, obj/item/tool)
-	var/new_paper_name = tgui_input_text(user, "Set the new name for the paper", "Thermal Printer", paper_name)
+	var/new_paper_name = tgui_input_text(user, "Set the new name for the paper", "Thermal Printer", html_decode(paper_name))
 	if(!new_paper_name)
 		return
 	paper_name = new_paper_name

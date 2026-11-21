@@ -213,11 +213,11 @@
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, html_decode(message))
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, html_decode(message))
 		return
 
 	if(check_emote(message, forced))

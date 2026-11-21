@@ -28,6 +28,7 @@
 	pull_force = 0
 	radio = /obj/item/radio/headset/silicon/pai
 	worn_slot_flags = ITEM_SLOT_HEAD
+	interaction_flags_atom = ALLOW_PAI
 
 	/// If someone has enabled/disabled the pAIs ability to holo
 	var/can_holo = TRUE
@@ -376,7 +377,7 @@
 	if(!master_ref)
 		balloon_alert(user, "access denied: no master")
 		return FALSE
-	var/new_laws = tgui_input_text(user, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", laws.supplied[1], 300)
+	var/new_laws = tgui_input_text(user, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", html_decode(laws.supplied[1]), 300)
 	if(!new_laws || !master_ref)
 		return FALSE
 	add_supplied_law(0, new_laws)

@@ -9,7 +9,7 @@
 			return
 
 	if(href_list["exploitable_info"])
-		if(linked_flavor)
+		if(linked_flavor?.can_see_exploitable_info(usr))
 			var/datum/browser/popup = new(usr, "[name]'s exp info", "[name]'s Exploitable Info", 500, 200)
 			popup.set_content(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", "[name]'s exploitable information", replacetext(linked_flavor.expl_info, "\n", "<BR>")))
 			popup.open()

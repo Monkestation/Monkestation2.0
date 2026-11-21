@@ -199,5 +199,15 @@ SUBSYSTEM_DEF(plexora)
 		return FALSE
 	return ..()
 
+/datum/controller/subsystem/plexora/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, default_headers) || var_name == NAMEOF(src, base_url))
+		return FALSE
+	return ..()
+
+/datum/controller/subsystem/plexora/CanProcCall(procname)
+	if(procname == "http_basicasync" || procname == "http_fireandforget")
+		return FALSE
+	return ..()
+
 #undef OLD_PLEXORA_CONFIG
 #undef AUTH_HEADER
