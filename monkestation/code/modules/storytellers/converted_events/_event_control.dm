@@ -37,7 +37,6 @@
 			string += "Too Many Antags"
 	return string
 
-/// Antag cap points one more antag from this event would add
 /datum/round_event_control/proc/get_antag_cap_cost()
 	return 0
 

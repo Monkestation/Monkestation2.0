@@ -105,7 +105,6 @@ SUBSYSTEM_DEF(gamemode)
 	/// Is storyteller secret or not
 	var/secret_storyteller = FALSE
 
-	/// ckey -> world.time they last declined or ignored a prompted antag roll
 	var/alist/antag_poll_declines = alist()
 
 	/// List of new player minds we currently want to give our roundstart antag to
@@ -248,11 +247,10 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/datum/mind/owner, points in already_counted)
 		. += points
 
-/// Whether events can inject more antagonists into the round, next_cost being the points of the one we want to add
+/// Whether events can inject more antagonists into the round
 /datum/controller/subsystem/gamemode/proc/can_inject_antags(next_cost = 0)
 	return get_antag_count() + next_cost <= get_antag_cap()
 
-/// Returns a copy of candidates without anyone still on cooldown from declining a prompted antag roll
 /datum/controller/subsystem/gamemode/proc/remove_recent_decliners(list/candidates)
 	. = list()
 	for(var/mob/candidate as anything in candidates)
