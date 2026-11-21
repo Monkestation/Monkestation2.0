@@ -38,7 +38,7 @@
 	antag_datum = cast_control.antag_datum
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
-	var/list/possible_candidates = cast_control.get_candidates(candidate_pool)
+	var/list/possible_candidates = cast_control.get_candidates(candidate_pool, include_decliners = TRUE)
 	candidate_pool = null
 	var/list/candidates = list()
 	if(cast_control == SSgamemode.current_roundstart_event && length(SSgamemode.roundstart_antag_minds))
@@ -59,6 +59,8 @@
 	if(length(cliented_list))
 		mass_adjust_antag_rep(cliented_list, 1)
 
+	if(prompted_picking)
+		possible_candidates = SSgamemode.remove_recent_decliners(possible_candidates)
 	var/list/weighted_candidates = return_antag_rep_weight(possible_candidates)
 
 	while(length(weighted_candidates) && length(candidates) < antag_count) //both of these pick_n_take from weighted_candidates so this should be fine
@@ -70,7 +72,7 @@
 			var/mob/picked_mob = picked_client.mob
 			log_storyteller("Prompted antag event mob: [key_name(picked_mob)], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			if(picked_mob)
-				candidates |= SSpolling.poll_candidates(
+				var/list/accepted = SSpolling.poll_candidates(
 					question = "Would you like to be a [cast_control.name]?",
 					check_jobban = antag_flag,
 					role = antag_flag,
@@ -81,6 +83,10 @@
 					chat_text_border_icon = antag_datum,
 					show_candidate_amount = FALSE,
 				)
+				if(picked_mob in accepted)
+					candidates |= picked_mob
+				else
+					SSgamemode.antag_poll_declines[picked_ckey] = world.time
 		else
 			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]

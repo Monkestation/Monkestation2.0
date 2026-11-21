@@ -182,7 +182,7 @@
 		return FALSE
 
 // monkestation start: storyteller stuff
-	if(checks_antag_cap && !roundstart && !SSgamemode.can_inject_antags())
+	if(checks_antag_cap && !roundstart && !SSgamemode.can_inject_antags(get_antag_cap_cost()))
 		return FALSE
 	if(!check_enemies())
 		return FALSE

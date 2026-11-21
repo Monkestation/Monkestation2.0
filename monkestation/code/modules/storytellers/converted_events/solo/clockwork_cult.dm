@@ -45,7 +45,7 @@
 	event_icon_state = "clockcult"
 	preferred_events = list(/datum/round_event_control/antagonist/bloodcult = 1)
 
-/datum/round_event_control/antagonist/clockcult/get_candidates()
+/datum/round_event_control/antagonist/clockcult/get_candidates(list/candidate_pool, include_decliners = FALSE)
 	var/list/candidates = ..()
 	for(var/mob/candidate in candidates)
 		var/datum/preferences/prefs = candidate.client?.prefs
