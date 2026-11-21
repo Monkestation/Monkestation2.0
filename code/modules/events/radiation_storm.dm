@@ -29,6 +29,8 @@
 
 /datum/round_event/radiation_storm/announce(fake)
 	priority_announce("High levels of radiation detected near the station. Maintenance is best shielded from radiation.", "Anomaly Alert", ANNOUNCER_RADIATION)
+	if(!fake)
+		ccpost_note_public_round_event("radiation_storm")
 	//sound not longer matches the text, but an audible warning is probably good
 
 /datum/round_event/radiation_storm/start()

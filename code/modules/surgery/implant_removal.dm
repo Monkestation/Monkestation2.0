@@ -23,7 +23,12 @@
 	repeatable = TRUE
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	// CCPost: skip the permanently installed Gorlex corporate failsafe.
+	// Reset the selection for each repeatable step; other implants remain removable.
+	implant = null
 	for(var/obj/item/object in target.implants)
+		if(istype(object, /obj/item/implant/explosive/ccpost/gorlex))
+			continue
 		implant = object
 		// break - Iterate all the way through to make implant removal LIFO
 	if(implant)
@@ -49,6 +54,9 @@
 		)
 
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	// CCPost: do not allow an in-progress surgery to extract the locked implant.
+	if(istype(implant, /obj/item/implant/explosive/ccpost/gorlex))
+		implant = null
 	if(implant)
 		display_results(
 			user,
@@ -85,13 +93,16 @@
 			qdel(implant)
 
 	else
-		to_chat(user, span_warning("You can't find anything in [target]'s [target_zone]!"))
+		if(locate(/obj/item/implant/explosive/ccpost/gorlex) in target.implants)
+			to_chat(user, span_warning("The remaining corporate implant is permanently integrated and cannot be extracted."))
+		else
+			to_chat(user, span_warning("You can't find anything in [target]'s [target_zone]!"))
 	return ..()
 
 /datum/surgery/implant_removal/mechanic
 	name = "Implant Removal"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	target_mobtypes = list(/mob/living/carbon/human) // Simpler mobs don't have bodypart types
+	target_mobtypes = list(/mob/living/carbon/human) // Simpler mobs don't have bodyparts
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

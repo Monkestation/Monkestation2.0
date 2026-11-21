@@ -20,6 +20,8 @@
 
 /datum/round_event/electrical_storm/announce(fake)
 	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
+	if(!fake)
+		ccpost_note_public_round_event("electrical_storm")
 
 
 /datum/round_event/electrical_storm/start()
