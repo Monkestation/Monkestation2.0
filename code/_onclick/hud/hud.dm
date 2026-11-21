@@ -47,6 +47,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/throw_icon
 
 	var/list/static_inventory = list() //the screen objects which are static
+	/// Assoc list of hud key => screen object, for screen objects added with [/datum/hud/proc/add_screen_object]
+	var/list/atom/movable/screen/screen_objects = list()
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
 	var/list/atom/movable/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
@@ -154,6 +156,47 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	update_sightflags(mymob, mymob.sight, NONE)
 
 	vis_holder = new(null, src)
+
+/**
+ * Adds a screen object to this hud under the passed key, so it can be found later with screen_objects\[hud_key\].
+ * Lighter version of tg's add_screen_object from their hud refactor, only the static group is supported.
+ */
+/datum/hud/proc/add_screen_object(atom/movable/screen/new_object, hud_key, group_key = HUD_GROUP_STATIC, ui_icon, ui_loc, update_screen = FALSE)
+	if(ispath(new_object))
+		new_object = new new_object(null, src)
+
+	if(isnull(hud_key))
+		hud_key = REF(new_object)
+
+	if(!isnull(ui_icon))
+		new_object.icon = ui_icon
+
+	if(!isnull(ui_loc))
+		new_object.screen_loc = ui_loc
+
+	if(group_key != HUD_GROUP_STATIC)
+		CRASH("Attempted to add [new_object] to the [src] hud with an unsupported group key [group_key]!")
+
+	new_object.hud_key = hud_key
+	if(screen_objects[hud_key])
+		CRASH("Attempted to add a new [new_object] screen object to the [src] hud while an object with the same key [hud_key] is already present!")
+
+	screen_objects[hud_key] = new_object
+	static_inventory |= new_object
+
+	if(update_screen)
+		show_hud(hud_version)
+	return new_object
+
+/// Removes a screen object added with [/datum/hud/proc/add_screen_object] and refreshes the hud. Can just be passed a key.
+/datum/hud/proc/remove_screen_object(atom/movable/screen/to_remove, update = TRUE)
+	if(!istype(to_remove))
+		to_remove = screen_objects[to_remove]
+		if(!to_remove)
+			return
+	qdel(to_remove)
+	if(update && !QDELETED(src))
+		show_hud(hud_version)
 
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
