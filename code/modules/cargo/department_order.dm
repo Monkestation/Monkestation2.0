@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 			)
 			supply_data += list(target_group)
 		//skip packs we should not show, even if we should show the group
-		if((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only || pack.goody)
+		if((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only || pack.goody || pack.no_departmental_order)
 			continue
 		//finally the pack data itself
 		target_group["packs"] += list(list(
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(!pack)
 		say("Something went wrong!")
 		CRASH("requested supply pack id \"[id]\" not found!")
-	if((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only || pack.goody)
+	if((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only || pack.goody || pack.no_departmental_order)
 		return
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"
@@ -265,7 +265,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	)
 	override_access = ACCESS_HOS
 	req_one_access = REGION_ACCESS_SECURITY
-	dep_groups = list("Security", "Armory")
+	dep_groups = list("Security", "Armory", "Requisitions")
 	radio_key_typepath = /obj/item/encryptionkey/headset_sec
 	radio_channel = RADIO_CHANNEL_SECURITY
 

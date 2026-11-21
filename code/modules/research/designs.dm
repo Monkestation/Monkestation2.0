@@ -93,6 +93,14 @@ other types of metals and chemistry for reagents).
 
 	return isnull(desc) ? initial(object_build_item_path.desc) : desc
 
+/// Called when the design is researched by the station's techweb
+/datum/design/proc/on_station_research()
+	return
+
+/// Called when the design is un-researched by the station's techweb
+/datum/design/proc/on_station_unresearch()
+	return
+
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

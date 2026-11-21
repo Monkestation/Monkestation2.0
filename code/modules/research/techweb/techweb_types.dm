@@ -12,6 +12,13 @@
 	if(.)
 		node.on_research(research_source)
 
+//Lets designs react to being researched by the station, such as unlocking cargo requisitions
+/datum/techweb/science/design_added(datum/design/design)
+	design.on_station_research()
+
+/datum/techweb/science/design_removed(datum/design/design)
+	design.on_station_unresearch()
+
 /**
  * Admin techweb that has everything unlocked by default
  */

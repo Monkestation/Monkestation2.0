@@ -29,7 +29,7 @@
 
 /obj/projectile/bullet/incendiary/c9mm
 	name = "9mm incendiary bullet"
-	damage = 15
+	damage = 25
 	fire_stacks = 2
 
 
@@ -51,7 +51,7 @@
 
 /obj/projectile/bullet/incendiary/c10mm
 	name = "10mm incendiary bullet"
-	damage = 20
+	damage = 35
 	fire_stacks = 3
 
 

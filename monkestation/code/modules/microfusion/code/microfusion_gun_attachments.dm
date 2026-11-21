@@ -330,7 +330,7 @@ The gun can fire PULSE shots.
 	attachment_overlay_icon_state = "attachment_pulse"
 	heat_addition = 150
 	power_usage = 50
-	projectile_override = /obj/projectile/beam/pulse
+	projectile_override = /obj/projectile/beam/laser/pulse
 	burst_to_add = 2
 	delay_to_add = 2
 
