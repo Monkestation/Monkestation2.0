@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - balance: "AI Data Cores now have a limit of 2 AIs per core."
-  - balance: "AI's Nanite remote is now part of CPU/RAM research, rather than being roundstart. This new research also has Diagnostic HUDs, rather than it being part of Medical research.\nbalance:"

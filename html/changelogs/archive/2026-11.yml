@@ -1000,3 +1000,13 @@
   notghosti:
   - rscadd: Most mobs that can be carried can now attempt to crawl into someone's
       hands to be carried.
+2026-11-21:
+  JohnFulpWillard:
+  - balance: AI Data Cores now have a limit of 2 AIs per core.
+  - balance: 'AI''s Nanite remote is now part of CPU/RAM research, rather than being
+      roundstart. This new research also has Diagnostic HUDs, rather than it being
+      part of Medical research.
+
+      balance:'
+  byondsucks:
+  - balance: Changeling armblade has 20 armor pen.
