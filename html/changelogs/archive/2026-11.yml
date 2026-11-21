@@ -807,3 +807,74 @@
   - code_imp: vv copy_outfit now disallows null name outfits, and copies cybernetics
   flleeppyy:
   - rscadd: Ariral plush, mapped in to a few locations on select maps
+2026-11-19:
+  AberrantQuerist:
+  - image: Parallax overhaul. Lavaland, asteroids, and several star layers are now
+      present in the background.
+  - image: Blue/"space" nebulae is now more common, while more outlandish or fantastical
+      nebulae colouring is less likely.
+  Absolucy:
+  - bugfix: maybe fixes roundend/reboot sounds not playing
+  AitorLogedo:
+  - bugfix: Regenerative Coma and Plasma Fixation no longer keep their effects after
+      you're cured.
+  - bugfix: Sheep can be sheared with a razor again.
+  - bugfix: Robotic chickens EMP what they hit again.
+  - bugfix: Broken leg bones hurt when you walk on them again.
+  - bugfix: Taking off gauze or a splint updates the wound properly.
+  - bugfix: Material bane triggers when the bane gets embedded in you.
+  - bugfix: The MOD mirage grenade dispenser dispenses grenades again.
+  - bugfix: Deconstructing a griddle with a crowbar no longer deletes the crowbar.
+  - bugfix: Fixed admin verb permission checks when used from panels.
+  - bugfix: Hand items like finger guns can't be put in the MOD holster anymore.
+  - bugfix: Emagged wall safes no longer turn invisible.
+  - bugfix: Jumpsuits without a casual sprite can't be adjusted into invisibility
+      anymore.
+  - bugfix: Mk-honk shoes can be refilled with bananium again.
+  - bugfix: Water spray only bothers cat people.
+  - bugfix: The HoP and captain naval caps have armor like their normal caps.
+  - bugfix: The AI needs the examination upgrade to examine humans, no matter how
+      it examines.
+  - bugfix: You can't pixel shift while stunned or immobilized.
+  - bugfix: Offstation comms consoles can't request the spare ID safe codes.
+  - bugfix: Droppers can be used on open growth dishes.
+  - bugfix: Repacking the same machine twice at once no longer dupes it.
+  - bugfix: Deployable solar panels and trackers no longer leave their assembly behind
+      when repacked.
+  - bugfix: Building a solar tracker uses up the assembly instead of duplicating it.
+  - bugfix: Spam clicking a flatpack no longer deploys more than one machine.
+  - bugfix: Cortical borers no longer freeze to death inside a cold corpse sitting
+      in a warm room
+  EnterTheJake:
+  - bugfix: 'Radiation sickness works again: prolonged exposure can now make you collapse,
+      vomit blood, mutate and lose your hair.'
+  - bugfix: Radiation no longer makes hairless heads (robotic heads, pod people) "lose"
+      their hair.
+  - bugfix: Brig Physicians no longer spawn with a blank PDA
+  - bugfix: Flipped-up welding goggles no longer cover your eyes.
+  - bugfix: 'Reverse bear trap victims now see who''s trapping them, not their own
+      name.
+
+      ## Pre-Merge Checklist
+
+      - [ x] You tested this on a local server.
+
+      - [x ] This code did not runtime during testing.
+
+      - [x ] You documented all of your changes.'
+  - bugfix: Floor tiles are now worth a quarter of an iron sheet, fixing an iron duplication
+      exploit.
+  - bugfix: Fixed a runtime when tongueless flesh heretics upgrade their passive.
+  - bugfix: Fire breath now properly scorches objects caught in the cone.
+  - bugfix: Reagent containers (beakers, bottles, glasses, syringes, etc.) are no
+      longer immune to fire.
+  - bugfix: Eldritch Essence now heals heretic ghouls and lunatics.
+  - bugfix: Mute and muzzled chuunibyous can no longer shout their spell lines on
+      non invocation spells.
+  - bugfix: Chav and Elvis mutations now use their correct speech patterns.
+  ashallaryn:
+  - rscadd: 'New Quirk: Intrusive Thoughts'
+  - rscadd: 'New Special Brain Trauma: Intrusive Thoughts (Variant of Split Personality)'
+  - rscadd: 'New action: Intrusive Thought (variant of Personality Commune)'
+  tattax:
+  - bugfix: fix trasenknox pull icon sometimes showing up as the righthand cuff spritte

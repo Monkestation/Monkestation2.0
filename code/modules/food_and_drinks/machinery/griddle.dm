@@ -38,7 +38,7 @@
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
-		return
+		return ITEM_INTERACT_SUCCESS
 	variant = rand(1,3)
 
 /obj/machinery/griddle/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume)

@@ -46,6 +46,10 @@ jobs:
         if: steps.maps.outputs.maps != '[]'
         run: bash tools/ci/install_dreamluau.sh
 
+      - name: Install navmap-pathfinder
+        if: steps.maps.outputs.maps != '[]'
+        run: bash tools/ci/install_navmap_pathfinder.sh
+
       - name: Check generated navmaps
         env:
           MAPS: ${{ steps.maps.outputs.maps }}

@@ -54,6 +54,7 @@
 		playsound(user.loc, 'sound/effects/magic/clockwork/ratvar_attack.ogg', 50)
 
 /obj/item/clothing/under/viking/godly_tunic
+	can_adjust = FALSE
 	name = " Cloak of Fenrir"
 	desc = "A cloak made from hide torn from Fenrir."
 	worn_icon_state = "pelts"
@@ -87,6 +88,7 @@
 	dog_fashion = /datum/dog_fashion/head/berserker
 
 /obj/item/clothing/under/viking/tunic
+	can_adjust = FALSE
 	name = "viking tunic"
 	desc = "A tunic made from wolf pelts."
 	worn_icon_state = "pelts"
@@ -98,6 +100,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/viking/fake_tunic
+	can_adjust = FALSE
 	name = "viking pelt"
 	desc = "A faux wolf pelt made to cosplay with"
 	worn_icon_state = "pelts"
