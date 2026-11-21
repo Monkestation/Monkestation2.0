@@ -488,3 +488,6 @@
 
 /datum/config_entry/number/max_shuttle_size
 	default = 250
+
+/datum/config_entry/flag/log_headshot
+	default = TRUE
