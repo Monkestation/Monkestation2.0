@@ -79,6 +79,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	///List of the default genes from this mutation to allow DNA Scanner highlighting
 	var/default_mutation_genes[DNA_MUTATION_BLOCKS]
 	var/stability = 100
+	/// Extra stability added on top of the base 100, from things like the bioscrambler liver
+	var/stability_bonus = 0
 	///Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 	var/scrambled = FALSE
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
@@ -470,7 +472,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /datum/dna/proc/update_instability(alert = TRUE)
 	var/old_stability = stability
-	stability = 100
+	stability = 100 + stability_bonus
 	for(var/datum/mutation/mutation in mutations)
 		if((MUTATION_SOURCE_MUTATOR in mutation.sources) || mutation.instability < 0)
 			stability -= mutation.instability * GET_MUTATION_STABILIZER(mutation)
@@ -612,6 +614,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	return FALSE
 
 /mob/living/carbon/can_mutate()
+	// Anything with DNA can mutate when genetics are unlocked, even androids and other geneless species
+	if(HAS_TRAIT(src, TRAIT_GENETICS_UNLOCKED))
+		return !!has_dna()
 	if(!(mob_biotypes & MOB_ORGANIC))
 		return FALSE
 	if(has_dna() && !HAS_TRAIT(src, TRAIT_GENELESS) && !HAS_TRAIT(src, TRAIT_BADDNA))
@@ -860,7 +865,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	return length(possible) ? pick(possible) : null //prevent runtimes from picking null
 
 ///Gives the mob a random mutation based on the given arguments.
-/mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race, /datum/mutation/race/simian))
+/mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race, /datum/mutation/race/simian), ignore_protection = FALSE)
+	if(!ignore_protection && HAS_TRAIT(src, TRAIT_RANDOM_MUTATION_PROOF))
+		return
 	var/mutation_path = get_random_mutation_path(quality, scrambled, sequence, excluded_mutations)
 	if(!mutation_path)
 		return
@@ -871,16 +878,20 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(mutation)
 		mutation.scrambled = TRUE
 
-/mob/living/carbon/proc/random_mutate_unique_identity()
+/mob/living/carbon/proc/random_mutate_unique_identity(ignore_protection = FALSE)
 	if(!has_dna())
 		CRASH("[src] does not have DNA")
+	if(!ignore_protection && HAS_TRAIT(src, TRAIT_RANDOM_MUTATION_PROOF))
+		return
 	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
 	dna.set_uni_feature_block(num, random_string(GET_UI_BLOCK_LEN(num), GLOB.hex_characters))
 	updateappearance(mutations_overlay_update=1)
 
-/mob/living/carbon/proc/random_mutate_unique_features()
+/mob/living/carbon/proc/random_mutate_unique_features(ignore_protection = FALSE)
 	if(!has_dna())
 		CRASH("[src] does not have DNA")
+	if(!ignore_protection && HAS_TRAIT(src, TRAIT_RANDOM_MUTATION_PROOF))
+		return
 	var/num = rand(1, DNA_FEATURE_BLOCKS)
 	dna.set_uni_feature_block(num, random_string(GET_UF_BLOCK_LEN(num), GLOB.hex_characters))
 	updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)

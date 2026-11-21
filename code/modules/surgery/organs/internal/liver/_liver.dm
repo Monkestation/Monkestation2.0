@@ -360,6 +360,149 @@
 		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK
 
+#define DOAFTER_IMPLANTING_LIVER "implanting_liver"
+#define BIOSCRAMBLER_STABILITY_BONUS 100
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler
+	name = "bioscrambler liver"
+	desc = "A cutting-edge cyberliver that reshapes itself around its host. A refined bioscrambler core lets it integrate seamlessly, steadies the host's genome and lets even synthetic bodies use genetics, but an electromagnetic pulse will scramble the host's genes. Requires a refined bioscrambler core to function."
+	icon = 'icons/obj/medical/organs/bioscrambler_liver.dmi'
+	icon_state = "liver-bioscrambler"
+	decay_factor = 0
+	alcohol_tolerance = 0
+	// Toxins still get filtered, they just never hurt the organ. Not 0, damage is divided by this
+	liver_resistance = 1000
+
+	var/obj/item/assembly/signaler/anomaly/core
+	var/required_anomaly = /obj/item/assembly/signaler/anomaly/bioscrambler
+	var/core_removable = TRUE
+	///The DNA we added our stability bonus to, so we take it back from the same one.
+	var/datum/dna/stabilized_dna
+	///Stops a burst of EMPs from stacking a pile of mutations at once.
+	COOLDOWN_DECLARE(emp_mutation_cooldown)
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	if(core)
+		add_stability(organ_owner)
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	// Species that can't mutate on their own lose every mutation, wiped before the stability goes so it can't melt them
+	if(core && !organ_owner.can_mutate())
+		organ_owner.dna?.remove_all_mutations()
+	// Everyone else just loses the stability bonus, which can push them to 0 or below
+	remove_stability()
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/proc/add_stability(mob/living/carbon/organ_owner)
+	if(stabilized_dna || !organ_owner.dna)
+		return
+	stabilized_dna = organ_owner.dna
+	stabilized_dna.stability_bonus += BIOSCRAMBLER_STABILITY_BONUS
+	stabilized_dna.update_instability(FALSE)
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/proc/remove_stability()
+	if(!stabilized_dna)
+		return
+	stabilized_dna.stability_bonus -= BIOSCRAMBLER_STABILITY_BONUS
+	stabilized_dna.update_instability(FALSE)
+	stabilized_dna = null
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/attack(mob/living/target_mob, mob/living/user, params)
+	if(target_mob != user || !istype(target_mob) || !core)
+		return ..()
+
+	if(DOING_INTERACTION(user, DOAFTER_IMPLANTING_LIVER))
+		return
+	user.balloon_alert(user, "implanting...")
+	if(!do_after(user, 2 SECONDS, interaction_key = DOAFTER_IMPLANTING_LIVER))
+		return ..()
+	playsound(target_mob, 'sound/items/handling/surgery/organ1.ogg', 50, TRUE)
+	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	Insert(user)
+	to_chat(user, span_notice("The liver slots itself effortlessly into you, and you feel a strange tingling sensation."))
+	return TRUE
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/attack_self(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
+
+	if(core)
+		return attack(user, user, modifiers)
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, required_anomaly))
+		return NONE
+	if(core)
+		balloon_alert(user, "core already in!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	core = tool
+	balloon_alert(user, "core installed")
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	add_organ_trait(TRAIT_GENETICS_UNLOCKED)
+	add_organ_trait(TRAIT_RANDOM_MUTATION_PROOF)
+	update_icon_state()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!core)
+		balloon_alert(user, "no core!")
+		return
+	if(!core_removable)
+		balloon_alert(user, "can't remove core!")
+		return
+	balloon_alert(user, "removing core...")
+	if(!do_after(user, 3 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
+		return
+	balloon_alert(user, "core removed")
+	core.forceMove(drop_location())
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(core)
+	core = null
+	remove_organ_trait(TRAIT_GENETICS_UNLOCKED)
+	remove_organ_trait(TRAIT_RANDOM_MUTATION_PROOF)
+	update_icon_state()
+
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state) + (core ? "-core" : "")
+
+// No parent call on purpose, an EMP can't damage this liver. It scrambles the owner's genes instead.
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/emp_act(severity)
+	if(!owner || !core || !COOLDOWN_FINISHED(src, emp_mutation_cooldown))
+		return
+	COOLDOWN_START(src, emp_mutation_cooldown, 5 SECONDS)
+	to_chat(owner, span_userdanger("The pulse sends your liver's core haywire, and your body starts to warp!"))
+	for(var/i in 1 to (severity == EMP_HEAVY ? 2 : 1))
+		scramble_owner()
+
+/// Mutates the owner like a dose of unstable mutagen would. Ignores own protection cuz it's internal.
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/proc/scramble_owner()
+	owner.random_mutate_unique_identity(ignore_protection = TRUE)
+	owner.random_mutate_unique_features(ignore_protection = TRUE)
+	if(prob(98))
+		owner.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE, ignore_protection = TRUE)
+	else
+		owner.easy_random_mutate(POSITIVE, ignore_protection = TRUE)
+	owner.updateappearance()
+	owner.domutcheck()
+
+/// Bioscrambler liver but already has a preloaded core just like how the voltalic cyberheart has a prebuilt one.
+/obj/item/organ/internal/liver/cybernetic/tier3/bioscrambler/prebuilt/Initialize(mapload)
+	. = ..()
+	core = new required_anomaly(src)
+	add_organ_trait(TRAIT_GENETICS_UNLOCKED)
+	add_organ_trait(TRAIT_RANDOM_MUTATION_PROOF)
+	update_icon_state()
+
+#undef DOAFTER_IMPLANTING_LIVER
+#undef BIOSCRAMBLER_STABILITY_BONUS
+
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN

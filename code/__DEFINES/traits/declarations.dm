@@ -190,6 +190,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
 #define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
 #define TRAIT_GENELESS "geneless"
+/// Lets a mob that can't normally mutate (androids, plasmamen, etc.) use genetics anyway
+#define TRAIT_GENETICS_UNLOCKED "genetics_unlocked"
+/// Blocks random mutations, like unstable mutagen and radiation storms
+#define TRAIT_RANDOM_MUTATION_PROOF "random_mutation_proof"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
 /// protects the holder from throw_impact
