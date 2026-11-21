@@ -333,7 +333,7 @@
 	flashed.SetSleeping(30 SECONDS)
 	join_brother_flashed_popup(source, flashed, flash)
 
-/// Pushes past a restrained target's mindshield, leaving it in place. Returns FALSE if interrupted.
+/// Breaks a restrained target's mindshield, destroying the implant. Returns FALSE if interrupted.
 /datum/antagonist/brother/proc/compromise_mindshield(mob/living/source, mob/living/carbon/flashed)
 	if (compromising)
 		return FALSE
@@ -342,6 +342,8 @@
 	var/success = do_after(source, mindshield_compromise_time, flashed, extra_checks = CALLBACK(src, PROC_REF(can_keep_compromising), flashed), hidden = TRUE)
 	compromising = FALSE
 	if (success)
+		for (var/obj/item/implant/mindshield/shield in flashed.implants)
+			qdel(shield)
 		return TRUE
 	if (!QDELETED(flashed) && !HAS_TRAIT(flashed, TRAIT_RESTRAINED))
 		flashed.balloon_alert(source, "[flashed.p_they()] broke free!")

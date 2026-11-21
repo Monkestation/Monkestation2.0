@@ -34,7 +34,7 @@
 		if(REF(blood_bond) in flash_handler?.sources)
 			. += span_boldnotice("In order to convert someone into your blood brother, you must <i>directly flash them</i>, not AoE flash!")
 			. += span_warning("Conversion will fail if the target is either dead, unconscious, SSD, mindshielded (unless compromised, see below), someone else's brother or if they are targeted by your objectives.")
-			. += span_notice("A mindshield can be compromised if the target is restrained without any eye protection, like sunglasses or modsuit helmets. Flash them, then hold still for 15 seconds.")
+			. += span_notice("A mindshield can be compromised if the target is restrained without any eye protection, like sunglasses or modsuit helmets. Flash them, then hold still for 15 seconds. This destroys their mindshield implant.")
 			var/conversions_left = blood_bond.get_conversions_left()
 			. += span_notice("You have <b>[conversions_left]</b> conversion charge[conversions_left == 1 ? "" : "s"] left.")
 
