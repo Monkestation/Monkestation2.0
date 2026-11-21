@@ -135,11 +135,11 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/ui_data()
 	var/list/data = list()
-	data["arrival"] = arrival
+	data["arrival"] = html_decode(arrival)
 	data["arrivalToggle"] = arrival_toggle
-	data["newhead"] = newhead
+	data["newhead"] = html_decode(newhead)
 	data["newheadToggle"] = newhead_toggle
-	data["node_message"] = node_message
+	data["node_message"] = html_decode(node_message)
 	data["node_toggle"] = announce_research_node
 	return data
 

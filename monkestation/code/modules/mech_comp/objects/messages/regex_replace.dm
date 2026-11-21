@@ -71,7 +71,7 @@
 		return
 
 	var/mod = R.Replace(input.cmd, expressionrepl)
-	mod = strip_html(mod)
+	mod = STRIP_HTML_SIMPLE(mod, MAX_MESSAGE_LEN)
 	if(mod)
 		input.cmd = mod
 		fire(input)

@@ -179,11 +179,11 @@
 			if(length(params))
 				for (var/changed_entry in params)
 					if (changed_entry == "title")
-						paper_to_be.title = sanitize(params[changed_entry])
+						paper_to_be.title = sanitize(params[changed_entry], encode = FALSE)
 					if (changed_entry == "author")
-						paper_to_be.author = sanitize(params[changed_entry])
+						paper_to_be.author = sanitize(params[changed_entry], encode = FALSE)
 					if (changed_entry == "abstract")
-						paper_to_be.abstract = sanitize(params[changed_entry])
+						paper_to_be.abstract = sanitize(params[changed_entry], encode = FALSE)
 				return TRUE
 		if("change_tab")
 			current_tab = params["new_tab"]

@@ -29,7 +29,7 @@
 	var/datum/gas_mixture/external = location.return_air()
 	var/datum/gas_mixture/internal = airs[1]
 
-	if(!internal.volume || !external.volume)
+	if(isnull(external))
 		return
 
 	if(internal.equalize(external))

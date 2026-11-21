@@ -10,6 +10,7 @@
 	desc = "A modernised version of the infamous fire axe, courtesy of the Gorlex Marauders. Capable of breaching almost anything, and cleaving through almost any armour, it is to be handled with care."
 	item = /obj/item/fireaxe/energy
 	cost = 12
+	population_minimum = 15
 
 /datum/uplink_item/melees/sword
 	name = "Energy Sword"
@@ -114,3 +115,4 @@
 	cost = 16
 	surplus = 0
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)
+	population_minimum = 20

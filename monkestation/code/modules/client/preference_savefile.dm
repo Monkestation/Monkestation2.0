@@ -38,7 +38,7 @@
 			loadout = _text2num(loadout)
 		special_save_loadout["unusual"] += loadout
 
-	alt_job_titles = save_data["alt_job_titles"]
+	alt_job_titles = save_data["alt_job_titles"] || list()
 	loadout_list = sanitize_loadout_list(save_loadout)
 	special_loadout_list = texted_special_save_loadouts
 

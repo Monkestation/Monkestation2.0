@@ -815,6 +815,20 @@
       nebulae colouring is less likely.
   Absolucy:
   - bugfix: maybe fixes roundend/reboot sounds not playing
+  - rscadd: Added lavaland versions of iron, uranium, diamond, silver, titanium, plasma
+      and bananium rock for mappers
+  - image: Mining scanner ore overlays have new sprites
+  - bugfix: Mining scanner radar ping volume now depends on how close a vent is
+  - bugfix: Basic mobs can't pull boulders out of vents anymore
+  - bugfix: Ore vents clear the walls around the vent instead of around the player
+  - bugfix: The hunter blood-drunk miner dashes after hitting you again
+  - bugfix: Bosses stop firing volleys once they're dead
+  - bugfix: Cursed tendrils curse people near the tendril, and ash walker nest logs
+      list the right people
+  - bugfix: Regrown mining rock gets richer ore once lavaland points are high enough
+  - bugfix: Cliffs no longer smooth into elevated floors
+  - bugfix: Snowy and ash rock join station walls like they should
+  - bugfix: Fixed ore asteroid rock draws properly
   AitorLogedo:
   - bugfix: Regenerative Coma and Plasma Fixation no longer keep their effects after
       you're cured.
@@ -872,9 +886,127 @@
   - bugfix: Mute and muzzled chuunibyous can no longer shout their spell lines on
       non invocation spells.
   - bugfix: Chav and Elvis mutations now use their correct speech patterns.
+  - bugfix: Cyborgs hit with a security baton are now told who hit them, instead of
+      themselves.
+  - bugfix: Fixed the flashlight sitting too high on regular disablers.
+  - bugfix: Training bombs no longer alert ghosts and admins like real bombs.
+  - bugfix: Hardly wounded people no longer take worse wounds than normal people from
+      heavy hits.
+  - balance: Easily wounded and hardly wounded now raise or lower the maximum wound
+      severity a single hit can roll, instead of scaling the hit's damage.
+  - bugfix: Syndicate bomb timers are now capped at 100 minutes instead of roughly
+      16 hours.
+  - bugfix: Viscerators no longer body-block people.
+  - balance: Viscerators can now fly over machines and through plastic flaps.
+  - bugfix: Gluon grenades now irradiate again.
+  - bugfix: Fixed several uplink items being hidden from their categories or missing
+      from the uplink entirely.
+  - bugfix: Traitors can buy the Syndicate Holster again.
+  - bugfix: The Refined Matter Eater Mutator is available to geneticists again.
+  EnterTheJaks:
+  - bugfix: finger guns now credit the proper user
+  Evalence0:
+  - rscadd: Added new "Chronically Overweight" quirk
   ashallaryn:
   - rscadd: 'New Quirk: Intrusive Thoughts'
   - rscadd: 'New Special Brain Trauma: Intrusive Thoughts (Variant of Split Personality)'
   - rscadd: 'New action: Intrusive Thought (variant of Personality Commune)'
+  desertmote, vinylspiders, Charlotte-Sugar, SmArtKar, Neocloudy, Melbert:
+  - rscadd: 'A new species to play: Cerulean!'
+  - rscadd: The hydro-vaporizer, a wearable device functional like an internals tank,
+      but for water vapor
+  - rscadd: A new light/two person pirate team, the Siren Shimai
+  - rscadd: A compact laser shotgun, for the aforementioned pirate team
+  - rscadd: An armored leather jacket, for the aforementioned pirate team
+  - rscadd: Added new hairstyles
+  - image: you can now change the style of lipstick to be higher or lower on the face
+      by alt-clicking the lipstick tube
+  - code_imp: Species can change what goes in their survival box, plasmamen use it
+      now
+  - code_imp: Areas can be set to have no gravity even with a gravity generator on
+      the level
+  - bugfix: Mobs spawned with a species already set now get their species heat and
+      cold modifiers
+  - bugfix: Ceruleans picking up special shoes (like noslips) no longer permanently
+      breaks the shoes
+  - bugfix: Ceruleans no longer turn back to human skin when they lose their tail
+      or one of their fish organs
+  - bugfix: Prosthetic quirks no longer give limbs or organs you don't have, and won't
+      give lungs to species that don't breathe oxygen
   tattax:
   - bugfix: fix trasenknox pull icon sometimes showing up as the righthand cuff spritte
+2026-11-20:
+  Absolucy:
+  - bugfix: Fixed a visual bug with items in bags (i.e science bags) visually appearing
+      in your hand slot when the bag is open, despite being actually in the bag.
+  - rscdel: Disabled mindswap artifacts.
+  - bugfix: (Melbert) Digital clocks should report more accurate times in the hours
+      position (before, it mirrored one of the minute's times)
+  - code_imp: (Melbert) Cleaned up digital clock code a bit, report if they seem to
+      be reporting weird numbers
+  - bugfix: (vinylspiders) atmos machines destroyed in explosions now release the
+      gas inside them instead of sometimes deleting it.
+  - bugfix: (vinylspiders) thermoelectric generator circulators (both hot and cold)
+      no longer delete the gas inside them when destroyed or deconstructed. the gas
+      now goes into the pipes they're connected to, or onto the floor if they aren't
+      connected.
+  - bugfix: Fixed a bunch of things mangling apostrophes and such.
+  - rscadd: Instead of just clicking rabbits, Monster Hunters must use their trick
+      weapon to tear open rifts to wonderland across the station. This is very obvious,
+      but others nearby will find themselves disoriented, do not worry about just
+      being easily shoved.
+  - rscadd: Opening a wonderland rift summons a small dimensional anomaly, alongside
+      passive NPC rabbits around the station.
+  - rscadd: If a monster target lingers near said rabbits for too long, the hunter
+      will be alerted to their location, until they finally leave the gaze of the
+      rabbits.
+  - rscadd: Added a ton of cool animations and visual effects to Monster Hunter stuff.
+  - rscadd: Added armor for monster hunters, the Queens' Huntsman set. It is dropped
+      by the third rabbit. Sprites by BucketOKirbys.
+  EnterTheJake:
+  - bugfix: The Jabberwocky's killer rabbits now actually chase people down instead
+      of standing around.
+  - bugfix: Killer rabbits can path around walls and furniture.
+  - bugfix: Killer rabbits no longer side with the crew if something other than the
+      Jabberwocky summons them.
+  - balance: Killer rabbits spot targets from up to 10 tiles away and move a bit faster.
+  - balance: Killer rabbit explosions now knock down and launch everyone nearby.
+  - balance: The Jabberwocky has full night vision.
+  - bugfix: Heretic-infused fishing rods no longer get harder to fish with every catch
+      after the infusion wears off.
+  - bugfix: 'fix: False Alarm no longer silently fails when it picks Shuttle Catastrophe.'
+  - bugfix: The round-end jingle no longer plays for players who have muted lobby
+      music.
+  - bugfix: Players with a fresh character save no longer spawn as ghosts at roundstart.
+  Singul0:
+  - rscadd: Adds Fax Machine upgrade for AI
+  V2LenKagamine:
+  - rscadd: Holo-candle projector! It makes candles [fake] that dont burn! Buy now
+      for 1500 coins!
+  - rscadd: Holo-candle projector can be boughted by chaplain!
+  - balance: Holosign projectors can now be put on the belt slot, because... really
+      theres better options for a belt item. I imagine they have a tiny clip to go
+      on your pants.
+  - code_imp: objects deriving from `/obj/item/flashlight` now ensure there IS a trash
+      type before trying to spawn it when light eater'd
+  - code_imp: Holosign projectors now have a new var allowing them to project multiple
+      of the hologram on the same tile. FALSE by default.
+  - qol: candles can now be drag-repositioned on tiles regardless of table, make a
+      tiny pentagram!
+  - bugfix: Holo-sign projector items now obey how many they are allowed to create,
+      and remember which ones they have.
+  chumtoadmonke:
+  - balance: poplocks a bunch of traitor items
+  notghosti:
+  - rscadd: Most mobs that can be carried can now attempt to crawl into someone's
+      hands to be carried.
+2026-11-21:
+  JohnFulpWillard:
+  - balance: AI Data Cores now have a limit of 2 AIs per core.
+  - balance: 'AI''s Nanite remote is now part of CPU/RAM research, rather than being
+      roundstart. This new research also has Diagnostic HUDs, rather than it being
+      part of Medical research.
+
+      balance:'
+  byondsucks:
+  - balance: Changeling armblade has 20 armor pen.

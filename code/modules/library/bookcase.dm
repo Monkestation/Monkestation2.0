@@ -139,7 +139,7 @@
 				if(!newname)
 					return
 				else
-					name = "bookcase ([sanitize(newname)])"
+					name = "bookcase ([newname])"
 			else if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 				if(length(contents))
 					to_chat(user, span_warning("You need to remove the books first!"))

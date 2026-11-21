@@ -8,7 +8,7 @@ GAME_VERB(/mob, request_internet_sound, "Request Internet Sound", "OOC")
 		to_chat(usr, span_danger("This server has disabled internet sound requests."), confidential = TRUE)
 		return
 
-	var/request_url = tgui_input_text(usr, "Please Input a URL", "Only certain sites are allowed, such as YouTube, SoundCloud, and Bandcamp.", "")
+	var/request_url = tgui_input_text(usr, "Please Input a URL", "Only certain sites are allowed, such as YouTube, SoundCloud, and Bandcamp.", "", encode = FALSE)
 	if(!request_url)
 		return
 

@@ -57,7 +57,7 @@
 
 /obj/item/broadcast_camera/attack_self_secondary(mob/user, modifiers)
 	. = ..()
-	broadcast_name = tgui_input_text(user = user, title = "Broadcast Name", message = "What will be the name of your broadcast?", default = "[broadcast_name]", max_length = MAX_CHARTER_LEN)
+	broadcast_name = tgui_input_text(user = user, title = "Broadcast Name", message = "What will be the name of your broadcast?", default = html_decode(broadcast_name), max_length = MAX_CHARTER_LEN)
 
 /obj/item/broadcast_camera/examine(mob/user)
 	. = ..()
@@ -222,3 +222,8 @@
 
 /atom/movable/screen/stream_viewers/proc/update_maptext(amt)
 	maptext = "<div align='left' valign='top' style='position: relative; top: 0px; left: 6px'>Viewers: <font color='#33FF33'>[amt]</font></div>"
+
+/obj/item/broadcast_camera/siren_pirates
+	name = "Livestreaming Camera"
+	broadcast_name = "Siren Shimai!"
+	camera_networks = list(CAMERA_NETWORK_PIRATE)

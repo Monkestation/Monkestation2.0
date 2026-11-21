@@ -104,12 +104,12 @@
 		if(MSG_MON_SCREEN_LOGS)
 			var/list/message_list = list()
 			for(var/datum/data_tablet_msg/pda in linkedServer?.pda_msgs)
-				message_list += list(list("ref" = REF(pda), "sender" = pda.sender, "recipient" = pda.recipient, "message" = pda.message))
+				message_list += list(list("ref" = REF(pda), "sender" = html_decode(pda.sender), "recipient" = html_decode(pda.recipient), "message" = pda.message))
 			data["messages"] = message_list
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 			var/list/request_list = list()
 			for(var/datum/data_rc_msg/rc in linkedServer?.rc_msgs)
-				request_list += list(list("ref" = REF(rc), "message" = rc.message, "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.send_dpt))
+				request_list += list(list("ref" = REF(rc), "message" = html_decode(rc.message), "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.send_dpt))
 			data["requests"] = request_list
 	return data
 
@@ -197,12 +197,12 @@
 			if(!is_on_station())
 				return TRUE
 
-			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption", max_length = 16)
+			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption", max_length = 16, encode = FALSE)
 			if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
 				return TRUE
 			if(dkey && dkey != "")
 				if(linkedServer.decryptkey == dkey)
-					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", max_length = 16)
+					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", max_length = 16, encode = FALSE)
 					if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
 						return TRUE
 					if(length(newkey) <= 3)
@@ -315,7 +315,7 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
-	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is <b>[server.decryptkey]</b>.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
+	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is <b>[html_encode(server.decryptkey)]</b>.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
 	add_overlay("paper_words")
 	update_appearance()
 
