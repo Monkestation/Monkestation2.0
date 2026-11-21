@@ -137,14 +137,76 @@
 
 /// Spawns an item and logs its purchase
 /datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	uplink_handler.logged_purchase_contents = null
 	var/atom/A = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
 	if(purchase_log_vis && uplink_handler.purchase_log)
-		uplink_handler.purchase_log.LogPurchase(A, src, cost)
+		// Crates that can't be handed back tell us what they held, otherwise kits and boxes are read off the thing that was bought
+		var/list/bought_contents = uplink_handler.logged_purchase_contents
+		if(!bought_contents && A && A != source && (A.atom_storage || istype(A, /obj/structure/closet)))
+			bought_contents = summarize_contents(A.contents)
+		uplink_handler.purchase_log.LogPurchase(A, src, cost, bought_contents)
+	uplink_handler.logged_purchase_contents = null
 	if(lock_other_purchases)
 		uplink_handler.shop_locked = TRUE
 	if(lock_secondary_objectives)
 		uplink_handler.disable_secondary_objectives()
+
+/// The uplink entry that sells this item, nothing if it has none. The cheapest entry wins
+/datum/uplink_item/proc/get_item_uplink_entry(item_path)
+	var/static/list/entry_by_item
+	if(!entry_by_item)
+		entry_by_item = list()
+		for(var/uplink_path in SStraitor.uplink_items_by_type)
+			var/datum/uplink_item/entry = SStraitor.uplink_items_by_type[uplink_path]
+			if(!ispath(entry.item) || entry.cost <= 0)
+				continue
+			var/datum/uplink_item/cheapest = entry_by_item[entry.item]
+			if(!cheapest || entry.cost < cheapest.cost)
+				entry_by_item[entry.item] = entry
+	return entry_by_item[item_path]
+
+/// Counts items or item paths for the round end log, as name = list(amount, icon html, TC cost, description)
+/// An item that has an uplink entry goes by that entry's name and description, otherwise its own
+/datum/uplink_item/proc/summarize_contents(list/things)
+	var/list/summary = list()
+	for(var/thing in things)
+		var/thing_type
+		var/thing_name
+		var/thing_desc
+		var/thing_icon
+		var/amount = 1
+		if(ispath(thing, /atom))
+			var/atom/thing_path = thing
+			thing_type = thing_path
+			thing_name = initial(thing_path.name)
+			thing_desc = initial(thing_path.desc)
+			if(initial(thing_path.icon) && initial(thing_path.icon_state))
+				thing_icon = icon2base64html(icon(initial(thing_path.icon), initial(thing_path.icon_state), SOUTH, 1))
+		else if(isitem(thing))
+			var/obj/item/thing_item = thing
+			thing_type = thing_item.type
+			thing_name = thing_item.name
+			thing_desc = thing_item.desc
+			if(thing_item.icon && thing_item.icon_state)
+				thing_icon = icon2base64html(thing_item)
+			if(isstack(thing_item))
+				var/obj/item/stack/thing_stack = thing_item
+				amount = thing_stack.amount
+		if(!thing_name)
+			continue
+		var/thing_cost
+		var/datum/uplink_item/uplink_entry = get_item_uplink_entry(thing_type)
+		if(uplink_entry)
+			thing_name = uplink_entry.name
+			thing_desc = uplink_entry.desc
+			thing_cost = uplink_entry.cost
+		var/list/existing = summary[thing_name]
+		if(existing)
+			existing[1] += amount
+		else
+			summary[thing_name] = list(amount, thing_icon, thing_cost, thing_desc)
+	return summary
 
 /// Used to create the uplink's item for generic use, rather than use by a Syndie specifically
 /// Can be used to "de-restrict" some items, such as Nukie guns spawning with Syndicate pins

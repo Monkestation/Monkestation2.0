@@ -34,6 +34,8 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 			var/datum/uplink_purchase_entry/UPE = purchase_log[hash]
 			var/datum/uplink_purchase_entry/UPE_O = other.purchase_log[hash]
 			UPE.amount_purchased += UPE_O.amount_purchased
+			for(var/item_name in UPE_O.contents_list)
+				UPE.add_contents(item_name, UPE_O.contents_list[item_name])
 	qdel(other)
 
 /datum/uplink_purchase_log/proc/TotalTelecrystalsSpent()
@@ -43,9 +45,12 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 	. = ""
 	for(var/hash in purchase_log)
 		var/datum/uplink_purchase_entry/UPE = purchase_log[hash]
-		. += "<span class='tooltip_container'>\[[UPE.icon_b64][show_key?"([owner])":""]<span class='tooltip_hover'><b>[UPE.name]</b><br>[UPE.spent_cost ? "[UPE.spent_cost] TC" : "[UPE.base_cost] TC<br>(Surplus)"]<br>[UPE.desc]</span>[(UPE.amount_purchased > 1) ? "x[UPE.amount_purchased]" : ""]\]</span>"
+		var/purchase_html = "<span class='tooltip_container'>\[[UPE.icon_b64][show_key?"([owner])":""]<span class='tooltip_hover'><b>[UPE.name]</b><br>[UPE.spent_cost ? "[UPE.spent_cost] TC" : "[UPE.base_cost] TC<br>(Surplus)"]<br>[UPE.desc]</span>[(UPE.amount_purchased > 1) ? "x[UPE.amount_purchased]" : ""]\]</span>"
+		var/contents_html = UPE.get_contents_render()
+		. += contents_html ? "<div class='purchase_row'>[purchase_html][contents_html]</div>" : purchase_html
 
-/datum/uplink_purchase_log/proc/LogPurchase(atom/A, datum/uplink_item/uplink_item, spent_cost)
+/// bought_contents is what a kit or crate held, as name = list(amount, icon html, TC cost, description)
+/datum/uplink_purchase_log/proc/LogPurchase(atom/A, datum/uplink_item/uplink_item, spent_cost, list/bought_contents)
 	var/datum/uplink_purchase_entry/UPE
 	var/hash = hash_purchase(uplink_item, spent_cost)
 	if(purchase_log[hash])
@@ -61,6 +66,8 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 		UPE.spent_cost = spent_cost
 
 	UPE.amount_purchased++
+	for(var/item_name in bought_contents)
+		UPE.add_contents(item_name, bought_contents[item_name])
 	total_spent += spent_cost
 
 /datum/uplink_purchase_log/proc/hash_purchase(datum/uplink_item/uplink_item, spent_cost)
@@ -74,3 +81,23 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 	var/base_cost
 	var/spent_cost
 	var/name
+	/// What the kit or crate held, as name = list(amount, icon html, TC cost, description). Added up if it was bought more than once
+	var/list/contents_list = list()
+
+/datum/uplink_purchase_entry/proc/add_contents(item_name, list/contents_entry)
+	var/list/existing = contents_list[item_name]
+	if(existing)
+		existing[1] += contents_entry[1]
+	else
+		contents_list[item_name] = contents_entry.Copy()
+
+/datum/uplink_purchase_entry/proc/get_contents_render()
+	if(!length(contents_list))
+		return ""
+	var/list/shown = list()
+	for(var/item_name in contents_list)
+		var/list/contents_entry = contents_list[item_name]
+		var/amount = contents_entry[1]
+		// Falls back to the name if there was no icon to draw
+		shown += "<span class='tooltip_container'>[contents_entry[2] || item_name]<span class='tooltip_hover'><b>[item_name]</b>[contents_entry[3] ? "<br>[contents_entry[3]] TC" : ""][contents_entry[4] ? "<br>[contents_entry[4]]" : ""]</span>[(amount > 1) ? "x[amount]" : ""]</span>"
+	return "<span class='purchase_contents'>contains: <span class='purchase_items'>[shown.Join("")]</span></span>"
