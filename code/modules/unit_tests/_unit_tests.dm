@@ -205,6 +205,7 @@
 #include "pills.dm"
 #include "plane_double_transform.dm"
 #include "plane_dupe_detector.dm"
+#include "plane_sanity.dm"
 #include "plantgrowth_tests.dm"
 #include "preference_species.dm"
 #include "preferences.dm"
@@ -277,6 +278,7 @@
 #include "vendor_boards.dm"
 #include "verify_config_tags.dm"
 #include "verify_emoji_names.dm"
+#include "washing.dm"
 #include "wizard_loadout.dm"
 #include "worn_icons.dm"
 // END_INCLUDE

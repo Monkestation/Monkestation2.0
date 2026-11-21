@@ -167,7 +167,7 @@
 
 	// TRAIT_CAREFUL_STEPS so we don't squash iceroaches and such. slimes are soft and squishy it makes sense.
 	// TRAIT_NO_IMMOBILIZE is for slimes sitting on us - can_feed_on() refuses a slime that can't move, so they'd never leave for food
-	add_traits(list(TRAIT_CANT_RIDE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_CAREFUL_STEPS, TRAIT_LIGHTWEIGHT, TRAIT_NO_IMMOBILIZE), INNATE_TRAIT)
+	add_traits(list(TRAIT_CANT_RIDE, TRAIT_CAN_MOUNT_HUMANS, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_CAREFUL_STEPS, TRAIT_LIGHTWEIGHT, TRAIT_NO_IMMOBILIZE), INNATE_TRAIT)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_slime_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
@@ -283,7 +283,7 @@
 		return
 	if(isslime(old_seat))
 		start_stack_cooldown()
-	pixel_z = initial(pixel_z) + stack_pixel_z()
+	update_stack_position()
 	// whatever we just did, we moved out from under anyone sitting on us
 	dump_riders()
 

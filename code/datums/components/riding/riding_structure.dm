@@ -32,13 +32,17 @@
 
 	if(QDELETED(src))
 		return
-	handle_vehicle_layer(movable_parent.dir)
-	handle_vehicle_offsets(movable_parent.dir)
+	update_parent_layer_and_offsets(movable_parent.dir)
 	return TRUE
 
 /datum/component/riding/structure/tank
 	vehicle_move_delay = 3
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/structure/tank/handle_specials()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
+/datum/component/riding/structure/tank/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(  0, 4),
+		TEXT_SOUTH = list(  0, 7),
+		TEXT_EAST =  list(-12, 7),
+		TEXT_WEST =  list( 12, 7),
+	)

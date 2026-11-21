@@ -56,6 +56,7 @@
 	name = "pit grate"
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice-255"
+	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
@@ -96,6 +97,7 @@
 		talpha = 255
 		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	SET_PLANE_IMPLICIT(src, ABOVE_LIGHTING_PLANE) //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
+	layer = ABOVE_NORMAL_TURF_LAYER
 	animate(src,alpha = talpha,time = 10)
 	addtimer(CALLBACK(src, PROC_REF(reset_plane)),10)
 	if(hidden)
@@ -107,6 +109,7 @@
 
 /obj/structure/pitgrate/proc/reset_plane()
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
+	layer = BELOW_CATWALK_LAYER
 
 /obj/structure/pitgrate/Destroy()
 	if(hidden)

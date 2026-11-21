@@ -190,8 +190,8 @@
 	// Put the little "map" overlay down where it looks nice
 	if(floor_markings)
 		floor_markings.dir = src.dir
-		floor_markings.pixel_x = -src.pixel_x
-		floor_markings.pixel_y = -src.pixel_y
+		floor_markings.pixel_w = -src.pixel_x
+		floor_markings.pixel_z = -src.pixel_y
 		add_overlay(floor_markings)
 
 /obj/machinery/station_map/screwdriver_act(mob/living/user, obj/item/tool)

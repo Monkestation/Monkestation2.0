@@ -618,7 +618,9 @@
 		var/obj/item/ammo_casing/a40mm/grenade = _grenade
 		if (!istype(grenade))
 			continue
-		. += image(icon = initial(icon), icon_state = (initial(grenade.icon_state) + "_inbox"), pixel_x = grenades * A40MM_GRENADE_INBOX_SPRITE_WIDTH)
+		var/image/grenade_overlay = image(icon = initial(icon), icon_state = (initial(grenade.icon_state) + "_inbox"))
+		grenade_overlay.pixel_w = grenades * A40MM_GRENADE_INBOX_SPRITE_WIDTH
+		. += grenade_overlay
 		grenades += 1
 
 #undef A40MM_GRENADE_INBOX_SPRITE_WIDTH

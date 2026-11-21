@@ -27,7 +27,6 @@
 	)
 	hud_type = /datum/hud/human
 	pressure_resistance = 25
-	can_buckle = TRUE
 	buckle_lying = 0
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	can_be_shoved_into = TRUE
@@ -90,13 +89,8 @@
 
 	var/datum/physiology/physiology
 
-	/// What types of mobs are allowed to ride/buckle to this mob
-	var/static/list/can_ride_typecache = typecacheof(list(
-		/mob/living/basic/parrot,
-		/mob/living/carbon/human,
-		/mob/living/basic/slime,
-	))
 	var/lastpuke = 0
+
 	var/account_id
 
 	var/hardcore_survival_score = 0
