@@ -50,10 +50,7 @@
 		return ..()
 	return TRUE
 
-/**
- * Attempts to load the given item into the analyzer.
- * Returns FALSE if the item wasn't loaded (machine not ready, or the item is banned), TRUE if it was handled (loaded, or stuck to the user's hand).
- */
+///Tries to load an item. Returns TRUE if it was handled (loaded, or stuck to the user's hand), FALSE if not.
 /obj/machinery/rnd/destructive_analyzer/proc/try_load_item(obj/item/weapon, mob/living/user)
 	if(!is_insertion_ready(user))
 		return FALSE
@@ -134,13 +131,7 @@
 				say("Destructive analysis failed!")
 			return TRUE
 
-/**
- * Items are loaded with a left click. Right clicks are left alone so emags can still be used on the machine.
- *
- * Plenty of items (radio jammers, doorjacks, etc.) handle the click in their own interact_with_atom, which would swallow it
- * before attackby ever ran, so they could never be inserted. Non-tool items are therefore loaded from here instead.
- * Tools are left to their tool acts, which fall through to attackby and load them (see screwdriver_act and wirecutter_act below).
- */
+//Some items (radio jammers, doorjacks) use the click themselves and never reach attackby, so non-tool items are loaded here instead. otherwise they would never be inserted. "You cant doorjack the destructive analyzer" despite me wanting to insert it into the analyzer.
 /obj/machinery/rnd/destructive_analyzer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	//Let emags in on a right click
 	if(is_right_clicking && istype(tool, /obj/item/card/emag))
