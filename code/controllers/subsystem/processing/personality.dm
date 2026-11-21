@@ -67,6 +67,7 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 
 /// Helper to select a random list of personalities, respecting incompatibilities. REturns a list of typepaths
 /datum/controller/subsystem/processing/personalities/proc/select_random_personalities(lower_end = 1, upper_end = CONFIG_GET(number/max_personalities))
+	init_personalities()
 	var/list/personality_pool = personalities_by_type.Copy()
 	var/list/selected_personalities = list()
 	var/num = rand(lower_end, upper_end)
