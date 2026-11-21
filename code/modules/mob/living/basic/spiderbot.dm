@@ -58,13 +58,20 @@
 	if(!.)
 		return
 
-	if(!emagged)
-		return
+	if(emagged)
+		emagged = FALSE
+		if(gibbed)
+			bakoom(gibbed)
+			return
+		balloon_alert_to_viewers("tick tick tick...",vision_distance = 5)
+		audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
+		playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+		Shake(duration = 2.5 SECONDS,shake_interval = 0.08 SECONDS)
+		addtimer(CALLBACK(src,TYPE_PROC_REF(/mob/living/basic/spiderbot/,bakoom),gibbed),2.5 SECONDS)
 
-	// Detonate once on death, then gib the chassis.
-	emagged = FALSE
+/mob/living/basic/spiderbot/proc/bakoom(gibbed = FALSE)
 	QDEL_NULL(mmi)
-	explosion(get_turf(src), -1, -1, 3, 5, adminlog = "Emagged spiderbot destruction", explosion_cause = src)
+	explosion(get_turf(src), -1, -1, 2, 4, adminlog = "Emagged spiderbot destruction", explosion_cause = src)
 	if(!gibbed && !QDELETED(src))
 		gib()
 

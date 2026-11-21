@@ -16,7 +16,7 @@
 		to_chat(user, span_notice("We return our vocal glands to their original position."))
 		return
 
-	var/mimic_voice = sanitize_name(tgui_input_text(user, "Enter a name to mimic", "Mimic Voice", max_length = MAX_NAME_LEN))
+	var/mimic_voice = sanitize_name(tgui_input_text(user, "Enter a name to mimic", "Mimic Voice", max_length = MAX_NAME_LEN, encode = FALSE))
 	if(!mimic_voice)
 		return
 	..()

@@ -20,7 +20,7 @@
 	MC_ADD_INPUT("clear", clear_type)
 
 /obj/item/mcobject/messaging/type_sensor/proc/set_fire_string(mob/user, obj/item/tool)
-	var/string = tgui_input_text(user, "Set Firing Message", "Type Sensor", fire_string)
+	var/string = tgui_input_text(user, "Set Firing Message", "Type Sensor", fire_string, encode = FALSE)
 
 	if(!string)
 		return

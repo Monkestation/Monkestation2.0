@@ -250,6 +250,8 @@ SUBSYSTEM_DEF(dbcore)
 		return FALSE
 	if(var_name == NAMEOF(src, processing_queries))
 		return FALSE
+	if(var_name == NAMEOF(src, max_concurrent_queries))
+		return FALSE
 	return ..()
 
 /datum/controller/subsystem/dbcore/proc/Connect()
@@ -576,6 +578,8 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	var/list/item  //list of data values populated by NextRow()
 
 /datum/db_query/New(connection, sql, arguments)
+	if(IsAdminAdvancedProcCall())
+		CRASH("Advanced admin proc call tried to create a db query directly: [sql]")
 	SSdbcore.all_queries += src
 	SSdbcore.all_queries_num++
 	Activity("Created")
@@ -594,6 +598,13 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 
 /datum/db_query/CanProcCall(proc_name)
 	//fuck off kevinz
+	return FALSE
+
+// a query waiting in the standby queue reads its sql when it finally runs, so editing one is the same as writing your own query
+/datum/db_query/vv_edit_var(var_name, var_value)
+	return FALSE
+
+/datum/db_query/can_vv_get(var_name)
 	return FALSE
 
 /datum/db_query/proc/Activity(activity)

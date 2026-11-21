@@ -90,27 +90,28 @@
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	var/healing = 2.5
 	ph = 1
-	chemical_flags = REAGENT_NO_RANDOM_RECIPE | REAGENT_DEAD_PROCESS | REAGENT_UNAFFECTED_BY_METABOLISM | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE|REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_DONOTSPLIT
 
-/datum/reagent/medicine/lonehope/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/medicine/lonehope/proc/dohealing(mob/living/carbon/affected_mob,seconds_per_tick)
 	var/healed = healing * REM * seconds_per_tick
 	affected_mob.adjustToxLoss(-healed, FALSE, TRUE, affected_biotype)
-	affected_mob.adjustOxyLoss(-healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustOxyLoss(-2*healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustBruteLoss(-healed, FALSE, TRUE, affected_bodytype)
 	affected_mob.adjustFireLoss(-healed, FALSE, TRUE, affected_bodytype)
-	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL - healed)
-		affected_mob.blood_volume += healed
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_EARS, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -healed)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, -healed)
+	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL - (4*healed))
+		affected_mob.blood_volume += (4*healed)
+/datum/reagent/medicine/lonehope/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	dohealing(affected_mob,seconds_per_tick)
 	..()
 	. = TRUE
-
 /datum/reagent/medicine/lonehope/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
-	var/healed = healing * REM * seconds_per_tick
-	affected_mob.adjustToxLoss(-healed, FALSE, TRUE, affected_biotype)
-	affected_mob.adjustOxyLoss(-healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
-	affected_mob.adjustBruteLoss(-healed, FALSE, TRUE, affected_bodytype)
-	affected_mob.adjustFireLoss(-healed, FALSE, TRUE, affected_bodytype)
-	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL - healed)
-		affected_mob.blood_volume += healed
+	dohealing(affected_mob,seconds_per_tick)
 	..()
 	. = TRUE
 
@@ -741,6 +742,65 @@
 	restore_eyesight(affected_mob, eyes)
 	..()
 
+/datum/reagent/medicine/oculine/flumpuline
+	name = "Flumpuline"
+	description = "Often confused for, or sold as, Oculine or a variation thereof. Slowly transmogrifies the eyes of the patient into grotesque stalks - but you'll never need glasses again."
+	color = "#6c596d"
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	overdose_threshold = 5
+	taste_description = "fungus"
+	purity = 1
+	ph = 0.01
+	chemical_flags = REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_NO_RANDOM_RECIPE|REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem = /datum/reagent/inverse
+	inverse_chem_val = 0
+	/// The eyes the flumpuline can turn yours into
+	var/static/list/eye_types = list(/obj/item/organ/internal/eyes/snail, /obj/item/organ/internal/eyes/night_vision/mushroom)
+
+/datum/reagent/medicine/oculine/flumpuline/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
+	delta_light = 200 //2x better than pure oculine
+	eyes.lighting_cutoff += delta_light
+	affected_mob.update_sight()
+
+/datum/reagent/medicine/oculine/flumpuline/restore_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
+	eyes.lighting_cutoff -= delta_light
+	affected_mob.update_sight()
+
+/datum/reagent/medicine/oculine/flumpuline/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+	// if no eyes or inorganic do nothing. we let already changed eyes go because funny
+	if(!eyes || !IS_ORGANIC_ORGAN(eyes))
+		return .
+
+	if(!prob(2))
+		return .
+
+	flump_eyes(affected_mob, eyes)
+
+// Overdose causes constant eye popping
+/datum/reagent/medicine/oculine/flumpuline/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(!prob(25))
+		return
+	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+
+	flump_eyes(affected_mob, eyes)
+
+/// Replaces the eyes of the mob with snail or mushroom eyes
+/datum/reagent/medicine/oculine/flumpuline/proc/flump_eyes(mob/affected_mob, obj/eyes)
+	var/obj/item/organ/internal/eyes/new_eyes = pick(eye_types)
+	new_eyes = new new_eyes(affected_mob)
+	new_eyes.Insert(affected_mob)
+	playsound(affected_mob, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, TRUE)
+	affected_mob.visible_message(span_danger("[affected_mob]'s [eyes ? eyes : "eye holes"] suddenly sprout stalks and turn into [new_eyes]!"))
+	ASYNC
+		affected_mob.emote("scream")
+		sleep(5 SECONDS)
+		if(!QDELETED(eyes))
+			eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
+			eyes.dust()
+
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
 	description = "Rapidly repairs damage to the patient's ears to cure deafness, assuming the source of said deafness isn't from genetic mutations, chronic deafness, or a total defecit of ears." //by "chronic" deafness, we mean people with the "deaf" quirk
@@ -887,6 +947,10 @@
 	/// The maximum amount of damage we can revive from, as a ratio of max health
 	var/max_revive_damage_ratio = 2
 
+/// To override for subtypes.
+/datum/reagent/medicine/strange_reagent/proc/pre_rez_check(atom/thing_to_rez)
+	return TRUE
+
 /datum/reagent/medicine/strange_reagent/instant
 	name = "Stranger Reagent"
 	instant = TRUE
@@ -949,6 +1013,11 @@
 		exposed_mob.do_jitter_animation(10)
 		return
 
+	if(!pre_rez_check(exposed_mob))
+		exposed_mob.visible_message(span_warning("[exposed_mob]'s body twitches slightly."))
+		exposed_mob.do_jitter_animation(1)
+		return
+
 	exposed_mob.visible_message(span_warning("[exposed_mob]'s body starts convulsing!"))
 	exposed_mob.notify_ghost_cloning("Your body is being revived with Strange Reagent!")
 	exposed_mob.do_jitter_animation(10)
@@ -975,6 +1044,27 @@
 	affected_mob.adjustBruteLoss(damage_at_random * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(damage_at_random * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	return ..()
+
+/datum/reagent/medicine/strange_reagent/fishy_reagent
+	name = "Fishy Reagent"
+	description = "This reagent has a chemical composition very similar to that of Strange Reagent, however, it seems to work purely and only on... fish. Or at least, aquatic creatures."
+	reagent_state = LIQUID
+	color = "#5ee8b3"
+	metabolization_rate = 1.25 * REAGENTS_METABOLISM
+	taste_description = "magnetic scales"
+	ph = 0.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+// only revives fish.
+/datum/reagent/medicine/strange_reagent/fishy_reagent/pre_rez_check(atom/thing_to_rez)
+	if(ismob(thing_to_rez))
+		var/mob/living/mob_to_rez = thing_to_rez
+		if(mob_to_rez.mob_biotypes & MOB_AQUATIC)
+			return TRUE
+		return FALSE
+	if(isfish(thing_to_rez))
+		return TRUE
+	return FALSE
 
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"

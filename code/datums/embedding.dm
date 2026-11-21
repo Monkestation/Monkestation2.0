@@ -232,6 +232,7 @@
 		damage += parent.w_class * impact_pain_mult
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_EMBEDDED, victim, target_limb)
+	SEND_SIGNAL(victim, COMSIG_CARBON_EMBED_ADDED, parent, target_limb)
 	on_successful_embed(victim, target_limb)
 
 	if (damage <= 0)
@@ -601,7 +602,7 @@
 	owner.visible_message(span_alert("[owner] is sent flying towards [caster] as the [parent] tears out of them!"), span_alert("You are launched at [caster] as the [parent] tears from your body and towards their hand!"))
 
 /datum/embedding/proc/still_in()
-	if (parent.loc != owner)
+	if (QDELETED(parent) || parent.loc != owner)
 		return FALSE
 	if (!(parent in owner_limb?.embedded_objects))
 		return FALSE

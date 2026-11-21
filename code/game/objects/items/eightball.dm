@@ -204,7 +204,7 @@
 /obj/item/toy/eightball/haunted/ui_data(mob/user)
 	var/list/data = list()
 	data["shaking"] = shaking
-	data["question"] = selected_message
+	data["question"] = html_decode(selected_message)
 
 	data["answers"] = list()
 	for(var/pa in haunted_answers)

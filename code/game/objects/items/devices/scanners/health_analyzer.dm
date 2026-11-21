@@ -616,7 +616,7 @@
 	var/render_list = ""
 	var/advised = FALSE
 
-	var/advanced = scanner.give_wound_treatment_bonus
+	var/advanced = scanner?.give_wound_treatment_bonus
 	if(!advanced && patient.has_reagent(/datum/reagent/inverse/technetium))
 		advanced = TRUE
 

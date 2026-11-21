@@ -113,6 +113,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 #define iswerewolf(A) (is_species(A,/datum/species/werewolf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
+#define iscerulean(A) (is_species(A, /datum/species/human/cerulean))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isshadowperson(A) (is_species(A, /datum/species/shadow))
@@ -256,8 +257,6 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 #define isidcard(I) (istype(I, /obj/item/card/id))
 
 #define isstructure(A) (istype(A, /obj/structure))
-
-#define isaquarium(A) (istype(A, /obj/structure/aquarium))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 

@@ -3,6 +3,7 @@
 	can_adjust = FALSE
 	body_parts_covered = CHEST|ARMS|GROIN
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 	icon = 'icons/obj/clothing/under/dress.dmi'
 	worn_icon = 'icons/mob/clothing/under/dress.dmi'
 
@@ -203,3 +204,8 @@
 	icon_state = "hulaskirt"
 	inhand_icon_state = "hulaskirt"
 	body_parts_covered = GROIN|LEGS
+
+
+/obj/item/clothing/under/dress/wedding_dress/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?

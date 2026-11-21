@@ -1,7 +1,7 @@
 /area/station/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	icon_state = "hall"
 	sound_environment = SOUND_AREA_STANDARD_STATION
-	astar_weight = -20 // hallways should be pathed through MORE often
 
 /area/station/hallway/primary
 	name = "\improper Primary Hallway"

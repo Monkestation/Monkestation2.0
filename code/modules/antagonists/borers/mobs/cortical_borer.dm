@@ -345,6 +345,9 @@
 			loc_temp = host.coretemperature // set the local temp to that of the host's core temp
 		else
 			loc_temp = human_host.bodytemperature
+		// a corpse stays as cold as wherever it was left, so a body pulled out of the cold would freeze us in a warm room
+		if(human_host.stat == DEAD)
+			loc_temp = max(loc_temp, get_temperature(environment))
 	else
 		loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature

@@ -94,7 +94,7 @@
 	ui_interact(user)
 
 /obj/structure/votebox/proc/set_description(mob/user)
-	var/new_description = tgui_input_text(user, "Enter a new description", "Vote Description", vote_description, multiline = TRUE)
+	var/new_description = tgui_input_text(user, "Enter a new description", "Vote Description", html_decode(vote_description), multiline = TRUE)
 	if(new_description)
 		vote_description = new_description
 

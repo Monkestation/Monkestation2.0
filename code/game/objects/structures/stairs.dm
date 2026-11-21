@@ -21,6 +21,8 @@
 	var/turf/listeningTo
 	/// Current atoms used as this stair's minimap blip targets.
 	var/list/minimap_blip_targets
+	/// Registered pathfinding transitions for terminal stair endpoints.
+	var/list/nav_links
 
 /obj/structure/stairs/north
 	dir = NORTH
@@ -58,13 +60,30 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	return ..()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/stairs/Destroy()
 	clear_minimap_blips()
+	QDEL_LIST(nav_links)
 	listeningTo = null
 	GLOB.stairs -= src
 	return ..()
+
+/obj/structure/stairs/LateInitialize(mapload_arg)
+	register_nav_links()
+
+/obj/structure/stairs/proc/register_nav_links()
+	QDEL_LIST(nav_links)
+	if(!isTerminator())
+		return
+	var/turf/source = get_turf(src)
+	var/turf/destination = get_step_multiz(src, dir|UP)
+	if(source && destination)
+		nav_links = list(
+			new /datum/nav_link/stairs(src, source, destination),
+			new /datum/nav_link/stairs(src, destination, source),
+		)
 
 /obj/structure/stairs/Move() //Look this should never happen but...
 	. = ..()
@@ -142,20 +161,41 @@
 		return FALSE
 	return ..()
 
-/obj/structure/stairs/proc/stair_ascend(atom/movable/climber)
+/obj/structure/stairs/proc/stair_ascend(atom/movable/climber, datum/callback/completion)
+	var/success = FALSE
+	if(get_turf(climber) != get_turf(src))
+		completion?.Invoke(FALSE)
+		return FALSE
 	var/turf/checking = get_step_multiz(get_turf(src), UP)
 	if(!istype(checking))
-		return
+		completion?.Invoke(FALSE)
+		return FALSE
 	// I'm only interested in if the pass is unobstructed, not if the mob will actually make it
 	if(!climber.can_z_move(UP, get_turf(src), checking, z_move_flags = ZMOVE_ALLOW_BUCKLED))
-		return
+		completion?.Invoke(FALSE)
+		return FALSE
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
 	if(istype(target) && !climber.can_z_move(DOWN, target, z_move_flags = ZMOVE_FALL_FLAGS)) //Don't throw them into a tile that will just dump them back down.
-		climber.zMove(target = target, z_move_flags = ZMOVE_STAIRS_FLAGS)
-		/// Moves anything that's being dragged by src or anything buckled to it to the stairs turf.
-		climber.pulling?.move_from_pull(climber, loc, climber.glide_size)
-		for(var/mob/living/buckled as anything in climber.buckled_mobs)
-			buckled.pulling?.move_from_pull(buckled, loc, buckled.glide_size)
+		success = climber.zMove(target = target, z_move_flags = ZMOVE_STAIRS_FLAGS)
+		if(success)
+			/// Moves anything that's being dragged by src or anything buckled to it to the stairs turf.
+			climber.pulling?.move_from_pull(climber, loc, climber.glide_size)
+			for(var/mob/living/buckled as anything in climber.buckled_mobs)
+				buckled.pulling?.move_from_pull(buckled, loc, buckled.glide_size)
+	completion?.Invoke(success)
+	return success
+
+/// Descends by entering the open space directly above the terminal stair and using normal gravity.
+/obj/structure/stairs/proc/stair_descend(atom/movable/climber, datum/callback/completion)
+	var/turf/above = get_step_multiz(src, UP)
+	var/turf/upper_endpoint = get_step_multiz(src, dir|UP)
+	if(!above || !upper_endpoint || get_turf(climber) != upper_endpoint)
+		completion?.Invoke(FALSE)
+		return FALSE
+	var/success = climber.Move(above, REVERSE_DIR(dir))
+	success = success && get_turf(climber) == get_turf(src)
+	completion?.Invoke(success)
+	return success
 
 
 /obj/structure/stairs/vv_edit_var(var_name, var_value)
@@ -302,6 +342,7 @@
 /obj/structure/stairs_frame/proc/make_new_stairs(stairs_type, custom_materials)
 	var/obj/structure/stairs/new_stairs = new stairs_type(loc)
 	new_stairs.setDir(dir)
+	new_stairs.register_nav_links()
 	if(custom_materials)
 		new_stairs.set_custom_materials(custom_materials)
 	qdel(src)

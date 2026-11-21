@@ -506,7 +506,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 
 		for(var/mob/living/soulcatcher_soul/soul in room.current_souls)
 			var/list/soul_list = list(
-				"name" = soul.name,
+				"name" = html_decode(soul.name),
 				"description" = soul.soul_desc,
 				"reference" = REF(soul),
 				"internal_hearing" = soul.internal_hearing,
@@ -570,7 +570,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 			return TRUE
 
 		if("rename_room")
-			var/new_room_name = tgui_input_text(usr,"Choose a new name for the room", name, target_room.name)
+			var/new_room_name = tgui_input_text(usr,"Choose a new name for the room", name, html_decode(target_room.name))
 			if(!new_room_name)
 				return FALSE
 
@@ -578,7 +578,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 			return TRUE
 
 		if("redescribe_room")
-			var/new_room_desc = tgui_input_text(usr,"Choose a new description for the room", name, target_room.room_description, multiline = TRUE)
+			var/new_room_desc = tgui_input_text(usr,"Choose a new description for the room", name, html_decode(target_room.room_description), multiline = TRUE)
 			if(!new_room_desc)
 				return FALSE
 
@@ -598,7 +598,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 			return TRUE
 
 		if("modify_name")
-			var/new_name = tgui_input_text(usr,"Choose a new name to send messages as", name, target_room.outside_voice, multiline = TRUE)
+			var/new_name = tgui_input_text(usr,"Choose a new name to send messages as", name, html_decode(target_room.outside_voice), multiline = TRUE)
 			if(!new_name)
 				return FALSE
 
@@ -683,7 +683,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 			return TRUE
 
 		if("change_name")
-			var/new_name = tgui_input_text(usr, "Enter a new name for [target_soul]", "Soulcatcher", target_soul)
+			var/new_name = tgui_input_text(usr, "Enter a new name for [target_soul]", "Soulcatcher", html_decode(target_soul.name))
 			if(!new_name)
 				return FALSE
 
@@ -743,7 +743,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 		return FALSE //uhoh
 
 	data["user_data"] = list(
-		"name" = user_soul.name,
+		"name" = html_decode(user_soul.name),
 		"description" = user_soul.soul_desc,
 		"reference" = REF(user_soul),
 		"internal_hearing" = user_soul.internal_hearing,
@@ -766,7 +766,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 		"description" = html_decode(current_room.room_description),
 		"reference" = REF(current_room),
 		"color" = current_room.room_color,
-		"owner" = current_room.outside_voice,
+		"owner" = html_decode(current_room.outside_voice),
 		)
 
 	var/datum/component/soulcatcher/master_soulcatcher = current_room.master_soulcatcher.resolve()
@@ -777,7 +777,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 			continue
 
 		var/list/soul_list = list(
-			"name" = soul.name,
+			"name" = html_decode(soul.name),
 			"description" = soul.soul_desc,
 			"ooc_notes" = soul.ooc_notes,
 			"reference" = REF(soul),
@@ -797,7 +797,7 @@ GAME_VERB(/mob/dead/observer, join_soulcatcher, "Enter Soulcatcher", "Ghost")
 
 	switch(action)
 		if("change_name")
-			var/new_name = tgui_input_text(usr, "Enter a new name", "Soulcatcher", user_soul.name)
+			var/new_name = tgui_input_text(usr, "Enter a new name", "Soulcatcher", html_decode(user_soul.name))
 			if(!new_name)
 				return FALSE
 

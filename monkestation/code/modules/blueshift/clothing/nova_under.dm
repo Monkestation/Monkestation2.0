@@ -1,4 +1,5 @@
 /obj/item/clothing/under/misc/bluetracksuit
+	can_adjust = FALSE
 	name = "blue tracksuit"
 	desc = "Found on a dead homeless man squatting in an alleyway, the classic design has been mass produced to bring terror to the galaxy."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
@@ -6,6 +7,7 @@
 	icon_state = "tracksuit_blue"
 
 /obj/item/clothing/under/tachawaiian
+	can_adjust = FALSE
 	name = "orange tactical hawaiian outfit"
 	desc = "Clearly the wearer didn't know if they wanted to invade a country or lay on a nice Hawaiian beach."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
@@ -25,6 +27,7 @@
 	icon_state = "tacticool_hawaiian_green"
 
 /obj/item/clothing/under/texas
+	can_adjust = FALSE
 	name = "texan formal outfit"
 	desc = "A premium quality shirt and pants combo straight from Texas."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
@@ -32,6 +35,7 @@
 	icon_state = "texas"
 
 /obj/item/clothing/under/doug_dimmadome
+	can_adjust = FALSE
 	name = "dimmadome formal outfit"
 	desc = "A tight fitting suit with a belt that is surely made out of gold."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'

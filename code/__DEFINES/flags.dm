@@ -71,6 +71,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 /// This atom does not need to generate its own preview icon for GAGS
 #define NO_NEW_GAGS_PREVIEW_1 (1<<21)
+/// This atom does not affect navmap baking.
+#define NAV_IRRELEVANT_1 (1<<22)
+/// This atom is always a live navmap blocker, regardless of density.
+#define NAV_ALWAYS_CONDITIONAL_1 (1<<23)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -113,6 +117,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 /// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
 #define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
+/// This turf is queued for navmap baking.
+#define NAV_QUEUED (1<<9)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -151,6 +157,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<16)
 ///This area blocks outgoing radio signals. Mostly used for the abductor ship and heretic sacrifice areas.
 #define AREA_BLOCKS_OUTGOING_RADIO (1<<17)
+/// Fishing here won't remove unique/limited loot from sources that are also used outside of it
+#define UNLIMITED_FISHING (1<<18)
+/// Gravity generators don't affect this area, so it has no gravity unless has_gravity is set
+#define NO_GRAVITY (1<<19)
 
 ////////////////Area Mapping Flags\\\\\\\\\\\\\\
 /// If false, loading multiple maps with this area type will create multiple instances.

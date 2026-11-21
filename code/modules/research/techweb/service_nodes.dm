@@ -94,11 +94,23 @@
 	prereq_ids = list("fishing")
 	design_ids = list(
 		"bioelec_gen",
+		"bluespace_reel",
+		"fish_genegun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
 	discount_experiments = list(/datum/experiment/scanning/fish/second = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SERVICE)
+
+/datum/techweb_node/fishing_anomalous
+	id = "fishing_anomalous"
+	display_name = "Anomalous Fishing"
+	description = "For the truly adventurous fisher, these experimental tools could augment your catches in unpredictable ways."
+	prereq_ids = list("fishing", "anomaly_research")
+	design_ids = list(
+		"anomalous_fishing_hook",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 // Kitchen root node
 /datum/techweb_node/bio_process
@@ -143,6 +155,10 @@
 		"stabilized_hook",
 		"auto_reel",
 		"fish_analyzer",
+		"bluespace_fish_case",
+		"bluespace_fish_tank_kit",
+		"fishing_gloves",
+		"mod_fishing",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)
