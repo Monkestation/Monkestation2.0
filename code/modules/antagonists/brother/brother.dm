@@ -338,7 +338,7 @@
 	if (compromising)
 		return FALSE
 	compromising = TRUE
-	flashed.balloon_alert(source, "compromising mindshield")
+	flashed.balloon_alert(source, "breaking mindshield...")
 	var/success = do_after(source, mindshield_compromise_time, flashed, extra_checks = CALLBACK(src, PROC_REF(can_keep_compromising), flashed), hidden = TRUE)
 	compromising = FALSE
 	if (success)
@@ -348,7 +348,7 @@
 	if (!QDELETED(flashed) && !HAS_TRAIT(flashed, TRAIT_RESTRAINED))
 		flashed.balloon_alert(source, "[flashed.p_they()] broke free!")
 	else
-		flashed.balloon_alert(source, "Interrupted!")
+		flashed.balloon_alert(source, "interrupted!")
 	return FALSE
 
 /// Hacks a cloning console to clone a dead brother, with no record left behind.
