@@ -33,6 +33,9 @@ SUBSYSTEM_DEF(air)
 	var/list/adjacent_rebuild = list()
 	/// A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.
 	var/list/obj/machinery/atmos_machinery = list()
+	/// Machines on machinery_hold_zs aren't processed while this runs, so machines in a template that's still loading don't run before their pipenets exist
+	COOLDOWN_DECLARE(machinery_hold)
+	var/list/machinery_hold_zs = list()
 
 	var/list/pipe_init_dirs_cache = list()
 	//atmos singletons
@@ -314,6 +317,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = FALSE)
+	var/holding = !COOLDOWN_FINISHED(src, machinery_hold)
 	if (!resumed)
 		src.currentrun = atmos_machinery.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -323,6 +327,9 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M)
 			atmos_machinery -= M
+			continue
+		if(holding && (M.z in machinery_hold_zs))
+			continue
 		if(M.process_atmos(wait * 0.1) == PROCESS_KILL)
 			stop_processing_machine(M)
 		if(MC_TICK_CHECK)
@@ -418,11 +425,14 @@ SUBSYSTEM_DEF(air)
 			var/datum/pipeline/linepipe = pack[SSAIR_REBUILD_PIPELINE]
 			var/list/border = pack[SSAIR_REBUILD_QUEUE]
 			expand_pipeline(linepipe, border)
-			if(state != SS_RUNNING) //expand_pipeline can fail a tick check, we shouldn't let things get too fucky here
+			if(length(border)) //expand_pipeline failed a tick check before finishing, resume it next fire
 				return
 
 			linepipe.building = FALSE
 			queue.len--
+			// machinery was claimed by another pipeline before we could expand somehow, check if it has no pipes or machines left we can just delete it
+			if(!length(linepipe.members) && !length(linepipe.other_atmos_machines))
+				qdel(linepipe)
 			if (MC_TICK_CHECK)
 				return
 
@@ -709,9 +719,10 @@ SUBSYSTEM_DEF(air)
 // pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		var/list/targets = AM.get_rebuild_targets()
-		for(var/datum/pipeline/build_off as anything in targets)
-			build_off.build_pipeline_blocking(AM)
+		var/datum/pipeline/build_target = AM.get_rebuild_target()
+		while(build_target)
+			build_target.build_pipeline_blocking(AM)
+			build_target = AM.get_rebuild_target()
 		CHECK_TICK
 
 GLOBAL_LIST_EMPTY(colored_turfs)
@@ -729,6 +740,13 @@ GLOBAL_LIST_EMPTY(colored_images)
 			shiny.color = sharp_color
 			GLOB.colored_images += shiny
 
+/// Call before initializing a template's atoms, setup_template_machinery lifts it. The deadline is there so a runtime mid-load can't freeze atmos machinery for good.
+/datum/controller/subsystem/air/proc/hold_machinery_for_template(list/atmos_machines)
+	COOLDOWN_START(src, machinery_hold, 10 SECONDS)
+	for(var/obj/machinery/atmospherics/machine as anything in atmos_machines)
+		if(machine.z)
+			machinery_hold_zs |= machine.z
+
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	var/obj/machinery/atmospherics/AM
 	for(var/A in 1 to atmos_machines.len)
@@ -738,10 +756,14 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		var/list/targets = AM.get_rebuild_targets()
-		for(var/datum/pipeline/build_off as anything in targets)
-			build_off.build_pipeline_blocking(AM)
+		var/datum/pipeline/build_target = AM.get_rebuild_target()
+		while(build_target)
+			build_target.build_pipeline_blocking(AM)
+			build_target = AM.get_rebuild_target()
 		CHECK_TICK
+
+	COOLDOWN_RESET(src, machinery_hold)
+	machinery_hold_zs.Cut()
 
 
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir, init_dir)

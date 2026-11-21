@@ -91,7 +91,7 @@
 
 	data["current_balance"] = synced_bank_account?.account_balance || 0
 	data["siphoning"] = siphoning
-	data["station_name"] = station_name()
+	data["station_name"] = html_decode(station_name())
 
 	return data
 
