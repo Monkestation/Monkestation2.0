@@ -237,7 +237,8 @@
 ///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
-//See: mob/living/carbon/human/var/limb_style. These are the styles of species with TRAIT_GREYSCALE_TOGGLE, other species can have their own (vox skin tones)
+//Limb styles are which look limbs use, picked from their style_icons by the "limb_style" DNA feature. See GLOB.limb_styles
+//These are the styles of species with TRAIT_GREYSCALE_TOGGLE, other species have their own (vox skin tones)
 ///The limbs use their normal colors
 #define LIMB_STYLE_CLASSIC "Classic"
 ///The limbs are greyscaled and colored by the mutant color
@@ -905,8 +906,10 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define EXTERNAL_RESTYLE_FLESH (1 << 2)
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
 #define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
-/// This organ is hair-like and can be restyled like hair, with mirrors and scissors. For heads that can't grow hair, like vox quills
+/// This organ is hair-like: it's restyled and shaved like hair, for heads that can't grow any. Like vox quills
 #define EXTERNAL_RESTYLE_HAIR (1 << 4)
+/// This organ is like facial hair: it's restyled and shaved like facial hair, for heads that can't grow any. Like vox facial quills
+#define EXTERNAL_RESTYLE_FACIAL_HAIR (1 << 5)
 
 
 /// If gravity must be present to perform action (can't use pens without gravity)

@@ -53,8 +53,13 @@
 	return ..()
 
 /obj/item/mmi/update_icon_state()
+	icon = initial(icon)
 	if(!brain)
 		icon_state = "[base_icon_state]_off"
+		return ..()
+	if(brain.mmi_icon_state) // brains with an MMI sprite of their own
+		icon = brain.mmi_icon || initial(icon)
+		icon_state = brain.mmi_icon_state
 		return ..()
 	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/internal/brain/alien) ? "_alien" : null]"
 	return ..()
@@ -69,11 +74,12 @@
 	return ..()
 
 /obj/item/mmi/proc/add_mmi_overlay()
+	// From our own icon, as a brain's MMI sprite can be in another file
 	if(brainmob && brainmob.stat != DEAD)
-		. += "mmi_alive"
+		. += mutable_appearance(initial(icon), "mmi_alive")
 		return
 	if(brain)
-		. += "mmi_dead"
+		. += mutable_appearance(initial(icon), "mmi_dead")
 
 /obj/item/mmi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
@@ -87,7 +93,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/organ/internal/brain/new_brain = tool
 		if(brain)
-			to_chat(user, span_warning("There's already a brain in the MMI!"))
+			to_chat(user, span_warning("There's already a [brain.brain_name] in the MMI!"))
 			return ITEM_INTERACT_BLOCKING
 		if(new_brain.suicided)
 			to_chat(user, span_warning("[new_brain] is completely useless."))
@@ -110,7 +116,7 @@
 
 		var/mob/living/brain/brain_mob = new_brain.brainmob
 		if(!brain_mob.key)
-			brain_mob.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
+			brain_mob.notify_ghost_cloning("Someone has put your [new_brain.brain_name] in an MMI!", source = src)
 		user.visible_message(span_notice("[user] sticks \a [new_brain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [new_brain]."))
 		set_brainmob(new_brain.brainmob)
 		new_brain.brainmob = null
@@ -154,10 +160,11 @@
 		radio.set_on(!radio.is_on())
 		to_chat(user, span_notice("You toggle [src]'s radio system [radio.is_on() == TRUE ? "on" : "off"]."))
 	else
+		var/brain_name = brain.brain_name
 		eject_brain(user)
 		update_appearance()
 		name = initial(name)
-		to_chat(user, span_notice("You unlock and upend [src], spilling the brain onto the floor."))
+		to_chat(user, span_notice("You unlock and upend [src], spilling the [brain_name] onto the floor."))
 
 /obj/item/mmi/proc/eject_brain(mob/user)
 	if(brainmob)
@@ -277,12 +284,13 @@ GAME_VERB_SRC_DESC(/obj/item/mmi, Toggle_Listening, usr.loc, "Toggle Listening",
 		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
+		var/brain_name = brain?.brain_name || "brain"
 		if(!B.key || !B.mind || B.stat == DEAD)
-			. += span_warning("\The [src] indicates that the brain is completely unresponsive.")
+			. += span_warning("\The [src] indicates that the [brain_name] is completely unresponsive.")
 		else if(!B.client)
-			. += span_warning("\The [src] indicates that the brain is currently inactive; it might change.")
+			. += span_warning("\The [src] indicates that the [brain_name] is currently inactive; it might change.")
 		else
-			. += span_notice("\The [src] indicates that the brain is active.")
+			. += span_notice("\The [src] indicates that the [brain_name] is active.")
 
 /obj/item/mmi/examine_more(mob/user)
 	. = ..()
@@ -318,11 +326,11 @@ GAME_VERB_SRC_DESC(/obj/item/mmi, Toggle_Listening, usr.loc, "Toggle Listening",
 		return FALSE
 	if(B.stat == DEAD)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that the brain is dead!"))
+			to_chat(user, span_warning("\The [src] indicates that the [brain?.brain_name || "brain"] is dead!"))
 		return FALSE
 	if(brain?.organ_flags & ORGAN_FAILING)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that the brain is damaged!"))
+			to_chat(user, span_warning("\The [src] indicates that the [brain.brain_name] is damaged!"))
 		return FALSE
 	return TRUE
 

@@ -1,4 +1,5 @@
 /obj/item/clothing/shoes
+	species_worn_icons = list(SPECIES_VOX = VOX_SHOES_FILE)
 	abstract_type = /obj/item/clothing/shoes
 	name = "shoes"
 	icon = 'icons/obj/clothing/shoes.dmi'
@@ -55,7 +56,7 @@
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_fitted_blood_state("shoeblood"))
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 

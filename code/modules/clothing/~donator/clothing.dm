@@ -560,6 +560,7 @@
 
 // Donation reward for Enzoman
 /obj/item/clothing/mask/luchador/enzo
+	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	name = "mask of El Red Templar"
 	desc = "A mask belonging to El Red Templar, a warrior of lucha. Taking it from him is not recommended."
 	icon = 'icons/obj/clothing/donator/masks.dmi'
@@ -960,6 +961,7 @@
 	desc = "Skrektastic."
 	icon = 'icons/obj/clothing/donator/masks.dmi'
 	worn_icon = 'icons/mob/clothing/donator/mask.dmi'
+	species_worn_icons = list(SPECIES_VOX = 'icons/mob/clothing/donator/mask_vox.dmi')
 	icon_state = "death"
 	actions_types = null
 	adjustable = FALSE

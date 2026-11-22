@@ -1,4 +1,5 @@
 /obj/item/clothing/gloves
+	species_worn_icons = list(SPECIES_VOX = VOX_GLOVES_FILE)
 	abstract_type = /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
@@ -50,7 +51,7 @@
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "gloveblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_fitted_blood_state("gloveblood"))
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 

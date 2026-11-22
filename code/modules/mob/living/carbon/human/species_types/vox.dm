@@ -39,20 +39,9 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	breathid = "n2"
 	inherent_respiration_type = RESPIRATION_N2
-	// Vox limbs are BODYSHAPE_CUSTOM, so clothing is drawn from these files when they have a sprite for it
-	custom_worn_icons = list(
-		LOADOUT_ITEM_UNIFORM = 'icons/mob/clothing/species/vox/uniform.dmi',
-		LOADOUT_ITEM_SUIT = 'icons/mob/clothing/species/vox/suit.dmi',
-		LOADOUT_ITEM_SHOES = 'icons/mob/clothing/species/vox/shoes.dmi',
-		LOADOUT_ITEM_GLOVES = 'icons/mob/clothing/species/vox/gloves.dmi',
-		LOADOUT_ITEM_HEAD = 'icons/mob/clothing/species/vox/head.dmi',
-		LOADOUT_ITEM_MASK = 'icons/mob/clothing/species/vox/mask.dmi',
-		LOADOUT_ITEM_GLASSES = 'icons/mob/clothing/species/vox/eyes.dmi',
-		LOADOUT_ITEM_EARS = 'icons/mob/clothing/species/vox/ears.dmi',
-		LOADOUT_ITEM_MISC = 'icons/mob/clothing/species/vox/back.dmi',
-		LOADOUT_ITEM_UNDERWEAR = 'icons/mob/clothing/species/vox/underwear.dmi',
-		LOADOUT_ITEM_UNDERSHIRT = 'icons/mob/clothing/species/vox/undershirt.dmi',
-		LOADOUT_ITEM_SOCKS = 'icons/mob/clothing/species/vox/socks.dmi',
+	suicide_messages = list(
+		"%SUICIDER% is jamming %THEIR% claws into %THEIR% eye sockets!",
+		"%SUICIDER% is deeply inhaling oxygen!",
 	)
 
 /datum/species/vox/random_name(gender, unique, last_name)
@@ -60,15 +49,22 @@
 		return random_unique_vox_name()
 	return capitalize(vox_name())
 
+/// Vox heads can't grow hair, but their quills take the hair colors and gradient
+/datum/species/vox/get_features()
+	var/list/features = ..()
+	features |= list("hair_color", "facial_hair_color", "hair_gradient", "hair_gradient_color")
+	return features
+
 /datum/species/vox/randomize_features()
 	var/list/features = ..()
 	features["vox_body_markings"] = pick(GLOB.vox_body_markings_list)
+	features["limb_style"] = pick(GLOB.vox_skin_tones)
 	return features
 
 /// A bare lime vox with cyan eyes, like the species icon on Yogstation
 /datum/species/vox/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.delete_equipment()
-	human.limb_style = VOX_DEFAULT_SKIN_TONE
+	human.dna.features["limb_style"] = VOX_DEFAULT_SKIN_TONE
 	human.dna.features["vox_quills"] = SPRITE_ACCESSORY_NONE
 	human.dna.features["vox_facial_quills"] = SPRITE_ACCESSORY_NONE
 	human.dna.features["vox_body_markings"] = SPRITE_ACCESSORY_NONE
@@ -78,73 +74,35 @@
 	human.update_body(is_creating = TRUE)
 
 /// Vox start the shift on internals, with the mask and tank from their preferences
-/datum/species/vox/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
-	var/mask_type = /obj/item/clothing/mask/breath/vox
-	if(equipping.dna.features["vox_mask"] == "Respirator")
-		mask_type = /obj/item/clothing/mask/breath/vox/respirator
-	var/tank_type = /obj/item/tank/internals/emergency_oxygen/vox
-	if(equipping.dna.features["vox_tank_type"] == "Large")
-		tank_type = /obj/item/tank/internals/nitrogen
-	equipping.equip_to_slot_or_del(new mask_type(equipping), ITEM_SLOT_MASK)
+/datum/species/vox/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+	// Job masks we can breathe through (like the clown's) stay on, others go in the bag
+	var/obj/item/job_mask = equipping.wear_mask
+	if(job_mask && !equipping.can_breathe_mask())
+		equipping.temporarilyRemoveItemFromInventory(job_mask, force = TRUE)
+		if(!equipping.equip_to_slot_if_possible(job_mask, ITEM_SLOT_BACKPACK, disable_warning = TRUE))
+			equipping.put_in_hands(job_mask)
+	if(!equipping.wear_mask)
+		var/mask_type = (equipping.dna.features["vox_mask"] == "Respirator") ? /obj/item/clothing/mask/breath/vox/respirator : /obj/item/clothing/mask/breath/vox
+		equipping.equip_to_slot_or_del(new mask_type(equipping), ITEM_SLOT_MASK)
+	var/tank_type = (equipping.dna.features["vox_tank_type"] == "Large") ? /obj/item/tank/internals/nitrogen : /obj/item/tank/internals/emergency_oxygen/vox
 	var/obj/item/tank/internals/tank = new tank_type(equipping)
-	equipping.put_in_r_hand(tank)
-	if(!visuals_only)
-		equipping.open_internals(tank)
+	if(!equipping.equip_to_appropriate_slot(tank))
+		equipping.put_in_hands(tank)
+	if(visuals_only)
+		return
+	to_chat(equipping, span_notice("You are now running on nitrogen internals from [tank]. Your species finds oxygen toxic, so you must breathe pure nitrogen."))
+	equipping.open_internals(tank)
 
-/// Fitted sprites only exist for some kinds of items. Anything else is drawn with its normal sprite.
-/datum/species/vox/generate_custom_worn_icon(item_slot, obj/item/item)
-	var/static/list/fitted_types = list(
-		LOADOUT_ITEM_UNIFORM = list(/obj/item/clothing/under),
-		LOADOUT_ITEM_SUIT = list(/obj/item/clothing/suit),
-		LOADOUT_ITEM_SHOES = list(/obj/item/clothing/shoes),
-		LOADOUT_ITEM_GLOVES = list(/obj/item/clothing/gloves),
-		LOADOUT_ITEM_HEAD = list(/obj/item/clothing/head),
-		LOADOUT_ITEM_MASK = list(/obj/item/clothing/mask),
-		LOADOUT_ITEM_GLASSES = list(/obj/item/clothing/glasses),
-		LOADOUT_ITEM_EARS = list(/obj/item/clothing/ears),
-		LOADOUT_ITEM_MISC = list(/obj/item/storage/backpack, /obj/item/defibrillator),
-	)
-	// Items whose sprite name matches a vox sprite drawn for a different item, so they keep their normal sprite
-	var/static/list/mismatched_sprites = typecacheof(list(
-		/obj/item/clothing/glasses/godeye,
-		/obj/item/clothing/head/helmet/surplus,
-		/obj/item/clothing/mask/luchador/enzo,
-		/obj/item/clothing/suit/armor/hos_tailcoat,
-		/obj/item/clothing/suit/armor/vest/blueshield/jacket,
-		/obj/item/clothing/suit/armor/vest/secjacket,
-		/obj/item/clothing/under/rank/cargo/qm/nova,
-		/obj/item/clothing/under/rank/cargo/tech/nova,
-		/obj/item/storage/backpack/deforest_medkit,
-	))
-	if(is_type_in_typecache(item, mismatched_sprites))
-		return null
-	if(!is_type_in_list(item, fitted_types[item_slot]))
-		return null
-	// Greyscale jumpsuits and sneakers generate their worn sprite, from a vox shaped config
-	if(item.greyscale_config_worn)
-		var/static/list/fitted_configs = list(
-			/datum/greyscale_config/jumpsuit/worn = /datum/greyscale_config/jumpsuit/worn/vox,
-			/datum/greyscale_config/jumpsuit_prison_worn = /datum/greyscale_config/jumpsuit_prison_worn/vox,
-			/datum/greyscale_config/sneakers/worn = /datum/greyscale_config/sneakers/worn/vox,
-			/datum/greyscale_config/sneakers_orange/worn = /datum/greyscale_config/sneakers_orange/worn/vox,
-		)
-		var/fitted_config = fitted_configs[item.greyscale_config_worn]
-		if(!fitted_config || !item.greyscale_colors)
-			return null
-		return SSgreyscale.GetColoredIconByType(fitted_config, item.greyscale_colors)
-	var/worn_state = item.worn_icon_state || item.icon_state
-	// Helmets have a file of their own. Some hats and helmets were drawn in each other's file, so both get checked.
-	var/list/icon_files = list(custom_worn_icons[item_slot])
-	if(item_slot == LOADOUT_ITEM_HEAD)
-		var/is_helmet = istype(item, /obj/item/clothing/head/helmet) && !istype(item, /obj/item/clothing/head/helmet/space/vox)
-		if(is_helmet)
-			icon_files.Insert(1, 'icons/mob/clothing/species/vox/helmet.dmi')
-		else
-			icon_files += 'icons/mob/clothing/species/vox/helmet.dmi'
-	for(var/icon_file in icon_files)
-		if(icon_exists(icon_file, worn_state))
-			return icon_file
-	return null
+/datum/species/vox/get_survival_box_internals(obj/item/storage/box/survival/box)
+	if(ispath(box.internal_type, /obj/item/tank/internals/emergency_oxygen/engi))
+		return /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi
+	return /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen
+
+/// Breath masks get swapped for ones that fit a beak, other masks (like gas masks) are kept
+/datum/species/vox/get_survival_box_mask(obj/item/storage/box/survival/box)
+	if(ispath(box.mask_type, /obj/item/clothing/mask/breath))
+		return pick(/obj/item/clothing/mask/breath/vox, /obj/item/clothing/mask/breath/vox/respirator)
+	return box.mask_type
 
 /datum/species/vox/get_species_description()
 	return "The Vox are remnants of an ancient race, that originate from arkships. \

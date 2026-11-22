@@ -16,6 +16,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	old_hair = human_holder.hairstyle
 	human_holder.set_hairstyle("Bald", update = TRUE)
+	human_holder.shave_hairlike_features(EXTERNAL_RESTYLE_HAIR)
 	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, PROC_REF(equip_hat))
 	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, PROC_REF(unequip_hat))
 

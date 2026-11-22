@@ -12,4 +12,4 @@
 	return LIMB_STYLE_CLASSIC
 
 /datum/preference/choiced/limb_style/apply_to_human(mob/living/carbon/human/target, value)
-	target.limb_style = value
+	target.dna.features["limb_style"] = value

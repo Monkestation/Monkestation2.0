@@ -166,6 +166,11 @@
 	bodypart_overlay.set_appearance(typed_accessory)
 
 	if(owner) //are we in a person?
+		if(ishuman(owner) && bodypart_overlay.feature_key) // keep their DNA in sync, so the new look survives DNA changes
+			var/mob/living/carbon/human/human_owner = owner
+			human_owner.dna.features[bodypart_overlay.feature_key] = bodypart_overlay.sprite_datum.name
+			if(dna_block)
+				human_owner.dna.update_uf_block(dna_block)
 		owner.update_body_parts()
 	else if(ownerlimb) //are we in a limb?
 		ownerlimb.update_icon_dropped()

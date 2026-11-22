@@ -25,6 +25,7 @@
 	create_storage(storage_type = /datum/storage/pockets/tiny)
 
 /obj/item/clothing/suit/armor/hos_tailcoat
+	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	name = "head of security's tailcoat"
 	desc = "A reinforced tailcoat worn by bunny themed security commanders. Enhanced with a special alloy for some extra protection and style."
 	icon_state = "hos"

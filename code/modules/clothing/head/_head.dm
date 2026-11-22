@@ -1,4 +1,5 @@
 /obj/item/clothing/head
+	species_worn_icons = list(SPECIES_VOX = list(VOX_HEAD_FILE, VOX_HELMET_FILE))
 	abstract_type = /obj/item/clothing/head
 	name = BODY_ZONE_HEAD
 	icon = 'icons/obj/clothing/head/default.dmi'
@@ -76,7 +77,7 @@
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
 
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "helmetblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_fitted_blood_state("helmetblood"))
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 

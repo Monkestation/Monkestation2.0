@@ -137,6 +137,7 @@
 	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
 
 /obj/item/clothing/gloves/color/yellow/vox
+	species_restricted = list(/datum/species/vox)
 	name = "insulated gauntlets"
 	desc = "These bizarre gauntlets seem to be fitted for... bird claws?"
 	icon = 'icons/obj/species/vox/gloves.dmi'

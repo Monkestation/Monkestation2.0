@@ -494,6 +494,7 @@
 
 // Big medical kit that can be worn like a bag, holds a LOT of medical items but slows you down slightly
 /obj/item/storage/backpack/deforest_medkit
+	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	name = "satchel medical kit"
 	desc = "A large orange satchel able to hold just about any piece of small medical equipment you could think of, you can even wear it on your back or belt!"
 	icon = 'monkestation/code/modules/blueshift/icons/deforest/storage.dmi'

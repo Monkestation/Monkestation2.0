@@ -8,8 +8,6 @@
 	var/pod_color = COLOR_VERY_DARK_LIME_GREEN
 	var/wing_color = COLOR_DARK_BROWN
 	var/antennae_color = COLOR_DARK_BROWN
-	var/quill_color = COLOR_DARKER_BROWN
-	var/facial_quill_color = COLOR_DARKER_BROWN
 
 /datum/color_palette/generic_colors/apply_prefs(datum/preferences/incoming)
 	hair_color = incoming.read_preference(/datum/preference/color/hair_color)
@@ -20,6 +18,4 @@
 	pod_color = incoming.read_preference(/datum/preference/color/pod_color)
 	wing_color = incoming.read_preference(/datum/preference/color/wing_color)
 	antennae_color = incoming.read_preference(/datum/preference/color/antennae_color)
-	quill_color = incoming.read_preference(/datum/preference/color/quill_color)
-	facial_quill_color = incoming.read_preference(/datum/preference/color/facial_quill_color)
 

@@ -102,6 +102,7 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 	fishing_modifier = 3
 
 /obj/item/clothing/shoes/magboots/vox
+	species_restricted = list(/datum/species/vox)
 	name = "vox magclaws"
 	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
 	icon = 'icons/obj/species/vox/shoes.dmi'

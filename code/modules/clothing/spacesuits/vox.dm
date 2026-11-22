@@ -11,6 +11,7 @@
 	acid = 85
 
 /obj/item/clothing/suit/space/vox
+	species_restricted = list(/datum/species/vox)
 	icon = 'icons/obj/species/vox/suits.dmi'
 	worn_icon = 'icons/mob/clothing/species/vox/suit.dmi'
 	icon_state = "vox-pressure" // the base type would otherwise use the generic space suit's sprite, which our icon file lacks
@@ -29,6 +30,8 @@
 	slowdown = 2
 
 /obj/item/clothing/head/helmet/space/vox
+	species_restricted = list(/datum/species/vox)
+	species_worn_icons = list(SPECIES_VOX = list(VOX_HEAD_FILE, VOX_HELMET_FILE))
 	icon = 'icons/obj/species/vox/hats.dmi'
 	worn_icon = 'icons/mob/clothing/species/vox/head.dmi'
 	icon_state = "vox-pressure" // the base type would otherwise use the generic space helmet's sprite, which our icon file lacks

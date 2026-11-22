@@ -39,6 +39,7 @@
 		. += span_notice("Alt-click [src] to adjust it.")
 
 /obj/item/clothing/mask/breath/vox
+	species_restricted = list(/datum/species/vox)
 	name = "vox breath mask"
 	desc = "A weirdly-shaped breath mask."
 	icon = 'icons/obj/species/vox/items.dmi'

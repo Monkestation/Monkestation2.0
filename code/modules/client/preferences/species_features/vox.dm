@@ -59,8 +59,8 @@
 	return data
 
 /datum/preference/choiced/vox_skin_tone/apply_to_human(mob/living/carbon/human/target, value)
-	if(isvox(target)) // limb_style is also used by other species with limb styles
-		target.limb_style = value
+	if(isvox(target)) // the limb style feature is also used by other species with limb styles
+		target.dna.features["limb_style"] = value
 
 /datum/preference/choiced/vox_quills
 	savefile_key = "feature_vox_quills"
@@ -79,18 +79,11 @@
 /datum/preference/choiced/vox_quills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_quills"] = value
 
+/// Quills take the hair color, see /datum/species/vox/get_features()
 /datum/preference/choiced/vox_quills/compile_constant_data()
 	var/list/data = ..()
-	data[SUPPLEMENTAL_FEATURE_KEY] = list("quill_color")
+	data[SUPPLEMENTAL_FEATURE_KEY] = list("hair_color")
 	return data
-
-/datum/preference/color/quill_color
-	savefile_key = "quill_color"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-
-/datum/preference/color/quill_color/create_default_value()
-	return COLOR_DARKER_BROWN
 
 /datum/preference/choiced/vox_facial_quills
 	savefile_key = "feature_vox_facial_quills"
@@ -112,24 +105,18 @@
 /datum/preference/choiced/vox_facial_quills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_facial_quills"] = value
 
+/// Facial quills take the facial hair color
 /datum/preference/choiced/vox_facial_quills/compile_constant_data()
 	var/list/data = ..()
-	data[SUPPLEMENTAL_FEATURE_KEY] = list("facial_quill_color")
+	data[SUPPLEMENTAL_FEATURE_KEY] = list("facial_hair_color")
 	return data
-
-/datum/preference/color/facial_quill_color
-	savefile_key = "facial_quill_color"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-
-/datum/preference/color/facial_quill_color/create_default_value()
-	return COLOR_DARKER_BROWN
 
 /// Colored by the mutant color
 /datum/preference/choiced/vox_body_markings
 	savefile_key = "feature_vox_body_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	main_feature_name = "Body Markings"
 	relevant_external_organ = /obj/item/organ/external/tail/vox
 
 /datum/preference/choiced/vox_body_markings/init_possible_values()
@@ -146,6 +133,7 @@
 	savefile_key = "feature_vox_tail_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	main_feature_name = "Tail Markings"
 	relevant_external_organ = /obj/item/organ/external/tail/vox
 
 /datum/preference/choiced/vox_tail_markings/init_possible_values()
@@ -188,3 +176,20 @@
 
 /datum/preference/choiced/vox_mask/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_mask"] = value
+
+// Underwear that only lists what has a vox fitted sprite, see is_underwear_preference_accessible()
+
+/datum/preference/choiced/underwear/vox
+	savefile_key = "feature_vox_underwear"
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	fitted_species = /datum/species/vox
+
+/datum/preference/choiced/undershirt/vox
+	savefile_key = "feature_vox_undershirt"
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	fitted_species = /datum/species/vox
+
+/datum/preference/choiced/socks/vox
+	savefile_key = "feature_vox_socks"
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	fitted_species = /datum/species/vox

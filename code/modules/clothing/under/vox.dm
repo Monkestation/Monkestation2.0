@@ -1,4 +1,5 @@
 /obj/item/clothing/under/vox
+	species_restricted = list(/datum/species/vox)
 	icon = 'icons/obj/species/vox/uniforms.dmi'
 	worn_icon = 'icons/mob/clothing/species/vox/uniform.dmi'
 	inhand_icon_state = null

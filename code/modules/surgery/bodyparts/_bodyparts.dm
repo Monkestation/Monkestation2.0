@@ -226,7 +226,7 @@
 	///this is our color palette we pull colors from
 	var/datum/color_palette/palette
 	var/palette_key
-	///Icons used instead of icon_static for the owner's limb style (see /mob/living/carbon/human/var/limb_style), limb style -> icon
+	///Icons used instead of icon_static for the owner's limb style (their "limb_style" DNA feature), limb style -> icon
 	var/list/style_icons
 
 	///limb flags for the specific limb
@@ -1026,10 +1026,11 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
+	var/owner_limb_style = human_owner.dna.features["limb_style"]
 	if (HAS_TRAIT(human_owner, TRAIT_GREYSCALE_TOGGLE))
-		should_draw_greyscale = (human_owner.limb_style == LIMB_STYLE_MUTANT_COLORS)
+		should_draw_greyscale = (owner_limb_style == LIMB_STYLE_MUTANT_COLORS)
 	if(style_icons)
-		var/style_icon = style_icons[human_owner.limb_style]
+		var/style_icon = style_icons[owner_limb_style]
 		if(style_icon)
 			icon_static = style_icon
 		else if(get_drawn_limb_style())
@@ -1059,6 +1060,10 @@
 
 	recolor_external_organs()
 	return TRUE
+
+/// Returns the verb for one unarmed attack with this limb. Override to pick from several.
+/obj/item/bodypart/proc/get_unarmed_attack_verb()
+	return unarmed_attack_verb
 
 /// Returns the limb style from style_icons this limb is drawn with right now, or null if it uses its normal icon
 /obj/item/bodypart/proc/get_drawn_limb_style()

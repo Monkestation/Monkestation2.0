@@ -143,9 +143,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!head || (head.head_flags & head_flag))
 		return FALSE
-	if(!head.has_restylable_features(EXTERNAL_RESTYLE_HAIR))
+	var/facial = (head_flag == HEAD_FACIAL_HAIR)
+	var/restyle_flag = facial ? EXTERNAL_RESTYLE_FACIAL_HAIR : EXTERNAL_RESTYLE_HAIR
+	if(!head.has_restylable_features(restyle_flag))
 		return FALSE
-	head.attempt_feature_restyle(src, user, user, BODY_ZONE_HEAD, EXTERNAL_RESTYLE_HAIR, 0)
+	if(HAS_TRAIT(user, facial ? TRAIT_SHAVED : TRAIT_BALD))
+		to_chat(user, span_notice("If only growing it back were that easy for you... The reminder makes you feel terrible."))
+		user.add_mood_event("bald_hair_day", /datum/mood_event/bald_reminder)
+		return TRUE
+	head.attempt_feature_restyle(src, user, user, BODY_ZONE_HEAD, restyle_flag, 0)
 	return TRUE
 
 /obj/structure/mirror/proc/change_name(mob/living/carbon/human/user)
@@ -182,13 +188,39 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
 				race_changer.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 				race_changer.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
+				var/datum/color_palette/generic_colors/palette = race_changer.dna.color_palettes[/datum/color_palette/generic_colors]
+				palette?.mutant_color = sanitize_hexcolor(new_mutantcolor)
 
 			else
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE
 
-	race_changer.update_body(is_creating = TRUE)
+		if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS_SECONDARY))
+			var/datum/color_palette/generic_colors/palette = race_changer.dna.color_palettes[/datum/color_palette/generic_colors]
+			var/new_secondary_color = tgui_color_picker(race_changer, "Choose your secondary color:", "Race change", palette?.mutant_color_secondary)
+			if(new_secondary_color && palette)
+				palette.mutant_color_secondary = sanitize_hexcolor(new_secondary_color)
+
+	choose_species_features(race_changer)
+	race_changer.updateappearance(mutcolor_update = TRUE)
 	race_changer.update_mutations_overlay() // no hulk lizard
+
+/**
+ * Lets someone pick the secondary features of their species, like markings or a skin tone,
+ * with the same choices as in the character preferences.
+ */
+/obj/structure/mirror/proc/choose_species_features(mob/living/carbon/human/race_changer)
+	var/list/species_features = race_changer.dna.species.get_features()
+	for(var/datum/preference/choiced/preference in get_preferences_in_priority_order())
+		if(preference.savefile_identifier != PREFERENCE_CHARACTER || preference.category != PREFERENCE_CATEGORY_SECONDARY_FEATURES)
+			continue
+		if(!(preference.savefile_key in species_features))
+			continue
+		var/feature_name = preference.main_feature_name || replacetext(replacetext(preference.savefile_key, "feature_", ""), "_", " ")
+		var/new_value = tgui_input_list(race_changer, "Choose your [LOWER_TEXT(feature_name)]", "Race change", preference.get_choices())
+		if(!isnull(new_value))
+			preference.apply_to_human(race_changer, new_value)
+	race_changer.dna.update_dna_identity()
 
 // possible Genders: MALE, FEMALE, PLURAL, NEUTER
 // possible Physique: MALE, FEMALE

@@ -275,6 +275,24 @@
 		update_body_parts()
 
 /**
+ * Shaves off the hair-like features of our head with these restyle flags (like vox quills), turning them to "None".
+ * Returns TRUE if anything was shaved.
+ */
+/mob/living/carbon/human/proc/shave_hairlike_features(restyle_flags)
+	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+	if(!head)
+		return FALSE
+	. = FALSE
+	for(var/obj/item/organ/external/feature in head)
+		if(!(feature.restyle_flags & restyle_flags))
+			continue
+		var/datum/sprite_accessory/shaved = feature.bodypart_overlay.get_global_feature_list()[SPRITE_ACCESSORY_NONE]
+		if(!shaved || feature.bodypart_overlay.sprite_datum == shaved)
+			continue
+		feature.simple_change_sprite(shaved.type)
+		. = TRUE
+
+/**
  * Set the hair gradient style of a human.
  * Update calls update_body_parts().
  **/

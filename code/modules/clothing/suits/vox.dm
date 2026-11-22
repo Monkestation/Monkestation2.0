@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/hooded/vox_robes
+	species_restricted = list(/datum/species/vox)
 	name = "alien hooded robes"
 	desc = "Large, comfortable robes worn by those who need a bit more covering. The thick fabric contains a pocket suitable for those that need their hands free during their work, while the cloth serves to cover scars or other injuries to the wearer's body."
 	icon = 'icons/mob/clothing/species/vox/suit.dmi'
@@ -28,6 +29,7 @@
 	wound = 15
 
 /obj/item/clothing/suit/armor/vox_scrap
+	species_restricted = list(/datum/species/vox)
 	name = "rusted metal armor"
 	desc = "A hodgepodge of various pieces of metal scrapped together into a rudimentary vox-shaped piece of armor."
 	icon = 'icons/obj/species/vox/suits.dmi'

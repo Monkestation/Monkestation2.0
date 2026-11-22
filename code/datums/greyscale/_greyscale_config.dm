@@ -11,6 +11,9 @@
 	/// Reference to the dmi file for this config
 	var/icon_file
 
+	/// Worn configs fitted to the shape of other species' limbs: species id -> config typepath. See /obj/item/var/species_worn_icons
+	var/list/species_configs
+
 	/// An optional var to set that tells the material system what material this configuration is for.
 	/// Use a typepath here, not an instance.
 	var/datum/material/material_skin

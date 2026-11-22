@@ -122,8 +122,6 @@
 	var/list/alternative_laughs
 	///stored list of alternate deathgasps
 	var/list/alternative_deathgasps
-	///Which look our limbs use, picked from their style_icons. See the LIMB_STYLE defines, and GLOB.vox_skin_tones for vox
-	var/limb_style = LIMB_STYLE_CLASSIC
 
 	///Boolean on whether symptoms for the mob has been created.
 	var/created_symptoms = FALSE

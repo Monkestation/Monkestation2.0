@@ -32,6 +32,21 @@ GLOBAL_LIST_EMPTY(vox_quills_list)
 GLOBAL_LIST_EMPTY(vox_facial_quills_list)
 GLOBAL_LIST_EMPTY(vox_tail_markings_list)
 GLOBAL_LIST_EMPTY(vox_body_markings_list)
+/// Every limb style, for the DNA block that stores them. See the LIMB_STYLE defines
+GLOBAL_LIST_INIT(limb_styles, list(
+	LIMB_STYLE_CLASSIC,
+	LIMB_STYLE_MUTANT_COLORS,
+	LIMB_STYLE_TUNDRA,
+	"azure",
+	"brown",
+	"crimson",
+	"emerald",
+	"grey",
+	VOX_DEFAULT_SKIN_TONE,
+	"mossy",
+	"nebula",
+	"plum",
+))
 /// Vox skin tones, the limb styles vox limbs are drawn in: skin tone -> bodypart icon file
 GLOBAL_LIST_INIT(vox_skin_tones, list(
 	"azure" = 'icons/mob/human/species/vox/bodyparts_azure.dmi',

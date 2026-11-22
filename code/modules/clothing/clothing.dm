@@ -7,6 +7,8 @@
 	max_integrity = 200
 	integrity_failure = 0.4
 	var/damaged_clothes = CLOTHING_PRISTINE //similar to machine's BROKEN stat and structure's broken var
+	/// If set, only these species (and their subtypes) can wear this, like gear shaped for another body
+	var/list/species_restricted
 
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
@@ -685,6 +687,22 @@ BLIND     // can't see anything
 /obj/item/clothing/remove_fantasy_bonuses(bonus)
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
+
+/obj/item/clothing/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+	if(!species_restricted || !(slot & slot_flags) || !ishuman(M))
+		return ..()
+	var/mob/living/carbon/human/wearer = M
+	if(!is_type_in_list(wearer.dna.species, species_restricted))
+		if(!disable_warning)
+			to_chat(wearer, span_warning("[src] is shaped for someone else, it won't fit you."))
+		return FALSE
+	return ..()
+
+/// Returns the blood.dmi icon state for our blood overlay: the version fitted to the shape we're drawn in if there is one, see species_fitted
+/obj/item/clothing/proc/get_fitted_blood_state(blood_state)
+	if(species_fitted && icon_exists('icons/effects/blood.dmi', "[blood_state]_[species_fitted]"))
+		return "[blood_state]_[species_fitted]"
+	return blood_state
 
 /// Returns a list of overlays with our blood, if we're bloodied
 /obj/item/clothing/proc/get_blood_overlay(blood_state, bodyshape = NONE)

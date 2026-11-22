@@ -9,3 +9,6 @@
 	icon = 'icons/obj/species/vox/language.dmi'
 	icon_state = "voxpidgin"
 	default_priority = 90
+	speech_verb = "shrieks"
+	ask_verb = "creels"
+	exclaim_verb = "loudly skrees"

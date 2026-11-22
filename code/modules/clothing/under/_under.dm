@@ -1,4 +1,5 @@
 /obj/item/clothing/under
+	species_worn_icons = list(SPECIES_VOX = VOX_UNIFORM_FILE)
 	abstract_type = /obj/item/clothing/under
 	name = "under"
 	icon = 'icons/obj/clothing/under/default.dmi'
@@ -109,7 +110,7 @@
 	if(accessory_overlay)
 		. += accessory_overlay
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_fitted_blood_state("uniformblood"))
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 

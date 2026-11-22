@@ -238,6 +238,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/maxhealthmod = 1
 	///Path to BODYSHAPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
 	var/list/custom_worn_icons = list()
+	/// Extra messages for bare-handed suicides in combat mode. %SUICIDER% is replaced with the human, %THEIR% with their possessive pronoun.
+	var/list/suicide_messages
 	///our color palette
 	var/datum/color_palette/color_palette
 
@@ -712,7 +714,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				var/underwear_icon = get_custom_underwear_icon(species_human, LOADOUT_ITEM_UNDERWEAR, underwear)
+				var/underwear_icon = species_human.get_underwear_icon(underwear, LOADOUT_ITEM_UNIFORM)
 				if(underwear_icon == underwear.icon && species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
 					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
@@ -725,7 +727,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
 				var/mutable_appearance/working_shirt
-				var/undershirt_icon = get_custom_underwear_icon(species_human, LOADOUT_ITEM_UNDERSHIRT, undershirt)
+				var/undershirt_icon = species_human.get_underwear_icon(undershirt, LOADOUT_ITEM_UNIFORM)
 				if(undershirt_icon == undershirt.icon && species_human.dna.species.sexes && species_human.physique == FEMALE)
 					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon, undershirt.icon), layer = -BODY_LAYER)
 				else
@@ -737,7 +739,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			//MONKESTATION EDITS FOR COLOURABLE SOCKS
 			var/mutable_appearance/socks_overlay
 			if(socks)
-				var/socks_icon = get_custom_underwear_icon(species_human, LOADOUT_ITEM_SOCKS, socks)
+				var/socks_icon = species_human.get_underwear_icon(socks, LOADOUT_ITEM_SHOES)
 				if(socks_icon == socks.icon && species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
 					socks_overlay = mutable_appearance(wear_female_version(socks.icon_state, socks.icon, socks.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
@@ -1156,6 +1158,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	target.set_facial_hairstyle("Shaved", update = FALSE)
 	target.set_hairstyle("Bald", update = FALSE)
+	target.shave_hairlike_features(EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR)
 	target.update_body_parts()
 
 //////////////////

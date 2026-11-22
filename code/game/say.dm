@@ -138,12 +138,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		. = verb_sing
 	else if(message_mods[WHISPER_MODE])
 		. = verb_whisper
-	else if(ending == "?")
-		return verb_ask
-	else if(ending == "!")
-		return verb_exclaim
 	else
-		return verb_say
+		var/datum/language/spoken_language = GLOB.language_datum_instances[message_mods[LANGUAGE_EXTENSION]]
+		if(ending == "?")
+			return spoken_language?.ask_verb || verb_ask
+		else if(ending == "!")
+			return spoken_language?.exclaim_verb || verb_exclaim
+		else
+			return spoken_language?.speech_verb || verb_say
 
 /atom/movable/proc/say_quote(input, list/spans=list(speech_span), list/message_mods = list())
 	if(!input)

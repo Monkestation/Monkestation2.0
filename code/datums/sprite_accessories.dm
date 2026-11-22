@@ -51,6 +51,8 @@
 	return L
 
 /datum/sprite_accessory
+	/// Sprites fitted to the shape of other species' limbs, for accessories worn by everyone like underwear: species id -> icon file
+	var/list/species_worn_icons
 	/// The icon file the accessory is located in.
 	var/icon
 	/// The icon_state of the accessory.
@@ -1991,6 +1993,7 @@
 ///////////////////////////
 
 /datum/sprite_accessory/underwear
+	species_worn_icons = list(SPECIES_VOX = VOX_UNDERWEAR_FILE)
 	icon = 'icons/mob/clothing/underwear.dmi'
 	use_static = FALSE
 	em_block = TRUE
@@ -2168,6 +2171,7 @@
 ////////////////////////////
 
 /datum/sprite_accessory/undershirt
+	species_worn_icons = list(SPECIES_VOX = VOX_UNDERSHIRT_FILE)
 	icon = 'icons/mob/clothing/underwear.dmi'
 	em_block = TRUE
 
@@ -2478,6 +2482,7 @@
 ///////////////////////
 
 /datum/sprite_accessory/socks
+	species_worn_icons = list(SPECIES_VOX = VOX_SOCKS_FILE)
 	icon = 'icons/mob/clothing/underwear.dmi'
 	em_block = TRUE
 

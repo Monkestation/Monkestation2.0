@@ -10,6 +10,7 @@
  */
 
 /obj/item/storage/backpack
+	species_worn_icons = list(SPECIES_VOX = VOX_BACK_FILE)
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
 	icon = 'icons/obj/storage/backpack.dmi'

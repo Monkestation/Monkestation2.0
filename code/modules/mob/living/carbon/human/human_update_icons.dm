@@ -182,6 +182,48 @@ There are several things that need to be remembered:
 	apply_overlay(ID_LAYER)
 
 
+/**
+ * Returns the limb ids whose shape decides how clothing in the given slot fits, in order of priority.
+ * Clothing with sprites fitted to one of these (/obj/item/var/species_worn_icons) uses them.
+ * Uniforms and suits only fit legs of one shape, or else the chest.
+ */
+/mob/living/carbon/human/proc/get_fitting_limb_ids(item_slot)
+	. = list()
+	var/obj/item/bodypart/left_leg = get_bodypart(BODY_ZONE_L_LEG)
+	var/obj/item/bodypart/right_leg = get_bodypart(BODY_ZONE_R_LEG)
+	var/legs_id = (left_leg && left_leg.limb_id == right_leg?.limb_id) ? left_leg.limb_id : null
+	switch(item_slot)
+		if(LOADOUT_ITEM_UNIFORM, LOADOUT_ITEM_SUIT)
+			if(legs_id)
+				. += legs_id
+			var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+			if(chest)
+				. |= chest.limb_id
+		if(LOADOUT_ITEM_SHOES)
+			if(legs_id)
+				. += legs_id
+		if(LOADOUT_ITEM_GLOVES)
+			var/obj/item/bodypart/left_arm = get_bodypart(BODY_ZONE_L_ARM)
+			var/obj/item/bodypart/right_arm = get_bodypart(BODY_ZONE_R_ARM)
+			if(left_arm && left_arm.limb_id == right_arm?.limb_id)
+				. += left_arm.limb_id
+		if(LOADOUT_ITEM_HEAD, LOADOUT_ITEM_MASK, LOADOUT_ITEM_GLASSES, LOADOUT_ITEM_EARS)
+			var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+			if(head)
+				. += head.limb_id
+		if(LOADOUT_ITEM_MISC) // the back slot
+			var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+			if(chest)
+				. += chest.limb_id
+
+/// Returns the icon file an underwear, undershirt or socks sprite accessory is drawn from: its fitted version for our limbs if it has one
+/mob/living/carbon/human/proc/get_underwear_icon(datum/sprite_accessory/accessory, item_slot)
+	for(var/limb_id in get_fitting_limb_ids(item_slot))
+		var/fitted_icon = accessory.species_worn_icons?[limb_id]
+		if(fitted_icon && icon_exists(fitted_icon, accessory.icon_state))
+			return fitted_icon
+	return accessory.icon
+
 /// Returns the blood.dmi icon state for a bloody bare hand. Arms of a different shape can have their own, like vox claws.
 /mob/living/carbon/human/proc/get_bloody_hand_state(arm_zone, side)
 	var/obj/item/bodypart/arm = get_bodypart(arm_zone)

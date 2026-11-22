@@ -64,6 +64,9 @@
 	style_icons = GLOB.vox_skin_tones
 	add_bodypart_overlay(new /datum/bodypart_overlay/simple/vox_body_markings())
 
+/obj/item/bodypart/arm/left/vox/get_unarmed_attack_verb()
+	return pick("scratch", "claw")
+
 /obj/item/bodypart/arm/right/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'
 	icon_husk = 'icons/mob/human/species/vox/husk.dmi'
@@ -81,6 +84,9 @@
 	. = ..()
 	style_icons = GLOB.vox_skin_tones
 	add_bodypart_overlay(new /datum/bodypart_overlay/simple/vox_body_markings())
+
+/obj/item/bodypart/arm/right/vox/get_unarmed_attack_verb()
+	return pick("scratch", "claw")
 
 /obj/item/bodypart/leg/left/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'

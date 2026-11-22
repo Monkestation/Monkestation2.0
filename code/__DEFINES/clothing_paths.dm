@@ -14,10 +14,20 @@
 #define LOADOUT_ITEM_TOYS "toys"
 #define LOADOUT_ITEM_PLUSHIES "plushies"
 
-// Keys for the underwear sprites of /datum/species/var/custom_worn_icons
-#define LOADOUT_ITEM_UNDERWEAR "underwear"
-#define LOADOUT_ITEM_UNDERSHIRT "undershirt"
-#define LOADOUT_ITEM_SOCKS "socks"
+// Vox fitted sprites, see /obj/item/var/species_worn_icons
+#define VOX_UNIFORM_FILE 'icons/mob/clothing/species/vox/uniform.dmi'
+#define VOX_SUIT_FILE 'icons/mob/clothing/species/vox/suit.dmi'
+#define VOX_SHOES_FILE 'icons/mob/clothing/species/vox/shoes.dmi'
+#define VOX_GLOVES_FILE 'icons/mob/clothing/species/vox/gloves.dmi'
+#define VOX_HEAD_FILE 'icons/mob/clothing/species/vox/head.dmi'
+#define VOX_HELMET_FILE 'icons/mob/clothing/species/vox/helmet.dmi'
+#define VOX_MASK_FILE 'icons/mob/clothing/species/vox/mask.dmi'
+#define VOX_EYES_FILE 'icons/mob/clothing/species/vox/eyes.dmi'
+#define VOX_EARS_FILE 'icons/mob/clothing/species/vox/ears.dmi'
+#define VOX_BACK_FILE 'icons/mob/clothing/species/vox/back.dmi'
+#define VOX_UNDERWEAR_FILE 'icons/mob/clothing/species/vox/underwear.dmi'
+#define VOX_UNDERSHIRT_FILE 'icons/mob/clothing/species/vox/undershirt.dmi'
+#define VOX_SOCKS_FILE 'icons/mob/clothing/species/vox/socks.dmi'
 
 #define INFO_GREYSCALE "greyscale"
 #define INFO_NAMED "name"

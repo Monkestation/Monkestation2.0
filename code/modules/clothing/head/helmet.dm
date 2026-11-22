@@ -1,4 +1,5 @@
 /obj/item/clothing/head/helmet
+	species_worn_icons = list(SPECIES_VOX = list(VOX_HELMET_FILE, VOX_HEAD_FILE))
 	name = "helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
@@ -195,6 +196,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/surplus
+	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	name = "surplus helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon = 'icons/obj/clothing/hats.dmi'

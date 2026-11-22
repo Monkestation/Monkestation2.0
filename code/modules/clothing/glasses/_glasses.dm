@@ -1,5 +1,6 @@
 //Glasses
 /obj/item/clothing/glasses
+	species_worn_icons = list(SPECIES_VOX = VOX_EYES_FILE)
 	abstract_type = /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
