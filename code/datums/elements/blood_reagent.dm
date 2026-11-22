@@ -233,7 +233,7 @@
 	if(!source.holder)
 		return
 	var/datum/mind/potential_ling_mind = source.data["mind"]
-	if(!potential_ling_mind.has_antag_datum(/datum/antagonist/changeling))
+	if(!potential_ling_mind?.has_antag_datum(/datum/antagonist/changeling))
 		return
 	if(new_holder_temperature < CHANGELING_BLOOD_BOIL_TEMP)
 		return
