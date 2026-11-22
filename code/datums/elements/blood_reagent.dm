@@ -1,3 +1,5 @@
+/// Temperature at which changeling blood will react to heat and boil out of it's container. Measured in kelvin.
+#define CHANGELING_BLOOD_BOIL_TEMP 395
 /// Element that blood reagents use to apply their data (not blood regen!) to mobs
 /// Only added to blood drawn *from* someone, so don't put behavior that should work with any reagent onto this
 /datum/element/blood_reagent
@@ -5,7 +7,6 @@
 	argument_hash_start_idx = 3
 	/// Blood type associated with this element
 	var/datum/blood_type/blood_type
-	var/is_changeling_blood = FALSE
 
 /*
  * Arguments:
@@ -35,9 +36,6 @@
 
 	if(!blood_source)
 		return
-
-	if(blood_source?.mind?.has_antag_datum(/datum/antagonist/changeling))
-		is_changeling_blood = TRUE
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])
@@ -234,9 +232,10 @@
 	SIGNAL_HANDLER
 	if(!source.holder)
 		return
-	if(!is_changeling_blood)
+	var/datum/mind/potential_ling_mind = source.data["mind"]
+	if(!potential_ling_mind.has_antag_datum(/datum/antagonist/changeling))
 		return
-	if(new_holder_temperature < 395)
+	if(new_holder_temperature < CHANGELING_BLOOD_BOIL_TEMP)
 		return
 	if(!source.holder.my_atom)
 		return
@@ -245,3 +244,5 @@
 	playsound(screamer, 'sound/effects/chemistry/changeling_blood_scream.ogg', 75, TRUE) // scream cuz it hurts
 	on_turf_expose(source, get_turf(screamer), source.volume) // splatter the floor because it jumped out
 	source.holder.del_reagent(source.type)
+
+#undef CHANGELING_BLOOD_BOIL_TEMP
