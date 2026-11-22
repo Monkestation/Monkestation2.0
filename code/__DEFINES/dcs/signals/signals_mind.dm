@@ -18,3 +18,6 @@
 
 // Sent when a mob with a mind enters cryo storage: (mob/living/body)
 #define COMSIG_MIND_CRYOED "mind_cryoed"
+
+/// Sent to the mind when its ghost uses Do Not Resuscitate
+#define COMSIG_MIND_DNR "mind_dnr"

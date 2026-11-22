@@ -33,7 +33,10 @@
 		var/datum/component/can_flash_from_behind/flash_handler = user.GetComponent(/datum/component/can_flash_from_behind)
 		if(REF(blood_bond) in flash_handler?.sources)
 			. += span_boldnotice("In order to convert someone into your blood brother, you must <i>directly flash them</i>, not AoE flash!")
-			. += span_warning("Conversion will fail if the target is either dead, unconscious, SSD, mindshielded, someone else's brother or if they are targeted by your objectives.")
+			. += span_warning("Conversion will fail if the target is either dead, unconscious, SSD, mindshielded (unless compromised, see below), someone else's brother or if they are targeted by your objectives.")
+			. += span_notice("A mindshield can be compromised if the target is restrained without any eye protection, like sunglasses or modsuit helmets. Flash them, then hold still for 15 seconds. This destroys their mindshield implant.")
+			var/conversions_left = blood_bond.get_conversions_left()
+			. += span_notice("You have <b>[conversions_left]</b> conversion charge[conversions_left == 1 ? "" : "s"] left.")
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
@@ -184,6 +187,8 @@
 
 	if(CAN_BYPASS_INNATE_FLASH_RESISTANCE(user)) // MONKESTATION EDIT: Make IPCs not resistant to bb and rev conversions.
 		ADD_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC)
+	if(IS_BROTHER(user)) // Brothers also ignore eye protection from the eyes, see get_eye_protection()
+		ADD_TRAIT(flashed, TRAIT_BROTHER_CONVERSION_FLASHED, TRAIT_GENERIC)
 
 	if(targeted)
 		if(!flashed.has_status_effect(/datum/status_effect/currently_flashed) && flashed.flash_act(1, 1))
@@ -200,17 +205,24 @@
 				flashed.Disorient(SHOVE_SLOWDOWN_LENGTH)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 		else if(user)
+			remove_conversion_flash_traits(flashed)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
 			return FALSE
 		else
+			remove_conversion_flash_traits(flashed)
 			to_chat(flashed, span_danger("[src] fails to blind you!"))
 			return FALSE
 	else
 		if(flashed.flash_act())
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 
-	REMOVE_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC) // MONKESTATION EDIT: Make IPCs not resistant to bb and rev conversions.
+	remove_conversion_flash_traits(flashed)
 	return TRUE
+
+/// Removes the conversion flash traits. Must run on every exit from flash_carbon()
+/obj/item/assembly/flash/proc/remove_conversion_flash_traits(mob/living/carbon/flashed)
+	REMOVE_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC) // MONKESTATION EDIT: Make IPCs not resistant to bb and rev conversions.
+	REMOVE_TRAIT(flashed, TRAIT_BROTHER_CONVERSION_FLASHED, TRAIT_GENERIC)
 
 /**
  * Handles the directionality of the attack

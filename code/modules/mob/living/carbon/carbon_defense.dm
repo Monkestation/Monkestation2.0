@@ -7,7 +7,13 @@
 	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		if(!HAS_TRAIT(src, TRAIT_CONVERSION_FLASHED) || !(eyes.organ_flags & ORGAN_DOESNT_PROTECT_AGAINST_CONVERSION)) // MONKESTATION EDIT: Make IPCs not immune to rev and bb conversions.
-			. += eyes.flash_protect
+			// Could just edit the welding shield eyes, but I only want to affect blood brothers, so they get their own check
+			// that gets past ALL eyes that protect against flashes (cybernetic welding shield eyes, a changeling's augmented eyesight toggled off, mutations, etc.).
+			// Eyes that make you more vulnerable to flashes still count, only the protection is ignored.
+			if(HAS_TRAIT(src, TRAIT_BROTHER_CONVERSION_FLASHED))
+				. += min(eyes.flash_protect, FLASH_PROTECTION_NONE)
+			else
+				. += eyes.flash_protect
 	else
 		return INFINITY //Can't get flashed without eyes
 	if(isclothing(head)) //Adds head protection
