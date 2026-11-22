@@ -413,7 +413,7 @@
 	add_overlay("datadisk_gene")
 
 /obj/item/disk/clonearmy/attack_self(mob/user)
-	var/targName = tgui_input_text(user, "Enter a directive for the evil clones.", "Clone Directive Entry", objective, CONFIG_GET(number/max_law_len), TRUE)
+	var/targName = tgui_input_text(user, "Enter a directive for the evil clones.", "Clone Directive Entry", html_decode(objective), CONFIG_GET(number/max_law_len), TRUE)
 	if(!targName)
 		return
 	if(is_ic_filtered(targName))
@@ -423,7 +423,7 @@
 	if(soft_filter_result)
 		if(tgui_alert(user,"Your directive contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return
-		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for a clone directive. Directive: \"[html_encode(targName)]\"")
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for a clone directive. Directive: \"[targName]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for a clone directive. Directive: \"[targName]\"")
 	objective = targName
 	..()

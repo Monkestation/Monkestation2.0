@@ -87,10 +87,10 @@
 /obj/machinery/electroplater/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_WRENCH && !plating)
 		default_unfasten_wrench(user,weapon,40)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(weapon.tool_behaviour == TOOL_CROWBAR && !plating && !anchored)
 		default_deconstruction_crowbar(weapon,1,FALSE)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return ..()
 

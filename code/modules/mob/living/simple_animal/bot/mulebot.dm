@@ -340,7 +340,7 @@
 		if("setid")
 			var/new_id
 			if(pda)
-				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
+				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN, encode = FALSE)
 			else
 				new_id = params["value"]
 			if(new_id)
@@ -461,10 +461,10 @@
 	unbuckle_all_mobs()
 
 	if(load) //don't have to do any of this for mobs.
-		load.forceMove(loc)
-		load.pixel_y = initial(load.pixel_y)
-		load.layer = initial(load.layer)
-		SET_PLANE_EXPLICIT(load, initial(load.plane), src)
+		cached_load.forceMove(loc)
+		cached_load.pixel_y = initial(cached_load.pixel_y)
+		cached_load.layer = initial(cached_load.layer)
+		SET_PLANE_EXPLICIT(cached_load, initial(cached_load.plane), src)
 		load = null
 
 	if(dirn) //move the thing to the delivery point.
@@ -479,7 +479,7 @@
 	else
 		. += text("No Cell Inserted!")
 	if(load)
-		. += "Current Load: [get_load_name()]"
+		. += "Current Load: [html_decode(get_load_name())]"
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()

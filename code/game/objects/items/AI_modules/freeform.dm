@@ -8,7 +8,7 @@
 	laws = list("")
 
 /obj/item/ai_module/core/freeformcore/attack_self(mob/user)
-	var/targName = tgui_input_text(user, "Enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
+	var/targName = tgui_input_text(user, "Enter a new core law for the AI.", "Freeform Law Entry", html_decode(laws[1]), CONFIG_GET(number/max_law_len), TRUE)
 	if(!targName)
 		return
 	if(is_ic_filtered(targName))
@@ -18,7 +18,7 @@
 	if(soft_filter_result)
 		if(tgui_alert(user,"Your law contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return
-		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
 	..()
@@ -37,7 +37,7 @@
 	if(!newpos || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	lawpos = newpos
-	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
+	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", html_decode(laws[1]), CONFIG_GET(number/max_law_len), TRUE)
 	if(!targName)
 		return
 	if(is_ic_filtered(targName))
@@ -47,7 +47,7 @@
 	if(soft_filter_result)
 		if(tgui_alert(user,"Your law contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return
-		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
 	..()

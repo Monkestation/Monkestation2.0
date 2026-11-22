@@ -956,6 +956,9 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
 
+	if(!length(held_items))
+		return FALSE
+
 	if(!isnum(held_index))
 		stack_trace("You passed [held_index] into swap_hand instead of a number. WTF man")
 		return FALSE

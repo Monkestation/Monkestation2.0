@@ -252,7 +252,9 @@
 			if(backup)
 				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 				var/datum/component/nanites/nanites = backup.nanites
-				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
+				var/datum/nanite_program/P = LAZYACCESS(nanites.programs, text2num(params["program_id"]))
+				if(!P)
+					return TRUE
 				investigate_log("[key_name(usr)] deleted program [P.name] from cloud #[current_view]", INVESTIGATE_NANITES)
 				nanites.programs -= P
 				qdel(P)
@@ -266,7 +268,9 @@
 				if(backup)
 					playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, 0)
 					var/datum/component/nanites/nanites = backup.nanites
-					var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
+					var/datum/nanite_program/P = LAZYACCESS(nanites.programs, text2num(params["program_id"]))
+					if(!P)
+						return TRUE
 					var/datum/nanite_rule/rule = rule_template.make_rule(P)
 					if(rule)
 						investigate_log("[key_name(usr)] added rule [rule.display()] to program [P.name] in cloud #[current_view]", INVESTIGATE_NANITES)
@@ -276,8 +280,10 @@
 			if(backup)
 				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, 0)
 				var/datum/component/nanites/nanites = backup.nanites
-				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
-				var/datum/nanite_rule/rule = P.rules[text2num(params["rule_id"])]
+				var/datum/nanite_program/P = LAZYACCESS(nanites.programs, text2num(params["program_id"]))
+				if(!P)
+					return TRUE
+				var/datum/nanite_rule/rule = LAZYACCESS(P.rules, text2num(params["rule_id"]))
 				if(rule)
 					investigate_log("[key_name(usr)] removed rule [rule.display()] from program [P.name] in cloud #[current_view]", INVESTIGATE_NANITES)
 					rule.remove()
@@ -287,7 +293,9 @@
 			if(backup)
 				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 				var/datum/component/nanites/nanites = backup.nanites
-				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
+				var/datum/nanite_program/P = LAZYACCESS(nanites.programs, text2num(params["program_id"]))
+				if(!P)
+					return TRUE
 				P.all_rules_required = !P.all_rules_required
 				investigate_log("[key_name(usr)] edited rule logic for program [P.name] into [P.all_rules_required ? "All" : "Any"] in cloud #[current_view]", INVESTIGATE_NANITES)
 				. = TRUE

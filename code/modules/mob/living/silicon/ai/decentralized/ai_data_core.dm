@@ -1,5 +1,6 @@
 ///Assoc list of ["z_level"] = list(cores)
 GLOBAL_LIST_EMPTY(data_cores)
+#define MAX_AIS_PER_CORE 2
 
 /obj/machinery/ai/data_core
 	name = "AI data core"
@@ -13,6 +14,11 @@ GLOBAL_LIST_EMPTY(data_cores)
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 10
 	use_power = IDLE_POWER_USE
 	critical_machine = TRUE
+
+	///Amount of AIs that can be stored in this data core at once.
+	var/max_ais = MAX_AIS_PER_CORE
+	///Lazylist of AIs stored in this data core.
+	var/list/mob/living/silicon/ai/stored_ais
 
 	var/disableheat = FALSE
 	var/valid_ticks = MAX_AI_DATA_CORE_TICKS //Limited to MAX_AI_DATA_CORE_TICKS. Decrement by 1 every time we have an invalid tick, opposite when valid
@@ -35,13 +41,13 @@ GLOBAL_LIST_EMPTY(data_cores)
 /obj/machinery/ai/data_core/Destroy(force)
 	update_list()
 
-	for(var/mob/living/silicon/ai/AI in contents)
+	for(var/mob/living/silicon/ai/AI as anything in stored_ais)
 		if(!AI.is_dying)
 			AI.relocate()
 
 	//Other AIs on this level will get alerted
 	for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[z]"])
-		for(var/mob/living/silicon/ai/AI in other_data_cores.contents)
+		for(var/mob/living/silicon/ai/AI as anything in other_data_cores.stored_ais)
 			if(!AI.mind && AI.deployed_shell.mind)
 				to_chat(AI.deployed_shell, span_userdanger("Warning! Data Core brought offline in [get_area(src)]! Please verify that no malicious actions were taken."))
 			else
@@ -74,7 +80,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 	//z-level is the same, ignore us.
 	if(old_os == linked_os)
 		return
-	for(var/mob/living/silicon/ai/ai_contents as anything in contents)
+	for(var/mob/living/silicon/ai/ai_contents as anything in stored_ais)
 		old_os.remove_ai(ai_contents)
 		linked_os.add_ai(ai_contents)
 
@@ -104,11 +110,15 @@ GLOBAL_LIST_EMPTY(data_cores)
 	. = ..()
 	if(istype(arrived, /obj/item/stock_parts/power_store/cell))
 		integrated_battery = arrived
+	if(istype(arrived, /mob/living/silicon/ai))
+		LAZYADD(stored_ais, arrived)
 
 /obj/machinery/ai/data_core/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == integrated_battery)
 		integrated_battery = null
+	if(istype(gone, /mob/living/silicon/ai))
+		LAZYREMOVE(stored_ais, gone)
 
 /obj/machinery/ai/data_core/examine(mob/user)
 	. = ..()
@@ -121,7 +131,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 	. += span_notice("It is reporting a core temperature of [EXAMINE_HINT("[core_temp]K")]")
 
 	. += span_bold("The monitor lists the following AIs:")
-	for(var/mob/living/silicon/ai/AI in contents)
+	for(var/mob/living/silicon/ai/AI as anything in stored_ais)
 		if(!isobserver(user))
 			. += span_bold("[AI.name]")
 		else
@@ -208,7 +218,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 
 /obj/machinery/ai/data_core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
-	for(var/mob/living/silicon/ai/AI in contents)
+	for(var/mob/living/silicon/ai/AI as anything in stored_ais)
 		AI.disconnect_shell()
 
 /obj/machinery/ai/data_core/proc/valid_data_core(mob/living/silicon/ai/user, ignore_z_levels = FALSE)
@@ -221,6 +231,8 @@ GLOBAL_LIST_EMPTY(data_cores)
 		if(!(src in GLOB.data_cores["[user_turf.z]"]))
 			return FALSE
 
+	if(length(stored_ais) >= max_ais)
+		return FALSE
 	if(valid_ticks > 0)
 		return TRUE
 	return FALSE
@@ -244,7 +256,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 	COOLDOWN_START(src, warning_cooldown, AI_DATA_CORE_WARNING_COOLDOWN)
 	//Other AIs on this level will get alerted
 	for(var/obj/machinery/ai/data_core/other_data_cores in GLOB.data_cores["[z]"])
-		for(var/mob/living/silicon/ai/AI in other_data_cores.contents)
+		for(var/mob/living/silicon/ai/AI as anything in other_data_cores.stored_ais)
 			if(!AI.mind && AI.deployed_shell.mind)
 				to_chat(AI.deployed_shell, span_userdanger("<A HREF=?src=[REF(AI)];go_to_machine=[REF(src)]>Data core</A> in [get_area(src)] is on the verge of failing! Immediate action required to prevent failure."))
 			else
@@ -257,7 +269,7 @@ GLOBAL_LIST_EMPTY(data_cores)
 		return FALSE
 
 	var/ai_creating_heat
-	for(var/mob/living/silicon/ai/ai_contents in contents)
+	for(var/mob/living/silicon/ai/ai_contents as anything in stored_ais)
 		ai_creating_heat = !ai_contents.technically_unpowered
 		break //don't need to check every single AI
 
@@ -327,3 +339,5 @@ GLOBAL_LIST_EMPTY(data_cores)
 			to_chat(user, span_alert("ERROR: AI flush is in progress, cannot execute transfer protocol."))
 			return FALSE
 	return TRUE
+
+#undef MAX_AIS_PER_CORE
