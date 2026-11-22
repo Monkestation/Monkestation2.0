@@ -40,12 +40,6 @@ map icebox
 	votable
 endmap
 
-map theseus
-	minplayers 5
-	votable
-	#feedbacklink https://www.youtube.com/watch?v=XG8b7WhANNA
-endmap
-
 map tramstation
 	minplayers 35
 	votable
@@ -64,15 +58,6 @@ endmap
 
 map blueshift
 	minplayers 75
-	votable
-endmap
-
-map voidraptor
-	minplayers 40
-	votable
-endmap
-
-map ouroboros
 	votable
 endmap
 
