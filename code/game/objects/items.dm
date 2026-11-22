@@ -870,7 +870,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum) & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
 		return
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
-		return
+		return TRUE
 	if(get_temperature() && isliving(hit_atom))
 		var/mob/living/L = hit_atom
 		L.ignite_mob()
