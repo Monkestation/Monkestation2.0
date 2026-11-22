@@ -167,13 +167,13 @@
 		return
 	var/icon/small_map = get_small_map(minimap)
 	var/mutable_appearance/screen_map = mutable_appearance(small_map)
-	screen_map.pixel_x = round((world.icon_size - small_map.Width()) / 2)
-	screen_map.pixel_y = round((world.icon_size - small_map.Height()) / 2)
+	screen_map.pixel_w = round((ICON_SIZE_X - small_map.Width()) / 2)
+	screen_map.pixel_z = round((ICON_SIZE_Y - small_map.Height()) / 2)
 	screen_map.color = light_color
 	. += screen_map
 	var/mutable_appearance/screen_glow = emissive_appearance(small_map, "", src)
-	screen_glow.pixel_x = screen_map.pixel_x
-	screen_glow.pixel_y = screen_map.pixel_y
+	screen_glow.pixel_w = screen_map.pixel_w
+	screen_glow.pixel_z = screen_map.pixel_z
 	. += screen_glow
 
 /// Returns the passed minimap shrunk down to fit our screen, cached per z-level
