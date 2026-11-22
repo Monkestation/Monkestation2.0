@@ -107,6 +107,7 @@
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 	medipen_type =  /obj/item/reagent_containers/medipen/atropine
+	var/givemicrobombpaper = TRUE
 
 /obj/item/storage/box/survival/syndie/give_internals()
 	if(isplasmaman(loc))
@@ -118,7 +119,13 @@
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
 	new /obj/item/tool_parcel(src)
-	new /obj/item/paper/fluff/operative(src)
+	if(givemicrobombpaper)
+		new /obj/item/paper/fluff/operative(src)
+
+/obj/item/storage/box/survival/syndie/ghostrole
+	name = "tactical survival box"
+	desc = "A box with emergency survival supplies. This one is labelled to contain an extended-capacity tank and a set of emergency tools."
+	givemicrobombpaper = FALSE
 
 /obj/item/tool_parcel
 	name = "operative toolkit care package"

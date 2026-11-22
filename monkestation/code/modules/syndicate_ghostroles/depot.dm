@@ -17,7 +17,6 @@
 	head = /obj/item/clothing/head/utility/hardhat
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/flashlight
-	box = /obj/item/storage/box/survival/syndie
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/depot_syndicate/guard
 	name = "Syndicate Depot Guard"
