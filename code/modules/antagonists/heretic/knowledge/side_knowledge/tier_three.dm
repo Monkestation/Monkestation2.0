@@ -59,13 +59,13 @@
 	drafting_tier = 3
 
 /// The max health given to Shattered Risen
-#define RISEN_MAX_HEALTH 125
+#define RISEN_MAX_HEALTH 150
 
 /datum/heretic_knowledge/limited_amount/risen_corpse
 	name = "Shattered Ritual"
 	desc = "Enchant a corpse into a Shattered Risen.<br>\
-		Shattered Risen are strong ghouls that have 125 health, but cannot hold items, \
-		instead having two brutal weapons for hands. You can only create one at a time."
+		Shattered Risen are strong ghouls that have 150 health, but cannot hold items, \
+		instead having two brutal weapons for hands."
 	transmute_text = "Transmute a corpse with a soul, a pair of latex or nitrile gloves."
 	gain_text = "I witnessed a cold, rending force drag this corpse back to near-life. \
 		When it moves, it crunches like broken glass. Its hands are no longer recognizable as human - \
@@ -75,7 +75,7 @@
 		/obj/item/clothing/suit = 1,
 		/obj/item/clothing/gloves/latex = 1,
 	)
-	limit = 1
+	limit = INFINITY
 	cost = 2
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_shattered"

@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "fish tails no longer soak up puddles like bare feet, spilled booze won't break your vaporizer anymore"

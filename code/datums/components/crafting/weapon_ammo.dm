@@ -29,7 +29,6 @@
 		/obj/item/stack/rods = 1,
 	)
 	tool_behaviors = list(TOOL_WIRECUTTER)
-	time = 0.5 SECONDS
 	time = 0.1 SECONDS
 	category = CAT_WEAPON_AMMO
 
