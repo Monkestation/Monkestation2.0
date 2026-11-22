@@ -138,7 +138,7 @@
 ///from /atom/movable/proc/throw_impact() after hitby() was called on the hit atom: (atom/hit_atom, datum/thrownthing/throwingdatum, caught)
 #define COMSIG_MOVABLE_POST_IMPACT "movable_post_impact"
 
-/// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
+/// From /datum/element/immerse/proc/add_immerse_overlay(): (atom/movable/immerse_mask/effect_relay)
 #define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
 
 /// From base of area/Exited(): (area/left, direction)

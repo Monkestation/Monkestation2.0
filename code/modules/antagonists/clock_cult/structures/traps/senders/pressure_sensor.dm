@@ -13,7 +13,7 @@
 	unwrench_path = /obj/item/clockwork/trap_placer/pressure_sensor
 	component_datum = /datum/component/clockwork_trap/pressure_sensor
 	alpha = 60
-	layer = SIGIL_LAYER
+	layer = LOW_OBJ_LAYER
 	max_integrity = 5
 	clockwork_desc = "Allows you to send a signal to linked traps when a non-servant steps on the plate."
 

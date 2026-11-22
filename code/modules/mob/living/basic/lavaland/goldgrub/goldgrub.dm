@@ -98,7 +98,9 @@
 
 /mob/living/basic/mining/goldgrub/death(gibbed)
 	barf_contents(gibbed)
-	return ..()
+	. = ..()
+	if (!QDELETED(src) && has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 25, bonus_tame_chance = 5)

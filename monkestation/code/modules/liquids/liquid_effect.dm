@@ -5,6 +5,7 @@
 	base_icon_state = "water"
 	anchored = TRUE
 	plane = FLOOR_PLANE
+	layer = CLEANABLE_FLOOR_OBJECT_LAYER
 	color = "#DDF"
 	alpha = 175
 	//For being on fire
@@ -144,7 +145,7 @@
 	var/list/stage_overlays = depth_overlays[cache_key]
 	if(!stage_overlays)
 		stage_overlays = list(
-			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_const = offset, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER),
+			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_const = offset, plane = GAME_PLANE, layer = ABOVE_MOB_LAYER),
 			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_top", offset_const = offset, plane = GAME_PLANE, layer = GATEWAY_UNDERLAY_LAYER),
 		)
 		depth_overlays[cache_key] = stage_overlays
@@ -303,7 +304,7 @@
 /obj/effect/abstract/fire
 	icon = 'icons/obj/effects/liquid.dmi'
 	plane = FLOOR_PLANE
-	layer = BELOW_MOB_LAYER
+	layer = CLEANABLE_FLOOR_OBJECT_LAYER
 	mouse_opacity = FALSE
 	appearance_flags = RESET_COLOR | RESET_ALPHA
 

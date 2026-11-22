@@ -5,7 +5,6 @@
 	icon_state = "punchingbag"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	var/list/hit_sounds = list('sound/items/weapons/genhit1.ogg', 'sound/items/weapons/genhit2.ogg', 'sound/items/weapons/genhit3.ogg',\
 	'sound/items/weapons/punch1.ogg', 'sound/items/weapons/punch2.ogg', 'sound/items/weapons/punch3.ogg', 'sound/items/weapons/punch4.ogg')
 
@@ -101,7 +100,7 @@
 	. = ..()
 
 	if(obj_flags & IN_USE)
-		. += mutable_appearance(icon, "[base_icon_state]-o", offset_spokesman = src, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-o", offset_spokesman = src, plane = GAME_PLANE, layer = ABOVE_MOB_LAYER, alpha = src.alpha)
 
 /obj/structure/weightmachine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -125,7 +124,7 @@
 		playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 		obj_flags &= ~IN_USE
 		update_appearance()
-		user.pixel_y = user.base_pixel_y
+		user.update_offsets()
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		user.add_mood_event("exercise", /datum/mood_event/exercise)
 		to_chat(user, finishmessage)
@@ -167,9 +166,9 @@
 		if (user.loc != src.loc)
 			break
 		sleep(0.3 SECONDS)
-		animate(user, pixel_y = -2, time = 3)
+		animate(user, pixel_z = user.base_pixel_z - 2, time = 0.3 SECONDS)
 		sleep(0.3 SECONDS)
-		animate(user, pixel_y = -4, time = 3)
+		animate(user, pixel_z = user.base_pixel_z - 4, time = 0.3 SECONDS)
 		sleep(0.2 SECONDS)
 		playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
 
@@ -180,14 +179,15 @@
 
 /obj/structure/weightmachine/weightlifter/AnimateMachine(mob/living/user)
 	var/reps = 0
-	user.pixel_y = 5
+	var/base_z = user.base_pixel_z
+	user.pixel_z = base_z + 5
 	while (reps++ < 6)
 		if (user.loc != src.loc)
 			break
 		for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
 			sleep(0.4 SECONDS)
-			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
+			animate(user, pixel_z = (user.pixel_z == base_z + 3) ? base_z + 5 : base_z + 3, time = 0.3 SECONDS)
 		playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
 	sleep(0.3 SECONDS)
-	animate(user, pixel_y = 2, time = 3)
+	animate(user, pixel_z = base_z + 2, time = 0.3 SECONDS)
 	sleep(0.3 SECONDS)

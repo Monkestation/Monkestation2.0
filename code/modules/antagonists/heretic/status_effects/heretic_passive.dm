@@ -436,8 +436,8 @@
 			overlay_scale = 1 // Projectile sprites are already tiny (usually)
 			overlay_angle = flesh_embed.hit_angle
 		var/mutable_appearance/embed_overlay = mutable_appearance(overlay_icon, overlay_state, -HIGHEST_LAYER)
-		embed_overlay.pixel_x = visual[1]
-		embed_overlay.pixel_y = visual[2]
+		embed_overlay.pixel_w = visual[1]
+		embed_overlay.pixel_z = visual[2]
 		var/matrix/embed_matrix = matrix()
 		embed_matrix.Scale(overlay_scale, overlay_scale)
 		// looks cute if it points at the source
