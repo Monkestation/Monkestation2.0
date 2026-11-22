@@ -832,15 +832,14 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, span_boldannounce("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
 
-	var/start_wait = world.time
+	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), delay, TIMER_STOPPABLE)
+	// SetRoundEndSound() schedules the sound itself once every client has it
 	if(!round_end_sound)
 		var/song = choose_round_end_song()
 		if(song)
 			SetRoundEndSound(song)
-	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
-	var/time_left = delay - (world.time - start_wait)
-	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), time_left, TIMER_STOPPABLE)
-	schedule_round_end_sound(time_left)
+	else if(round_end_sound_sent)
+		schedule_round_end_sound(delay)
 
 
 /datum/controller/subsystem/ticker/proc/reboot_callback(reason, end_string)

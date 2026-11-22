@@ -1010,3 +1010,25 @@
       balance:'
   byondsucks:
   - balance: Changeling armblade has 20 armor pen.
+2026-11-22:
+  Absolucy:
+  - balance: Bloodsuckers no longer need 5 "enemies" to roll, and should roll more
+      often now.
+  - rscadd: Added gentle, warping, transformative and crystalline slime crossbreeds.
+      Check Slimepedia to see what they do!
+  AitorLogedo:
+  - bugfix: 'rounds no longer sit on "Reboot: DELAYED" for minutes before restarting'
+  EnterTheJake:
+  - balance: Metallic hydrogen crossbow bolts now deal 60 damage with 100 armor penetration,
+      pierce vehicles, and no longer embed.
+  - spellcheck: Fixed the syndicate rebar crossbow box claiming low armor penetration,
+      and a typo in its uplink description.
+  - code_imp: Cleaned up duplicate vars on the hydrogen bolt and jagged rod recipe.
+  EnterTheJake, Xander3359, Arturlang, Absolucy, KillerOrcaCora, necromanceranne:
+  - rscadd: Tactical Maps have been added to the game!
+  - rscadd: Nuclear Operatives implants now let you open a minimap that shows the
+      areas of the station and where the nukeops team, borgs, mechs, Cayenne and the
+      nuke disk are in real time.
+  - rscadd: Nukie leaders can draw and put labels on the map.
+  - rscadd: The reconnaissance platform has been added to the nukie base, it shows
+      the tactical map while on the Syndicate base.

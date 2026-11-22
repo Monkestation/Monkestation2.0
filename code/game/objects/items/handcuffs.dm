@@ -753,8 +753,10 @@
 	playsound(src.loc,'sound/items/weapons/bolathrow.ogg', 75, TRUE)
 
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
-		return//abort
+	if(..())//if it gets caught or the hit was prevented,
+		return TRUE//abort
+	if(!iscarbon(hit_atom))//or the target can't be cuffed
+		return
 	ensnare(hit_atom)
 
 /**
@@ -826,7 +828,7 @@
 
 /obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(iscarbon(hit_atom))
+	if(!. && iscarbon(hit_atom))
 		var/mob/living/carbon/C = hit_atom
 		effectReference = C.apply_status_effect(/datum/status_effect/gonbola_pacify)
 
