@@ -1,0 +1,14 @@
+author: "EnterTheJake, Arturlang"
+delete-after: True
+changes:
+  - bugfix: "Flesh heretics now actually heal and cure wounds by eating organs and meat."
+  - bugfix: "Knit Flesh can insert organs again."
+  - bugfix: "Ghouls made with Mansus Grasp no longer count against your bloody blade limit."
+  - bugfix: "Heretics examining non-ghouls no longer causes a runtime."
+  - balance: "The flesh heretic final passive no longer grants damage resistance. Instead, while fat, bullets embed in your flesh for 15% damage, bolas can't ensnare you, and once 8 things are lodged in you they're expelled in a ring."
+  - balance: "Flesh heretics get hungry half as fast."
+  - balance: "Eating organs and meat as a flesh heretic now makes you fat much faster."
+  - balance: "Bleeding Steel now inflicts a critical slash on the limb you're aiming at, making it much easier to sever limbs."
+  - balance: "Removed the limit on Ghouls, Voiceless Dead and Shattered Risen."
+  - balance: "Ghouls now have 50 health, Voiceless Dead 75, Shattered Risen 150 and Raw Prophets 85."
+  - balance: "Knit Flesh can now extract (and implant) brains."

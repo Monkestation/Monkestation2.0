@@ -4,6 +4,8 @@
 	icon_state = "tackle"
 	inhand_icon_state = null
 	cold_protection = HANDS
+	/// How much wearing these gloves affects fishing difficulty
+	var/fishing_modifier = -7
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
 	custom_premium_price = PAYCHECK_COMMAND * 3.5
@@ -48,6 +50,7 @@
 	desc = "Sleek, aerodynamic gripper gloves that are less effective at actually performing takedowns, but more effective at letting the user sail through the hallways and cause accidents."
 	icon_state = "tackledolphin"
 	inhand_icon_state = null
+	fishing_modifier = -10
 
 	tackle_stam_cost = 10
 	base_knockdown = 0.5 SECONDS
@@ -107,6 +110,7 @@
 	desc = "Ratty looking fingerless gloves wrapped with sticky tape. Beware anyone wearing these, for they clearly have no shame and nothing to lose."
 	icon_state = "fingerless"
 	inhand_icon_state = null
+	fishing_modifier = -5
 
 	tackle_stam_cost = 15
 	base_knockdown = 1.75 SECONDS
@@ -118,3 +122,9 @@
 	desc = "Gloves for football players! Teaches them how to tackle like a pro."
 	icon_state = "tackle_gloves"
 	inhand_icon_state = null
+	fishing_modifier = -4
+
+
+/obj/item/clothing/gloves/tackler/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier) //fishing tackle equipment (ba dum tsh)

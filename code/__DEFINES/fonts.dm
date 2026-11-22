@@ -11,6 +11,8 @@
 #define CHARCOAL_FONT "Candara"
 /// Font used when signing on paper.
 #define SIGNATURE_FONT "Segoe Script"
+/// Font used by silicons
+#define ROBOT_FONT "Courier New"
 
 /// Emoji icon set
 #define EMOJI_SET 'icons/ui/chat/emoji.dmi'

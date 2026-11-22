@@ -481,7 +481,7 @@
 		/obj/item/clothing/shoes/heels = 2, //MONKESTATION ADDITION
 		/obj/item/clothing/accessory/badge/lawyer = 2,
 		/obj/item/radio/headset/headset_srv = 2,
-		/obj/item/fish_feed = 1,
+		/obj/item/reagent_containers/cup/fish_feed = 1,
 	)
 	premium = list(
 		/obj/item/mod/control/pre_equipped/portable_suit = 1,
@@ -518,6 +518,7 @@
 		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
 		/obj/item/clothing/suit/chaplainsuit/technotao = 1,
 		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/holosign_creator/holo_candle = 2,
 	)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,

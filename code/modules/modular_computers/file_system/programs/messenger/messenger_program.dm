@@ -145,13 +145,13 @@
 
 /datum/computer_file/program/messenger/ui_state(mob/user)
 	if(issilicon(user))
-		return GLOB.reverse_contained_state
+		return GLOB.deep_inventory_state
 	return GLOB.default_state
 
 /datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
 	switch(action)
 		if("PDA_ringSet")
-			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
+			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", html_decode(ringtone), MESSENGER_RINGTONE_MAX_LENGTH)
 			var/mob/living/usr_mob = usr
 			if(!new_ringtone || !in_range(computer, usr_mob) || computer.loc != usr_mob)
 				return FALSE

@@ -144,8 +144,8 @@
 		var/turf/open/misc/asteroid/sand_turf = target
 		if(!sand_turf.can_dig(mod.wearer))
 			return
-		sand_turf.getDug()
-		drain_power(use_energy_cost)
+		if(sand_turf.getDug())
+			drain_power(use_energy_cost)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
@@ -421,7 +421,7 @@
 		mod.wearer.update_equipment_speed_mods()
 	traveled_tiles = 0
 
-/obj/item/mod/module/ash_accretion/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/ash_accretion/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	return ..()
 

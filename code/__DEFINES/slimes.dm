@@ -17,6 +17,8 @@
 #define SLIME_EVOLUTION_COST 100
 ///How many other slimes on our tile stop us from splitting
 #define SLIME_OVERCROWD_AMOUNT 2
+///How many transformative extracts one slime can hold
+#define SLIME_MAX_TRANSFORMATIONS 3
 
 ///The slime is not hungry. It might try to feed anyways.
 #define SLIME_HUNGER_NONE 0
@@ -106,6 +108,15 @@
 #define COMPRESSOR_EFFECT_EXTRACTS 10
 /// Extracts the compressor's color tank holds.
 #define COMPRESSOR_COLOR_EXTRACTS 5
+
+#define EXTRACT_REQUEST_WAITING "waiting"
+#define EXTRACT_REQUEST_CLAIMED "claimed"
+#define EXTRACT_REQUEST_READY "ready"
+#define EXTRACT_REQUEST_PICKED_UP "picked_up"
+#define EXTRACT_REQUEST_DECLINED "declined"
+#define EXTRACT_REQUEST_CANCELLED "cancelled"
+/// Longest reason a requester or a decliner can write.
+#define EXTRACT_REQUEST_REASON_LENGTH 60
 
 /// Doesn't squash mobs like roaches and stuff when walking over them
 #define TRAIT_CAREFUL_STEPS "careful_steps"

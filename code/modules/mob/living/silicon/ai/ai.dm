@@ -131,11 +131,6 @@
 
 	var/jobtitles = TRUE
 
-	///This action opens menu to modify the settings.
-	var/datum/action/innate/internal_nanite_menu/nanite_menu
-	///This action actually uses the remote.
-	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
-
 	/* ROBOT CONTROL */
 	/// UI for robot controls
 	VAR_FINAL/datum/robot_control/robot_control
@@ -157,6 +152,9 @@
 
 	///How much ai's client view_range should be adjusted by with view_size.setTo(). 0 Is default view size.
 	var/view_range_boost = 0
+
+	///AI pen, if it somehow gets into range of one.
+	var/obj/item/pen/silicon/ai_pen
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()
@@ -220,15 +218,11 @@
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
+	ai_pen = new/obj/item/pen/silicon(src)
 
 	deploy_action.Grant(src)
 
 	dashboard = new(src)
-
-	nanite_remote = new
-	nanite_menu = new(nanite_remote)
-	nanite_menu.Grant(src)
-	nanite_remote.Grant(src)
 
 	if(isvalidAIloc(loc))
 		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, ai_network_change)
@@ -297,8 +291,7 @@
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
 	QDEL_NULL(dashboard)
-	QDEL_NULL(nanite_menu)
-	QDEL_NULL(nanite_remote)
+	QDEL_NULL(ai_pen)
 	malfhack = null
 	current = null
 	bot_ref = null
@@ -577,7 +570,7 @@ GAME_VERB_HIDDEN(/mob/living/silicon/ai, ai_camera_track, "track") //Don't displ
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
 	if(href_list["project_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type(/obj/machinery/holopad)
+		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad)
 		if(Holopad)
 			lastloc = get_turf(eyeobj)
 			Holopad.attack_ai_secondary(src) //may as well recycle

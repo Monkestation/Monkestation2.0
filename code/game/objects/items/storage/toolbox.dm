@@ -19,7 +19,7 @@
 	hitsound = 'sound/items/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
@@ -108,6 +108,12 @@
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
+
+// version of below that isn't a traitor item
+/obj/item/storage/toolbox/mechanical/old/cleaner
+	name = "old blue toolbox"
+	icon_state = "oldtoolboxclean"
+	icon_state = "toolbox_blue_old"
 
 /obj/item/storage/toolbox/mechanical/old/clean // the assistant traitor toolbox, damage scales with TC inside
 	name = "toolbox"

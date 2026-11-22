@@ -20,7 +20,6 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 		/datum/cassette_song,
 		/datum/chat_payload,
 		/datum/color_palette,
-		/datum/component/mirage_border, // only turf and mirage holder refs
 		/datum/gas_mixture,
 		/datum/greyscale_layer,
 		/datum/instrument_key,
@@ -38,7 +37,7 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 		/datum/weakref,
 		/turf/open/space/basic,
 		/turf/cordon,
-		/obj/effect/abstract/mirage_holder, // only a turf ref i think?
+		/atom/movable/mirage_holder, // only a turf ref i think?
 		// stuff below isn't 100% guaranteed to be ref-free, but they're prolly not an issue
 		/datum/light_source,
 		/datum/lighting_corner,

@@ -1414,7 +1414,7 @@
 		name = initial(name)
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
-	var/name_input = tgui_input_text(user, "Enter prisoner name. (Will appear on suit sensors.)", "Prisoner Identification", registered_name, MAX_NAME_LEN)
+	var/name_input = tgui_input_text(user, "Enter prisoner name. (Will appear on suit sensors.)", "Prisoner Identification", html_decode(registered_name), MAX_NAME_LEN)
 	if( QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
 	if(!name_input || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
@@ -1728,7 +1728,7 @@
 			return
 		if(popup_input == "Forge/Reset")
 			if(!forged)
-				var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+				var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN, encode = FALSE)
 				input_name = sanitize_name(input_name, allow_numbers = TRUE)
 				if(!input_name)
 					// Invalid/blank names give a randomly generated one.
@@ -1762,7 +1762,7 @@
 					if(selected_trim_path)
 						SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 
-				var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant")
+				var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? html_decode(assignment) : "Assistant")
 				if(target_occupation)
 					assignment = target_occupation
 
@@ -1925,7 +1925,7 @@
 		return
 	switch(popup_input)
 		if("Name")
-			var/input_name = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+			var/input_name = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN, encode = FALSE)
 			input_name = sanitize_name(input_name, allow_numbers = TRUE)
 			if(!after_input_check(user, attacking_item, input_name, scribbled_name))
 				return
@@ -1933,7 +1933,7 @@
 			var/list/details = attacking_item.get_writing_implement_details()
 			details_colors[CARDBOARD_ID_NAME_COLOR] = details["color"] || "#000000"
 		if("Assignment")
-			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job assignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
+			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job assignment", html_decode(scribbled_assignment) || "Assistant", MAX_NAME_LEN)
 			if(!after_input_check(user, attacking_item, input_assignment, scribbled_assignment))
 				return
 			scribbled_assignment = input_assignment

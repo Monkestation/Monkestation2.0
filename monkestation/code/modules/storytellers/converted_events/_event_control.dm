@@ -105,7 +105,10 @@
 /datum/round_event_control/antagonist/New()
 	. = ..()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		restricted_roles |= protected_roles
+		LAZYOR(restricted_roles, protected_roles)
+	for(var/datum/job/job_type as anything in subtypesof(/datum/job))
+		if(job_type::job_flags & JOB_ANTAG_BLACKLISTED)
+			LAZYOR(restricted_roles, job_type::title)
 
 /datum/round_event_control/antagonist/return_failure_string(players_amt)
 	. =..()
@@ -117,6 +120,10 @@
 		if(.)
 			. += ", "
 		. += "No Required"
+	if(roundstart && occurrences)
+		if(.)
+			. += ", "
+		. += "Already Ran"
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates() //we should optimize this
 	if(length(candidates) < antag_amt)
@@ -133,6 +140,9 @@
 	if(!.)
 		return
 	if(!check_required_roles())
+		return FALSE
+	// raw occurrences, the shared count would block bloodcult's clockcult pairing
+	if(roundstart && occurrences)
 		return FALSE
 
 	var/antag_amt = get_antag_amount()
@@ -156,7 +166,7 @@
 /datum/round_event_control/antagonist/get_href_actions()
 	// firing or scheduling one of these with no latejoiner would just grab someone already aboard, unprompted
 	if(track == EVENT_TRACK_LATEJOIN)
-		return "<a href='byond://?src=[REF(src)];action=force_next'>Force Next</a>"
+		return "<a href='byond://?src=[REF(src)];[HrefToken()];action=force_next'>Force Next</a>"
 	return ..()
 
 /datum/round_event_control/antagonist/get_weight()

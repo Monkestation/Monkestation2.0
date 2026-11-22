@@ -329,12 +329,18 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/carp
 
+/obj/item/stack/sheet/animalhide/carp/fish
+	name = "fish scales"
+	desc = "The scales of a fish, or fish person. It reminds you about the importance of sharing."
+	singular_name = "fish scale"
+
 GLOBAL_LIST_INIT(carp_recipes, list ( \
 	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, check_density = FALSE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1, check_density = FALSE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2, check_density = FALSE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3, check_density = FALSE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carpskin fishing bag", /obj/item/storage/bag/fishing/carpskin, 3, check_density = FALSE, category = CAT_CONTAINERS), \
 	))
 
 /obj/item/stack/sheet/animalhide/carp/get_main_recipes()

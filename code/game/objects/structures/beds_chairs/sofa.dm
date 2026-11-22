@@ -19,9 +19,9 @@ path/corner/color_name {\
 	icon = 'icons/obj/chairs_wide.dmi'
 	buildstackamount = 1
 	item_chair = null
-	astar_weight = 5
 	var/has_armrests = TRUE
 	var/mutable_appearance/armrest
+	fishing_modifier = -6
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	. = ..()

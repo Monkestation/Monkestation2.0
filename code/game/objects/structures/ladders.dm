@@ -11,6 +11,8 @@
 	var/crafted = FALSE
 	/// travel time for ladder in deciseconds
 	var/travel_time = 1 SECONDS
+	/// Registered pathfinding transitions for this ladder's linked endpoints.
+	var/list/nav_links
 
 /obj/structure/ladder/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
 	..()
@@ -19,10 +21,12 @@
 		src.up = up
 		up.down = src
 		up.update_appearance()
+		up.register_nav_links()
 	if (down)
 		src.down = down
 		down.up = src
 		down.update_appearance()
+		down.register_nav_links()
 
 	register_context()
 
@@ -41,6 +45,7 @@
 
 /obj/structure/ladder/Destroy(force)
 	GLOB.ladders -= src
+	QDEL_LIST(nav_links)
 	disconnect()
 	return ..()
 
@@ -56,6 +61,7 @@
 				down = L
 				L.up = src  // Don't waste effort looping the other way
 				L.update_appearance()
+				L.register_nav_links()
 	if (!up)
 		L = locate() in GET_TURF_ABOVE(T)
 		if (L)
@@ -63,17 +69,40 @@
 				up = L
 				L.down = src  // Don't waste effort looping the other way
 				L.update_appearance()
+				L.register_nav_links()
 
 	update_appearance()
+	update_minimap_blip()
+	register_nav_links()
 
 /obj/structure/ladder/proc/disconnect()
 	if(up && up.down == src)
 		up.down = null
 		up.update_appearance()
+		up.update_minimap_blip()
+		up.register_nav_links()
 	if(down && down.up == src)
 		down.up = null
 		down.update_appearance()
+		down.update_minimap_blip()
+		down.register_nav_links()
 	up = down = null
+	register_nav_links()
+
+/obj/structure/ladder/proc/register_nav_links()
+	QDEL_LIST(nav_links)
+	if(up)
+		LAZYINITLIST(nav_links)
+		nav_links += new /datum/nav_link/ladder(src, get_turf(src), get_turf(up), TRUE)
+	if(down)
+		LAZYINITLIST(nav_links)
+		nav_links += new /datum/nav_link/ladder(src, get_turf(src), get_turf(down), FALSE)
+
+/// Adds or removes our minimap blip depending on if we are linked to another ladder
+/obj/structure/ladder/proc/update_minimap_blip()
+	remove_minimap_blip(MINIMAP_LADDER_BLIP, src)
+	if(up || down)
+		add_minimap_blip(src, MINIMAP_LADDER_BLIP, "ladder")
 
 /obj/structure/ladder/update_icon_state()
 	icon_state = "ladder[up ? 1 : 0][down ? 1 : 0]"
@@ -103,10 +132,13 @@
 		travel(user, going_up)
 	add_fingerprint(user)
 
-/obj/structure/ladder/proc/start_travelling(mob/user, going_up)
+/obj/structure/ladder/proc/start_travelling(mob/user, going_up, datum/callback/completion)
 	show_initial_fluff_message(user, going_up)
-	if(do_after(user, travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
-		travel(user, going_up)
+	var/success = do_after(user, travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER)
+	if(success)
+		success = travel(user, going_up)
+	completion?.Invoke(success)
+	return success
 
 /// The message shown when the player starts climbing the ladder
 /obj/structure/ladder/proc/show_initial_fluff_message(mob/user, going_up)
@@ -117,13 +149,15 @@
 	var/obj/structure/ladder/ladder = going_up ? up : down
 	if(!ladder)
 		balloon_alert(user, "there's nothing that way!")
-		return
+		return FALSE
 	var/response = SEND_SIGNAL(user, COMSIG_LADDER_TRAVEL, src, ladder, going_up)
 	if(response & LADDER_TRAVEL_BLOCK)
-		return
+		return FALSE
 
 	var/turf/target = get_turf(ladder)
-	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
+	. = user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
+	if(!.)
+		return FALSE
 	if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
 		if(iscarbon(user))
 			var/mob/living/carbon/guy = user
@@ -137,6 +171,7 @@
 	// this way players can keep climbing up or down with ease until they reach an end.
 	if(ladder.up && ladder.down)
 		ladder.show_options(user, is_ghost)
+	return TRUE
 
 /// The messages shown after the player has finished climbing. Players can see this happen from either src or the destination so we've 2 POVs here
 /obj/structure/ladder/proc/show_final_fluff_message(mob/user, obj/structure/ladder/destination, going_up)
@@ -291,6 +326,7 @@
 	// Override the parent to find ladders based on being height-linked
 	if (!id || (up && down))
 		update_appearance()
+		register_nav_links()
 		return
 
 	for(var/obj/structure/ladder/unbreakable/unbreakable_ladder in GLOB.ladders)
@@ -300,16 +336,19 @@
 			down = unbreakable_ladder
 			unbreakable_ladder.up = src
 			unbreakable_ladder.update_appearance()
+			unbreakable_ladder.register_nav_links()
 			if (up)
 				break  // break if both our connections are filled
 		else if (!up && unbreakable_ladder.height == height + 1)
 			up = unbreakable_ladder
 			unbreakable_ladder.down = src
 			unbreakable_ladder.update_appearance()
+			unbreakable_ladder.register_nav_links()
 			if (down)
 				break  // break if both our connections are filled
 
 	update_appearance()
+	register_nav_links()
 
 /obj/structure/ladder/crafted
 	crafted = TRUE

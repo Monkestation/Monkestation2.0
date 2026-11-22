@@ -587,7 +587,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	desc = "[desc] It has [uses] use\s remaining."
 
 /datum/action/innate/ai/blackout/Activate()
-	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(prob(30 * apc.overload))
 			apc.overload_lighting()
 		else
@@ -995,8 +995,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	data["voices"] = voice_options
 	data["loud"] = loudvoice
 	data["on"] = changing_voice
-	data["say_verb"] = say_verb
-	data["name"] = say_name
+	data["say_verb"] = html_decode(say_verb)
+	data["name"] = html_decode(say_name)
 	data["selected"] = say_span || owner.speech_span
 	return data
 

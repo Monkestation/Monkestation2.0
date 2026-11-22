@@ -580,6 +580,29 @@
 		new /mob/living/basic/pet/dog/corgi(location)
 	..()
 
+/datum/chemical_reaction/lifish
+	required_reagents = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/blood = 1)
+	required_temp = 374
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/lifish/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+
+	// create fish possibles
+	var/list/fish_types = list()
+	for(var/path in subtypesof(/obj/item/fish))
+		var/obj/item/fish/fake_fish = path
+		if(initial(fake_fish.random_case_rarity) == FISH_RARITY_NOPE) // means they aren't mean to be randomly available
+			continue
+		fish_types |= path
+
+	// spawn from popssible fishes
+	for(var/i in 1 to rand(1, created_volume)) // More flop.
+		var/spawned_fish = pick(fish_types)
+		var/obj/item/fish/new_fish = new spawned_fish(location)
+		ADD_TRAIT(new_fish, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
+	return ..()
+
 //monkey powder heehoo
 /datum/chemical_reaction/monkey_powder
 	results = list(/datum/reagent/monkey_powder = 5)
@@ -1001,3 +1024,15 @@
 	results = list(/datum/reagent/scrunchium = 5)
 	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 1, /datum/reagent/liquid_dark_matter = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+/datum/chemical_reaction/fish_hallucinogen_degradation
+	results = list(/datum/reagent/consumable/nutriment/protein = 0.1)
+	required_reagents = list(/datum/reagent/toxin/mindbreaker/fish = 1)
+	required_temp = 363.15 // 90°
+	optimal_temp = 450
+	rate_up_lim = 8
+	temp_exponent_factor = 1.5
+	optimal_ph_min = 2
+	optimal_ph_max = 10
+	thermic_constant = 80
+	H_ion_release = 2
+	reaction_tags = REACTION_TAG_EASY

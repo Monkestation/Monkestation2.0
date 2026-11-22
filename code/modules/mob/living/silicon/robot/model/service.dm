@@ -16,7 +16,7 @@
 		/obj/item/borg/apparatus/cooking,
 		/obj/item/reagent_containers/cup/beaker/large, // While the shaker is more appropriate, this is for ease of identification.
 		/obj/item/reagent_containers/condiment/enzyme,
-		/obj/item/pen,
+		/obj/item/pen/silicon,
 		/obj/item/reagent_containers/cup/rag,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,

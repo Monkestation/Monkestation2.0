@@ -22,6 +22,7 @@
 		guns_typecache = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/grenadelauncher, /obj/item/gun/chem, /obj/item/gun/syringe, /obj/item/gun/microfusion))
 //monkestation edit on previous line: adds microfusion guns
 /obj/item/mod/module/magnetic_harness/on_install()
+	. = ..()
 	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
 	if(!istype(suit))
 		return
@@ -29,6 +30,7 @@
 	suit.allowed |= guns_typecache
 
 /obj/item/mod/module/magnetic_harness/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(deleting)
 		return
 	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
@@ -121,7 +123,7 @@
 		if(!holding)
 			balloon_alert(mod.wearer, "nothing to holster!")
 			return
-		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY)
+		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || (holding.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
 			balloon_alert(mod.wearer, "doesn't fit!")
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
@@ -135,6 +137,7 @@
 		balloon_alert(mod.wearer, "holster full!")
 
 /obj/item/mod/module/holster/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(holstered)
 		holstered.forceMove(drop_location())
 
@@ -269,6 +272,9 @@
 	dispense_type = /obj/item/grenade/mirage
 
 /obj/item/mod/module/dispenser/mirage/on_use()
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/grenade/mirage/grenade = .
 	grenade.arm_grenade(mod.wearer)
 

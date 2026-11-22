@@ -305,8 +305,6 @@
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			owner.dropItemToGround(head_item, force = TRUE, violent = violent)
 
-	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
-
 	//Handle dental implants
 	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in owner.actions)
 		pill_action.Remove(owner)
@@ -462,6 +460,8 @@
 
 	if(length(excluded_zones))
 		zone_list -= excluded_zones
+	if(HAS_TRAIT(src, TRAIT_BLOCK_ATTACHING_LEGS))
+		zone_list -= GLOB.leg_zones
 	for(var/limb_zone in zone_list)
 		regenerate_limb(limb_zone, dismembered_by_copy)
 

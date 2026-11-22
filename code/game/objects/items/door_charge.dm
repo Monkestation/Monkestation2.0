@@ -7,7 +7,7 @@
 	component_datum = /datum/component/interaction_booby_trap/door
 
 /obj/item/traitor_machine_trapper/door_charge/attack_self(mob/user, modifiers)
-	exploding_taunt = tgui_input_text(user, "What should I say when I explode?", "Bad Manners_OS", exploding_taunt, MAX_MESSAGE_LEN)
+	exploding_taunt = tgui_input_text(user, "What should I say when I explode?", "Bad Manners_OS", exploding_taunt, MAX_MESSAGE_LEN, encode = FALSE)
 
 /obj/item/traitor_machine_trapper/door_charge/examine(mob/user)
 	. = ..()

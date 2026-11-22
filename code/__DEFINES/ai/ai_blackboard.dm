@@ -8,6 +8,8 @@
 #define BB_FOOD_TARGET "bb_food_target"
 ///Path we should use next time we start A* movement, if it ends where we're going
 #define BB_PATH_TO_USE "BB_path_to_use"
+///Nav link and z-move actions for each step of BB_PATH_TO_USE
+#define BB_PATH_ACTIONS_TO_USE "BB_path_actions_to_use"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 ///are we hungry? determined by the udder compnent
@@ -16,6 +18,10 @@
 #define BB_BREED_READY "BB_breed_ready"
 ///maximum kids we can have
 #define BB_MAX_CHILDREN "BB_max_children"
+///our current happiness level
+#define BB_BASIC_HAPPINESS "BB_basic_happiness"
+///are we depressed? (happiness drops twice as fast)
+#define BB_BASIC_DEPRESSED "basic_depressed"
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"

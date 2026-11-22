@@ -262,6 +262,7 @@
 	desc = "A puddle of stabilized plasma."
 	icon_state = "purpleglow"
 	icon = 'icons/effects/stabilized_plasma.dmi'
+	decal_reagent = /datum/reagent/stable_plasma
 //MONKESTATION EDIT STOP
 
 /obj/effect/decal/cleanable/insectguts
@@ -398,8 +399,11 @@
 
 /obj/effect/decal/cleanable/ants/fire_act(exposed_temperature, exposed_volume)
 	var/obj/effect/decal/cleanable/ants/fire/fire_ants = new(loc)
-	fire_ants.reagents.clear_reagents()
-	reagents.trans_to(fire_ants, fire_ants.reagents.maximum_volume)
+	if(reagents)
+		fire_ants.create_reagents(reagents.maximum_volume)
+		reagents.trans_to(fire_ants, reagents.total_volume)
+	else
+		fire_ants.reagent_amount = reagent_amount
 	qdel(src)
 
 /obj/effect/decal/cleanable/ants/fire

@@ -19,7 +19,7 @@
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	movement_type = FLYING
 	health = 25
 	maxHealth = 25
@@ -80,25 +80,6 @@
 		/obj/machinery/vending,
 		/obj/structure/window,
 	))
-	/// Weighted list of colours a carp can be
-	/// Weighted list of usual carp colors
-	var/static/list/carp_colors = list(
-		COLOR_CARP_PURPLE = 7,
-		COLOR_CARP_PINK = 7,
-		COLOR_CARP_GREEN = 7,
-		COLOR_CARP_GRAPE = 7,
-		COLOR_CARP_SWAMP = 7,
-		COLOR_CARP_TURQUOISE = 7,
-		COLOR_CARP_BROWN = 7,
-		COLOR_CARP_TEAL = 7,
-		COLOR_CARP_LIGHT_BLUE = 7,
-		COLOR_CARP_RUSTY = 7,
-		COLOR_CARP_RED = 7,
-		COLOR_CARP_YELLOW = 7,
-		COLOR_CARP_BLUE = 7,
-		COLOR_CARP_PALE_GREEN = 7,
-		COLOR_CARP_SILVER = 1, // The rare silver carp
-	)
 
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
@@ -114,6 +95,7 @@
 
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
+	AddComponent(/datum/component/profound_fisher)
 	if (tamer)
 		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
@@ -140,14 +122,14 @@
 /mob/living/basic/carp/proc/apply_colour()
 	if (!greyscale_config)
 		return
-	set_greyscale(colors = list(pick_weight(carp_colors)))
+	set_greyscale(colors = list(pick_weight(GLOB.carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/tamed(mob/living/tamer, atom/food, feedback = TRUE)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
-	ai_controller?.change_ai_movement_type(/datum/ai_movement/jps)
+	ai_controller?.change_ai_movement_type(/datum/ai_movement/navmap_astar)
 	if (!feedback)
 		return
 	spin(spintime = 10, speed = 1)
@@ -250,6 +232,8 @@
 	var/datum/callback/got_disk = CALLBACK(src, PROC_REF(got_disk))
 	var/datum/callback/display_disk = CALLBACK(src, PROC_REF(display_disk))
 	AddComponent(/datum/component/nuclear_bomb_operator, got_disk, display_disk)
+	var/obj/item/implant/implanter = SSwardrobe.provide_type(/obj/item/implant/tacmap/nuclear/cayenne, src)
+	implanter.implant(src, null, TRUE)
 
 /mob/living/basic/carp/pet/cayenne/apply_colour()
 	if (prob(RARE_CAYENNE_CHANCE))

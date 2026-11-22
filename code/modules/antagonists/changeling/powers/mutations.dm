@@ -188,6 +188,7 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	armour_penetration = 20
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
@@ -211,6 +212,8 @@
 	)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, click_parameters)
+	if(QDELETED(target))
+		return
 	if(istype(target, /obj/structure/table))
 		var/obj/smash = target
 		smash.deconstruct(FALSE)
@@ -479,6 +482,8 @@
 		return
 
 	var/obj/item/shield/changeling/S = ..(user)
+	if(!S)
+		return
 	S.remaining_uses = round(changeling.absorbed_count * 3)
 	return TRUE
 
@@ -544,6 +549,7 @@
 	cold_protection = 0
 	heat_protection = 0
 	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /datum/armor/armor_changeling
 	melee = 40

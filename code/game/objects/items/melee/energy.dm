@@ -169,6 +169,56 @@
 	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|FIRELOSS)
 
+///Lone wander jaunt axe, used in /datum/outfit/myststranger
+/obj/item/melee/energy/axe/lone_wanderer
+	name = "experimental protonic inversal axe"
+	///Fallout NV OWB refrence FTW.
+	desc = "Yes, because the intellectually challenged see an M and a T next to each other and take Occam's razor to it!"
+	desc_controls = "Right-Click to dash."
+	var/datum/effect_system/spark_spread/spark_system
+	var/datum/action/innate/dash/lone_wanderer/jaunt
+
+/obj/item/melee/energy/axe/lone_wanderer/Initialize(mapload)
+	. = ..()
+	jaunt = new(src)
+	spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+
+/obj/item/melee/energy/axe/lone_wanderer/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.density)
+		jaunt?.teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/melee/energy/axe/lone_wanderer/equipped(mob/user, slot, initial)
+	. = ..()
+	if(!QDELETED(jaunt))
+		jaunt.Grant(user, src)
+
+/obj/item/melee/energy/axe/lone_wanderer/dropped(mob/user)
+	. = ..()
+	if(!QDELETED(jaunt))
+		jaunt.Remove(user)
+
+/obj/item/melee/energy/axe/lone_wanderer/Destroy()
+	QDEL_NULL(spark_system)
+	QDEL_NULL(jaunt)
+	return ..()
+
+/datum/action/innate/dash/lone_wanderer
+	current_charges = 5
+	max_charges = 5
+	charge_rate = 20
+	beam_length = 0.1 SECONDS
+	recharge_sound = null
+
+/datum/action/innate/dash/lone_wanderer/GiveAction(mob/viewer)
+	return
+
+/datum/action/innate/dash/lone_wanderer/HideFrom(mob/viewer)
+	return
+
 /// Energy swords.
 /datum/embedding/esword
 	embed_chance = 75

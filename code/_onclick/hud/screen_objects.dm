@@ -49,6 +49,8 @@
 	/// Generally we don't want default Click stuff, which results in bugs like using Telekinesis on a screen element
 	/// or trying to point your gun at your screen.
 	var/default_click = FALSE
+	/// The key this screen object is stored under in its hud's screen_objects, if it was added with [/datum/hud/proc/add_screen_object]
+	var/hud_key
 
 /atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -57,6 +59,11 @@
 	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
+	if(hud && !isnull(hud_key) && hud.screen_objects[hud_key] == src)
+		hud.screen_objects -= hud_key
+		if(!QDELETED(hud))
+			hud.static_inventory -= src
+			hud.mymob?.canon_client?.screen -= src
 	master_ref = null
 	hud = null
 	return ..()
@@ -91,7 +98,7 @@
 	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
 
 /// Returns the mob this is being displayed to, if any
-/atom/movable/screen/proc/get_mob()
+/atom/movable/screen/proc/get_mob() as /mob
 	return hud?.mymob
 
 /atom/movable/screen/proc/on_hud_delete(datum/source)
@@ -264,8 +271,9 @@
 	. = ..()
 
 	if(!handcuff_overlay)
+		var/ui_style = hud?.mymob?.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
-		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
+		handcuff_overlay = mutable_appearance((ui_style ? ui_style2icon(ui_style) : 'icons/hud/screen_gen.dmi'), state)
 
 	if(!hud?.mymob)
 		return

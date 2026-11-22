@@ -583,6 +583,8 @@ world
 						add.MapColors(arglist(appearance.color))
 					else
 						add.Blend(appearance.color, ICON_MULTIPLY)
+				if(!(appearance.appearance_flags & KEEP_TOGETHER))
+					add = flatten_height_filter(add, appearance)
 			else // 'I' is an appearance object.
 				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim, next_parentcolor)
 
@@ -618,6 +620,9 @@ world
 			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
 
 
+		if(appearance.appearance_flags & KEEP_TOGETHER)
+			flat = flatten_height_filter(flat, appearance)
+
 		if(appearance.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, appearance.alpha), ICON_MULTIPLY)
 
@@ -630,6 +635,7 @@ world
 			return icon(flat, "", SOUTH)
 	else if (render_icon) // There's no overlays.
 		var/icon/final_icon = icon(icon(curicon, curstate, base_icon_dir), "", SOUTH, no_anim ? TRUE : null)
+		final_icon = flatten_height_filter(final_icon, appearance)
 
 		if (appearance.alpha < 255)
 			final_icon.Blend(rgb(255,255,255, appearance.alpha), ICON_MULTIPLY)
@@ -643,6 +649,50 @@ world
 		return final_icon
 
 	#undef PROCESS_OVERLAYS_OR_UNDERLAYS
+
+/// Icon procs ignore filters, so this redoes an appearance's height filter (see apply_height_filter) on its flattened icon. Returns the icon to use.
+/proc/flatten_height_filter(icon/flat, image/appearance)
+	if(!length(appearance.filters))
+		return flat
+	var/dm_filter/height_filter = appearance.filters["height_displacement"]
+	if(!height_filter)
+		return flat
+
+	// green 128 + n on a mask row moves that row by n pixels, and every height mask moves whole rows
+	var/static/alist/mask_rows_cache = alist()
+	var/mask = height_filter.icon
+	var/list/mask_rows = mask_rows_cache[mask]
+	if(isnull(mask_rows))
+		var/icon/mask_icon = icon(mask)
+		mask_rows = list()
+		for(var/row in 1 to mask_icon.Height())
+			var/pixel = mask_icon.GetPixel(1, row)
+			var/list/channels = pixel ? rgb2num(pixel) : null
+			mask_rows += channels ? channels[2] - 128 : 0
+		mask_rows_cache[mask] = mask_rows
+
+	var/width = flat.Width()
+	var/height = flat.Height()
+	var/list/shifts = list()
+	for(var/row in 1 to height)
+		var/mask_row = row - height_filter.y
+		var/mask_shift = (mask_row >= 1 && mask_row <= length(mask_rows)) ? mask_rows[mask_row] : 0
+		shifts += round(mask_shift * height_filter.size / 127, 1)
+
+	var/icon/displaced = icon(flat)
+	displaced.Blend(rgb(255, 255, 255, 0), ICON_MULTIPLY)
+	var/band_start = 1
+	for(var/row in 1 to height)
+		if(row < height && shifts[row + 1] == shifts[row])
+			continue
+		var/icon/band = icon(flat)
+		var/shift = shifts[row]
+		if(shift)
+			band.Shift(shift < 0 ? SOUTH : NORTH, abs(shift))
+		band.Crop(1, band_start, width, row)
+		displaced.Blend(band, ICON_OVERLAY, 1, band_start)
+		band_start = row + 1
+	return displaced
 
 /proc/getIconMask(atom/atom_to_mask)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(atom_to_mask.icon, atom_to_mask.icon_state)//So we want the default icon and icon state of atom_to_mask.
@@ -685,6 +735,21 @@ world
 	mask_icon.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 255,255,255,-255, 1,1,1,1)
 	return mask_icon
 
+/**
+ * A simple helper proc to apply a mask to an icon
+ * Arguments:
+ * * base_icon - the icon which the proc will apply the mask on
+ * * mask_to_use - the mask to use from code\__DEFINES\icon_masks.dm
+ * * replacement - an icon to overlay after the masking
+ */
+/proc/apply_icon_mask(icon/base_icon, mask_to_use, icon/replacement)
+	if(isnull(mask_to_use))
+		return
+	var/icon/mask = icon('icons/mob/clothing/under/masking_helpers.dmi', mask_to_use)
+	base_icon.Blend(mask, ICON_SUBTRACT)
+	if(!isnull(replacement))
+		base_icon.Blend(replacement, ICON_OVERLAY)
+	return base_icon
 
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.
@@ -1363,6 +1428,50 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		var/icon/my_icon = icon(icon_path)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
+
+/**
+ * Returns an alist (x, y, width, height) describing the box around the visible pixels of an icon state.
+ *
+ * Only the first frame facing south is measured.
+ */
+/proc/get_icon_state_visible_bounds(icon_file, icon_state) as /alist
+	// unlike get_icon_dimensions this caches runtime generated icons too, one entry per icon for the rest of the round, bc GetPixel is slow as balls
+	var/static/alist/cached_bounds = alist()
+	var/alist/bounds_by_state = cached_bounds[icon_file]
+	if(isnull(bounds_by_state))
+		bounds_by_state = alist()
+		cached_bounds[icon_file] = bounds_by_state
+	var/alist/bounds = bounds_by_state["[icon_state]"]
+	if(bounds)
+		return bounds
+
+	var/icon/sprite = icon(icon_file, icon_state, SOUTH, 1)
+	var/icon_width = sprite.Width()
+	var/icon_height = sprite.Height()
+	var/left = icon_width + 1
+	var/right = 0
+	var/bottom = icon_height + 1
+	var/top = 0
+	for(var/x in 1 to icon_width)
+		for(var/y in 1 to icon_height)
+			if(isnull(sprite.GetPixel(x, y)))
+				continue
+			left = min(left, x)
+			right = max(right, x)
+			bottom = min(bottom, y)
+			top = max(top, y)
+
+	if(right < left)
+		bounds = alist("x" = 0, "y" = 0, "width" = icon_width, "height" = icon_height)
+	else
+		bounds = alist(
+			"x" = (left + right - 1 - icon_width) / 2,
+			"y" = (bottom + top - 1 - icon_height) / 2,
+			"width" = right - left + 1,
+			"height" = top - bottom + 1,
+		)
+	bounds_by_state["[icon_state]"] = bounds
+	return bounds
 
 /// Fikou's fix for making toast alerts look nice - resets offsets, transforms to fit
 /proc/get_small_overlay(atom/source)

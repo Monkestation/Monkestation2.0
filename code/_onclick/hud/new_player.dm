@@ -1,4 +1,8 @@
+/// Maximum number of station trait buttons we will display, please think hard before creating scenarios where there are more than this
+#define MAX_STATION_TRAIT_BUTTONS_VERTICAL 3
+
 /datum/hud/new_player
+	var/list/shown_station_trait_buttons
 
 /datum/hud/new_player/New(mob/owner)
 	..()
@@ -27,6 +31,60 @@
 	start_button.SlowInit()
 	static_inventory += start_button
 	start_button.owner = REF(owner)
+
+/// Load and then display the buttons for relevant station traits
+/datum/hud/new_player/proc/show_station_trait_buttons()
+	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
+		return
+	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
+		if (QDELETED(trait) || !trait.can_display_lobby_button(mymob.client))
+			remove_station_trait_button(trait)
+			continue
+		if(LAZYACCESS(shown_station_trait_buttons, trait))
+			continue
+		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(our_hud = src)
+		sign_up_button.owner = REF(mymob)
+		trait.setup_lobby_button(sign_up_button)
+		static_inventory |= sign_up_button
+		LAZYSET(shown_station_trait_buttons, trait, sign_up_button)
+		RegisterSignal(trait, COMSIG_QDELETING, PROC_REF(remove_station_trait_button))
+
+	place_station_trait_buttons()
+
+/// Display the buttosn for relevant station traits.
+/datum/hud/new_player/proc/place_station_trait_buttons()
+	if(hud_version != HUD_STYLE_STANDARD || !mymob?.client)
+		return
+
+	var/y_offset = -30
+	var/x_offset = -164
+	var/y_button_offset = -27
+	var/x_button_offset = 27
+	var/iteration = 0
+	for(var/trait in shown_station_trait_buttons)
+		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = shown_station_trait_buttons[trait]
+		iteration++
+		sign_up_button.screen_loc = "TOP:[y_offset],CENTER:[x_offset]"
+		mymob.client.screen |= sign_up_button
+		if (iteration >= MAX_STATION_TRAIT_BUTTONS_VERTICAL)
+			iteration = 0
+			y_offset = -30
+			x_offset += x_button_offset
+		else
+			y_offset += y_button_offset
+
+/// Remove a station trait button, then re-order the rest.
+/datum/hud/new_player/proc/remove_station_trait_button(datum/station_trait/trait)
+	SIGNAL_HANDLER
+	var/atom/movable/screen/lobby/button/sign_up/button = LAZYACCESS(shown_station_trait_buttons, trait)
+	if(!button)
+		return
+	LAZYREMOVE(shown_station_trait_buttons, trait)
+	UnregisterSignal(trait, COMSIG_QDELETING)
+	static_inventory -= button
+	mymob?.client?.screen -= button
+	qdel(button)
+	place_station_trait_buttons()
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
@@ -636,6 +694,27 @@
 	if(.)
 		SEND_SOUND(usr, 'sound/misc/menumonkey.ogg')
 
+/atom/movable/screen/lobby/button/sign_up
+	icon = 'icons/hud/lobby/signup_button.dmi'
+	icon_state = "signup"
+	base_icon_state = "signup"
+	always_create = FALSE
+
+/atom/movable/screen/lobby/button/sign_up/Click(location, control, params)
+	. = ..()
+	if(.)
+		update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/lobby/button/sign_up/MouseEntered(location, control, params)
+	. = ..()
+	if(QDELETED(src) || !desc)
+		return
+	openToolTip(usr, tip_src = src, params = params, title = name, content = desc,)
+
+/atom/movable/screen/lobby/button/sign_up/MouseExited()
+	. = ..()
+	closeToolTip(usr)
+
 /atom/movable/screen/lobby/overflow_alert
 	screen_loc = "TOP:-48,CENTER-2.7"
 	icon = 'icons/hud/lobby/overflow.dmi'
@@ -680,7 +759,7 @@
 
 /atom/movable/screen/lobby/overflow_alert/proc/initial_setup(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(SSstation, COMSIG_TICKER_ENTER_PREGAME)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
 	var/datum/station_trait/overflow_job_bureaucracy/overflow = locate() in SSstation.station_traits
 	overflow_job = overflow?.picked_job
 	if(overflow_job)
@@ -721,3 +800,5 @@
 	SSticker.start_immediately = TRUE
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
+
+#undef MAX_STATION_TRAIT_BUTTONS_VERTICAL

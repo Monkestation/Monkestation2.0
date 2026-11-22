@@ -12,10 +12,14 @@
 	if(!silent || override)
 		return
 
-	if(quickdraw)
-		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]. Right-click to remove it."))
-	else
-		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]."))
+	to_chat(user, span_notice("You discreetly slip [to_insert] into [parent].[quickdraw ? " Right-click to remove it." : ""]"))
+
+
+/datum/storage/pockets/coat
+	max_slots = 2
+	max_specific_storage = WEIGHT_CLASS_SMALL
+	rustle_sound = TRUE
+	attack_hand_interact = FALSE
 
 /datum/storage/pockets/small
 	max_slots = 1
@@ -173,7 +177,7 @@
 /datum/storage/pockets/armor
 	max_slots = 2
 	rustle_sound = TRUE
-	attack_hand_interact = TRUE
+	attack_hand_interact = FALSE
 
 ///Void cloak pocket
 /datum/storage/pockets/void_cloak

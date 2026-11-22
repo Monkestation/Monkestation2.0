@@ -100,6 +100,9 @@
 	var/current_y = screen_start_y
 	var/turf/our_turf = get_turf(real_location)
 
+	for(var/atom/movable/thing as anything in real_location)
+		thing.screen_loc = null
+
 	var/list/obj/storage_contents = list()
 	if (islist(numbered_contents))
 		for(var/content_type in numbered_contents)

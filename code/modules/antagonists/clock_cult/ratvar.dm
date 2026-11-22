@@ -54,7 +54,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM)
 	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_ending_start)), 5 SECONDS)
-	if(GLOB.narsie_breaching_rune)
+	if(GLOB.narsie_breaching_rune && !GLOB.wonderland_apocalypse)
 		if(istype(GLOB.narsie_breaching_rune, /obj/effect/rune/narsie))
 			new /obj/narsie(get_turf(GLOB.narsie_breaching_rune))
 		else

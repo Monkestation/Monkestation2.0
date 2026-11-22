@@ -27,21 +27,19 @@
 	)
 	enemy_roles = list(
 		JOB_AI,
-		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
-		JOB_SECURITY_ASSISTANT,
 		JOB_BRIG_PHYSICIAN,
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 		JOB_CURATOR,
 	)
-	required_enemies = 5
+	required_enemies = 3
 	min_players = 20
-	weight = 5
+	weight = 10
 	maximum_antags = 2
 	event_icon_state = "vampires"
 
