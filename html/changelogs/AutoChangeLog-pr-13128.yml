@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "rounds no longer sit on \"Reboot: DELAYED\" for minutes before restarting"
