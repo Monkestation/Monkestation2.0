@@ -13,14 +13,14 @@
 	if(hidden == FALSE)
 		user.upgrade_flags |= BORER_HIDING
 		owner.balloon_alert(owner, "started hiding")
-		owner.plane -= 2 // Its to make the borer move into or out of the WALL_PLANE and its original plane irrespective of level offset
+		owner.layer--
 		ADD_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
 		if((user.upgrade_flags & BORER_ENERGIC))
 			user.remove_movespeed_modifier(/datum/movespeed_modifier/borer_speed_bonus)
 	else
 		user.upgrade_flags &= ~BORER_HIDING
 		owner.balloon_alert(owner, "stopped hiding")
-		owner.plane += 2
+		owner.layer++
 		REMOVE_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
 		if((user.upgrade_flags & BORER_ENERGIC))
 			user.add_movespeed_modifier(/datum/movespeed_modifier/borer_speed_bonus)
