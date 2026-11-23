@@ -5,8 +5,6 @@
 	var/list/enemy_roles
 	///required number of enemies in roles to exist
 	var/required_enemies = 0
-	/// How much antag debt one pick from this event costs, the roll's credit shrinks by the same amount. Smaller antags should cost less than a full antag round.
-	var/antag_debt_cost = 1
 
 /datum/round_event_control/proc/return_failure_string(players_amt)
 	var/string
@@ -103,6 +101,8 @@
 	var/always_spawn_full_amount = FALSE
 	/// The candidate pool passed to run_event(), held just long enough for the new event to take it in New().
 	var/list/next_candidate_pool
+	/// How much antag debt one pick from this event costs, the roll's credit shrinks by the same amount. Smaller antags should cost less than a full antag round. Ghost rolls ignore it, they're outside antag debt.
+	var/antag_debt_cost = 1
 	/// Set when the last run asked players and none of them said yes, so refunding the points would just make the storyteller ask the same people again.
 	var/last_run_no_takers = FALSE
 
@@ -259,7 +259,6 @@
 	return candidates
 
 /datum/round_event_control/antagonist/from_ghosts
-	antag_debt_cost = 0.5
 
 /datum/round_event_control/antagonist/from_ghosts/get_candidates()
 	var/round_started = SSticker.HasRoundStarted()

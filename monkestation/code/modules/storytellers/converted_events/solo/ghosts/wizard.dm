@@ -23,7 +23,6 @@
 	)
 	required_enemies = 5
 	weight = 2
-	antag_debt_cost = 1
 	min_players = 35
 	max_occurrences = 1
 	prompted_picking = TRUE

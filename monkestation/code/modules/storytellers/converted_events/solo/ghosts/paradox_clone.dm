@@ -45,7 +45,7 @@
 			chat_text_border_icon = /datum/antagonist/paradox_clone,
 		)
 
-	for(var/mob/candidate as anything in roll_antag_candidates(candidates, antag_count, cast_control.antag_debt_cost))
+	for(var/mob/candidate as anything in pick_ghost_antags(candidates, antag_count))
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 

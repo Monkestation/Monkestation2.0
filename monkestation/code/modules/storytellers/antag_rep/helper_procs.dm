@@ -37,17 +37,12 @@
 		var/datum/preferences/prefs = GLOB.preferences_datums[ckey]
 		prefs?.adjust_antag_debt(share)
 
-/// Weighted draw of up to amount candidates for an antag roll. Charges each pick cost debt, credits the whole pool the same total, returns the picked mobs.
-/proc/roll_antag_candidates(list/candidates, amount = 1, cost = 1)
-	var/list/weighted_candidates = get_antag_roll_weights(candidates)
-	var/list/pool_ckeys = assoc_to_keys(weighted_candidates)
-	var/list/picked = list()
-	while(length(weighted_candidates) && length(picked) < amount)
-		var/picked_ckey = pick_n_take_weighted(weighted_candidates)
-		var/client/picked_client = GLOB.directory[picked_ckey]
-		if(QDELETED(picked_client) || QDELETED(picked_client.mob))
+/// Plain random draw of up to amount ghost candidates that still have a client. Ghost roles are freebies, so they never read or touch antag debt.
+/proc/pick_ghost_antags(list/candidates, amount = 1)
+	. = list()
+	for(var/mob/candidate as anything in shuffle(candidates))
+		if(length(.) >= amount)
+			break
+		if(QDELETED(candidate) || !candidate.client)
 			continue
-		picked_client.prefs?.adjust_antag_debt(-cost)
-		picked += picked_client.mob
-	credit_antag_roll(pool_ckeys, length(picked) * cost)
-	return picked
+		. += candidate

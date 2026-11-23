@@ -12,7 +12,6 @@
 	earliest_start = 40 MINUTES
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
-	antag_debt_cost = 0.5
 
 /datum/round_event/ghost_role/teratoma
 	minimum_required = 1
@@ -41,7 +40,10 @@
 	var/pod_type = pick(/obj/structure/closet/supplypod/car_pod, /obj/structure/closet/supplypod/washer_pod)
 	var/obj/structure/closet/supplypod/pod = new pod_type
 	pod.stay_after_drop = TRUE
-	for(var/mob/dead/selected as anything in roll_antag_candidates(candidates, MAX_TERATOMAS_TO_SPAWN, control.antag_debt_cost))
+	while(length(candidates) > 0 && length(spawned_mobs) < MAX_TERATOMAS_TO_SPAWN)
+		var/mob/dead/selected = pick_n_take(candidates)
+		if(QDELETED(selected) || !selected.client)
+			continue
 		var/datum/mind/goober_mind = new(selected.key)
 		goober_mind.active = TRUE
 
