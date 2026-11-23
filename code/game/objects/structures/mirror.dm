@@ -198,38 +198,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
 				race_changer.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 				race_changer.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
-				var/datum/color_palette/generic_colors/palette = race_changer.dna.color_palettes[/datum/color_palette/generic_colors]
-				palette?.mutant_color = sanitize_hexcolor(new_mutantcolor)
 
 			else
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE
 
-		if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS_SECONDARY))
-			var/datum/color_palette/generic_colors/palette = race_changer.dna.color_palettes[/datum/color_palette/generic_colors]
-			var/new_secondary_color = tgui_color_picker(race_changer, "Choose your secondary color:", "Race change", palette?.mutant_color_secondary)
-			if(new_secondary_color && palette)
-				palette.mutant_color_secondary = sanitize_hexcolor(new_secondary_color)
-
 	choose_species_features(race_changer)
-	race_changer.updateappearance(mutcolor_update = TRUE)
+	race_changer.update_body(is_creating = TRUE)
 	race_changer.update_mutations_overlay() // no hulk lizard
 
 /**
- * Lets someone pick the features of their new species listed in its mirror_race_change_features, like vox markings or skin tone,
- * with the same choices as in the character preferences.
+ * Lets someone pick the features of their new species listed in its mirror_race_change_features, like vox markings and their colors,
+ * with the same choices as in the character preferences. Takes choiced and color preferences.
  */
 /obj/structure/mirror/proc/choose_species_features(mob/living/carbon/human/race_changer)
 	var/list/feature_preferences = race_changer.dna.species.mirror_race_change_features
 	if(!length(feature_preferences))
 		return
 	for(var/preference_type in feature_preferences)
-		var/datum/preference/choiced/preference = GLOB.preference_entries[preference_type]
-		if(!istype(preference))
-			continue
-		var/feature_name = preference.main_feature_name || replacetext(replacetext(preference.savefile_key, "feature_", ""), "_", " ")
-		var/new_value = tgui_input_list(race_changer, "Choose your [LOWER_TEXT(feature_name)]", "Race change", preference.get_choices())
-		if(!isnull(new_value))
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+		var/feature_name = replacetext(replacetext(preference.savefile_key, "feature_", ""), "_", " ")
+		var/new_value
+		if(istype(preference, /datum/preference/choiced))
+			var/datum/preference/choiced/choiced_preference = preference
+			feature_name = LOWER_TEXT(choiced_preference.main_feature_name || feature_name)
+			new_value = tgui_input_list(race_changer, "Choose your [feature_name]", "Race change", choiced_preference.get_choices())
+		else if(istype(preference, /datum/preference/color))
+			new_value = tgui_color_picker(race_changer, "Choose your [feature_name]", "Race change")
+			new_value &&= sanitize_hexcolor(new_value)
+		if(!isnull(new_value) && preference.is_valid(new_value))
 			preference.apply_to_human(race_changer, new_value)
 	race_changer.dna.update_dna_identity()
 

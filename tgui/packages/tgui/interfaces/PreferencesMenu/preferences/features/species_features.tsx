@@ -410,14 +410,22 @@ export const feature_vox_quills_gradient_color: Feature<string> = {
 
 export const feature_vox_body_markings: FeatureChoiced = {
   name: 'Body Markings',
-  description: 'Colored by the mutant color.',
   component: FeatureDropdownInput,
+};
+
+export const feature_vox_body_markings_color: Feature<string> = {
+  name: 'Body Markings Color',
+  component: FeatureColorInput,
 };
 
 export const feature_vox_tail_markings: FeatureChoiced = {
   name: 'Tail Markings',
-  description: 'Colored by the secondary mutant color.',
   component: FeatureDropdownInput,
+};
+
+export const feature_vox_tail_markings_color: Feature<string> = {
+  name: 'Tail Markings Color',
+  component: FeatureColorInput,
 };
 
 export const feature_vox_tank_type: FeatureChoiced = {

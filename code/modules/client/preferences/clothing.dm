@@ -56,7 +56,7 @@
 			if(BODY_ZONE_PRECISE_R_HAND)
 				limb_zone = BODY_ZONE_R_ARM
 		var/obj/item/bodypart/limb = species.bodypart_overrides[limb_zone]
-		final_icon.blend_icon(uni_icon(initial(limb.icon_static), "[initial(limb.limb_id)]_[zone]"), ICON_OVERLAY)
+		final_icon.blend_icon(uni_icon(UNLINT(initial(limb.icon_static)), "[initial(limb.limb_id)]_[zone]"), ICON_OVERLAY)
 	return final_icon
 
 /// Backpack preference

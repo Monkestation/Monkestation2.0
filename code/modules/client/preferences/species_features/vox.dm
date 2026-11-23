@@ -178,7 +178,7 @@
 	if(relevant_external_organ in target.dna.species.external_organs)
 		target.set_hair_gradient_color(value, update = FALSE)
 
-/// Colored by the mutant color
+/// Colored by the mutant color, see /datum/preference/color/vox_body_markings_color
 /datum/preference/choiced/vox_body_markings
 	savefile_key = "feature_vox_body_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -195,7 +195,36 @@
 /datum/preference/choiced/vox_body_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_body_markings"] = value
 
-/// Colored by the secondary mutant color
+// Vox markings are colored by the mutant colors, which these set under marking names. Vox don't have the
+// mutant color traits, so the normal mutant color preferences aren't theirs. Any color works: it's added to dark sprites.
+
+/datum/preference/color/vox_body_markings_color
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	savefile_key = "feature_vox_body_markings_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_external_organ = /obj/item/organ/external/tail/vox
+
+/datum/preference/color/vox_body_markings_color/apply_to_human(mob/living/carbon/human/target, value)
+	if(!(relevant_external_organ in target.dna.species.external_organs))
+		return
+	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
+	palette?.mutant_color = value
+
+/datum/preference/color/vox_tail_markings_color
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	savefile_key = "feature_vox_tail_markings_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_external_organ = /obj/item/organ/external/tail/vox
+
+/datum/preference/color/vox_tail_markings_color/apply_to_human(mob/living/carbon/human/target, value)
+	if(!(relevant_external_organ in target.dna.species.external_organs))
+		return
+	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
+	palette?.mutant_color_secondary = value
+
+/// Colored by the secondary mutant color, see /datum/preference/color/vox_tail_markings_color
 /datum/preference/choiced/vox_tail_markings
 	savefile_key = "feature_vox_tail_markings"
 	savefile_identifier = PREFERENCE_CHARACTER

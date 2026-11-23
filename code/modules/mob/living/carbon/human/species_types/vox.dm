@@ -4,8 +4,6 @@
 	id = SPECIES_VOX
 	visual_gender = FALSE
 	inherent_traits = list(
-		TRAIT_MUTANT_COLORS, // body markings
-		TRAIT_MUTANT_COLORS_SECONDARY, // tail markings
 		TRAIT_NO_CLONE,
 		TRAIT_RESISTCOLD,
 	)
@@ -42,7 +40,9 @@
 	mirror_race_change_features = list(
 		/datum/preference/choiced/vox_skin_tone,
 		/datum/preference/choiced/vox_body_markings,
+		/datum/preference/color/vox_body_markings_color,
 		/datum/preference/choiced/vox_tail_markings,
+		/datum/preference/color/vox_tail_markings_color,
 	)
 	suicide_messages = list(
 		"%SUICIDER% is jamming %THEIR% claws into %THEIR% eye sockets!",
