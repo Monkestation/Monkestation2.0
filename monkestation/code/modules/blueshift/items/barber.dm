@@ -225,7 +225,7 @@
 			return
 		var/obj/item/organ/external/feature = hairlike_features[hairlike_features[1]]
 		if(length(hairlike_features) > 1)
-			var/selected_part = tgui_alert(user, "Please select which part of [target_human] you would like to sculpt!", "It's sculpting time!", hairlike_features + "Cancel")
+			var/selected_part = tgui_alert(user, "Please select which part of [target_human] you would like to sculpt!", "It's sculpting time!", assoc_to_keys(hairlike_features) + "Cancel")
 			if(!selected_part || selected_part == "Cancel")
 				return
 			feature = hairlike_features[selected_part]

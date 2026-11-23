@@ -211,9 +211,9 @@
 
 /datum/preference/choiced/vox_tail_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_tail_markings"] = value
-	// Like the quills, a tail that's already there takes the new markings
+	// Like the quills, a tail that's already there takes the new markings, unless it grew on someone else
 	var/obj/item/organ/external/tail/vox/tail = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-	if(istype(tail))
+	if(istype(tail) && (!tail.original_owner || IS_WEAKREF_OF(target, tail.original_owner)))
 		tail.bodypart_overlay.set_appearance_from_name(value)
 
 /// Which nitrogen tank a vox starts the shift with, see /datum/species/vox/post_equip_species_outfit()
