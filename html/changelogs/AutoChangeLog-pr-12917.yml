@@ -1,4 +1,0 @@
-author: "chumtoadmonke"
-delete-after: True
-changes:
-  - rscdel: "Removed acarp"
