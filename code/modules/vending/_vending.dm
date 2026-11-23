@@ -694,7 +694,6 @@
 			tilted = TRUE
 			tilted_rotation = picked_rotation
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	if(get_turf(fatty) != get_turf(src))
 		throw_at(get_turf(fatty), range, 1, spin = FALSE, quickstart = FALSE)
@@ -1026,7 +1025,6 @@
 
 	tilted = FALSE
 	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
 
 	var/matrix/to_turn = turn(transform, -tilted_rotation)
 	animate(src, transform = to_turn, 0.2 SECONDS)

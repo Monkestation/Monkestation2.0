@@ -68,7 +68,7 @@
 	. = ..()
 	if (stat == DEAD)
 		return
-	. += emissive_appearance(icon, "watcher_emissive", src/*, effect_type = EMISSIVE_NO_BLOOM */)
+	. += emissive_appearance(icon, "watcher_emissive", src, effect_type = EMISSIVE_NO_BLOOM)
 	. += emissive_appearance(icon, "watcher_emissive_bloom", src)
 
 /// I love eating diamonds yum

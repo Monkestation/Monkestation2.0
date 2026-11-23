@@ -1,7 +1,0 @@
-author: "EnterTheJake, Xander3359, Arturlang, Absolucy, KillerOrcaCora, necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "Tactical Maps have been added to the game!"
-  - rscadd: "Nuclear Operatives implants now let you open a minimap that shows the areas of the station and where the nukeops team, borgs, mechs, Cayenne and the nuke disk are in real time."
-  - rscadd: "Nukie leaders can draw and put labels on the map."
-  - rscadd: "The reconnaissance platform has been added to the nukie base, it shows the tactical map while on the Syndicate base."

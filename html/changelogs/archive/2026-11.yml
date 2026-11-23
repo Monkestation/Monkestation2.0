@@ -1010,3 +1010,180 @@
       balance:'
   byondsucks:
   - balance: Changeling armblade has 20 armor pen.
+2026-11-22:
+  Absolucy:
+  - balance: Bloodsuckers no longer need 5 "enemies" to roll, and should roll more
+      often now.
+  - rscadd: Added gentle, warping, transformative and crystalline slime crossbreeds.
+      Check Slimepedia to see what they do!
+  AitorLogedo:
+  - bugfix: 'rounds no longer sit on "Reboot: DELAYED" for minutes before restarting'
+  EnterTheJake:
+  - balance: Metallic hydrogen crossbow bolts now deal 60 damage with 100 armor penetration,
+      pierce vehicles, and no longer embed.
+  - spellcheck: Fixed the syndicate rebar crossbow box claiming low armor penetration,
+      and a typo in its uplink description.
+  - code_imp: Cleaned up duplicate vars on the hydrogen bolt and jagged rod recipe.
+  EnterTheJake, Xander3359, Arturlang, Absolucy, KillerOrcaCora, necromanceranne:
+  - rscadd: Tactical Maps have been added to the game!
+  - rscadd: Nuclear Operatives implants now let you open a minimap that shows the
+      areas of the station and where the nukeops team, borgs, mechs, Cayenne and the
+      nuke disk are in real time.
+  - rscadd: Nukie leaders can draw and put labels on the map.
+  - rscadd: The reconnaissance platform has been added to the nukie base, it shows
+      the tactical map while on the Syndicate base.
+2026-11-23:
+  Absolucy:
+  - refactor: (SmArtKar) Refactored how overlay lights work - having one in your pocket
+      will no longer color air around you into piss
+  - qol: (SmArtKar) Painted flashlights once again emit colored light.
+  - balance: (LemonInTheDark) Flashlight beams are a bit softer.
+  - rscadd: (SmArtKar) Emissive objects now have a bit of a colored bloom around them.
+  - qol: (SmArtKar) Added a preference to adjust emissive bloom size
+  - rscadd: (SmArtKar) Added specular overlays - some items like hazard vests or firefighter
+      suits no longer outright glow in the dark, but instead amplify existing light
+      to shine brighter than their surroundings.
+  - rscadd: (SmArtKar) Redid unrestricted access airlock overlays to look less bad
+  - bugfix: (SmArtKar) Fixed unrestricted access overlays not showing up on windoors.
+  - bugfix: (LemonInTheDark) Hitting lit things with the light_eater will no longer
+      sometimes cause them to stay stuck, lit
+  - image: (LemonInTheDark, Donglesplonge) Redoes fov "mask" sprites. They're clean,
+      have a very pleasant dithering effect, and look real fuckin good!
+  - rscdel: (LemonInTheDark, Donglesplonge) Changed FOV, it no longer hides mobs,
+      instead it blurs the hidden area, and makes it a bit darker/oversaturated
+  - bugfix: (Ben10Omintrix) fences will no longer appear pitch black and they will
+      layer properly
+  - bugfix: (LemonInTheDark) Using fake space tiles on icebox will no longer summon
+      the endless void
+  - bugfix: (Waterpig) Parallax layers no longer snap to and from the center of the
+      screen abruptly when changing the random parallax layer.
+  - qol: (Melbert) Tweaked size of runechat shadow outline.
+  - admin: (SmArtKar) Refactored the planemaster debugger tool
+  - bugfix: (LemonInTheDark) Grass turfs will render properly now. Reworked how floors
+      render, please report any bugs!
+  - bugfix: (LemonInTheDark) Cameras now properly capture lighting
+  - bugfix: (LemonInTheDark) The layering seen in photos should better match the actual
+      game
+  - bugfix: (_0Steven) Fixed pipes/cables/disposals rendering above closed catwalks.
+  - qol: (Melbert) Runes, crayons, and similar decals no longer have shadows
+  - bugfix: (Melbert) Blood and similar "mess" decals no longer have shadows (again)
+  - bugfix: (Ghom) Fixed a couple nits with the water visuals not appearing on objects
+      with a very low layer (rendered just above the floor), as well as atmos pipes
+      looking a bit funky on untiled turfs beside catwalks and platings when beside
+      connected, under-floored pipes.
+  - bugfix: (Melbert) Gibs get bulk cleaned if you clean the turf again
+  - refactor: (Melbert) Changed how things determine "I can be bulk cleaned if I clean
+      the turf underneath me", let me know if you notice anything not getting bulk
+      cleaned or weird things getting bulk cleaned
+  - bugfix: (SmArtKar) Fixed certain hallucinations displaying below floors/decals/items
+  - bugfix: (SmArtKar) Fixed spiderwebs, alien weeds, kudzu, and other stuff layering
+      below catwalks and glass floors
+  - bugfix: (SmArtKar) Fixed vents and pipes partially poking out from under glass
+      and catwalk floors
+  - bugfix: (SmArtKar) Fixed blood/glass floor glow going over objects
+  - bugfix: (SmArtKar) Fixed emissive overlays on neon carpets poking through objects
+  - bugfix: (SmArtKar) Fixed blood emissives rendering below disposals pipes and other
+      floor objects
+  - bugfix: (antropod) Fixes material tiles spawned by disposals underneath the floor
+  - bugfix: (Melbert) Fixed grab offsets not showing for anything but passive grab
+  - bugfix: (Melbert) Fix jank with mob offsets when riding things
+  - refactor: (Melbert) Refactored riding component, particularly how it selects layer
+      and offsets. Report any oddities
+  - refactor: (Melbert) Refactored pixel offsets of mobs. Report any oddities
+  - bugfix: (SmArtKar) Fixed broken layering on some vehicles
+  - bugfix: (SmArtKar) Fixed jittering resetting the wrong pair of visual offsets
+  - bugfix: (Melbert) Fixed offset during vehicle traversal over boxes and tables,
+      as well as while floating
+  - bugfix: (Ben10Omintrix) fixes surgery table buckle offsets
+  - bugfix: (Waterpig) Plasmaman helmet hats layer correctly now
+  - bugfix: (Waterpig) Cyborg hats should now layer correctly, among other worn items
+  - refactor: (Waterpig) Changed many of our use cases for pixel_x and pixel_y correctly
+      into pixel_w and pixel_z, fixing layering issues in the process.
+  - bugfix: (SmArtKar) Fixed runechat offsets for stored mobs
+  - refactor: (SmArtKar) Refactors immerse element to use alpha filters instead of
+      static overlays. It should look much prettier now.
+  - bugfix: (SmArtKar) Fixed harmless runtimes when a flying object tried to cross
+      lava
+  - bugfix: (SmArtKar) Fixes runtimes from throwing fishing lines into water
+  - bugfix: (Melbert) Items and mobs no longer hide behind big runes (heretic, cult,
+      wizard)
+  - bugfix: (Melbert) Fixed some situations in which you couldn't interact with heretic
+      runes
+  - bugfix: (_0Steven) You no longer render on top of tall enough objects that get
+      vertically offset when anchored to a table when standing on the tile directly
+      to the north of them. Examples are soda and booze dispensers.
+  - bugfix: (_0Steven) Removing the vertical offset some objects get when anchored
+      to a table can be done by unanchoring it at any point, rather than only on a
+      table.
+  - bugfix: (Ghom) beams now take into account the pixel offsets of both origin and
+      target more accurately.
+  - bugfix: (SmArtKar) Fixed PKC mark effect being offset to the side when applied
+      to some mobs.
+  - bugfix: (jimmyl) pancake stack layering
+  - bugfix: (jimmyl) pizzabox stack layering
+  - bugfix: (Ghom) Fixed the shower water visually not coming out behind the showerhead.
+  - bugfix: (SmArtKar) Fixed electrified chair overlay layering
+  - bugfix: (Fikou) bouncy castles no longer render under the gibs they spawn
+  - qol: (SmArtKar) Monster cores now display above corpses when dropped
+  - qol: (theOOZ) Mobs entangled within spacevines are layered above the spacevines
+      for as long as they stay buckled
+  - bugfix: (_0Steven) Bedsheets adjust their offset to match that of the living they're
+      tucking in.
+  - sound: (_0Steven) Bedsheets use the cloth drop/pickup sounds instead of being
+      silent.
+  - bugfix: (Ben10Omintrix) fixes pickup animation not matching player offset
+  - bugfix: (SmArtKar) Delusions no longer turn you into shadowy blobs when moving
+      between z-levels
+  - bugfix: (SmArtKar) Fixed weather from Z levels above rendering over players' UI
+  - qol: (SmArtKar) Multi-Z Detail setting has been renamed to Multi-Z Depth with
+      an explanation on what it does. "Standard" setting has been renamed to "No Culling"
+  - bugfix: (_0Steven) Fixed accessories getting slowly but surely offset further
+      down-right each time you attached them to an outfit.
+  - bugfix: (SmArtKar) Fixed rotated objects having odd shadows or not blocking emissives/space
+      light when they should.
+  - qol: (SmArtKar) Emissives now inherit object's transparency.
+  - bugfix: (zxaber) Fixed a visual bug with cyborg tools that are able to carry items.
+  - bugfix: (SmArtKar) Certain emotes (like twitching) no longer stop all ongoing
+      animations
+  - bugfix: (Jacquerel) When you pick up a plant pot and hide behind it you will now
+      also move it in front of you, in case it is visually far away from your position
+  - bugfix: (SmArtKar) Fixed goldgrubs leaving floating emissives after dying
+  - bugfix: (Nari Harimoto) Camera Consoles no longer hallucinate the Gateway in a
+      different position
+  - bugfix: (_0Steven) Critter crates no longer re-attain their ability to lift you
+      despite being open if you move one after opening it, and neither does this lifting
+      field stay after you destroy it.
+  - balance: The heavy artillery gun now uses its own slower riding speed instead
+      of the light gun's.
+  - bugfix: The wienermobile's fifth seat puts its passenger in the right spot.
+  - bugfix: Pixel shifting now resets when someone pulls you.
+  - bugfix: Railings no longer turn invisible or stay connected to railings that were
+      rotated, unanchored or destroyed.
+  - bugfix: Railings with rails on both sides of the same tile no longer have a gap
+      in the middle.
+  - bugfix: Railing ends no longer hang open next to unanchored or sideways railings.
+  - bugfix: Wooden fences and wrestling ropes now draw in front of people standing
+      behind them.
+  AitorLogedo:
+  - bugfix: fish tails no longer soak up puddles like bare feet, spilled booze won't
+      break your vaporizer anymore
+  EnterTheJake, Arturlang:
+  - bugfix: Flesh heretics now actually heal and cure wounds by eating organs and
+      meat.
+  - bugfix: Knit Flesh can insert organs again.
+  - bugfix: Ghouls made with Mansus Grasp no longer count against your bloody blade
+      limit.
+  - bugfix: Heretics examining non-ghouls no longer causes a runtime.
+  - balance: The flesh heretic final passive no longer grants damage resistance. Instead,
+      while fat, bullets embed in your flesh for 15% damage, bolas can't ensnare you,
+      and once 8 things are lodged in you they're expelled in a ring.
+  - balance: Flesh heretics get hungry half as fast.
+  - balance: Eating organs and meat as a flesh heretic now makes you fat much faster.
+  - balance: Bleeding Steel now inflicts a critical slash on the limb you're aiming
+      at, making it much easier to sever limbs.
+  - balance: Removed the limit on Ghouls, Voiceless Dead and Shattered Risen.
+  - balance: Ghouls now have 50 health, Voiceless Dead 75, Shattered Risen 150 and
+      Raw Prophets 85.
+  - balance: Knit Flesh can now extract (and implant) brains.
+  chumtoadmonke:
+  - rscdel: Removed acarp

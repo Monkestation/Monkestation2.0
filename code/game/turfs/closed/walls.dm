@@ -63,7 +63,7 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
-		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
+		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = LOW_FLOOR_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
 			generate_space_underlay(underlay_appearance, src)
 		else
@@ -171,17 +171,19 @@
 	return TRUE
 
 /mob/living/carbon/proc/start_leaning(obj/wall)
-
+	var/new_x = 0
+	var/new_y = 0
 	switch(dir)
 		if(SOUTH)
-			pixel_y += LEANING_OFFSET
+			new_y += LEANING_OFFSET
 		if(NORTH)
-			pixel_y += -LEANING_OFFSET
+			new_y -= LEANING_OFFSET
 		if(WEST)
-			pixel_x += LEANING_OFFSET
+			new_x += LEANING_OFFSET
 		if(EAST)
-			pixel_x += -LEANING_OFFSET
+			new_x -= LEANING_OFFSET
 
+	add_offsets(LEANING_TRAIT, x_add = new_x, y_add = new_y)
 	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
 	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
@@ -202,8 +204,7 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE, COMSIG_LIVING_RESIST))
 	is_leaning = FALSE
-	pixel_y = base_pixel_y + body_position_pixel_x_offset
-	pixel_x = base_pixel_y + body_position_pixel_y_offset
+	remove_offsets(LEANING_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_NO_LEG_AID, LEANING_TRAIT)
@@ -416,8 +417,8 @@
 		if(WALL_DENT_HIT)
 			decal.icon_state = "impact[rand(1, 3)]"
 
-	decal.pixel_x = x
-	decal.pixel_y = y
+	decal.pixel_w = x
+	decal.pixel_z = y
 
 	LAZYADD(dent_decals, decal)
 

@@ -313,7 +313,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/vitals_reader/no_hand, 32)
 	overlay.appearance_flags |= RESET_COLOR
 	overlay.color = color_to_use
 	overlay.pixel_z += 32
-	overlay.pixel_y += -32 + y_offset
+	overlay.pixel_z += -32 + y_offset
 	return overlay
 
 #undef LOWER_BAR_OFFSET

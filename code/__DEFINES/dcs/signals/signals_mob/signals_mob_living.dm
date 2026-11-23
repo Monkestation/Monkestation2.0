@@ -272,3 +272,6 @@
 
 /// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
 #define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"
+
+/// From /mob/living/update_offsets(animate) : (new_x, new_y, new_w, new_z, animate)
+#define COMSIG_LIVING_UPDATE_OFFSETS "living_update_offsets"

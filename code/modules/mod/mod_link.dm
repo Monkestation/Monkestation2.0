@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /proc/get_link_visual_generic(datum/mod_link/mod_link, atom/movable/visuals, proc_path)
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
 	playsound(mod_link.holder, 'sound/machines/terminal/terminal_processing.ogg', 50, vary = TRUE)
-	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "static_base", TURF_LAYER))
+	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "static_base", ABOVE_NORMAL_TURF_LAYER))
 	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "modlink", ABOVE_ALL_MOB_LAYER))
 	visuals.add_filter("crop_square", 1, alpha_mask_filter(icon = icon('icons/effects/effects.dmi', "modlink_filter")))
 	visuals.maptext_height = 6
@@ -56,23 +56,19 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	if(newdir & NORTH)
 		other_visual.pixel_y = 13
 		other_visual.layer = BELOW_MOB_LAYER
-		SET_PLANE_IMPLICIT(other_visual, GAME_PLANE_FOV_HIDDEN)
 	if(newdir & SOUTH)
 		other_visual.pixel_y = -24
 		other_visual.layer = ABOVE_ALL_MOB_LAYER
-		SET_PLANE_IMPLICIT(other_visual, GAME_PLANE_UPPER_FOV_HIDDEN)
 		new_transform.Scale(-1, 1)
 		new_transform.Translate(-1, 0)
 	if(newdir & EAST)
 		other_visual.pixel_x = 14
 		other_visual.layer = BELOW_MOB_LAYER
-		SET_PLANE_IMPLICIT(other_visual, GAME_PLANE_FOV_HIDDEN)
 		new_transform.Shear(0.5, 0)
 		new_transform.Scale(0.65, 1)
 	if(newdir & WEST)
 		other_visual.pixel_x = -14
 		other_visual.layer = BELOW_MOB_LAYER
-		SET_PLANE_IMPLICIT(other_visual, GAME_PLANE_FOV_HIDDEN)
 		new_transform.Shear(-0.5, 0)
 		new_transform.Scale(0.65, 1)
 	other_visual.transform = new_transform

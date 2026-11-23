@@ -484,7 +484,7 @@
 		else
 			var/t_growthstate = clamp(round(((growth / (myseed.harvest_age * (1.01 ** -myseed.maturation))) * 10) * myseed.growthstages, 1),1, myseed.growthstages)
 			plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
-	plant_overlay.pixel_y = myseed.plant_icon_offset
+	plant_overlay.pixel_z = myseed.plant_icon_offset
 	return plant_overlay
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.

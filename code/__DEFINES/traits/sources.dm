@@ -377,3 +377,6 @@
 
 /// From the aquarium component
 #define AQUARIUM_TRAIT "aquarium"
+
+/// From grabbing someone
+#define GRABBING_TRAIT "grabbing"

@@ -1,6 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - balance: "Metallic hydrogen crossbow bolts now deal 60 damage with 100 armor penetration, pierce vehicles, and no longer embed."
-  - spellcheck: "Fixed the syndicate rebar crossbow box claiming low armor penetration, and a typo in its uplink description."
-  - code_imp: "Cleaned up duplicate vars on the hydrogen bolt and jagged rod recipe."

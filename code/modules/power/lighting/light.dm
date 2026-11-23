@@ -5,7 +5,6 @@
 	icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = WALL_OBJ_LAYER
-	//plane = GAME_PLANE_UPPER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
@@ -793,7 +792,7 @@
 	icon_state = "floor"
 	bulb_outer_range = 4
 	light_angle = 360
-	layer = LOW_OBJ_LAYER
+	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

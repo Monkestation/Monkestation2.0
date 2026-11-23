@@ -58,7 +58,7 @@
 	icon_state = "cosmic_rune"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	plane = FLOOR_PLANE
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 	/// The other rune this rune is linked with
 	var/datum/weakref/linked_rune
 	/// Effect for when someone teleports
@@ -69,7 +69,7 @@
 	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
-	// ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 		COMSIG_ATOM_EXITED = PROC_REF(on_exited)
@@ -169,7 +169,7 @@
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_fade"
 	plane = FLOOR_PLANE
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 	anchored = TRUE
 	duration = 5
 
@@ -184,7 +184,7 @@
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_light"
 	plane = FLOOR_PLANE
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 	anchored = TRUE
 	duration = 5
 

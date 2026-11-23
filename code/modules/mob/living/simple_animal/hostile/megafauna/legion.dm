@@ -116,7 +116,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/small/update_overlays()
 	. = ..()
 	if (stat != DEAD) // Shouldn't really happen but just in case
-		. += emissive_appearance(icon, "[icon_state]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(client)
