@@ -97,7 +97,7 @@
 	var/unsuitable_atmos_damage = 1
 
 	///rendered posession overlays
-	var/list/possession_overlays[1]
+	var/list/possession_overlays[2]
 	/// do we have hands?
 	var/dexterous = FALSE
 
@@ -266,6 +266,18 @@
 	else
 		melee_attack(attack_target, modifiers)
 	//monkestation edit
+
+/mob/living/basic/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_ADJUST_HANDS, "Grant Hands")
+
+/mob/living/basic/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_ADJUST_HANDS] && check_rights(R_FUN))
+		AddComponent(/datum/component/basic_inhands, y_offset = -6)
+		AddComponent(/datum/component/max_held_weight, WEIGHT_CLASS_SMALL)
+		AddElement(/datum/element/dextrous)
 
 /mob/living/basic/vv_edit_var(vname, vval)
 	switch(vname)

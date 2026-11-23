@@ -2041,8 +2041,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_HALLUCINATION, "Give Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DELUSION_HALLUCINATION, "Give Delusion Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_GUARDIAN_SPIRIT, "Give Guardian Spirit")
-	VV_DROPDOWN_OPTION("", "-------------")
-	VV_DROPDOWN_OPTION(VV_HK_ADJUST_HANDS, "Grant Hands")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -2069,10 +2067,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_guardian(usr)
-	if(href_list[VV_HK_ADJUST_HANDS] && check_rights(R_FUN))
-		AddComponent(/datum/component/basic_inhands, y_offset = -6)
-		AddComponent(/datum/component/max_held_weight, WEIGHT_CLASS_SMALL)
-		AddElement(/datum/element/dextrous)
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list

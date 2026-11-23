@@ -26,6 +26,9 @@
 		qdel(src)
 		return
 
+	if(QDELETED(src))
+		return
+
 	var/mob/dead/observer/chosen = pick(candidates)
 	var/mob/living/basic/possession_holder/weak/created = new(get_turf(plush), plush)
 
