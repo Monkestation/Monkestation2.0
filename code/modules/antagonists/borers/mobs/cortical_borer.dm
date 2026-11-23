@@ -380,9 +380,9 @@
 
 	REMOVE_TRAIT(src, TRAIT_WEATHER_IMMUNE, "borer_in_host")
 	set_survivable_temperatures(initial(minimum_survivable_temperature), initial(maximum_survivable_temperature)) //reset body tempature
-	human_host = null
 	if(has_status_effect(/datum/status_effect/borer_sugar))
 		remove_status_effect(/datum/status_effect/borer_sugar)
+	human_host = null
 	SEND_SIGNAL(src, COMSIG_HOST_CHANGED)
 
 //borers shouldnt be able to whisper...
