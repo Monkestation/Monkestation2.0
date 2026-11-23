@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "kidnapped ceruleans get a spare vaporizer while held so they don't suffocate"
