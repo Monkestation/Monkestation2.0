@@ -44,7 +44,7 @@
 	message_admins("Latejoin: [ADMIN_LOOKUPFLW(latejoiner)] has been selected for [picked_event.name].")
 	log_storyteller("Latejoin: [key_name(latejoiner)] has been selected for [picked_event.name]")
 
-/// How much more (or less) likely the latejoiner is than the average alive player to win a weighted antag roll, so the chance averages out to the plain latejoin chance.
+/// How much more (or less) likely the latejoiner is than the average alive player to win a weighted antag roll. The chance is clamped to 100 after this, so owed players lose the excess and latejoin antags come out a bit rarer overall.
 /datum/controller/subsystem/gamemode/proc/get_latejoin_weight_multiplier(mob/living/carbon/human/latejoiner)
 	var/list/weights = get_antag_roll_weights(GLOB.alive_player_list | latejoiner)
 	var/joiner_weight = weights[latejoiner.ckey]
