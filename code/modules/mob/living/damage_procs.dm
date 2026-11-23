@@ -485,6 +485,22 @@
 /mob/living/proc/pre_stamina_change(diff as num, forced)
 	return diff
 
+/// Stamina damage taken so far. Reaching the stamina maximum means stamcrit.
+/mob/living/proc/getStaminaLoss()
+	return stamina?.loss || 0
+
+/// Positive amount deals stamina damage, negative heals it. Returns the damage actually dealt.
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
+	if(!stamina || !amount)
+		return 0
+	if(!forced && !(mob_biotypes & required_biotype))
+		return 0
+	return -stamina.adjust(-amount, forced)
+
+/// Sets stamina damage to exactly this amount.
+/mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
+	return adjustStaminaLoss(amount - getStaminaLoss(), updating_stamina, forced, required_biotype)
+
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.
  *
