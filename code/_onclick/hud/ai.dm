@@ -202,7 +202,6 @@
 	AI = hud_owner?.mymob
 	if(!AI)
 		return INITIALIZE_HINT_QDEL //this is probably a bad idea ingame, but... hey if it works for unit tests? (does not know if itll work)
-	START_PROCESSING(SSobj, src) //SSobj sounds good. The things that download are also on the same subsystem.
 
 /atom/movable/screen/ai_download_alarm/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -219,6 +218,8 @@
 			message += "<br>[uppertext(download_area.name) || "NIL REF ERR"] - [downloader.download_progress]% DOWNLOADED"
 
 	maptext = MAPTEXT(message)
+	if(!length(AI.download_sources))
+		STOP_PROCESSING(SSobj, src)
 
 
 /datum/hud/ai

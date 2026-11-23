@@ -345,6 +345,9 @@ GLOBAL_VAR_INIT(ai_control_code, random_nukecode(6))
 			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 			downloading = target
 			downloading.download_sources += src
+			var/atom/movable/screen/ai_download_alarm/timer = locate() in downloading.hud_used.static_inventory
+			if(timer)
+				START_PROCESSING(SSobj, timer)
 			var/mob/living/message_target = downloading.deployed_shell ? downloading.deployed_shell : downloading
 			to_chat(message_target, span_userdanger("Warning! Someone is attempting to download you from [get_area(src)]! (<a href='byond://?src=[REF(downloading)];instant_download=1;console=[REF(src)]'>Click here [downloading.deployed_shell ? "while in your core " : ""]to finish download instantly</a>)"))
 			message_target.playsound_local(message_target, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
