@@ -2,6 +2,7 @@
 /obj/item/spear
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "spearglass0"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "spear"

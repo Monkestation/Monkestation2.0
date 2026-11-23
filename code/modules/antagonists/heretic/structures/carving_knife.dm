@@ -5,7 +5,7 @@
 		but only few can evoke the dangers that lurk beneath reality."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "rune_carver"
-	// icon_angle = -45
+	icon_angle = -45
 	flags_1 = CONDUCT_1
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL

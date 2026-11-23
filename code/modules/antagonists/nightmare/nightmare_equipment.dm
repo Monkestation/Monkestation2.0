@@ -5,6 +5,7 @@
 	name = "light eater" //as opposed to heavy eater
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
+	icon_angle = 180
 	inhand_icon_state = "arm_blade"
 	force = 25
 	armour_penetration = 35

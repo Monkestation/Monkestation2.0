@@ -5,6 +5,7 @@
 	desc = "So you never have to touch anything with your dirty, unwashed hands."
 	reach = 2
 	icon_state = "tongs"
+	icon_angle = -45
 	base_icon_state = "tongs"
 	inhand_icon_state = "fork" // close enough
 	attack_verb_continuous = list("pinches", "tongs", "nips")

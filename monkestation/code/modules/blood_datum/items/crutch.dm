@@ -3,6 +3,7 @@
 	desc = "A medical crutch used by people missing a leg. Not all that useful if you're missing both of them, though."
 	icon = 'monkestation/code/modules/blood_datum/icons/staff.dmi'
 	icon_state = "crutch_med"
+	icon_angle = 45
 	inhand_icon_state = "crutch_med"
 	lefthand_file = 'monkestation/code/modules/blood_datum/icons/melee_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/blood_datum/icons/melee_righthand.dmi'

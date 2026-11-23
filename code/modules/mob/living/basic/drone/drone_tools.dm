@@ -51,6 +51,7 @@
 	desc = "A crowbar built into your chassis."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_engiborg_crowbar"
+	icon_angle = 0
 	inhand_icon_state = "crowbar"
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
@@ -79,6 +80,7 @@
 	desc = "A wrench built into your chassis."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_engiborg_wrench"
+	icon_angle = 0
 	inhand_icon_state = "wrench"
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5 //Monke, drone tools are as fast as borg tools.
@@ -107,5 +109,6 @@
 	desc = "A multitool built into your chassis."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_engiborg_multitool"
+	icon_angle = 0
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5

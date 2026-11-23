@@ -47,6 +47,7 @@
 	desc = "Dangerous. Loud. Sleek. It has a built in roulette wheel. This thing could easily rip your arm off if you're not careful."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "house_edge0"
+	icon_angle = -45
 	inhand_icon_state = "house_edge0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'

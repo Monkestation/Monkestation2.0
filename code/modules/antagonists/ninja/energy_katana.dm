@@ -15,6 +15,7 @@
 	desc_controls = "Right-click to dash."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "energy_katana"
+	icon_angle = 35
 	inhand_icon_state = "energy_katana"
 	worn_icon_state = "energy_katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'

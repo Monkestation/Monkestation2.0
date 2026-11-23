@@ -185,6 +185,7 @@
 	hitsound = 'sound/items/weapons/blade1.ogg'
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "lightspear"
+	icon_angle = -45
 	inhand_icon_state = "lightspear"
 	worn_icon_state = "none"
 	lefthand_file = 'icons/mob/inhands/polearms_lefthand.dmi'

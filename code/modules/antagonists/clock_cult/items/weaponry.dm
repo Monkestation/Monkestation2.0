@@ -70,6 +70,7 @@
 	desc = "A razor-sharp spear made of brass. It thrums with barely-contained energy."
 	base_icon_state = "ratvarian_spear"
 	icon_state = "ratvarian_spear0"
+	icon_angle = -45
 	embed_type = /datum/embedding/brass_spear
 	throwforce = 40
 	force = 7
@@ -220,6 +221,7 @@
 	name = "brass longsword"
 	desc = "A large sword made of brass."
 	icon_state = "ratvarian_sword"
+	icon_angle = -45
 	force = 20
 	throwforce = 20
 	armour_penetration = 15
