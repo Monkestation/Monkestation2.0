@@ -330,11 +330,11 @@
 	build_path = /obj/item/disk/design_disk/limbs/lizard
 
 /obj/item/disk/design_disk/limbs/vox
-	name = "Vox Limb Design Disk"
+	name = "Vox Organ Design Disk"
 	limb_designs = list(/datum/design/vox_tail, /datum/design/vox_tongue, /datum/design/vox_eyes, /datum/design/vox_liver, /datum/design/vox_lungs)
 
 /datum/design/limb_disk/vox
-	name = "Vox Limb Design Disk"
+	name = "Vox Organ Design Disk"
 	desc = "Contains designs for vox organs for the limbgrower - Vox tail, tongue, eyes, liver, and lungs."
 	id = "limbdesign_vox"
 	build_path = /obj/item/disk/design_disk/limbs/vox
