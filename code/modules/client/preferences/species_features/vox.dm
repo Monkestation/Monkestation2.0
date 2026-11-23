@@ -61,6 +61,9 @@
 /datum/preference/choiced/vox_skin_tone/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_skin_tone"] = value
 
+/datum/preference/choiced/vox_skin_tone/get_value_from_human(mob/living/carbon/human/target)
+	return target.dna.features["vox_skin_tone"]
+
 /datum/preference/choiced/vox_quills
 	savefile_key = "feature_vox_quills"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -195,6 +198,9 @@
 /datum/preference/choiced/vox_body_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_body_markings"] = value
 
+/datum/preference/choiced/vox_body_markings/get_value_from_human(mob/living/carbon/human/target)
+	return target.dna.features["vox_body_markings"]
+
 // Vox markings are colored by the mutant colors, which these set under marking names. Vox don't have the
 // mutant color traits, so the normal mutant color preferences aren't theirs. Any color works: it's added to dark sprites.
 
@@ -211,6 +217,10 @@
 	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette?.mutant_color = value
 
+/datum/preference/color/vox_body_markings_color/get_value_from_human(mob/living/carbon/human/target)
+	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
+	return palette?.mutant_color
+
 /datum/preference/color/vox_tail_markings_color
 	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	savefile_key = "feature_vox_tail_markings_color"
@@ -223,6 +233,10 @@
 		return
 	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette?.mutant_color_secondary = value
+
+/datum/preference/color/vox_tail_markings_color/get_value_from_human(mob/living/carbon/human/target)
+	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]
+	return palette?.mutant_color_secondary
 
 /// Colored by the secondary mutant color, see /datum/preference/color/vox_tail_markings_color
 /datum/preference/choiced/vox_tail_markings
@@ -244,6 +258,9 @@
 	var/obj/item/organ/external/tail/vox/tail = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(istype(tail) && (!tail.original_owner || IS_WEAKREF_OF(target, tail.original_owner)))
 		tail.bodypart_overlay.set_appearance_from_name(value)
+
+/datum/preference/choiced/vox_tail_markings/get_value_from_human(mob/living/carbon/human/target)
+	return target.dna.features["vox_tail_markings"]
 
 /// Which nitrogen tank a vox starts the shift with, see /datum/species/vox/post_equip_species_outfit()
 /datum/preference/choiced/vox_tank_type

@@ -218,13 +218,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	for(var/preference_type in feature_preferences)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 		var/feature_name = replacetext(replacetext(preference.savefile_key, "feature_", ""), "_", " ")
+		var/current_value = preference.get_value_from_human(race_changer)
 		var/new_value
 		if(istype(preference, /datum/preference/choiced))
 			var/datum/preference/choiced/choiced_preference = preference
 			feature_name = LOWER_TEXT(choiced_preference.main_feature_name || feature_name)
-			new_value = tgui_input_list(race_changer, "Choose your [feature_name]", "Race change", choiced_preference.get_choices())
+			new_value = tgui_input_list(race_changer, "Choose your [feature_name]", "Race change", choiced_preference.get_choices(), current_value)
 		else if(istype(preference, /datum/preference/color))
-			new_value = tgui_color_picker(race_changer, "Choose your [feature_name]", "Race change")
+			new_value = tgui_color_picker(race_changer, "Choose your [feature_name]", "Race change", current_value)
 			new_value &&= sanitize_hexcolor(new_value)
 		if(!isnull(new_value) && preference.is_valid(new_value))
 			preference.apply_to_human(race_changer, new_value)
