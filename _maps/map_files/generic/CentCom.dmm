@@ -20378,7 +20378,8 @@
 	color = "#0000cc";
 	name = "Strange Fluid";
 	desc = "Something of extradimensional origin had leaked from the potato.";
-	layer = 2.99
+	layer = 2.99;
+	plane = -4
 	},
 /turf/open/floor/carpet/neon/simple/black,
 /area/centcom/central_command_areas/adminroom)
@@ -24847,9 +24848,7 @@
 /turf/open/misc/grass,
 /area/centcom)
 "jsJ" = (
-/obj/machinery/holopad/secure/hacked{
-	layer = 2.6
-	},
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/golden_eye)
 "jth" = (
@@ -31848,9 +31847,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
-/obj/machinery/holopad/secure/hacked{
-	layer = 2.6
-	},
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)
 "vqc" = (

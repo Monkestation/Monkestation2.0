@@ -1,0 +1,5 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Fax machines no longer show a stray \"00\" in the paper section."
+  - bugfix: "The fax \"Visible to Network\" field shows Yes/No again."

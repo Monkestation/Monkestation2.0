@@ -105,8 +105,7 @@
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "cL" = (
 /obj/effect/rune/apocalypse{
-	req_cultists = 999;
-	layer = 2
+	req_cultists = 999
 	},
 /obj/structure/destructible/cult/pants_altar{
 	layer = 3

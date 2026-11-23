@@ -321,6 +321,7 @@
 #define SSLIQUIDS_RUN_TYPE_FIRE 5
 #define SSLIQUIDS_RUN_TYPE_OCEAN 6
 #define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 7
+#define SSLIQUIDS_RUN_TYPE_REACTIONS 8
 
 ///The default state, no NT Representative ever spawned in.
 #define NT_REP_STATUS_DOESNT_EXIST 0

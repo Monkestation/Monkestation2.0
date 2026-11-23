@@ -525,19 +525,19 @@
 	)
 	generate_items_inside(items_inside, src)
 ///Used in /datum/outfit/myststranger
-/obj/item/storage/medkit/lone_wanderer_medkit
+/obj/item/storage/medkit/courrier_medkit
 	name = "ancient medical storage"
 	icon_state = "medkit_tactical_premium"
 	desc = "Give me your tired, your poor, your battered and bruised, all are welcome in my loving arms."
 
-/obj/item/storage/medkit/lone_wanderer_medkit/Initialize(mapload)
+/obj/item/storage/medkit/courrier_medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 	atom_storage.max_slots = 28
 	atom_storage.max_total_storage = 168
 	atom_storage.set_holdable(null,null,null)
 
-/obj/item/storage/medkit/lone_wanderer_medkit/PopulateContents()
+/obj/item/storage/medkit/courrier_medkit/PopulateContents()
 	var/list/items_inside = list(
 		/obj/item/scalpel/advanced = 1,
 		/obj/item/hemostat = 1,
@@ -551,8 +551,8 @@
 		/obj/item/emergency_bed = 1,
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/bodybag/bluespace = 1,
-		/obj/item/reagent_containers/medipen/lone_wanderer = 1,
-		/obj/item/reagent_containers/medipen/lone_wanderer/painkiller = 1,
+		/obj/item/reagent_containers/medipen/ancient = 1,
+		/obj/item/reagent_containers/medipen/ancient/painkiller = 1,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/gauze/sterilized = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,

@@ -168,7 +168,6 @@
 	anchored = TRUE
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
 	layer = ABOVE_HUD_PLANE
-	plane = GAME_PLANE_UPPER
 	///icon of our heart
 	var/mess_ups = 'monkestation/code/modules/ranching/icons/hover_icons.dmi'
 	var/client/stored_client

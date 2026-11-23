@@ -129,8 +129,8 @@
 		var/image/overlay = scoop_overlays[i]
 		if(istext(overlay))
 			overlay = image('icons/obj/kitchen.dmi', overlay)
-		overlay.pixel_x = x_offset
-		overlay.pixel_y = y_offset + added_offset
+		overlay.pixel_w = x_offset
+		overlay.pixel_z = y_offset + added_offset
 		new_overlays += overlay
 		added_offset += ICE_CREAM_SCOOP_OFFSET
 
