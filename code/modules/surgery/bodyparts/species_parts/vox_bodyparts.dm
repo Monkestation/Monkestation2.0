@@ -18,18 +18,13 @@
 	style_icons = GLOB.vox_skin_tones
 	add_bodypart_overlay(new /datum/bodypart_overlay/simple/vox_body_markings())
 
-/obj/item/bodypart/head/vox/get_limb_icon(dropped, mob/living/carbon/update_on)
-	. = ..()
-	// Attached heads get this from the eyes organ
-	if(dropped && eyes && (head_flags & HEAD_EYESPRITES))
-		var/image/eye_static = image(eyes_icon, get_eye_static_state(), -BODY_LAYER, SOUTH)
-		worn_face_offset?.apply_offset(eye_static)
-		. += eye_static
-
-/// Part of vox eyes is never colored: green, or blue for some skin tones
-/obj/item/bodypart/head/vox/proc/get_eye_static_state()
+/// Part of the eyes in a vox head is never colored, whatever eyes they are: green, or blue for some skin tones
+/obj/item/bodypart/head/vox/get_eye_static_overlays(dropped = FALSE)
 	var/static/list/blue_static_skin_tones = list("crimson", "mossy")
-	return "eyes_static_[(get_drawn_limb_style() in blue_static_skin_tones) ? "blue" : "green"]"
+	var/static_state = "eyes_static_[(get_drawn_limb_style() in blue_static_skin_tones) ? "blue" : "green"]"
+	if(dropped)
+		return list(image(eyes_icon, static_state, -BODY_LAYER, SOUTH))
+	return list(mutable_appearance(eyes_icon, static_state, -BODY_LAYER))
 
 /obj/item/bodypart/chest/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'

@@ -249,12 +249,22 @@
 				worn_face_offset.apply_offset(eye_right)
 			. += eye_left
 			. += eye_right
+			for(var/image/eye_static as anything in get_eye_static_overlays(dropped = TRUE))
+				worn_face_offset?.apply_offset(eye_static)
+				. += eye_static
 		else if(!eyes && (head_flags & HEAD_EYEHOLES))
 			var/no_eyes_icon = (eyes_icon && icon_exists(eyes_icon, "eyes_missing")) ? eyes_icon : 'icons/mob/species/human/human_face.dmi'
 			var/image/no_eyes = image(no_eyes_icon, "eyes_missing", -BODY_LAYER, SOUTH)
 			worn_face_offset?.apply_offset(no_eyes)
 			. += no_eyes
 	return
+
+/**
+ * Returns the overlays this head draws over any eyes in it that aren't colored by the eye color, like the fixed part of vox eyes.
+ * Used both when the head is attached (by the eyes' overlay) and when it's severed. The caller applies the face offset.
+ */
+/obj/item/bodypart/head/proc/get_eye_static_overlays(dropped = FALSE)
+	return list()
 
 /obj/item/bodypart/head/talk_into(mob/holder, message, channel, spans, datum/language/language, list/message_mods)
 	var/mob/headholder = holder

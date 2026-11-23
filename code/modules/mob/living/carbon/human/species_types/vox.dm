@@ -37,6 +37,11 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	breathid = "n2"
 	inherent_respiration_type = RESPIRATION_N2
+	// Not set on Yogstation either, left as ideas. Other species use these:
+	// species_cookie = /obj/item/food/meat/slab // what admins give for a prayer, a cookie by default. Lizards get meat, and vox tongues like it
+	// inert_mutation = /datum/mutation/... // the dormant mutation in the species' genome, dwarfism by default
+	// death_sound = 'sound/...' // played when they die, like the lizard one. Would want a proper death shriek
+	// inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_REPTILE // biotypes are used by diseases and some chems, lizards are MOB_REPTILE
 	mirror_race_change_features = list(
 		/datum/preference/choiced/vox_skin_tone,
 		/datum/preference/choiced/vox_body_markings,
@@ -100,7 +105,7 @@
 	human.dna.features["vox_facial_quills"] = SPRITE_ACCESSORY_NONE
 	human.dna.features["vox_body_markings"] = SPRITE_ACCESSORY_NONE
 	human.dna.features["vox_tail_markings"] = "Plain"
-	regenerate_organs(human, src, visual_only = TRUE)
+	regenerate_organs(human, visual_only = TRUE)
 	human.set_eye_color("#17fdfb")
 	human.update_body(is_creating = TRUE)
 

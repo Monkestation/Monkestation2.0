@@ -163,6 +163,8 @@
 			overlays += emissive_appearance_copy(eye_left, src, NONE)
 			overlays += emissive_appearance_copy(eye_right, src, NONE)
 
+		overlays += my_head.get_eye_static_overlays()
+
 		if(my_head?.worn_face_offset)
 			for(var/mutable_appearance/overlay in overlays)
 				my_head.worn_face_offset.apply_offset(overlay)
@@ -785,15 +787,6 @@
 	icon = 'icons/obj/species/vox/organs.dmi'
 	icon_state = "eyes-vox"
 	decay_factor = 0
-
-/obj/item/organ/internal/eyes/vox/generate_body_overlay(mob/living/carbon/human/parent)
-	. = ..()
-	var/obj/item/bodypart/head/vox/head = parent.get_bodypart(BODY_ZONE_HEAD)
-	if(!length(.) || !istype(head))
-		return
-	var/mutable_appearance/eye_static = mutable_appearance(head.eyes_icon, head.get_eye_static_state(), -BODY_LAYER)
-	head.worn_face_offset?.apply_offset(eye_static)
-	. += eye_static
 
 /obj/item/organ/internal/eyes/vox/emp_act(severity)
 	. = ..()

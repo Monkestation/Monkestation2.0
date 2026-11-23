@@ -278,7 +278,8 @@
 
 /datum/bodypart_overlay/mutant/tail/vox/get_image(obj/item/bodypart/limb, layer_index, layer_real, layer_name)
 	if(limb && on_original_body(limb))
-		skin_tone = limb.get_drawn_limb_style() || VOX_DEFAULT_SKIN_TONE
+		var/limb_style = limb.get_drawn_limb_style()
+		skin_tone = (limb_style in GLOB.vox_skin_tones) ? limb_style : VOX_DEFAULT_SKIN_TONE // other limb styles, like tundra moth fur, have no tail
 	var/wagging_prefix = wagging ? "wagging_" : ""
 	var/mutable_appearance/tail = mutable_appearance('icons/mob/human/species/vox/tails.dmi', "m_tail_vox_[wagging_prefix][skin_tone]_[layer_index]", layer = layer_real)
 	if(sprite_datum.icon_state != "plain")
