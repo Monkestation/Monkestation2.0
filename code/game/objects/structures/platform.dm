@@ -18,6 +18,7 @@
 	anchored = TRUE
 	armor_type = /datum/armor/half_wall
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
+	custom_materials = list(/datum/material/iron = PLATFORM_BASE_MATERIAL_AMOUNT)
 	/// Icon used for the frame
 	var/frame_icon = 'icons/obj/smooth_structures/platform/frame_faces/window_frame_normal.dmi'
 	/// Material used in our construction
@@ -246,7 +247,7 @@
 	frame_icon = 'icons/obj/smooth_structures/platform/frame_faces/window_frame_cult.dmi'
 	icon_state = "window_frame_cult-0"
 	base_icon_state = "window_frame_cult"
-	sheet_type = /datum/material/runedmetal
+	sheet_type = /obj/item/stack/sheet/runed_metal
 	custom_materials = list(/datum/material/runedmetal = PLATFORM_BASE_MATERIAL_AMOUNT)
 	smoothing_groups = SMOOTH_GROUP_PLATFORMS_STONE
 	canSmoothWith = SMOOTH_GROUP_PLATFORMS_STONE
