@@ -3,7 +3,6 @@
 	icon = 'goon/icons/mob/interact.dmi'
 	icon_state = "interact"
 	alpha = 180
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	layer = ABOVE_ALL_MOB_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -30,7 +29,7 @@
 
 	particle.icon_state = state
 	particle.loc = owner_loc
-	SET_PLANE_EXPLICIT(particle, GAME_PLANE_UPPER_FOV_HIDDEN, owner_loc)
+	SET_PLANE_EXPLICIT(particle, GAME_PLANE, owner_loc)
 	particle.pixel_x = origin_coords[1]
 	particle.pixel_y = origin_coords[2]
 	//A matrix to animate towards. Saves copy pasting var declarations.

@@ -84,8 +84,12 @@
 
 /// Flicks a hologram animation above the table for everyone
 /obj/machinery/minimap_table/proc/play_animation(icon_state = "startup", duration = animation_duration)
-	var/image/img = image(hologram_icon_file, src, icon_state, ABOVE_MOB_LAYER, dir, animation_x, animation_y)
-	var/image/emissive_img = image(hologram_icon_file, src, icon_state, ABOVE_MOB_LAYER, dir, animation_x, animation_y)
+	var/image/img = image(hologram_icon_file, src, icon_state, ABOVE_MOB_LAYER, dir)
+	img.pixel_w = animation_x
+	img.pixel_z = animation_y
+	var/image/emissive_img = image(hologram_icon_file, src, icon_state, ABOVE_MOB_LAYER, dir)
+	emissive_img.pixel_w = animation_x
+	emissive_img.pixel_z = animation_y
 	emissive_img.plane = EMISSIVE_PLANE
 	emissive_img.color = GLOB.emissive_color
 
@@ -179,13 +183,13 @@
 	if(active)
 		var/holo_state = "idle"
 		var/mutable_appearance/idle = mutable_appearance(hologram_icon_file, holo_state, ABOVE_MOB_LAYER)
-		idle.pixel_x = animation_x
-		idle.pixel_y = animation_y
+		idle.pixel_w = animation_x
+		idle.pixel_z = animation_y
 		. += idle
 
 		var/mutable_appearance/emissive = emissive_appearance(hologram_icon_file, holo_state, src, ABOVE_MOB_LAYER)
-		emissive.pixel_x = animation_x
-		emissive.pixel_y = animation_y
+		emissive.pixel_w = animation_x
+		emissive.pixel_z = animation_y
 		. += emissive
 
 /obj/machinery/minimap_table/OnProximityExit(atom/movable/gone)

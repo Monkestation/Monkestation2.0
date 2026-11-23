@@ -70,7 +70,7 @@
 
 /obj/effect/goliath_tentacle/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "[icon_state]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+	. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 	. += emissive_appearance(icon, "[icon_state]_e_bloom", src)
 
 /obj/effect/goliath_tentacle/attack_hand(mob/living/user, list/modifiers)

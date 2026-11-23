@@ -80,7 +80,7 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_overlays()
 	. = ..()
 	. += get_pipe_image(icon, "pipe", dir, , piping_layer)
-	if(showpipe)
+	if(underfloor_state)
 		. += get_pipe_image(icon, "pipe", initialize_directions)
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/process_atmos()

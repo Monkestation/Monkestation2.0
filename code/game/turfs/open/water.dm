@@ -19,12 +19,6 @@
 	var/sinking = FALSE
 	///If we have one then what should our player_sink max_sinkage be set to, leave unset for default sinkage
 	var/max_sinkage
-	/**
-	 * Used as the color arg/var for the immerse element. It should be kept more or less in line with
-	 * the hue of the turf, as semi-transparent vis overlays can opacify the semi-transparent bits of an icon,
-	 * and we're kinda trying to offset that issue.
-	 */
-	var/immerse_overlay_color = "#5AAA88"
 	///The transparency of the immerse element's overlay
 	var/immerse_overlay_alpha = 180
 	/// Fishing element for this specific water tile
@@ -66,7 +60,7 @@
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+	AddElement(/datum/element/immerse, "immerse", immerse_overlay_alpha)
 	immerse_added = TRUE
 
 /turf/open/water/Destroy()
@@ -82,7 +76,7 @@
 	. = ..()
 	if(immerse_added || is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
 		return
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+	AddElement(/datum/element/immerse, "immerse", immerse_overlay_alpha)
 	immerse_added = TRUE
 
 /turf/open/water/jungle
@@ -101,7 +95,6 @@
 	icon_state = "water"
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
-	immerse_overlay_color = "#7799AA"
 	fishing_datum = /datum/fish_source/ocean/beach
 
 /turf/open/water/beach/Initialize(mapload)
@@ -143,7 +136,6 @@
 		the odd fish darting through the water."
 	baseturfs = /turf/open/water/hot_spring
 	planetary_atmos = FALSE
-	immerse_overlay_color = "#A0E2DE"
 	immerse_overlay_alpha = 190
 	fishing_datum = /datum/fish_source/hot_spring
 	/// Holder for the steam particles
@@ -180,7 +172,7 @@
 /turf/open/water/hot_spring/proc/enter_initialized_movable(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
 	if(!immerse_added && !is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
-		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+		AddElement(/datum/element/immerse, "immerse", immerse_overlay_alpha)
 		immerse_added = TRUE
 	enter_hot_spring(movable)
 

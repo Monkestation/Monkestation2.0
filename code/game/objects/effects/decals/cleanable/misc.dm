@@ -10,6 +10,8 @@
 	desc = "Ashes to ashes, dust to dust, and into space."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
+	plane = GAME_PLANE
+	layer = CLEANABLE_OBJECT_LAYER
 	mergeable_decal = FALSE
 	beauty = -50
 	decal_reagent = /datum/reagent/ash
@@ -128,12 +130,13 @@
 	name = "cobweb"
 	desc = "Somebody should remove that."
 	gender = NEUTER
+	plane = GAME_PLANE
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
 	clean_type = CLEAN_TYPE_HARD_DECAL
+	is_mopped = FALSE
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
@@ -144,6 +147,8 @@
 	gender = NEUTER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
+	plane = GAME_PLANE
+	layer = CLEANABLE_OBJECT_LAYER
 	mergeable_decal = FALSE
 	beauty = -150
 	clean_type = CLEAN_TYPE_HARD_DECAL
@@ -215,6 +220,8 @@
 	name = "chemical pile"
 	desc = "A pile of chemicals. You can't quite tell what's inside it."
 	gender = NEUTER
+	plane = GAME_PLANE
+	layer = CLEANABLE_OBJECT_LAYER
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 
@@ -297,6 +304,8 @@
 	desc = "Torn pieces of cardboard and paper, left over from a package."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paper_shreds"
+	plane = GAME_PLANE
+	layer = CLEANABLE_OBJECT_LAYER
 
 /obj/effect/decal/cleanable/wrapping/pinata
 	name = "pinata shreds"
@@ -315,7 +324,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "garbage"
 	plane = GAME_PLANE
-	layer = FLOOR_CLEAN_LAYER //To display the decal over wires.
+	layer = CLEANABLE_OBJECT_LAYER
 	beauty = -150
 	clean_type = CLEAN_TYPE_HARD_DECAL
 
@@ -395,7 +404,7 @@
 
 /obj/effect/decal/cleanable/ants/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha)
+	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha, effect_type = EMISSIVE_NO_BLOOM)
 
 /obj/effect/decal/cleanable/ants/fire_act(exposed_temperature, exposed_volume)
 	var/obj/effect/decal/cleanable/ants/fire/fire_ants = new(loc)
@@ -422,7 +431,6 @@
 	name = "pool of fuel"
 	desc = "A pool of flammable fuel. Its probably wise to clean this off before something ignites it..."
 	icon_state = "fuel_pool"
-	layer = LOW_OBJ_LAYER
 	beauty = -50
 	clean_type = CLEAN_TYPE_BLOOD
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
