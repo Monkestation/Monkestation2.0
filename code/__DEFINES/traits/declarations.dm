@@ -1336,6 +1336,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Simple trait that just holds if we came into growth from a specific mob type. Should hold a REF(src) to the type of mob that caused the growth, not anything else.
 #define TRAIT_WAS_EVOLVED "was_evolved_from_the_mob_we_hold_a_textref_to"
 
+/// slapped on anything a slime has latched onto, and it never comes back off. if it's a monkey, nobody feels bad when it dies
+#define TRAIT_WAS_SLIME_FOOD "was_slime_food"
+
 // Traits to heal for
 
 /// This mob heals from carp rifts.

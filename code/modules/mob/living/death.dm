@@ -173,6 +173,9 @@
 		// This check exists so debraining someone doesn't make the surgeon super sad
 		if(manipulation.location == BODY_ZONE_HEAD && body_position == LYING_DOWN)
 			return
+	// monkeys in xenobio are food, don't make people sad about the buffet working
+	if(ismonkey(src) && HAS_TRAIT(src, TRAIT_WAS_SLIME_FOOD))
+		return
 
 	. = ..()
 	add_memory_in_range(src, 7, (gibbed ? /datum/memory/witness_gib : /datum/memory/witnessed_death), protagonist = src)
