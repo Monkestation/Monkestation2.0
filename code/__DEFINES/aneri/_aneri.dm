@@ -21,16 +21,3 @@
 
 /// Sets the folder where panic reports are written, creating it if needed.
 /proc/aneri_set_panic_output_folder(path)	return call_ext(ANERI, "byond:set_panic_output_folder")(path)
-
-/// Base type for datums whose data lives on the Rust side.
-/// It holds the key that Rust uses to find that data.
-/datum/aneri
-	VAR_FINAL/__aneri_key_low
-	VAR_FINAL/__aneri_key_high
-
-/datum/aneri/Del()
-	if(!gc_destroyed)
-		gc_destroyed = world.time
-		// no signal don't put a signal on this shit
-		UNLINT(Destroy())
-	return ..()

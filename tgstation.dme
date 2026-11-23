@@ -898,6 +898,7 @@
 #include "code\controllers\subsystem\processing\xenobio.dm"
 #include "code\datums\action.dm"
 #include "code\datums\alarm.dm"
+#include "code\datums\aneri.dm"
 #include "code\datums\beam.dm"
 #include "code\datums\browser.dm"
 #include "code\datums\callback.dm"
