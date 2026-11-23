@@ -199,13 +199,6 @@
 	if (isnull(flashed.mind) || !GET_CLIENT(flashed))
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
-
-	// monkestation edit: dont try to convert banned people
-	if(is_banned_from(flashed.ckey, list(ROLE_BROTHER, ROLE_SYNDICATE)))
-		flashed.balloon_alert(source, "cannot become brother!")
-		return
-	// monkestation end
-
 	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
 		// If the objective has a target, are we flashing them?
 		if(flashed == brother_objective.target?.current)
@@ -222,6 +215,11 @@
 
 	if (flashed in team.rejected_brothers)
 		flashed.balloon_alert(source, "[flashed.p_they()] have rejected you before")
+		return
+
+	if(is_banned_from(flashed.ckey, list(ROLE_BROTHER, ROLE_SYNDICATE)))
+		to_chat(flashed, span_big(span_hypnophrase("You can't remember how you fell down!")))
+		flashed.balloon_alert(source, "cannot become brother!")
 		return
 
 	//The first BB flash against someone should sleep them. They get a popup if they want to join the BB team or not. If they say no they cant be BB flashed anymore

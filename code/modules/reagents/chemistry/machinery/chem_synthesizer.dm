@@ -31,7 +31,10 @@
 				beaker = null
 				. = TRUE
 		if("input")
-			var/input_reagent = (input("Enter the name of any reagent", "Input") as text|null)
+			var/input_reagent = (input("Enter the name of any reagent", "Input") as text)
+			if(!input_reagent)
+				say("USE WORDS")
+				return
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
 			if(!input_reagent)
 				say("REAGENT NOT FOUND")
