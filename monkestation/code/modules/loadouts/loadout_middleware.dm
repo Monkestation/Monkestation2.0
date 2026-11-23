@@ -198,7 +198,7 @@
 	if(INFO_NAMED in preferences.loadout_list[item.item_path])
 		current_name = preferences.loadout_list[item.item_path][INFO_NAMED]
 
-	var/input_name = stripped_input(preferences.parent, "What name do you want to give [item.name]? Leave blank to clear.", "[item.name] name", current_name, MAX_NAME_LEN)
+	var/input_name = stripped_input(preferences.parent, "What name do you want to give [item.name]? Leave blank to clear.", "[item.name] name", html_decode(current_name), MAX_NAME_LEN)
 	if(QDELETED(src) || QDELETED(preferences.parent) || QDELETED(preferences))
 		return
 

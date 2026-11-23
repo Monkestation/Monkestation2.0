@@ -399,7 +399,8 @@
 	var/image/new_image = new
 	new_image.icon = 'icons/hud/slasher_ui.dmi'
 	new_image.pixel_x = 10
-	new_image.plane = GAME_PLANE_UPPER
+	new_image.plane = GAME_PLANE
+	new_image.layer = ABOVE_MOB_LAYER
 	switch(fear_stage)
 		if(2)
 			new_image.icon_state = "they_fear"

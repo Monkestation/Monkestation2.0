@@ -6,7 +6,7 @@
  */
 /atom
 	abstract_type = /atom
-	layer = TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
 
@@ -172,6 +172,9 @@
 	var/interaction_flags_click = NONE
 	/// Flags to check for in can_perform_action for mouse drag & drop checks. To bypass checks see interaction_flags_atom mouse drop flags
 	var/interaction_flags_mouse_drop = NONE
+
+	/// What color this shows up as on the tactical map
+	var/tacmap_color = TACMAP_SOLID
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -585,6 +588,10 @@
 
 ///Is this atom within 1 tile of another atom
 /atom/proc/HasProximity(atom/movable/proximity_check_mob as mob|obj)
+	return
+
+/// has a previously nearby atom moved away
+/atom/proc/OnProximityExit(atom/movable/proximity_check_mob as mob|obj)
 	return
 
 /// Sets the wire datum of an atom

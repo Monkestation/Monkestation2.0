@@ -550,6 +550,7 @@
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
+	icon_angle = -45
 	inhand_icon_state = "e_sword"
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -667,6 +668,7 @@
 	desc = "It says \"Sternside Changs #1 fan\" on it."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "foamblade"
+	icon_angle = -180
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
@@ -779,6 +781,7 @@
 	desc = "Woefully underpowered in D20."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "katana"
+	icon_angle = -45
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -1119,6 +1122,7 @@
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
+	icon_angle = -45
 	inhand_icon_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -1397,7 +1401,7 @@
 
 //Add changing looks when i feel suicidal about making 20 inhands for these.
 /obj/item/toy/dummy/attack_self(mob/user)
-	var/new_name = tgui_input_text(usr, "What would you like to name the dummy?", "Doll Name", doll_name, MAX_NAME_LEN)
+	var/new_name = tgui_input_text(usr, "What would you like to name the dummy?", "Doll Name", html_decode(doll_name), MAX_NAME_LEN)
 	if(!new_name)
 		return
 	doll_name = new_name
@@ -1516,18 +1520,18 @@
 	COOLDOWN_START(src, foamfinger_cooldown, 5 SECONDS)
 	user.manual_emote("waves around the foam finger.")
 	var/direction = prob(50) ? -1 : 1
-	if(NSCOMPONENT(user.dir)) //So signs are waved horizontally relative to what way the player waving it is facing.
-		animate(user, pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_x = user.pixel_x + (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+	if(NSCOMPONENT(user.dir))
+		animate(user, pixel_w = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_w = (-2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_w = (2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_w = (-2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_w = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
 	else
-		animate(user, pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_y = user.pixel_y + (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
-		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(user, pixel_z = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_z = (-2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = (2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = (-2 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+		animate(pixel_z = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE)
 	user.changeNext_move(CLICK_CD_MELEE)
 
 ///All people who have used an Intento this round along with their high scores.

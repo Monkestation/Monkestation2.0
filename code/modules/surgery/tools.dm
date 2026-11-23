@@ -3,6 +3,7 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "retractor"
+	icon_angle = 45
 	inhand_icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -25,6 +26,7 @@
 /obj/item/retractor/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_mediborg_retractor"
+	icon_angle = 45
 
 /obj/item/retractor/cyborg/alien
 	icon = 'icons/mob/silicon/robot_items.dmi'
@@ -36,6 +38,7 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "hemostat"
+	icon_angle = 135
 	inhand_icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -60,6 +63,7 @@
 /obj/item/hemostat/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_mediborg_hemostat"
+	icon_angle = 45
 
 /obj/item/hemostat/cyborg/alien
 	icon = 'icons/mob/silicon/robot_items.dmi'
@@ -71,6 +75,7 @@
 	desc = "This stops bleeding."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "cautery"
+	icon_angle = 135
 	inhand_icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -98,6 +103,7 @@
 /obj/item/cautery/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_mediborg_cautery"
+	icon_angle = 45
 
 /obj/item/cautery/cyborg/alien
 	icon_state = "toolkit_mediborg_cautery_alien"
@@ -217,6 +223,7 @@
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "scalpel"
+	icon_angle = 180
 	inhand_icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -264,6 +271,7 @@
 	desc = "Ultra-sharp blade attached directly to your servos for extra-accuracy."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_mediborg_scalpel"
+	icon_angle = 0
 
 /obj/item/scalpel/cyborg/alien
 	icon = 'icons/mob/silicon/robot_items.dmi'
@@ -275,6 +283,7 @@
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "saw"
+	icon_angle = 180
 	inhand_icon_state = "saw"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -319,6 +328,7 @@
 /obj/item/circular_saw/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_mediborg_saw"
+	icon_angle = 0
 
 /obj/item/circular_saw/cyborg/alien
 	icon = 'icons/mob/silicon/robot_items.dmi'
@@ -477,6 +487,7 @@
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5)
 	icon_state = "adv_retractor"
+	icon_angle = 0
 	inhand_icon_state = "adv_retractor"
 	surgical_tray_overlay = "retractor_advanced"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -521,6 +532,7 @@
 	desc = "A type of heavy duty surgical shears used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to be able to secure and align the shears."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "shears"
+	icon_angle = 90
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	toolspeed = 1
@@ -601,6 +613,7 @@
 	desc = "For setting things right."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "bonesetter"
+	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,  /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25)
@@ -618,6 +631,7 @@
 /obj/item/bonesetter/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_mediborg_bonesetter"
+	icon_angle = 45
 
 /obj/item/bonesetter/cyborg/alien
 	icon = 'icons/mob/silicon/robot_items.dmi'

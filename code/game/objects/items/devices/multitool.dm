@@ -15,6 +15,7 @@
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. You can activate it in-hand to locate the nearest APC."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "multitool"
+	icon_angle = -90
 	inhand_icon_state = "multitool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -334,6 +335,7 @@
 	desc = "Optimised version of a regular multitool. Streamlines processes handled by its internal microchip."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_engiborg_multitool"
+	icon_angle = 0
 	toolspeed = 0.5
 
 //Tricorder

@@ -89,6 +89,8 @@
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
 ///Called when a limb a carbon has gets an embed (mob/living/carbon/the_guy_getting_embedded, /obj/item/the_embed, /obj/item/bodypart/the_part_getting_the_embed)
 #define COMSIG_CARBON_EMBED_ADDED "item_embed_on_add"
+///Called when an embedded item stops being embedded in a carbon, before it is moved/deleted (mob/living/carbon/the_guy, /obj/item/the_embed, /obj/item/bodypart/the_part)
+#define COMSIG_CARBON_EMBED_REMOVED "item_embed_on_remove"
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)
@@ -188,9 +190,9 @@
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
 
-/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting)
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 #define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
-/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting)
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 #define COMSIG_HUMAN_PUNCHED "human_punched"
 
 #define COMSIG_CARBON_EQUIP_EARS "carbon_ears_equip"

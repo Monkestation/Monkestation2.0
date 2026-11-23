@@ -50,6 +50,11 @@
 		user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 
 	current_slot = slot
+	source.pixel_x = source.base_pixel_x
+	source.pixel_y = source.base_pixel_y
+	source.pixel_w = source.base_pixel_w
+	source.pixel_z = source.base_pixel_z
+
 	on_icon_update(source)
 
 /datum/component/tactical/proc/on_icon_update(obj/item/source)

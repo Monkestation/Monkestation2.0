@@ -16,10 +16,28 @@
 	var/ui_desc
 	/// If TRUE, then the inhand state is changed when swapping modes.
 	var/inhand_icon_change = TRUE
+	/// If TRUE, a normal qdel sends us to nullspace instead of deleting us.
+	var/recall_bound = FALSE
 
 /obj/item/melee/trick_weapon/Initialize(mapload)
 	. = ..()
 	apply_transform_component()
+
+/obj/item/melee/trick_weapon/proc/bind_to_recall()
+	recall_bound = TRUE
+	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_pre_qdeleted))
+	RegisterSignal(src, COMSIG_ADMIN_DELETING, PROC_REF(on_admin_delete))
+
+/obj/item/melee/trick_weapon/proc/on_pre_qdeleted(datum/source, force)
+	SIGNAL_HANDLER
+	if(!recall_bound || force)
+		return FALSE
+	moveToNullspace()
+	return TRUE
+
+/obj/item/melee/trick_weapon/proc/on_admin_delete(datum/source, client/admin)
+	SIGNAL_HANDLER
+	recall_bound = FALSE
 
 /obj/item/melee/trick_weapon/proc/apply_transform_component()
 	AddComponent(/datum/component/transforming, \
@@ -34,7 +52,8 @@
 
 /obj/item/melee/trick_weapon/update_name(updates)
 	. = ..()
-	name = "[initial(name)] +[upgrade_level]"
+	if(upgrade_level > 0)
+		name = "[initial(name)] +[upgrade_level]"
 
 /obj/item/melee/trick_weapon/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
@@ -48,11 +67,6 @@
 	var/current_base_force = enabled ? on_force : initial(force)
 	force = UPGRADED_VAL(current_base_force, upgrade_level)
 	update_name()
-
-/obj/item/melee/trick_weapon/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers) //our weapon does 25% less damage on non monsters
-	if(!is_monster_hunter_prey(target_mob))
-		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 0.75)
-	return ..()
 
 /obj/item/melee/trick_weapon/update_icon_state()
 	icon_state = "[base_icon_state][enabled ? "_active" : ""]"

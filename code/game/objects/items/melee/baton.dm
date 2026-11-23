@@ -4,6 +4,7 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "classic_baton"
+	icon_angle = -45
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -211,10 +212,8 @@
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 
 			if(ishuman(target))
-				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
-				target.Disorient(SHOVE_SLOWDOWN_LENGTH)
+				target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
+				target.Disorient(STAGGERED_SLOWDOWN_LENGTH)
 		else
 			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)
@@ -315,6 +314,7 @@
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "telebaton"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	inhand_icon_state = null
@@ -413,6 +413,7 @@
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
+	icon_angle = -45
 	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -565,6 +566,7 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
+	icon_angle = -45
 	base_icon_state = "stunbaton"
 	inhand_icon_state = "stunbaton"
 	worn_icon_state = "baton"
@@ -898,6 +900,7 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
+	icon_angle = -45
 	base_icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	base_inhand_state = "prod"

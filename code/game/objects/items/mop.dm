@@ -3,6 +3,7 @@
 	name = "mop"
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "mop"
+	icon_angle = 135
 	inhand_icon_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'

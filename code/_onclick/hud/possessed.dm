@@ -127,9 +127,6 @@
 	zone_select.update_appearance()
 	static_inventory += zone_select
 
-	combo_display = new /atom/movable/screen/combo(null, src)
-	infodisplay += combo_display
-
 /datum/hud/possessed/persistent_inventory_update()
 	if(!mymob)
 		return

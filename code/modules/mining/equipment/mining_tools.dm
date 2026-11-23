@@ -3,6 +3,7 @@
 	name = "pickaxe"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
+	icon_angle = -45
 	inhand_icon_state = "pickaxe"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
@@ -64,6 +65,7 @@
 /obj/item/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
+	icon_angle = 0
 	inhand_icon_state = "handdrill"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
@@ -116,6 +118,7 @@
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
+	icon_angle = 135
 	inhand_icon_state = "shovel"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
@@ -151,6 +154,7 @@
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
+	icon_angle = -135
 	inhand_icon_state = "spade"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
@@ -178,6 +182,7 @@
 	desc = "The multi-purpose tool you always needed."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "trench_tool"
+	icon_angle = -45
 	inhand_icon_state = "trench_tool"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
@@ -266,6 +271,7 @@
 	name = "Big Slappy"
 	desc = "A gigantic wrench made illegal because of its many incidents involving this tool."
 	icon_state = "giant_wrench"
+	icon_angle = 0
 	icon = 'icons/obj/weapons/giant_wrench.dmi'
 	inhand_icon_state = null
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'

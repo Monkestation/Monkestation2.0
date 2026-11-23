@@ -15,12 +15,14 @@
 	desc = "A flowing circle of shapes and runes is etched into the floor, the lines twist and move before your eyes."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune"
-	pixel_x = -28
-	pixel_y = -33
+	pixel_x = -33
+	pixel_y = 16
+	pixel_z = -48
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_ATTACK_PAW
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	/// How many prior grand rituals have been completed?
 	var/potency = 0
 	/// Time to take per invocation of rune.
@@ -81,6 +83,7 @@
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
 	announce_rune()
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /// I cast Summon Security
 /obj/effect/grand_rune/proc/announce_rune()
@@ -122,6 +125,9 @@
 
 /obj/effect/grand_rune/interact(mob/living/user)
 	. = ..()
+	if(GLOB.wonderland_apocalypse)
+		to_chat(user, span_hearts_decree("Stop waving your arms at my floor. I said no tricks, and I meant yours most of all."))
+		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(invoke_rune), user)
 	return TRUE
 
@@ -405,7 +411,7 @@
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 
 /obj/effect/decal/cleanable/grand_remains/cheese
 	name = "cheese soot marks"

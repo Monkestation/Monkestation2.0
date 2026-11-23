@@ -184,8 +184,8 @@
 		if(dir == EAST)
 			used_list_index = 3
 
-		head_overlay.pixel_y += head_y_shift[used_list_index]
-		head_overlay.pixel_x += head_x_shift[used_list_index]
+		head_overlay.pixel_z += head_y_shift[used_list_index]
+		head_overlay.pixel_w += head_x_shift[used_list_index]
 
 		possession_overlays[2] = head_overlay
 
