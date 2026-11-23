@@ -238,7 +238,6 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Corporate Climber",
 	"Cybersun Industries",
 	"Donk Corporation",
-	"Gorlex Marauders",
 	"Internal Affairs Agent",
 	"Legal Trouble",
 	"MI13",
