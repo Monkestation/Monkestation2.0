@@ -1,5 +1,4 @@
 /obj/item/clothing/mask
-	species_worn_icons = list(SPECIES_VOX = VOX_MASK_FILE)
 	abstract_type = /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'

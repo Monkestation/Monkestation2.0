@@ -226,8 +226,10 @@
 	///this is our color palette we pull colors from
 	var/datum/color_palette/palette
 	var/palette_key
-	///Icons used instead of icon_static for the owner's limb style (their "limb_style" DNA feature), limb style -> icon
+	///Icons used instead of icon_static for the owner's limb style, limb style -> icon
 	var/list/style_icons
+	///If set, the DNA feature our limb style is read from (like vox skin tones), instead of /mob/living/carbon/human/var/limb_style
+	var/limb_style_feature
 
 	///limb flags for the specific limb
 	var/limb_flags
@@ -1026,7 +1028,7 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
-	var/owner_limb_style = human_owner.dna.features["limb_style"]
+	var/owner_limb_style = limb_style_feature ? human_owner.dna.features[limb_style_feature] : human_owner.limb_style
 	if (HAS_TRAIT(human_owner, TRAIT_GREYSCALE_TOGGLE))
 		should_draw_greyscale = (owner_limb_style == LIMB_STYLE_MUTANT_COLORS)
 	if(style_icons)

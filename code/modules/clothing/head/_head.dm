@@ -1,5 +1,4 @@
 /obj/item/clothing/head
-	species_worn_icons = list(SPECIES_VOX = list(VOX_HEAD_FILE, VOX_HELMET_FILE))
 	abstract_type = /obj/item/clothing/head
 	name = BODY_ZONE_HEAD
 	icon = 'icons/obj/clothing/head/default.dmi'

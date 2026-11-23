@@ -834,7 +834,6 @@
 	particles = new /particles/bonfire()
 
 /obj/item/clothing/glasses/godeye
-	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	name = "eye of god"
 	desc = "A strange eye, said to have been torn from an omniscient creature that used to roam the wastes."
 	icon_state = "godeye"

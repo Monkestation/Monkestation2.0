@@ -16,7 +16,7 @@
 	final_icon.scale(32, 32)
 	return final_icon
 
-/// Vox skin tones are limb styles, see GLOB.vox_skin_tones
+/// Vox skin tones are limb styles of vox limbs, see GLOB.vox_skin_tones
 /datum/preference/choiced/vox_skin_tone
 	savefile_key = "feature_vox_skin_tone"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -59,8 +59,7 @@
 	return data
 
 /datum/preference/choiced/vox_skin_tone/apply_to_human(mob/living/carbon/human/target, value)
-	if(isvox(target)) // the limb style feature is also used by other species with limb styles
-		target.dna.features["limb_style"] = value
+	target.dna.features["vox_skin_tone"] = value
 
 /datum/preference/choiced/vox_quills
 	savefile_key = "feature_vox_quills"

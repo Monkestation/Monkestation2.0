@@ -119,18 +119,6 @@
 	else
 		return 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg'
 
-/// Returns the sound of our owner coughing, or null for none
-/obj/item/organ/internal/tongue/proc/get_cough_sound()
-	return null
-
-/// Returns the sound of our owner sneezing, or null for none
-/obj/item/organ/internal/tongue/proc/get_sneeze_sound()
-	return null
-
-/// Returns the message shown when our owner screams, like "shrieks!", or null for the normal one
-/obj/item/organ/internal/tongue/proc/get_scream_message()
-	return null
-
 /obj/item/organ/internal/tongue/proc/get_scream_sound()
 	if(owner.gender == MALE)
 		if(prob(1))
@@ -790,12 +778,3 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/internal/tongue/vox/get_scream_sound()
 	return 'sound/voice/vox_species/shriek1.ogg'
-
-/obj/item/organ/internal/tongue/vox/get_scream_message()
-	return "shrieks!"
-
-/obj/item/organ/internal/tongue/vox/get_cough_sound()
-	return 'sound/voice/vox_species/shriekcough.ogg'
-
-/obj/item/organ/internal/tongue/vox/get_sneeze_sound()
-	return 'sound/voice/vox_species/shrieksneeze.ogg'

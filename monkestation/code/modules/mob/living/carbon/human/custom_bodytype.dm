@@ -53,24 +53,46 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
 /datum/species/proc/set_custom_worn_icon_cached(file_to_use, state_to_use, meta, cached_value)
 	GLOB.species_clothing_fallback_cache[name]["[file_to_use]-[state_to_use]-[meta]"] = cached_value
 
+/// Returns a shared instance of the species with this id, for reading its data. Null if there's no such species.
+/proc/get_species_prototype(species_id)
+	var/static/list/prototypes = list()
+	var/datum/species/species_type = GLOB.species_list[species_id]
+	if(!species_type)
+		return null
+	if(!prototypes[species_id])
+		prototypes[species_id] = new species_type()
+	return prototypes[species_id]
+
 /**
- * Allow for custom clothing icon generation. Only called if the species is BODYSHAPE_CUSTOM
+ * Allow for custom clothing icon generation. Only called if the wearer is BODYSHAPE_CUSTOM
  * If null is returned, use default human icon.
+ * The limbs an item is worn on decide which species' sprites it uses (see /mob/living/carbon/human/proc/get_fitting_limb_ids()),
+ * so vox legs on a human still wear vox fitted uniforms.
  * Arguments:
  * * item_slot: The slot we're updating. One of LOADOUT_ITEM_HEAD, etc.
  * * item: The item being rendered.
  */
 /datum/species/proc/generate_custom_worn_icon(item_slot, obj/item/item)
-	// Items with sprites fitted to the shape of the limbs they're worn on use those, whatever species the wearer is
 	item.species_fitted = null
 	var/mob/living/carbon/human/wearer = item.loc
-	if(ishuman(wearer))
-		for(var/limb_id in wearer.get_fitting_limb_ids(item_slot))
-			var/fitted_icon = item.get_fitted_worn_icon(limb_id)
-			if(fitted_icon)
-				item.species_fitted = limb_id
-				return fitted_icon
+	var/list/limb_ids = ishuman(wearer) ? wearer.get_fitting_limb_ids(item_slot) : null
+	if(isnull(limb_ids)) // the limbs don't decide this slot
+		limb_ids = list(id)
+	for(var/limb_id in limb_ids)
+		var/datum/species/limb_species = (limb_id == id) ? src : get_species_prototype(limb_id)
+		var/fitted_icon = limb_species?.get_fitted_worn_icon(item_slot, item)
+		if(fitted_icon)
+			item.species_fitted = limb_id
+			return fitted_icon
+	return null
 
+/**
+ * Returns our fitted worn sprite for an item worn in the given slot, or null if we have none for it.
+ * Arguments:
+ * * item_slot: The slot we're updating. One of LOADOUT_ITEM_HEAD, etc.
+ * * item: The item being rendered.
+ */
+/datum/species/proc/get_fitted_worn_icon(item_slot, obj/item/item)
 	// If already set (possibly by us, or manually, use it.)
 	var/icon/final_icon = get_custom_worn_icon(item_slot, item)
 	if(final_icon && icon_exists(final_icon, item.worn_icon_state || item.icon_state))

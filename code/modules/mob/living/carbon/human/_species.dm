@@ -714,7 +714,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				var/underwear_icon = species_human.get_underwear_icon(underwear, LOADOUT_ITEM_UNIFORM)
+				var/underwear_icon = species_human.get_underwear_icon(underwear, LOADOUT_ITEM_UNDERWEAR)
 				if(underwear_icon == underwear.icon && species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
 					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
@@ -727,7 +727,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
 				var/mutable_appearance/working_shirt
-				var/undershirt_icon = species_human.get_underwear_icon(undershirt, LOADOUT_ITEM_UNIFORM)
+				var/undershirt_icon = species_human.get_underwear_icon(undershirt, LOADOUT_ITEM_UNDERSHIRT)
 				if(undershirt_icon == undershirt.icon && species_human.dna.species.sexes && species_human.physique == FEMALE)
 					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon, undershirt.icon), layer = -BODY_LAYER)
 				else
@@ -739,7 +739,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			//MONKESTATION EDITS FOR COLOURABLE SOCKS
 			var/mutable_appearance/socks_overlay
 			if(socks)
-				var/socks_icon = species_human.get_underwear_icon(socks, LOADOUT_ITEM_SHOES)
+				var/socks_icon = species_human.get_underwear_icon(socks, LOADOUT_ITEM_SOCKS)
 				if(socks_icon == socks.icon && species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
 					socks_overlay = mutable_appearance(wear_female_version(socks.icon_state, socks.icon, socks.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
@@ -1107,6 +1107,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Equips species-relevant gear after putting on an outfit.
 /datum/species/proc/post_equip_species_outfit(mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
+
+/// Returns the sound a human of this species makes when coughing, or null for none
+/datum/species/proc/get_cough_sound(mob/living/carbon/human/human)
+	return null
+
+/// Returns the sound a human of this species makes when sneezing, or null for none
+/datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
+	return null
+
+/// Returns the message shown when a human of this species screams, like "shrieks!", or null for the normal one
+/datum/species/proc/get_scream_message(mob/living/carbon/human/human)
+	return null
 
 /**
  * Equip the outfit required for life. Replaces items currently worn.

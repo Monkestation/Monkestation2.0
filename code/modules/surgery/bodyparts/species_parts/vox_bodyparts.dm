@@ -1,4 +1,4 @@
-// Vox limbs aren't greyscale: each skin tone is a limb style, with its own icon file (GLOB.vox_skin_tones).
+// Vox limbs aren't greyscale: each skin tone is a limb style with its own icon file (GLOB.vox_skin_tones), picked by the "vox_skin_tone" DNA feature.
 
 /obj/item/bodypart/head/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'
@@ -9,6 +9,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
+	limb_style_feature = "vox_skin_tone"
 	head_flags = HEAD_EYESPRITES | HEAD_EYECOLOR | HEAD_EYEHOLES | HEAD_DEBRAIN
 	eyes_icon = 'icons/mob/human/species/vox/eyes.dmi'
 
@@ -39,6 +40,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
+	limb_style_feature = "vox_skin_tone"
 	ass_image = 'icons/ass/assvox.png'
 
 /obj/item/bodypart/chest/vox/Initialize(mapload)
@@ -54,6 +56,7 @@
 	limb_id = SPECIES_VOX
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
+	limb_style_feature = "vox_skin_tone"
 	unarmed_attack_verb = "scratch"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
@@ -75,6 +78,7 @@
 	limb_id = SPECIES_VOX
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
+	limb_style_feature = "vox_skin_tone"
 	unarmed_attack_verb = "scratch"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
@@ -96,6 +100,7 @@
 	limb_id = SPECIES_VOX
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
+	limb_style_feature = "vox_skin_tone"
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 
 /obj/item/bodypart/leg/left/vox/Initialize(mapload)
@@ -111,6 +116,7 @@
 	limb_id = SPECIES_VOX
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
+	limb_style_feature = "vox_skin_tone"
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 
 /obj/item/bodypart/leg/right/vox/Initialize(mapload)

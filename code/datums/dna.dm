@@ -302,8 +302,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_VOX_TAIL_MARKINGS_BLOCK] = construct_block(GLOB.vox_tail_markings_list.Find(features["vox_tail_markings"]), GLOB.vox_tail_markings_list.len)
 	if(features["vox_body_markings"])
 		L[DNA_VOX_BODY_MARKINGS_BLOCK] = construct_block(GLOB.vox_body_markings_list.Find(features["vox_body_markings"]), GLOB.vox_body_markings_list.len)
-	if(features["limb_style"])
-		L[DNA_LIMB_STYLE_BLOCK] = construct_block(GLOB.limb_styles.Find(features["limb_style"]), GLOB.limb_styles.len)
+	if(features["vox_skin_tone"])
+		L[DNA_VOX_SKIN_TONE_BLOCK] = construct_block(GLOB.vox_skin_tones.Find(features["vox_skin_tone"]), GLOB.vox_skin_tones.len)
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 		. += L[blocknum] || random_string(GET_UF_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
@@ -466,8 +466,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(GLOB.vox_tail_markings_list.Find(features["vox_tail_markings"]), GLOB.vox_tail_markings_list.len))
 		if(DNA_VOX_BODY_MARKINGS_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.vox_body_markings_list.Find(features["vox_body_markings"]), GLOB.vox_body_markings_list.len))
-		if(DNA_LIMB_STYLE_BLOCK)
-			set_uni_feature_block(blocknumber, construct_block(GLOB.limb_styles.Find(features["limb_style"]), GLOB.limb_styles.len))
+		if(DNA_VOX_SKIN_TONE_BLOCK)
+			set_uni_feature_block(blocknumber, construct_block(GLOB.vox_skin_tones.Find(features["vox_skin_tone"]), GLOB.vox_skin_tones.len))
 
 /**
  * Checks if two DNAs are practically the same by comparing their most defining features
@@ -709,11 +709,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	set_facial_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_FACIAL_HAIR_COLOR_BLOCK)), update = FALSE)
 	if(HAS_TRAIT(src, TRAIT_SHAVED))
 		set_facial_hairstyle("Shaved", update = FALSE)
+		shave_hairlike_features(EXTERNAL_RESTYLE_FACIAL_HAIR)
 	else
 		var/style = GLOB.facial_hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
 		set_facial_hairstyle(style, update = FALSE)
 	if(HAS_TRAIT(src, TRAIT_BALD))
 		set_hairstyle("Bald", update = FALSE)
+		shave_hairlike_features(EXTERNAL_RESTYLE_HAIR)
 	else
 		var/style = GLOB.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
 		set_hairstyle(style, update = FALSE)
@@ -768,16 +770,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["vox_tail_markings"] = GLOB.vox_tail_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_VOX_TAIL_MARKINGS_BLOCK), GLOB.vox_tail_markings_list.len)]
 	if(dna.features["vox_body_markings"])
 		dna.features["vox_body_markings"] = GLOB.vox_body_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_VOX_BODY_MARKINGS_BLOCK), GLOB.vox_body_markings_list.len)]
-	if(dna.features["limb_style"])
-		dna.features["limb_style"] = GLOB.limb_styles[deconstruct_block(get_uni_feature_block(features, DNA_LIMB_STYLE_BLOCK), GLOB.limb_styles.len)]
+	if(dna.features["vox_skin_tone"])
+		dna.features["vox_skin_tone"] = GLOB.vox_skin_tones[deconstruct_block(get_uni_feature_block(features, DNA_VOX_SKIN_TONE_BLOCK), GLOB.vox_skin_tones.len)]
 
 	for(var/obj/item/organ/external/external_organ in organs)
 		external_organ.mutate_feature(features, src)
-	// Hair-like features don't grow back either
-	if(HAS_TRAIT(src, TRAIT_BALD))
-		shave_hairlike_features(EXTERNAL_RESTYLE_HAIR)
-	if(HAS_TRAIT(src, TRAIT_SHAVED))
-		shave_hairlike_features(EXTERNAL_RESTYLE_FACIAL_HAIR)
 
 	if(icon_update)
 		if(mutcolor_update)

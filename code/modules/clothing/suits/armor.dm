@@ -321,7 +321,6 @@
 
 
 /obj/item/clothing/suit/armor/vest/secjacket
-	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	name = "security jacket"
 	desc = "A red jacket in red Security colors. It has hi-vis stripes all over it."
 	icon_state = "secjacket"

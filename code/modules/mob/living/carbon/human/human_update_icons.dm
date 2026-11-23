@@ -183,8 +183,8 @@ There are several things that need to be remembered:
 
 
 /**
- * Returns the limb ids whose shape decides how clothing in the given slot fits, in order of priority.
- * Clothing with sprites fitted to one of these (/obj/item/var/species_worn_icons) uses them.
+ * Returns the limb ids whose shape decides how clothing in the given slot fits, in order of priority,
+ * or null if the limbs don't decide that slot. Their species' fitted sprites (/datum/species/var/custom_worn_icons) are used.
  * Uniforms and suits only fit legs of one shape, or else the chest.
  */
 /mob/living/carbon/human/proc/get_fitting_limb_ids(item_slot)
@@ -215,11 +215,17 @@ There are several things that need to be remembered:
 			var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
 			if(chest)
 				. += chest.limb_id
+		else
+			return null
 
-/// Returns the icon file an underwear, undershirt or socks sprite accessory is drawn from: its fitted version for our limbs if it has one
-/mob/living/carbon/human/proc/get_underwear_icon(datum/sprite_accessory/accessory, item_slot)
-	for(var/limb_id in get_fitting_limb_ids(item_slot))
-		var/fitted_icon = accessory.species_worn_icons?[limb_id]
+/**
+ * Returns the icon file an underwear sprite accessory is drawn from: the fitted version for our limbs if there is one.
+ * underwear_slot is LOADOUT_ITEM_UNDERWEAR, LOADOUT_ITEM_UNDERSHIRT or LOADOUT_ITEM_SOCKS.
+ */
+/mob/living/carbon/human/proc/get_underwear_icon(datum/sprite_accessory/accessory, underwear_slot)
+	for(var/limb_id in get_fitting_limb_ids(underwear_slot == LOADOUT_ITEM_SOCKS ? LOADOUT_ITEM_SHOES : LOADOUT_ITEM_UNIFORM))
+		var/datum/species/limb_species = get_species_prototype(limb_id)
+		var/fitted_icon = limb_species?.custom_worn_icons[underwear_slot]
 		if(fitted_icon && icon_exists(fitted_icon, accessory.icon_state))
 			return fitted_icon
 	return accessory.icon

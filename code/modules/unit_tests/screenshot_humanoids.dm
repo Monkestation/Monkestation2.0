@@ -29,7 +29,7 @@
 	tundramoth.dna.features["moth_antennae"] = "Tundra"
 	tundramoth.dna.features["moth_markings"] = "Tundra"
 	tundramoth.dna.features["moth_wings"] = "Tundra"
-	tundramoth.dna.features["limb_style"] = LIMB_STYLE_TUNDRA
+	tundramoth.limb_style = LIMB_STYLE_TUNDRA
 	tundramoth.set_species(/datum/species/moth)
 	tundramoth.equipOutfit(/datum/outfit/job/doctor, visualsOnly = TRUE)
 	test_screenshot("[/datum/species/moth]_tundra", get_flat_icon_for_all_directions(tundramoth))

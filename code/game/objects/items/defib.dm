@@ -3,7 +3,6 @@
 #define DEFIB_CAN_HURT(source) (source.combat || (source.req_defib && !source.defib.safety))
 
 /obj/item/defibrillator
-	species_worn_icons = list(SPECIES_VOX = VOX_BACK_FILE)
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients. \
 	Has a rear bracket for attachments to wall mounts and medical cyborgs."

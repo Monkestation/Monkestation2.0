@@ -1,5 +1,4 @@
 /obj/item/clothing/gloves
-	species_worn_icons = list(SPECIES_VOX = VOX_GLOVES_FILE)
 	abstract_type = /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing

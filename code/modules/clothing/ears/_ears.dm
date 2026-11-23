@@ -1,7 +1,6 @@
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
-	species_worn_icons = list(SPECIES_VOX = VOX_EARS_FILE)
 	abstract_type = /obj/item/clothing/ears
 	name = "ears"
 	lefthand_file = 'icons/mob/inhands/clothing/ears_lefthand.dmi'

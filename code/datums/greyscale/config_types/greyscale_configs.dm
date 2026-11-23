@@ -108,7 +108,6 @@
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit.json'
 
 /datum/greyscale_config/jumpsuit/worn
-	species_configs = list(SPECIES_VOX = /datum/greyscale_config/jumpsuit/worn/vox)
 	name = "Jumpsuit (Worn)"
 	icon_file = 'icons/mob/clothing/under/color.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_worn.json'
@@ -129,7 +128,6 @@
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison.json'
 
 /datum/greyscale_config/jumpsuit_prison_worn
-	species_configs = list(SPECIES_VOX = /datum/greyscale_config/jumpsuit_prison_worn/vox)
 	name = "Worn Prison Jumpsuit"
 	icon_file = 'icons/mob/clothing/under/color.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_worn.json'
@@ -187,7 +185,6 @@
 	json_config = 'code/datums/greyscale/json_configs/sneakers.json'
 
 /datum/greyscale_config/sneakers/worn
-	species_configs = list(SPECIES_VOX = /datum/greyscale_config/sneakers/worn/vox)
 	name = "Sneakers (Worn)"
 	icon_file = 'icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_worn.json'
@@ -208,7 +205,6 @@
 	json_config = 'code/datums/greyscale/json_configs/sneakers_orange.json'
 
 /datum/greyscale_config/sneakers_orange/worn
-	species_configs = list(SPECIES_VOX = /datum/greyscale_config/sneakers_orange/worn/vox)
 	name = "Orange Sneakers (Worn)"
 	icon_file = 'icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_orange_worn.json'
@@ -1664,21 +1660,17 @@
 // Vox shaped worn sprites, see /datum/species/vox/generate_custom_worn_icon()
 
 /datum/greyscale_config/jumpsuit/worn/vox
-	species_configs = null
 	name = "Jumpsuit (Worn, Vox)"
 	icon_file = 'icons/mob/clothing/species/vox/greyscale.dmi'
 
 /datum/greyscale_config/jumpsuit_prison_worn/vox
-	species_configs = null
 	name = "Worn Prison Jumpsuit (Vox)"
 	icon_file = 'icons/mob/clothing/species/vox/greyscale.dmi'
 
 /datum/greyscale_config/sneakers/worn/vox
-	species_configs = null
 	name = "Sneakers (Worn, Vox)"
 	icon_file = 'icons/mob/clothing/species/vox/greyscale.dmi'
 
 /datum/greyscale_config/sneakers_orange/worn/vox
-	species_configs = null
 	name = "Orange Sneakers (Worn, Vox)"
 	icon_file = 'icons/mob/clothing/species/vox/greyscale.dmi'

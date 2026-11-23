@@ -172,10 +172,8 @@
 	var/supports_variations_flags = NONE
 	/// This is a bitfield that defines which bodyshapes this item is capable of rendering, used by build_worn_icon()
 	var/bodyshapes_with_variations = NONE
-	/// Worn sprites fitted to the shape of other species' limbs: species id -> icon file, or a list of icon files to check in order.
-	/// The limbs an item is worn on decide which of these it uses, see /mob/living/carbon/human/proc/get_fitting_limb_ids()
-	var/list/species_worn_icons
-	/// The species id whose fitted sprite this item is currently drawn with, or null if it uses its normal one. Lets overlays like blood match the shape.
+	/// The species id whose fitted worn sprite (see /datum/species/var/custom_worn_icons) this item is currently drawn with, or null if it uses its normal one.
+	/// Lets overlays like blood match the shape.
 	var/species_fitted
 
 	///A weakref to the mob who threw the item
@@ -2000,23 +1998,3 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", "Object")
 			return bait.reagents?.has_reagent(special_identifier[FISH_BAIT_VALUE], special_identifier[FISH_BAIT_AMOUNT], check_subtypes = TRUE)
 		else
 			CRASH("Unknown bait identifier in fish favourite/disliked list")
-
-/**
- * Returns this item's worn sprite fitted to the given species' limbs, or null if it has none.
- * Greyscale items generate it from their config's fitted version, others use species_worn_icons.
- */
-/obj/item/proc/get_fitted_worn_icon(species_id)
-	if(greyscale_config_worn)
-		if(!greyscale_colors)
-			return null
-		var/datum/greyscale_config/worn_config = SSgreyscale.configurations["[greyscale_config_worn]"]
-		var/fitted_config = worn_config?.species_configs?[species_id]
-		return fitted_config ? SSgreyscale.GetColoredIconByType(fitted_config, greyscale_colors) : null
-	var/fitted_icons = species_worn_icons?[species_id]
-	if(!fitted_icons)
-		return null
-	var/worn_state = worn_icon_state || icon_state
-	for(var/icon_file in islist(fitted_icons) ? fitted_icons : list(fitted_icons))
-		if(icon_exists(icon_file, worn_state))
-			return icon_file
-	return null

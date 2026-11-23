@@ -1,13 +1,11 @@
 /obj/item/clothing/under/rank/cargo
 
 /obj/item/clothing/under/rank/cargo/tech/nova
-	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/cargo.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/cargo.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/under/rank/cargo/qm/nova
-	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/cargo.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/cargo.dmi'
 

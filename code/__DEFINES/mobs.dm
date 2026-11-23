@@ -237,8 +237,7 @@
 ///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
-//Limb styles are which look limbs use, picked from their style_icons by the "limb_style" DNA feature. See GLOB.limb_styles
-//These are the styles of species with TRAIT_GREYSCALE_TOGGLE, other species have their own (vox skin tones)
+//See: mob/living/carbon/human/var/limb_style, only used by species with TRAIT_GREYSCALE_TOGGLE
 ///The limbs use their normal colors
 #define LIMB_STYLE_CLASSIC "Classic"
 ///The limbs are greyscaled and colored by the mutant color

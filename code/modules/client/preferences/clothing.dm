@@ -14,7 +14,7 @@
 
 /**
  * Underwear, undershirt and socks preferences come in a normal version, and fitted versions (see their fitted_species var)
- * for species whose limbs have underwear sprites of their own (/datum/sprite_accessory/var/species_worn_icons).
+ * for species whose limbs have underwear sprites of their own (/datum/species/var/custom_worn_icons).
  * A species with a fitted version only sees that one. Returns whether the preference is shown for the selected species.
  */
 /proc/is_underwear_preference_accessible(datum/preferences/preferences, datum/preference/choiced/preference, datum/species/fitted_species)
@@ -30,16 +30,20 @@
 			return FALSE
 	return TRUE
 
+/// Returns the icon file a species' fitted underwear sprites are in, for fitted underwear preferences
+/proc/get_fitted_underwear_icon(datum/species/fitted_species, underwear_slot)
+	var/datum/species/species = get_species_prototype(initial(fitted_species.id))
+	return species?.custom_worn_icons[underwear_slot]
+
 /// Returns the names of the accessories that have a sprite fitted to the given species, for fitted underwear preferences
-/proc/get_fitted_underwear_names(list/accessory_list, datum/species/fitted_species)
+/proc/get_fitted_underwear_names(list/accessory_list, datum/species/fitted_species, underwear_slot)
 	. = list()
-	var/species_id = initial(fitted_species.id)
+	var/fitted_icon = get_fitted_underwear_icon(fitted_species, underwear_slot)
 	for(var/accessory_name in accessory_list)
 		var/datum/sprite_accessory/accessory = accessory_list[accessory_name]
 		if(!accessory.icon_state || accessory.icon_state == SPRITE_ACCESSORY_NONE) // "Nude" has nothing to draw
 			. += accessory_name
 			continue
-		var/fitted_icon = accessory.species_worn_icons?[species_id]
 		if(!accessory.locked && fitted_icon && icon_exists(fitted_icon, accessory.icon_state))
 			. += accessory_name
 
@@ -144,7 +148,7 @@
 
 /datum/preference/choiced/socks/init_possible_values()
 	if(fitted_species)
-		return get_fitted_underwear_names(GLOB.socks_list, fitted_species)
+		return get_fitted_underwear_names(GLOB.socks_list, fitted_species, LOADOUT_ITEM_SOCKS)
 	return assoc_to_keys_features(GLOB.socks_list)
 
 /datum/preference/choiced/socks/create_default_value()
@@ -154,7 +158,7 @@
 	if(fitted_species)
 		var/datum/sprite_accessory/accessory = GLOB.socks_list[value]
 		var/datum/universal_icon/legs = generate_species_limbs_icon(fitted_species, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-		return generate_underwear_icon(accessory, legs, icon_file = accessory?.species_worn_icons?[initial(fitted_species.id)])
+		return generate_underwear_icon(accessory, legs, icon_file = get_fitted_underwear_icon(fitted_species, LOADOUT_ITEM_SOCKS))
 
 	var/static/datum/universal_icon/lower_half
 
@@ -194,7 +198,7 @@
 
 /datum/preference/choiced/undershirt/init_possible_values()
 	if(fitted_species)
-		return get_fitted_underwear_names(GLOB.undershirt_list, fitted_species)
+		return get_fitted_underwear_names(GLOB.undershirt_list, fitted_species, LOADOUT_ITEM_UNDERSHIRT)
 	return assoc_to_keys_features(GLOB.undershirt_list)
 
 /datum/preference/choiced/undershirt/create_default_value()
@@ -204,7 +208,7 @@
 	if(fitted_species)
 		var/datum/sprite_accessory/accessory = GLOB.undershirt_list[value]
 		var/datum/universal_icon/fitted_body = generate_species_limbs_icon(fitted_species, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_CHEST))
-		var/fitted_icon = accessory?.species_worn_icons?[initial(fitted_species.id)]
+		var/fitted_icon = get_fitted_underwear_icon(fitted_species, LOADOUT_ITEM_UNDERSHIRT)
 		if(fitted_icon && accessory.icon_state != SPRITE_ACCESSORY_NONE)
 			fitted_body.blend_icon(uni_icon(fitted_icon, accessory.icon_state), ICON_OVERLAY)
 		fitted_body.crop(9, 9, 23, 23)
@@ -254,7 +258,7 @@
 
 /datum/preference/choiced/underwear/init_possible_values()
 	if(fitted_species)
-		return get_fitted_underwear_names(GLOB.underwear_list, fitted_species)
+		return get_fitted_underwear_names(GLOB.underwear_list, fitted_species, LOADOUT_ITEM_UNDERWEAR)
 	return assoc_to_keys_features(GLOB.underwear_list)
 
 /datum/preference/choiced/underwear/create_default_value()
@@ -264,7 +268,7 @@
 	if(fitted_species)
 		var/datum/sprite_accessory/accessory = GLOB.underwear_list[value]
 		var/datum/universal_icon/lower_body = generate_species_limbs_icon(fitted_species, list(BODY_ZONE_CHEST, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-		return generate_underwear_icon(accessory, lower_body, COLOR_ALMOST_BLACK, accessory?.species_worn_icons?[initial(fitted_species.id)])
+		return generate_underwear_icon(accessory, lower_body, COLOR_ALMOST_BLACK, get_fitted_underwear_icon(fitted_species, LOADOUT_ITEM_UNDERWEAR))
 
 	var/static/datum/universal_icon/lower_half
 

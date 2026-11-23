@@ -161,6 +161,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["vox_facial_quills"] = get_consistent_feature_entry(GLOB.vox_facial_quills_list)
 	target.dna.features["vox_body_markings"] = get_consistent_feature_entry(GLOB.vox_body_markings_list)
 	target.dna.features["vox_tail_markings"] = get_consistent_feature_entry(GLOB.vox_tail_markings_list)
+	target.dna.features["vox_skin_tone"] = VOX_DEFAULT_SKIN_TONE
 
 
 	var/datum/color_palette/generic_colors/palette = target.dna.color_palettes[/datum/color_palette/generic_colors]

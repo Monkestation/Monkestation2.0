@@ -81,7 +81,6 @@
 	)
 
 /obj/item/clothing/suit/armor/vest/blueshield/jacket
-	species_worn_icons = null // its sprite name matches a vox sprite drawn for a different item
 	name = "blueshield's jacket"
 	desc = "An expensive kevlar-lined jacket with a golden badge on the chest and \"NT\" emblazoned on the back. It weighs surprisingly little, despite how heavy it looks."
 	icon_state = "blueshield"

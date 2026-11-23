@@ -1,5 +1,4 @@
 /obj/item/clothing/under
-	species_worn_icons = list(SPECIES_VOX = VOX_UNIFORM_FILE)
 	abstract_type = /obj/item/clothing/under
 	name = "under"
 	icon = 'icons/obj/clothing/under/default.dmi'
