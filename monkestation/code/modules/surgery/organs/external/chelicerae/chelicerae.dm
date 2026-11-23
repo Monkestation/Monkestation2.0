@@ -12,7 +12,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/arachnid_chelicerae
 
 /datum/bodypart_overlay/mutant/arachnid_chelicerae
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
 	feature_key = "arachnid_chelicerae"
 
 /datum/bodypart_overlay/mutant/arachnid_chelicerae/get_global_feature_list()
@@ -21,7 +24,10 @@
 /datum/bodypart_overlay/mutant/arachnid_chelicerae/get_base_icon_state()
 	return sprite_datum.icon_state //i still hate you
 
-/datum/bodypart_overlay/mutant/arachnid_chelicerae/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/arachnid_chelicerae/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(human.head?.flags_inv & HIDESNOUT))
 		return TRUE
 	return FALSE

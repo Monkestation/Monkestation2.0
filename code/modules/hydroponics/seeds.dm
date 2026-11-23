@@ -3,7 +3,8 @@
 // ********************************************************
 
 /obj/item/seeds
-	icon = 'icons/obj/hydroponics/seeds.dmi'
+	abstract_type = /obj/item/seeds
+	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	icon_state = "seed" // Unknown plant seed - these shouldn't exist in-game.
 	worn_icon_state = "seed"
 	w_class = WEIGHT_CLASS_TINY
@@ -17,7 +18,7 @@
 	/// Used to update icons. Should match the name in the sprites unless all icon_* are overridden.
 	var/species = ""
 	///the file that stores the sprites of the growing plant from this seed.
-	var/growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	var/growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	/// Used to override grow icon (default is `"[species]-grow"`). You can use one grow icon for multiple closely related plants with it.
 	var/icon_grow
 	/// Used to override dead icon (default is `"[species]-dead"`). You can use one dead icon for multiple closely related plants with it.
@@ -575,7 +576,7 @@
 			return
 		switch(choice)
 			if("Plant Name")
-				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", plantname, 20))
+				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", html_decode(plantname), 20))
 				if(isnull(newplantname))
 					return
 				if(!user.can_perform_action(src))
@@ -583,7 +584,7 @@
 				name = "[LOWER_TEXT(newplantname)]"
 				plantname = newplantname
 			if("Seed Description")
-				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)
+				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", html_decode(desc), 180)
 				if(isnull(newdesc))
 					return
 				if(!user.can_perform_action(src))
@@ -592,7 +593,7 @@
 			if("Product Description")
 				if(product && !productdesc)
 					productdesc = initial(product.desc)
-				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, 180)
+				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", html_decode(productdesc), 180)
 				if(isnull(newproductdesc))
 					return
 				if(!user.can_perform_action(src))

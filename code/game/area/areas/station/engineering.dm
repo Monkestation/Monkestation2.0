@@ -3,6 +3,7 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/engineering/engine_smes
 	name = "\improper Engineering SMES"
@@ -13,6 +14,7 @@
 	icon_state = "engine"
 
 /area/station/engineering/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Engineering Hallway"
 	icon_state = "engine_hallway"
 
@@ -54,7 +56,7 @@
 /area/station/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"
 	icon_state = "atmos_engine"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /area/station/engineering/lobby
 	name = "\improper Engineering Lobby"
@@ -63,7 +65,7 @@
 /area/station/engineering/supermatter
 	name = "\improper Supermatter Engine"
 	icon_state = "engine_sm"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/station/engineering/supermatter/waste
@@ -101,7 +103,7 @@
 /area/station/engineering/storage/tcomms
 	name = "Telecomms Storage"
 	icon_state = "tcom_storage"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /area/station/engineering/storage_shared
 	name = "Shared Engineering Storage"
@@ -111,7 +113,7 @@
 /area/station/engineering/shipbreaker_hut
 	name = "Shipbreaker Hut"
 	icon_state = "engine_break"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /*
 * Construction Areas
@@ -122,6 +124,7 @@
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/construction/mining/aux_base
 	name = "Auxiliary Base Construction"

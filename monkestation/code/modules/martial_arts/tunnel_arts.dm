@@ -8,7 +8,7 @@
 /datum/martial_art/the_tunnel_arts
 	name = "The Tunnel Arts"
 	id = MARTIALART_TUNNELARTS
-	allow_temp_override = FALSE
+	locked_to_use = TRUE
 	help_verb = /mob/living/proc/tunnel_arts_help
 	display_combos = TRUE
 	/// Probability of successfully blocking attacks while on throw mode
@@ -22,13 +22,13 @@
 		TRAIT_NOGUNS
 	)
 
-/datum/martial_art/the_tunnel_arts/teach(mob/living/new_holder)
+/datum/martial_art/the_tunnel_arts/activate_style(mob/living/new_holder)
 	. = ..()
 	new_holder.add_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	new_holder.faction |= FACTION_RAT //:D
 
-/datum/martial_art/the_tunnel_arts/on_remove(mob/living/remove_from)
+/datum/martial_art/the_tunnel_arts/deactivate_style(mob/living/remove_from)
 	remove_from.remove_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
 	remove_from.faction -= FACTION_RAT //:(
 	return ..()
@@ -60,8 +60,8 @@
 		ignored_mobs = list(attacker),
 	)
 	to_chat(attacker, span_danger("You uppercut [defender]!"), type = MESSAGE_TYPE_COMBAT)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
+	log_combat(attacker, defender, "god fist (The Tunnel Arts)")
 	defender.apply_damage(30, attacker.get_attack_type(), affecting, blocked = def_check)
 	defender.emote("flip")
 	defender.emote("spin")
@@ -81,8 +81,8 @@
 		ignored_mobs = list(attacker),
 	)
 	to_chat(attacker, span_danger("You palm strike [defender], corrupting [defender.p_their()] Chi energy!"), type = MESSAGE_TYPE_COMBAT)
-	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
+	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
+	log_combat(attacker, defender, "chaos punch (The Tunnel Arts)")
 	defender.apply_damage(45, attacker.get_attack_type(), affecting, blocked = def_check)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	defender.throw_at(throw_target, 3, 4, attacker)
@@ -108,7 +108,7 @@
 	for(var/sounds in 1 to 4)
 		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), defender.loc), sounds DECISECONDS, TIMER_DELETE_ME)
 
-	log_combat(attacker, defender, "god fist (The Tunnel Arts))")
+	log_combat(attacker, defender, "thousand fists (The Tunnel Arts)")
 	defender.apply_damage(25, attacker.get_attack_type(), affecting, blocked = def_check)
 
 	if(!defender.mind || defender.stat != CONSCIOUS || prob(50))
@@ -129,7 +129,7 @@
 
 /// Echo our punching sounds
 /datum/martial_art/the_tunnel_arts/proc/do_attack_sound(atom/playing_from)
-	playsound(playing_from, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(playing_from, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
 /datum/martial_art/the_tunnel_arts/grab_act(mob/living/attacker, mob/living/defender)
 	if(!check_usability(attacker)) //allows for deniability

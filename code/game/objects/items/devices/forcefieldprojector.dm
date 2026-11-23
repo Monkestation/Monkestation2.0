@@ -1,7 +1,7 @@
 /obj/item/forcefield_projector
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "signmaker_forcefield"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
@@ -62,7 +62,7 @@
 			return ITEM_INTERACT_BLOCKING
 		force_proj_busy = FALSE
 
-	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
+	playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
 	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
 	var/obj/structure/projected_forcefield/F = new field_type(T, src)
 	current_fields += F
@@ -127,14 +127,14 @@
 
 /obj/structure/projected_forcefield/Destroy()
 	visible_message(span_warning("[src] flickers and disappears!"))
-	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
+	playsound(src,'sound/items/weapons/resonator_blast.ogg',25,TRUE)
 	if(generator)
 		generator.current_fields -= src
 		generator = null
 	return ..()
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)

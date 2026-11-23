@@ -27,21 +27,19 @@
 	)
 	enemy_roles = list(
 		JOB_AI,
-		JOB_CYBORG,
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
-		JOB_SECURITY_ASSISTANT,
 		JOB_BRIG_PHYSICIAN,
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 		JOB_CURATOR,
 	)
-	required_enemies = 5
+	required_enemies = 3
 	min_players = 20
-	weight = 5
+	weight = 10
 	maximum_antags = 2
 	event_icon_state = "vampires"
 
@@ -55,6 +53,15 @@
 	antag_flag = ROLE_VAMPIRICACCIDENT
 	name = "Vampiric Accident"
 	prompted_picking = TRUE
+	max_occurrences = 1
+
+/datum/round_event_control/antagonist/bloodsucker/latejoin
+	typepath = /datum/round_event/antagonist/bloodsucker
+	antag_flag = ROLE_BLOODSUCKERBREAKOUT
+	name = "Bloodsucker Breakout"
+	track = EVENT_TRACK_LATEJOIN
+	earliest_start = BASE_LATEJOIN_SPAWN_TIME
+	maximum_antags = 1
 	max_occurrences = 1
 
 /datum/round_event/antagonist/bloodsucker/add_datum_to_mind(datum/mind/antag_mind)

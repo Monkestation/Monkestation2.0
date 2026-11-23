@@ -34,7 +34,7 @@
 //general disarm proc
 /mob/living/proc/disarm(mob/living/carbon/target)
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(target, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)
@@ -102,13 +102,12 @@
 	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
 		target_held_item = null
 
-	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-		target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+	if(!target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
 		if(target_held_item)
 			append_message = "loosening [target.p_their()] grip on [target_held_item]"
 			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing
 				span_warning("Your grip on \the [target_held_item] loosens!"), null, COMBAT_MESSAGE_RANGE)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE)
 
 	else if(target_held_item)
 		target.dropItemToGround(target_held_item)

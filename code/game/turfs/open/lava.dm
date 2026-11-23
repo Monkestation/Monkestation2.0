@@ -7,6 +7,7 @@
 /turf/open/lava
 	name = "lava"
 	icon_state = "lava"
+	nav_cost_flags = NAV_COST_LAVA
 	desc = "Looks painful to step in. Don't mine down."
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down
@@ -16,7 +17,7 @@
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
 	light_on = FALSE
-	bullet_bounce_sound = 'sound/items/welder2.ogg'
+	bullet_bounce_sound = 'sound/items/tools/welder2.ogg'
 
 	footstep = FOOTSTEP_LAVA
 	barefootstep = FOOTSTEP_LAVA
@@ -43,21 +44,39 @@
 	var/mask_state = "lava-lightmask"
 	/// The type for the preset fishing spot of this type of turf.
 	var/fish_source_type = /datum/fish_source/lavaland
+	/// Whether the immerse element has been added yet or not
+	var/immerse_added = FALSE
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
 	if(fish_source_type)
-		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
+		add_lazy_fishing(fish_source_type)
+	// You can release chrabs and lavaloops and likes in lava, or be an absolute scumbag and drop other fish there too.
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
-
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
 
 /turf/open/lava/Destroy()
+	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	for(var/mob/living/leaving_mob in contents)
 		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
 		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 	return ..()
+
+/turf/open/lava/get_nav_cost_flags()
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_LAVA_STOPPED))
+		. &= ~NAV_COST_LAVA
+
+///We lazily add the immerse element when something is spawned or crosses this turf and not before.
+/turf/open/lava/proc/on_atom_inited(datum/source, atom/movable/movable)
+	SIGNAL_HANDLER
+	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
+		return
+	AddElement(/datum/element/immerse, "immerse", 215)
+	immerse_added = TRUE
 
 /turf/open/lava/update_overlays()
 	. = ..()
@@ -122,7 +141,9 @@
 	update_appearance(~UPDATE_SMOOTHING)
 
 /turf/open/lava/ex_act(severity, target)
-	return
+	if(fish_source)
+		GLOB.preset_fish_sources[fish_source].spawn_reward_from_explosion(src, severity)
+	return FALSE
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -142,6 +163,9 @@
 
 /turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
+	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
+		AddElement(/datum/element/immerse, "immerse", 215)
+		immerse_added = TRUE
 	if(burn_stuff(arrived))
 		START_PROCESSING(SSobj, src)
 
@@ -169,7 +193,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
 
@@ -205,7 +229,7 @@
 			return
 		if(R.use(1))
 			to_chat(user, span_notice("You construct a lattice."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			new /obj/structure/lattice/lava(locate(x, y, z))
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
@@ -287,7 +311,7 @@
 		var/mob/living/carbon/burn_carbon = burn_living
 		var/obj/item/clothing/burn_suit = burn_carbon.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		var/obj/item/clothing/burn_helmet = burn_carbon.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(burn_suit?.clothing_flags & LAVAPROTECT && burn_helmet?.clothing_flags & LAVAPROTECT)
+		if(isclothing(burn_suit) && (burn_suit.clothing_flags & LAVAPROTECT) && isclothing(burn_helmet) && (burn_helmet.clothing_flags & LAVAPROTECT))
 			return LAVA_BE_PROCESSING
 
 	return LAVA_BE_BURNING
@@ -446,3 +470,10 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	slowdown = 0
 	fish_source_type = null
+
+//Fishing portal plasma with station atmos
+/turf/open/lava/plasma/station
+	desc = "A pool of chilled liquid plasma.  Only the most extreme fish live here."
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+	baseturfs = /turf/open/lava/plasma/station

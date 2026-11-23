@@ -23,8 +23,8 @@
 	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1, /obj/item/food/meat/slab/gondola = 1)
 	//Gondolas aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	bodytemp_cold_damage_limit = -1
-	bodytemp_heat_damage_limit = 1500
+	minbodytemp = 0
+	maxbodytemp = 1500
 	maxHealth = 200
 	health = 200
 	del_on_death = TRUE
@@ -49,11 +49,11 @@
 	//Offset the face to match the Gondola's height.
 	switch(height)
 		if("gondola_body_medium")
-			eyes_overlay.pixel_y = -4
-			moustache_overlay.pixel_y = -4
+			eyes_overlay.pixel_z = -4
+			moustache_overlay.pixel_z = -4
 		if("gondola_body_short")
-			eyes_overlay.pixel_y = -8
-			moustache_overlay.pixel_y = -8
+			eyes_overlay.pixel_z = -8
+			moustache_overlay.pixel_z = -8
 
 	cut_overlays(TRUE)
 	add_overlay(body_overlay)

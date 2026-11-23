@@ -66,25 +66,19 @@
 		if(proj.catastropic_dismemberment)
 			apply_damage(proj.damage, proj.damtype, BODY_ZONE_CHEST, wound_bonus = proj.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
 
-/mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
-	. = FALSE
-	if(!skip_throw_mode_check && !throw_mode)
-		return
-	if(get_active_held_item())
-		return
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
-	return TRUE
+/mob/living/carbon/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
+	. = ..()
+	if(.)
+		throw_mode_off(THROW_MODE_TOGGLE)
 
-/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(!skipcatch && can_catch_item() && isitem(AM) && !HAS_TRAIT(AM, TRAIT_UNCATCHABLE) && isturf(AM.loc))
-		var/obj/item/I = AM
-		I.attack_hand(src)
-		if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-			visible_message(span_warning("[src] catches [I]!"), \
-							span_userdanger("You catch [I] in mid-air!"))
-			throw_mode_off(THROW_MODE_TOGGLE)
-			return TRUE
+/mob/living/carbon/can_catch_item(skip_throw_mode_check = FALSE, try_offhand = FALSE)
+	if(!skip_throw_mode_check && !throw_mode)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/hitby(atom/movable/movable, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	if(!skipcatch && try_catch_item(movable))
+		return TRUE
 	return ..()
 
 /mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, def_zone)
@@ -259,7 +253,7 @@
 */
 /mob/living/carbon/disarm(mob/living/carbon/target)
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(target, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)
@@ -335,9 +329,8 @@
 	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
 		target_held_item = null
 
-	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-		target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE)
+	if(!target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
 
 	log_combat(src, target, "shoved", append_message)
 
@@ -346,12 +339,6 @@
 		if(clothing.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
 			return TRUE
 	return FALSE
-
-/mob/living/carbon/proc/clear_shove_slowdown()
-	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
-	var/active_item = get_active_held_item()
-	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
-		visible_message(span_warning("[name] regains their grip on \the [active_item]!"), span_warning("You regain your grip on \the [active_item]"), null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)
@@ -483,7 +470,7 @@
 						null, span_hear("You hear a honk!"), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You honk [src]'s nose."))
 			to_chat(src, span_notice("[helper] honks your clown nose, honk! "))
-		else if(src.dna.species.bodytype & BODYTYPE_SNOUTED)
+		else if(src.bodyshape & BODYSHAPE_SNOUTED)
 			helper.visible_message(span_notice("[helper] boops [src]'s snout."), \
 						null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You boop [src] on the snout."))
@@ -571,14 +558,14 @@
 				add_mood_event("hug", /datum/mood_event/bad_touch_bear_hug)
 
 		// Let people know if they hugged someone really warm or really cold
-		if(helper.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
+		if(helper.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 			to_chat(src, span_warning("It feels like [helper] is over heating as [helper.p_they()] hug[helper.p_s()] you."))
-		else if(helper.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
+		else if(helper.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			to_chat(src, span_warning("It feels like [helper] is freezing as [helper.p_they()] hug[helper.p_s()] you."))
 
-		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
+		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 			to_chat(helper, span_warning("It feels like [src] is over heating as you hug [p_them()]."))
-		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
+		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			to_chat(helper, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
 
 		if(HAS_TRAIT(helper, TRAIT_FRIENDLY))
@@ -599,7 +586,7 @@
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
 		get_up(TRUE)
 
-	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 	// Shake animation
 	if (incapacitated())
@@ -706,7 +693,7 @@
 					ears.set_organ_damage(ears.maxHealth)
 			else if(ears.damage >= 5)
 				to_chat(src, span_warning("Your ears start to ring!"))
-			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
+			SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
 		return effect_amount //how soundbanged we are
 
 
@@ -757,10 +744,14 @@
 		if (!IS_ORGANIC_LIMB(limb))
 			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)
 
-/mob/living/carbon/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+/mob/living/carbon/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user != src)
 		return ..()
 
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, grab_at_wounds), src)
+
+/// Attempts to grasp at the user's own wounds to slow bleeding.
+/mob/living/carbon/proc/grab_at_wounds(mob/living/user)
 	var/obj/item/bodypart/grasped_part = get_bodypart(zone_selected)
 	if(!grasped_part?.can_be_grasped())
 		return
@@ -841,7 +832,7 @@
 	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
-	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(get_turf(src), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
 
 /// Randomise a body part and organ of this mob

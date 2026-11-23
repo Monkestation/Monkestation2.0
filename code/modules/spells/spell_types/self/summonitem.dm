@@ -137,7 +137,7 @@
 				holding_mark.forceMove(caster.loc)
 				holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly appears!"))
 				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
-				playsound(holding_mark, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+				playsound(holding_mark, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 				return
 
 			else if(isobj(item_to_retrieve.loc))
@@ -182,7 +182,7 @@
 	else
 		item_to_retrieve.forceMove(caster.drop_location())
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears!"))
-	playsound(get_turf(item_to_retrieve), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+	playsound(get_turf(item_to_retrieve), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 
 /* monkestation removal: get rid of the abductor batong recall
 

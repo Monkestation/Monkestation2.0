@@ -36,6 +36,8 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
 	add_traits(innate_traits, INNATE_TRAIT)
+	become_area_sensitive(INNATE_TRAIT)
+	RegisterSignal(src, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 
 /mob/living/carbon/human/ghost/Destroy()
 	wake_up_from_temporary_sleep()
@@ -81,6 +83,12 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 	else
 		move_to_ghostspawn()
 		revive(full_heal_flags = ADMIN_HEAL_ALL)
+
+/mob/living/carbon/human/ghost/proc/on_enter_area(datum/source, area/new_area)
+	SIGNAL_HANDLER
+	// We should teleport, if this is not an area allowed to be inhabited by ghost characters, or this is an area ghosts are prohibited to inhabit during a round, and the round is ongoing
+	if(!(new_area.area_flags & GHOST_AREA) || ((new_area.area_flags & NO_GHOSTS_DURING_ROUND) && SSticker.current_state != GAME_STATE_FINISHED))
+		move_to_ghostspawn()
 
 /datum/action/cooldown/mob_cooldown/return_to_ghost
 	name = "Return to Ghost"

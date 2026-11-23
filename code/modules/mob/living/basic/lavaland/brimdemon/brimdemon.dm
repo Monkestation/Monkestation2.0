@@ -14,13 +14,13 @@
 	speak_emote = list("cackles")
 	melee_damage_lower = 7.5
 	melee_damage_upper = 7.5
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	melee_attack_cooldown = 0.6 SECONDS
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	death_message = "wails as infernal energy escapes from its wounds, leaving it an empty husk."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 5
 	light_outer_range = 1.4
@@ -63,7 +63,7 @@
 /mob/living/basic/mining/brimdemon/update_overlays()
 	. = ..()
 	if (stat != DEAD)
-		. += emissive_appearance(icon, "[icon_living]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Show a funny animation before doing an explosion
 /obj/effect/temp_visual/brim_burst

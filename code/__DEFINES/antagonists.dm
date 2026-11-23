@@ -21,10 +21,18 @@
 #define FUGITIVE_RESULT_FUGITIVE_VICTORY 7
 #define FUGITIVE_RESULT_MAJOR_FUGITIVE 8
 
+// Wizard's contract school types
 #define APPRENTICE_DESTRUCTION "destruction"
 #define APPRENTICE_BLUESPACE "bluespace"
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
+
+#define ALL_APPRENTICE_TYPES list( \
+	APPRENTICE_DESTRUCTION, \
+	APPRENTICE_BLUESPACE, \
+	APPRENTICE_ROBELESS, \
+	APPRENTICE_HEALING, \
+)
 
 //Pirates
 
@@ -485,6 +493,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 // Monster Hunter stuff
 #define UPGRADED_VAL(x,y) ( CEILING((x * (1.07 ** y)), 1) )
 #define CALIBER_BLOODSILVER "bloodsilver"
+#define MONSTER_THREAT_LOW 2
+#define MONSTER_THREAT_MEDIUM 3
+#define MONSTER_THREAT_HIGH 4
+#define MONSTER_HUNTER_THREAT_REQUIRED 6
+#define MONSTER_HUNTER_PREY_REQUIRED 2
 
 ///Whether a mob is a Monster Hunter
 #define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter))
@@ -523,14 +536,18 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// is something an eminence
 #define iseminence(checked) (istype(checked, /mob/living/eminence))
 
-/// is something a worm
-#define iscorticalborer(A) (istype(A, /mob/living/basic/cortical_borer))
-
 /// Is the mob a blood brother
 #define IS_BROTHER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/brother))
 
 /// Whether the mob can convert others through innate flash shielding like IPCs (head revolutionaries and blood brothers)
 #define CAN_BYPASS_INNATE_FLASH_RESISTANCE(mob) (IS_BROTHER(mob) || IS_HEAD_REVOLUTIONARY(mob))
+
+// Worm zone start
+
+/// is something a worm
+#define iscorticalborer(A) (istype(A, /mob/living/basic/cortical_borer))
+/// does something have a worm
+#define has_borer(A) (locate(/mob/living/basic/cortical_borer) in A)
 
 // Borer evolution defines
 // The three primary paths that eventually diverge
@@ -541,8 +558,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BORER_EVOLUTION_GENERAL "General"
 #define BORER_EVOLUTION_START "Start"
 
-// Borer effect flags
-
 /// If the borer is in stealth mode, giving less feedback to hosts at the cost of no health/resource/point gain
 #define BORER_STEALTH_MODE (1<<0)
 /// If the borer is sugar-immune, taking no ill effects from sugar
@@ -551,10 +566,10 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BORER_FAST_BORING (1<<2)
 /// If the borer is currently hiding under tables/couches/stairs or appearing on top of them
 #define BORER_HIDING (1<<3)
-/// If the borer can produce eggs without a host
-#define BORER_ALONE_PRODUCTION (1<<4)
 /// If the borer is energic, used for crawling into various spaces
-#define BORER_ENERGIC (1<<5)
+#define BORER_ENERGIC (1<<4)
+
+// Worm zone ends
 
 /// If the given mob is a bloodling
 #define IS_BLOODLING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodling))

@@ -3,7 +3,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax
 	name = "Fax Machine"
 	desc = "Bluespace technologies on the application of bureaucracy."
-	icon = 'icons/obj/fax.dmi'
+	icon = 'icons/obj/machines/fax.dmi'
 	icon_state = "fax"
 	density = TRUE
 	power_channel = AREA_USAGE_EQUIP
@@ -32,6 +32,8 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	var/list/fax_history = list()
 	/// MONKESTATION EDIT: If true admins get messaged when it recieves a fax, for CC offices or other schnanigans.
 	var/recieve_notifies_admins = FALSE
+	/// Is the fax from an AI upgrade?
+	var/ai_fax = FALSE
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
 		/obj/item/paper,
@@ -121,7 +123,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return FALSE
 	if (!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		playsound(src, 'sound/creatures/dog/growl2.ogg', 50, FALSE)
+		playsound(src, 'sound/mobs/non-humanoids/dog/growl2.ogg', 50, FALSE)
 		balloon_alert(user, "migrated to syndienet 2.0")
 		to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
 		return TRUE
@@ -236,7 +238,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if(FAX.fax_id == fax_id) //skip yourself
 			continue
 		var/list/fax_data = list()
-		fax_data["fax_name"] = FAX.fax_name
+		fax_data["fax_name"] = html_decode(FAX.fax_name)
 		fax_data["fax_id"] = FAX.fax_id
 		fax_data["visible"] = FAX.visible_to_network
 		fax_data["has_paper"] = !!FAX.loaded_item_ref?.resolve()
@@ -246,12 +248,13 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 	// Own data
 	data["fax_id"] = fax_id
-	data["fax_name"] = fax_name
+	data["fax_name"] = html_decode(fax_name)
 	data["visible"] = visible_to_network
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
 	data["has_paper"] = !!loaded_item_ref?.resolve()
 	data["fax_history"] = fax_history
+	data["ai_fax"] = ai_fax
 	var/list/special_networks_data = list()
 	for(var/key in special_networks)
 		special_networks_data += list(special_networks[key])
@@ -269,6 +272,9 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 			var/obj/item/loaded = loaded_item_ref?.resolve()
 			if (!loaded)
 				return
+			if(istype(loaded, /obj/item/paper/ai))
+				var/obj/item/paper/ai/ai_paper = loaded
+				ai_paper.interactive = FALSE
 			loaded.forceMove(drop_location())
 			loaded_item_ref = null
 			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
@@ -277,8 +283,12 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 		if("send")
 			var/obj/item/loaded = loaded_item_ref?.resolve()
-			if (!loaded)
+			if(!loaded)
 				return
+			//disable interactivity once its out.
+			if(istype(loaded, /obj/item/paper/ai))
+				var/obj/item/paper/ai/ai_paper = loaded
+				ai_paper.interactive = FALSE
 			var/destination = params["id"]
 			if(send(loaded, destination))
 				log_fax(loaded, destination, params["name"])
@@ -313,6 +323,26 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 			history_clear()
 			return TRUE
 
+		if("generate_paper")
+			if(!ai_fax)
+				log_runtime("Non-AI fax tried to do AI fax!")
+				return
+			var/obj/item/paper/made_paper = new /obj/item/paper/ai(src)
+			loaded_item_ref = WEAKREF(made_paper)
+			update_appearance()
+
+		if("edit_paper")
+			if(!ai_fax)
+				log_runtime("Non-AI fax tried to do AI fax!")
+				return
+
+			//shouldn't be able to put anything else.
+			var/obj/item/paper/ai/loaded = loaded_item_ref?.resolve()
+			if(loaded)
+				loaded.ui_interact(usr)
+
+
+
 /**
  * Records logs of bureacratic action
  * Arguments:
@@ -344,7 +374,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if (FAX.jammed)
 			do_sparks(5, TRUE, src)
 			balloon_alert(usr, "destination port jammed")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
@@ -454,7 +484,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/proc/history_add(history_type = "Send", history_fax_name)
 	var/list/history_data = list()
 	history_data["history_type"] = history_type
-	history_data["history_fax_name"] = history_fax_name
+	history_data["history_fax_name"] = html_decode(history_fax_name)
 	history_data["history_time"] = station_time_timestamp()
 	fax_history += list(history_data)
 
@@ -549,3 +579,15 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	recieve_notifies_admins = TRUE
 
 //Monkestation edit end
+
+/obj/machinery/fax/ai
+	desc = "You should frankly not see this. Yell at coders!"
+	use_power = FALSE
+	ai_fax = TRUE
+
+/obj/machinery/fax/ai/Initialize(mapload, ai_name)
+	. = ..()
+	fax_name = ai_name
+
+/obj/machinery/fax/ai/ui_status(mob/user)
+	return UI_INTERACTIVE //always be interactable

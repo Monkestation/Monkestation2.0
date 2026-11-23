@@ -8,7 +8,7 @@
 	density = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	break_message = span_warning("Sparks fly as the brass structure shatters across the ground.") //The message shown when a structure breaks
-	break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
+	break_sound = 'sound/effects/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
 	debris = list(
 		/obj/structure/fluff/clockwork/alloy_shards/large = 1,
 		/obj/structure/fluff/clockwork/alloy_shards/medium = 2,

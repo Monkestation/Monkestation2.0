@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/pipe
-	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipes_bitmask.dmi'
 	damage_deflection = 12
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
@@ -45,11 +45,11 @@
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)
 
-/obj/machinery/atmospherics/pipe/get_rebuild_targets()
+/obj/machinery/atmospherics/pipe/get_rebuild_target()
 	if(!QDELETED(parent))
 		return
 	parent = new
-	return list(parent)
+	return parent
 
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
 	if(air_temporary)
@@ -59,17 +59,17 @@
 /obj/machinery/atmospherics/pipe/return_air()
 	if(air_temporary)
 		return air_temporary
-	return parent.air
+	return parent?.air
 
 /obj/machinery/atmospherics/pipe/return_analyzable_air()
 	if(air_temporary)
 		return air_temporary
-	return parent.air
+	return parent?.air
 
 /obj/machinery/atmospherics/pipe/remove_air(amount)
 	if(air_temporary)
 		return air_temporary.remove(amount)
-	return parent.air.remove(amount)
+	return parent?.air?.remove(amount)
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/pipe_meter))
@@ -100,7 +100,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/proc/update_pipe_icon()
-	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipes_bitmask.dmi'
 	var/connections = NONE
 	var/bitfield = NONE
 	for(var/i in 1 to device_type)
@@ -136,4 +136,4 @@
 	return paintable
 
 /obj/machinery/atmospherics/pipe/update_layer()
-	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)
+	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER : initial(layer)) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)

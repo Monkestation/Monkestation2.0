@@ -56,7 +56,7 @@
 
 	// anti-drop logic (for shuttle dock or tripped)
 	if(prevent_drop)
-		for(var/obj/item/held_item in owner.held_items)
+		for(var/obj/item/held_item as anything in owner.get_held_items())
 			ADD_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 	// Apply floored trait so the mob falls over
@@ -67,7 +67,7 @@
 		addtimer(CALLBACK(src, PROC_REF(clear_prevent_drop)), 0)
 
 /datum/status_effect/incapacitating/knockdown/proc/clear_prevent_drop()
-	for(var/obj/item/held_item in owner.held_items)
+	for(var/obj/item/held_item as anything in owner.get_held_items())
 		REMOVE_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
@@ -209,8 +209,10 @@
 	tick_interval = initial(tick_interval)
 
 #define HEALING_SLEEP_DEFAULT 0.2
+/// The sleep multipler for fitness xp conversion
+#define SLEEP_QUALITY_WORKOUT_MULTIPLER 10
 
-/datum/status_effect/incapacitating/sleeping/tick()
+/datum/status_effect/incapacitating/sleeping/tick(seconds_between_ticks)
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = HEALING_SLEEP_DEFAULT
@@ -256,6 +258,16 @@
 		if(locate(/obj/item/pillow) in owner.loc)
 			healing += 0.1
 
+		if(healing > 0 && iscarbon(owner))
+			var/mob/living/carbon/carbon_owner = owner
+			var/datum/status_effect/exercised/exercised = carbon_owner.has_status_effect(/datum/status_effect/exercised)
+			if(exercised && carbon_owner.mind)
+				// the better you sleep, the more xp you gain
+				carbon_owner.mind.adjust_experience(/datum/skill/athletics, seconds_between_ticks * healing * SLEEP_QUALITY_WORKOUT_MULTIPLER)
+				carbon_owner.adjust_timed_status_effect(-1 * seconds_between_ticks * healing * SLEEP_QUALITY_WORKOUT_MULTIPLER, /datum/status_effect/exercised)
+				if(prob(2))
+					to_chat(carbon_owner, span_notice("You feel your fitness improving!"))
+
 		if(healing > 0 && health_ratio > 0.8)
 			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
 			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
@@ -272,6 +284,7 @@
 		owner.emote("snore")
 
 #undef HEALING_SLEEP_DEFAULT
+#undef SLEEP_QUALITY_WORKOUT_MULTIPLER
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -344,7 +357,7 @@
 	alerttooltipstyle = "hisgrace"
 
 /datum/status_effect/his_wrath/tick()
-	for(var/obj/item/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG as anything in owner.get_held_items_of_type(/obj/item/his_grace))
 		qdel(src)
 		return
 	owner.adjustBruteLoss(0.1)
@@ -381,8 +394,8 @@
 	var/list/factions = list(FACTION_MINING, FACTION_BOSS) // MONKESTATION ADDITION
 	if(faction_check(owner.faction, factions)) //MONKESTATION EDIT, only marks mining mobs no longer large mobs
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', boosted ? "shield" : "shield2")
-		marked_underlay.pixel_x = -owner.pixel_x
-		marked_underlay.pixel_y = -owner.pixel_y
+		marked_underlay.pixel_w = -(owner.base_pixel_x + owner.base_pixel_w)
+		marked_underlay.pixel_z = -(owner.base_pixel_y + owner.base_pixel_z)
 		owner.underlays += marked_underlay
 		return TRUE
 	return FALSE
@@ -537,7 +550,7 @@
 		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
 		wasting_effect.alpha = 255
 		animate(wasting_effect, alpha = 0, time = 32)
-		playsound(owner, 'sound/effects/curse5.ogg', 20, TRUE, -1)
+		playsound(owner, 'sound/effects/curse/curse5.ogg', 20, TRUE, -1)
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
@@ -560,7 +573,7 @@
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
+	playsound(spawn_turf, 'sound/effects/curse/curse2.ogg', 80, TRUE, -1)
 	var/obj/projectile/curse_hand/C = new (spawn_turf)
 	C.aim_projectile(owner, spawn_turf)
 	C.fire()
@@ -589,7 +602,7 @@
 /datum/status_effect/progenitor_curse/proc/grasp(turf/spawn_turf)
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
+	playsound(spawn_turf, pick('sound/effects/curse/curse1.ogg','sound/effects/curse/curse2.ogg','sound/effects/curse/curse3.ogg'), 80, 1, -1)
 	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
 	pro.aim_projectile(owner, spawn_turf)
 	pro.fire()
@@ -836,11 +849,44 @@
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
+	owner.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id)) //I believe I can fly!
 
 /datum/status_effect/go_away/tick()
 	owner.AdjustStun(1, ignore_canstun = TRUE)
-	var/turf/T = get_step(owner, direction)
-	owner.forceMove(T)
+	var/turf/turf = get_step(owner, direction)
+	if(!turf)
+		qdel(src)
+		return
+	owner.forceMove(turf)
+
+/datum/status_effect/go_away/on_remove()
+	. = ..()
+	owner.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id))
+
+///Subtype of the go away effect (phases the mob in one direction) that deletes the owner on z-level change or when the time's up.
+/datum/status_effect/go_away/deletes_mob
+	id = "go_away_deletes_mob"
+	duration = 30 SECONDS
+	/// Timer that tracks when we should vanish
+	var/deletion_timer
+
+/datum/status_effect/go_away/deletes_mob/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	deletion_timer = addtimer(CALLBACK(src, PROC_REF(wipe_bozo)), duration - 5 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	RegisterSignals(new_owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH), PROC_REF(wipe_bozo))
+
+/// Fades out and deletes the owner
+/datum/status_effect/go_away/deletes_mob/proc/wipe_bozo()
+	deltimer(deletion_timer)
+	owner.fade_into_nothing()
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
+
+/datum/status_effect/go_away/deletes_mob/on_remove()
+	. = ..()
+	deltimer(deletion_timer)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"

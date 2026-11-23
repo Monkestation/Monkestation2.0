@@ -82,9 +82,7 @@
 	for(var/stamp in stamps)
 		var/image/stamp_image = image(
 			icon = icon,
-			icon_state = stamp,
-			pixel_x = stamp_offset_x,
-			pixel_y = stamp_offset_y + bonus_stamp_offset
+			icon_state = stamp
 		)
 		stamp_image.appearance_flags |= RESET_COLOR
 		add_overlay(stamp_image)
@@ -93,9 +91,7 @@
 	if(postmarked == TRUE)
 		var/image/postmark_image = image(
 			icon = icon,
-			icon_state = "postmark",
-			pixel_x = stamp_offset_x + rand(-3, 1),
-			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+			icon_state = "postmark"
 		)
 		postmark_image.appearance_flags |= RESET_COLOR
 		add_overlay(postmark_image)
@@ -109,7 +105,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 
 /obj/item/mail/attack_self(mob/user)
 	if(recipient_ref)
@@ -124,22 +120,31 @@
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	if(contents.len)
-		user.put_in_hands(contents[1])
-	user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	if(length(contents))
+		var/obj/stuff = contents[1]
+		if(isitem(stuff))
+			user.put_in_hands(stuff)
+		else
+			stuff.forceMove(user.drop_location())
+	if(postmarked) // dead mail from the strike isn't ours to pay out on
+		user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/mail/examine_more(mob/user)
 	. = ..()
-	var/list/msg = list(span_notice("<i>You notice the postmarking on the front of the mail...</i>"))
-	var/datum/mind/recipient = recipient_ref.resolve()
-	if(recipient)
-		msg += "\t[span_info("Certified NT mail for [recipient].")]"
+	if(!postmarked)
+		. += span_info("This mail has no postmarking of any sort...")
 	else
-		msg += "\t[span_info("Certified mail for [GLOB.station_name].")]"
-	msg += "\t[span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")]"
-	return msg
+		. += span_notice("<i>You notice the postmarking on the front of the mail...</i>")
+	var/datum/mind/recipient = recipient_ref?.resolve()
+	if(recipient)
+		. += span_info("[postmarked ? "Certified NT" : "Uncertified"] mail for [recipient].")
+	else if(postmarked)
+		. += span_info("Certified mail for [GLOB.station_name].")
+	else
+		. += span_info("This is a dead letter mail with no recipient.")
+	. += span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
@@ -221,8 +226,8 @@
 	base_icon_state = "mail"
 	can_install_electronics = FALSE
 	lid_icon_state = "maillid"
-	lid_x = -26
-	lid_y = 2
+	lid_w = -26
+	lid_z = 2
 	paint_jobs = null
 	can_weld_shut = FALSE
 
@@ -279,6 +284,46 @@
 /obj/structure/closet/crate/mail/full/Initialize(mapload)
 	. = ..()
 	populate(INFINITY)
+
+///Used in the mail strike shuttle loan event
+/obj/structure/closet/crate/mail/full/mail_strike
+	desc = "A post crate from somewhere else."
+
+/obj/structure/closet/crate/mail/full/mail_strike/populate(amount)
+	var/strike_mail_to_spawn = rand(1, storage_capacity-1)
+	for(var/i in 1 to strike_mail_to_spawn)
+		new /obj/item/mail/mail_strike(src)
+	return ..(storage_capacity - strike_mail_to_spawn)
+
+///Generic mail used in the mail strike shuttle loan event
+/obj/item/mail/mail_strike
+	name = "dead mail"
+	desc = "An unmarked parcel of unknown origins, effectively undeliverable."
+	postmarked = FALSE
+	generic_goodies = list(
+		/obj/effect/spawner/random/entertainment/money_medium = 2,
+		/obj/effect/spawner/random/contraband = 2,
+		/obj/effect/spawner/random/entertainment/money_large = 1,
+		/obj/effect/spawner/random/entertainment/coin = 1,
+		/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage = 1,
+		/obj/effect/spawner/random/entertainment/drugs = 1,
+		/obj/effect/spawner/random/contraband/grenades = 1,
+	)
+
+/obj/item/mail/mail_strike/Initialize(mapload)
+	if(prob(35))
+		stamped = FALSE
+	if(prob(35))
+		name = "dead envelope"
+		icon_state = "mail_large"
+		goodie_count = 2
+		stamp_max = 2
+		stamp_offset_y = 5
+	. = ..()
+	color = pick(COLOR_SILVER, COLOR_DARK, COLOR_DRIED_TAN, COLOR_ORANGE_BROWN, COLOR_BROWN, COLOR_SYNDIE_RED)
+	for(var/goodie in 1 to goodie_count)
+		var/target_good = pick_weight(generic_goodies)
+		new target_good(src)
 
 
 /// Opened mail crate

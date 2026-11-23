@@ -23,7 +23,7 @@
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "pummel")
 	drop_sound = 'sound/items/drop/wooden.ogg'
 	pickup_sound = 'sound/items/pickup/wooden.ogg'
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 
 	//open umbrella offsets for the inhands
 	var/open_x_offset = 2
@@ -33,7 +33,7 @@
 	var/open = FALSE
 
 	/// The sound effect played when our umbrella is opened
-	var/on_sound = 'sound/weapons/batonextend.ogg'
+	var/on_sound = 'sound/items/weapons/batonextend.ogg'
 	/// The inhand icon state used when our umbrella is opened.
 	var/on_inhand_icon_state = "umbrella_on"
 
@@ -59,7 +59,7 @@
 	AddComponent( \
 		/datum/component/transforming, \
 		force_on = 7, \
-		hitsound_on = "sound/weapons/genhit1.ogg", \
+		hitsound_on = "sound/items/weapons/genhit1.ogg", \
 		w_class_on = WEIGHT_CLASS_BULKY, \
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("swooshes", "whacks", "fwumps"), \
@@ -107,20 +107,20 @@
 	SIGNAL_HANDLER
 	owner.update_held_items()
 
-/obj/item/umbrella/get_worn_offsets(isinhands)
-	. = ..()
-	var/mob/holder = loc
+/obj/item/umbrella/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = ..()
 	if(open)
-		.[2] += open_y_offset
+		offsets.y += open_y_offset
 		switch(loc.dir)
 			if(NORTH)
-				.[1] += ISODD(holder.get_held_index_of_item(src)) ? -open_x_offset : open_x_offset
+				offsets.x += ISODD(hand_index) ? -open_x_offset : open_x_offset
 			if(SOUTH)
-				.[1] += ISODD(holder.get_held_index_of_item(src)) ? open_x_offset : -open_x_offset
+				offsets.x += ISODD(hand_index) ? open_x_offset : -open_x_offset
 			if(EAST)
-				.[1] -= open_x_offset
+				offsets.x -= open_x_offset
 			if(WEST)
-				.[1] += open_x_offset
+				offsets.x += open_x_offset
+	return offsets
 
 //other umbrellas
 

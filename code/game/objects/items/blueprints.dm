@@ -72,6 +72,7 @@
 			data["area_notice"] = "You are now in \the [current_area.name]"
 	var/area/area_inside_of = get_area(user)
 	data["area_name"] = html_encode(area_inside_of.name)
+	data["area_allows_shuttle_docking"] = area_inside_of.allow_shuttle_docking
 	data["legend"] = legend_viewing
 	data["viewing"] = !!viewing
 	data["wire_data"] = list()
@@ -95,7 +96,7 @@
 	data["legend_viewing_list"] = LEGEND_VIEWING_LIST
 	data["legend_off"] = LEGEND_OFF
 	data["fluff_notice"] = fluffnotice
-	data["station_name"] = station_name()
+	data["station_name"] = html_decode(station_name())
 	data["wire_devices"] = list()
 	for(var/wireset in GLOB.wire_color_directory)
 		data["wire_devices"] += list(list(
@@ -128,6 +129,11 @@
 			in_use = TRUE
 			edit_area(user)
 			in_use = FALSE
+		if("toggle_allow_shuttle_docking")
+			if(get_area_type(user) != AREA_STATION)
+				return
+			var/area/area = get_area(src)
+			area.allow_shuttle_docking = !area.allow_shuttle_docking
 		if("exit_legend")
 			legend_viewing = LEGEND_OFF
 		if("view_legend")
@@ -227,7 +233,15 @@
 	name = "land claim"
 	desc = "Use it to build new structures in the wastes."
 	fluffnotice = "In memory of the Liberator's brother, Delaminator, and his Scarlet Macaw-iathan, from which this artifact was stolen."
-	/* new_area_type = /area/golem */
+	new_area_type = /area/ruin/powered/golem_ship
+
+/obj/item/blueprints/golem/ui_interact(mob/user, datum/tgui/ui)
+	if(iscarbon(user))
+		var/mob/living/carbon/boi = user
+		if(!istype(boi.mind?.assigned_role, /datum/job/free_golem) && !HAS_TRAIT(boi, TRAIT_NUKEIMMUNE)) //ok if they're nuke immune probably an admin so.
+			balloon_alert(user,"nope!")
+			return
+		. = ..()
 
 ///Slime blueprints - Makes areas colored and compatible with xenobiology camera consoles, one time use.
 /obj/item/blueprints/slime
@@ -239,7 +253,7 @@
 /obj/item/blueprints/slime/edit_area(mob/user)
 	. = ..()
 	var/area/area = get_area(src)
-	var/list/turf_matrix = color_transition_filter("#2956B2")
+	var/list/turf_matrix = color_transition_filter("#2956B2", SATURATION_OVERRIDE)
 	for(var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

@@ -15,7 +15,7 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	butcher_results = list(/obj/effect/decal/cleanable/ants = 3) //It's just a bunch of ants glued together into a larger ant
 	response_help_continuous = "pets"
@@ -30,8 +30,8 @@
 	health = 100
 	maxHealth = 100
 	light_outer_range = 1.5 // Bioluminescence!
-	bodytemp_cold_damage_limit = T20C - 100
-	bodytemp_heat_damage_limit = T20C + 120
+	minimum_survivable_temperature = T20C - 100
+	maximum_survivable_temperature = T20C + 120
 	light_color = "#d43229" // The ants that comprise the giant ant still glow red despite the sludge.
 
 	ai_controller = /datum/ai_controller/basic_controller/ant

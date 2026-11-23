@@ -2172,8 +2172,7 @@
 	dir = 4
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains. The skeleton is laid out on its side and there seems to have been no sign of struggle.";
-	layer = 4.1
+	desc = "They look like human remains. The skeleton is laid out on its side and there seems to have been no sign of struggle."
 	},
 /obj/machinery/button/door/directional/west{
 	id = "awaydorm3";
@@ -2878,7 +2877,7 @@
 "vt" = (
 /obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/device.dmi';
+	icon = 'icons/obj/devices/tracker.dmi';
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},

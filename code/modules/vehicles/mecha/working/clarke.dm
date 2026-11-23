@@ -2,6 +2,7 @@
 /obj/vehicle/sealed/mecha/clarke
 	desc = "Combining man and machine for a better, stronger engineer. Can even resist lava!"
 	name = "\improper Clarke"
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "clarke"
 	base_icon_state = "clarke"
 	max_temperature = 65000
@@ -101,7 +102,7 @@
 		if(isnull(cached_ore_box))
 			return FALSE
 		cached_ore_box.dump_box_contents()
-		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Dumped [cached_ore_box].", LOG_MECHA)
 		return TRUE
 

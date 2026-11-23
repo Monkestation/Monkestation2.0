@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	// Rate limiting
-	if(!holder && href_list["window_id"] != "statbrowser")
+	if(!holder)
 		var/mtl = CONFIG_GET(number/minute_topic_limit)
 		if (mtl)
 			var/minute = round(world.time, 1 MINUTES)
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				return
 
 		var/stl = max(CONFIG_GET(number/second_topic_limit), CONFIG_GET(number/tgui_max_chunk_count))
-		if (stl)
+		if (stl && href_list["window_id"] != "statbrowser")
 			var/second = round(world.time, 1 SECONDS)
 			if (!topiclimiter)
 				topiclimiter = new(LIMITER_SIZE)
@@ -663,6 +663,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	SSambience.remove_ambience_client(src)
 	SSmouse_entered.hovers -= src
 	SSping.currentrun -= src
+	SSsound_tokens.clients_needing_update -= src
+	SSsound_tokens.currentrun -= src
+	QDEL_NULL(imode)
 	QDEL_NULL(view_size)
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
@@ -1212,7 +1215,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	for(var/procpath/verb_to_init as anything in verbstoprocess)
 		if(!verb_to_init || verb_to_init.hidden)
 			continue
-		if(!SSverbs.verbs_by_verb_path[verb_to_init] && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_to_init]
+		if(!meta && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+			continue
+		if(meta?.src_based)
 			continue
 		panel_verbs += list(SSverbs.serialize_verb(verb_to_init))
 	tgui_panel?.window?.send_message("verbs/init", list("verbs" = panel_verbs))

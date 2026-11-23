@@ -506,11 +506,20 @@
 	activate_message = span_notice("You recall learning from your grandmother how they baked their cookies with love.")
 	deactivate_message = span_notice("You forget all memories imparted upon you by your grandmother. Were they even your real grandma?")
 
+/obj/item/skillchip/drunken_brawler
+	name = "F0RC3 4DD1CT10N skillchip"
+	auto_traits = list(TRAIT_DRUNKEN_BRAWLER)
+	skill_name = "Drunken Unarmed Proficiency"
+	skill_description = "When intoxicated, you gain increased unarmed effectiveness."
+	skill_icon = "wine-bottle"
+	activate_message = span_notice("You honestly could do with a drink. Never know when someone might try and jump you around here.")
+	deactivate_message = span_notice("You suddenly feel a lot safer going around the station sober... ")
+
 /obj/item/skillchip/master_angler
 	name = "Mast-Angl-Er skillchip"
-	auto_traits = list(TRAIT_REVEAL_FISH)
+	auto_traits = list(TRAIT_REVEAL_FISH, TRAIT_EXAMINE_FISHING_SPOT, TRAIT_EXAMINE_FISH, TRAIT_EXAMINE_DEEPER_FISH)
 	skill_name = "Fisherman's Discernment"
-	skill_description = "While fishing, it'll make a smidge easier to guess whatever you're trying to catch."
+	skill_description = "Lists fishes when examining a fishing spot, gives a hint of whatever thing's biting the hook and more."
 	skill_icon = "fish"
 	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
 	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")

@@ -12,7 +12,8 @@
 	light_outer_range = 5
 	anchored = TRUE
 	density = FALSE
-	layer = TURF_LAYER + 0.1
+	can_astar_pass = CANASTARPASS_ALWAYS_PROC
+	layer = ABOVE_NORMAL_TURF_LAYER
 	var/item_value_consumed = 0
 	var/current_pit_size = 1 // 1 = 1x1, 2 = 2x2, 3 = 3x3 can go higher
 	var/list/pit_overlays = list()
@@ -348,10 +349,11 @@
 /obj/structure/bingle_pit_overlay
 	name = "bingle pit"
 	icon = 'monkestation/code/modules/veth_misc_items/bingle/icons/binglepit.dmi'
-	layer = TURF_LAYER + 0.5
+	layer = LOW_OBJ_LAYER
 	plane = GAME_PLANE
 	anchored = TRUE
 	density = FALSE
+	can_astar_pass = CANASTARPASS_ALWAYS_PROC
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	uses_integrity = TRUE
 	obj_flags = parent_type::obj_flags | BLOCK_Z_OUT_DOWN
@@ -517,7 +519,7 @@
 
 /area/misc/bingle_pit
 	name = "Bingle Pit"
-	area_flags = NOTELEPORT | EVENT_PROTECTED | ABDUCTOR_PROOF | ALWAYS_VALID_BLOODSUCKER_LAIR | UNIQUE_AREA
+	area_flags = NOTELEPORT | EVENT_PROTECTED | ABDUCTOR_PROOF | ALWAYS_VALID_BLOODSUCKER_LAIR
 	has_gravity = TRUE
 	requires_power = FALSE
 	static_lighting = TRUE

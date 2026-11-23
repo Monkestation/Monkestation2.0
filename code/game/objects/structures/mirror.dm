@@ -132,7 +132,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	hairdresser.set_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_name(mob/living/carbon/human/user)
-	var/newname = sanitize_name(tgui_input_text(user, "Who are we again?", "Name change", user.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
+	var/newname = sanitize_name(tgui_input_text(user, "Who are we again?", "Name change", user.name, MAX_NAME_LEN, encode = FALSE), allow_numbers = TRUE) //It's magic so whatever.
 	if(!newname)
 		return TRUE
 	user.real_name = newname
@@ -208,8 +208,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	var/new_eye_color = tgui_color_picker(user, "Choose your eye color", "Eye Color", user.eye_color_left)
 	if(isnull(new_eye_color))
 		return TRUE
-	user.eye_color_left = sanitize_hexcolor(new_eye_color)
-	user.eye_color_right = sanitize_hexcolor(new_eye_color)
+	user.set_eye_color(sanitize_hexcolor(new_eye_color))
 	user.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
 	user.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
 	user.update_body()

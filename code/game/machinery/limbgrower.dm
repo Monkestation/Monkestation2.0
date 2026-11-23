@@ -22,7 +22,7 @@
 	/// Our internal techweb for limbgrower designs.
 	var/datum/techweb/autounlocking/stored_research
 	/// All the categories of organs we can print.
-	var/list/categories = list(SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, RND_CATEGORY_LIMBS_OTHER,) // Monkestation Edit:
+	var/list/categories = list(SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_CERULEAN, SPECIES_SHADEKIN, RND_CATEGORY_LIMBS_OTHER,) // Monkestation Edit:
 	///Designs imported from technology disks that we can print.
 	var/list/imported_designs = list()
 
@@ -167,7 +167,12 @@
 
 		if("make_limb")
 			var/design_id = params["design_id"]
-			if(!stored_research.researched_designs.Find(design_id) && !stored_research.hacked_designs.Find(design_id) && !imported_designs.Find(design_id))
+			var/temp_category = params["active_tab"]
+			if(!stored_research.researched_designs[design_id] && !stored_research.hacked_designs[design_id] && !imported_designs[design_id])
+				return
+			if(!(obj_flags & EMAGGED) && stored_research.hacked_designs.Find(design_id))
+				return
+			if(!(temp_category in categories))
 				return
 			being_built = SSresearch.techweb_design_by_id(design_id)
 			// All the reagents we're using to make our organ.
@@ -179,7 +184,7 @@
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
 					audible_message(span_notice("[src] buzzes."))
-					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 					return
 
 				power = max(active_power_usage, (power + consumed_reagents_list[reagent_id]))
@@ -188,9 +193,6 @@
 			use_energy(power)
 			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
-			var/temp_category = params["active_tab"]
-			if( ! (temp_category in categories) )
-				return FALSE //seriously come on
 			selected_category = temp_category
 			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
 			return TRUE
@@ -208,7 +210,7 @@
 	for(var/reagent_id in modified_consumed_reagents_list)
 		if(!reagents.has_reagent(reagent_id, modified_consumed_reagents_list[reagent_id]))
 			audible_message(span_notice("The [src] buzzes."))
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 			break
 
 		reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])

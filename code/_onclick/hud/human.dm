@@ -288,9 +288,6 @@
 	zone_select.update_appearance()
 	static_inventory += zone_select
 
-	combo_display = new /atom/movable/screen/combo(null, src)
-	infodisplay += combo_display
-
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
@@ -412,11 +409,11 @@
 				screenmob.client.screen -= H.r_store
 
 	if(hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in H.held_items)
+		for(var/obj/item/I as anything in H.get_held_items())
 			I.screen_loc = ui_hand_position(H.get_held_index_of_item(I))
 			screenmob.client.screen += I
 	else
-		for(var/obj/item/I in H.held_items)
+		for(var/obj/item/I as anything in H.get_held_items())
 			I.screen_loc = null
 			screenmob.client.screen -= I
 

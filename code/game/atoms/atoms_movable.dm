@@ -1,4 +1,5 @@
 /atom/movable
+	abstract_type = /atom/movable
 	layer = OBJ_LAYER
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
@@ -69,7 +70,7 @@
 	var/movement_type = GROUND
 
 	var/atom/movable/pulling
-	var/grab_state = 0
+	var/grab_state = GRAB_PASSIVE
 	/// The strongest grab we can acomplish
 	var/max_grab = GRAB_PASSIVE
 	var/throwforce = 0
@@ -121,9 +122,6 @@
 	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
 	var/can_language_malfunction = TRUE
 
-	/// The weight for A* pathfinding added to turfs this atom is on.
-	var/astar_weight
-
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -169,6 +167,8 @@
 		blocker.dir = dir
 		blocker.appearance_flags = appearance_flags | EMISSIVE_APPEARANCE_FLAGS
 		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Takes a light path through the normal macro for a microop
+		if (IS_TOPDOWN_PLANE(plane))
+			blocker.layer = TOPDOWN_TO_EMISSIVE_LAYER(layer)
 		// Ok so this is really cursed, but I want to set with this blocker cheaply while
 		// Still allowing it to be removed from the overlays list later
 		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
@@ -193,11 +193,28 @@
 		if(MOVABLE_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
-	if(astar_weight && isturf(loc))
-		var/turf/turf_loc = loc
-		turf_loc.astar_weight += astar_weight
+	if(NAV_RELEVANT(src))
+		nav_dirty_footprint()
+
+/// Dirties every turf this covers, since a multi-tile movable spans more than its loc.
+/atom/movable/proc/nav_dirty_footprint()
+	for(var/turf/covered_turf in (isturf(loc) ? locs : list(get_turf(src))))
+		covered_turf.nav_dirty()
+
+/atom/movable/set_density(new_value)
+	. = ..()
+	if(isnull(.)) //no change
+		return
+
+	if(!(flags_1 & (NAV_IRRELEVANT_1 | NAV_ALWAYS_CONDITIONAL_1)))
+		if(isturf(loc))
+			nav_dirty_footprint()
 
 /atom/movable/Destroy(force)
+	//Update the navmap if the destroyed thing was nav relevant : )
+	if(NAV_RELEVANT(src))
+		nav_dirty_footprint()
+
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
 
@@ -593,7 +610,7 @@
 	if(!. || !isliving(moving_atom))
 		return
 	var/mob/living/pulled_mob = moving_atom
-	set_pull_offsets(pulled_mob, grab_state)
+	set_pull_offsets(pulled_mob, grab_state, animate = FALSE)
 
 /**
  * Checks if the pulling and pulledby should be stopped because they're out of reach.
@@ -877,12 +894,6 @@
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
 
-	if(astar_weight)
-		if(old_turf)
-			old_turf.astar_weight -= astar_weight
-		if(new_turf)
-			new_turf.astar_weight += astar_weight
-
 	if (old_turf?.z != new_turf?.z)
 		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))
 		on_changed_z_level(old_turf, new_turf, same_z_layer)
@@ -900,6 +911,18 @@
 
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
+
+	// Shit moving; mark em dirty if relevant
+	if(NAV_RELEVANT(src))
+		if(old_turf)
+			old_turf.nav_dirty()
+			if(new_turf && old_turf.z == new_turf.z && length(locs) > 1)
+				// the old footprint is the new one shifted back by how far we moved
+				for(var/turf/covered_turf in locs)
+					var/turf/old_covered_turf = locate(covered_turf.x + old_turf.x - new_turf.x, covered_turf.y + old_turf.y - new_turf.y, old_turf.z)
+					old_covered_turf?.nav_dirty()
+		if(new_turf && new_turf != old_turf)
+			nav_dirty_footprint()
 
 	return TRUE
 
@@ -1320,7 +1343,9 @@
 		return // in case a signal interceptor broke or deleted the thing before we could process our hit
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
 		return
-	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	var/caught = hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_IMPACT, hit_atom, throwingdatum, caught)
+	return caught
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))

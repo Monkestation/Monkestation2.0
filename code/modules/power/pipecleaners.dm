@@ -26,9 +26,10 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/pipe_cleaner
 	name = "pipe cleaner"
 	desc = "A bendable piece of wire covered in fuzz. Fun for arts and crafts!"
-	icon = 'icons/obj/power_cond/pipe_cleaner.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipe_cleaner.dmi'
 	icon_state = "0-1"
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
+	plane = FLOOR_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	color = CABLE_HEX_COLOR_RED

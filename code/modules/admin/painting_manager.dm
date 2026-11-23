@@ -1,6 +1,6 @@
 ADMIN_VERB(painting_manager, R_ADMIN, FALSE, "Paintings Manager", "View and redact paintings.", ADMIN_CATEGORY_MAIN)
-	var/static/datum/paintings_manager/ui = new
-	ui.ui_interact(user.mob)
+	var/datum/paintings_manager/tgui = new()
+	tgui.ui_interact(user.mob)
 
 /// Painting Admin Management Panel
 /datum/paintings_manager
@@ -55,7 +55,7 @@ ADMIN_VERB(painting_manager, R_ADMIN, FALSE, "Paintings Manager", "View and reda
 		if("rename")
 			//Modify the metadata
 			var/old_title = chosen_painting.title
-			var/new_title = tgui_input_text(user, "New painting title?", "Painting Rename", chosen_painting.title)
+			var/new_title = tgui_input_text(user, "New painting title?", "Painting Rename", html_decode(chosen_painting.title))
 			if(!new_title)
 				return
 			chosen_painting.title = new_title
@@ -63,7 +63,7 @@ ADMIN_VERB(painting_manager, R_ADMIN, FALSE, "Paintings Manager", "View and reda
 			return TRUE
 		if("rename_author")
 			var/old_name = chosen_painting.creator_name
-			var/new_name = tgui_input_text(user, "New painting author name?", "Painting Rename", chosen_painting.creator_name)
+			var/new_name = tgui_input_text(user, "New painting author name?", "Painting Rename", html_decode(chosen_painting.creator_name))
 			if(!new_name)
 				return
 			chosen_painting.creator_name = new_name

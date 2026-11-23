@@ -4,22 +4,28 @@
 	gain_text = "Their growth is astounding, their organs and glands can expand several times their size in mere days."
 	unlocked_evolutions = list(/datum/borer_evolution/upgrade_injection/t2)
 	tier = 1
+	/// How many units of chemicals will we be able to inject after this upgrade?
+	var/unlocked_injection = 10
 
 /datum/borer_evolution/upgrade_injection/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
-	cortical_owner.injection_rates_unlocked += cortical_owner.injection_rates[length(cortical_owner.injection_rates_unlocked) + 1]
+	var/datum/action/cooldown/borer/inject_chemical/action = locate() in cortical_owner.actions
+	if(action)
+		action.available_injection_amounts += unlocked_injection
 
 /datum/borer_evolution/upgrade_injection/t2
 	name = "Upgrade Injection II"
 	desc = "Upgrade your possible injection amount to 25 units."
 	unlocked_evolutions = list(/datum/borer_evolution/upgrade_injection/t3)
 	tier = 2
+	unlocked_injection = 25
 
 /datum/borer_evolution/upgrade_injection/t3
 	name = "Upgrade Injection III"
 	desc = "Upgrade your possible injection amount to 50 units."
 	unlocked_evolutions = list()
 	tier = 3
+	unlocked_injection = 50
 
 /datum/borer_evolution/sugar_immunity
 	name = "Sugar Immunity"
@@ -41,15 +47,17 @@
 
 /datum/borer_evolution/synthetic_borer/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
-	cortical_owner.organic_restricted = FALSE
+	var/datum/action/cooldown/borer/choosing_host/action = locate() in cortical_owner.actions
+	if(action)
+		action.accepted_biotypes = ALL
 
-/datum/borer_evolution/synthetic_chems_positive
+/datum/borer_evolution/reagent_giver/synthetic_chems_positive
 	name = "Synthetic Chemicals (+)"
 	desc = "Gain access to a list of helpful, synthetic-compatible chemicals."
 	gain_text = "Once we had established that robots weren't safe either, we began to experiment with them. Interestingly enough, some of them never needed to be oiled again."
 	tier = 6
 	evo_cost = 6
-	var/static/list/added_chemicals = list(
+	reagents = list(
 		/datum/reagent/medicine/system_cleaner,
 		/datum/reagent/medicine/liquid_solder,
 		/datum/reagent/fuel/oil,
@@ -59,24 +67,16 @@
 		/datum/reagent/drug/methamphetamine/robo,
 	)
 
-/datum/borer_evolution/synthetic_chems_positive/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
-	. = ..()
-	cortical_owner.potential_chemicals |= added_chemicals
-
-/datum/borer_evolution/synthetic_chems_negative
+/datum/borer_evolution/reagent_giver/synthetic_chems_negative
 	name = "Synthetic Chemicals (-)"
 	desc = "Gain access to a list of synthetic-damaging chemicals."
 	gain_text = "Good thing is, some of the worms were hostile to the robots, too. Corroded from the inside, some of them were basically husks."
 	tier = 6
 	evo_cost = 6
-	var/static/list/added_chemicals = list(
+	reagents = list(
 		/datum/reagent/toxin/acid/fluacid, // More like anti everything but :shrug:
 		/datum/reagent/thermite,
 		/datum/reagent/pyrosium,
 		/datum/reagent/oxygen,
 		/datum/reagent/medicine/painkiller/robopiates
 	)
-
-/datum/borer_evolution/synthetic_chems_negative/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
-	. = ..()
-	cortical_owner.potential_chemicals |= added_chemicals

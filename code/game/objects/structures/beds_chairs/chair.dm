@@ -12,24 +12,27 @@
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	layer = OBJ_LAYER
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
-	astar_weight = 2
 
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
+	///How much sitting on this chair influences fishing difficulty
+	var/fishing_modifier = -5
 
+/obj/structure/chair/Initialize(mapload)
+	. = ..()
+	if(prob(0.2))
+		name = "tactical [name]"
+		fishing_modifier -= 8
+	MakeRotate()
+	if(can_buckle && fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
 	. += span_notice("It's held together by a couple of <b>bolts</b>.")
 	if(!has_buckled_mobs() && can_buckle)
 		. += span_notice("While standing on [src], drag and drop your sprite onto [src] to buckle to it.")
-
-/obj/structure/chair/Initialize(mapload)
-	. = ..()
-	if(prob(0.2))
-		name = "tactical [name]"
-	MakeRotate()
 
 ///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
 /obj/structure/chair/proc/MakeRotate()
@@ -72,7 +75,7 @@
 	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
 		return
 	if(!overlays_from_child_procs || overlays_from_child_procs.len == 0)
-		var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over")
+		var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over", OBJ_LAYER)
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
 	else
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
@@ -109,10 +112,8 @@
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER_FOV_HIDDEN)
 	else
 		layer = OBJ_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -144,6 +145,7 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
+	fishing_modifier = -6
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -161,6 +163,7 @@
 	max_integrity = 70
 	buildstackamount = 2
 	item_chair = null
+	fishing_modifier = -7
 	// The mutable appearance used for the overlay over buckled mobs.
 	var/mutable_appearance/armrest
 
@@ -179,7 +182,6 @@
 /obj/structure/chair/comfy/proc/gen_armrest()
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
-	SET_PLANE_EXPLICIT(armrest, GAME_PLANE_UPPER, src)
 	update_armrest()
 
 /obj/structure/chair/comfy/proc/GetArmrest()
@@ -226,7 +228,7 @@
 
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1, layer = OBJ_LAYER))
 	. = ..()
 
 /obj/structure/chair/comfy/shuttle/tactical
@@ -237,11 +239,13 @@
 	desc = "A luxurious chair, the many purple scales reflect the light in a most pleasing manner."
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
+	fishing_modifier = -12
 
 /obj/structure/chair/office
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
+	fishing_modifier = -6
 	icon_state = "officechair_dark"
 
 
@@ -252,11 +256,12 @@
 
 /obj/structure/chair/office/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1, layer = OBJ_LAYER))
 	. = ..()
 
 /obj/structure/chair/office/tactical
 	name = "tactical swivel chair"
+	fishing_modifier = -10
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
@@ -301,10 +306,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	can_buckle = TRUE
 
 /obj/structure/chair/stool/bar/post_buckle_mob(mob/living/M)
-	M.pixel_y += 4
+	M.add_offsets(type, z_add = 4)
 
 /obj/structure/chair/stool/bar/post_unbuckle_mob(mob/living/M)
-	M.pixel_y -= 4
+	M.remove_offsets(type)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
@@ -331,7 +336,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	throwforce = 10
 	demolition_mod = 1.25
 	throw_range = 3
-	hitsound = 'sound/items/trayhit1.ogg'
+	hitsound = 'sound/items/trayhit/trayhit1.ogg'
 	hit_reaction_chance = 50
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	var/break_chance = 5 //Likely hood of smashing the chair.
@@ -387,7 +392,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
+	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance) || attack_type == LEAP_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
 		return TRUE
 	return FALSE
@@ -423,7 +428,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	name = "bamboo stool"
 	icon_state = "bamboo_stool"
 	inhand_icon_state = "stool_bamboo"
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/stool/bamboo
 	break_chance = 50	//Submissive and breakable unlike the chad iron stool
 
@@ -436,7 +441,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "woodenchair"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
 	break_chance = 50
@@ -453,6 +458,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
 	icon_state = "chairold"
 	item_chair = null
+	fishing_modifier = 4
 
 /obj/structure/chair/bronze
 	name = "brass chair"
@@ -462,6 +468,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
+	fishing_modifier = -13 //the pinnacle of Ratvarian technology.
+	/// Total rotations made
 	var/turns = 0
 
 /obj/structure/chair/bronze/Destroy()
@@ -504,13 +512,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	item_chair = null
 	flags_1 = NODECONSTRUCT_1
 	alpha = 0
+	fishing_modifier = -21 //it only lives for 25 seconds, so we make them worth it.
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
-	M.pixel_y += 5
+	M.add_offsets(type, z_add = 5)
 
 /obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
-	M.pixel_y -= 5
-
+	M.remove_offsets(type)
 
 /obj/structure/chair/plastic
 	icon_state = "plastic_chair"
@@ -522,15 +530,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
 	item_chair = /obj/item/chair/plastic
+	fishing_modifier = -10
 
 /obj/structure/chair/plastic/post_buckle_mob(mob/living/Mob)
-	Mob.pixel_y += 2
-	.=..()
+	Mob.add_offsets(type, z_add = 2)
+	. = ..()
 	if(iscarbon(Mob))
 		INVOKE_ASYNC(src, PROC_REF(snap_check), Mob)
 
 /obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
-	Mob.pixel_y -= 2
+	Mob.remove_offsets(type)
 
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)

@@ -37,7 +37,7 @@
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
-#define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
+#define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/remove_gauze] once the gauze is gone
 ///from /obj/item/bodypart/proc/receive_damage, sent from the limb owner (limb, brute, burn)
 #define COMSIG_CARBON_LIMB_DAMAGED "carbon_limb_damaged"
 	#define COMPONENT_PREVENT_LIMB_DAMAGE (1 << 0)
@@ -63,9 +63,16 @@
 #define COMSIG_CARBON_POST_REMOVE_LIMB "carbon_post_remove_limb"
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
+/// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
+#define COMSIG_BODYPART_POST_REMOVED "bodypart_post_removed"
 
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
+
+/// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
+#define COMSIG_BODYPART_UPDATED "bodypart_updated"
+/// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
+#define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"
 ///from /item/organ/proc/Remove() (/obj/item/organ/)
@@ -82,6 +89,8 @@
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
 ///Called when a limb a carbon has gets an embed (mob/living/carbon/the_guy_getting_embedded, /obj/item/the_embed, /obj/item/bodypart/the_part_getting_the_embed)
 #define COMSIG_CARBON_EMBED_ADDED "item_embed_on_add"
+///Called when an embedded item stops being embedded in a carbon, before it is moved/deleted (mob/living/carbon/the_guy, /obj/item/the_embed, /obj/item/bodypart/the_part)
+#define COMSIG_CARBON_EMBED_REMOVED "item_embed_on_remove"
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)
@@ -131,6 +140,8 @@
 #define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
+///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
+#define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
 ///from /datum/species/handle_fire. Called when the human is set on fire and burning clothes and stuff
 #define COMSIG_HUMAN_BURNING "human_burning"
 	/// Return to do no burn damage
@@ -179,9 +190,9 @@
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
 
-/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting)
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 #define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
-/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting)
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 #define COMSIG_HUMAN_PUNCHED "human_punched"
 
 #define COMSIG_CARBON_EQUIP_EARS "carbon_ears_equip"
@@ -194,3 +205,5 @@
 
 /// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
 #define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"
+/// From /mob/living/carbon/item_coverage_changed: (added_slots, removed_slots)
+#define COMSIG_CARBON_ITEM_COVERAGE_CHANGED "carbon_item_coverage_changed"

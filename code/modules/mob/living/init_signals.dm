@@ -68,8 +68,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COLD_BLOODED), PROC_REF(on_cold_blooded_trait_gain))
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_COLD_BLOODED), PROC_REF(on_cold_blooded_trait_loss))
+	RegisterSignal(src, COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY, PROC_REF(edit_immerse_overlay))
 
 /// Called when [TRAIT_KNOCKEDOUT] is added or removed from the mob.
 /mob/living/proc/on_knockedout_trait(datum/source)
@@ -106,7 +105,7 @@
 	SIGNAL_HANDLER
 	mobility_flags &= ~MOBILITY_MOVE
 	if(living_flags & MOVES_ON_ITS_OWN)
-		SSmove_manager.stop_looping(src) //stop mid walk //This is also really dumb
+		GLOB.move_manager.stop_looping(src) //stop mid walk //This is also really dumb
 
 /// Called when [TRAIT_IMMOBILIZED] is removed from the mob.
 /mob/living/proc/on_immobilized_trait_loss(datum/source)
@@ -269,6 +268,11 @@
 	SIGNAL_HANDLER
 	refresh_gravity()
 
+/mob/living/proc/edit_immerse_overlay(datum/source, atom/movable/immerse_mask/effect_relay)
+	SIGNAL_HANDLER
+	effect_relay.transform = effect_relay.transform.Scale(1 / current_size)
+	effect_relay.transform = effect_relay.transform.Turn(-lying_angle)
+
 /// Called when [TRAIT_UNDENSE] is gained or lost
 /mob/living/proc/undense_changed(datum/source)
 	SIGNAL_HANDLER
@@ -284,13 +288,3 @@
 /mob/living/proc/on_hearing_regain()
 	SIGNAL_HANDLER
 	refresh_looping_ambience()
-
-///Called when [TRAIT_COLD_BLOODED] is added to the mob.
-/mob/living/proc/on_cold_blooded_trait_gain()
-	SIGNAL_HANDLER
-	temperature_insulation -= initial(temperature_insulation)
-
-///Called when [TRAIT_COLD_BLOODED] is added to the mob.
-/mob/living/proc/on_cold_blooded_trait_loss()
-	SIGNAL_HANDLER
-	temperature_insulation += initial(temperature_insulation)

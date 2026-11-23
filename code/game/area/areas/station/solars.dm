@@ -5,7 +5,7 @@
 /area/station/solars
 	icon_state = "panels"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -71,6 +71,7 @@
 /area/station/maintenance/solars
 	name = "Solar Maintenance"
 	icon_state = "yellow"
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/maintenance/solars/port
 	name = "Port Solar Maintenance"

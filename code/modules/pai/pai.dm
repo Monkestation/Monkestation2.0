@@ -28,6 +28,7 @@
 	pull_force = 0
 	radio = /obj/item/radio/headset/silicon/pai
 	worn_slot_flags = ITEM_SLOT_HEAD
+	interaction_flags_atom = ALLOW_PAI
 
 	/// If someone has enabled/disabled the pAIs ability to holo
 	var/can_holo = TRUE
@@ -37,7 +38,7 @@
 	var/can_transmit = TRUE
 	/// The card we inhabit
 	var/obj/item/pai_card/card
-	/// The current chasis that will appear when in holoform
+	/// The current chassis that will appear when in holoform
 	var/chassis = "repairbot"
 	/// Toggles whether the pAI can hold encryption keys or not
 	var/encrypt_mod = FALSE
@@ -101,7 +102,7 @@
 		"Internal GPS" = 35,
 		"Universal Translator" = 35,
 	)
-	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
+	/// List of all possible chassis. TRUE means the pAI can be picked up in this chassis.
 	var/static/list/possible_chassis = list(
 		"bat" = FALSE,
 		"butterfly" = FALSE,
@@ -136,7 +137,7 @@
 // See software.dm for Topic()
 /mob/living/silicon/pai/can_perform_action(atom/movable/target, action_bitflags)
 	if(!(action_bitflags & ALLOW_PAI))
-		to_chat(src, span_warning("Your holochasis does not allow you to do this!"))
+		to_chat(src, span_warning("Your holochassis does not allow you to do this!"))
 		return FALSE
 	action_bitflags |= ALLOW_RESTING // Resting is just an aesthetic feature for them
 	action_bitflags &= ~ALLOW_SILICON_REACH // They don't get long reach like the rest of silicons
@@ -376,7 +377,7 @@
 	if(!master_ref)
 		balloon_alert(user, "access denied: no master")
 		return FALSE
-	var/new_laws = tgui_input_text(user, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", laws.supplied[1], 300)
+	var/new_laws = tgui_input_text(user, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", html_decode(laws.supplied[1]), 300)
 	if(!new_laws || !master_ref)
 		return FALSE
 	add_supplied_law(0, new_laws)
@@ -426,7 +427,7 @@
 	to_chat(src, span_userdanger("Your mental faculties leave you."))
 	to_chat(src, span_rose("oblivion... "))
 	balloon_alert(user, "personality wiped")
-	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 	qdel(src)
 	return TRUE
 

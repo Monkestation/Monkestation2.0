@@ -3,7 +3,7 @@
 /obj/structure/disposalpipe
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	anchored = TRUE
 	density = FALSE
 	obj_flags = CAN_BE_HIT
@@ -124,8 +124,7 @@
 
 	if(isfloorturf(T) && T.overfloor_placed) // pop the tile if present
 		floorturf = T
-		if(floorturf.floor_tile)
-			new floorturf.floor_tile(T)
+		floorturf.spawn_tile()
 		floorturf.make_plating(TRUE)
 
 	if(direction) // direction is specified

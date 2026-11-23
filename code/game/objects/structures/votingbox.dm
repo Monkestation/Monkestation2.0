@@ -5,7 +5,7 @@
 	name = "voting box"
 	desc = "An automatic voting box."
 
-	icon = 'icons/obj/votebox.dmi'
+	icon = 'icons/obj/storage/box.dmi'
 	icon_state = "votebox_maint"
 
 	anchored = TRUE
@@ -94,7 +94,7 @@
 	ui_interact(user)
 
 /obj/structure/votebox/proc/set_description(mob/user)
-	var/new_description = tgui_input_text(user, "Enter a new description", "Vote Description", vote_description, multiline = TRUE)
+	var/new_description = tgui_input_text(user, "Enter a new description", "Vote Description", html_decode(vote_description), multiline = TRUE)
 	if(new_description)
 		vote_description = new_description
 

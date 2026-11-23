@@ -52,9 +52,10 @@
  * Captalism in the year 2525, everything in a vending machine, even love
  */
 /obj/machinery/vending
+	abstract_type = /obj/machinery/vending
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "generic"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -68,7 +69,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.7
 	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
-	clicksound = 'sound/machines/pda_button1.ogg'
+	clicksound = 'sound/machines/pda_button/pda_button1.ogg'
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
@@ -203,6 +204,9 @@
  * * FALSE - if the machine was maploaded on a zlevel that doesn't pass the is_station_level check
  * * TRUE - all other cases
  */
+	///the path of the fish_source datum to use for the fishing_spot component
+	var/fish_source_path = /datum/fish_source/vending
+
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50
@@ -230,6 +234,9 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
+
+	if(fish_source_path)
+		AddComponent(/datum/component/fishing_spot, fish_source_path)
 
 	if(onstation_override) //overrides the checks if true.
 		onstation = TRUE
@@ -672,7 +679,7 @@
 			break
 
 /// Tilts ontop of the atom supplied, if crit is true some extra shit can happen. See [fall_and_crush] for return values.
-/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit)
+/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit, range = 1)
 	if(QDELETED(src) || !has_gravity(src))
 		return
 
@@ -687,10 +694,9 @@
 			tilted = TRUE
 			tilted_rotation = picked_rotation
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	if(get_turf(fatty) != get_turf(src))
-		throw_at(get_turf(fatty), 1, 1, spin = FALSE, quickstart = FALSE)
+		throw_at(get_turf(fatty), range, 1, spin = FALSE, quickstart = FALSE)
 
 /**
  * Exists for the purposes of custom behavior.
@@ -831,7 +837,7 @@
 
 				living_target.Paralyze(paralyze_time)
 				living_target.emote("scream")
-				playsound(living_target, 'sound/effects/blobattack.ogg', 40, TRUE)
+				playsound(living_target, 'sound/effects/blob/blobattack.ogg', 40, TRUE)
 				playsound(living_target, 'sound/effects/splat.ogg', 50, TRUE)
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
@@ -1019,7 +1025,6 @@
 
 	tilted = FALSE
 	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
 
 	var/matrix/to_turn = turn(transform, -tilted_rotation)
 	animate(src, transform = to_turn, 0.2 SECONDS)
@@ -1390,6 +1395,24 @@
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[name]", "[R.name]"))
 	vend_ready = TRUE
 
+/**
+ * Spawns a new product from the given record at the given location, without any payment involved.
+ * Used by fishing in vending machines. MONKESTATION EDIT: tg uses this for every vend, we only use it here
+ */
+/obj/machinery/vending/proc/dispense(datum/data/vending_product/record, atom/spawn_location, silent = FALSE)
+	if(!silent)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+	var/obj/item/vended_item = new record.product_path(spawn_location)
+	on_dispense(vended_item)
+	record.amount--
+	return vended_item
+
+/// Returns how much a product record costs, following the same rules as vend(). MONKESTATION EDIT: records don't store the final price
+/obj/machinery/vending/proc/get_record_price(datum/data/vending_product/record)
+	if((record in coin_records) || (record in hidden_records))
+		return record.custom_premium_price || extra_price
+	return record.custom_price || default_price
+
 ///A proc meant to perform custom behavior on newly dispensed items.
 /obj/machinery/vending/proc/on_dispense(obj/item/vended_item)
 	return
@@ -1529,6 +1552,7 @@
 	return ..()
 
 /obj/machinery/vending/custom
+	fish_source_path = null // MONKESTATION EDIT: our custom vendors store items by hash
 	name = "Custom Vendor"
 	icon_state = "custom"
 	icon_deny = "custom-deny"
@@ -1623,15 +1647,19 @@
 			linked_account = C.registered_account
 			speak("\The [src] has been linked to [C].")
 
-	if(compartmentLoadAccessCheck(user))
-		if(IS_WRITING_UTENSIL(attacking_item))
-			name = tgui_input_text(user, "Set name", "Name", name, 20)
-			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
-			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)
-			last_slogan = world.time + rand(0, slogan_delay)
-			return
+	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attacking_item))
+		return ..()
 
-	return ..()
+	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, 20, encode = FALSE), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
+	if (new_name)
+		name = new_name
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", html_decode(desc), 60))
+	if (new_desc)
+		desc = new_desc
+	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60, encode = FALSE))
+	if (new_slogan)
+		slogan_list += new_slogan
+		last_slogan = world.time + rand(0, slogan_delay)
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
 	return FALSE

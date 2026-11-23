@@ -55,6 +55,8 @@ GLOBAL_VAR(station_nuke_source)
 	var/proper_bomb = TRUE //Please
 	/// A reference to the countdown that goes up over the nuke
 	var/obj/effect/countdown/nuclearbomb/countdown
+	/// is this nuke on the MINIMAP_BOMB_BLIP tag minimap?
+	var/is_on_minimap = TRUE
 
 	// Special icon system
 	var/special_icons = FALSE
@@ -67,6 +69,7 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 	SSpoints_of_interest.make_point_of_interest(src)
 	previous_level = SSsecurity_level.get_current_level_as_text()
+	update_minimap_blip()
 	AddElement(/datum/element/ridable, /datum/component/riding/structure/tank)
 
 /obj/machinery/nuclearbomb/Destroy()
@@ -116,14 +119,14 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon, mob/user, params)
 	if (istype(weapon, /obj/item/disk/nuclear))
 		if(auth) //god forbid there be more than one nuclear disk
-			playsound(src, 'sound/machines/terminal_error.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
 			return TRUE
 		if(!disk_check(weapon))
 			return TRUE
 		if(!user.transferItemToLoc(weapon, src))
 			return TRUE
 		update_ui_mode()
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		add_fingerprint(user)
 		return TRUE
 
@@ -369,7 +372,7 @@ GLOBAL_VAR(station_nuke_source)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 				auth.forceMove(get_turf(src))
 				auth = null
@@ -377,7 +380,7 @@ GLOBAL_VAR(station_nuke_source)
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
 				if(I && disk_check(I) && usr.transferItemToLoc(I, src))
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 					playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 					. = TRUE
 			update_ui_mode()
@@ -475,6 +478,7 @@ GLOBAL_VAR(station_nuke_source)
 		arm_nuke(usr)
 	else
 		disarm_nuke(usr)
+	update_minimap_blip()
 
 /// Arms the nuke, making it active and triggering all pinpointers to start counting down (+delta alert)
 /obj/machinery/nuclearbomb/proc/arm_nuke(mob/armer)
@@ -521,6 +525,13 @@ GLOBAL_VAR(station_nuke_source)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)
 	update_appearance()
 
+/// Updates our minimap blip to show if we are armed or not
+/obj/machinery/nuclearbomb/proc/update_minimap_blip()
+	if(!is_on_minimap)
+		return
+	var/blip_icon =  'icons/ui_icons/minimap/map_blips_large.dmi'
+	add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_[timing ? "on" : "off"]", blip_icon, TRUE)
+
 /// If the nuke is active, gets how much time is left until it detonates, in seconds.
 /// If the nuke is not active, gets how much time the nuke is set for, in seconds.
 /obj/machinery/nuclearbomb/proc/get_time_left()
@@ -556,7 +567,7 @@ GLOBAL_VAR(station_nuke_source)
 	yes_code = FALSE
 	safety = TRUE
 	update_appearance()
-	sound_to_playing_players('sound/machines/alarm.ogg')
+	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg')
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DETONATING, src)
 

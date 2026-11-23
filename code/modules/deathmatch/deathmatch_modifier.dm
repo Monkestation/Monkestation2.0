@@ -234,13 +234,6 @@
 /datum/deathmatch_modifier/stormtrooper/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(player, TRAIT_POOR_AIM, DEATHMATCH_TRAIT)
 
-/datum/deathmatch_modifier/four_hands
-	name = "Four Hands"
-	description = "When one pair isn't enough..."
-
-/datum/deathmatch_modifier/four_hands/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	player.change_number_of_hands(4)
-
 /datum/deathmatch_modifier/paraplegic
 	name = "Paraplegic"
 	description = "Wheelchairs. For. Everyone."
@@ -603,7 +596,11 @@
 	. = ..()
 
 	var/datum/martial_art/picked_art_path = pick_weight(weighted_martial_arts)
-	var/datum/martial_art/instantiated_art = new picked_art_path()
+	var/datum/martial_art/instantiated_art = new picked_art_path(player)
+
+	if (istype(instantiated_art, /datum/martial_art/boxing))
+		player.mind.adjust_experience(/datum/skill/athletics, SKILL_EXP_LEGENDARY)
+
 	instantiated_art.teach(player)
 
 	to_chat(player, span_revenboldnotice("Your martial art is [uppertext(instantiated_art.name)]!"))

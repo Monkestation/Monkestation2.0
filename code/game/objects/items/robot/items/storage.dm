@@ -154,6 +154,8 @@
 		return FALSE
 	if(!is_acceptable_storable(storing_item))
 		return FALSE
+	storing_item.pixel_x = 0
+	storing_item.pixel_y = 0
 	storing_item.forceMove(src)
 	stored = storing_item
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
@@ -217,16 +219,16 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_w = 0
+		stored.pixel_z = 0
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		if(istype(stored, /obj/item/reagent_containers/cup/beaker))
-			arm.pixel_y = arm.pixel_y - 3
+			arm.pixel_z -= 3
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
 		. += stored_copy
 	else
-		arm.pixel_y = arm.pixel_y - 5
+		arm.pixel_z -= 5
 	. += arm
 
 /// Secondary attack spills the content of the beaker.
@@ -293,8 +295,8 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
 		stored_organ.layer = FLOAT_LAYER
 		stored_organ.plane = FLOAT_PLANE
-		stored_organ.pixel_x = 0
-		stored_organ.pixel_y = 0
+		stored_organ.pixel_w = 0
+		stored_organ.pixel_z = 0
 		. += stored_organ
 		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
 	else
@@ -325,13 +327,14 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and shuttle frame rods."
 	icon_state = "borg_stack_apparatus"
 	whitelist_storables = list(
 		/obj/item/stack/sheet,
 		/obj/item/stack/rods,
-		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stack/tile,
+		/obj/item/stack/conveyor,
+		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/flatpacked_machine
 	)
 
@@ -343,8 +346,8 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_stack_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_w = 0
+		stored.pixel_z = 0
 		arm.icon_state = "borg_stack_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		var/underscore = findtext(stored_copy.icon_state, "_")
@@ -369,6 +372,7 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 		/obj/item/electronics,
 		/obj/item/stock_parts,
 		/obj/item/assembly,
+		/obj/item/conveyor_switch_construct,
 		/obj/item/flatpacked_machine
 	)
 	allow_electronics_interaction = TRUE
@@ -381,8 +385,8 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_w = -3
+		stored.pixel_z = 0
 		if(!istype(stored, /obj/item/circuitboard))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
@@ -408,7 +412,6 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 		/obj/item/gun/magic/artifact,
 		/obj/item/melee/artifact,
 		/obj/item/artifact_summon_wand,
-		/obj/item/slime_mutation_syringe,
 		/obj/item/borg_restart_board
 	)
 	blacklisted_storables = list(
@@ -442,8 +445,8 @@ GAME_VERB(/obj/item/borg/apparatus, verb_drop_stored_item, "Drop", "Object")
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_w = -3
+		stored.pixel_z = 0
 		if((!istype(stored, /obj/item/plate/oven_tray)) || (!istype(stored, /obj/item/food)))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)

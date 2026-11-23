@@ -1,4 +1,5 @@
 /obj/item/melee/energy
+	abstract_type = /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	max_integrity = 200
 	armor_type = /datum/armor/melee_energy
@@ -24,7 +25,7 @@
 	/// Sharpness while active.
 	var/active_sharpness = SHARP_EDGED
 	/// Hitsound played attacking while active.
-	var/active_hitsound = 'sound/weapons/blade1.ogg'
+	var/active_hitsound = 'sound/items/weapons/blade1.ogg'
 	/// Weight class while active.
 	var/active_w_class = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
@@ -122,7 +123,7 @@
 	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	if(user)
 		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 	update_appearance(UPDATE_ICON_STATE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
@@ -136,7 +137,7 @@
 	base_icon_state = "axe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
 	force = 40
@@ -168,6 +169,63 @@
 	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|FIRELOSS)
 
+///Lone wander jaunt axe, used in /datum/outfit/myststranger
+/obj/item/melee/energy/axe/prot_inv_axe
+	name = "experimental protonic inversal axe"
+	///Fallout NV OWB refrence FTW.
+	desc = "Yes, because the intellectually challenged see an M and a T next to each other and take Occam's razor to it!"
+	desc_controls = "Right-Click to dash. Activate in hand to turn on."
+	var/datum/effect_system/spark_spread/spark_system
+	var/datum/action/innate/dash/prot_inv_axe/jaunt
+	force = 5
+	throwforce = 1
+	throw_speed = 3
+	throw_range = 7
+	armour_penetration = 40
+	active_force = 35
+	active_throwforce = 70
+
+/obj/item/melee/energy/axe/prot_inv_axe/Initialize(mapload)
+	. = ..()
+	jaunt = new(src)
+	spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+
+/obj/item/melee/energy/axe/prot_inv_axe/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.density)
+		jaunt?.teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/melee/energy/axe/prot_inv_axe/equipped(mob/user, slot, initial)
+	. = ..()
+	if(!QDELETED(jaunt))
+		jaunt.Grant(user, src)
+
+/obj/item/melee/energy/axe/prot_inv_axe/dropped(mob/user)
+	. = ..()
+	if(!QDELETED(jaunt))
+		jaunt.Remove(user)
+
+/obj/item/melee/energy/axe/prot_inv_axe/Destroy()
+	QDEL_NULL(spark_system)
+	QDEL_NULL(jaunt)
+	return ..()
+
+/datum/action/innate/dash/prot_inv_axe
+	current_charges = 5
+	max_charges = 5
+	charge_rate = 400
+	beam_length = 0.5 SECONDS
+	recharge_sound = null
+
+/datum/action/innate/dash/prot_inv_axe/GiveAction(mob/viewer)
+	return
+
+/datum/action/innate/dash/prot_inv_axe/HideFrom(mob/viewer)
+	return
+
 /// Energy swords.
 /datum/embedding/esword
 	embed_chance = 75
@@ -189,7 +247,7 @@
 	armour_penetration = 50
 	armour_ignorance = 5
 	block_chance = 50
-	block_sound = 'sound/weapons/block_blade.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
 	embed_type = /datum/embedding/esword
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -223,12 +281,15 @@
 		return
 	attack_self(user)
 
+/obj/item/melee/energy/sword/cyborg/ninja
+	sword_color_icon = "green"
+
 /obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "esaw"
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
 	force = 18
 	hitcost = 75 // Costs more than a standard cyborg esword.
 	w_class = WEIGHT_CLASS_NORMAL
@@ -242,6 +303,9 @@
 
 /obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE
+
+/obj/item/melee/energy/sword/cyborg/saw/ninja
+	icon_state = "esaw_ninja"
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber
@@ -321,7 +385,7 @@
 	base_icon_state = "blade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	force = 30

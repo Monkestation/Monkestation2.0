@@ -52,19 +52,21 @@ GAME_VERB(/mob/living, navigate, "Navigate", "IC")
 		CRASH("Navigate target ([navigate_target]) is not an atom, somehow.")
 
 	navigating = TRUE
-	var/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation), navigate_target))
-	if(!SSpathfinder.astar_pathfind(src, navigate_target, maxnodes = MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), smooth_diagonals = FALSE, on_finish = await)) // diagonals look kind of weird when visualized for now
-		navigating = FALSE
-		balloon_alert(src, "failed to begin navigation!")
+	var/list/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation)))
+	if(!SSpathfinder.pathfind(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 0, access = get_access(), skip_first = FALSE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, on_finish = await, allow_multiz = TRUE, max_path_cost = MAX_NAVIGATE_RANGE * 10 * 5, allow_nav_links = TRUE, nav_cost_modifiers = alist(NAV_COST_MAINTENANCE = 5, NAV_COST_LAVA = 99999)))
+		// An unreachable multi-z search invokes the callback before returning FALSE.
+		// Avoid reporting two failures in that case.
+		if(navigating)
+			navigating = FALSE
+			balloon_alert(src, "failed to begin navigation!")
 
-/mob/living/proc/finish_navigation(turf/navigate_target, list/path)
+/mob/living/proc/finish_navigation(list/path, list/actions)
 	navigating = FALSE
 	if(!client)
 		return
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
-	path |= get_turf(navigate_target)
 	for(var/i in 1 to length(path))
 		var/turf/current_turf = path[i]
 		var/image/path_image = image(icon = 'icons/effects/navigation.dmi', layer = HIGH_PIPE_LAYER, loc = current_turf)
@@ -83,7 +85,12 @@ GAME_VERB(/mob/living, navigate, "Navigate", "IC")
 			if(dir_1 > dir_2)
 				dir_1 = dir_2
 				dir_2 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
-		path_image.icon_state = "[dir_1]-[dir_2]"
+		var/action = actions?[i]
+		if(action == UP || action == DOWN || (action && action < 0))
+			path_image.icon_state = "0-0"
+			path_image.color = action == UP ? COLOR_GREEN : (action == DOWN ? COLOR_ORANGE : COLOR_YELLOW)
+		else
+			path_image.icon_state = "[dir_1]-[dir_2]"
 		client.images += path_image
 		client.navigation_images += path_image
 		animate(path_image, 0.5 SECONDS, alpha = 150)
@@ -143,10 +150,10 @@ GAME_VERB(/mob/living, navigate, "Navigate", "IC")
 	for(var/obj/structure/stairs/stairs_bro in GLOB.stairs)
 		if(direction == UP && stairs_bro.z != z) //if we're going up, we need to find stairs on our z level
 			continue
-		if(direction == DOWN && stairs_bro.z != z - 1) //if we're going down, we need to find stairs on the z level beneath us
+		if(direction == DOWN && get_step_multiz(stairs_bro, UP)?.z != z) //if we're going down, target the upper endpoint of stairs below us
 			continue
 		if(!target)
-			target = stairs_bro.z == z ? stairs_bro : get_step_multiz(stairs_bro, UP) //if the stairs aren't on our z level, get the turf above them (on our zlevel) to path to instead
+			target = stairs_bro.z == z ? stairs_bro : get_step_multiz(stairs_bro, UP)
 			continue
 		if(get_dist_euclidean(stairs_bro, src) > get_dist_euclidean(target, src))
 			continue

@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 44
+#define SAVEFILE_VERSION_MAX 46
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -93,6 +93,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if (current_version < 44)
 		key_bindings -= "show_names"
+
+	if(current_version < 45)
+		if("swap_hands" in key_bindings)
+			var/keys = key_bindings["swap_hands"]
+			key_bindings -= "swap_hands"
+			key_bindings["swap_hands_row"] = keys
+
+	if(current_version < 46)
+		// wield is unbound by default now, shift+x goes to swapping between rows of hands like tg
+		var/list/wield_keys = key_bindings["keybinding_living_toggle_wield"]
+		if("ShiftX" in wield_keys)
+			wield_keys -= "ShiftX"
+			if(!length(key_bindings["swap_hands_column"]))
+				key_bindings["swap_hands_column"] = list("ShiftX")
 
 /datum/preferences/proc/update_character(current_version, list/save_data)
 	if (current_version < 41)

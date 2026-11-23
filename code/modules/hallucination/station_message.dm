@@ -80,7 +80,7 @@
 	priority_announce(
 		text = "Figments from an eldritch god are being summoned by [totally_real_cult_leader.real_name] into [fake_summon_area] from an unknown dimension. Disrupt the ritual at all costs!",
 		title = "[command_name()] Higher Dimensional Affairs",
-		sound = 'sound/ambience/antag/bloodcult/bloodcult_scribe.ogg',
+		sound = 'sound/music/antag/bloodcult/bloodcult_scribe.ogg',
 		has_important_message = TRUE,
 		players = list(hallucinator),
 	)
@@ -97,7 +97,7 @@
 /datum/hallucination/station_message/supermatter_delam
 
 /datum/hallucination/station_message/supermatter_delam/start()
-	SEND_SOUND(hallucinator, 'sound/magic/charge.ogg')
+	SEND_SOUND(hallucinator, 'sound/effects/magic/charge.ogg')
 	to_chat(hallucinator, span_boldannounce("You feel reality distort for a moment..."))
 	return ..()
 
@@ -130,5 +130,5 @@
 	if(QDELETED(src))
 		return
 
-	hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/explosion_distant.ogg', 50, FALSE, pressure_affected = FALSE)
+	hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/explosion/explosion_distant.ogg', 50, FALSE, pressure_affected = FALSE)
 	qdel(src)

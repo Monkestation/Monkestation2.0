@@ -133,7 +133,7 @@
 	name = "pack of coca leaf seeds"
 	desc = "These seeds grow into coca shrubs. They make you feel energized just looking at them..."
 	icon = 'icons/obj/items/drugs.dmi'
-	growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	icon_state = "seed-cocaleaf"
 	species = "cocaleaf"
 	plantname = "Coca Leaves"

@@ -17,7 +17,6 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate_movement = NO_STEPS
 	/// The types of turfs that this foam cannot spread to.
@@ -41,9 +40,9 @@
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
 	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
-		plane = FLOOR_PLANE
+		layer = WATER_LEVEL_LAYER
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
-	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
+	playsound(src, 'sound/effects/bubbles/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	SSfoam.start_processing(src)
 
@@ -98,13 +97,13 @@
 			for(var/obj/object in turf_location)
 				if(object == src)
 					continue
-				if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+				if(HAS_TRAIT(object, TRAIT_UNDERFLOOR))
 					continue
 				reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
 	for(var/mob/living/foamer in loc)
-		if(HAS_TRAIT(foamer, TRAIT_ON_ELEVATED_SURFACE))
+		if(HAS_TRAIT(foamer, TRAIT_MOB_ELEVATED))
 			continue
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
@@ -156,7 +155,7 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
-			if(HAS_TRAIT(foaming, TRAIT_ON_ELEVATED_SURFACE))
+			if(HAS_TRAIT(foaming, TRAIT_MOB_ELEVATED))
 				continue
 			foam_mob(foaming, seconds_per_tick)
 
@@ -277,7 +276,9 @@
 		var/obj/effect/decal/cleanable/plasma/reagentdecal = new(exposed_turf)
 		reagentdecal = locate() in exposed_turf
 		if(reagentdecal)
-			reagentdecal.reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
+			var/datum/reagents/decal_reagents = reagentdecal.lazy_init_reagents()
+			decal_reagents.maximum_volume += absorbed_plasma
+			decal_reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
 			absorbed_plasma = 0
 //MONKESTATION EDIT STOP
 
@@ -311,7 +312,6 @@
 	opacity = TRUE // changed in New()
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall that can be used as a base to construct a wall."
@@ -331,7 +331,7 @@
 	if(foam_floor)
 		var/turf/open/location = loc
 		if(isspaceturf(location))
-			location.PlaceOnTop(/turf/open/floor/plating/foam)
+			location.place_on_top(/turf/open/floor/plating/foam)
 
 /obj/structure/foamedmetal/Destroy()
 	air_update_turf(TRUE, FALSE)
@@ -347,7 +347,7 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
+	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -356,7 +356,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
+	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.istate & ISTATE_HARM)
@@ -389,7 +389,7 @@
 				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/metal_foam_base)
+			T.place_on_top(/turf/closed/wall/metal_foam_base)
 			transfer_fingerprints_to(T)
 			qdel(src)
 		return ITEM_INTERACT_SUCCESS
@@ -421,7 +421,7 @@
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
 	if(isspaceturf(location))
-		location.PlaceOnTop(/turf/open/floor/plating/foam)
+		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)
 		var/turf/cardinal_turf = get_step(location, cardinal)

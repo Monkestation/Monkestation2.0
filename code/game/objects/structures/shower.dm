@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
-	layer = ABOVE_WINDOW_LAYER
+	layer = ABOVE_MOB_LAYER
 	use_power = NO_POWER_USE
 	subsystem_type = /datum/controller/subsystem/processing/plumbing
 	///Does the user want the shower on or off?
@@ -191,22 +191,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	deconstruct()
 	return TRUE
 
+/obj/machinery/shower/setDir(newdir)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(!actually_on)
 		return
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
-	SET_PLANE_EXPLICIT(water_falling, GAME_PLANE_UPPER, src)
 	switch(dir)
 		if(NORTH)
-			water_falling.pixel_y += pixel_shift
+			water_falling.pixel_z += pixel_shift
 		if(SOUTH)
-			water_falling.pixel_y -= pixel_shift
+			water_falling.pixel_z -= pixel_shift
 		if(EAST)
-			water_falling.pixel_x += pixel_shift
+			water_falling.pixel_w += pixel_shift
 		if(WEST)
-			water_falling.pixel_x -= pixel_shift
+			water_falling.pixel_w -= pixel_shift
 	. += water_falling
 
 /obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -257,6 +260,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		var/mob/living/living_target = target
 		check_heat(living_target)
 		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
+		if(HAS_TRAIT(living_target, TRAIT_WATER_ADAPTATION)) //very mild healing for those with the water adaptation trait (fish infusion)
+			var/need_mob_update = living_target.adjustOxyLoss(-1 * SSMACHINES_DT, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			need_mob_update += living_target.adjustFireLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			need_mob_update += living_target.adjustToxLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			need_mob_update += living_target.adjustBruteLoss(-0.6 * SSMACHINES_DT, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			if(need_mob_update)
+				living_target.updatehealth()
 
 /**
  * Toggle whether shower is actually on and outputting water.
@@ -287,7 +297,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
-
+		for(var/mob/living/showerer in loc)
+			showerer.remove_status_effect(/datum/status_effect/washing_regen)
 	return TRUE
 
 /obj/machinery/shower/process(seconds_per_tick)
@@ -317,11 +328,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
 
 	// Wash up.
-	wash_atom(loc)
-	for(var/atom/movable/movable_content as anything in loc)
-		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
-
+	wash_atom(loc, TRUE)
 	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
@@ -330,18 +337,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		new /obj/item/stock_parts/water_recycler(drop_location())
 	qdel(src)
 
-/obj/machinery/shower/proc/check_heat(mob/living/L)
+/// Freezes or burns whoever is under the shower if the water is too cold or too hot
+/obj/machinery/shower/proc/check_heat(mob/living/living)
 	if(current_temperature == SHOWER_FREEZING)
-		if(L.bodytemperature >= L.standard_body_temperature - 1 KELVIN)
-			to_chat(L, span_warning("[src] is freezing!"))
-
-		L.adjust_bodytemperature(-0.5 KELVIN, min_temp = CELCIUS_TO_KELVIN(30))
-
+		living.adjust_bodytemperature(-80, 80)
+		to_chat(living, span_warning("[src] is freezing!"))
 	else if(current_temperature == SHOWER_BOILING)
-		if(L.bodytemperature <= L.standard_body_temperature + 1 KELVIN)
-			to_chat(L, span_warning("[src] is [pick("scalding", "searing")]!"))
-		L.adjust_bodytemperature(0.5 KELVIN, max_temp = CELCIUS_TO_KELVIN(40))
-		L.apply_damage(6, BURN, spread_damage = TRUE)
+		living.adjust_bodytemperature(35, 0, 500)
+		living.adjustFireLoss(5)
+		to_chat(living, span_danger("[src] is searing!"))
 
 
 /obj/structure/showerframe

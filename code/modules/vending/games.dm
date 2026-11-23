@@ -46,6 +46,23 @@
 			),
 		),
 		list(
+			"name" = "Fishing",
+			"icon" = "fish",
+			"products" = list(
+				/obj/item/storage/toolbox/fishing = 2,
+				/obj/item/storage/box/fishing_hooks = 2,
+				/obj/item/storage/box/fishing_lines = 2,
+				/obj/item/storage/box/fishing_lures = 2,
+				/obj/item/book/manual/fish_catalog = 5,
+				/obj/item/reagent_containers/cup/fish_feed = 4,
+				/obj/item/storage/box/aquarium_props = 4,
+				/obj/item/fish_analyzer = 2,
+				/obj/item/storage/bag/fishing = 2,
+				/obj/item/fishing_rod/telescopic = 1,
+				/obj/item/fish_tank = 1,
+			),
+		),
+		list(
 			"name" = "Skillchips",
 			"icon" = "floppy-disk",
 			"products" = list(
@@ -90,6 +107,7 @@
 		/obj/item/clothing/shoes/wheelys/rollerskates= 3,
 		/obj/item/melee/skateboard/pro = 3,
 		/obj/item/melee/skateboard/hoverboard = 1,
+		/obj/item/music_tape/robocop = 1,
 	)
 	refill_canister = /obj/item/vending_refill/games
 	default_price = PAYCHECK_CREW

@@ -1,6 +1,6 @@
 /datum/robot_skin
 	/// The abstract type. Not used anywhere at the moment.
-	var/abstract_type = /datum/robot_skin
+	abstract_type = /datum/robot_skin
 	/// The name of the skin.
 	var/name = "Unknown"
 	/// The icon of the sprite.
@@ -25,13 +25,8 @@
 	var/list/hat_offset = null
 	/// The X and Y offsets of any worn badges. If not null, allows badges to be worn.
 	var/list/badge_offset = null
-	/// The X and Y offsets of any buckled individuals.
-	var/list/ride_offset = list(
-		"north" = list(0, 4),
-		"south" = list(0, 4),
-		"east" = list(-6, 3),
-		"west" = list(6, 3),
-	)
+	/// The offsets of any buckled individuals, as list(TEXT_NORTH = list(x, y, layer), ...). Null uses DEFAULT_ROBOT_RIDING_OFFSETS.
+	var/list/ride_offset
 	/// The traits that are given when using this skin.
 	var/list/traits = null
 
@@ -72,5 +67,5 @@
 	for(var/i in 1 to intervals)
 		if(QDELETED(cyborg_target))
 			return
-		playsound(cyborg_target, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		playsound(cyborg_target, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg'), 80, TRUE, -1)
 		sleep(time_between)

@@ -5,6 +5,7 @@
 	base_icon_state = "water"
 	anchored = TRUE
 	plane = FLOOR_PLANE
+	layer = CLEANABLE_FLOOR_OBJECT_LAYER
 	color = "#DDF"
 	alpha = 175
 	//For being on fire
@@ -29,6 +30,7 @@
 	var/static/obj/effect/abstract/fire/small_fire/small_fire
 	var/static/obj/effect/abstract/fire/medium_fire/medium_fire
 	var/static/obj/effect/abstract/fire/big_fire/big_fire
+	var/static/alist/depth_overlays = alist()
 
 	var/mutable_appearance/displayed_content
 	/// State-specific message chunks for examine_turf()
@@ -136,9 +138,18 @@
 /obj/effect/abstract/liquid_turf/update_overlays()
 	. = ..()
 	var/number = liquid_state - 1
-	if(number != 0)
-		. += mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_spokesman = my_turf, plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER)
-		. += mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_top", offset_spokesman = my_turf, plane =GAME_PLANE, layer = GATEWAY_UNDERLAY_LAYER)
+	if(number == 0)
+		return
+	var/offset = GET_TURF_PLANE_OFFSET(my_turf)
+	var/cache_key = "[number]_[offset]"
+	var/list/stage_overlays = depth_overlays[cache_key]
+	if(!stage_overlays)
+		stage_overlays = list(
+			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_bottom", offset_const = offset, plane = GAME_PLANE, layer = ABOVE_MOB_LAYER),
+			mutable_appearance('icons/obj/effects/liquid_overlays.dmi', "stage[number]_top", offset_const = offset, plane = GAME_PLANE, layer = GATEWAY_UNDERLAY_LAYER),
+		)
+		depth_overlays[cache_key] = stage_overlays
+	. += stage_overlays
 
 /obj/effect/abstract/liquid_turf/proc/set_fire_effect()
 	if(displayed_content)
@@ -194,11 +205,13 @@
 			liquid_group.expose_atom(stepped_human, 1, TOUCH)
 	else if (isliving(AM))
 		var/mob/living/L = AM
+		if(iscarbon(L) && has_fish_tail(L))
+			L.apply_status_effect(/datum/status_effect/water_affected)
 		if(liquid_group.slippery)
 			if(L.m_intent == MOVE_INTENT_SPRINT && !(L.movement_type & FLYING) && L.body_position == STANDING_UP)
 				L.slip(30, T, NO_SLIP_WHEN_WALKING, 0, TRUE)
 		if(!(L.movement_type & FLYING))
-			if(ishuman(AM))
+			if(ishuman(AM) && !has_fish_tail(AM))
 				var/mob/living/carbon/human/stepped_human = AM
 				if(!((stepped_human.wear_suit?.body_parts_covered | stepped_human.w_uniform?.body_parts_covered | stepped_human.shoes?.body_parts_covered) & FEET))
 					liquid_group.expose_atom(stepped_human, 0.1, TOUCH)
@@ -291,7 +304,7 @@
 /obj/effect/abstract/fire
 	icon = 'icons/obj/effects/liquid.dmi'
 	plane = FLOOR_PLANE
-	layer = BELOW_MOB_LAYER
+	layer = CLEANABLE_FLOOR_OBJECT_LAYER
 	mouse_opacity = FALSE
 	appearance_flags = RESET_COLOR | RESET_ALPHA
 

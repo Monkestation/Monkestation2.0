@@ -372,6 +372,15 @@
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
 
+/obj/effect/temp_visual/crit
+	name = "critical hit"
+	icon_state = "crit"
+	duration = 15
+
+/obj/effect/temp_visual/crit/Initialize(mapload)
+	. = ..()
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
+
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
@@ -438,7 +447,12 @@
 	duration = 6
 
 /obj/effect/temp_visual/impact_effect/neurotoxin
-	icon_state = "impact_neurotoxin"
+	icon_state = "impact_spit"
+	color = "#5BDD04"
+
+/obj/effect/temp_visual/impact_effect/ink_spit
+	icon_state = "impact_spit"
+	color = COLOR_NEARLY_ALL_BLACK
 
 /obj/effect/temp_visual/heart
 	name = "heart"
@@ -527,7 +541,7 @@
 	duration = 2 SECONDS
 
 /obj/effect/constructing_effect
-	icon = 'icons/effects/effects_rcd.dmi'
+	icon = 'icons/effects/rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -598,7 +612,7 @@
 /obj/effect/constructing_effect/proc/attacked(mob/user)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', vol = 80, vary = TRUE)
 	end()
 
 /obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
@@ -637,8 +651,10 @@
 	. = ..()
 	if(!looker || !creature)
 		return INITIALIZE_HINT_QDEL
-	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
+	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER)
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	modsuit_image.pixel_w = (creature.x - looker.x) * 32
+	modsuit_image.pixel_z = (creature.y - looker.y) * 32
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	mod_man = WEAKREF(looker)
 	add_mind(looker)

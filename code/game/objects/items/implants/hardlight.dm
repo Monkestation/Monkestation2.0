@@ -117,7 +117,7 @@
 	button_icon = 'icons/obj/items_and_weapons.dmi'
 	button_icon_state = "lightspear"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_INCAPACITATED
-	sound = 'sound/weapons/saberon.ogg'
+	sound = 'sound/items/weapons/saberon.ogg'
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 20 SECONDS
@@ -170,7 +170,7 @@
 /obj/item/gun/magic/hardlight_spear //listen man
 	name = "hardlight spear"
 	desc = "A spear made out of hardened light."
-	fire_sound = 'sound/weapons/fwoosh.ogg'
+	fire_sound = 'sound/items/weapons/fwoosh.ogg'
 	pinless = TRUE
 	force = 30
 	demolition_mod = 1.5
@@ -182,7 +182,7 @@
 	sharpness = SHARP_POINTY
 	w_class = WEIGHT_CLASS_HUGE
 	antimagic_flags = NONE
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "lightspear"
 	inhand_icon_state = "lightspear"
@@ -278,8 +278,8 @@
 	shrapnel_type = /obj/item/shrapnel/bullet/spear
 	light_outer_range = 1
 	light_power = 1
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	hitsound_wall = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	hitsound_wall = 'sound/items/weapons/parry.ogg'
 	embed_type = /datum/embedding/hardlight_spear
 
 /datum/embedding/hardlight_spear

@@ -190,12 +190,10 @@
 				owner.emote("twitch")
 			if(2 to 3)
 				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "MROW", "ANIMES", "LIZZZARD", "HELP")][GET_MUTATION_POWER(src) > 1 ? "!!" : ""]", forced=name)
-		var/x_offset_old = owner.pixel_x
-		var/y_offset_old = owner.pixel_y
-		var/x_offset = owner.pixel_x + rand(-2,2)
-		var/y_offset = owner.pixel_y + rand(-1,1)
-		animate(owner, pixel_x = x_offset, pixel_y = y_offset, time = 1)
-		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)
+		var/w_offset =  rand(-2, 2)
+		var/z_offset = rand(-1, 1)
+		animate(owner, pixel_w = w_offset, pixel_z = z_offset, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(owner, pixel_w = -w_offset, pixel_z = -z_offset, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 
 //Deafness makes you deaf.
 /datum/mutation/deaf
@@ -350,6 +348,7 @@
 		return
 
 	ADD_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
 	RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(register_limb))
 	RegisterSignal(owner, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(unregister_limb))
 	for(var/body_part in affected_limbs)
@@ -365,6 +364,7 @@
 		return
 
 	REMOVE_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
 	UnregisterSignal(owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
 	for(var/body_part in affected_limbs)
 		var/obj/item/bodypart/limb = owner.get_bodypart(check_zone(body_part))
@@ -422,6 +422,18 @@
 	difficulty = 16
 	instability = 20
 	power_coeff = 1
+
+/datum/mutation/stimmed/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
+
+/datum/mutation/stimmed/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	REMOVE_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
 
 /datum/mutation/stimmed/on_life(seconds_per_tick, times_fired)
 	if(HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
@@ -527,7 +539,7 @@
 		if(prob(15))
 			owner.acid_act(rand(30, 50) * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 10)
 			owner.visible_message(span_warning("[owner]'s skin bubbles and pops."), span_userdanger("Your bubbling flesh pops! It burns!"))
-			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
+			playsound(owner,'sound/items/weapons/sear.ogg', 50, TRUE)
 
 /datum/mutation/gigantism
 	name = "Gigantism"
@@ -1131,4 +1143,4 @@
 	var/obj/item/organ/internal/ears/ears = owner.get_organ_slot(ORGAN_SLOT_EARS) // RIP THEM OUT TO STOP THE NOISE
 	if(ears && SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		to_chat(owner, span_warning("Your ears start to ring!"))
-		SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg', 0, 1, 0, 250))
+		SEND_SOUND(owner, sound('sound/items/weapons/flash_ring.ogg', 0, 1, 0, 250))

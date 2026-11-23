@@ -4,7 +4,7 @@
 /obj/vehicle/ridden/artillerylight
 	name = "NT Model-2508 Field Cannon"
 	desc = "A small field cannon based off a centuries old design, updated with modern materials to make it much lighter and safe to fire on stations."
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "artillery_light"
 	layer = LYING_MOB_LAYER
 	SET_BASE_PIXEL(-24, 0)
@@ -76,7 +76,7 @@
 /obj/vehicle/ridden/artilleryheavy
 	name = "M1938 122mm Artillery Gun"
 	desc = "A large Soviet howitzer not much newer then the legendary Mosin Nagant, its way to heavy to be safe on the station, and its shell likewise is too dangerous for orbital use."
-	icon = 'icons/mecha/supertanks.dmi'
+	icon = 'icons/mob/rideables/supertanks.dmi'
 	icon_state = "m1938"
 	layer = LYING_MOB_LAYER
 	SET_BASE_PIXEL(-40, 0)
@@ -104,7 +104,7 @@
 /obj/vehicle/ridden/artilleryheavy/Initialize(mapload)
 	. = ..()
 	add_overlay(image(icon, "m1938_cover", ABOVE_MOB_LAYER))
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/artillery_light)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/artillery_heavy)
 
 /obj/vehicle/ridden/artilleryheavy/welder_act(mob/living/user, obj/item/welder)
 	if(user.istate & ISTATE_HARM)

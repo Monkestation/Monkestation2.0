@@ -53,7 +53,7 @@
 				var/datum/language/language_instance = GLOB.language_datum_instances[language]
 				packet_out["language"] = language_instance.name
 				var/message_out = ""
-				var/message_in = packet.parameters["message"]
+				var/message_in = html_decode(packet.parameters["message"])
 				if(universal_translate || user.has_language(language))
 					// Known language or translator, show plain text
 					message_out = "\"[message_in]\""

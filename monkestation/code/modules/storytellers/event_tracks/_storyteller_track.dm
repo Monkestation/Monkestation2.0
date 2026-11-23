@@ -45,6 +45,10 @@
 /datum/storyteller_track/event/objectives
 	id = EVENT_TRACK_OBJECTIVES
 
+//should not be triggered, SSgamemode rolls these whenever someone latejoins
+/datum/storyteller_track/event/latejoin
+	id = EVENT_TRACK_LATEJOIN
+
 //whenever this ticks over it gives a point to a random other track, exists to add more variabilty to event timing. TODO: allow for variable points given
 /datum/storyteller_track/booster
 	id = STORYTELLER_TRACK_BOOSTER

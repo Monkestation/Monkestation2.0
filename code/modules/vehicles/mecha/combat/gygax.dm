@@ -1,6 +1,7 @@
 /obj/vehicle/sealed/mecha/gygax
 	desc = "A lightweight, security exosuit. Popular among private and corporate security."
 	name = "\improper Gygax"
+	icon = 'icons/mob/rideables/mecha.dmi'
 	icon_state = "gygax"
 	base_icon_state = "gygax"
 	movedelay = 3
@@ -71,6 +72,10 @@
 	bomb = 20
 	fire = 100
 	acid = 100
+
+/obj/vehicle/sealed/mecha/gygax/dark/Initialize(mapload)
+	. = ..()
+	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "syndiemech")
 
 /obj/vehicle/sealed/mecha/gygax/dark/loaded/Initialize(mapload)
 	. = ..()

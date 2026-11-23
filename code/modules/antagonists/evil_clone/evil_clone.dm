@@ -6,7 +6,7 @@
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	antag_count_points = 1
-	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
+	stinger_sound = 'sound/music/antag/revolutionary_tide.ogg'
 
 /datum/antagonist/evil_clone/greet()
 	. = ..()

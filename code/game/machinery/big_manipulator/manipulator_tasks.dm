@@ -10,7 +10,7 @@
 /datum/manipulator_task/proc/serialize()
 	return list("type" = type)
 
-/datum/manipulator_task/New(...)
+/datum/manipulator_task/New(..., serialized_data)
 	..()
 	return
 
@@ -97,7 +97,7 @@
 /datum/manipulator_task/cargo/proc/fill_priority_list(manipulator_tier)
 	return list()
 
-/datum/manipulator_task/cargo/proc/find_type_priority(skip_anchored = FALSE)
+/datum/manipulator_task/cargo/proc/find_type_priority(skip_anchored = FALSE, skip_non_dense = FALSE)
 	var/atom/movable/best_candidate = null
 	var/best_priority_index = INFINITY
 
@@ -117,6 +117,12 @@
 				continue
 
 			if(skip_anchored && thing.anchored)
+				continue
+
+			if(skip_non_dense && !thing.density)
+				continue
+
+			if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
 				continue
 
 			if(isliving(thing))
@@ -411,6 +417,7 @@
 	var/worker_combat_mode = FALSE
 	var/worker_use_rmb = FALSE
 	var/skip_anchored = FALSE
+	var/skip_non_dense = FALSE
 
 /datum/manipulator_task/cargo/dropoff_base/use/fill_priority_list(manipulator_tier)
 	var/list/priorities =  list(
@@ -438,7 +445,7 @@
 		return FALSE
 	if(!manipulator.monkey_worker?.resolve())
 		return FALSE
-	if(!find_type_priority(skip_anchored))
+	if(!find_type_priority(skip_anchored, skip_non_dense))
 		return FALSE
 	return can_accept(target)
 
@@ -449,6 +456,7 @@
 	data["worker_combat_mode"] = worker_combat_mode
 	data["worker_use_rmb"] = worker_use_rmb
 	data["skip_anchored"] = skip_anchored
+	data["skip_non_dense"] = skip_non_dense
 	return data
 
 /datum/manipulator_task/cargo/dropoff_base/use/New(turf/new_turf, manipulator_tier, serialized_data)
@@ -459,6 +467,7 @@
 		worker_combat_mode = !!serialized_data["worker_combat_mode"]
 		worker_use_rmb = !!serialized_data["worker_use_rmb"]
 		skip_anchored = !!serialized_data["skip_anchored"]
+		skip_non_dense = !!serialized_data["skip_non_dense"]
 	return
 
 /datum/manipulator_task/cargo/dropoff_base/use/do_dropoff(obj/machinery/big_manipulator/manipulator)
@@ -473,6 +482,7 @@
 	var/worker_combat_mode = FALSE
 	var/worker_use_rmb = FALSE
 	var/skip_anchored = FALSE
+	var/skip_non_dense = FALSE
 
 /datum/manipulator_task/cargo/interact/fill_priority_list(manipulator_tier)
 	var/list/priorities =  list(
@@ -488,7 +498,7 @@
 /datum/manipulator_task/cargo/interact/can_run(obj/machinery/big_manipulator/manipulator)
 	if(!..())
 		return FALSE
-	return find_type_priority() != null
+	return find_type_priority(skip_anchored, skip_non_dense) != null
 
 /datum/manipulator_task/cargo/interact/run_task(obj/machinery/big_manipulator/manipulator)
 	manipulator.rotate_to_point(src, src, PROC_REF(try_interact))
@@ -500,6 +510,7 @@
 	data["worker_combat_mode"] = worker_combat_mode
 	data["worker_use_rmb"] = worker_use_rmb
 	data["skip_anchored"] = skip_anchored
+	data["skip_non_dense"] = skip_non_dense
 	return data
 
 /datum/manipulator_task/cargo/interact/New(turf/new_turf, manipulator_tier, serialized_data)
@@ -510,6 +521,7 @@
 		worker_combat_mode = !!serialized_data["worker_combat_mode"]
 		worker_use_rmb = !!serialized_data["worker_use_rmb"]
 		skip_anchored = !!serialized_data["skip_anchored"]
+		skip_non_dense = !!serialized_data["skip_non_dense"]
 	return
 
 /datum/manipulator_task/cargo/interact/proc/try_interact(obj/machinery/big_manipulator/manipulator)

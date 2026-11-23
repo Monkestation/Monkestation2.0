@@ -10,6 +10,10 @@
 		controller.queue_behavior(/datum/ai_behavior/find_nearby, BB_MONKEY_CURRENT_PRESS_TARGET)
 		return
 
+	if(controller.blackboard[BB_MONKEY_PENNED] && istype(controller.blackboard[BB_MONKEY_CURRENT_PRESS_TARGET], /obj/machinery/light))
+		controller.clear_blackboard_key(BB_MONKEY_CURRENT_PRESS_TARGET)
+		return
+
 	if(prob(50))
 		controller.queue_behavior(/datum/ai_behavior/use_on_object, BB_MONKEY_CURRENT_PRESS_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING

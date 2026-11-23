@@ -1,4 +1,5 @@
 /turf/closed
+	abstract_type = /turf/closed
 	layer = CLOSED_TURF_LAYER
 	plane = WALL_PLANE
 	turf_flags = IS_SOLID
@@ -8,6 +9,7 @@
 	init_air = FALSE
 	rad_insulation = RAD_MEDIUM_INSULATION
 	pass_flags_self = PASSCLOSEDTURF
+	tacmap_color = TACMAP_BLACK
 
 //Monkestation edit start
 /turf/closed/examine(mob/user)

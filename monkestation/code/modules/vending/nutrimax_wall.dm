@@ -1,5 +1,5 @@
 /obj/machinery/vending/hydronutrients/wall
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "wallnutri"
 	icon_deny = "wallnutri-deny"
 	panel_type = "wallnutri-panel"

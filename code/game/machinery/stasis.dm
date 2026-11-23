@@ -45,9 +45,9 @@
 	if(last_stasis_sound != _running)
 		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
 		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/click_alt(mob/user)
@@ -142,14 +142,14 @@
 	if(stasis_running() && check_nap_violations())
 		chill_out(buckled)
 	update_appearance()
-	buckled.pixel_y -= 2
+	buckled.add_offsets(type, z_add = -2)
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/buckled)
 	thaw_them(buckled)
 	if(buckled == occupant)
 		set_occupant(null)
 	update_appearance()
-	buckled.pixel_y += 2
+	buckled.remove_offsets(type)
 
 /obj/machinery/stasis/process()
 	if(!(occupant && isliving(occupant) && check_nap_violations()))

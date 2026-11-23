@@ -196,6 +196,9 @@
 
 ///LEGACY HELPER
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
+	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK))
+		return
+
 	if(!client?.imode.set_combat_mode(new_mode, silent))
 		istate = ISTATE_HARM|ISTATE_BLOCKING
 
@@ -208,7 +211,7 @@
 			blocked = TRUE
 			return SUCCESSFUL_BLOCK
 		else
-			playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
+			playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 		return ..()
 
 	var/obj/item/thrown_item = AM
@@ -258,6 +261,26 @@
 		emote("scream", intentional=FALSE)
 	return ..()
 
+///The core of catching thrown items, which non-carbons cannot without the help of items or abilities yet, as they've no throw mode.
+/mob/living/proc/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
+	if(!can_catch_item(skip_throw_mode_check, try_offhand) || !isitem(item) || HAS_TRAIT(item, TRAIT_UNCATCHABLE) || !isturf(item.loc))
+		return FALSE
+	if(!can_hold_items(item))
+		return FALSE
+	INVOKE_ASYNC(item, TYPE_PROC_REF(/obj/item, attempt_pickup), src, TRUE)
+	if(get_active_held_item() == item) //if our attack_hand() picks up the item...
+		visible_message(span_warning("[src] catches [item]!"), \
+						span_userdanger("You catch [item] in mid-air!"))
+		return TRUE
+
+///Checks the requites for catching a throw item.
+/mob/living/proc/can_catch_item(skip_throw_mode_check = FALSE, try_offhand = FALSE)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return FALSE
+	if(get_active_held_item() && (!try_offhand || get_inactive_held_item() || !swap_hand()))
+		return FALSE
+	return TRUE
+
 /mob/living/fire_act()
 	. = ..()
 	adjust_fire_stacks(3)
@@ -268,30 +291,29 @@
  */
 /mob/living/proc/grab(mob/living/target)
 	if(!istype(target))
-		return FALSE
+		return GRAB_SKIP
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
-		return FALSE
-	if(mind && mind?.martial_art)
-		// Apply general martial arts (human on mob, mob on human, mob on mob)
-		src.apply_martial_art(target, null)
-	if(ishuman(target)) // MONKE EDIT: only humans can block it seems like
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_block()) // MONKE EDIT: No args for block check // src, 0, "[src]'s grab", UNARMED_ATTACK
-			return FALSE
+		return GRAB_FAILURE
+	if(target.check_block(src, 0, "[src]'s grab"))
+		return GRAB_FAILURE
 	target.grabbedby(src)
-	return TRUE
+	return GRAB_SUCCESS
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+/**
+ * Called when this mob is grabbed by another mob.
+ */
+/mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message = supress_message)
 		return
-
+	// This line arbitrarily prevents any non-carbon from upgrading grabs
+	if(!iscarbon(user))
+		return
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
-
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE
@@ -302,7 +324,7 @@
 	if(user.grab_state >= user.max_grab)
 		return
 	user.changeNext_move(CLICK_CD_GRABBING)
-	var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+	var/sound_to_play = 'sound/items/weapons/thudswoosh.ogg'
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.grab_sound)
@@ -353,7 +375,7 @@
 			to_chat(user, span_danger("You're strangling [src]!"))
 			if(!buckled && !density)
 				Move(user.loc)
-	user.set_pull_offsets(src, grab_state)
+	user.set_pull_offsets(src, user.grab_state)
 	return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -424,20 +446,12 @@
 		if(operations.next_step(user, modifiers))
 			return TRUE
 
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
 	return FALSE
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/misc/start))
 		to_chat(user, "No attacking people at spawn, you jackass.")
 		return FALSE
-
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
 
 	if((user.istate & ISTATE_SECONDARY))
 		if (user != src && iscarbon(src))
@@ -459,7 +473,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 	if (prob(75))
 		log_combat(user, src, "attacked")
-		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 		visible_message(span_danger("[user.name] bites [src]!"), \
 						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You bite [src]!"))
@@ -486,7 +500,7 @@
 			visible_message(span_danger("[L.name] bites [src]!"), \
 							span_userdanger("[L.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
 			to_chat(L, span_danger("You bite [src]!"))
-			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 			return TRUE
 		else
 			visible_message(span_danger("[L.name]'s bite misses [src]!"), \
@@ -582,7 +596,7 @@
 		GLOB.cult_narsie.souls += 1
 		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
 			GLOB.cult_narsie.resolved = TRUE
-			sound_to_playing_players('sound/machines/alarm.ogg')
+			sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg')
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_VICTORY_MASS_CONVERSION), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)), 270)
 	if(client)
@@ -652,8 +666,8 @@
 /mob/living/proc/do_slap_animation(atom/slapped)
 	do_attack_animation(slapped, no_effect=TRUE)
 	var/mutable_appearance/glove_appearance = mutable_appearance('icons/effects/effects.dmi', "slapglove")
-	glove_appearance.pixel_y = 10 // should line up with head
-	glove_appearance.pixel_x = 10
+	glove_appearance.pixel_z = 10 // should line up with head
+	glove_appearance.pixel_w = 10
 	var/atom/movable/flick_visual/glove = slapped.flick_overlay_view(glove_appearance, 1 SECONDS)
 
 	// And animate the attack!

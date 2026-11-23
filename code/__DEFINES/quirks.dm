@@ -16,6 +16,10 @@
 #define QUIRK_HIDE_FROM_SCAN		(1 << 4)
 /// Cloning should never carry this quirk over (monkestation addition)
 #define QUIRK_DONT_CLONE			(1 << 5)
+/// Skip this quirk when reviving an oozeling core.
+#define QUIRK_OOZELING_SKIP			(1 << 6)
+/// Save and restore this quirk when reviving an oozeling core.
+#define QUIRK_OOZELING_SAVE			(1 << 7)
 
 // Quirk Costs
 #define QUIRK_COST_PARAPLEGIC -12

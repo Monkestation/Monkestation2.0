@@ -1,4 +1,5 @@
 /mob/living
+	abstract_type = /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	pressure_resistance = 10
@@ -150,7 +151,7 @@
 	///if a mob's name should be appended with an id when created e.g. Mob (666)
 	var/unique_name = FALSE
 	///the id a mob gets when it's created
-	var/numba = 0
+	var/identifier = 0
 
 	///these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
 	var/list/butcher_results = null
@@ -206,10 +207,6 @@
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
 
-	///The x amount a mob's sprite should be offset due to the current position they're in
-	var/body_position_pixel_x_offset = 0
-	///The y amount a mob's sprite should be offset due to the current position they're in or size (e.g. lying down moves your sprite down)
-	var/body_position_pixel_y_offset = 0
 	///The height offset of a mob's maptext due to their current size.
 	var/body_maptext_height_offset = 0
 
@@ -235,34 +232,19 @@
 	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
 	var/reach_length = 1
 
-	/// Body temp we homeostasize to
-	var/standard_body_temperature = BODYTEMP_NORMAL
-	/// Temperature of our insides
-	var/bodytemperature = BODYTEMP_NORMAL
-	/// Lazylist of targets we homeostasize to
-	/// This allows multiple effects to add a different target to the list, which is averaged
-	/// (So you can have both a fever and a cold at the same time)
-	/// If empty just defaults to standard_body_temperature
-	var/list/homeostasis_targets
-
-	/// How cold to start sustaining cold damage
-	var/bodytemp_cold_damage_limit = -1 // -1 = no cold damage ever
-	/// How hot to start sustaining heat damage
-	var/bodytemp_heat_damage_limit = INFINITY // INFINITY = no heat damage ever
-
-	/// How fast the mob's temperature normalizes to their environment
-	var/temperature_normalization_speed = 0.1
-	/// How fast the mob's temperature normalizes to their homeostasis
-	/// Also gets multiplied by metabolism_efficiency.
-	/// Note that more of this = more nutrition is consumed every life tick.
-	var/temperature_homeostasis_speed = 0.5
-	/// Protection (insulation) from temperature changes, max 1
-	var/temperature_insulation = 0.15
-
-	/// Whether we currently have temp alerts, minor optimization
-	VAR_PRIVATE/temp_alerts = FALSE
+	/// List of changes to body temperature, used by desease symtoms like fever
+	var/list/body_temp_changes = list()
 
 	/// A weak reference to the team monitor component contained within the monitor holder, used for certain antagoists so they can track
 	var/datum/component/team_monitor/team_monitor
 	///a reference to a stored /datum/component/tracking_beacon used by victims of antags
 	var/datum/component/tracking_beacon/tracking_beacon
+
+	/// Lazylist of martial arts this mob knows
+	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
+	/// Reference handling is done by the martial arts themselves
+	var/list/datum/martial_art/martial_arts
+	/// Lazylists of pixel offsets this mob is currently using
+	/// Modify this via add_offsets and remove_offsets,
+	/// NOT directly (and definitely avoid modifying offsets directly)
+	VAR_PRIVATE/list/offsets

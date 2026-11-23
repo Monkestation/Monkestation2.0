@@ -9,7 +9,6 @@
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
@@ -23,11 +22,11 @@
 
 /mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
 	. = ..()
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_FOV_HIDDEN) //So it won't hide smaller mobs.
+	layer = LYING_MOB_LAYER
 
 /mob/living/carbon/alien/adult/royal/on_standing_up(new_lying_angle)
 	. = ..()
-	SET_PLANE_IMPLICIT(src, initial(plane))
+	layer = initial(layer)
 
 /mob/living/carbon/alien/adult/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
@@ -110,14 +109,14 @@
 	return TRUE
 
 /datum/action/cooldown/alien/promote/Activate(atom/target)
-	var/obj/item/queen_promotion/existing_promotion = locate() in owner.held_items
+	var/obj/item/queen_promotion/existing_promotion = owner.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(existing_promotion)
 		to_chat(owner, span_noticealien("You discard [existing_promotion]."))
 		owner.temporarilyRemoveItemFromInventory(existing_promotion)
 		qdel(existing_promotion)
 		return TRUE
 
-	if(!owner.get_empty_held_indexes())
+	if(!length(owner.get_empty_held_indexes()))
 		to_chat(owner, span_warning("You must have an empty hand before preparing the parasite."))
 		return FALSE
 

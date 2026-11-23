@@ -45,7 +45,7 @@
 		else
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
-	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
+	playsound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
 	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name)
 
 /datum/brain_trauma/special/bluespace_prophet
@@ -100,7 +100,6 @@
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
-	image_plane = GAME_PLANE_UPPER
 	var/obj/effect/client_image_holder/bluespace_stream/linked_to
 
 /obj/effect/client_image_holder/bluespace_stream/Initialize(mapload, list/mobs_which_see_us)
@@ -219,7 +218,7 @@
 		linked = FALSE
 		return
 	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
-	owner.playsound_local(owner, 'sound/magic/lightning_chargeup.ogg', 75, FALSE)
+	owner.playsound_local(owner, 'sound/effects/magic/lightning_chargeup.ogg', 75, FALSE)
 	returning = TRUE
 	addtimer(CALLBACK(src, PROC_REF(snapback)), 100)
 
@@ -232,7 +231,7 @@
 		return
 	to_chat(owner, span_warning("You're pulled through spacetime!"))
 	do_teleport(owner, get_turf(linked_target), null, channel = TELEPORT_CHANNEL_QUANTUM)
-	owner.playsound_local(owner, 'sound/magic/repulse.ogg', 100, FALSE)
+	owner.playsound_local(owner, 'sound/effects/magic/repulse.ogg', 100, FALSE)
 	linked_target = null
 	linked = FALSE
 
@@ -242,18 +241,17 @@
 	scan_desc = "violent psychosis"
 	gain_text = span_warning("You feel unhinged...")
 	lose_text = span_notice("You feel more balanced.")
+	/// The martial art we teach
 	var/datum/martial_art/psychotic_brawling/psychotic_brawling
 
 /datum/brain_trauma/special/psychotic_brawling/on_gain()
-	..()
-	psychotic_brawling = new(null)
-	if(!psychotic_brawling.teach(owner, TRUE))
-		to_chat(owner, span_notice("But your martial knowledge keeps you grounded."))
-		qdel(src)
+	. = ..()
+	psychotic_brawling = new(src)
+	psychotic_brawling.locked_to_use = TRUE
+	psychotic_brawling.teach(owner)
 
 /datum/brain_trauma/special/psychotic_brawling/on_lose()
-	..()
-	psychotic_brawling.remove(owner)
+	. = ..()
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
@@ -396,17 +394,17 @@
 
 	if(owner.stat != CONSCIOUS)
 		if(SPT_PROB(10, seconds_per_tick))
-			owner.playsound_local(beepsky, 'sound/voice/beepsky/iamthelaw.ogg', 50)
+			owner.playsound_local(beepsky, 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg', 50)
 		return
 
 	if(get_dist(owner, beepsky) <= 1)
-		owner.playsound_local(owner, 'sound/weapons/egloves.ogg', 50)
+		owner.playsound_local(owner, 'sound/items/weapons/egloves.ogg', 50)
 		owner.visible_message(span_warning("[owner]'s body jerks as if it was shocked."), span_userdanger("You feel the fist of the LAW."))
 		owner.stamina.adjust(-rand(40, 70))
 		QDEL_NULL(beepsky)
 
 	if(SPT_PROB(10, seconds_per_tick) && get_dist(owner, beepsky) <= 8)
-		owner.playsound_local(beepsky, 'sound/voice/beepsky/criminal.ogg', 40)
+		owner.playsound_local(beepsky, 'sound/mobs/non-humanoids/beepsky/criminal.ogg', 40)
 
 /obj/effect/client_image_holder/securitron
 	name = "Securitron"
@@ -594,7 +592,7 @@
 	owner.clear_mood_event("fireaxe")
 	UnregisterSignal(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_ATOM_EXAMINE))
 	if(GLOB.bridge_axe)
-		UnregisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK)
+		UnregisterSignal(GLOB.bridge_axe, list(COMSIG_ITEM_AFTERATTACK, COMSIG_QDELETING))
 	return ..()
 
 /datum/brain_trauma/special/axedoration/proc/axe_gone(source)

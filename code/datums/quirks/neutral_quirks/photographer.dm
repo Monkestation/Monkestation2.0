@@ -4,6 +4,7 @@
 	icon = FA_ICON_CAMERA
 	value = 0
 	mob_trait = TRAIT_PHOTOGRAPHER
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SAVE
 	gain_text = span_notice("You know everything about photography.")
 	lose_text = span_danger("You forget how photo cameras work.")
 	medical_record_text = "Patient mentions photography as a stress-relieving hobby."

@@ -48,3 +48,46 @@
 		var/dy = end.yi - start.yi
 		return round(delta_to_angle(dy, dx))
 	return null
+
+/**
+ * Gets all connected z-levels within a given manhattan distance of center.
+ *
+ * Arguments:
+ * * center: The starting Z level. Can either be a numeric z-level, or a [/datun/space_level].
+ * * dist: The maximum distance to search.
+ */
+/proc/get_linked_z_levels_in_range(datum/space_level/center, dist)
+	if(isnum(center))
+		center = SSmapping.get_level(center)
+	var/list/to_check = list(center)
+	var/list/checked = list()
+	var/total_search_distance = 0
+	while(to_check.len && total_search_distance <= dist)
+		var/list/current_pass = to_check.Copy()
+		to_check.Cut()
+		for(var/datum/space_level/level as anything in current_pass)
+			checked[level] = TRUE
+			for(var/direction in level.neigbours)
+				var/datum/space_level/neighbor = level.neigbours[direction]
+				if(!checked[neighbor])
+					to_check |= neighbor
+		total_search_distance++
+	return checked
+
+/// Connected levels, plus the ones a warped room's runes open onto.
+/proc/get_telecomms_levels(turf/position) as /list
+	var/list/levels = SSmapping.get_connected_levels(position)
+	var/datum/warped_room/room = get_warped_room(position)
+	if(!room)
+		return levels
+	levels = levels.Copy()
+	for(var/rune_level in room.rune_levels())
+		levels |= SSmapping.get_connected_levels(rune_level)
+	return levels
+
+/// Whether the turf is in a warped room with a rune on any of these levels.
+/proc/warped_room_in_levels(turf/position, list/levels)
+	var/datum/warped_room/room = get_warped_room(position)
+	if(!room)
+		return FALSE
+	return length(room.rune_levels() & levels) > 0

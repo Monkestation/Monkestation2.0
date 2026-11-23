@@ -2,12 +2,21 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Any floor or wall. What makes up the station and the rest of the map.
 /turf
+	abstract_type = /turf
 	icon = 'icons/turf/floors.dmi'
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
+	light_height = LIGHTING_HEIGHT_FLOOR
 
 	/// Turf bitflags, see code/__DEFINES/flags.dm
 	var/turf_flags = NONE
+
+	/// Packed navmap passability bits. null = unbaked / dirty. See code/__DEFINES/navmap.dm for layout.
+	var/nav_pass = null
+	/// Terrain cost flags assigned directly to this turf. Area cost flags are combined when queried.
+	var/nav_cost_flags = NONE
+	/// Lazy alist: numeric dir -> flat list of pass_flags masks or (weakref, evaluation direction) pairs. Only present on turfs with conditional edges.
+	var/alist/nav_blockers
 
 	/// If there's a tile over a basic floor that can be ripped out
 	var/overfloor_placed = FALSE
@@ -41,7 +50,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/requires_activation //add to air processing after initialize?
 	var/changing_turf = FALSE
 
-	var/bullet_bounce_sound = 'sound/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
+	var/bullet_bounce_sound = 'sound/items/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
 
@@ -101,9 +110,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// This would either be expensive, or impossible to manage. Let's just avoid it yes?
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
+	///The typepath we use for lazy fishing on turfs, to save on world init time.
+	var/fish_source
 
-	/// The weight of the turf for A* pathfinding.
-	var/astar_weight = 50
+	/// If TRUE, then this turf will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
 
 
 /turf/vv_edit_var(var_name, new_value)
@@ -247,12 +258,17 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	old_area.turfs_to_uncontain_by_zlevel[z] += src
 	new_area.turfs_by_zlevel[z] += src
 	new_area.contents += src
+	SEND_SIGNAL(src, COMSIG_TURF_AREA_CHANGED, old_area)
+	SEND_SIGNAL(new_area, COMSIG_AREA_TURF_ADDED, src, old_area)
+	SEND_SIGNAL(old_area, COMSIG_AREA_TURF_REMOVED, src, new_area)
 
 	//changes to make after turf has moved
 	on_change_area(old_area, new_area)
 
 /// Allows for reactions to an area change without inherently requiring change_area() be called (I hate maploading)
 /turf/proc/on_change_area(area/old_area, area/new_area)
+	if((old_area?.nav_cost_flags || NONE) != (new_area?.nav_cost_flags || NONE))
+		nav_cost_dirty()
 	transfer_area_lighting(old_area, new_area)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
@@ -528,20 +544,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/Distance(turf/T)
 	return get_dist(src,T)
 
-//  This Distance proc assumes that only cardinal movement is
-//  possible. It results in more efficient (CPU-wise) pathing
-//  for bots and anything else that only moves in cardinal dirs.
-/turf/proc/Distance_cardinal(turf/T)
-	if(!src || !T)
-		return FALSE
-	return abs(x - T.x) + abs(y - T.y)
-
 ////////////////////////////////////////////////////
 
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		for(var/obj/on_top in contents) //this is for deleting things like wires contained in the turf
-			if(HAS_TRAIT(on_top, TRAIT_T_RAY_VISIBLE))
+			if(HAS_TRAIT(on_top, TRAIT_UNDERFLOOR))
 				on_top.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
@@ -551,9 +559,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/can_lay_cable()
 	return can_have_cabling() && underfloor_accessibility >= UNDERFLOOR_INTERACTABLE
-
-/turf/proc/visibilityChanged()
-	SScameras.update_visibility(src)
 
 /turf/proc/burn_tile()
 	return
@@ -741,19 +746,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/datum/reagent/R = reagent
 		. |= R.expose_turf(src, reagents[R])
 
-/**
- * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
- */
-/turf/wash(clean_types)
+// When our turf is washed, we may wash everything on top of the turf
+// By default we will only wash mopable things (like blood or vomit)
+// but you may optionally pass in all_contents = TRUE to wash everything
+/turf/wash(clean_types, all_contents = FALSE)
 	. = ..()
-
-	for(var/am in src)
-		if(am == src)
-			continue
-		var/atom/movable/movable_content = am
-		if(!ismopable(movable_content))
-			continue
-		movable_content.wash(clean_types)
+	for(var/atom/movable/to_clean as anything in src)
+		if(all_contents || HAS_TRAIT(to_clean, TRAIT_MOPABLE))
+			to_clean.wash(clean_types)
 
 /turf/set_density(new_value)
 	var/old_density = density
@@ -765,6 +765,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		explosive_resistance -= get_explosive_block()
 	if(density)
 		explosive_resistance += get_explosive_block()
+
+	// Navmap: a density toggle changes our own edges.
+	nav_dirty()
 
 /// Wrapper around inherent_explosive_resistance
 /// We assume this proc is cold, so we can move the "what is our block" into it
@@ -812,25 +815,25 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
 
+/turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(alpha < 255)
+		AddElement(/datum/element/turf_z_transparency)
+		main_material.setup_glow(src)
+	rust_resistance = main_material.mat_rust_resistance
+
+/turf/remove_main_material_effects(datum/material/custom_material, amount, multipier)
+	. = ..()
+	rust_resistance = initial(rust_resistance)
+	if(alpha == 255)
+		return
+	RemoveElement(/datum/element/turf_z_transparency)
+	// yeets glow
+	set_light(0, 0, null)
+
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
 	return TRUE
-
-/// Returns an additional distance factor based on slowdown and other factors.
-/turf/proc/get_heuristic_slowdown(mob/traverser, travel_dir)
-	. = astar_weight
-	var/area/current_area = loc
-	if(current_area?.astar_weight)
-		. += current_area.astar_weight
-
-// Like Distance_cardinal, but includes additional weighting to make A* prefer turfs that are easier to pass through.
-/turf/proc/heuristic_cardinal(turf/T, mob/traverser)
-	var/travel_dir = get_dir(src, T)
-	. = Distance_cardinal(T, traverser) + get_heuristic_slowdown(traverser, travel_dir) + T.get_heuristic_slowdown(traverser, travel_dir)
-
-/// A 3d-aware version of heuristic_cardinal that just... adds the Z-axis distance with a multiplier.
-/turf/proc/heuristic_cardinal_3d(turf/T, mob/traverser)
-	return heuristic_cardinal(T, traverser) + abs(z - T.z) * 5 // Weight z-level differences higher so that we try to change Z-level sooner
 
 /**Shake() and then explode a turf based on the passed vars
  * shake_duration: how long to shake the turf for before calling explosion()
@@ -847,3 +850,257 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	visible_message(span_userdanger("\The [src] looks like its about to collapse!"))
 	Shake(0.2, 0.2, shake_duration)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, explosion_stats[1], explosion_stats[2], explosion_stats[3], 0, 0, do_log), shake_duration)
+/**
+ * the following are some fishing-related optimizations to shave off as much
+ * time we spend implementing the fishing as possible, even if that means
+ * hackier code, because we've hundreds of turfs like lava, water etc every round,
+ */
+/turf/proc/add_lazy_fishing(fish_source_path)
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(add_fishing_spot_comp))
+	RegisterSignal(src, COMSIG_NPC_FISHING, PROC_REF(on_npc_fishing))
+	RegisterSignal(src, COMSIG_FISH_RELEASED_INTO, PROC_REF(on_fish_release_into))
+	RegisterSignal(src, COMSIG_TURF_CHANGE, PROC_REF(remove_lazy_fishing))
+	ADD_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
+	fish_source = fish_source_path
+
+/// Stops the turf from turning into a fishing spot when interacted with
+/turf/proc/remove_lazy_fishing()
+	SIGNAL_HANDLER
+	UnregisterSignal(src, list(
+		COMSIG_FISHING_ROD_CAST,
+		COMSIG_NPC_FISHING,
+		COMSIG_FISH_RELEASED_INTO,
+		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
+		COMSIG_TURF_CHANGE,
+	))
+	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
+	fish_source = null
+
+/// Turns the turf into an actual fishing spot the first time someone casts on it
+/turf/proc/add_fishing_spot_comp(datum/source, obj/item/fishing_rod/rod, mob/user)
+	SIGNAL_HANDLER
+	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[fish_source])
+	remove_lazy_fishing()
+	return spot.handle_cast(arglist(args))
+
+/// Gives the fish source of this turf to NPCs looking for somewhere to fish
+/turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
+	SIGNAL_HANDLER
+	fish_spot_container[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[fish_source]
+
+/// Lets the fish source of this turf know a fish was released into it, so it can be repopulated
+/turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	GLOB.preset_fish_sources[fish_source].readd_fish(src, fish, releaser)
+
+/turf/examine(mob/user)
+	. = ..()
+	if(!fish_source || !HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
+		return
+	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes(src))
+		return
+	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
+
+/turf/examine_more(mob/user)
+	. = ..()
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT) || !fish_source)
+		return
+	GLOB.preset_fish_sources[fish_source].get_catchable_fish_names(user, src, .)
+
+/turf/ex_act(severity, target)
+	. = ..()
+	if(!fish_source)
+		return
+	GLOB.preset_fish_sources[fish_source].spawn_reward_from_explosion(src, severity)
+
+/turf/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!fish_source || !istype(tool.buffer?.resolve(), /obj/machinery/fishing_portal_generator))
+		return ..()
+	var/obj/machinery/fishing_portal_generator/portal = tool.buffer.resolve()
+	return portal.link_fishing_spot(GLOB.preset_fish_sources[fish_source], src, user)
+
+/// Invalidates this turf and its neighbours, then queues them for baking.
+/turf/proc/nav_dirty()
+	// Track startup changes by coordinates, since the turf may be replaced.
+	if(!SSnavmap.initialized || SSnavmap.startup_finalization_pending)
+		SSnavmap.record_startup_dirty_turf(src)
+		return
+	SSnavmap.publish_nav_cost_flags(src, get_nav_cost_flags())
+	// Only auto-update important z-levels
+	if(!SSnavmap.auto_dirty_zlevels[z])
+		// everywhere else bakes lazily, so just drop the stale bake and let the next search redo it
+		nav_clear_bake()
+		for(var/dir in GLOB.cardinals)
+			var/turf/neighbor = get_step(src, dir)
+			neighbor?.nav_clear_bake()
+		for(var/dir in GLOB.verticals)
+			var/turf/neighbor = get_step_multiz(src, dir)
+			neighbor?.nav_clear_bake()
+		return
+	nav_pass = null
+	nav_blockers = null
+	SSnavmap.queue_turf_bake(src)
+	// Clear the navmap DLL's baked flag before the asynchronous re-bake.
+	navmap_pathfinder_update(x, y, z, 0, get_nav_cost_flags())
+	for(var/dir in GLOB.cardinals)
+		var/turf/neighbor = get_step(src, dir)
+		if(neighbor)
+			neighbor.nav_pass = null
+			neighbor.nav_blockers = null
+			SSnavmap.queue_turf_bake(neighbor)
+			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0, neighbor.get_nav_cost_flags())
+	for(var/dir in GLOB.verticals)
+		var/turf/neighbor = get_step_multiz(src, dir)
+		if(neighbor)
+			neighbor.nav_pass = null
+			SSnavmap.queue_turf_bake(neighbor)
+			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0, neighbor.get_nav_cost_flags())
+			// Proc-based turfs may have passability that depends on the adjacent z-level.
+			// Avoid a virtual call for the overwhelmingly common density-based turfs.
+			if(neighbor.pathing_pass_method == TURF_PATHING_PASS_PROC)
+				neighbor.nav_dirty_vertical_dependents()
+
+/// Forgets this turf's bake without queueing a new one. Both the DLL and the DM search re-bake an unbaked turf when they reach it.
+/turf/proc/nav_clear_bake()
+	if(isnull(nav_pass))
+		return
+	nav_pass = null
+	nav_blockers = null
+	navmap_pathfinder_update(x, y, z, 0, get_nav_cost_flags())
+
+/// Returns this turf's terrain costs combined with those assigned to its area.
+/turf/proc/get_nav_cost_flags()
+	var/area/our_area = loc
+	return nav_cost_flags | (our_area?.nav_cost_flags || NONE)
+
+/// Publishes a terrain-cost flag change without rebaking passability edges.
+/turf/proc/nav_cost_dirty()
+	if(!SSnavmap.initialized || SSnavmap.startup_finalization_pending)
+		SSnavmap.record_startup_cost_dirty(src)
+		return
+	var/effective_flags = get_nav_cost_flags()
+	SSnavmap.publish_nav_cost_flags(src, effective_flags)
+	// Publish the current edge cache with the new flags, or preserve the dirty marker if not baked.
+	navmap_pathfinder_update(x, y, z, nav_pass || 0, effective_flags)
+
+/// Invalidates nav edges whose passability depends on this turf's vertical neighbours.
+/// Most turfs have no such dependencies; specialized proc-based turfs can override this.
+/turf/proc/nav_dirty_vertical_dependents()
+	return
+
+/// Bakes this turf's outgoing edges and publishes them to the DLL navmap cache.
+/turf/proc/nav_bake(skip_navmap_push = FALSE)
+	var/packed = NAV_BAKED | (SSnavmap.space_type_cache[type] ? NONE : NAV_SIMULATED)
+	var/alist/blockers = null
+
+	for(var/dir in GLOB.cardinals)
+		var/turf/dest = get_step(src, dir)
+		if(isnull(dest))
+			continue // edge of the world, no edge
+		var/list/edge_blockers = list()
+		packed |= nav_evaluate_edge(dir, dest, edge_blockers)
+		if(length(edge_blockers))
+			blockers ||= alist()
+			blockers[dir] = edge_blockers
+
+	// Raw vertical edges are intentionally available only to flying movers. Their
+	// destination remains at the same x/y on the adjacent mapped layer.
+	for(var/dir in GLOB.verticals)
+		var/turf/dest = get_step_multiz(src, dir)
+		if(!dest || !zPassOut(dir) || !dest.zPassIn(dir))
+			continue
+		packed |= NAV_FLIGHT(dir)
+
+	nav_pass = packed
+	nav_blockers = blockers
+	var/effective_cost_flags = get_nav_cost_flags()
+	SSnavmap.publish_nav_cost_flags(src, effective_cost_flags)
+	// Mass prebakes publish the completed z-level in one FFI call when the DLL is present.
+	if(!skip_navmap_push)
+		navmap_pathfinder_update(x, y, z, packed, effective_cost_flags)
+	return effective_cost_flags
+
+/// Builds packed passability bits and live blockers for one outgoing edge.
+/turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)
+	if(dest.density)
+		return NONE // hard blocked, nobody passes
+	// Baseline class passability of the destination turf, before contents.
+	var/ground_ok = TRUE
+	var/flight_ok = TRUE
+	var/has_cond = FALSE
+	switch(dest.pathing_pass_method)
+		if(TURF_PATHING_PASS_NO)
+			return NONE
+		if(TURF_PATHING_PASS_PROC)
+			var/pathing_bits = dest.nav_bake_pathing_pass(dir, edge_blockers)
+			ground_ok = !!(pathing_bits & NAV_GROUND(dir))
+			flight_ok = !!(pathing_bits & NAV_FLIGHT(dir))
+			has_cond = !!(pathing_bits & NAV_COND(dir))
+
+	// border objects :(
+	for(var/obj/border in src)
+		if(!SSnavmap.border_blocker_cache[border.type])
+			continue
+		if(!NAV_RELEVANT(border))
+			continue
+		if(nav_classify_atom(border, edge_blockers))
+			has_cond = TRUE
+		else
+			if(ground_ok && !border.CanAStarPass(dir, SSnavmap.ground_rep))
+				ground_ok = FALSE
+			if(flight_ok && !border.CanAStarPass(dir, SSnavmap.flying_rep))
+				flight_ok = FALSE
+
+	// destination contents (reverse dir)
+	var/reverse = REVERSE_DIR(dir)
+	for(var/atom/movable/iter_object in dest)
+		if(!NAV_RELEVANT(iter_object))
+			continue // dont care if its not relevant for pathfinding
+		if(nav_classify_atom(iter_object, edge_blockers))
+			has_cond = TRUE
+		else
+			if(ground_ok && !iter_object.CanAStarPass(reverse, SSnavmap.ground_rep))
+				ground_ok = FALSE
+			if(flight_ok && !iter_object.CanAStarPass(reverse, SSnavmap.flying_rep))
+				flight_ok = FALSE
+
+	var/bits = NONE
+	if(ground_ok)
+		bits |= NAV_GROUND(dir)
+	if(flight_ok)
+		bits |= NAV_FLIGHT(dir)
+	if(has_cond)
+		bits |= NAV_COND(dir)
+	return bits
+
+/// Returns the packed edge bits for a turf whose pathing pass method is proc-based.
+/// The default keeps the turf conditional, matching the normal CanAStarPass behavior.
+/turf/proc/nav_bake_pathing_pass(dir, list/edge_blockers)
+	edge_blockers += WEAKREF(src)
+	return NAV_GROUND(dir) | NAV_FLIGHT(dir) | NAV_COND(dir)
+
+/// Stores a static pass-flag mask or a live mover-dependent blocker.
+/turf/proc/nav_classify_atom(atom/movable/blocker, list/edge_blockers)
+	// Store known pass-flag gates as masks.
+	var/mask = SSnavmap.mask_whitelist_cache[blocker.type]
+	if(mask)
+		edge_blockers += mask
+		return TRUE
+
+	// Store mover-dependent blockers for live evaluation. (The DLL calls back into these via byond API.)
+	if(istype(blocker, /obj/machinery/door) \
+		|| blocker.can_astar_pass == CANASTARPASS_ALWAYS_PROC \
+		|| (blocker.pass_flags_self & ~NAV_NON_PASS_FLAGS) \
+		|| SSnavmap.force_conditional_cache[blocker.type])
+		edge_blockers += WEAKREF(blocker)
+		return TRUE
+
+	return FALSE
+
+/// Resolves and evaluates a live blocker within one native-to-DM callback.
+/turf/proc/nav_blocker_can_pass(datum/weakref/blocker_ref, dir, datum/can_pass_info/pass_info)
+	var/atom/blocker = blocker_ref?.resolve()
+	if(!blocker)
+		return TRUE
+	var/eval_dir = blocker.loc == src ? dir : REVERSE_DIR(dir)
+	return blocker.CanAStarPass(eval_dir, pass_info)

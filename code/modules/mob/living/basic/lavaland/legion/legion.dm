@@ -21,7 +21,7 @@
 	attack_verb_continuous = "lashes out at"
 	attack_verb_simple = "lash out at"
 	speak_emote = list("gurgles")
-	attack_sound = 'sound/weapons/pierce.ogg'
+	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "bounces harmlessly off of"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	death_message = "wails in chorus and dissolves into quivering flesh."
@@ -75,7 +75,7 @@
 /mob/living/basic/mining/legion/update_overlays()
 	. = ..()
 	if (stat != DEAD && has_emissive) // Shouldn't really happen but just in case
-		. += emissive_appearance(icon, "[icon_living]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Put a corpse in this guy
 /mob/living/basic/mining/legion/proc/consume(mob/living/consumed)

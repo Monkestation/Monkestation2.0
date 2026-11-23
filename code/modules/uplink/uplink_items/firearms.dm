@@ -1,6 +1,6 @@
 /datum/uplink_category/firearms
 	name = "Firearms"
-	weight = 9
+	weight = 13
 
 /datum/uplink_item/firearms
 	category = /datum/uplink_category/firearms
@@ -58,20 +58,21 @@
 
 /datum/uplink_item/firearms/rebarxbowsyndie
 	name = "Syndicate Rebar Crossbow"
-	desc = "A much more proffessional version of the engineer's bootleg rebar crossbow. Quicker loading, and better ammo. Owners manual included."
+	desc = "A much more professional version of the engineer's bootleg rebar crossbow. Quicker loading, and better ammo. Owners manual included."
 	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
 	cost = 8
 
 /datum/uplink_item/firearms/laser_musket
 	name = "Syndicate Laser Musket"
 	desc = "An exprimental 'rifle' designed by Aetherofusion. This laser(probably) uses alien technology to fit 4 high energy capacitors \
-			into a small rifle which can be stored safely(?) in any backpack. To charge, simply press down on the main control panel. \
+			into a medium sized rifle, make sure you have a vest to hang it on! To charge, simply press down on the main control panel. \
 			Rumors of this 'siphoning power off your lifeforce' are greatly exaggerated, and Aetherofusion assures safety for up to 2 years of use."
 	item = /obj/item/gun/energy/laser/musket/syndicate
 	progression_minimum = 30 MINUTES
 	cost = 12
 	surplus = 40
 	purchasable_from = ~UPLINK_CLOWN_OPS
+	population_minimum = 20
 
 /datum/uplink_item/firearms/autoshotgun
 	name = "Auto Shotgun Case"
@@ -80,6 +81,7 @@
 	item = /obj/item/storage/toolbox/guncase/traitor/autoshotgun
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) // Nuke ops have their own shotty, Clown ops can't buy lethal firearms
 	cost = 14
+	population_minimum = 30
 
 /datum/uplink_item/firearms/shotgun_revolver
 	name = "\improper Bóbr 12 GA revolver"

@@ -142,6 +142,13 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
+"eV" = (
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side,
+/area/shuttle/escape)
 "fo" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
@@ -914,20 +921,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"FX" = (
-/obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/surgery{
-	pixel_x = -15
-	},
-/obj/item/surgery_tray,
-/obj/item/surgery_tray{
-	pixel_x = 5
-	},
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/side,
-/area/shuttle/escape)
 "Gr" = (
 /obj/item/stack/sheet/plastitaniumglass{
 	amount = 20;
@@ -1317,6 +1310,20 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white/textured_large,
 /area/shuttle/escape)
+"Ph" = (
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/surgery{
+	pixel_x = -15
+	},
+/obj/item/surgery_tray,
+/obj/item/surgery_tray{
+	pixel_x = 5
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side,
+/area/shuttle/escape)
 "Pv" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -1518,13 +1525,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"WO" = (
-/obj/effect/decal/cleanable/blood/splatter/oil/streak,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/side,
-/area/shuttle/escape)
 "WQ" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
@@ -2150,7 +2150,7 @@ WI
 vy
 od
 WI
-FX
+Ph
 gI
 pK
 pK
@@ -2449,7 +2449,7 @@ uX
 ne
 Hp
 zh
-WO
+eV
 WQ
 WQ
 WQ

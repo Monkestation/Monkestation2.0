@@ -53,6 +53,7 @@
 #define RND_SUBCATEGORY_COMPUTER_RESEARCH "/Research Consoles"
 #define RND_SUBCATEGORY_COMPUTER_ENGINEERING "/Engineering & Atmospherics Consoles"
 #define RND_SUBCATEGORY_COMPUTER_CARGO "/Cargo Consoles"
+#define RND_SUBCATEGORY_COMPUTER_SHUTTLE "/Shuttle Consoles"
 
 #define RND_CATEGORY_MACHINE "/Machine Boards"
 #define RND_SUBCATEGORY_MACHINE_ATMOS "/Atmospherics Machines"
@@ -177,6 +178,9 @@
 #define RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY "/Security Modules"
 #define RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY "/Supply Modules"
 #define RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE "/Service Modules"
+
+#define RND_CATEGORY_IPC "/IPC"
+#define RND_SUBCATEGORY_IPC_COMPONENTS "/IPC Components"
 
 #define RND_CATEGORY_CYBERNETICS "/Cybernetics"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_1 "/Tier 1 Cybernetic Organs"

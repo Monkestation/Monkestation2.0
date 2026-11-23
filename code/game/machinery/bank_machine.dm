@@ -70,7 +70,7 @@
 		end_siphon()
 		return
 
-	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 	syphoning_credits += siphon_am
 	synced_bank_account.adjust_money(-siphon_am)
 	if(next_warning < world.time && prob(15))
@@ -91,7 +91,7 @@
 
 	data["current_balance"] = synced_bank_account?.account_balance || 0
 	data["siphoning"] = siphoning
-	data["station_name"] = station_name()
+	data["station_name"] = html_decode(station_name())
 
 	return data
 

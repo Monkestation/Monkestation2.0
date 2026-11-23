@@ -128,7 +128,7 @@
 		to_chat(user, span_notice("You play with [src]."))
 		timer = world.time + cooldown
 		if(!quiet)
-			playsound(user, 'sound/mecha/mechstep.ogg', 20, TRUE)
+			playsound(user, 'sound/vehicles/mecha/mechstep.ogg', 20, TRUE)
 	else
 		. = ..()
 
@@ -163,17 +163,15 @@
 		if(!check_battle_start(user)) //if the user's mech isn't ready, don't bother checking
 			return
 
-		for(var/obj/item/I in target.held_items)
-			if(istype(I, /obj/item/toy/mecha)) //if you attack someone with a mech who's also holding a mech, offer to battle them
-				var/obj/item/toy/mecha/P = I
-				if(!P.check_battle_start(target, null, user)) //check if the attacker mech is ready
-					break
+		for(var/obj/item/toy/mecha/gundam as anything in target.get_held_items_of_type(/obj/item/toy/mecha))
+			if(!gundam.check_battle_start(target, null, user)) //check if the attacker mech is ready
+				break
 
-				//slap them with the metaphorical white glove
-				if(P.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
-					mecha_brawl(P, target, user) //P = defender's mech / SRC = attacker's mech / target = defender / user = attacker
-					P.wants_to_battle = FALSE
-					return
+			//slap them with the metaphorical white glove
+			if(gundam.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
+				mecha_brawl(gundam, target, user) //P = defender's mech / SRC = attacker's mech / target = defender / user = attacker
+				gundam.wants_to_battle = FALSE
+				return
 
 		//extend the offer of battle to the other mech
 		to_chat(user, span_notice("You offer battle to [target.name]!"))
@@ -192,7 +190,7 @@
 		to_chat(user, span_notice("You telekinetically play with [src]."))
 		timer = world.time + cooldown
 		if(!quiet)
-			playsound(user, 'sound/mecha/mechstep.ogg', 20, TRUE)
+			playsound(user, 'sound/vehicles/mecha/mechstep.ogg', 20, TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
@@ -223,12 +221,12 @@
 		switch(i)
 			if(1, 3)
 				SpinAnimation(5, 0)
-				playsound(src, 'sound/mecha/mechstep.ogg', 30, TRUE)
+				playsound(src, 'sound/vehicles/mecha/mechstep.ogg', 30, TRUE)
 				user.adjustBruteLoss(25)
 				user.stamina.adjust(-50)
 			if(2)
 				user.SpinAnimation(5, 0)
-				playsound(user, 'sound/weapons/smash.ogg', 20, TRUE)
+				playsound(user, 'sound/items/weapons/smash.ogg', 20, TRUE)
 				combat_health-- //we scratched it!
 			if(4)
 				say(special_attack_cry + "!!")
@@ -333,7 +331,7 @@
 											span_danger("You begin charging [attacker]'s special attack!"))
 					else //just attack
 						attacker.SpinAnimation(5, 0)
-						playsound(attacker, 'sound/mecha/mechstep.ogg', 30, TRUE)
+						playsound(attacker, 'sound/vehicles/mecha/mechstep.ogg', 30, TRUE)
 						combat_health--
 						attacker_controller.visible_message(span_danger("[attacker] devastates [src]!"), \
 											span_danger("You ram [attacker] into [src]!"), \
@@ -360,7 +358,7 @@
 										span_danger("[src] and [attacker] clash dramatically, causing sparks to fly!"), \
 										span_hear("You hear hard plastic rubbing against hard plastic."), COMBAT_MESSAGE_RANGE)
 				if(5) //both win
-					playsound(attacker, 'sound/weapons/parry.ogg', 20, TRUE)
+					playsound(attacker, 'sound/items/weapons/parry.ogg', 20, TRUE)
 					if(prob(50))
 						attacker_controller.visible_message(span_danger("[src]'s attack deflects off of [attacker]."), \
 											span_danger("[src]'s attack deflects off of [attacker]."), \
@@ -377,7 +375,7 @@
 										span_danger("You begin charging [src]'s special attack!"))
 					else //just attack
 						SpinAnimation(5, 0)
-						playsound(src, 'sound/mecha/mechstep.ogg', 30, TRUE)
+						playsound(src, 'sound/vehicles/mecha/mechstep.ogg', 30, TRUE)
 						attacker.combat_health--
 						src_controller.visible_message(span_danger("[src] smashes [attacker]!"), \
 										span_danger("You smash [src] into [attacker]!"), \
@@ -479,14 +477,14 @@
 	switch(special_attack_type)
 		if(SPECIAL_ATTACK_DAMAGE) //+2 damage
 			victim.combat_health-=2
-			playsound(src, 'sound/weapons/marauder.ogg', 20, TRUE)
+			playsound(src, 'sound/items/weapons/marauder.ogg', 20, TRUE)
 		if(SPECIAL_ATTACK_HEAL) //+2 healing
 			combat_health+=2
-			playsound(src, 'sound/mecha/mech_shield_raise.ogg', 20, TRUE)
+			playsound(src, 'sound/vehicles/mecha/mech_shield_raise.ogg', 20, TRUE)
 		if(SPECIAL_ATTACK_UTILITY) //+1 heal, +1 damage
 			victim.combat_health--
 			combat_health++
-			playsound(src, 'sound/mecha/mechmove01.ogg', 30, TRUE)
+			playsound(src, 'sound/vehicles/mecha/mechmove01.ogg', 30, TRUE)
 		if(SPECIAL_ATTACK_OTHER) //other
 			super_special_attack(victim)
 		else
@@ -574,7 +572,7 @@
 	special_attack_cry = "MEGA HORN"
 
 /obj/item/toy/mecha/honk/super_special_attack(obj/item/toy/mecha/victim)
-	playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 20, TRUE)
+	playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg', 20, TRUE)
 	victim.special_attack_cooldown += 3 //Adds cooldown to the other mech and gives a minor self heal
 	combat_health++
 
@@ -608,7 +606,7 @@
 	special_attack_cry = "KILLER CLAMP"
 
 /obj/item/toy/mecha/deathripley/super_special_attack(obj/item/toy/mecha/victim)
-	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 20, TRUE)
+	playsound(src, 'sound/items/weapons/sonic_jackhammer.ogg', 20, TRUE)
 	if(victim.combat_health < combat_health) //Instantly kills the other mech if it's health is below our's.
 		say("EXECUTE!!")
 		victim.combat_health = 0

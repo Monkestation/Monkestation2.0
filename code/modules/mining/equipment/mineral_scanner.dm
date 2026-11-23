@@ -2,7 +2,7 @@
 /obj/item/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
 	name = "manual mining scanner"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "manual_mining"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "analyzer"
@@ -25,9 +25,10 @@
 /obj/item/mining_scanner/admin
 
 /obj/item/mining_scanner/admin/attack_self(mob/user)
-	for(var/turf/closed/mineral/M in world)
-		if(M.scan_state)
-			M.icon_state = M.scan_state
+	for(var/turf/closed/mineral/mineral_turf in world)
+		if(mineral_turf.scan_state)
+			mineral_turf.icon = mineral_turf.scan_icon
+			mineral_turf.icon_state = mineral_turf.scan_state
 	qdel(src)
 
 /obj/item/t_scanner/adv_mining_scanner
@@ -60,45 +61,48 @@
 		var/turf/t = get_turf(src)
 		mineral_scan_pulse(t, range, src)
 
-/proc/mineral_scan_pulse(turf/T, range = world.view, obj/item/scanner)
-	var/list/minerals = list()
+/proc/mineral_scan_pulse(turf/start_turf, range = world.view, obj/item/scanner)
 	var/vents_nearby = FALSE
 	var/undiscovered = FALSE
 	var/radar_volume = 30
-	for(var/turf/closed/mineral/M in range(range, T))
-		if(M.scan_state)
-			minerals += M
 
-	for(var/obj/structure/ore_vent/vent in range(range, T))
+	for(var/obj/structure/ore_vent/vent in range(range, start_turf))
 		if(!vents_nearby && (!vent.discovered || !vent.tapped))
 			vents_nearby = TRUE
 			if(vent.discovered)
 				undiscovered = TRUE
-		var/potential_volume = 80 - (get_dist(T.loc, vent) * 10)
+		var/potential_volume = 80 - (get_dist(start_turf, vent) * 10)
 		radar_volume = max(potential_volume, radar_volume)
 		vent.add_mineral_overlays()
 
-	if(LAZYLEN(minerals))
-		for(var/turf/closed/mineral/M in minerals)
-			var/obj/effect/temp_visual/mining_overlay/oldC = locate(/obj/effect/temp_visual/mining_overlay) in M
-			if(oldC)
-				qdel(oldC)
-			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
-			C.icon_state = M.scan_state
+	for(var/turf/closed/mineral/mineral in RANGE_TURFS(range, start_turf))
+		if(!mineral.scan_state)
+			continue
+
+		var/obj/effect/temp_visual/mining_overlay/scan_overlay = locate(/obj/effect/temp_visual/mining_overlay) in mineral
+		if(!scan_overlay)
+			scan_overlay = new(mineral)
+			scan_overlay.icon = mineral.scan_icon
+			scan_overlay.icon_state = mineral.scan_state
+			continue
+
+		deltimer(scan_overlay.timerid)
+		scan_overlay.timerid = QDEL_IN_STOPPABLE(scan_overlay, scan_overlay.duration)
+		animate(scan_overlay, alpha = 0, time = scan_overlay.duration, easing = scan_overlay.easing_style)
 
 	if(vents_nearby && scanner) // Lets player know if they are close to a vent.
 		if(undiscovered)
 			playsound(scanner, 'sound/machines/radar-ping.ogg', radar_volume, FALSE)
+			scanner.balloon_alert_to_viewers("ore vent nearby")
 		else
 			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
-		scanner.balloon_alert_to_viewers("ore vent nearby")
 		scanner.spasm_animation(1.5 SECONDS)
 
 /obj/effect/temp_visual/mining_overlay
 	plane = HIGH_GAME_PLANE
 	layer = FLASH_LAYER
 	icon = 'icons/effects/ore_visuals.dmi'
-	appearance_flags = 0 //to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
+	appearance_flags = NONE // to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
 	duration = 35
 	pixel_x = -224
 	pixel_y = -224

@@ -21,7 +21,7 @@
 	///Var for the chassis we are attached to, needed to access ripley contents and such
 	var/obj/vehicle/sealed/mecha/ripley/cargo_holder
 	///Audio for using the hydraulic clamp
-	var/clampsound = 'sound/mecha/hydraulic.ogg'
+	var/clampsound = 'sound/vehicles/mecha/hydraulic.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
@@ -398,4 +398,4 @@
 		marktwo.name = markone.name
 	markone.wreckage = FALSE
 	qdel(markone)
-	playsound(get_turf(marktwo),'sound/items/ratchet.ogg',50,TRUE)
+	playsound(get_turf(marktwo),'sound/items/tools/ratchet.ogg',50,TRUE)

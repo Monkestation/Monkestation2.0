@@ -119,6 +119,8 @@
  * * lifespan - The lifespan of the message in deciseconds
  */
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan)
+	usr = null // do not hold a ref to usr here please,,,,
+
 	/// Cached icons to show what language the user is speaking
 	var/static/list/language_icons
 
@@ -160,15 +162,15 @@
 
 	// Append radio icon if from a virtual speaker
 	if (extra_classes.Find("virtual-speaker"))
-		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "radio")
+		var/image/r_icon = image('icons/ui/chat/chat_icons.dmi', icon_state = "radio")
 		LAZYADD(prefixes, "\icon[r_icon]")
 	else if (extra_classes.Find("emote"))
-		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "emote")
+		var/image/r_icon = image('icons/ui/chat/chat_icons.dmi', icon_state = "emote")
 		LAZYADD(prefixes, "\icon[r_icon]")
 		chat_color_name_to_use = target.get_visible_name(add_id_name = FALSE) // use face name for nonverbal messages
 	// monkestation start: looc
 	else if (extra_classes.Find("looc"))
-		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "looc")
+		var/image/r_icon = image('icons/ui/chat/chat_icons.dmi', icon_state = "looc")
 		LAZYADD(prefixes, "\icon[r_icon]")
 	// monkestation end
 
@@ -181,7 +183,7 @@
 	// Calculate target color if not already present
 	if (!target.chat_color || target.chat_color_name != chat_color_name_to_use)
 		target.chat_color = colorize_string(chat_color_name_to_use)
-		target.chat_color_darkened = colorize_string(chat_color_name_to_use, 0.85, 0.85)
+		target.chat_color_darkened = colorize_string(chat_color_name_to_use, 0.85, 0.92)
 		target.chat_color_name = chat_color_name_to_use
 
 	// Append language icon if the language uses one
@@ -239,12 +241,12 @@
 			// When choosing to update the remaining time we have to be careful not to update the
 			// scheduled time once the EOL has been executed.
 			if (time_spent >= time_before_fade)
-				if(m.message.pixel_y < starting_height)
-					var/max_height = m.message.pixel_y + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
+				if(m.message.pixel_z < starting_height)
+					var/max_height = m.message.pixel_z + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
 					if(max_height > 0)
-						animate(m.message, pixel_y = m.message.pixel_y + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
-				else if(mheight + starting_height >= m.message.pixel_y)
-					animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+						animate(m.message, pixel_z = m.message.pixel_z + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+				else if(mheight + starting_height >= m.message.pixel_z)
+					animate(m.message, pixel_z = m.message.pixel_z + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
 				continue
 
 			var/remaining_time = time_before_fade * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
@@ -261,12 +263,12 @@
 				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
 			// We run this after the alpha animate, because we don't want to interrup it, but also don't want to block it by running first
 			// Sooo instead we do this. bit messy but it fuckin works
-			if(m.message.pixel_y < starting_height)
-				var/max_height = m.message.pixel_y + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
+			if(m.message.pixel_z < starting_height)
+				var/max_height = m.message.pixel_z + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
 				if(max_height > 0)
-					animate(m.message, pixel_y = m.message.pixel_y + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
-			else if(mheight + starting_height >= m.message.pixel_y)
-				animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+					animate(m.message, pixel_z = m.message.pixel_z + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+			else if(mheight + starting_height >= m.message.pixel_z)
+				animate(m.message, pixel_z = m.message.pixel_z + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
 
 	// Reset z index if relevant
 	if (current_z_idx >= CHAT_LAYER_MAX_Z)
@@ -277,8 +279,8 @@
 	SET_PLANE_EXPLICIT(message, RUNECHAT_PLANE, message_loc)
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
-	message.pixel_y = starting_height
-	message.pixel_x = -target.base_pixel_x
+	message.pixel_z = starting_height
+	message.pixel_w = -message_loc.base_pixel_w
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight * 1.25 // We add extra because some characters are superscript, like actions
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
@@ -371,40 +373,15 @@
  * * lum_shift - A value between 0 and 1 that will be multiplied against the luminescence
  */
 /datum/chatmessage/proc/colorize_string(name, sat_shift = 1, lum_shift = 1)
-	// seed to help randomness
-	var/static/rseed = rand(1,26)
+	var/hash = md5(name + GLOB.round_id)
+	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 256)
+	var/s = lerp(CM_COLOR_SAT_MIN, CM_COLOR_SAT_MAX, hex2num(copytext(hash, 3, 5)) / 255)
+	var/l = lerp(CM_COLOR_LUM_MIN, CM_COLOR_LUM_MAX, hex2num(copytext(hash, 5, 7)) / 255)
 
-	// get hsl using the selected 6 characters of the md5 hash
-	var/hash = copytext(md5(name + GLOB.round_id), rseed, rseed + 6)
-	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
-	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
-	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
-
-	// adjust for shifts
 	s *= clamp(sat_shift, 0, 1)
-	l *= clamp(lum_shift, 0, 1)
+	l = max(l * clamp(lum_shift, 0, 1), 0.5)
 
-	// convert to rgb
-	var/h_int = round(h/60) // mapping each section of H to 60 degree sections
-	var/c = (1 - abs(2 * l - 1)) * s
-	var/x = c * (1 - abs((h / 60) % 2 - 1))
-	var/m = l - c * 0.5
-	x = (x + m) * 255
-	c = (c + m) * 255
-	m *= 255
-	switch(h_int)
-		if(0)
-			return "#[num2hex(c, 2)][num2hex(x, 2)][num2hex(m, 2)]"
-		if(1)
-			return "#[num2hex(x, 2)][num2hex(c, 2)][num2hex(m, 2)]"
-		if(2)
-			return "#[num2hex(m, 2)][num2hex(c, 2)][num2hex(x, 2)]"
-		if(3)
-			return "#[num2hex(m, 2)][num2hex(x, 2)][num2hex(c, 2)]"
-		if(4)
-			return "#[num2hex(x, 2)][num2hex(m, 2)][num2hex(c, 2)]"
-		if(5)
-			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
+	return rgb(h, s * 100, l * 100, space = COLORSPACE_HSL)
 
 
 #undef CHAT_LAYER_MAX_Z

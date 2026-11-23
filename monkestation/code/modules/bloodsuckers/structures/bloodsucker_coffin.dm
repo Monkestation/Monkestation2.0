@@ -7,6 +7,7 @@
 			/area/ocean,
 			/area/shuttle,
 			/area/space,
+			/area/misc/warped_room,
 		))
 
 	// ALREADY CLAIMED
@@ -70,9 +71,9 @@
 	desc = "For those departed who are not so dear."
 	icon_state = "coffin"
 	base_icon_state = "coffin"
-	icon = 'icons/bloodsuckers/vamp_obj.dmi'
-	open_sound = 'sound/bloodsuckers/coffin_open.ogg'
-	close_sound = 'sound/bloodsuckers/coffin_close.ogg'
+	icon = 'icons/obj/antags/bloodsucker/vamp_obj.dmi'
+	open_sound = 'sound/effects/bloodsuckers/coffin_open.ogg'
+	close_sound = 'sound/effects/bloodsuckers/coffin_close.ogg'
 	breakout_time = 30 SECONDS
 	pry_lid_timer = 20 SECONDS
 	resistance_flags = NONE
@@ -93,9 +94,9 @@
 	desc = "For those too scared of having their place of rest disturbed."
 	icon_state = "securecoffin"
 	base_icon_state = "securecoffin"
-	icon = 'icons/bloodsuckers/vamp_obj.dmi'
-	open_sound = 'sound/bloodsuckers/coffin_open.ogg'
-	close_sound = 'sound/bloodsuckers/coffin_close.ogg'
+	icon = 'icons/obj/antags/bloodsucker/vamp_obj.dmi'
+	open_sound = 'sound/effects/bloodsuckers/coffin_open.ogg'
+	close_sound = 'sound/effects/bloodsuckers/coffin_close.ogg'
 	breakout_time = 35 SECONDS
 	pry_lid_timer = 35 SECONDS
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
@@ -116,7 +117,7 @@
 	desc = "When you're ready to meat your maker, the steaks can never be too high."
 	icon_state = "meatcoffin"
 	base_icon_state = "meatcoffin"
-	icon = 'icons/bloodsuckers/vamp_obj.dmi'
+	icon = 'icons/obj/antags/bloodsucker/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF
 	open_sound = 'sound/effects/footstep/slime1.ogg'
 	close_sound = 'sound/effects/footstep/slime1.ogg'
@@ -139,7 +140,7 @@
 	desc = "A big metal sardine can inside of another big metal sardine can, in space."
 	icon_state = "metalcoffin"
 	base_icon_state = "metalcoffin"
-	icon = 'icons/bloodsuckers/vamp_obj.dmi'
+	icon = 'icons/obj/antags/bloodsucker/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	open_sound = 'sound/effects/pressureplate.ogg'
 	close_sound = 'sound/effects/pressureplate.ogg'

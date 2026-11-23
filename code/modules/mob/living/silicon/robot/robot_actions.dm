@@ -104,17 +104,17 @@
 		// Start the sound. it'll just last the 4 seconds it takes for us to rev up
 		wash_audio.start()
 		// We're just gonna shake the borg a bit. Not a ton, but just enough that it feels like the audio makes sense
-		var/base_x = robot_owner.base_pixel_x
-		var/base_y = robot_owner.base_pixel_y
-		animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
+		var/base_w = robot_owner.base_pixel_w
+		var/base_z = robot_owner.base_pixel_z
+		animate(robot_owner, pixel_w = base_w, pixel_z = base_z, time = 0.1 SECONDS, loop = -1)
 		for(var/i in 1 to 17) //Startup rumble
-			var/x_offset = base_x + rand(-1, 1)
-			var/y_offset = base_y + rand(-1, 1)
-			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+			var/w_offset = base_w + rand(-1, 1)
+			var/z_offset = base_z + rand(-1, 1)
+			animate(pixel_w = w_offset, pixel_z = z_offset, time = 0.1 SECONDS)
 
 		if(!do_after(robot_owner, 4 SECONDS, interaction_key = "auto_wash_toggle", extra_checks = allow_buffer_activate))
 			wash_audio.stop() // Coward
-			animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
+			animate(robot_owner, pixel_w = base_w, pixel_z = base_z, time = 0.1 SECONDS)
 			return FALSE
 	else
 		if(!COOLDOWN_FINISHED(src, toggle_cooldown))
@@ -139,16 +139,16 @@
 	robot_owner.add_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
 	RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, PROC_REF(clean))
 	//This is basically just about adding a shake to the borg, effect should look ilke an engine's running
-	var/base_x = robot_owner.base_pixel_x
-	var/base_y = robot_owner.base_pixel_y
-	robot_owner.pixel_x = base_x + rand(-7, 7)
-	robot_owner.pixel_y = base_y + rand(-7, 7)
+	var/base_w = robot_owner.base_pixel_w
+	var/base_z = robot_owner.base_pixel_z
+	robot_owner.pixel_w = base_w + rand(-7, 7)
+	robot_owner.pixel_z = base_z + rand(-7, 7)
 	//Larger shake with more changes to start out, feels like "Revving"
-	animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
+	animate(robot_owner, pixel_w = base_w, pixel_z = base_z, time = 0.1 SECONDS, loop = -1)
 	for(var/i in 1 to 100)
-		var/x_offset = base_x + rand(-2, 2)
-		var/y_offset = base_y + rand(-2, 2)
-		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+		var/w_offset = base_w + rand(-2, 2)
+		var/z_offset = base_z + rand(-2, 2)
+		animate(pixel_w = w_offset, pixel_z = z_offset, time = 0.1 SECONDS)
 	if(!wash_audio.is_active())
 		wash_audio.start()
 	clean()
@@ -164,15 +164,15 @@
 	// Diable the cleaning, we're revving down
 	UnregisterSignal(robot_owner, COMSIG_MOVABLE_MOVED)
 	// Do the rumble animation till we're all finished
-	var/base_x = robot_owner.base_pixel_x
-	var/base_y = robot_owner.base_pixel_y
-	animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
+	var/base_w = robot_owner.base_pixel_w
+	var/base_z = robot_owner.base_pixel_z
+	animate(robot_owner, pixel_w = base_w, pixel_z = base_z, time = 0.1 SECONDS)
 	for(var/i in 1 to finished_by - 0.1 SECONDS) //We rumble until we're finished making noise
-		var/x_offset = base_x + rand(-1, 1)
-		var/y_offset = base_y + rand(-1, 1)
-		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+		var/w_offset = base_w + rand(-1, 1)
+		var/z_offset = base_z + rand(-1, 1)
+		animate(pixel_w = w_offset, pixel_z = z_offset, time = 0.1 SECONDS)
 	// Reset our animations
-	animate(pixel_x = base_x, pixel_y = base_y, time = 2)
+	animate(pixel_w = base_w, pixel_z = base_z, time = 0.2 SECONDS)
 	addtimer(CALLBACK(wash_audio, TYPE_PROC_REF(/datum/looping_sound, stop)), time_left)
 	addtimer(CALLBACK(src, PROC_REF(turn_off_wash)), finished_by)
 
@@ -249,7 +249,7 @@
 
 /datum/action/cooldown/cyborg_miner_shield/New(Target, original)
 	. = ..()
-	shield_overlay = mutable_appearance('icons/mecha/durand_shield.dmi', "borg_shield")
+	shield_overlay = mutable_appearance('icons/mob/effects/durand_shield.dmi', "borg_shield")
 
 /datum/action/cooldown/cyborg_miner_shield/Activate()
 	var/mob/living/silicon/robot/borg = owner
@@ -258,10 +258,10 @@
 		return
 	active = !active
 	if(active)
-		playsound(borg, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
+		playsound(borg, 'sound/vehicles/mecha/mech_shield_raise.ogg', 50, FALSE)
 		RegisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_shield_overlay_update), override = TRUE)
 	else
-		playsound(borg, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
+		playsound(borg, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
 		UnregisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS)
 	borg.update_appearance()
 

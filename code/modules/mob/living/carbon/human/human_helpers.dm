@@ -65,7 +65,7 @@
 /mob/living/carbon/human/get_face_name(if_no_face = "Unknown")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return if_no_face //We're Unknown, no face information for you
-	if(!is_face_visible()) //Wearing something which hides our face, use id-name if possible
+	if(obscured_slots & HIDEFACE) //Wearing something which hides our face, use id-name if possible
 		return if_no_face
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
 	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
@@ -286,3 +286,47 @@
 	socks = backup["socks"]
 	socks_color = backup["socks_color"]
 	jumpsuit_style = backup["jumpsuit_style"]
+
+/// Sets both mob's and eye organ's eye color values
+/// If color_right is not passed, its assumed to be the same as color_left
+/mob/living/carbon/human/proc/set_eye_color(color_left, color_right)
+	if (!color_right)
+		color_right = color_left
+	eye_color_left = color_left
+	eye_color_right = color_right
+	// Doesn't assign eye color if they already have one from their type
+	var/obj/item/organ/internal/eyes/eyes = get_organ_by_type(/obj/item/organ/internal/eyes)
+	if (istype(eyes) && !initial(eyes.eye_color_left) && !initial(eyes.eye_color_right))
+		eyes.eye_color_left = color_left
+		eyes.eye_color_right = color_right
+		eyes.refresh(src, FALSE)
+
+/mob/living/carbon/human/calculate_fitness()
+	var/fitness_modifier = 1
+	if (HAS_TRAIT(src, TRAIT_HULK))
+		fitness_modifier *= 2
+	if (HAS_TRAIT(src, TRAIT_STRENGTH))
+		fitness_modifier *= 1.5
+	if (HAS_TRAIT(src, TRAIT_ROD_SUPLEX))
+		fitness_modifier *= 2 // To be able to suplex a rod, you must possess an incredible amount of power
+	if (HAS_TRAIT(src, TRAIT_EASILY_WOUNDED))
+		fitness_modifier /= 2
+	if (HAS_TRAIT(src, TRAIT_GAMER))
+		fitness_modifier /= 1.5
+	if (HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+		fitness_modifier /= 1.5
+
+	var/athletics_level = mind?.get_skill_level(/datum/skill/athletics) || 1
+
+	var/min_damage = 0
+	var/max_damage = 0
+	for (var/body_zone in GLOB.limb_zones)
+		var/obj/item/bodypart/part = get_bodypart(body_zone)
+		if (isnull(part) || part.unarmed_damage_high <= 0 || HAS_TRAIT(part, TRAIT_PARALYSIS))
+			continue
+		min_damage += part.unarmed_damage_low
+		max_damage += part.unarmed_damage_high
+
+	var/damage = ((min_damage / 4) + (max_damage / 4)) / 2 // We expect you to have 4 functional limbs- if you have fewer you're probably not going to be so good at lifting
+
+	return ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * maxHealth)

@@ -50,13 +50,11 @@
 
 	if(active)
 		var/list/hold_list = owner.get_empty_held_indexes()
-		if(LAZYLEN(hold_list) == owner.held_items.len)
+		if(LAZYLEN(hold_list) == owner.get_num_hand_slots())
 			to_chat(owner, span_notice("You are not holding any items, your hands relax..."))
 			active = FALSE
 			return
-		for(var/obj/item/held_item as anything in owner.held_items)
-			if(!held_item)
-				continue
+		for(var/obj/item/held_item as anything in owner.get_held_items())
 			if (held_item.type in ANTI_DROP_BLACKLIST())
 				to_chat(owner, span_notice("You can't seem to get a good grip on the [held_item]."))
 				continue

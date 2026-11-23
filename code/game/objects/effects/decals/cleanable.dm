@@ -1,6 +1,7 @@
 /obj/effect/decal/cleanable
+	abstract_type = /obj/effect/decal/cleanable
 	gender = PLURAL
-	layer = FLOOR_CLEAN_LAYER
+	layer = CLEANABLE_FLOOR_OBJECT_LAYER
 	flags_1 = UNPAINTABLE_1
 	var/list/random_icon_states = null
 	/// When two of these are on a same tile or do we need to merge them into just one?
@@ -12,6 +13,9 @@
 	var/datum/reagent/decal_reagent
 	///The amount of reagent this decal holds, if decal_reagent is defined
 	var/reagent_amount = 0
+	/// If TRUE, gains TRAIT_MOPABLE on init - thus this cleanable will cleaned if its turf is cleaned
+	/// Set to FALSE for things that hang high on the walls or things which generally shouldn't be mopped up
+	var/is_mopped = TRUE
 
 	var/list/diseases = list()
 
@@ -20,6 +24,9 @@
 	if(LAZYLEN(random_icon_states))
 		icon_state = pick(random_icon_states)
 	base_icon_state = icon_state
+
+	if(is_mopped)
+		ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 	if(isturf(loc))
 		for (var/obj/effect/decal/cleanable/other in loc)

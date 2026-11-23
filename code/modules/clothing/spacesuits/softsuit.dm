@@ -12,6 +12,7 @@
 	inhand_icon_state = "void_suit"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
+	cerulean_flipper_palette = "#a1181f"
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "Engineering Void Helmet"
@@ -33,6 +34,7 @@
 	inhand_icon_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	armor_type = /datum/armor/space_eva
+	cerulean_flipper_palette = "#2e2e2e"
 
 /obj/item/clothing/head/helmet/space/eva
 	name = "EVA helmet"
@@ -89,7 +91,7 @@
 		name = "torn emergency space helmet"
 		desc = "A bulky, air-tight helmet meant to protect the user during emergency situations, at least until someone snapped the visor plate."
 		torn = TRUE
-		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 50, TRUE)
 		playsound(loc, 'sound/effects/snap.ogg', 50, TRUE)
 
 
@@ -114,6 +116,6 @@
 		name = "torn emergency space suit"
 		desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
 		torn = TRUE
-		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 50, TRUE)
 		playsound(loc, 'sound/effects/refill.ogg', 50, TRUE)
 		playsound(loc, 'sound/effects/alert.ogg', 20, TRUE) //scare them

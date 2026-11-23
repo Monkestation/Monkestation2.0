@@ -1,6 +1,6 @@
 /datum/uplink_category/melees
 	name = "Melees"
-	weight = 7
+	weight = 11
 
 /datum/uplink_item/melees
 	category = /datum/uplink_category/melees
@@ -10,6 +10,7 @@
 	desc = "A modernised version of the infamous fire axe, courtesy of the Gorlex Marauders. Capable of breaching almost anything, and cleaving through almost any armour, it is to be handled with care."
 	item = /obj/item/fireaxe/energy
 	cost = 12
+	population_minimum = 15
 
 /datum/uplink_item/melees/sword
 	name = "Energy Sword"
@@ -47,6 +48,7 @@
 	item = /obj/item/dualsaber
 	cost = 16
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_SPY)
+	population_minimum = 30
 
 /datum/uplink_item/melees/doublesword/get_discount_value(discount_type)
 	switch(discount_type)
@@ -84,17 +86,6 @@
 	surplus = 30
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
-/datum/uplink_item/melees/martialarts/advanced
-	name = "Scroll of the Awakened Dragon"
-	desc = "A scroll penned by the infamous Awakened Dragon, penned with the blood of their \
-			disciples, it appears to have clues towards true enlightenment in the path of the Sleeping Carp."
-	cost = 25
-	surplus = 5 // Rare but not impossible.
-	item = /obj/item/book/granter/martial/carp/true
-	lock_other_purchases = TRUE
-	cant_discount = TRUE
-	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS | UPLINK_SPY)
-
 /datum/uplink_item/melees/edagger
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
@@ -111,3 +102,4 @@
 	cost = 16
 	surplus = 0
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)
+	population_minimum = 20

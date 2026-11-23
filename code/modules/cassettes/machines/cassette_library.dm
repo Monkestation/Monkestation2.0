@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 			var/list/approved_cassettes = SScassettes.filtered_cassettes(status = CASSETTE_STATUS_APPROVED)
 			var/datum/cassette/selected_cassette = null
 			for(var/datum/cassette/cassette as anything in approved_cassettes)
-				if(cassette.name == cassette_name)
+				if(html_decode(cassette.name) == cassette_name)
 					selected_cassette = cassette
 					break
 
@@ -226,7 +226,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 	var/list/purchase_record = list(
 		"buyer" = buyer_name,
 		"cassette_id" = selected_cassette.id,
-		"cassette_name" = selected_cassette.name,
+		"cassette_name" = html_decode(selected_cassette.name),
 		"cassette_author" = selected_cassette.author.name,
 		"cassette_author_ckey" = selected_cassette.author.ckey,
 		"cassette_icon" = 'icons/obj/cassettes/walkman.dmi',
@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 
 	busy = TRUE
 	balloon_alert(user, "printing cassette...")
-	playsound(src, 'sound/machines/terminal_processing.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 50, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(finish_printing), selected_cassette, user), 2 SECONDS)
 

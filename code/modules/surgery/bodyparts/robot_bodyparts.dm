@@ -1,11 +1,3 @@
-#define ROBOTIC_LIGHT_BRUTE_MSG "marred"
-#define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
-#define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
-
-#define ROBOTIC_LIGHT_BURN_MSG "scorched"
-#define ROBOTIC_MEDIUM_BURN_MSG "charred"
-#define ROBOTIC_HEAVY_BURN_MSG "smoldering"
-
 //For ye whom may venture here, split up arm / hand sprites are formatted as "l_hand" & "l_arm".
 //The complete sprite (displayed when the limb is on the ground) should be named "borg_l_arm".
 //Failure to follow this pattern will cause the hand's icons to be missing due to the way get_limb_icon() works to generate the mob's icons using the aux_zone var.
@@ -22,7 +14,8 @@
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -54,7 +47,8 @@
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -86,7 +80,8 @@
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -118,7 +113,8 @@
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -149,7 +145,8 @@
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -259,7 +256,8 @@
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_LIST_PROSTHETIC
+	bodytype = BODYTYPE_ROBOTIC
+	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
@@ -309,24 +307,31 @@
 			. += "It has two eye sockets occupied by flashes."
 		. += span_notice("You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.")
 
-/obj/item/bodypart/head/robot/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = weapon
+/obj/item/bodypart/head/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stock_parts/manipulator))
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return ITEM_INTERACT_BLOCKING
+		new /mob/living/basic/spiderbot(get_turf(loc))
+		qdel(tool)
+		qdel(src)
+		to_chat(user, span_notice("You install some manipulators and modify the head, creating a functional spider-bot!"))
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/assembly/flash/handheld))
+		var/obj/item/assembly/flash/handheld/flash = tool
 		if(flash1 && flash2)
 			to_chat(user, span_warning("You have already inserted the eyes!"))
-			return
-		else if(flash.burnt_out)
+			return ITEM_INTERACT_BLOCKING
+		if(flash.burnt_out)
 			to_chat(user, span_warning("You can't use a broken flash!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(flash, src))
+			return ITEM_INTERACT_BLOCKING
+		if(flash1)
+			flash2 = flash
 		else
-			if(!user.transferItemToLoc(flash, src))
-				return
-			if(flash1)
-				flash2 = flash
-			else
-				flash1 = flash
-			to_chat(user, span_notice("You insert the flash into the eye socket."))
-			return
+			flash1 = flash
+		to_chat(user, span_notice("You insert the flash into the eye socket."))
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/prytool)
@@ -362,6 +367,9 @@
 	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+	unarmed_damage_low = 1
+	unarmed_damage_high = 5
+	unarmed_effectiveness = 0
 
 /obj/item/bodypart/arm/right/robot/surplus
 	name = "surplus prosthetic right arm"
@@ -373,6 +381,9 @@
 	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+	unarmed_damage_low = 1
+	unarmed_damage_high = 5
+	unarmed_effectiveness = 0
 
 /obj/item/bodypart/leg/left/robot/surplus
 	name = "surplus prosthetic left leg"
@@ -384,6 +395,9 @@
 	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+	unarmed_damage_low = 2
+	unarmed_damage_high = 10
+	unarmed_effectiveness = 0
 
 /obj/item/bodypart/leg/right/robot/surplus
 	name = "surplus prosthetic right leg"
@@ -395,6 +409,9 @@
 	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+	unarmed_damage_low = 2
+	unarmed_damage_high = 10
+	unarmed_effectiveness = 0
 
 // Advanced Limbs: More durable, high punching force
 
@@ -403,9 +420,9 @@
 	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 11
-	unarmed_damage_high = 11
-	unarmed_stun_threshold = 15
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
 	max_damage = 75
 	brute_modifier = 0.5
 	burn_modifier = 0.5
@@ -416,9 +433,9 @@
 	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 11
-	unarmed_damage_high = 11
-	unarmed_stun_threshold = 15
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
 	max_damage = 75
 	brute_modifier = 0.5
 	burn_modifier = 0.5
@@ -429,8 +446,9 @@
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 18
-	unarmed_damage_high = 18
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
 	max_damage = 75
 	brute_modifier = 0.5
 	burn_modifier = 0.5
@@ -441,17 +459,10 @@
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 18
-	unarmed_damage_high = 18
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
 	max_damage = 75
 	brute_modifier = 0.5
 	burn_modifier = 0.5
 	is_emissive = TRUE
-
-#undef ROBOTIC_LIGHT_BRUTE_MSG
-#undef ROBOTIC_MEDIUM_BRUTE_MSG
-#undef ROBOTIC_HEAVY_BRUTE_MSG
-
-#undef ROBOTIC_LIGHT_BURN_MSG
-#undef ROBOTIC_MEDIUM_BURN_MSG
-#undef ROBOTIC_HEAVY_BURN_MSG

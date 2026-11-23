@@ -7,7 +7,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	density = FALSE
 	plane = FLOOR_PLANE
-	layer = GAS_SCRUBBER_LAYER
+	layer = BELOW_CATWALK_LAYER
 	anchored = TRUE
 	var/processing = FALSE
 	var/drain_flat = 5
@@ -27,7 +27,7 @@
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
-	playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/welder2.ogg', 50, TRUE)
 	to_chat(user, span_notice("You start [welded ? "unwelding" : "welding"] [src]..."))
 	if(I.use_tool(src, user, 2 SECONDS))
 		to_chat(user, span_notice("You [welded ? "unweld" : "weld"] [src]."))

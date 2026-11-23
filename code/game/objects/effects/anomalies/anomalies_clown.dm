@@ -7,7 +7,7 @@
 	color = "#86c4dd"
 	lifespan = 40 SECONDS //fast and slippery
 	var/active = TRUE
-	var/list/comedysounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
+	var/list/comedysounds = list('sound/items/sitcom_laugh/SitcomLaugh1.ogg', 'sound/items/sitcom_laugh/SitcomLaugh2.ogg', 'sound/items/sitcom_laugh/SitcomLaugh3.ogg')
 	var/static/list/clown_spawns = list(
 		/mob/living/basic/clown/clownhulk/chlown = 6,
 		/mob/living/basic/clown = 66,
@@ -52,7 +52,7 @@
 	active = TRUE
 
 /obj/effect/anomaly/clown/detonate()
-	playsound(src, 'sound/items/airhorn.ogg', vol = 100, vary = 1)
+	playsound(src, 'sound/items/airhorn/airhorn.ogg', vol = 100, vary = 1)
 
 	for(var/mob/living/carbon/target in (hearers(HONK_RANGE, src)))
 		to_chat(target, "<font color='red' size='10'>HONK</font>")

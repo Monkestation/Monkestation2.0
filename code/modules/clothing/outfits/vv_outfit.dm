@@ -103,14 +103,14 @@
 			if(ID.trim)
 				outfit.id_trim = ID.trim.type
 	//Copy hands
-	if(held_items.len >= 2) //Not in the mood to let outfits transfer amputees
-		var/obj/item/left_hand = held_items[1]
-		var/obj/item/right_hand = held_items[2]
+	if(get_num_hand_slots() >= 2) //Not in the mood to let outfits transfer amputees
+		var/obj/item/left_hand = get_item_for_held_index(LEFT_HANDS)
 		if(istype(left_hand))
 			outfit.l_hand = left_hand.type
 			var/vedits = collect_vv(left_hand)
 			if(vedits)
 				result["LHAND"] = vedits
+		var/obj/item/right_hand = get_item_for_held_index(RIGHT_HANDS)
 		if(istype(right_hand))
 			outfit.r_hand = right_hand.type
 			var/vedits = collect_vv(left_hand)
@@ -132,8 +132,14 @@
 	outfit.implants = list()
 	for(var/obj/item/implant/implant in implants)
 		outfit.implants |= implant.type
+	outfit.cybernetics = list()
+	for(var/obj/item/organ/internal/cyberimp/cyb in organs)
+		outfit.cybernetics |= cyb.type
 	//Copy to outfit cache
 	var/outfit_name = stripped_input(usr,"Enter the outfit name")
+	if(!outfit_name)
+		to_chat(usr,"Outfit has no name, canceled!")
+		return
 	outfit.name = outfit_name
 	GLOB.custom_outfits += outfit
 	to_chat(usr,"Outfit registered, use select equipment to equip it.")
@@ -146,13 +152,13 @@
 		var/obj/item/item
 		switch(slot)
 			if("LHAND")
-				item = human.held_items[1]
+				item = human.get_item_for_held_index(LEFT_HANDS)
 			if("RHAND")
-				item = human.held_items[2]
+				item = human.get_item_for_held_index(RIGHT_HANDS)
 			else
 				item = human.get_item_by_slot(text2num(slot))
 		for(var/vname in edits)
-			item.vv_edit_var(vname,edits[vname])
+			item?.vv_edit_var(vname,edits[vname])
 	//Apply access
 	var/obj/item/id_slot = human.get_item_by_slot(ITEM_SLOT_ID)
 	if(id_slot)

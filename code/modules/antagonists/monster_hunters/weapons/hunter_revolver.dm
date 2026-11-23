@@ -19,7 +19,7 @@
 	can_hold_up = FALSE // no need, really
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/gun/ballistic/revolver/hunter_revolver/examine(mob/user)
 	. = ..()
@@ -79,9 +79,27 @@
 	name = "bloodsilver bullet"
 	damage = 3
 	ricochets_max = 4
-	ricochet_chance = 50
-	ricochet_auto_aim_range = 5
-	ricochet_shoots_firer = FALSE
+	ricochet_chance = 100
+	ricochet_decay_chance = 1
+	ricochet_incidence_leeway = 0
+
+/obj/projectile/bullet/bloodsilver/on_ricochet(atom/target)
+	. = ..()
+	var/list/valid_prey = list()
+	for(var/mob/living/prey in range(7, loc))
+		if(prey.stat == DEAD || !is_in_sight(src, prey) || !is_monster_hunter_prey(prey))
+			continue
+		valid_prey += prey
+	var/mob/living/closest_prey = get_closest_atom(/mob/living, valid_prey, src)
+	if(!closest_prey)
+		return
+	set_angle_centered(loc, get_angle(loc, closest_prey.loc))
+	original = closest_prey
+
+/obj/projectile/bullet/bloodsilver/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
+	if(target == firer)
+		return FALSE
+	return ..()
 
 /obj/projectile/bullet/bloodsilver/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -116,7 +134,8 @@
 /datum/status_effect/silver_bullet/on_apply()
 	ADD_TRAIT(owner, TRAIT_BLOODSILVER_CURSE, TRAIT_STATUS_EFFECT(id))
 	owner.apply_status_effect(/datum/status_effect/wonderland_district/bloodsilver)
-	to_chat(owner, span_userdanger("An invisible blaze fills your body, you feel as if your abilities are are compromised!"), type = MESSAGE_TYPE_COMBAT)
+	to_chat(owner, span_userdanger("An invisible blaze fills your body, you feel as if your abilities are compromised!"), type = MESSAGE_TYPE_COMBAT)
+	to_chat(owner, span_hearts_fury("No tricks! Gag it! Starch it! Stand it in the corner!"), type = MESSAGE_TYPE_COMBAT)
 	SEND_SIGNAL(owner, COMSIG_LIVING_BLOODSILVER_HIT)
 	remove_effects()
 	RegisterSignal(owner, COMSIG_MOB_PRE_JAUNT, PROC_REF(on_jaunt))
@@ -146,13 +165,14 @@
 	SIGNAL_HANDLER
 
 	playsound(jaunter, 'sound/effects/meteorimpact.ogg', vol = 40, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_SOUND_EFFECTS)
-	to_chat(jaunter, span_userdanger("As you try to jaunt, a hidden beast grabs your very being, violently dragging you back down into this plane of existence!"), type = MESSAGE_TYPE_WARNING)
+	to_chat(jaunter, span_userdanger("You try to jaunt away, but something enormous drags you back down!"), type = MESSAGE_TYPE_WARNING)
+	to_chat(jaunter, span_hearts_fury("Nobody leaves before the sentence!"), type = MESSAGE_TYPE_WARNING)
 	jaunter.set_confusion_if_lower(2.5 SECONDS)
 	jaunter.Knockdown(0.5 SECONDS, ignore_canstun = TRUE)
 	return COMPONENT_BLOCK_JAUNT
 
 /atom/movable/screen/alert/status_effect/silver_bullet
 	name = "Bloodsilver Curse"
-	desc = "Your powers have been suppressed by an otherworldly beast!"
+	desc = "Your powers have been silenced by an otherworldly queen!"
 	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "wonderland"

@@ -48,6 +48,11 @@
 	mood_change = -2
 	timeout = 3 MINUTES
 
+/datum/mood_event/inked
+	description = "I've been splashed with squid ink. Tastes like salt."
+	mood_change = -3
+	timeout = 3 MINUTES
+
 /datum/mood_event/slipped
 	description = "I slipped. I should be more careful next time..."
 	mood_change = -2
@@ -508,3 +513,8 @@
 	description = "What... what was that ominous feeling?"
 	mood_change = -10
 	timeout = 5 MINUTES
+
+/datum/mood_event/normal_hangover
+	description = "Ugh, what a night."
+	mood_change = 0
+	timeout = 10 MINUTES

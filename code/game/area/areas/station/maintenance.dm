@@ -1,16 +1,18 @@
 /area/station/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+	area_flags_mapping = UNIQUE_AREA | PERSISTENT_ENGRAVINGS
 	mood_bonus = 15
 	mood_message = "Being in maintenance makes me feel like i'm home again!"
 	mood_trait = TRAIT_MAINTENANCE_DWELLER
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_ENVIRONMENT_HALLWAY
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 	forced_ambience = TRUE
-	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
+	ambient_buzz = 'sound/ambience/maintenance/source_corridor2.ogg'
 	ambient_buzz_vol = 50
-	astar_weight = 10
 	anchor_roundstart_lockers = FALSE
 
 /*
@@ -104,7 +106,8 @@
 /area/station/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
+	area_flags_mapping = UNIQUE_AREA
 
 /area/station/maintenance/chicken
 	name = "Ranching Maintenance"
@@ -254,6 +257,7 @@
 /area/station/maintenance/disposal/incinerator
 	name = "\improper Incinerator"
 	icon_state = "incinerator"
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/maintenance/space_hut
 	name = "\improper Space Hut"

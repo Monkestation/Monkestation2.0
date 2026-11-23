@@ -73,7 +73,7 @@
 	gender = PLURAL
 	name = "sand"
 	desc = "This is better than a vacation, since you're still getting paid."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
@@ -127,6 +127,7 @@
 	desc = "Space-looking floor. Thankfully, the deadly aspects of space are not emulated here."
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
 
 /turf/open/floor/holofloor/hyperspace

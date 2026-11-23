@@ -1,5 +1,6 @@
 
 /obj
+	abstract_type = /obj
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
@@ -10,7 +11,7 @@
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
 	var/icon_state_preview
-	/// The vertical pixel offset applied when the object is anchored on a tile with table
+	/// The vertical pixel_z offset applied when the object is anchored on a tile with table
 	/// Ignored when set to 0 - to avoid shifting directional wall-mounted objects above tables
 	var/anchored_tabletop_offset = 0
 
@@ -57,10 +58,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
 	add_debris_element() //monkestation edit
+	if(opacity)
+		SScameras.update_visibility(src)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	if(opacity)
+		SScameras.update_visibility(src)
 	SStgui.close_uis(src)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
@@ -358,13 +363,45 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return FALSE
 	return TRUE
 
-/// Adjusts the vertical pixel offset when the object is anchored on a tile with table
+/// Adjusts the vertical pixel_z offset when the object is anchored on a tile with table
 /obj/proc/check_on_table()
-	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
-		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+	if(anchored_tabletop_offset == 0)
+		return
+	if(istype(src, /obj/structure/table))
+		return
+
+	if(anchored && locate(/obj/structure/table) in loc)
+		pixel_z = anchored_tabletop_offset
+	else
+		pixel_z = initial(pixel_z)
 
 /// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
 /obj/proc/get_demolition_modifier(obj/target)
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod
+
+/obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	modify_max_integrity(ceil(max_integrity * integrity_mod))
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force *= strength_mod
+	throwforce *= strength_mod
+	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+
+///This proc is called when the material is removed from an object specifically.
+/obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	modify_max_integrity(floor(max_integrity / integrity_mod))
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force /= strength_mod
+	throwforce /= strength_mod
+	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))

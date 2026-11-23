@@ -86,7 +86,7 @@
 
 /obj/structure/door_assembly/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(IS_WRITING_UTENSIL(attacking_item) && !(user.istate & ISTATE_HARM))
-		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
+		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", html_decode(created_name), MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && loc != usr)
@@ -222,7 +222,7 @@
 				if(!noglass)
 					if(!glass)
 						if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-							playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
+							playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 							user.visible_message(span_notice("[user] adds [G.name] to \the [src]."), \
 												span_notice("You start to install [G.name] into \the [src]..."))
 							if(do_after(user, 1 SECONDS, target = src))
@@ -245,7 +245,7 @@
 								to_chat(user, span_warning("You cannot add [G] to [src]!"))
 								return
 							if(G.get_amount() >= 2)
-								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
+								playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 								user.visible_message(span_notice("[user] adds [G.name] to \the [src]."), \
 									span_notice("You start to install [G.name] into \the [src]..."))
 								if(do_after(user, 1 SECONDS, target = src))

@@ -1,7 +1,7 @@
 
 /obj/structure/transit_tube
 	name = "transit tube"
-	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
+	icon = 'icons/obj/pipes_n_cables/transit_tube.dmi'
 	icon_state = "straight"
 	desc = "A transit tube for moving things around."
 	density = TRUE
@@ -146,13 +146,13 @@
 		tube_overlay.icon_state = "decorative_diag"
 		switch(shift_dir)
 			if(NORTH)
-				tube_overlay.pixel_y = 32
+				tube_overlay.pixel_z = 32
 			if(SOUTH)
-				tube_overlay.pixel_y = -32
+				tube_overlay.pixel_z = -32
 			if(EAST)
-				tube_overlay.pixel_x = 32
+				tube_overlay.pixel_w = 32
 			if(WEST)
-				tube_overlay.pixel_x = -32
+				tube_overlay.pixel_w = -32
 	else
 		tube_overlay.icon_state = "decorative"
 

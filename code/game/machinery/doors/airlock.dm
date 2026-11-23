@@ -114,7 +114,7 @@
 	interaction_flags_click = ALLOW_SILICON_REACH
 	blocks_emissive = EMISSIVE_BLOCK_NONE // Custom emissive blocker. We don't want the normal behavior.
 
-	flags_1 = HTML_USE_INITAL_ICON_1
+	flags_1 = parent_type::flags_1 | HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	align_to_windows = TRUE
@@ -159,10 +159,10 @@
 
 	var/doorOpen = 'sound/machines/airlock/open.ogg'
 	var/doorClose = 'sound/machines/airlock/close.ogg'
-	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
+	var/doorDeni = 'sound/machines/beep/deniedbeep.ogg' // i'm thinkin' Deni's
 	var/boltUp = 'sound/machines/airlock/bolts_up.ogg'
 	var/boltDown = 'sound/machines/airlock/bolts_down.ogg'
-	var/noPower = 'sound/machines/doorclick.ogg'
+	var/noPower = 'sound/machines/airlock/doorclick.ogg'
 
 	/// What airlock assembly mineral plating was applied to
 	var/previous_airlock = /obj/structure/door_assembly
@@ -237,6 +237,8 @@
 
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
 
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
@@ -692,20 +694,21 @@
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
 			if(!(unres_sides & heading))
 				continue
-			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+			floorlight.color = LIGHT_COLOR_DEFAULT
 			switch (heading)
 				if (NORTH)
-					floorlight.pixel_x = 0
-					floorlight.pixel_y = 32
+					floorlight.pixel_w = 0
+					floorlight.pixel_z = 32
 				if (SOUTH)
-					floorlight.pixel_x = 0
-					floorlight.pixel_y = -32
+					floorlight.pixel_w = 0
+					floorlight.pixel_z = -32
 				if (EAST)
-					floorlight.pixel_x = 32
-					floorlight.pixel_y = 0
+					floorlight.pixel_w = 32
+					floorlight.pixel_z = 0
 				if (WEST)
-					floorlight.pixel_x = -32
-					floorlight.pixel_y = 0
+					floorlight.pixel_w = -32
+					floorlight.pixel_z = 0
 			. += floorlight
 
 /obj/machinery/door/proc/auto_dir_align()
@@ -1139,7 +1142,7 @@
 			to_chat(user, span_warning("[src] has already been sealed!"))
 			return
 		user.visible_message(span_notice("[user] begins sealing [src]."), span_notice("You begin sealing [src]."))
-		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		if(!do_after(user, airlockseal.seal_time, target = src))
 			return
 		if(!density)
@@ -1151,7 +1154,7 @@
 		if(!user.transferItemToLoc(airlockseal, src))
 			to_chat(user, span_warning("For some reason, you can't attach [airlockseal]!"))
 			return
-		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		user.visible_message(span_notice("[user] finishes sealing [src]."), span_notice("You finish sealing [src]."))
 		seal = airlockseal
 		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
@@ -1187,7 +1190,7 @@
 					to_chat(user, span_warning("You need at least 15 Psi to force open an airlock!"))
 					return
 				user.visible_message(span_warning("[user] starts forcing open [src]!"), span_velvet("<b>ueahz</b><br>You begin forcing open [src]..."))
-				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+				playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 				if(!tendrils.twin)
 					if(!do_after(user, 7.5 SECONDS, target = src))
 						return
@@ -1213,7 +1216,7 @@
 						if(!do_after(user, rand(8, 10), target = src))
 							SEND_SIGNAL(user.mind, COMSIG_MIND_SPEND_ANTAG_RESOURCE, list(ANTAG_RESOURCE_DARKSPAWN = 30))
 							return
-					playsound(src, 'sound/magic/darkspawn/pass_smash_door.ogg', 50, TRUE)
+					playsound(src, 'sound/effects/magic/darkspawn/pass_smash_door.ogg', 50, TRUE)
 					take_damage(max_integrity / rand(8, 15))
 					to_chat(user, "<span class='velvet bold'>klaj.</span>")
 				ex_act(EXPLODE_DEVASTATE)
@@ -1241,7 +1244,7 @@
 	playsound(src, 'sound/items/handling/paper_pickup.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	if(!do_after(user, 5 SECONDS, src))
 		return FALSE
-	playsound(src, 'sound/items/poster_ripped.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+	playsound(src, 'sound/items/poster/poster_ripped.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	if(!open()) //only take a use away if the door actually opens
 		return FALSE
 	fake_card.used()
@@ -1303,12 +1306,12 @@
 		to_chat(user, span_warning("You don't have the dexterity to remove the seal!"))
 		return TRUE
 	user.visible_message(span_notice("[user] begins removing the seal from [src]."), span_notice("You begin removing [src]'s pneumatic seal."))
-	playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+	playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	if(!do_after(user, airlockseal.unseal_time, target = src))
 		return TRUE
 	if(!seal)
 		return TRUE
-	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+	playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	airlockseal.forceMove(get_turf(user))
 	user.visible_message(span_notice("[user] finishes removing the seal from [src]."), span_notice("You finish removing [src]'s pneumatic seal."))
 	seal = null
@@ -1368,7 +1371,7 @@
 
 			if(!prying_so_hard)
 				var/time_to_open = 50
-				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS) //is it aliens or just the CE being a dick?
+				playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS) //is it aliens or just the CE being a dick?
 				prying_so_hard = TRUE
 				if(do_after(user, time_to_open, src))
 					if(check_electrified && shock(user,100))
@@ -1434,7 +1437,6 @@
 	set_opacity(0)
 	if(multi_tile)
 		filler.set_opacity(FALSE)
-	update_freelook_sight()
 	sleep(0.4 SECONDS)
 	set_density(FALSE)
 	if(multi_tile)
@@ -1469,7 +1471,7 @@
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS) // No power usage, special sound, get it open.
-			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+			playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 			return TRUE
 
 		else
@@ -1504,7 +1506,7 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 
 	var/turf/open/open_turf = get_turf(src)
-	if(!QDELETED(open_turf.liquids))
+	if(!QDELETED(open_turf?.liquids))
 		var/datum/liquid_group/turfs_group = open_turf.liquids.liquid_group
 		if(!QDELETED(turfs_group))
 			turfs_group.remove_from_group(open_turf)
@@ -1522,14 +1524,14 @@
 	if(air_tight)
 		set_density(TRUE)
 		if(multi_tile)
-			filler.density = TRUE
+			filler.set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	sleep(0.1 SECONDS)
 	if(!air_tight)
 		set_density(TRUE)
 		if(multi_tile)
-			filler.density = TRUE
+			filler.set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	sleep(0.4 SECONDS)
@@ -1539,7 +1541,6 @@
 		set_opacity(TRUE)
 		if(multi_tile)
 			filler.set_opacity(TRUE)
-	update_freelook_sight()
 	sleep(0.1 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
@@ -1558,7 +1559,7 @@
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS)
-			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+			playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 			return TRUE
 
 		else
@@ -1651,7 +1652,7 @@
 	var/time_to_open = 5 //half a second
 	if(hasPower())
 		time_to_open = 5 SECONDS //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 
 
 	if(do_after(user, time_to_open, src))
@@ -2638,7 +2639,7 @@
 			new /obj/effect/temp_visual/cult/sac(loc)
 			var/atom/throwtarget
 			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
+			SEND_SOUND(L, sound(pick('sound/effects/hallucinations/turn_around1.ogg','sound/effects/hallucinations/turn_around2.ogg'),0,1,50))
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1)

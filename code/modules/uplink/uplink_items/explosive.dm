@@ -1,6 +1,6 @@
 /datum/uplink_category/explosives
 	name = "Explosives"
-	weight = 3
+	weight = 6
 
 /datum/uplink_item/explosives
 	category = /datum/uplink_category/explosives
@@ -109,6 +109,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
+	population_minimum = 20 //no one wants mass station damage on lowpop
 
 /datum/uplink_item/explosives/syndicate_bomb/New()
 	. = ..()

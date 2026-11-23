@@ -217,14 +217,13 @@
 	parent.forceMove(owner)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(weapon_disappeared))
 	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
-	owner.visible_message(span_danger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
-		span_userdanger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
+	embed_message()
 
 	var/damage = parent.throwforce
 	if (!is_harmless(consider_stamina = TRUE))
 		owner.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
 		if (!is_harmless())
-			playsound(owner,'sound/weapons/bladeslice.ogg', 40)
+			playsound(owner,'sound/items/weapons/bladeslice.ogg', 40)
 			if (owner_limb.can_bleed())
 				parent.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
 		if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
@@ -232,6 +231,7 @@
 		damage += parent.w_class * impact_pain_mult
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_EMBEDDED, victim, target_limb)
+	SEND_SIGNAL(victim, COMSIG_CARBON_EMBED_ADDED, parent, target_limb)
 	on_successful_embed(victim, target_limb)
 
 	if (damage <= 0)
@@ -261,6 +261,10 @@
 
 	return TRUE
 
+/datum/embedding/proc/embed_message()
+	owner.visible_message(span_danger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
+		span_userdanger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
+
 /// Proc which is called upon successfully embedding into someone/something, for children to override
 /datum/embedding/proc/on_successful_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)
 	return
@@ -284,6 +288,7 @@
 		owner_limb._unembed_object(parent)
 	if (owner)
 		UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EX_ACT))
+		SEND_SIGNAL(owner, COMSIG_CARBON_EMBED_REMOVED, parent, owner_limb)
 		if (!owner.has_embedded_objects())
 			owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 			owner.clear_mood_event("embedded")
@@ -601,7 +606,7 @@
 	owner.visible_message(span_alert("[owner] is sent flying towards [caster] as the [parent] tears out of them!"), span_alert("You are launched at [caster] as the [parent] tears from your body and towards their hand!"))
 
 /datum/embedding/proc/still_in()
-	if (parent.loc != owner)
+	if (QDELETED(parent) || parent.loc != owner)
 		return FALSE
 	if (!(parent in owner_limb?.embedded_objects))
 		return FALSE

@@ -26,8 +26,6 @@
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
 
-	ident = rand(1, 999)
-
 	previous_health = health
 
 	if(ispath(cell))
@@ -43,9 +41,8 @@
 		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
-		builtInCamera = new (src)
+		builtInCamera = new(src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.toggle_cam(null, displaymessage = FALSE)
 	update_icons()
@@ -119,6 +116,13 @@
 	if(istype(model, /obj/item/robot_model/syndicate) || (emagged && !centcom))
 		modularInterface.device_theme = PDA_THEME_SYNDICATE
 		modularInterface.icon_state = "tablet-silicon-syndicate"
+		modularInterface.icon_state_powered = null
+		modularInterface.icon_state_unpowered = null
+	else if(istype(model, /obj/item/robot_model/ninja))
+		modularInterface.device_theme = PDA_THEME_SYNDICATE
+		modularInterface.icon_state = "tablet-silicon-ninja"
+		modularInterface.icon_state_powered = null
+		modularInterface.icon_state_unpowered = null
 	else
 		modularInterface.device_theme = PDA_THEME_NTOS
 		modularInterface.icon_state = "tablet-silicon"
@@ -153,6 +157,8 @@
 	//Show alerts window if user clicked on "Show alerts" in chat
 	if(href_list["showalerts"])
 		alert_control.ui_interact(src)
+	if(locked && href_list["unlock_self"])
+		toggle_cover()
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -167,6 +173,11 @@
 		to_chat(src,span_userdanger("ERROR: Lockdown is engaged. Please disengage lockdown to pick module."))
 		return
 	prompt_full_transformation()
+
+/// We have our name-making proc to call after we make our mmi, just set identifier here
+/mob/living/silicon/robot/set_name()
+	if(identifier == 0)
+		identifier = rand(1, 999)
 
 /// Used to setup the a basic and (somewhat) unique name for the robot.
 /mob/living/silicon/robot/proc/setup_default_name()
@@ -202,7 +213,7 @@
 
 
 /mob/living/silicon/robot/proc/get_standard_name()
-	return "[(designation ? "[designation] " : "")][(mmi ? mmi.braintype : "Cyborg")]-[ident]"
+	return "[(designation ? "[designation] " : "")][(mmi ? mmi.braintype : "Cyborg")]-[identifier]"
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
@@ -263,6 +274,17 @@
 /// For any special cases for robots after being righted.
 /mob/living/silicon/robot/proc/after_righted(mob/user)
 	return
+
+/// Toggles the cyborg's cover lock. User is provided only if it's someone else doing it (not the cyborg itself).
+/mob/living/silicon/robot/proc/toggle_cover(mob/user)
+	locked = !locked
+	to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] [src]'s cover."))
+	update_icons()
+	if(emagged)
+		to_chat(user, span_notice("The cover interface glitches out for a split second."))
+		logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
+	else
+		logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
@@ -741,7 +763,7 @@
 		upgrades |= new /obj/item/borg/upgrade/ai(src)
 	shell = TRUE
 	braintype = "AI Shell"
-	name = "Empty AI Shell-[ident]"
+	name = "Empty AI Shell-[identifier]"
 	real_name = name
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
@@ -760,7 +782,7 @@
 		qdel(boris)
 	shell = FALSE
 	GLOB.available_ai_shells -= src
-	name = "Unformatted Cyborg-[ident]"
+	name = "Unformatted Cyborg-[identifier]"
 	real_name = name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
@@ -773,7 +795,7 @@
  * * AI - AI unit that initiated the deployment into the AI shell
  */
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] [designation] Shell-[ident]"
+	real_name = "[AI.real_name] [designation] Shell-[identifier]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name //update the camera name too
@@ -839,25 +861,27 @@
 /mob/living/silicon/robot/attack_ai(mob/user)
 	if(shell && (!connected_ai || connected_ai == user))
 		var/mob/living/silicon/ai/AI = user
-		AI.deploy_to_shell(src)
+		AI.select_shell(src)
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
 	//Don't try buckling on INTENT_HARM so that silicons can search people's inventories without loading them
 	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (!(istate & ISTATE_HARM))))
 		return user_buckle_mob(M, user, check_loc = FALSE)
 
-/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= RIDER_NEEDS_ARM)
-	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message(span_warning("[M] really can't seem to mount [src]..."))
-		return
-
+/mob/living/silicon/robot/is_buckle_possible(mob/living/target, force, check_loc)
 	if(stat || incapacitated())
-		return
+		return FALSE
+	if(!HAS_TRAIT(target, TRAIT_CAN_MOUNT_CYBORGS))
+		target.visible_message(span_warning("[target] really can't seem to mount [src]..."))
+		return FALSE
 	if(!can_be_ridden)
-		M.visible_message(span_boldwarning("Unfortunately, [M] just can't seem to hold onto [src]!"))
-		return
+		target.visible_message(span_boldwarning("Unfortunately, [target] just can't seem to hold onto [src]!"))
+		return FALSE
 
-	buckle_mob_flags= RIDER_NEEDS_ARM // just in case
+	return ..()
+
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force, check_loc, buckle_mob_flags)
+	buckle_mob_flags = RIDER_NEEDS_ARM // just in case
 	return ..()
 
 /mob/living/silicon/robot/post_buckle_mob(mob/living/victim_to_boot)

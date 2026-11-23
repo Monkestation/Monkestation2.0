@@ -4,7 +4,7 @@
 
 /obj/item/barcodescanner
 	name = "barcode scanner"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state ="scanner"
 	desc = "A fabulous tool if you need to scan a barcode."
 	throw_speed = 3

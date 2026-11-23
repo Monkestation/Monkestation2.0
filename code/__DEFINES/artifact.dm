@@ -66,10 +66,10 @@
 }
 
 
-#define STIMULUS_CARBON_TOUCH (1<<1)
-#define STIMULUS_SILICON_TOUCH (1<<2)
-#define STIMULUS_FORCE (1<<3)
-#define STIMULUS_HEAT (1<<4)
-#define STIMULUS_SHOCK (1<<5)
-#define STIMULUS_RADIATION (1<<6)
-#define STIMULUS_DATA (1<<7)
+#define STIMULUS_CARBON_TOUCH "carbonT"
+#define STIMULUS_SILICON_TOUCH "siliT"
+#define STIMULUS_FORCE "force"
+#define STIMULUS_HEAT "temperature"
+#define STIMULUS_SHOCK "electricity"
+#define STIMULUS_RADIATION "radiation"
+#define STIMULUS_DATA "data"

@@ -24,12 +24,12 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
 			if(damage_amount)
-				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+				playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like
@@ -135,7 +135,7 @@
 	desc = "A thick resin surface covers the floor."
 	anchored = TRUE
 	density = FALSE
-	layer = MID_TURF_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 	icon_state = "weeds1-0"
@@ -342,7 +342,6 @@
 	integrity_failure = 0.05
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	var/obj/item/clothing/mask/facehugger/child
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
@@ -389,7 +388,7 @@
 				return
 			if(BURST)
 				to_chat(user, span_notice("You clear the hatched egg."))
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 				qdel(src)
 				return
 			if(GROWING)

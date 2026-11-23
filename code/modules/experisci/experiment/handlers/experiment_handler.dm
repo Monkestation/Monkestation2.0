@@ -96,7 +96,7 @@
 	SIGNAL_HANDLER
 	if ((isnull(selected_experiment) && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || (config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		return
-	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
+	playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
 /**
@@ -133,7 +133,7 @@
 		playsound(user, 'sound/machines/ping.ogg', 25)
 		to_chat(user, span_notice("You scan [target]."))
 	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
 
@@ -145,7 +145,7 @@
 	var/atom/movable/our_scanner = parent
 	if (selected_experiment == null)
 		if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-			playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
+			playsound(our_scanner, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 			to_chat(our_scanner, span_notice("No experiment selected!"))
 		return
 	var/successful_scan
@@ -157,7 +157,7 @@
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
 		to_chat(our_scanner, span_notice("The scan succeeds."))
 	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
 
 /// Hooks on a successful autopsy experiment
@@ -167,19 +167,6 @@
 	if (action_experiment(source, target))
 		playsound(source, 'sound/machines/ping.ogg', 25)
 		source.say("New unique autopsy successfully catalogued.")
-
-/**
- * Announces a message to all experiment handlers
- *
- * Arguments:
- * * message - The message to announce
- */
-/datum/component/experiment_handler/proc/announce_message_to_all(message)
-	for(var/datum/component/experiment_handler/experi_handler as anything in GLOB.experiment_handlers)
-		if(experi_handler.linked_web != linked_web)
-			continue
-		var/atom/movable/experi_parent = experi_handler.parent
-		experi_parent.say(message)
 
 /**
  * Announces a message to this experiment handler
@@ -277,6 +264,7 @@
  */
 /datum/component/experiment_handler/proc/link_experiment(datum/experiment/experiment)
 	if (can_select_experiment(experiment))
+		unlink_experiment()
 		selected_experiment = experiment
 		selected_experiment.on_selected(src)
 
@@ -294,16 +282,23 @@
  * * experiment - The experiment to check
  */
 /datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/experiment)
+	// Check that this experiment is visible currently
+	if (!(experiment in linked_web?.available_experiments))
+		return FALSE
+
+	return is_compatible_experiment(experiment)
+
+/**
+ * Checks if an experiment could be selected by the handler if it were available in the linked web.
+ * Basically, it skips the available_experiments check, unlike can_select_experiment.
+ */
+/datum/component/experiment_handler/proc/is_compatible_experiment(datum/experiment/experiment)
 	// Check that this experiments has no disallowed traits
 	if (experiment.traits & disallowed_traits)
 		return FALSE
 
 	// Check against the list of allowed experimentors
 	if (length(experiment.allowed_experimentors) && !is_type_in_list(parent, experiment.allowed_experimentors))
-		return FALSE
-
-	// Check that this experiment is visible currently
-	if (!(experiment in linked_web?.available_experiments))
 		return FALSE
 
 	// Check that this experiment type isn't blacklisted

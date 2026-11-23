@@ -45,8 +45,8 @@
 		return
 
 	if(pipe_state == PIPE_STATE_FINE)
-		var/mutable_appearance/pipe_connector = mutable_appearance(icon, "pipe-connector", src, plane)
-		pipe_connector.pixel_y += 7
+		var/mutable_appearance/pipe_connector = mutable_appearance(icon, "pipe-connector", offset_spokesman = src)
+		pipe_connector.pixel_z += 7
 		. += pipe_connector
 
 	switch(pipe_status)
@@ -196,19 +196,27 @@
 	vehicle_move_delay = 0.5
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/vehicle/sick_grinder/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 13), TEXT_EAST = list(0, 13), TEXT_WEST = list(0, 13)))
-	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+/datum/component/riding/vehicle/sick_grinder/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 13),
+		TEXT_SOUTH = list(0, 13),
+		TEXT_EAST =  list(0, 13),
+		TEXT_WEST =  list(0, 13),
+	)
+
+/datum/component/riding/vehicle/sick_grinder/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, OBJ_LAYER),
+		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
+		TEXT_EAST =  list(0, 0, OBJ_LAYER),
+		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+	)
 
 
 /datum/component/particle_spewer/movement/sparks
 	unusual_description = "flying sparks"
 	particle_state = "white_square"
-	burst_amount = 4
+	burst_amount = 5
 	duration = 2 SECONDS
 	particle_blending = BLEND_ADD
 
@@ -233,37 +241,14 @@
 	animate_holder.set_transform_type(3, MATRIX_ROTATE)
 
 
-/datum/component/particle_spewer/movement/sparks/animate_particle(obj/effect/abstract/particle/spawned)
+/datum/component/particle_spewer/movement/sparks/animate_particle(obj/effect/abstract/particle/spawned, burst_index)
+	var/offset = (burst_index - 1) * 2
+	switch(move_dir)
+		if(NORTH, SOUTH)
+			spawned.pixel_y += offset
+		if(EAST, WEST)
+			spawned.pixel_x += offset
+
 	. = ..()
 	spawned.color = COLOR_WHITE
 	spawned.add_filter("bloom", 1, list(type = "bloom", threshold = rgb(255,128,255), size = 5, offset = 4, alpha = 255))
-
-/datum/component/particle_spewer/movement/sparks/spawn_particles(atom/movable/mover, turf/target)
-	var/burstees = burst_amount
-	if(random_bursts)
-		burstees = rand(1, burst_amount)
-
-	var/offset = 0
-	var/dir = get_dir(mover, target)
-	for(var/i = 0 to burstees)
-		//create and assign particle its stuff
-		var/obj/effect/abstract/particle/spawned = new(get_turf(source_object))
-		if(offsets)
-			spawned.pixel_x = offset_x
-			spawned.pixel_y = offset_y
-
-		switch(dir)
-			if(NORTH, SOUTH)
-				spawned.pixel_y += offset
-			if(EAST, WEST)
-				spawned.pixel_x += offset
-
-		offset += 2
-		spawned.icon = icon_file
-		spawned.icon_state = particle_state
-		spawned.blend_mode = particle_blending
-
-		living_particles |= spawned
-
-		RegisterSignal(spawned, COMSIG_QDELETING, PROC_REF(particle_qdeleting))
-		animate_particle(spawned)

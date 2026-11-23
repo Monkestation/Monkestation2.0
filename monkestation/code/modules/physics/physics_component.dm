@@ -74,6 +74,8 @@
 	var/cached_animate_movement
 	/// Cached transform of the parent, in case some fucking idiot decides its a good idea to make the damn movable spin forever
 	var/cached_transform
+	/// Whether the parent had gravity last time we checked, re-checked whenever it changes tile. Without gravity nothing slows down or bounces, so we just stop
+	var/in_gravity = TRUE
 
 // It's a BAD IDEA to use this on something that is not an item, even though you can
 /datum/component/movable_physics/Initialize(
@@ -128,6 +130,7 @@
 /datum/component/movable_physics/Destroy(force)
 	STOP_PROCESSING(SSmovable_physics, src)
 	bounce_callback = null
+	bump_callback = null
 	stop_callback = null
 	cached_transform = null
 	return ..()
@@ -143,7 +146,7 @@
 		qdel(src)
 
 /datum/component/movable_physics/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_IMPACT)
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_NEWTONIAN_MOVE, COMSIG_MOVABLE_BUMP))
 	if(isitem(parent))
 		UnregisterSignal(parent, COMSIG_ITEM_PICKUP)
 	stop_movement()
@@ -151,7 +154,7 @@
 // NOTE: This component will work very poorly at anything less than ticking 10 times per second
 /datum/component/movable_physics/process(seconds_per_tick)
 	var/atom/movable/moving_atom = parent
-	if(!isturf(moving_atom.loc) || QDELING(moving_atom.loc) || !has_movement())
+	if(!isturf(moving_atom.loc) || !in_gravity || !has_movement())
 		stop_movement()
 		return PROCESS_KILL
 
@@ -164,44 +167,44 @@
 	//this code basically only makes sense if we only move at most a single tile per tick, it is absolutely fucked otherwise
 	while(tick_amount > 0)
 		tick_amount--
-		//we need to know if we have gravity right now to apply friction and such, yeah
-		var/has_gravity = moving_atom.has_gravity()
 
-		moving_atom.pixel_x = round(moving_atom.pixel_x + (horizontal_velocity * sin(angle)), MOVABLE_PHYSICS_PRECISION)
-		moving_atom.pixel_y = round(moving_atom.pixel_y + (horizontal_velocity * cos(angle)), MOVABLE_PHYSICS_PRECISION)
+		if(horizontal_velocity)
+			moving_atom.pixel_x = round(moving_atom.pixel_x + (horizontal_velocity * sin(angle)), MOVABLE_PHYSICS_PRECISION)
+			moving_atom.pixel_y = round(moving_atom.pixel_y + (horizontal_velocity * cos(angle)), MOVABLE_PHYSICS_PRECISION)
 
-		moving_atom.pixel_z = round(clamp(moving_atom.pixel_z + vertical_velocity, z_floor, world.icon_size), MOVABLE_PHYSICS_PRECISION)
+		var/new_pixel_z = round(clamp(moving_atom.pixel_z + vertical_velocity, z_floor, ICON_SIZE_Y), MOVABLE_PHYSICS_PRECISION)
+		if(new_pixel_z != moving_atom.pixel_z)
+			moving_atom.pixel_z = new_pixel_z
 
 		moving_atom.adjust_visual_angle(round(visual_angle_velocity, 1))
 
-		if(has_gravity)
-			visual_angle_velocity = max(0, visual_angle_velocity - visual_angle_friction)
-			horizontal_velocity = max(0, horizontal_velocity - horizontal_friction)
-			// we are not on the floor, apply friction
-			if(moving_atom.pixel_z > z_floor)
-				vertical_velocity -= vertical_friction
-			// we are on the floor, try to bounce if we have any vertical velocity
-			else if(moving_atom.pixel_z <= z_floor && vertical_velocity)
-				z_floor_bounce(moving_atom)
-				// z_floor_bounce could have deleted us
-				if(QDELETED(src))
-					return
+		visual_angle_velocity = max(0, visual_angle_velocity - visual_angle_friction)
+		horizontal_velocity = max(0, horizontal_velocity - horizontal_friction)
+		// we are not on the floor, apply friction
+		if(moving_atom.pixel_z > z_floor)
+			vertical_velocity -= vertical_friction
+		// we are on the floor, try to bounce if we have any vertical velocity
+		else if(vertical_velocity)
+			z_floor_bounce(moving_atom)
+			// z_floor_bounce could have deleted us
+			if(QDELETED(src))
+				return
 
 		var/move_direction = NONE
 		var/effective_pixel_x = moving_atom.pixel_x - moving_atom.base_pixel_x
 		var/effective_pixel_y = moving_atom.pixel_y - moving_atom.base_pixel_y
 		//crossed east boundary
-		if(effective_pixel_x > world.icon_size/2)
+		if(effective_pixel_x > ICON_SIZE_X / 2)
 			move_direction |= EAST
 		//crossed west boundary
-		else if(effective_pixel_x < -world.icon_size/2)
+		else if(effective_pixel_x < -ICON_SIZE_X / 2)
 			move_direction |= WEST
 
 		//crossed north boundary
-		if(effective_pixel_y > world.icon_size/2)
+		if(effective_pixel_y > ICON_SIZE_Y / 2)
 			move_direction |= NORTH
 		//crossed south boundary
-		else if(effective_pixel_y < -world.icon_size/2)
+		else if(effective_pixel_y < -ICON_SIZE_Y / 2)
 			move_direction |= SOUTH
 
 		//check if we need to move, continue otherwise
@@ -211,16 +214,22 @@
 		var/step = get_step(moving_atom, move_direction)
 		//attempt to move to that tile, if successful we reset the pixel_x and pixel_y to be on the edge of appropriate boundaries
 		//if unsuccessful, bump signal will be called and newton's third law comes into play
-		if(moving_atom.Move(step, move_direction, world.icon_size))
-			if(move_direction & EAST)
-				moving_atom.pixel_x -= world.icon_size
-			else if(move_direction & WEST)
-				moving_atom.pixel_x += world.icon_size
+		var/moved = moving_atom.Move(step, move_direction, ICON_SIZE_ALL)
+		// a bump callback could have deleted us
+		if(QDELETED(src))
+			return
+		if(!moved)
+			continue
+		in_gravity = moving_atom.has_gravity()
+		if(move_direction & EAST)
+			moving_atom.pixel_x -= ICON_SIZE_X
+		else if(move_direction & WEST)
+			moving_atom.pixel_x += ICON_SIZE_X
 
-			if(move_direction & NORTH)
-				moving_atom.pixel_y -= world.icon_size
-			else if(move_direction & SOUTH)
-				moving_atom.pixel_y += world.icon_size
+		if(move_direction & NORTH)
+			moving_atom.pixel_y -= ICON_SIZE_Y
+		else if(move_direction & SOUTH)
+			moving_atom.pixel_y += ICON_SIZE_Y
 
 /// Checks if we still have any movement going on
 /datum/component/movable_physics/proc/has_movement()
@@ -241,6 +250,7 @@
 	START_PROCESSING(SSmovable_physics, src)
 	physics_flags |= MPHYSICS_MOVING
 	var/atom/movable/moving_atom = parent
+	in_gravity = moving_atom.has_gravity()
 	cached_animate_movement = moving_atom.animate_movement
 	moving_atom.animate_movement = NO_STEPS
 	if(!spin_speed || visual_angle_velocity || visual_angle_friction)
@@ -277,7 +287,6 @@
 
 /// Proc for bouncing, aka object reached z_floor on pixel_z and needs a dose of Newton's third law
 /datum/component/movable_physics/proc/z_floor_bounce(atom/movable/moving_atom)
-	moving_atom.pixel_z = round(z_floor, MOVABLE_PHYSICS_PRECISION)
 	if(bounce_spin_speed && !visual_angle_velocity && !visual_angle_friction)
 		moving_atom.SpinAnimation(speed = bounce_spin_speed, loops = max(0, bounce_spin_loops))
 	vertical_velocity = abs(vertical_velocity * vertical_conservation_of_momentum)

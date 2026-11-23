@@ -6,7 +6,7 @@
 	icon_living = "star_gazer"
 	pixel_x = -32
 	base_pixel_x = -32
-	mob_biotypes = MOB_HUMANOID | MOB_EPIC
+	mob_biotypes = MOB_HUMANOID | MOB_SPECIAL
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	speed = -0.2
@@ -21,11 +21,11 @@
 	attack_verb_continuous = "ravages"
 	attack_verb_simple = "ravage"
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
-	death_sound = 'sound/magic/cosmic_expansion.ogg'
+	death_sound = 'sound/effects/magic/cosmic_expansion.ogg'
 
 	chat_color = "#a903fc"
 	speech_span = "stargazer_big"
@@ -37,7 +37,7 @@
 	can_buckle_to = FALSE
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	lighting_cutoff_red = 12
@@ -420,7 +420,7 @@
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/attack_everything,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/navmap_astar
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/* /datum/ai_planning_subtree/escape_captivity, */

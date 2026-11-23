@@ -102,7 +102,7 @@
 	if(humholder.gloves)
 		if(!(!(humholder.gloves.body_parts_covered & HANDS) || HAS_TRAIT(humholder.gloves, TRAIT_FINGERPRINT_PASSTHROUGH)))
 			return
-	for(var/obj/item/held in humholder.held_items)
+	for(var/obj/item/held as anything in humholder.get_held_items())
 		if(is_this_bane(held))
 			if(damaging && bane_power > 49)
 				var/ouchy_arm = (humholder.get_held_index_of_item(held) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM

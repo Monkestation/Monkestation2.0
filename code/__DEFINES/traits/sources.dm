@@ -247,7 +247,7 @@
 #define LEFT_LEG_TRAIT "left_leg"
 
 ///coming from a fish trait datum.
-#define FISH_DATUM_TRAIT "FISH_DATUM_TRAIT"
+#define FISH_TRAIT_DATUM "FISH_TRAIT_DATUM"
 ///coming from a fish evolution datum
 #define FISH_EVOLUTION "fish_evolution"
 
@@ -366,3 +366,15 @@
 #define NISOFT_TRAIT "nifsoft"
 // Trait sources
 #define GHOSTROLE_TRAIT "ghostrole"
+/// Pauses a slime's AI during a split or mutation wind-up
+#define SLIME_WINDUP_TRAIT "slime_windup"
+/// Pauses a slime's AI while it sits in a vacuum pack
+#define VACUUM_STORED_TRAIT "vacuum_stored"
+/// Trait from an engraving
+#define ENGRAVED_TRAIT "engraved"
+
+/// From the aquarium component
+#define AQUARIUM_TRAIT "aquarium"
+
+/// From grabbing someone
+#define GRABBING_TRAIT "grabbing"

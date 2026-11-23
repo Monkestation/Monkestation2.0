@@ -12,6 +12,24 @@
 	holder.mutations |= src
 	holder.add_atom_colour(hue, FIXED_COLOUR_PRIORITY)
 
+/datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
+	SHOULD_CALL_PARENT(TRUE)
+	if(buckled.buckled == holder)
+		buckled.layer = SPACEVINE_MOB_LAYER
+	RegisterSignal(buckled, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_unbuckle), override = TRUE)
+
+/datum/spacevine_mutation/proc/on_unbuckle(datum/source, new_buckled)
+	SHOULD_CALL_PARENT(TRUE)
+	SIGNAL_HANDLER
+	if(!isliving(source))
+		return
+	var/mob/living/buckled = source
+	if(istype(new_buckled, /obj/structure/spacevine))
+		buckled.layer = SPACEVINE_MOB_LAYER
+		return
+	buckled.layer = initial(buckled.layer)
+	UnregisterSignal(buckled, COMSIG_LIVING_SET_BUCKLED)
+
 /datum/spacevine_mutation/proc/process_mutation(obj/structure/spacevine/holder)
 	return
 
@@ -37,9 +55,6 @@
 	return
 
 /datum/spacevine_mutation/proc/on_spread(obj/structure/spacevine/holder, turf/target)
-	return
-
-/datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
 	return
 
 /datum/spacevine_mutation/proc/on_explosion(severity, target, obj/structure/spacevine/holder)
@@ -168,6 +183,7 @@
 
 /// What happens if an aggr spreading vine buckles a mob.
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
+	. = ..()
 	aggrospread_act(holder, buckled)
 
 /// Hurts mobs. To be used when a vine with aggressive spread mutation spreads into the mob's tile or buckles them.
@@ -180,7 +196,7 @@
 		if(thorn && prob(40) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE)) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
 			victim.apply_damage(50, BRUTE, def_zone = limb, wound_bonus = rand(-20,10), sharpness = SHARP_POINTY) //This one gets a bit lower damage because it ignores armor.
 			victim.Stun(1 SECONDS) //Stopped in place for a moment.
-			playsound(living_mob, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
+			playsound(living_mob, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 			living_mob.visible_message(span_danger("[living_mob] is nailed by a sharp thorn!"), \
 			span_userdanger("You are nailed by a sharp thorn!"))
 			log_combat(vine, living_mob, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
@@ -188,7 +204,7 @@
 			if(prob(80) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
 				victim.Knockdown(2 SECONDS)
-				playsound(victim, 'sound/weapons/whip.ogg', 50, TRUE, -1)
+				playsound(victim, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 				living_mob.visible_message(span_danger("[living_mob] is lacerated by an outburst of vines!"), \
 				span_userdanger("You are lacerated by an outburst of vines!"))
 				log_combat(vine, living_mob, "aggressively lacerated")
@@ -203,7 +219,7 @@
 				log_combat(vine, living_mob, "aggressively smashed")
 	else //Living but not a carbon? Maybe a silicon? Can't be wounded so have a big chunk of simple bruteloss with no special effects. They can be entangled.
 		living_mob.adjustBruteLoss(75)
-		playsound(living_mob, 'sound/weapons/whip.ogg', 50, TRUE, -1)
+		playsound(living_mob, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 		living_mob.visible_message(span_danger("[living_mob] is brutally threshed by [vine]!"), \
 		span_userdanger("You are brutally threshed by [vine]!"))
 		log_combat(vine, living_mob, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
@@ -323,6 +339,7 @@
 //This specific mutation only covers floors instead of structures, items, mobs and cant tangle mobs
 /datum/spacevine_mutation/timid/on_birth(obj/structure/spacevine/holder)
 	SET_PLANE_IMPLICIT(holder, FLOOR_PLANE)
+	holder.layer = ABOVE_OPEN_TURF_LAYER
 	holder.light_state = PASS_LIGHT
 	holder.can_tangle = FALSE
 	return ..()
@@ -352,9 +369,9 @@
 
 /datum/spacevine_mutation/weeping/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/item, expected_damage)
 	var/scream = pick(
-		'sound/voice/human/malescream_1.ogg',
-		'sound/voice/human/femalescream_1.ogg',
-		'sound/voice/lizard/lizard_scream_2.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_2.ogg',
 		)
 	playsound(holder, scream, 90, TRUE, frequency = 1.5)
 	var/mob/living/victim = hitter

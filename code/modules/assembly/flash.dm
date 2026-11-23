@@ -117,7 +117,7 @@
 	if(burnt_out || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	set_light_on(TRUE)
 	addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
@@ -194,10 +194,9 @@
 			else if (deviation == DEVIATION_NONE)
 				flashed.stamina.adjust(-80)
 
-			if (!flashed.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				flashed.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(flashed, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
-				flashed.Disorient(SHOVE_SLOWDOWN_LENGTH)
+			if (!flashed.get_timed_status_effect_duration(/datum/status_effect/staggered))
+				flashed.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
+				flashed.Disorient(STAGGERED_SLOWDOWN_LENGTH)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
@@ -395,7 +394,7 @@
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	update_icon(ALL, TRUE)
 	return TRUE
 

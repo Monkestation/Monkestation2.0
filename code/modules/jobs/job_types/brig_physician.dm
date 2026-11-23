@@ -49,7 +49,6 @@
 	uniform = /obj/item/clothing/under/rank/security/medical/grey
 	suit = /obj/item/clothing/suit/toggle/labcoat/secmed/alt
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/pda/security/brig_physician
 	ears = /obj/item/radio/headset/headset_secmed
 	shoes = /obj/item/clothing/shoes/jackboots
 	belt = /obj/item/storage/belt/medical/secmed/full
@@ -57,15 +56,17 @@
 	head = /obj/item/clothing/head/soft/sec/medical
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 	l_pocket = /obj/item/assembly/flash/handheld
-	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
+	r_pocket = /obj/item/modular_computer/pda/security/brig_physician
 	l_hand = /obj/item/storage/medkit/surgery
+
+	pda_slot = ITEM_SLOT_RPOCKET
 
 	backpack = /obj/item/storage/backpack/secmed
 	satchel = /obj/item/storage/backpack/satchel/secmed
 	duffelbag = /obj/item/storage/backpack/duffelbag/secmed
 
 	backpack_contents = list(
-		/obj/item/modular_computer/pda/security/brig_physician = 1,
+		/obj/item/restraints/handcuffs/cable/zipties = 1,
 		/obj/item/emergency_bed = 1,
 		)
 

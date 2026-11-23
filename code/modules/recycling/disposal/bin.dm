@@ -3,7 +3,7 @@
 #define SEND_PRESSURE (0.05*ONE_ATMOSPHERE)
 
 /obj/machinery/disposal
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	density = TRUE
 	armor_type = /datum/armor/machinery_disposal
 	max_integrity = 200
@@ -102,10 +102,12 @@
 /obj/machinery/disposal/LateInitialize(mapload_arg)
 	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
 	var/atom/L = loc
-	var/datum/gas_mixture/env = new
-	env.copy_from(L.return_air())
-	var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
-	air_contents.merge(removed)
+	var/datum/gas_mixture/turf_air = L.return_air()
+	if(turf_air)
+		var/datum/gas_mixture/env = new
+		env.copy_from(turf_air)
+		var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
+		air_contents.merge(removed)
 	trunk_check()
 
 /obj/machinery/disposal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

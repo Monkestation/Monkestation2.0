@@ -1,4 +1,5 @@
 /mob/living/silicon
+	abstract_type = /mob/living/silicon
 	gender = NEUTER
 	verb_say = "states"
 	verb_ask = "queries"
@@ -7,9 +8,9 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	death_sound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
 	forced_interaction_mode = /datum/interaction_mode/combat_mode/cyborg
 	fire_stack_decay_rate = -0.55
@@ -43,8 +44,8 @@
 	var/crew_hud = DATA_HUD_CREW //MONKE, lets silicons tell who is crew.
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/bodycamera/builtInCamera = null
-	var/updating = FALSE //portable camera camerachunk update
+	///The camera built into us, lets us be seen through camera consoles
+	var/obj/machinery/camera/silicon/builtInCamera
 	///Whether we have been emagged
 	var/emagged = FALSE
 	var/centcom = FALSE
@@ -74,7 +75,7 @@
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
 		TRAIT_NOFIRE_SPREAD,
-		//TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
+		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
 		TRAIT_FENCE_CLIMBER,
 		TRAIT_SILICON_ACCESS,
 		TRAIT_REAGENT_SCANNER,
@@ -264,7 +265,7 @@
 
 	if (lawcache_zeroth)
 		if (force || (lawcache_zeroth in lawcache_lawcheck))
-			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
+			say("[radiomod] 0. [html_decode(lawcache_zeroth)]", forced = forced_log_message)
 			sleep(1 SECONDS)
 
 	CHECK_DEAD
@@ -275,7 +276,7 @@
 			continue
 		CHECK_DEAD
 		if (force || (law in lawcache_hackedcheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			say("[radiomod] [num]. [html_decode(law)]", forced = forced_log_message)
 			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_ion))
@@ -285,7 +286,7 @@
 			return
 		CHECK_DEAD
 		if (force || (law in lawcache_ioncheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			say("[radiomod] [num]. [html_decode(law)]", forced = forced_log_message)
 			sleep(1 SECONDS)
 
 	var/number = 1
@@ -295,7 +296,7 @@
 			continue
 		CHECK_DEAD
 		if (force || (law in lawcache_lawcheck))
-			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			say("[radiomod] [number]. [html_decode(law)]", forced = forced_log_message)
 			number++
 			sleep(1 SECONDS)
 
@@ -306,7 +307,7 @@
 			continue
 		CHECK_DEAD
 		if (force || (law in lawcache_lawcheck))
-			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			say("[radiomod] [number]. [html_decode(law)]", forced = forced_log_message)
 			number++
 			sleep(1 SECONDS)
 
@@ -518,8 +519,3 @@
 	for(var/borg_laws in law_list)
 		. += borg_laws
 
-/mob/living/silicon/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	return
-
-/mob/living/silicon/body_temperature_alerts()
-	return

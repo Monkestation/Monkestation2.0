@@ -23,7 +23,7 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
-	block_sound = 'sound/weapons/block_shield.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
 	start_empty = TRUE
 	spriteshift = FALSE
 	var/tutel_break_leftover = /obj/item/broken_shield

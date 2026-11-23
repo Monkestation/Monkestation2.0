@@ -15,7 +15,7 @@
 	embed_type = /datum/embedding/spear
 	armour_penetration = 30
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
 	sharpness = SHARP_POINTY // Monke, spears are actually pointy.
@@ -153,7 +153,7 @@
 	. += span_notice("Alt-click to set your war cry.")
 
 /obj/item/spear/explosive/click_alt(mob/user)
-	var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)
+	var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50, encode = FALSE)
 	if(input)
 		war_cry = input
 	return CLICK_ACTION_SUCCESS

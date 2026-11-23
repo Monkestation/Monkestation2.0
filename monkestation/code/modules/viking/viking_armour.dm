@@ -2,13 +2,13 @@
 // I mean they coould but funny armour
 
 /obj/item/clothing/head/viking
-	icon = 'icons/viking/viking_items.dmi'
-	worn_icon = 'icons/viking/viking_armor.dmi'
+	icon = 'icons/obj/weapons/viking_items.dmi'
+	worn_icon = 'icons/mob/clothing/viking_armor.dmi'
 	desc = "oi admins wrong one"
 
 /obj/item/clothing/under/viking
-	icon = 'icons/viking/viking_items.dmi'
-	worn_icon ='icons/viking/viking_armor.dmi'
+	icon = 'icons/obj/weapons/viking_items.dmi'
+	worn_icon ='icons/mob/clothing/viking_armor.dmi'
 	desc = "oi admins wrong one"
 
 //warning this item will include the godslayer armor heal (as soon as i get the code in)
@@ -51,9 +51,10 @@
 		COOLDOWN_START(src, effect_cooldown, effect_cooldown_time) //This needs to happen first, otherwise there's an infinite loop
 		user.heal_ordered_damage(heal_amount, damage_heal_order)
 		user.visible_message(span_notice("[user] suddenly revives, as if their rage healed them!"), span_notice("You suddenly feel invigorated!"))
-		playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)
+		playsound(user.loc, 'sound/effects/magic/clockwork/ratvar_attack.ogg', 50)
 
 /obj/item/clothing/under/viking/godly_tunic
+	can_adjust = FALSE
 	name = " Cloak of Fenrir"
 	desc = "A cloak made from hide torn from Fenrir."
 	worn_icon_state = "pelts"
@@ -87,6 +88,7 @@
 	dog_fashion = /datum/dog_fashion/head/berserker
 
 /obj/item/clothing/under/viking/tunic
+	can_adjust = FALSE
 	name = "viking tunic"
 	desc = "A tunic made from wolf pelts."
 	worn_icon_state = "pelts"
@@ -98,6 +100,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/viking/fake_tunic
+	can_adjust = FALSE
 	name = "viking pelt"
 	desc = "A faux wolf pelt made to cosplay with"
 	worn_icon_state = "pelts"

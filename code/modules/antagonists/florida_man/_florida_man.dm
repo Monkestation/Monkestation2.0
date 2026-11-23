@@ -32,7 +32,7 @@
 	return ..()
 
 /datum/antagonist/florida_man/on_removal()
-	wrassling?.remove(owner.current)
+	wrassling?.unlearn(owner.current)
 	QDEL_NULL(wrassling)
 	QDEL_NULL(doorbuster)
 	QDEL_NULL(cuff_break)
@@ -66,7 +66,7 @@
 	QDEL_NULL(cuff_break)
 	QDEL_NULL(regen)
 	var/mob/living/carbon/human/floridan = mob_override || owner.current
-	wrassling?.remove(floridan)
+	wrassling?.unlearn(floridan)
 	if(ishuman(floridan))
 		floridan.remove_traits(florida_traits, type)
 		floridan.physiology?.stun_mod /= 0.25
@@ -86,7 +86,7 @@
 	var/mob/living/carbon/floridan = owner.current
 	randomize_human(floridan)
 
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/floridaman.ogg',100,0, use_reverb = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/music/antag/floridaman.ogg',100,0, use_reverb = FALSE)
 	to_chat(owner, span_boldannounce("You are THE Florida Man!\nYou're not quite sure how you got out here in space, but you don't generally bother thinking about things.\n\nYou love methamphetamine!\nYou love wrestling lizards!\nYou love getting drunk!\nYou love sticking it to THE MAN!\nYou don't act with any coherent plan or objective.\nYou don't outright want to destroy the station or murder people, as you have no home to return to.\n\nGo forth, son of Space Florida, and sow chaos!"))
 	owner.announce_objectives()
 	random_unique_name(PLURAL, floridan)

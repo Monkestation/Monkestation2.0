@@ -13,8 +13,10 @@
 	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
+	///The bodyshape(s) allowed to attach to this chest.
+	var/acceptable_bodyshape = BODYSHAPE_HUMANOID
 	///The bodytype(s) allowed to attach to this chest.
-	var/acceptable_bodytype = BODYTYPE_HUMANOID
+	var/acceptable_bodytype = ALL
 
 	var/icon/ass_image
 	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
@@ -71,26 +73,27 @@
 	should_draw_greyscale = FALSE
 	is_dimorphic = FALSE
 	wound_resistance = -10
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
-	acceptable_bodytype = BODYTYPE_MONKEY
+	bodyshape = BODYSHAPE_MONKEY
+	acceptable_bodyshape = BODYSHAPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 */
 
 /obj/item/bodypart/chest/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_chest"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 500
-	acceptable_bodytype = BODYTYPE_HUMANOID
+	acceptable_bodyshape = BODYSHAPE_HUMANOID
 
 /obj/item/bodypart/chest/larva
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "larva_chest"
 	limb_id = BODYPART_ID_LARVA
 	is_dimorphic = FALSE
@@ -109,22 +112,22 @@
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
 	unarmed_damage_high = 2
-	unarmed_stun_threshold = 3
 */
 
 /obj/item/bodypart/arm/left/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_arm"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
@@ -140,7 +143,7 @@
 	husk_type = "monkey"
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	should_draw_greyscale = FALSE
 	wound_resistance = -10
 	px_x = 5
@@ -148,15 +151,15 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 2
 	unarmed_damage_high = 2
-	unarmed_stun_threshold = 3
 */
 
 /obj/item/bodypart/arm/right/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_arm"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
@@ -166,6 +169,7 @@
 
 /// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
+	abstract_type = /obj/item/bodypart/leg
 	name = "leg"
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
@@ -175,10 +179,11 @@
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
-	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
-	unarmed_damage_low = 8
-	unarmed_damage_high = 8
-	unarmed_stun_threshold = 10
+	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_attack_verbs_continuous = list("kicks")
+	unarmed_damage_low = 7
+	unarmed_damage_high = 15
+	unarmed_effectiveness = 15
 
 	/// Used by the bloodysoles component to make footprints
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
@@ -192,6 +197,12 @@
 	QDEL_NULL(worn_foot_offset)
 	return ..()
 
+/// block attachment of legs if the owner has the related trait
+/obj/item/bodypart/leg/can_attach_limb(mob/living/carbon/owner, special)
+	if(!special && HAS_TRAIT(owner, TRAIT_BLOCK_ATTACHING_LEGS))
+		return FALSE
+	return ..()
+
 /obj/item/bodypart/leg/left
 	name = "left leg"
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
@@ -202,7 +213,6 @@
 	plaintext_zone = "left leg"
 	px_x = -2
 	px_y = 12
-	can_be_disabled = TRUE
 	bodypart_trait_source = LEFT_LEG_TRAIT
 
 /obj/item/bodypart/leg/left/set_owner(new_owner)
@@ -264,22 +274,22 @@
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 3
 	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
 	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
 */
 
 /obj/item/bodypart/leg/left/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_leg"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
@@ -360,22 +370,22 @@
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_MONKEY
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
 	unarmed_damage_low = 3
 	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
 	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
 */
 
 /obj/item/bodypart/leg/right/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_leg"
 	limb_id = BODYPART_ID_ALIEN
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodyshape = BODYSHAPE_HUMANOID
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE

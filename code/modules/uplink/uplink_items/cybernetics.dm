@@ -1,6 +1,6 @@
 /datum/uplink_category/cybernetics
 	name = "Cybernetics"
-	weight = 3
+	weight = 5
 
 /datum/uplink_item/cybernetics
 	category = /datum/uplink_category/cybernetics
@@ -20,6 +20,7 @@
 	item = /obj/item/storage/box/syndie_kit/mantis
 	cost = 12
 	purchasable_from = UPLINK_TRAITORS
+	population_minimum = 25
 
 /obj/item/storage/box/syndie_kit/mantis/PopulateContents()
 	new /obj/item/autosurgeon/syndicate/syndie_mantis(src)

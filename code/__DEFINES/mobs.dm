@@ -97,7 +97,8 @@
 #define MOB_HUMANOID (1 << 4)
 #define MOB_BUG (1 << 5)
 #define MOB_BEAST (1 << 6)
-#define MOB_EPIC (1 << 7) //megafauna
+///The mob is some kind of a creature that should be exempt from certain **fun** interactions for balance reasons, i.e. megafauna or a headslug.
+#define MOB_SPECIAL (1 << 7)
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
@@ -107,40 +108,55 @@
 #define MOB_MINING (1 << 13)
 ///The mob is a crustacean. Like crabs. Or lobsters.
 #define MOB_CRUSTACEAN (1 << 14)
+/// Mob is fish or water-related.
+#define MOB_AQUATIC (1 << 12)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
 
-#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
+#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
 
-//Bodytype defines for how things can be worn, surgery, and other misc things.
+//Bodytype defines for surgery, and other misc things.
 ///The limb is organic.
 #define BODYTYPE_ORGANIC (1<<0)
 ///The limb is robotic.
 #define BODYTYPE_ROBOTIC (1<<1)
-///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
-#define BODYTYPE_HUMANOID (1<<2)
-///The limb is digitigrade.
-#define BODYTYPE_DIGITIGRADE (1<<3)
-///The limb fits the monkey mold.
-#define BODYTYPE_MONKEY (1<<4)
-///The limb is snouted.
-#define BODYTYPE_SNOUTED (1<<5)
 ///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
-#define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
+#define BODYTYPE_LARVA_PLACEHOLDER (1<<2)
 ///The limb is from a xenomorph.
-#define BODYTYPE_ALIEN (1<<7)
-///The limb fits a modular custom shape
-#define BODYTYPE_CUSTOM (1<<8)
+#define BODYTYPE_ALIEN (1<<3)
+/// Analagous to BODYSHAPE_DIGITIGRADE, though this one is not removed if the mob's shape changed
+#define BODYTYPE_DIGITIGRADE (1<<4)
 
-#define BODYTYPE_LIST_PROSTHETIC (BODYTYPE_ROBOTIC | BODYTYPE_HUMANOID | BODYTYPE_MONKEY)
+// Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
+///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
+#define BODYSHAPE_HUMANOID (1<<0)
+///The limb fits the monkey mold.
+#define BODYSHAPE_MONKEY (1<<1)
+///The limb is digitigrade.
+#define BODYSHAPE_DIGITIGRADE (1<<2)
+///The limb is snouted.
+#define BODYSHAPE_SNOUTED (1<<3)
+///The limb fits a modular custom shape
+#define BODYSHAPE_CUSTOM (1<<4)
+
+// Robotic limb brute & burn examines
+#define ROBOTIC_LIGHT_BRUTE_MSG "marred"
+#define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
+#define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
+///The limb has a Cerulean (large fish) tail
+#define BODYSHAPE_CERULEAN (1<<5)
+
+#define ROBOTIC_LIGHT_BURN_MSG "scorched"
+#define ROBOTIC_MEDIUM_BURN_MSG "charred"
+#define ROBOTIC_HEAVY_BURN_MSG "smoldering"
 
 //Species gib types
 #define GIB_TYPE_HUMAN "human"
@@ -162,9 +178,9 @@
 #define SPECIES_LIZARD_ASH "ashwalker"
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
+#define SPECIES_CERULEAN "cerulean"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
-#define SPECIES_TUNDRA "tundra"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
@@ -197,6 +213,7 @@
 #define SPECIES_DRACONIC_SKELETON "draconic_skeleton"
 #define SPECIES_WEREWOLF "werewolf"
 #define SPECIES_ORNITHID "ornithid"
+#define SPECIES_SHADEKIN "shadekin"
 
 
 // Like species IDs, but not specifically attached a species.
@@ -218,6 +235,14 @@
 ///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
+//See: mob/living/carbon/human/var/limb_style, only used by species with TRAIT_GREYSCALE_TOGGLE
+///The limbs use their normal colors
+#define LIMB_STYLE_CLASSIC "Classic"
+///The limbs are greyscaled and colored by the mutant color
+#define LIMB_STYLE_MUTANT_COLORS "Mutant colors"
+///The limbs use their tundra fur sprites
+#define LIMB_STYLE_TUNDRA "Tundra fur"
+
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100
 
@@ -232,13 +257,14 @@
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
 
-/// Damage recieved when past heat damage threshold.
-/// Gets multiplied by 2x, 4x, 8x depending on how far past the threshold you are.
-#define HEAT_DAMAGE 1
+/// Lung temperature defines
+#define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 4 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
-/// Damage recieved when past cold damage threshold.
-/// Gets multiplied by 2x, 4x, 8x depending on how far past the threshold you are.
-#define COLD_DAMAGE 0.25
+#define COLD_DAMAGE_LEVEL_1 0.25 //Amount of damage applied when your body temperature just passes the 260.15k safety point
+#define COLD_DAMAGE_LEVEL_2 0.75 //Amount of damage applied when your body temperature passes the 200K point
+#define COLD_DAMAGE_LEVEL_3 1.5 //Amount of damage applied when your body temperature passes the 120K point
 
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
@@ -394,6 +420,10 @@
 #define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
 #define CRYSTALIZE_STAGE_SMALL 600 //Because they're not static
 
+// Strings used by modsuit mob sprite generation for Ceruleans/mobs with a big fish tail
+#define FLIPPERS "flippers"
+#define NO_FLIPPERS "no_flippers"
+
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
@@ -454,6 +484,8 @@
 #define SLIPPERY_TURF (1<<5)
 /// Slipping on this will send them sliding for a long time
 #define SUPER_DUPER_SLIDE (1<<6)
+/// For mobs who are slippery, this requires the mob holding it to be lying down.
+#define SLIPPERY_WHEN_LYING_DOWN (1<<7)
 
 #define MAX_CHICKENS 50
 
@@ -475,6 +507,8 @@
 #define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
 ///light of this intensity suppresses healing and causes very slow burn damage
 #define SHADOW_SPECIES_DIM_LIGHT 0.2
+/// Same as SHADOW_SPECIES_DIM_LIGHT, named like on tg
+#define SHADOW_SPECIES_LIGHT_THRESHOLD SHADOW_SPECIES_DIM_LIGHT
 ///light of this intensity causes rapid burn damage (high number because movable lights are weird)
 /**so the problem is that movable lights ALWAYS have a luminosity of 0.5, regardless of power or distance, so even at the edge of the overlay they still do damage
 * at 0.6 being bright they'll still do damage and disable some abilities, but it won't be weaponized
@@ -534,9 +568,7 @@
 /// Factor at which mob nutrition decreases
 #define HUNGER_FACTOR 0.1
 
-// These add up to 1 to roughly (VERY roughly) represent the proportion of hunger used by each system
-/// What % of hunger is used by homeostasis
-#define HOMEOSTASIS_HUNGER_MULTIPLIER 0.1
+// These add up to roughly represent the proportion of hunger used by each system
 /// What % of hunger is used by passive hunger
 #define PASSIVE_HUNGER_MULTIPLIER 0.4
 /// What % of hunger is used by movement
@@ -749,6 +781,16 @@
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
+// Used in applying height
+/// Used for overlays centered around the upper half of the human sprite
+#define UPPER_BODY "upper body"
+/// Used for overlays centered around the lower half of the human sprite
+#define LOWER_BODY "lower body"
+/// Used for overlays that should not offset at all
+#define NO_MODIFY "do not modify"
+/// Used for overlays that stretch the full body and thus need a filter
+#define ENTIRE_BODY "full body"
+
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
 // - They do not start at 0 for futureproofing
@@ -763,20 +805,19 @@
 #define HUMAN_HEIGHT_TALL 14
 #define HUMAN_HEIGHT_TALLER 16
 #define HUMAN_HEIGHT_TALLEST 18
+// If you add a height here update human_heights_to_offsets as well!
 
-/// Assoc list of all heights, cast to strings, to """"tuples"""""
-/// The first """tuple""" index is the upper body offset
-/// The second """tuple""" index is the lower body offset
-GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
-	MONKEY_HEIGHT_DWARF = list(-9, -3),
-	MONKEY_HEIGHT_MEDIUM = list(-7, -4),
-	HUMAN_HEIGHT_DWARF = list(-5, -4),
-	HUMAN_HEIGHT_SHORTEST = list(-2, -1),
-	HUMAN_HEIGHT_SHORT = list(-1, -1),
-	HUMAN_HEIGHT_MEDIUM = list(0, 0),
-	HUMAN_HEIGHT_TALL = list(1, 1),
-	HUMAN_HEIGHT_TALLER = list(2, 1),
-	HUMAN_HEIGHT_TALLEST = list(3, 2),
+/// Assoc list of all heights, to offset values
+GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
+	MONKEY_HEIGHT_DWARF = list("[UPPER_BODY]" = -7, "[LOWER_BODY]" = -4),
+	MONKEY_HEIGHT_MEDIUM = list("[UPPER_BODY]" = -6, "[LOWER_BODY]" = -4),
+	HUMAN_HEIGHT_DWARF = list("[UPPER_BODY]" = -5, "[LOWER_BODY]" = -3),
+	HUMAN_HEIGHT_SHORTEST = list("[UPPER_BODY]" = -2, "[LOWER_BODY]" = -1),
+	HUMAN_HEIGHT_SHORT = list("[UPPER_BODY]" = -1, "[LOWER_BODY]" = -1),
+	HUMAN_HEIGHT_MEDIUM = list("[UPPER_BODY]" = 0, "[LOWER_BODY]" = 0),
+	HUMAN_HEIGHT_TALL = list("[UPPER_BODY]" = 1, "[LOWER_BODY]" = 1),
+	HUMAN_HEIGHT_TALLER = list("[UPPER_BODY]" = 2, "[LOWER_BODY]" = 1),
+	HUMAN_HEIGHT_TALLEST = list("[UPPER_BODY]" = 3, "[LOWER_BODY]" = 2),
 ))
 
 /*
@@ -791,7 +832,7 @@ GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
  * Please keep this organized and in order, to make it easier to see at a glance how mobs layer
  * Don't be afraid to change the values of existing layers either, it won't break anything so long as order is the same
  *
- * If you want to add a new layer, make sure to update TOTAL_LAYERS and layers_to_offset as needed
+ * If you want to add a new layer, make sure to update TOTAL_LAYERS as needed
  * NOTE: You ONLY need to add standing layers if you're using the standing overlay system, ie. apply_overlay(YOUR_LAYER)!
  * If you're NOT using this sytem just add it as a sub-layer where appropriate
  */
@@ -892,65 +933,11 @@ GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
 /// (You ONLY need to update this if you add a standing overlay, adding an integer.)
 #define TOTAL_LAYERS 45
 
-#define UPPER_BODY "upper body"
-#define LOWER_BODY "lower body"
-#define NO_MODIFY "do not modify"
-
-/// Used for human height overlay adjustments
-/// Certain standing overlay layers shouldn't have a filter applied and should instead just offset by a pixel y
-/// This list contains all the layers that must offset, with its value being whether it's a part of the upper half of the body (TRUE) or not (FALSE)
-GLOBAL_LIST_INIT(layers_to_offset, list(
-	// Weapons commonly cross the middle of the sprite so they get cut in half by the filter
-	"[HANDS_LAYER]" = LOWER_BODY,
-	// Very tall hats will get cut off by filter
-	"[HEAD_LAYER]" = UPPER_BODY,
-	// Hair will get cut off by filter
-	"[HAIR_LAYER]" = UPPER_BODY,
-	// Long belts (sabre sheathe) will get cut off by filter
-	"[BELT_LAYER]" = LOWER_BODY,
-	// Everything below looks fine with or without a filter, so we can skip it and just offset
-	// (In practice they'd be fine if they got a filter but we can optimize a bit by not.)
-	/* monkestation edit: fix some weirdness with heights, most notably gloves
-	"[GLASSES_LAYER]" = UPPER_BODY,
-	"[ABOVE_BODY_FRONT_GLASSES_LAYER]" = UPPER_BODY, // currently unused
-	"[ABOVE_BODY_FRONT_HEAD_LAYER]" = UPPER_BODY, // only used for head stuff
-	"[GLOVES_LAYER]" = LOWER_BODY,
-	"[HALO_LAYER]" = UPPER_BODY, // above the head
-	"[HANDCUFF_LAYER]" = LOWER_BODY,
-	"[ID_CARD_LAYER]" = UPPER_BODY, // unused
-	"[ID_LAYER]" = UPPER_BODY,
-	"[FACEMASK_LAYER]" = UPPER_BODY,
-	monkestation end */
-	/* monkestation edit start
-		it's okay for these layers to use shared appearences so long as the filters are reset before adding them as overlays
-		this is because adding an appearence to `overlays` copies it
-	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
-	"[MUTATIONS_LAYER]" = NO_MODIFY,
-	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
-	monkestation edit end */
-	// These DO get a filter, I'm leaving them here as reference,
-	// to show how many filters are added at a glance
-	// BACK_LAYER (backpacks are big)
-	// BODYPARTS_HIGH_LAYER (arms)
-	// BODY_LAYER (body markings (full body), underwear (full body), eyes)
-	// BODY_ADJ_LAYER (external organs like wings)
-	// BODY_BEHIND_LAYER (external organs like wings)
-	// BODY_FRONT_LAYER (external organs like wings)
-	// DAMAGE_LAYER (full body)
-	// HIGHEST_LAYER (full body)
-	// UNIFORM_LAYER (full body)
-	// WOUND_LAYER (full body)
-))
-
-//Bitflags for the layers a bodypart overlay can draw on (can be drawn on multiple layers)
-/// Draws overlay on the BODY_FRONT_LAYER
-#define EXTERNAL_FRONT (1 << 0)
-/// Draws overlay on the BODY_ADJ_LAYER
-#define EXTERNAL_ADJACENT (1 << 1)
-/// Draws overlay on the BODY_BEHIND_LAYER
-#define EXTERNAL_BEHIND (1 << 2)
-/// Draws organ on all EXTERNAL layers
-#define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+// Legacy mutant bodypart layering defines for icon states
+// Don't change these without updating all relevant icon states
+#define EXTERNAL_FRONT "FRONT"
+#define EXTERNAL_ADJACENT "ADJ"
+#define EXTERNAL_BEHIND "BEHIND"
 
 // Bitflags for external organs restylability
 /// This organ allows restyle through plant restyling (like secateurs)
@@ -959,6 +946,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define EXTERNAL_RESTYLE_FLESH (1 << 2)
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
 #define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
+
 
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
@@ -1082,14 +1070,10 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEALING_TOUCH_NOT_SELF "healing_touch_not_self"
 #define HEALING_TOUCH_SELF_ONLY "healing_touch_self_only"
 
-//MONKESTATION REMOVAL - These constants were moved as part of a temperature overhaul by Borbop, in
-// #3301. They now reside in `code\__DEFINES\atmospherics\atmos_mob_interaction.dm`.
-/*
 /// Default minimum body temperature mobs can exist in before taking damage
 #define NPC_DEFAULT_MIN_TEMP 250
 /// Default maximum body temperature mobs can exist in before taking damage
 #define NPC_DEFAULT_MAX_TEMP 350
-*/
 
 // Flags for mobs which can't do certain things while someone is looking at them
 /// Flag which stops you from moving while observed

@@ -109,7 +109,7 @@
 /obj/item/radio/intercom/can_receive(freq, list/levels)
 	if(levels != RADIO_NO_Z_LEVEL_RESTRICTION)
 		var/turf/position = get_turf(src)
-		if(isnull(position) || !(position.z in levels))
+		if(isnull(position) || !((position.z in levels) || warped_room_in_levels(position, levels)))
 			return FALSE
 
 	if(freq == FREQ_SYNDICATE)
@@ -149,7 +149,7 @@
 		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
 		if(RADIO_FREQENCY_LOCKED)
 			balloon_alert(user, "can't override frequency lock!")
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return
 
 		// Emagging an unlocked one will do nothing, for now

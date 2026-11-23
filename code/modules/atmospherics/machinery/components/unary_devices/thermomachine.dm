@@ -14,8 +14,6 @@
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 
-	hide = TRUE
-
 	move_resist = MOVE_RESIST_DEFAULT
 	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -126,7 +124,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
-	var/image/pipe = get_pipe_image('icons/obj/atmospherics/components/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
+	var/image/pipe = get_pipe_image('icons/obj/machines/atmospherics/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
 	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
 

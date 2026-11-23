@@ -168,6 +168,8 @@
 	set_content(output)
 
 /datum/browser/modal/alert/Topic(href,href_list)
+	if (user?.client && usr?.client != user.client)
+		return
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return
@@ -255,7 +257,7 @@
 		addtimer(CALLBACK(src, PROC_REF(close)), timeout)
 
 /datum/browser/modal/proc/wait()
-	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
+	while (opentime && selectedbutton <= 0 && !QDELETED(user) && (!timeout || opentime+timeout > world.time))
 		stoplag(1)
 
 /datum/browser/modal/listpicker
@@ -296,6 +298,8 @@
 	set_content(output)
 
 /datum/browser/modal/listpicker/Topic(href,href_list)
+	if (user?.client && usr?.client != user.client)
+		return
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return
@@ -394,6 +398,8 @@
 	return dat
 
 /datum/browser/modal/preflikepicker/Topic(href,href_list)
+	if (user?.client && usr?.client != user.client)
+		return
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return

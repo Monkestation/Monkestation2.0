@@ -9,6 +9,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	flags_inv = HIDEMUTWINGS
 	body_parts_covered = CHEST
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/flashlight/lantern) //lamp
 
 /obj/item/clothing/suit/mothcoat/original
@@ -18,7 +19,7 @@
 
 /obj/item/clothing/suit/mothcoat/original/Initialize(mapload)
 	. = ..()
-
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
 	create_storage(storage_type = /datum/storage/pockets)
 
 /obj/item/clothing/suit/mothcoat/winter
@@ -30,6 +31,6 @@
 	greyscale_config_worn = /datum/greyscale_config/mothcoat_winter_worn
 	greyscale_colors = "#557979#795e55"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-
+	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

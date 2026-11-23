@@ -31,7 +31,7 @@
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	istate = ISTATE_HARM
@@ -154,7 +154,7 @@
 	if (isnull(client))
 		return
 
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", generate_random_name(), MAX_NAME_LEN)))
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", generate_random_name(), MAX_NAME_LEN, encode = FALSE)))
 	if (!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning("Invalid name, please try again."))
 		return guardian_rename()

@@ -150,7 +150,7 @@
 			"object" = pack.name,
 			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
-			"reason" = order.reason,
+			"reason" = html_decode(order.reason),
 			"id" = order.id,
 			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
 		))
@@ -287,13 +287,13 @@
 					personal_department = null
 
 	if(pack.goody && !self_paid)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: Small crates may only be purchased by private accounts.")
 		return
 
 	var/similar_count = SSshuttle.supply.get_order_count(pack)
 	if(similar_count == OVER_ORDER_LIMIT)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 		return
 

@@ -1,4 +1,5 @@
 /obj/item/clothing/under
+	abstract_type = /obj/item/clothing/under
 	name = "under"
 	icon = 'icons/obj/clothing/under/default.dmi'
 	worn_icon = 'icons/mob/clothing/under/default.dmi'
@@ -8,10 +9,9 @@
 	slot_flags = ITEM_SLOT_ICLOTHING
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	limb_integrity = 30
 	blood_overlay_type = "uniform"
 
@@ -48,6 +48,8 @@
 	var/mutable_appearance/accessory_overlay
 	/// A weak reference to the current accessory that's providing armor.
 	var/datum/weakref/current_armored_accessory
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK|CLOTHING_CERULEAN_MASK_LEGS
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
 
 /datum/armor/clothing_under
 	bio = 10
@@ -97,7 +99,7 @@
 
 	return .
 
-/obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
@@ -170,13 +172,13 @@
 
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/wearer = user
-		if(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
+		if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
 
 /obj/item/clothing/under/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
-	return replace_icon_legs(base_icon, legs)
+	return apply_icon_mask(base_icon, LEGS_MASK, legs)
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
@@ -493,4 +495,5 @@ GAME_VERB_SRC(/obj/item/clothing/under, jumpsuit_adjust, usr, "Adjust Jumpsuit S
 		return
 
 /obj/item/clothing/under/rank
+	abstract_type = /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

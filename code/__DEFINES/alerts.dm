@@ -14,6 +14,8 @@
 #define ALERT_TOO_MUCH_NITRO "too_much_nitro"
 #define ALERT_NOT_ENOUGH_NITRO "not_enough_nitro"
 
+#define ALERT_NOT_ENOUGH_WATER "not_enough_water"
+
 /** Mob related */
 #define ALERT_SUCCUMB "succumb"
 #define ALERT_BUCKLED "buckled"
@@ -22,6 +24,7 @@
 #define ALERT_IRRADIATED "irradiated"
 #define ALERT_EMBEDDED_OBJECT "embeddedobject"
 #define ALERT_SHOES_KNOT "shoealert"
+#define ALERT_RADIOACTIVE_AREA "radioactive_area"
 
 //antag related
 #define ALERT_HYPNOSIS "hypnosis"
@@ -70,3 +73,6 @@
 #define ALERT_BITRUNNER_GLITCH "bitrunning_glitch"
 
 #define ALERT_BRAINWASHED "brainwashed"
+
+#define ALERT_EMAGGED_SPIDERBOT "emagged_spiderbot"
+#define ALERT_SILICON_RECORDING "silicon_recording"

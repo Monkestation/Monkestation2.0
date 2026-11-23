@@ -69,14 +69,18 @@
 	var/living_number = max(length(GLOB.player_list) / POP_PER_BORER, 1)
 	var/choosing_number = min(length(candidates), living_number)
 
-	for(var/repeating_code in 1 to choosing_number)
+	var/datum/team/cortical_borers/team = new()
+	team.create_objectives()
+
+	for(var/index in 1 to choosing_number)
 		var/mob/dead/observer/new_borer = pick(candidates)
 		candidates -= new_borer
 		var/vent = pick(vents)
 		var/mob/living/basic/cortical_borer/empowered/spawned_cb = new /mob/living/basic/cortical_borer/empowered(get_turf(vent))
 		spawned_cb.move_into_vent(vent)
 		spawned_cb.PossessByPlayer(new_borer.ckey)
-		spawned_cb.mind.add_antag_datum(/datum/antagonist/cortical_borer/hivemind)
+		var/datum/antagonist/cortical_borer/antag = spawned_cb.mind.has_antag_datum(/datum/antagonist/cortical_borer)
+		team.add_member(spawned_cb.mind, antag)
 		announce_to_ghosts(spawned_cb)
 		message_admins("[ADMIN_LOOKUPFLW(spawned_cb)] has been made into a borer by an event.")
 		log_game("STORYTELLER: [key_name(new_borer)] was spawned as a borer by the storyteller.")

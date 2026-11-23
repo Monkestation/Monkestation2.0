@@ -10,7 +10,7 @@
 	/// Whether we apply the floating anim to the body
 	var/body_floats = FALSE
 	/// The layer this body will be drawn on, in case we want to bypass lighting
-	var/body_layer = TURF_LAYER
+	var/body_layer = LOW_FLOOR_LAYER
 	/// if TRUE, spawns the body under the hallucinator instead of somewhere in view
 	var/spawn_under_hallucinator = FALSE
 
@@ -52,13 +52,14 @@
 /// Makes the image of the body to show at the location passed.
 /datum/hallucination/body/proc/make_body_image(turf/location)
 	var/image/created_image = image(body_image_file, location, body_image_state, body_layer)
+	SET_PLANE_EXPLICIT(created_image, GAME_PLANE, location)
 	if(body_floats)
 		DO_FLOATING_ANIM(created_image)
 	return created_image
 
 /datum/hallucination/body/husk
 	random_hallucination_weight = 8
-	body_image_file = 'icons/mob/species/human/human.dmi'
+	body_image_file = 'icons/mob/human/human.dmi'
 	body_image_state = "husk"
 
 /datum/hallucination/body/husk/sideways
@@ -167,8 +168,8 @@
 
 /datum/hallucination/body/weird/freezer/make_body_image(turf/location)
 	var/image/body = ..()
-	body.pixel_x = pick(rand(-208,-48), rand(48, 208))
-	body.pixel_y = pick(rand(-208,-48), rand(48, 208))
+	body.pixel_w = pick(rand(-208,-48), rand(48, 208))
+	body.pixel_z = pick(rand(-208,-48), rand(48, 208))
 	body.alpha = 245
 	SET_PLANE_EXPLICIT(body, ABOVE_HUD_PLANE, location)
 	return body
@@ -189,5 +190,5 @@
 	if(QDELETED(src))
 		return
 	// Spook 'em before we delete
-	shown_body.pixel_x = (shown_body.pixel_x / 2)
-	shown_body.pixel_y = (shown_body.pixel_y / 2)
+	shown_body.pixel_w = (shown_body.pixel_w / 2)
+	shown_body.pixel_z = (shown_body.pixel_z / 2)

@@ -199,7 +199,7 @@
 		say("Design too complex.")
 		return
 	materials.use_materials(needed_mats, creation_efficiency)
-	playsound(src, 'sound/items/rped.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 	busy = TRUE
 
 	addtimer(CALLBACK(src, PROC_REF(finish_build), inserted_board), flatpack_time)
@@ -289,7 +289,7 @@
 	new /obj/effect/temp_visual/mook_dust(loc)
 	var/obj/machinery/new_machine = new board.build_path(loc)
 	loc.visible_message(span_warning("[src] deploys!"))
-	playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
 	new_machine.RefreshParts()
 	new_machine.on_construction(user)
 
@@ -330,7 +330,7 @@
 	var/offset = 0
 	for(var/item in contents)
 		var/mutable_appearance/flatpack_overlay = mutable_appearance(icon, "flatcart_flat", layer = layer + (offset * 0.01))
-		flatpack_overlay.pixel_y = offset
+		flatpack_overlay.pixel_z = offset
 		offset += 4
 		. += flatpack_overlay
 

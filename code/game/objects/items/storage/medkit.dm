@@ -524,6 +524,41 @@
 		/obj/item/healthanalyzer = 1,
 	)
 	generate_items_inside(items_inside, src)
+///Used in /datum/outfit/myststranger
+/obj/item/storage/medkit/courrier_medkit
+	name = "ancient medical storage"
+	icon_state = "medkit_tactical_premium"
+	desc = "Give me your tired, your poor, your battered and bruised, all are welcome in my loving arms."
+
+/obj/item/storage/medkit/courrier_medkit/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_slots = 28
+	atom_storage.max_total_storage = 168
+	atom_storage.set_holdable(null,null,null)
+
+/obj/item/storage/medkit/courrier_medkit/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/scalpel/advanced = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/retractor/advanced = 1,
+		/obj/item/circular_saw = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/cautery/advanced = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/blood_filter/advanced = 1,
+		/obj/item/breathing_bag = 1,
+		/obj/item/emergency_bed = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/bodybag/bluespace = 1,
+		/obj/item/reagent_containers/medipen/ancient = 1,
+		/obj/item/reagent_containers/medipen/ancient/painkiller = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/gauze/sterilized = 1,
+		/obj/item/stack/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/bone_gel = 1,
+	)
+	generate_items_inside(items_inside, src)
 
 //medibot assembly
 /obj/item/storage/medkit/tool_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -907,7 +942,7 @@
 		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return BRUTELOSS
 	user.visible_message(span_suicide("[user] is putting [user.p_their()] head inside the [src], it looks like [user.p_theyre()] trying to commit suicide!"))
-	user.adjust_bodytemperature(-INFINITY, min_temp = CELCIUS_TO_KELVIN(10 CELCIUS))
+	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)
 	return FIRELOSS
 

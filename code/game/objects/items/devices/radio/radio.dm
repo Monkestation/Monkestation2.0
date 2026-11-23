@@ -17,6 +17,7 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FIRE_PROOF // OH SHIT FUCK ALL THE EXPENSIVE RARE HEADSETS ARE MELTING TO OUR HEADS
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.25)
 
 	///if FALSE, broadcasting and listening dont matter and this radio shouldnt do anything
@@ -381,7 +382,7 @@
 	// Okay, the signal was never processed, send a mundane broadcast.
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
-	signal.levels = SSmapping.get_connected_levels(T)
+	signal.levels = get_telecomms_levels(T)
 	signal.broadcast()
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
@@ -414,7 +415,7 @@
 	// deny checks
 	if (levels != RADIO_NO_Z_LEVEL_RESTRICTION)
 		var/turf/position = get_turf(src)
-		if(!position || !(position.z in levels))
+		if(!position || !((position.z in levels) || warped_room_in_levels(position, levels)))
 			return FALSE
 
 	if (input_frequency == FREQ_SYNDICATE && !syndie)

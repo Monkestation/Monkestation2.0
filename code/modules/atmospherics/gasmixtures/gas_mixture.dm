@@ -135,16 +135,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/thermal_energy()
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
 
-///Update archived versions of variables. Returns: 1 in all cases
+/// Update archived versions of variables
 /datum/gas_mixture/proc/archive()
-	var/list/cached_moles = moles
-	var/list/cached_moles_archive = moles_archive
-
+	moles_archive = moles.Copy()
 	temperature_archived = temperature
-	for(var/gas_id in cached_moles)
-		cached_moles_archive[gas_id] = cached_moles[gas_id]
-
-	return TRUE
 
 ///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
@@ -162,8 +156,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/cached_moles = moles //accessing datum vars is slower than proc vars
 	var/list/cached_giver_moles = giver.moles
 	//gas transfer
-	for(var/gas_id in cached_giver_moles)
-		cached_moles[gas_id] += cached_giver_moles[gas_id]
+	for(var/gas_id, value in cached_giver_moles)
+		cached_moles[gas_id] += value
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
 	return TRUE
@@ -186,8 +180,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 ///gases_moles is an associative list of gas species to their amount to be added
 /datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
 	var/cached_moles = moles
-	for(var/gas_id in gases_moles)
-		cached_moles[gas_id] += gases_moles[gas_id]
+	for(var/gas_id, value in gases_moles)
+		cached_moles[gas_id] += value
 	garbage_collect()
 
 
@@ -214,8 +208,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/cached_removed_moles = removed.moles //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	for(var/id in cached_moles)
-		cached_removed_moles[id] = QUANTIZE(cached_moles[id] * ratio)
+	for(var/id, value in cached_moles)
+		cached_removed_moles[id] = QUANTIZE(value * ratio)
 		cached_moles[id] -= cached_removed_moles[id]
 
 	garbage_collect()
@@ -236,8 +230,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/cached_removed_moles = removed.moles //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	for(var/id in cached_moles)
-		cached_removed_moles[id] = QUANTIZE(cached_moles[id] * ratio)
+	for(var/id, value in cached_moles)
+		cached_removed_moles[id] = QUANTIZE(value * ratio)
 		cached_moles[id] -= cached_removed_moles[id]
 
 	garbage_collect()
@@ -316,8 +310,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/copy_cached_moles_archive = copy.moles_archive
 
 	copy.temperature = temperature
-	for(var/gas_id in cached_moles)
-		copy_cached_moles[gas_id] = cached_moles[gas_id]
+	for(var/gas_id, value in cached_moles)
+		copy_cached_moles[gas_id] = value
 		copy_cached_moles_archive[gas_id] = 0
 
 	return copy
@@ -335,8 +329,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	cached_moles_archive.Cut()
 
 	temperature = sample.temperature
-	for(var/gas_id in sample_cached_moles)
-		cached_moles[gas_id] = sample_cached_moles[gas_id]
+	for(var/gas_id, value in sample_cached_moles)
+		cached_moles[gas_id] = value
 		cached_moles_archive[gas_id] = 0
 
 	return TRUE
@@ -347,13 +341,11 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/cached_moles = moles //accessing datum vars is slower than proc vars
 	var/list/sample_cached_moles = sample.moles
 
-	//remove all gases not in the sample
-	cached_moles &= sample_cached_moles
-
+	// Remove all gases (sample overrides our values anyways)
+	cached_moles.Cut()
 	temperature = sample.temperature
-	for(var/gas_id in sample_cached_moles)
-		cached_moles[gas_id] = sample_cached_moles[gas_id] * partial
-
+	for(var/gas_id, amount in sample_cached_moles)
+		cached_moles[gas_id] = amount * partial
 	return TRUE
 
 /// Performs air sharing calculations between two gas_mixtures
@@ -439,7 +431,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	if(length(only_in_sharer + only_in_cached)) //if all gases were present in both mixtures, we know that no gases are 0
+	if(length(only_in_sharer) || length(only_in_cached)) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(only_in_cached) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(only_in_sharer) //the reverse is equally true
 	else if (initial(sharer.gc_share))
@@ -539,10 +531,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
 				continue
 
-			for(var/id in reqs)
+			for(var/id, value in reqs)
 				if (id == "MIN_TEMP" || id == "MAX_TEMP")
 					continue
-				if(cached_moles[id] < reqs[id])
+				if(cached_moles[id] < value)
 					continue reaction_loop
 
 			//at this point, all requirements for the reaction are satisfied. we can now react()
@@ -593,7 +585,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/output_moles = output_air.total_moles()
 	var/output_pressure = output_air.return_pressure()
 
-	if(our_moles <= 0 || temperature <= 0)
+	if(our_moles <= 0 || temperature <= 0 || !output_air.volume)
 		return FALSE
 
 	var/pressure_delta = 0
@@ -760,8 +752,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 	var/list/gases_to_check = acceptable_gas_bounds.Copy() // thank you spaceman
 	var/list/cached_moles = moles
-	for(var/id in cached_moles)
-		var/gas_moles = cached_moles[id]
+	for(var/id, gas_moles in cached_moles)
 		if(!(id in gases_to_check))
 			if(gas_moles > extraneous_gas_limit)
 				return FALSE

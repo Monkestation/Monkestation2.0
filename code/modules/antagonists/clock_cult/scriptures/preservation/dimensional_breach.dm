@@ -8,7 +8,7 @@
 	invocation_text = list("Brightest Engine, take my soul...", "To complete our greatest goal...", "through the rifts you now shall come...", "to show them where the light is from!")
 	invokers_required = 6
 	category = SPELLTYPE_PRESERVATION
-	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg' //ironic
+	recital_sound = 'sound/effects/magic/clockwork/narsie_attack.ogg' //ironic
 	fast_invoke_mult = 1
 	cogs_required = 5
 
@@ -23,6 +23,10 @@
 
 	if(!GLOB.clock_ark)
 		to_chat(invoker, span_userdanger("No ark located, contact the admins with an ahelp(f1)."))
+		return FALSE
+
+	if(GLOB.wonderland_apocalypse)
+		to_chat(invoker, span_hearts_decree("Stop that ticking this instant! I will not have another door opened in my court. Wind it down! Lock it up! Sentence the key!"))
 		return FALSE
 
 	if(SSthe_ark.charged_anchoring_crystals < ANCHORING_CRYSTALS_TO_SUMMON)

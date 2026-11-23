@@ -19,7 +19,7 @@
 	melee_damage_upper = 0
 	attack_verb_continuous = "barrels into"
 	attack_verb_simple = "barrel into"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	speak_emote = list("screeches")
 	death_message = "stops moving as green liquid oozes from the carcass!"
 	status_flags = CANPUSH
@@ -98,7 +98,9 @@
 
 /mob/living/basic/mining/goldgrub/death(gibbed)
 	barf_contents(gibbed)
-	return ..()
+	. = ..()
+	if (!QDELETED(src) && has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 25, bonus_tame_chance = 5)

@@ -36,7 +36,7 @@
 	. = ..()
 	if(!density || !voice_activated || radio_freq)
 		return
-	if(findtext(raw_message, password))
+	if(findtext(html_decode(raw_message), password))
 		open()
 
 /obj/machinery/door/password/Bumped(atom/movable/AM)
@@ -66,10 +66,10 @@
 			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
 		if("deny")
 			//Deny animation would be nice to have.
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
-	var/guess = tgui_input_text(user, "Enter the password", "Password")
+	var/guess = tgui_input_text(user, "Enter the password", "Password", encode = FALSE)
 	if(guess == password)
 		return TRUE
 	return FALSE

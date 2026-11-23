@@ -102,6 +102,15 @@
 	LAZYINITLIST(lazy_list); \
 	LAZYINITLIST(lazy_list[key]); \
 	lazy_list[key] |= value;
+/// Calls Insert on the lazy list if it exists, otherwise initializes it with the value
+#define LAZYINSERT(lazylist, index, value) \
+	if (!lazylist) { \
+		lazylist = list(value); \
+	} else if (index == 0 && index > length(lazylist)) { \
+		lazylist += value; \
+	} else { \
+		lazylist.Insert(index, value); \
+	}
 
 ///Ensures the length of a list is at least I, prefilling it with V if needed. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
 #define LISTASSERTLEN(L, I, V...) \
@@ -228,33 +237,6 @@
 			};\
 			__BIN_ITEM = COMPTYPE;\
 			__BIN_MID = ##COMPARISON(__BIN_ITEM) > ##COMPARISON(COMPARE) ? __BIN_MID : __BIN_MID + 1;\
-			__BIN_LIST.Insert(__BIN_MID, INPUT);\
-		};\
-	} while(FALSE)
-
-/// The above but the tree is sorted in reverse.
-#define BINARY_INSERT_DEFINE_REVERSE(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
-	do {\
-		var/list/__BIN_LIST = LIST;\
-		var/__BIN_CTTL = length(__BIN_LIST);\
-		if(!__BIN_CTTL) {\
-			__BIN_LIST += INPUT;\
-		} else {\
-			var/__BIN_LEFT = 1;\
-			var/__BIN_RIGHT = __BIN_CTTL;\
-			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			##TYPECONT(__BIN_ITEM);\
-			while(__BIN_LEFT < __BIN_RIGHT) {\
-				__BIN_ITEM = COMPTYPE;\
-				if(##COMPARISON(__BIN_ITEM) >= ##COMPARISON(COMPARE)) {\
-					__BIN_LEFT = __BIN_MID + 1;\
-				} else {\
-					__BIN_RIGHT = __BIN_MID;\
-				};\
-				__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			};\
-			__BIN_ITEM = COMPTYPE;\
-			__BIN_MID = ##COMPARISON(__BIN_ITEM) < ##COMPARISON(COMPARE) ? __BIN_MID : __BIN_MID + 1;\
 			__BIN_LIST.Insert(__BIN_MID, INPUT);\
 		};\
 	} while(FALSE)
@@ -537,6 +519,18 @@
 		if(total <= 0)
 			return item
 	return null
+
+/**
+* Like pick_weight, but decreases the value of the picked element by 1
+ * For example, given the following list:
+ * A = 6, B = 3, C = 1, D = 0
+ * A would have a 60% chance of being picked, after which it would decrease by one and the new list would be
+ * A = 5, B = 3, C = 1, D = 0
+ * Tt would then have a 55.55...% to be picked, rinse and repeat
+*/
+/proc/pick_weight_take(list/list_to_pick)
+	. = pick_weight(list_to_pick)
+	list_to_pick[.]--
 
 /**
  * Like pick_weight, but allowing for nested lists.

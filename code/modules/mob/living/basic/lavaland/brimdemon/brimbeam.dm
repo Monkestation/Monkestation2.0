@@ -29,7 +29,7 @@
 	owner.move_resist = MOVE_FORCE_VERY_STRONG
 	owner.balloon_alert_to_viewers("charging...")
 	var/mutable_appearance/direction_overlay = mutable_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
-	var/mutable_appearance/direction_emissive = emissive_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir", owner, alpha = 150/*, effect_type = EMISSIVE_NO_BLOOM*/)
+	var/mutable_appearance/direction_emissive = emissive_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir", owner, alpha = 150, effect_type = EMISSIVE_NO_BLOOM)
 	owner.add_overlay(direction_overlay)
 	owner.add_overlay(direction_emissive)
 
@@ -59,7 +59,7 @@
 /// Create a laser in the direction we are facing
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/fire_laser()
 	owner.visible_message(span_danger("[owner] fires a brimbeam!"))
-	playsound(owner, 'sound/creatures/brimdemon.ogg', 150, FALSE, 0, 3)
+	playsound(owner, 'sound/mobs/non-humanoids/brimdemon/brimdemon.ogg', 150, FALSE, 0, 3)
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, beam_range)
 	var/turf/origin_turf = get_turf(owner)
 	var/list/affected_turfs = get_line(origin_turf, target_turf) - origin_turf

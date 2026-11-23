@@ -587,9 +587,9 @@
 	throw_range = 7
 	resistance_flags = null
 
-	hitsound = 'sound/weapons/smash.ogg'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 
 /obj/item/storage/fancy/a40mm_box/Initialize(mapload)
 	. = ..()
@@ -618,7 +618,9 @@
 		var/obj/item/ammo_casing/a40mm/grenade = _grenade
 		if (!istype(grenade))
 			continue
-		. += image(icon = initial(icon), icon_state = (initial(grenade.icon_state) + "_inbox"), pixel_x = grenades * A40MM_GRENADE_INBOX_SPRITE_WIDTH)
+		var/image/grenade_overlay = image(icon = initial(icon), icon_state = (initial(grenade.icon_state) + "_inbox"))
+		grenade_overlay.pixel_w = grenades * A40MM_GRENADE_INBOX_SPRITE_WIDTH
+		. += grenade_overlay
 		grenades += 1
 
 #undef A40MM_GRENADE_INBOX_SPRITE_WIDTH

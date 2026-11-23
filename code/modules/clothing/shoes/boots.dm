@@ -4,6 +4,7 @@
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	armor_type = /datum/armor/shoes_combat
 	strip_delay = 40
 	resistance_flags = NONE
@@ -55,6 +56,7 @@
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
@@ -107,10 +109,11 @@
 	icon_state = "winterboots"
 	inhand_icon_state = null
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	armor_type = /datum/armor/shoes_winterboots
-
+	cold_protection = FEET|LEGS
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-
+	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	lace_time = 8 SECONDS
 
@@ -127,7 +130,7 @@
 	desc = "A pair of winter boots with special grips on the bottom, designed to prevent slipping on frozen surfaces."
 	icon_state = "iceboots"
 	inhand_icon_state = null
-	clothing_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
+	clothing_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NO_SNOWPRINTS)
 	resistance_flags = FIRE_PROOF // Monkestation addition
 
 // A pair of ice boots intended for general crew EVA use - see EVA winter coat for comparison.
@@ -173,6 +176,7 @@
 	icon_state = "workboots"
 	inhand_icon_state = "jackboots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	armor_type = /datum/armor/shoes_workboots
 	strip_delay = 20
 	equip_delay_other = 40
@@ -208,6 +212,7 @@
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
@@ -292,3 +297,12 @@
 	icon_state = "admiral_drag"
 	worn_icon_state = "admiral_drag"
 	inhand_icon_state = "admiral_drag"
+
+
+/obj/item/clothing/shoes/jackboots/floortile/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
+
+/obj/item/clothing/shoes/pirate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)

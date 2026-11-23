@@ -5,7 +5,7 @@
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
 
-	hitsound = 'sound/hallucinations/growl1.ogg'
+	hitsound = 'sound/effects/hallucinations/growl1.ogg'
 	force = 21 // Just enough to break airlocks with melee attacks
 	wound_bonus = -30
 	bare_wound_bonus = 15
@@ -13,6 +13,9 @@
 
 /obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(attack_modifiers?[ATTACK_BLOCKED])
+		return
+
+	if(QDELETED(target))
 		return
 
 	if(ishuman(target))

@@ -15,12 +15,11 @@
 	health = 300
 	ranged = TRUE
 	projectiletype = /obj/projectile/leaper
-	projectilesound = 'sound/weapons/pierce.ogg'
+	projectilesound = 'sound/items/weapons/pierce.ogg'
 	ranged_cooldown_time = 30
 	pixel_x = -16
 	base_pixel_x = -16
 	layer = LARGE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	speed = 10
 	stat_attack = HARD_CRIT
 	robust_searching = 1
@@ -65,7 +64,6 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "leaper_bubble_pop"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 3
 
 /obj/effect/temp_visual/leaper_projectile_impact/Initialize(mapload)

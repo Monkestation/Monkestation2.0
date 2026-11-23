@@ -37,8 +37,8 @@
 /datum/action/cooldown/spell/wolves_among_sheep/cast(atom/cast_on)
 	. = ..()
 	center_turf = get_turf(owner)
-	playsound(center_turf,'sound/magic/wolvesamongsheep_warhorn.ogg', 1000, TRUE, 40)
-	playsound(center_turf,'sound/machines/airlockopen.ogg', 500, TRUE)
+	playsound(center_turf,'sound/effects/magic/wolvesamongsheep_warhorn.ogg', 1000, TRUE, 40)
+	playsound(center_turf,'sound/machines/airlock/airlockopen.ogg', 500, TRUE)
 	to_transform = list()
 	new /obj/effect/heretic_rune/big(center_turf)
 	addtimer(CALLBACK(src, PROC_REF(create_arena), center_turf), 1 SECONDS)
@@ -80,7 +80,7 @@
 			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/floors/rose_stone_turf.dmi', target, turf_icon, layer = ABOVE_OPEN_TURF_LAYER))
 		else if(isclosedturf(target))
 			var/wall_icon = "rose_stone_" + "[pick(1, 2, 3, 4, 5, 6, 7, 8)]"
-			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/walls/rose_stone_wall.dmi', target, wall_icon, layer = ABOVE_OPEN_TURF_LAYER))
+			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/walls/rose_stone_wall.dmi', target, wall_icon, layer = target.layer))
 
 		target.turf_flags |= NOJAUNT // We make the arena a NOJAUNT area so that stinky people cannot teleport in
 
@@ -91,7 +91,7 @@
 			to_banish.moveToNullspace()
 		// Windows will also get an alt appearance
 		for(var/obj/structure/window/to_change in target)
-			to_change.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/obj/structures.dmi', to_change, "stone_window_pane", layer = ABOVE_OPEN_TURF_LAYER))
+			to_change.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/obj/structures.dmi', to_change, "stone_window_pane", layer = to_change.layer))
 
 /// Sets up the proximity monitor which handles things that are within the area and leave once they get someone to crit
 /datum/action/cooldown/spell/wolves_among_sheep/proc/create_arena(turf/target)

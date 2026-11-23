@@ -3,7 +3,7 @@
  * You can't really use the non-modular version, least you eventually want asinine merge
  * conflicts and/or potentially disastrous issues to arise, so here's your own.
  */
-#define MODULAR_SAVEFILE_VERSION_MAX 4
+#define MODULAR_SAVEFILE_VERSION_MAX 5
 
 #define MODULAR_SAVEFILE_UP_TO_DATE -1
 
@@ -38,7 +38,7 @@
 			loadout = _text2num(loadout)
 		special_save_loadout["unusual"] += loadout
 
-	alt_job_titles = save_data["alt_job_titles"]
+	alt_job_titles = save_data["alt_job_titles"] || list()
 	loadout_list = sanitize_loadout_list(save_loadout)
 	special_loadout_list = texted_special_save_loadouts
 
@@ -66,6 +66,8 @@
 /datum/preferences/proc/update_character_monkestation(current_modular_version, list/save_data)
 	if(current_modular_version < 4)
 		monkestation_sanitize_alt_job_titles(save_data)
+	if(current_modular_version < 5)
+		migrate_tundra_moths(save_data)
 
 /datum/preferences/proc/update_preferences_monkestation(current_modular_version, datum/json_savefile/save_data)
 	return

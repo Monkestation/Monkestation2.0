@@ -528,7 +528,7 @@
 	if(!isliving(examined) || !examined.mind)
 		return
 	var/datum/antagonist/heretic_monster/monster = examined.mind.has_antag_datum(/datum/antagonist/heretic_monster)
-	if(monster.master == owner)
+	if(monster?.master == owner)
 		examine_text += span_heretic_master("[examined.p_They()] [examined.p_are()] your servant!")
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -720,7 +720,7 @@
 
 		for(var/datum/mind/mind as anything in cult_team.members)
 			if(mind.current)
-				SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
+				SEND_SOUND(mind.current, 'sound/effects/magic/clockwork/narsie_attack.ogg')
 				to_chat(mind.current, span_cultlarge(span_warning("Arcane and forbidden knowledge floods your forges and archives. The cult has learned how to create the ")) + span_cultlarge(span_hypnophrase("[result]!")))
 
 	conversion_rune.flash_lighting_fx(range = 7, power = 3, color = COLOR_HERETIC_GREEN, duration = 5 SECONDS)
@@ -1298,6 +1298,8 @@
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
  */
 /datum/antagonist/heretic/proc/can_ascend()
+	if(GLOB.wonderland_apocalypse)
+		return "\"Ascend? Over MY head? Nobody on this station goes higher than me!\" (Wonderland has sealed your ascension.)"
 	if(feast_of_owls)
 		return "The owls have taken your right of ascension (denied ascension)." // We sold our ambition for immediate power :/
 	if(!can_assign_self_objectives)
@@ -1334,9 +1336,23 @@
 
 /datum/antagonist/heretic/proc/query_for_monster_hunter(datum/source, list/prey)
 	SIGNAL_HANDLER
-	// if you've sacced a head of staff, or passed the point where blade breaking gets disabled, you're potential prey
-	if(high_value_sacrifices > 0 || unlimited_blades)
-		prey += owner
+	var/minion_count = 0
+	for(var/datum/mind/minion_mind as anything in monsters_summoned)
+		var/datum/antagonist/heretic_monster/minion_datum = minion_mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+		if(minion_datum?.master != owner)
+			continue
+		var/mob/living/minion = minion_mind.current
+		if(QDELETED(minion) || minion.stat == DEAD)
+			continue
+		minion_count++
+	if(passive_level >= 3 || minion_count >= 5)
+		prey[owner] = MONSTER_THREAT_HIGH
+	else if(unlimited_blades || high_value_sacrifices > 0 || minion_count >= 2)
+		prey[owner] = MONSTER_THREAT_MEDIUM
+	else if(total_sacrifices > 0 || minion_count)
+		prey[owner] = MONSTER_THREAT_LOW
+	else
+		prey[owner] = 0
 
 /// Give oozeling heretics their living heart back when revived.
 /datum/antagonist/heretic/proc/on_oozeling_revive(datum/source, mob/living/carbon/human/new_body, obj/item/organ/internal/brain/slime/core, nugget)

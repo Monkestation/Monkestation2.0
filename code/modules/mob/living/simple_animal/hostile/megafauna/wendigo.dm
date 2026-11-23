@@ -19,7 +19,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	icon = 'icons/mob/simple/icemoon/64x64megafauna.dmi'
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
@@ -48,7 +48,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	//hardmode_reward = /obj/item/gem/wendigo
-	rawr_sound = 'sound/magic/demon_dies.ogg' // MONKESTATION EDIT ADDITION
+	rawr_sound = 'sound/effects/magic/demon_dies.ogg' // MONKESTATION EDIT ADDITION
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
 	/// Range for wendigo stomping when it moves
@@ -153,7 +153,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 
 /proc/wendigo_scream(mob/owner)
 	SLEEP_CHECK_DEATH(5, owner)
-	playsound(owner.loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
+	playsound(owner.loc, 'sound/effects/magic/demon_dies.ogg', 600, FALSE, 10)
 	var/pixel_shift = rand(5, 15)
 	animate(owner, pixel_z = pixel_shift, time = 1, loop = 20, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -pixel_shift, time = 1, flags = ANIMATION_RELATIVE)
@@ -246,7 +246,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 /obj/item/wendigo_skull
 	name = "wendigo skull"
 	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/mining_zones/artifacts.dmi'
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0

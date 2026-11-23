@@ -10,8 +10,16 @@
 /datum/status_effect/water_affected/proc/calculate_water_slow()
 	//Factor in swimming skill here?
 	var/turf/owner_turf = get_turf(owner)
-	if(!owner_turf || QDELETED(owner_turf.liquids) || QDELETED(owner_turf.liquids.liquid_group) || owner_turf.liquids.liquid_group.group_overlay_state == LIQUID_STATE_PUDDLE)
+	if(!owner_turf || QDELETED(owner_turf.liquids) || QDELETED(owner_turf.liquids.liquid_group))
 		return FALSE
+	// fish tails swim through spills like they do through water tiles, puddles included
+	if(has_fish_tail(owner))
+		owner.remove_movespeed_modifier(/datum/movespeed_modifier/liquids)
+		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water/liquids)
+		return TRUE
+	if(owner_turf.liquids.liquid_group.group_overlay_state == LIQUID_STATE_PUDDLE)
+		return FALSE
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water/liquids)
 	var/slowdown_amount = owner_turf.liquids.liquid_group.group_overlay_state * 0.5
 	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/liquids, multiplicative_slowdown = slowdown_amount)
 	return TRUE
@@ -21,6 +29,9 @@
 	if(!calculate_water_slow())
 		qdel(src)
 		return
+	// puddles only touch feet when stepping in, like for everyone else
+	if(owner_turf.liquids.liquid_group.group_overlay_state == LIQUID_STATE_PUDDLE)
+		return
 	//Make the reagents touch the person
 
 	var/fraction = SUBMERGEMENT_PERCENT(owner, owner_turf.liquids)
@@ -29,6 +40,11 @@
 
 /datum/status_effect/water_affected/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/liquids)
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water/liquids)
+
+///Whether this mob has a fish tail, which lets it move through liquids of any depth without slowdown
+/proc/has_fish_tail(mob/living/target)
+	return istype(target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/external/tail/fish)
 
 /datum/movespeed_modifier/liquids
 	variable = TRUE

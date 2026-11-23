@@ -15,6 +15,22 @@
 /// Used for HUD objects
 #define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE|TILE_BOUND)
 
+/// Screen objects that are always shown while the hud is visible, kept in static_inventory
+#define HUD_GROUP_STATIC 1
+
+#define HUD_TAC_MINIMAP "tac_minimap"
+#define HUD_TAC_MINIMAP_DIMMER "tac_minimap_dimmer"
+#define HUD_TAC_MINIMAP_Z_INDICATOR "tac_minimap_z_indicator"
+#define HUD_TAC_MINIMAP_Z_INDICATOR_UP "tac_minimap_z_up"
+#define HUD_TAC_MINIMAP_Z_INDICATOR_DOWN "tac_minimap_z_down"
+#define HUD_TAC_MINIMAP_TOOL_RED "tac_minimap_tool_red"
+#define HUD_TAC_MINIMAP_TOOL_YELLOW "tac_minimap_tool_yellow"
+#define HUD_TAC_MINIMAP_TOOL_PURPLE "tac_minimap_tool_purple"
+#define HUD_TAC_MINIMAP_TOOL_BLUE "tac_minimap_tool_blue"
+#define HUD_TAC_MINIMAP_TOOL_ERASE "tac_minimap_tool_erase"
+#define HUD_TAC_MINIMAP_TOOL_LABEL "tac_minimap_tool_label"
+#define HUD_TAC_MINIMAP_TOOL_CLEAR "tac_minimap_tool_clear"
+
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
 
@@ -40,12 +56,12 @@
 	return"CENTER+[x_off]:16,SOUTH+[y_off]:[5 + y_pixel_offset]"
 
 /proc/ui_equip_position(mob/M)
-	var/y_off = round((M.held_items.len-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
+	var/y_off = round((M.get_num_hand_slots()-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
 	return "CENTER:-16,SOUTH+[y_off+1]:5"
 
 /proc/ui_swaphand_position(mob/M, which = 1) //values based on old swaphand ui positions (CENTER: +/-16,SOUTH+1:5)
 	var/x_off = which == 1 ? -1 : 0
-	var/y_off = round((M.held_items.len-1) / 2)
+	var/y_off = round((M.get_num_hand_slots()-1) / 2)
 	return "CENTER+[x_off]:16,SOUTH+[y_off+1]:5"
 
 // Middle

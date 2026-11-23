@@ -12,7 +12,7 @@
 	yield = 50
 	potency = 50
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	icon_dead = "towercap-dead"
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	possible_mutations = list(/datum/hydroponics/plant_mutation/steel_towercap)
@@ -126,7 +126,7 @@
 /obj/structure/punji_sticks
 	name = "punji sticks"
 	desc = "Don't step on this."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "punji"
 	resistance_flags = FLAMMABLE
 	max_integrity = 30
@@ -142,7 +142,7 @@
 	build_stab_overlay()
 
 /obj/structure/punji_sticks/proc/build_stab_overlay()
-	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER, offset_spokesman = src, plane = GAME_PLANE_FOV_HIDDEN)
+	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER)
 
 /obj/structure/punji_sticks/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()

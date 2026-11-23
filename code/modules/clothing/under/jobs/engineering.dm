@@ -1,6 +1,7 @@
 //Contains: Engineering department jumpsuits
 
 /obj/item/clothing/under/rank/engineering
+	abstract_type = /obj/item/clothing/under/rank/engineering
 	icon = 'icons/obj/clothing/under/engineering.dmi'
 	worn_icon = 'icons/mob/clothing/under/engineering.dmi'
 	armor_type = /datum/armor/rank_engineering
@@ -32,6 +33,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians. Made from fire resistant materials."
@@ -48,6 +50,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/engineering/engineer
 	desc = "It's an orange high visibility jumpsuit worn by engineers. Made from fire resistant materials."

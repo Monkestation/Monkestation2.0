@@ -2,13 +2,13 @@
 /obj/effect/heretic_rune
 	name = "transmutation rune"
 	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid. This one looks pretty small."
-	icon = 'icons/obj/rune.dmi'
+	icon = 'icons/obj/antags/cult/rune.dmi'
 	icon_state = "main1"
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	plane = FLOOR_PLANE
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
@@ -17,7 +17,7 @@
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
-	// ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 	AddElement(/datum/element/block_turf_fingerprints)
 
 /obj/effect/heretic_rune/examine(mob/user)
@@ -198,7 +198,7 @@
 	// This doesn't necessarily mean the ritual will succeed, but it's valid!
 	// Do the animations and associated feedback.
 	flick("[icon_state]_active", src)
-	playsound(user, 'sound/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
+	playsound(user, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
 
 	// - We temporarily make all of our chosen atoms invisible, as some rituals may sleep,
 	// and we don't want people to be able to run off with ritual items.
@@ -253,7 +253,7 @@
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
 		return FALSE
 	for(var/atom/movable/thing in loc)
-		if(thing.flags_1 & PREVENT_CLICK_UNDER_1 && thing.density && thing.layer > layer)
+		if(thing.flags_1 & PREVENT_CLICK_UNDER_1 && thing.density && COMPARE_LAYERS(thing.layer, layer))
 			return TRUE
 	return FALSE
 
@@ -265,7 +265,7 @@
 	pixel_y = 18
 	pixel_z = -48
 	plane = FLOOR_PLANE
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune
 	/// We only set this state after setting the colour, otherwise the animation doesn't colour correctly
 	var/animation_state = "transmutation_rune_draw"

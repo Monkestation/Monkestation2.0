@@ -1,7 +1,7 @@
 /obj/item/electropack
 	name = "electropack"
 	desc = "Dance my monkeys! DANCE!!!"
-	icon = 'icons/obj/radio.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "electropack0"
 	inhand_icon_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -40,7 +40,7 @@
 /obj/item/electropack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
-		A.icon = 'icons/obj/assemblies/assemblies.dmi'
+		A.icon = 'icons/obj/devices/assemblies.dmi'
 
 		if(!user.transferItemToLoc(attacking_item, A))
 			to_chat(user, span_warning("[attacking_item] is stuck to your hand, you cannot attach it to [src]!"))

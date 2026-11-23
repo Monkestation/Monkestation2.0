@@ -56,7 +56,7 @@
 	if(inserted_tape)
 		. += span_info("The \"<b>[inserted_tape.cassette_data.name]</b>\" cassette is inserted.")
 		if(current_song)
-			. += span_info("The track \"<b>[current_song.name]</b>\" is [playing ? "playing" : "selected"].")
+			. += span_info("The track \"<b>[html_encode(current_song.name)]</b>\" is [playing ? "playing" : "selected"].")
 		. += span_info("<b>Ctrl-Click</b> to eject the tape.")
 	else
 		. += span_info("No tape is inserted.")
@@ -244,7 +244,7 @@
 	if(current_song.duration > 0)
 		playing_extra_data["duration"] = DisplayTimeText(current_song.duration * 1 SECONDS)
 	user.balloon_alert(user, "track #[new_idx] selected")
-	to_chat(user, span_notice("Selected track <b>\"[current_song.name]\"</b>."))
+	to_chat(user, span_notice("Selected track <b>\"[html_encode(current_song.name)]\"</b>."))
 
 /*
 	ACTION BUTTONS

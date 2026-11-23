@@ -12,7 +12,6 @@
 	max_integrity = 100
 	buckle_lying = 0
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	var/view_range = 2.5
 	var/cooldown = 0
 	/// The projectile that the turret fires
@@ -28,9 +27,9 @@
 	var/warned = FALSE
 	var/list/calculated_projectile_vars
 	/// Sound to play at the end of a burst
-	var/overheatsound = 'sound/weapons/sear.ogg'
+	var/overheatsound = 'sound/items/weapons/sear.ogg'
 	/// Sound to play when firing
-	var/firesound = 'sound/weapons/gun/smg/shot.ogg'
+	var/firesound = 'sound/items/weapons/gun/smg/shot.ogg'
 	/// If using a wrench on the turret will start undeploying it
 	var/can_be_undeployed = FALSE
 	/// What gets spawned if the object is undeployed
@@ -69,8 +68,8 @@
 //BUCKLE HOOKS
 
 /obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
-	for(var/obj/item/I in buckled_mob.held_items)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
+	for(var/obj/item/I as anything in buckled_mob.get_held_items())
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
 	if(istype(buckled_mob))
@@ -90,20 +89,15 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/V in M.held_items)
-		var/obj/item/I = V
-		if(istype(I))
-			if(M.dropItemToGround(I))
-				var/obj/item/gun_control/TC = new(src)
-				M.put_in_hands(TC)
-		else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-			var/obj/item/gun_control/TC = new(src)
-			M.put_in_hands(TC)
+	M.drop_all_held_items() // Some stuff might not be dropped here
+	for(var/empty_hand_index in M.get_empty_held_indexes())
+		var/obj/item/gun_control/control = new()
+		if(!M.put_in_hand(control, empty_hand_index)) // fuck.
+			qdel(control)
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	setDir(SOUTH)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	set_anchored(TRUE)
 	if(M.client)
 		M.client.view_size.setTo(view_range)
@@ -136,43 +130,34 @@
 	switch(dir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = 0
 			user.pixel_y = -14
 		if(NORTHEAST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = -8
 			user.pixel_y = -4
 		if(EAST)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 			user.pixel_x = -14
 			user.pixel_y = 0
 		if(SOUTHEAST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = -8
 			user.pixel_y = 4
 		if(SOUTH)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-			plane = GAME_PLANE_UPPER
 			user.pixel_x = 0
 			user.pixel_y = 14
 		if(SOUTHWEST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = 8
 			user.pixel_y = 4
 		if(WEST)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 			user.pixel_x = 14
 			user.pixel_y = 0
 		if(NORTHWEST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = 8
 			user.pixel_y = -4
 
@@ -230,15 +215,15 @@
 	number_of_shots = 3
 	cooldown_duration = 2 SECONDS
 	rate_of_fire = 2
-	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	firesound = 'sound/items/weapons/gun/hmg/hmg.ogg'
+	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 
 /obj/machinery/deployable_turret/artillerylight
 	name = "NT Model-2508 Field Cannon"
 	desc = "A small field cannon based off a centuries old design, updated with modern materials to make it much lighter and safe to fire on stations."
-	icon = 'icons/mecha/largetanks.dmi'
+	icon = 'icons/mob/rideables/largetanks.dmi'
 	icon_state = "artillery_light"
 	max_integrity = 300
 	armor_type = /datum/armor/artillery
@@ -248,8 +233,8 @@
 	number_of_shots = 1
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cooldown_duration = 3 SECONDS
-	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	firesound = 'sound/items/weapons/gun/general/lighttankgun.ogg'
+	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/vehicle/ridden/artillerylight
 	cover_amount = 66 // its has a gunshield
@@ -269,30 +254,25 @@
 	switch(dir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = -9
 			user.pixel_y = 0
 		if(EAST)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 			user.pixel_x = -6
 			user.pixel_y = 0
 		if(SOUTH)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-			plane = GAME_PLANE_UPPER
 			user.pixel_x = 9
 			user.pixel_y = 0
 		if(WEST)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 			user.pixel_x = 4
 			user.pixel_y = 0
 
 /obj/machinery/deployable_turret/artilleryheavy
 	name = "M1938 122mm Artillery Gun"
 	desc = "A large Soviet howitzer not much newer then the legendary Mosin Nagant, its way to heavy to be safe on the station, and its shell likewise is too dangerous for orbital use."
-	icon = 'icons/mecha/supertanks.dmi'
+	icon = 'icons/mob/rideables/supertanks.dmi'
 	icon_state = "m1938"
 	max_integrity = 450
 	armor_type = /datum/armor/artillery
@@ -302,8 +282,8 @@
 	number_of_shots = 1
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cooldown_duration = 8 SECONDS
-	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	firesound = 'sound/items/weapons/gun/general/lighttankgun.ogg'
+	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/vehicle/ridden/artilleryheavy
 	cover_amount = 88 // its has a gunshield
@@ -323,23 +303,18 @@
 	switch(dir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = -9
 			user.pixel_y = 0
 		if(EAST)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 			user.pixel_x = -6
 			user.pixel_y = 0
 		if(SOUTH)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-			plane = GAME_PLANE_UPPER
 			user.pixel_x = 9
 			user.pixel_y = 0
 		if(WEST)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 			user.pixel_x = 4
 			user.pixel_y = 0
 

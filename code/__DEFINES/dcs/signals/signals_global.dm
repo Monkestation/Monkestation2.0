@@ -87,6 +87,8 @@
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
 
+/// Global signal sent when a mob is spawned from a ghost in a dynamic ruleset (mob/spawned_mob)
+#define COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS "!ruleset_body_generated_from_ghosts"
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
 
@@ -106,6 +108,12 @@
 
 /// Sent whenever a monster hunter initiates the Wonderland Apocalypse
 #define COMSIG_GLOB_WONDERLAND_APOCALYPSE "!wonderland_apocalypse"
+
+///Global signal sent when the player list grows. Called by [mob/add_to_player_list] (mob/player)
+#define COMSIG_GLOB_PLAYER_LOGIN "!player_login"
+
+///Global signal sent when the player list shrinks. Called by [mob/remove_from_player_list] (mob/player)
+#define COMSIG_GLOB_PLAYER_LOGOUT "!player_logout"
 
 /// Sent when supermatter begins its delam countdown/when the suppression system is triggered: (var/trigger_reason)
 #define COMSIG_MAIN_SM_DELAMINATING "delam_time"

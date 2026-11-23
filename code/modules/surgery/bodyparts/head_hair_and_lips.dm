@@ -11,37 +11,8 @@
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
 	if(human_head_owner)
-		if(human_head_owner.head)
-			var/obj/item/hat = human_head_owner.head
-			if(hat.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(hat.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.wear_mask)
-			var/obj/item/mask = human_head_owner.wear_mask
-			if(mask.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(mask.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.wear_neck)
-			var/obj/item/item_neck = human_head_owner.wear_neck
-			if(item_neck.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(item_neck.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.w_uniform)
-			var/obj/item/item_uniform = human_head_owner.w_uniform
-			if(item_uniform.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(item_uniform.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-		//invisibility and husk stuff
-		if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
-			hair_hidden = TRUE
-			facial_hair_hidden = TRUE
+		hair_hidden = !!(human_head_owner.obscured_slots & HIDEHAIR)
+		facial_hair_hidden = !!(human_head_owner.obscured_slots & HIDEFACIALHAIR)
 	if(is_husked)
 		hair_hidden = TRUE
 		facial_hair_hidden = TRUE
@@ -100,7 +71,7 @@
 		var/image/lip_overlay = image('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, image_dir)
 		lip_overlay.color = lip_color
 		//Emissive blocker
-		if(blocks_emissive)
+		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 			lip_overlay.overlays += emissive_blocker(lip_overlay.icon, lip_overlay.icon_state, location, alpha = facial_hair_alpha)
 		//Offsets
 		worn_face_offset?.apply_offset(lip_overlay)
@@ -114,7 +85,7 @@
 			facial_hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
 			facial_hair_overlay.alpha = facial_hair_alpha
 			//Emissive blocker
-			if(blocks_emissive)
+			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				facial_hair_overlay.overlays += emissive_blocker(facial_hair_overlay.icon, facial_hair_overlay.icon_state, location, alpha = facial_hair_alpha)
 			//Offsets
 			worn_face_offset?.apply_offset(facial_hair_overlay)
@@ -134,7 +105,7 @@
 			hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
 			hair_overlay.alpha = hair_alpha
 			//Emissive blocker
-			if(blocks_emissive)
+			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
 			//Offsets
 			worn_face_offset?.apply_offset(hair_overlay)
@@ -174,10 +145,10 @@
 	var/debrain_icon = 'icons/mob/species/human/human_face.dmi'
 	var/debrain_icon_state = "debrained"
 	if(bodytype & BODYTYPE_ALIEN)
-		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_alien"
 	else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
-		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_larva"
 
 	var/image/debrain_overlay

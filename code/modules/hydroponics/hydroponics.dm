@@ -157,8 +157,8 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Lock mutation"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	// Edibles and pills can be composted.
-	if(IS_EDIBLE(held_item) || istype(held_item, /obj/item/reagent_containers/pill))
+	// Edibles can be composted (most of the times).
+	if(IS_EDIBLE(held_item) && HAS_TRAIT(held_item, TRAIT_UNCOMPOSTABLE))
 		context[SCREENTIP_CONTEXT_LMB] = "Compost"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -484,7 +484,7 @@
 		else
 			var/t_growthstate = clamp(round(((growth / (myseed.harvest_age * (1.01 ** -myseed.maturation))) * 10) * myseed.growthstages, 1),1, myseed.growthstages)
 			plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
-	plant_overlay.pixel_y = myseed.plant_icon_offset
+	plant_overlay.pixel_z = myseed.plant_icon_offset
 	return plant_overlay
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
@@ -809,7 +809,10 @@
 		var/visi_msg = ""
 		var/transfer_amount
 
-		if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
+		if(IS_EDIBLE(reagent_source))
+			if(HAS_TRAIT(reagent_source, TRAIT_UNCOMPOSTABLE))
+				to_chat(user, "[reagent_source] cannot be composted in its current state")
+				return
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
 			transfer_amount = reagent_source.reagents.total_volume
 			SEND_SIGNAL(reagent_source, COMSIG_ITEM_ON_COMPOSTED, user)
@@ -1169,7 +1172,7 @@
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
 	desc = "A patch of dirt."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	gender = PLURAL
 	circuit = null

@@ -77,6 +77,16 @@
 		/obj/item/storage/backpack/duffelbag/mining_conscript,
 	)
 
+/datum/voucher_set/mining/punching_mitts
+	name = "Punching Mitts"
+	description = "Contains a pair of punching mitts for turning the local wilderness into the local gravel pit with your BARE HANDS."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "punch_mitts"
+	set_items = list(
+		/obj/item/clothing/gloves/fingerless/punch_mitts,
+		/obj/item/clothing/head/cowboy,
+	)
+
 // monkestation explorer vouchers
 /datum/voucher_set/explorer
 
@@ -250,7 +260,7 @@
 /datum/voucher_set/security/utility/sec_projector
 	name = "Security Holobarrier Projector"
 	description = "A holographic projector that creates holographic security barriers along with holographic handcuffs."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "signmaker_sec"
 	set_items = list(
 		/obj/item/holosign_creator/security,
@@ -345,7 +355,7 @@
 /datum/voucher_set/security/utility/laptop
 	name = "Security Laptop"
 	description = "A laptop pre-loaded with security software."
-	icon = 'icons/obj/modular_laptop.dmi'
+	icon = 'icons/obj/devices/modular_laptop.dmi'
 	icon_state = "laptop-closed"
 	set_items = list(
 		/obj/item/modular_computer/laptop/preset/security,

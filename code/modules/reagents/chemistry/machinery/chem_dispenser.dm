@@ -144,8 +144,8 @@
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
-	b_o.pixel_y = -4
-	b_o.pixel_x = -7
+	b_o.pixel_w = -7
+	b_o.pixel_z = -4
 	return b_o
 
 /obj/machinery/chem_dispenser/proc/work_animation()
@@ -418,7 +418,7 @@
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
 						to_chat(ui.user, span_warning("[src] cannot find <b>[reagent]</b>!"))
-						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+						playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
@@ -609,17 +609,17 @@
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	switch(dir)
 		if(NORTH)
-			b_o.pixel_y = 7
-			b_o.pixel_x = rand(-9, 9)
+			b_o.pixel_w = rand(-9, 9)
+			b_o.pixel_z = 7
 		if(EAST)
-			b_o.pixel_x = 4
-			b_o.pixel_y = rand(-5, 7)
+			b_o.pixel_w = 4
+			b_o.pixel_z = rand(-5, 7)
 		if(WEST)
-			b_o.pixel_x = -5
-			b_o.pixel_y = rand(-5, 7)
+			b_o.pixel_w = -5
+			b_o.pixel_z = rand(-5, 7)
 		else//SOUTH
-			b_o.pixel_y = -7
-			b_o.pixel_x = rand(-9, 9)
+			b_o.pixel_w = rand(-9, 9)
+			b_o.pixel_z = -7
 	return b_o
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -730,7 +730,7 @@
 /obj/machinery/chem_dispenser/abductor
 	name = "reagent synthesizer"
 	desc = "Synthesizes a variety of reagents using proto-matter."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "chem_dispenser"
 	base_icon_state = "chem_dispenser"
 	has_panel_overlay = FALSE

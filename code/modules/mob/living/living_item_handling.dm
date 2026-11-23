@@ -14,12 +14,14 @@
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 
 /mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
 	throw_mode = mode
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
@@ -66,6 +68,13 @@
 		return fumble_throw_item(target, thrown_thing)
 	//MONKESTATION EDIT START
 	var/power_throw = 0
+	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		power_throw += potential_spine.added_throw_speed
+		extra_throw_range += potential_spine.added_throw_range
+
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
 //	if(HAS_TRAIT(src, TRAIT_DWARF)) // MONKESTATION EDIT OLD
@@ -87,7 +96,6 @@
 	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw ? " really hard!" : "."]"), \
 					span_danger("You [verb_text] [thrown_thing][power_throw ? " really hard!" : "."]"))
 	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
-	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
 	newtonian_move(get_dir(target, src))
 	//MONKESTATION EDIT START
 	var/total_throw_range = thrown_thing.throw_range + extra_throw_range
@@ -185,7 +193,7 @@
 	if(!offered_item || offerer.get_active_held_item() != offered_item && !bypass)
 		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
 		return
-	if(!get_empty_held_indexes())
+	if(!length(get_empty_held_indexes()))
 		to_chat(src, span_warning("You have no empty hands!"))
 		return
 

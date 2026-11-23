@@ -11,7 +11,7 @@
 
 /obj/item/assembly/flash/explosive/proc/prepare_boom(mob/living/user)
 	user.visible_message("[user] presses a button on top of the flash... <font color='red'>what was that sound?</font>?")
-	playsound(src, 'sound/machines/beep.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/beep/beep.ogg', 100, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(detonate), src), 1.5 SECONDS)
 	admin_log = "[user] detonates the explosive flash!"
 	burn_out()

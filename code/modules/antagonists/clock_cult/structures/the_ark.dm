@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		to_chat(current_mob, span_hypnophrase("The only thing you remember is suddenly feeling hard ground beneath you and the safety of home."))
 		current_mob.forceMove(find_safe_turf())
 
-	if(GLOB.narsie_breaching_rune)
+	if(GLOB.narsie_breaching_rune && !GLOB.wonderland_apocalypse)
 		if(istype(GLOB.narsie_breaching_rune, /obj/effect/rune/narsie))
 			new /obj/narsie(get_turf(GLOB.narsie_breaching_rune))
 		else
@@ -91,7 +91,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 				sound_to_playing_players('sound/machines/clockcult/ark_deathrattle.ogg', 50)
 				sleep(2.7 SECONDS)
 				explosion(src, 1, 3, 8, 8)
-				sound_to_playing_players('sound/effects/explosion_distant.ogg', 50)
+				sound_to_playing_players('sound/effects/explosion/explosion_distant.ogg', 50)
 				for(var/obj/effect/portal/clockcult/portal in GLOB.portals)
 					qdel(portal)
 				SSshuttle.clearHostileEnvironment(src)
@@ -105,9 +105,9 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	. = ..()
 	if(!.)
 		return
-	send_clock_message(span_bigbrass("The ark is taking damage!"), sent_sound = 'sound/machines/clockcult/ark_damage.ogg')
+	send_clock_message(span_bigbrass("The ark is taking damage!"), sent_sound = 'sound/effects/parry.ogg')
 	flick("clockwork_gateway_damaged", src)
-	playsound(src, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
+	playsound(src, 'sound/effects/parry.ogg', 75, FALSE)
 
 /obj/structure/destructible/clockwork/the_ark/process(seconds_per_tick)
 	if(current_state >= ARK_STATE_FINAL)
@@ -135,11 +135,14 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 /obj/structure/destructible/clockwork/the_ark/proc/prepare_ark()
 	if(current_state > ARK_STATE_BASE)
 		return
+	if(GLOB.wonderland_apocalypse)
+		send_clock_message(span_hearts_decree("Your Ark may sit in the corner and think about what it has done. It opens when I say, and I shall not say."))
+		return
 	current_state = ARK_STATE_CHARGING
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_charging"
 	send_clock_message(span_bigbrass("The Ark's many cogs suddenly whir to life, steam gushing out of its many crevices; it will open in 5 minutes!"), \
-					   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
+					   sent_sound = 'sound/effects/magic/clockwork/scripture_tier_up.ogg')
 	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD) //MOVE THIS TO A LOOP ON THE ARK SS
 
 /obj/structure/destructible/clockwork/the_ark/proc/open_gateway()
@@ -149,7 +152,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_active"
 	send_clock_message(span_bigbrass("The Ark has been activated, you will be transported soon! Dont forget to gather weapons with your \"Clockwork Armaments\" scripture."), \
-					   sent_sound = 'sound/magic/clockwork/ark_activation_sequence.ogg')
+					   sent_sound = 'sound/effects/magic/clockwork/ark_activation_sequence.ogg')
 	addtimer(CALLBACK(src, PROC_REF(announce_gateway)), 27 SECONDS)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()
@@ -168,7 +171,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		var/datum/antagonist/clock_cultist/servant_antag = servant_mind.has_antag_datum(/datum/antagonist/clock_cultist)
 		servant_antag?.add_forbearance(servant_mob)
 
-	sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 50)
+	sound_to_playing_players('sound/effects/magic/clockwork/invoke_general.ogg', 50)
 	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	addtimer(CALLBACK(src, PROC_REF(begin_assault)), ARK_GRACE_PERIOD)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(send_station_support_package), /obj/item/turf_demolisher/reebe), 10 SECONDS)
@@ -176,7 +179,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
 	not a drill. Estimated time of appearance: [ARK_GRACE_PERIOD/10] seconds. Use this time to prepare for an attack on [station_name()]." \
-	,"Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ark_activation.ogg')
+	,"Central Command Higher Dimensional Affairs", 'sound/effects/magic/clockwork/ark_activation.ogg')
 
 	sound_to_playing_players('sound/effects/clockcult_gateway_charging.ogg', 10, TRUE)
 	log_game("The clock cult has begun opening the Ark of the Clockwork Justiciar.")

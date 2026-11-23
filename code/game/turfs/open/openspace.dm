@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	layer = SPACE_LAYER
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	turf_flags = NO_RUST
 	var/can_cover_up = TRUE
@@ -109,7 +110,7 @@
 /turf/open/openspace/proc/CanCoverUp()
 	return can_cover_up
 
-/turf/open/openspace/proc/CanBuildHere()
+/turf/open/openspace/CanBuildHere()
 	return can_build_on
 
 /turf/open/openspace/attackby(obj/item/C, mob/user, params)
@@ -131,9 +132,6 @@
 	return ..()
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -147,7 +145,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
 
@@ -155,24 +153,48 @@
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(pass_info?.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+		return TRUE
 	var/atom/movable/our_movable = pass_info.caller_ref?.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
-	if(pass_info.multiz_checks)
-		var/turf/turf_below = GET_TURF_BELOW(src)
-		if(turf_below)
-			var/obj/structure/stairs/stairs_below = locate() in turf_below
-			if(stairs_below?.isTerminator())
-				return TRUE
 	return FALSE
+
+/// Bakes the static part of openspace's ground passability.
+/turf/open/openspace/nav_bake_pathing_pass(dir, list/edge_blockers)
+	// Ground movers may path across openspace when its downward fall path is
+	// already blocked (for example by a lattice or catwalk). Flying movers can
+	// always use the horizontal edge.
+	var/turf/below = GET_TURF_BELOW(src)
+	if(zPassOut(DOWN) && below?.zPassIn(DOWN))
+		return NAV_FLIGHT(dir)
+	return NAV_GROUND(dir) | NAV_FLIGHT(dir)
+
+/turf/open/openspace/nav_dirty_vertical_dependents()
+	// Ground edges on our horizontal neighbours depend on whether our downward
+	// fall path is blocked, so a change below us invalidates those edges too.
+	if(!SSnavmap.initialized || SSnavmap.startup_finalization_pending)
+		for(var/horizontal_dir in GLOB.cardinals)
+			var/turf/edge_neighbor = get_step(src, horizontal_dir)
+			if(edge_neighbor)
+				SSnavmap.record_startup_dirty_coordinate(edge_neighbor)
+		return
+	for(var/horizontal_dir in GLOB.cardinals)
+		var/turf/edge_neighbor = get_step(src, horizontal_dir)
+		if(!edge_neighbor)
+			continue
+		edge_neighbor.nav_pass = null
+		edge_neighbor.nav_blockers = null
+		SSnavmap.queue_turf_bake(edge_neighbor)
+		navmap_pathfinder_update(edge_neighbor.x, edge_neighbor.y, edge_neighbor.z, 0, edge_neighbor.get_nav_cost_flags())
 
 /turf/open/openspace/replace_floor(turf/open/new_floor_path, flags)
 	if (!initial(new_floor_path.overfloor_placed))
 		ChangeTurf(new_floor_path, flags = flags)
 		return
 	// Create plating under tiled floor we try to create directly onto the air
-	PlaceOnTop(/turf/open/floor/plating, flags = flags)
-	PlaceOnTop(new_floor_path, flags = flags)
+	place_on_top(/turf/open/floor/plating, flags = flags)
+	place_on_top(new_floor_path, flags = flags)
 
 /turf/open/openspace/can_cross_safely(atom/movable/crossing)
 	if(HAS_TRAIT(crossing, TRAIT_MOVE_FLYING) || (locate(/obj/structure/lattice) in src))

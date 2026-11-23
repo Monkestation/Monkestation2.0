@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender
-	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_sender_off"
 	base_icon_state = "bluespace_sender"
 	name = "Bluespace Gas Sender"
@@ -80,7 +80,7 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_overlays()
 	. = ..()
 	. += get_pipe_image(icon, "pipe", dir, , piping_layer)
-	if(showpipe)
+	if(underfloor_state)
 		. += get_pipe_image(icon, "pipe", initialize_directions)
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/process_atmos()

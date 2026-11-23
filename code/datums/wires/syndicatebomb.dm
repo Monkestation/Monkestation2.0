@@ -24,7 +24,7 @@
 			if(B.active)
 				holder.visible_message(span_danger("[icon2html(B, viewers(holder))] An alarm sounds! It's go-"))
 				B.explode_now = TRUE
-				if(!istype(B.payload, /obj/machinery/syndicatebomb/training))
+				if(!istype(B.payload, /obj/item/bombcore/training))
 					tell_admins(B)
 					// Cursed usr use but no easy way to get the pulser
 					if(isliving(usr))
@@ -48,7 +48,7 @@
 
 		if(WIRE_PROCEED)
 			holder.visible_message(span_danger("[icon2html(B, viewers(holder))] The bomb buzzes ominously!"))
-			playsound(B, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+			playsound(B, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 			var/seconds = B.seconds_remaining()
 			if(seconds >= 61) // Long fuse bombs can suddenly become more dangerous if you tinker with them.
 				B.detonation_timer = world.time + 600
@@ -76,7 +76,7 @@
 			if(!mend && B.active)
 				holder.visible_message(span_danger("[icon2html(B, viewers(holder))] An alarm sounds! It's go-"))
 				B.explode_now = TRUE
-				if(!istype(B.payload, /obj/machinery/syndicatebomb/training))
+				if(!istype(B.payload, /obj/item/bombcore/training))
 					tell_admins(B)
 					if(isliving(source))
 						log_combat(source, holder, "cut the detonation wire for")

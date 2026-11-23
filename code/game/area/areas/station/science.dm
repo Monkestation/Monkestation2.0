@@ -3,6 +3,7 @@
 	icon_state = "science"
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_SCIENCE
 
 /area/station/science/lobby
 	name = "\improper Science Lobby"
@@ -25,6 +26,7 @@
 	icon_state = "xenobio"
 
 /area/station/science/xenobiology/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Xenobiology Hallway"
 	icon_state = "xenobio_hall"
 
@@ -113,20 +115,21 @@
 /area/station/science/ordnance/burnchamber
 	name = "\improper Ordnance Burn Chamber"
 	icon_state = "ord_burn"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /area/station/science/ordnance/freezerchamber
 	name = "\improper Ordnance Freezer Chamber"
 	icon_state = "ord_freeze"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 // Room for equipments and such
 /area/station/science/ordnance/testlab
 	name = "\improper Ordnance Testing Lab"
 	icon_state = "ord_test"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	skip_minimap_rendering = TRUE
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED

@@ -1,11 +1,12 @@
 /obj/item/clothing/suit/armor
+	abstract_type = /obj/item/clothing/suit/armor
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
 	body_parts_covered = CHEST
-
+	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-
+	heat_protection = CHEST|GROIN
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	strip_delay = 60
 	equip_delay_other = 40
@@ -50,7 +51,6 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back/armorvest
 
-//MONKESTATION EDIT START
 /obj/item/clothing/suit/armor/surplus
 	name = "surplus armor vest"
 	desc = "An armored vest that provides decent protection against most types of damage."
@@ -60,7 +60,6 @@
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back/armorvest
-//MONKESTATION EDIT STOP
 
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
@@ -86,10 +85,10 @@
 	desc = "A blue armor vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
 	icon_state = "armor_press"
 
-/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
@@ -99,9 +98,9 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/vest_marine
-
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /datum/armor/vest_marine
@@ -174,9 +173,10 @@
 	inhand_icon_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor_type = /datum/armor/armor_hos
-
-
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
+	has_coat_pockets = TRUE
 
 /datum/armor/armor_hos
 	melee = 30
@@ -195,6 +195,7 @@
 	inhand_icon_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/hos/trenchcoat/pimpcoat
 	name = "pink armored trenchcoat"
@@ -213,6 +214,7 @@
 	icon_state = "hosformal"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
 	. = ..()
@@ -224,11 +226,13 @@
 	icon_state = "warden_alt"
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
-
-
+	cold_protection = CHEST|GROIN|ARMS|HANDS
+	heat_protection = CHEST|GROIN|ARMS|HANDS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
@@ -241,9 +245,10 @@
 	icon_state = "leathercoat-sec"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-
-
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
@@ -254,6 +259,7 @@
 	armor_type = /datum/armor/vest_capcarapace
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
+	has_coat_pockets = TRUE
 
 /datum/armor/vest_capcarapace
 	melee = 50
@@ -269,6 +275,8 @@
 	name = "syndicate captain's vest"
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
+	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade coat"
@@ -276,6 +284,7 @@
 	icon_state = "capformal"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
 	. = ..()
@@ -287,13 +296,19 @@
 	icon_state = "riot"
 	inhand_icon_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_riot
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
 	tackle_mod = 2
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/space
+
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -311,14 +326,17 @@
 	icon_state = "secjacket"
 	inhand_icon_state = "armor"
 	armor_type = /datum/armor/armor_secjacket
+	cold_protection = CHEST|GROIN|ARMS|HANDS
+	heat_protection = CHEST|GROIN|ARMS|HANDS
 	body_parts_covered = CHEST|GROIN|ARMS
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /datum/armor/armor_secjacket //Gotta compensate those extra covered limbs
 	melee = 25
@@ -360,7 +378,7 @@
 	return ..()
 
 /obj/item/clothing/suit/armor/balloon_vest/proc/pop()
-	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, vary = TRUE)
 	qdel(src)
 
 /obj/item/clothing/suit/armor/bone
@@ -409,8 +427,8 @@
 	inhand_icon_state = "armor_reflec"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
-
-
+	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_laserproof
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	//var/hit_reflect_chance = 50  //monkestation removal
@@ -451,20 +469,20 @@
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = THICKMATERIAL
-
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
-
+	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.5
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	tackle_mod = 2
+	has_coat_pockets = TRUE
+	coat_pocket_storage_datum = /datum/storage/pockets/armor
 
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
 	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/armor)
-
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 //All of the armor below is mostly unused
 
 /datum/armor/armor_swat
@@ -489,6 +507,12 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/armor_heavy
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/black
+
+/obj/item/clothing/suit/armor/heavy/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 /datum/armor/armor_heavy
 	melee = 80
@@ -504,8 +528,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	clothing_flags = THICKMATERIAL
-
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_tdome
 
 /datum/armor/armor_tdome
@@ -533,8 +557,8 @@
 /obj/item/clothing/suit/armor/tdome/holosuit
 	name = "thunderdome suit"
 	armor_type = /datum/armor/tdome_holosuit
-	max_heat_protection_temperature = null
-	min_cold_protection_temperature = null
+	cold_protection = null
+	heat_protection = null
 
 /datum/armor/tdome_holosuit
 	melee = 10
@@ -562,6 +586,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		)
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
@@ -628,10 +653,11 @@
 	icon_state = "rus_coat"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/vest_russian_coat
 	dog_fashion = null
+	has_coat_pockets = TRUE
 
 /datum/armor/vest_russian_coat
 	melee = 25
@@ -652,6 +678,8 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor_type = /datum/armor/armor_elder_atmosian
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 
 
@@ -679,6 +707,8 @@
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_centcom_formal
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
+	has_coat_pockets = TRUE
 
 /datum/armor/armor_centcom_formal
 	melee = 35
@@ -701,6 +731,8 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
+	has_coat_pockets = TRUE
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"
@@ -708,9 +740,10 @@
 	icon_state = "militia"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-
+	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/coat_militia
+	has_coat_pockets = TRUE
 
 /datum/armor/coat_militia
 	melee = 40
@@ -734,8 +767,14 @@
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_centcom_formal
+	has_coat_pockets = TRUE
 
 
 /obj/item/clothing/suit/armor/centcom_admiral/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)

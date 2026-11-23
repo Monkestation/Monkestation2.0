@@ -21,7 +21,7 @@
 		to_chat(user, span_warning("You have already completed this tutorial!"))
 		return
 
-	playsound(user, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50)
+	playsound(user, 'sound/machines/lavaland/cursed_slot_machine_jackpot.ogg', 50)
 	user.visible_message(span_notice("[user] [reward_message]"))
 	players_that_completed += user.ckey
 

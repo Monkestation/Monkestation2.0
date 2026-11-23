@@ -165,7 +165,7 @@
 	if(host_mob.stat == DEAD)
 		return
 	to_chat(host_mob, span_warning("You feel compelled to speak..."))
-	host_mob.say(sent_message, forced = "nanite speech")
+	host_mob.say(html_decode(sent_message), forced = "nanite speech")
 
 /datum/nanite_program/comm/voice
 	name = "Skull Echo"
@@ -186,7 +186,7 @@
 		sent_message = message_setting.get_value()
 	if(host_mob.stat == DEAD)
 		return
-	to_chat(host_mob, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
+	to_chat(host_mob, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[sent_message]")]\"")
 
 /datum/nanite_program/comm/hallucination
 	name = "Hallucination"

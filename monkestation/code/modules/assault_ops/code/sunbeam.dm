@@ -15,7 +15,7 @@
 	move_force = INFINITY
 	move_resist = INFINITY
 	pull_force = INFINITY
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	movement_type = PHASING | FLYING
 	plane = ABOVE_LIGHTING_PLANE
 	light_outer_range = 6
@@ -74,7 +74,7 @@
 	. = ..()
 	for(var/i in 1 to SUNBEAM_OVERLAYS)
 		var/mutable_appearance/beam_overlay = mutable_appearance(icon, "sunray")
-		beam_overlay.pixel_y = beam_offset_y * i
+		beam_overlay.pixel_z = beam_offset_y * i
 		. += beam_overlay
 
 /obj/effect/sunbeam/process(seconds_per_tick)

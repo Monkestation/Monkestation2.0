@@ -13,8 +13,8 @@
 	dense_when_open = TRUE
 	//One quarter chance of ashing things inside.
 	delivery_icon = "deliverycrate"
-	open_sound = 'sound/machines/crate_open.ogg'
-	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound = 'sound/machines/crate/crate_open.ogg'
+	close_sound = 'sound/machines/crate/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
@@ -36,9 +36,9 @@
 	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
 	var/lid_icon_state
 	/// Controls the X value of the lid, allowing left and right pixel movement.
-	var/lid_x = 0
+	var/lid_w = 0
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
-	var/lid_y = 0
+	var/lid_z = 0
 
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
@@ -114,8 +114,8 @@
 		. += "securecrateg"
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
-		lid.pixel_x = lid_x
-		lid.pixel_y = lid_y
+		lid.pixel_w = lid_w
+		lid.pixel_z = lid_z
 		lid.layer = layer
 		. += lid
 	if(welded)
@@ -243,7 +243,7 @@
 		return
 	if(user)
 		to_chat(user, span_notice("You remove the [manifest] from [src]."))
-	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
+	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(drop_location(src))
 	if(ishuman(user))
@@ -264,8 +264,8 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
@@ -348,8 +348,8 @@
 		. += "engcartg"
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
-		lid.pixel_x = lid_x
-		lid.pixel_y = lid_y
+		lid.pixel_w = lid_w
+		lid.pixel_z = lid_z
 		lid.layer = layer
 		. += lid
 	if(welded)
@@ -587,8 +587,8 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/sandstone
 	material_drop_amount = 8
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
@@ -603,8 +603,8 @@
 	max_integrity = 150
 	material_drop = /obj/item/stack/sheet/mineral/sandstone
 	material_drop_amount = 18
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 30
 	close_sound_volume = 80
 	can_install_electronics = FALSE

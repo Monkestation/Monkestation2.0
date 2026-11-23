@@ -85,6 +85,21 @@
 	var/list/cached_vars
 #endif
 
+	///The layout pref we take from the player looking at this datum's UI to know what layout to give.
+	var/datum/preference/choiced/layout_prefs_used = /datum/preference/choiced/tgui_layout
+
+	/**
+	 * Parent types.
+	 *
+	 * Abstract-ness is a meta-property of a class that is used to indicate
+	 * that the class is intended to be used as a base class for others, and
+	 * should not (or cannot) be instantiated.
+	 * We have no such language concept in DM, and so we provide a datum member
+	 * that can be used to hint at abstractness for circumstances where we would
+	 * like that to be the case, such as base behavior providers.
+	 */
+	var/abstract_type = /datum
+
 /**
  * Called when a href for this datum is clicked
  *
@@ -507,6 +522,11 @@
 	filter_data = null
 	filter_cache = null
 	atom_cast.filters = null
+
+/// Calls qdel on itself, because signals dont allow callbacks
+/datum/proc/selfdelete()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// Return text from this proc to provide extra context to hard deletes that happen to it
 /// Optional, you should use this for cases where replication is difficult and extra context is required

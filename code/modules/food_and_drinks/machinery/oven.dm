@@ -11,7 +11,7 @@
 /obj/machinery/oven
 	name = "oven"
 	desc = "Why do they call it oven when you of in the cold food of out hot eat the food?"
-	icon = 'icons/obj/machines/kitchenmachines.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "oven_off"
 	base_icon_state = "oven"
 	density = TRUE
@@ -61,7 +61,7 @@
 	. = ..()
 	if(open)
 		var/mutable_appearance/door_overlay = mutable_appearance(icon, "[base_icon_state]_lid_open")
-		door_overlay.pixel_y = OVEN_LID_Y_OFFSET
+		door_overlay.pixel_z = OVEN_LID_Y_OFFSET
 		. += door_overlay
 	else
 		. += mutable_appearance(icon, "[base_icon_state]_lid_closed")

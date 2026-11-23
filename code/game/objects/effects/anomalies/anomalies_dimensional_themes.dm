@@ -10,7 +10,7 @@
 	/// Typepath of custom material to use for objects.
 	var/datum/material/material
 	/// Sound to play when transforming a tile
-	var/sound = 'sound/magic/blind.ogg'
+	var/sound = 'sound/effects/magic/blind.ogg'
 	/// Weighted list of turfs to replace the floor with.
 	var/list/replace_floors = list(/turf/open/floor/material = 1)
 	/// Typepath of turf to replace walls with.
@@ -31,7 +31,7 @@
 /datum/dimension_theme/New()
 	if (material)
 		var/datum/material/using_mat = GET_MATERIAL_REF(material)
-		window_colour = using_mat.greyscale_colors
+		window_colour = using_mat.color
 
 /**
  * Applies themed transformation to the provided turf.
@@ -222,7 +222,7 @@
 	icon = 'icons/obj/ore.dmi'
 	icon_state = "Uranium ore"
 	material = /datum/material/uranium
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 
 /datum/dimension_theme/meat
 	icon = 'icons/obj/food/meat.dmi'
@@ -336,7 +336,7 @@
 /datum/dimension_theme/clockwork
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sheet-brass"
-	sound = 'sound/magic/clockwork/fellowship_armory.ogg'
+	sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg'
 	replace_floors = list(/turf/open/floor/bronze = 1)
 	replace_walls = /turf/closed/wall/mineral/bronze
 	replace_objs = list(

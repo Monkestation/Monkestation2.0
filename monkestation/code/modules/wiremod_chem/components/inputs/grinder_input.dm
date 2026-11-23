@@ -1,7 +1,7 @@
 /obj/structure/chemical_input/grinder
 	name = "remote chemical grinder"
 	desc = "grinds stuff in chemical."
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	icon_state = "grinder_chemical"
 	reagent_flags = TRANSPARENT | DRAINABLE
 	component_name = "Grinder Input"

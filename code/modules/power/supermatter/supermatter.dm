@@ -17,7 +17,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
-	icon = 'icons/obj/engine/supermatter.dmi'
+	icon = 'icons/obj/machines/engine/supermatter.dmi'
 	density = TRUE
 	anchored = TRUE
 	layer = MOB_LAYER
@@ -281,7 +281,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_NORMAL, energy = internal_energy * zap_transmission_rate * delta_time)
 	if(accumulated_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
 		var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_NORMAL)
-		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
+		playsound(src, 'sound/items/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(
@@ -1015,12 +1015,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 // Warp Effect //
 /atom/movable/warp_effect
-	plane = GRAVITY_PULSE_PLANE
+	plane = DISPLACEMENT_PLANE
 	appearance_flags = PIXEL_SCALE|LONG_GLIDE // no tile bound so you can see it around corners and so
 	icon = 'icons/effects/light_overlays/light_352.dmi'
 	icon_state = "light"
-	pixel_x = -176
-	pixel_y = -176
+	pixel_x = -160
+	pixel_y = -160
 
 /atom/movable/warp_effect/Initialize(mapload)
 	. = ..()

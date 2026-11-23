@@ -1,5 +1,4 @@
-/*
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 import { TRAITOR_MECHANICAL_DESCRIPTION } from './traitor';
 
 const SyndicateInfiltrator: Antagonist = {
@@ -14,4 +13,3 @@ const SyndicateInfiltrator: Antagonist = {
 };
 
 export default SyndicateInfiltrator;
-*/

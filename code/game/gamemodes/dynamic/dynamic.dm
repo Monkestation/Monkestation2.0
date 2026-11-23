@@ -298,7 +298,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return ..()
 
 /datum/game_mode/dynamic/proc/send_intercept()
-	if(SScommunications.block_command_report) //If we don't want the report to be printed just yet, we put it off until it's ready
+	if(GLOB.communications_controller.block_command_report) //If we don't want the report to be printed just yet, we put it off until it's ready
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), 10 SECONDS)
 		return
 
@@ -344,7 +344,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	generate_station_goals(greenshift)
 	. += generate_station_goal_report()
 	. += generate_station_trait_report()
-	if(length(SScommunications.command_report_footnotes))
+	if(length(GLOB.communications_controller.command_report_footnotes))
 		. += generate_report_footnote()
 
 	print_command_report(., "[command_name()] Status Summary", announce=FALSE)

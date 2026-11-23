@@ -1,13 +1,17 @@
 /datum/element/spooky
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	var/too_spooky = TRUE //will it spawn a new instrument?
+	///will it spawn a new instrument
+	var/too_spooky = TRUE
+	///Once used, the element is detached
+	var/single_use = FALSE
 
-/datum/element/spooky/Attach(datum/target, too_spooky = TRUE)
+/datum/element/spooky/Attach(datum/target, too_spooky = TRUE, single_use = FALSE)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	src.too_spooky = too_spooky
+	src.single_use = single_use
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(spectral_attack))
 
 /datum/element/spooky/Detach(datum/source)
@@ -26,6 +30,9 @@
 			if(U.stamina.loss > 95)
 				to_chat(U, "<font color ='red', size ='4'><B>Your ears weren't meant for this spectral sound.</B></font>")
 				INVOKE_ASYNC(src, PROC_REF(spectral_change), U)
+			if(single_use)
+				to_chat(user, span_warning("You feel like [source] has lost its spookiness..."))
+				Detach(source)
 			return
 
 	if(ishuman(C))
@@ -42,6 +49,9 @@
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
 		to_chat(C, "<span class='robot'><font size='4'>You're feeling more bony.</font></span>")
 		INVOKE_ASYNC(src, PROC_REF(spectral_change), H)
+		if(single_use)
+			to_chat(user, span_warning("You feel like [source] has lost its spookiness..."))
+			Detach(source)
 
 	else //the sound will spook monkeys.
 		C.set_jitter_if_lower(30 SECONDS)
@@ -68,7 +78,7 @@
 		change_name(H) //time for a new name!
 
 /datum/element/spooky/proc/change_name(mob/living/carbon/human/spooked)
-	var/skeleton_name = sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN))
+	var/skeleton_name = sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN, encode = FALSE))
 	if(!skeleton_name)
 		skeleton_name = "spooky skeleton"
 	spooked.fully_replace_character_name(null, skeleton_name)

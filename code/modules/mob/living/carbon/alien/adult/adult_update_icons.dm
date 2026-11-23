@@ -35,15 +35,11 @@
 			icon = alt_icon
 			alt_icon = old_icon
 		icon_state = "alien[caste]_leap"
-		pixel_x = base_pixel_x - 32
-		pixel_y = base_pixel_y - 32
 	else
 		if(alt_icon != initial(alt_icon))
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-	pixel_x = base_pixel_x + body_position_pixel_x_offset
-	pixel_y = base_pixel_y + body_position_pixel_y_offset
 	update_held_items()
 	update_worn_handcuffs()
 
@@ -68,7 +64,7 @@
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
-			handcuff_overlay += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
+			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)

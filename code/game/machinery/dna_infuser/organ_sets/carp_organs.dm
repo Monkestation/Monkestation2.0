@@ -10,6 +10,9 @@
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = list(TRAIT_SPACEWALK)
+	bonus_biotype = MOB_AQUATIC
+	limb_texture = /datum/bodypart_texture/carpskin
+	color_overlay_priority = LIMB_COLOR_CARP_INFUSION
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
 /// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
@@ -60,7 +63,7 @@
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = 10
 	head.unarmed_damage_high = 15
-	head.unarmed_stun_threshold = 15
+	head.unarmed_effectiveness = 15
 	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
 
 /obj/item/organ/internal/tongue/carp/on_remove(mob/living/carbon/tongue_owner)
@@ -75,8 +78,12 @@
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = initial(head.unarmed_damage_low)
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
-	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
+	head.unarmed_effectiveness = initial(head.unarmed_effectiveness)
 	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
+
+/obj/item/organ/internal/tongue/carp/get_possible_languages()
+	. = ..()
+	. += /datum/language/carptongue
 
 /obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()

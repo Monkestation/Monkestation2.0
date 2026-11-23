@@ -38,7 +38,7 @@
 /datum/mutation/antenna/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
+		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
 
 /datum/mutation/antenna/setup()
 	. = ..()
@@ -149,7 +149,7 @@
 /datum/mutation/mindreader/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))
+		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))
 
 /datum/mutation/mindreader/get_visual_indicator()
 	return visual_indicators[type][1]

@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/SRN_rocket
-	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/rocket_launch.ogg'
 	item_flags = NONE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	fire_sound_volume = 80
@@ -72,7 +72,7 @@
 /obj/projectile/bullet/SRN_rocket/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		playsound(src.loc, 'sound/weapons/pierce.ogg', vol = 100, vary = TRUE)
+		playsound(src.loc, 'sound/items/weapons/pierce.ogg', vol = 100, vary = TRUE)
 		target_human.adjustOxyLoss(5)
 		to_chat(target_human, span_alert("You are struck by a spatial nullifier! Thankfully it didn't affect you... much."))
 		INVOKE_ASYNC(target_human, TYPE_PROC_REF(/mob, emote), "scream")
@@ -98,7 +98,7 @@
 		INVOKE_ASYNC(hero, TYPE_PROC_REF(/mob, emote), "scream")
 
 	for(var/mob/player as anything in GLOB.player_list)
-		player.playsound_local(null, 'sound/magic/charge.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		player.playsound_local(null, 'sound/effects/magic/charge.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		to_chat(player, span_boldannounce("You feel reality distort for a moment..."))
 		shake_camera(player, 1.5 SECONDS, 3)
 

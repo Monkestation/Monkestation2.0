@@ -4,11 +4,11 @@
 	icon_state = "revolver"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
 	recoil = 0.6
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
-	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
-	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
+	load_sound = 'sound/items/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/items/weapons/gun/revolver/empty.ogg'
 	fire_sound_volume = 90
-	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/revolver/dry_fire.ogg'
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -54,11 +54,11 @@
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 		if(play_click)
-			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
+			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(play_click)
-			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
+			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
 
 
 GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
@@ -111,7 +111,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	icon_state = "c38"
-	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/gun/ballistic/revolver/c38/detective
@@ -120,9 +120,9 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_38
-	initial_fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	initial_fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	alternative_caliber = CALIBER_357
-	alternative_fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	alternative_fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	alternative_ammo_misfires = TRUE
 	misfire_probability = 0
 	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
@@ -167,7 +167,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	name = "\improper Golden revolver"
 	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo."
 	icon_state = "goldrevolver"
-	fire_sound = 'sound/weapons/resonator_blast.ogg'
+	fire_sound = 'sound/items/weapons/resonator_blast.ogg'
 	recoil = 8
 	pin = /obj/item/firing_pin
 
@@ -448,10 +448,10 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 	icon_state = "miningbigiron"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/govmining
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
-	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
-	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
+	load_sound = 'sound/items/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/items/weapons/gun/revolver/empty.ogg'
 	fire_sound_volume = 100
-	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/revolver/dry_fire.ogg'
 	pin = /obj/item/firing_pin/wastes
 
 /obj/item/gun/ballistic/revolver/govmining/give_manufacturer_examine()
@@ -482,3 +482,52 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 
 /obj/item/gun/ballistic/revolver/takbok/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+
+// But he made one fatal slip, when he tried to match the ranger with the big iron on his hip.
+
+/obj/item/gun/ballistic/revolver/big_iron
+	name = "\proper Big Iron"
+	desc = "No rest for the wicked."
+	desc_controls = "Left click fire, right click to fan the hammer for 3 quick shots, 6 while wielded, activate in hand to reload from... somewhere."
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/big_iron
+	can_suppress = FALSE
+	fire_delay = 1 SECONDS
+	recoil = 0.4
+	wield_recoil = 0
+	COOLDOWN_DECLARE(fan_cd)
+
+/obj/item/gun/ballistic/revolver/big_iron/attack_self(mob/living/user)
+	var/reload_delay = 2.75 SECONDS
+	if(HAS_TRAIT(src,TRAIT_WIELDED))
+		reload_delay = 1.75 SECONDS
+	if(do_after(user,reload_delay,user,timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)))
+		unload_ammo(user)
+		magazine.top_off()
+		spin()
+		user.balloon_alert(user,"reloaded!")
+	return
+
+/obj/item/gun/ballistic/revolver/big_iron/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ITEM_INTERACT_SUCCESS
+	if(!COOLDOWN_FINISHED(src,fan_cd))
+		return
+	var/params = list2params(modifiers)
+	fire_delay = 0
+	try_fire_gun(interacting_with,user,params)
+	addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),1.2)
+	addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),2.4)
+	var/semidelay = 2.3
+	if(HAS_TRAIT(src,TRAIT_WIELDED))
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),3.6)
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),4.8)
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),6)
+		semidelay = 5.9
+	COOLDOWN_START(src,fan_cd,semidelay)
+
+/obj/item/gun/ballistic/revolver/big_iron/proc/try_fan_hammer(atom/at,mob/living/user,params)
+	if(user.is_holding(src))
+		try_fire_gun(at,user,params)
+	if(COOLDOWN_FINISHED(src,fan_cd))
+		fire_delay = initial(fire_delay)
+

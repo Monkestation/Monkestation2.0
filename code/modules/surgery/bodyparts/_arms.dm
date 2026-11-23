@@ -1,5 +1,6 @@
 /// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/arm
+	abstract_type = /obj/item/bodypart/arm
 	name = "arm"
 	desc = "Hey buddy give me a HAND and report this to the github because you shouldn't be seeing this."
 	attack_verb_continuous = list("slaps", "punches")
@@ -8,10 +9,13 @@
 	aux_layer = BODYPARTS_HIGH_LAYER
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
-	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
+	unarmed_attack_verbs = list("punch") /// The classic punch, wonderfully classic and completely random
+	unarmed_attack_verbs_continuous = list("punches")
+	grappled_attack_verb = "pummel"
+	grappled_attack_verb_continuous = "pummels"
 	unarmed_damage_low = 5
-	unarmed_damage_high = 5
-	unarmed_stun_threshold = 10
+	unarmed_damage_high = 10
+	unarmed_pummeling_bonus = 1.5
 	body_zone = BODY_ZONE_L_ARM
 	/// Datum describing how to offset things worn on the hands of this arm, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_glove_offset
@@ -41,9 +45,9 @@
 		UnregisterSignal(old_owner, COMSIG_MOB_SWAP_HANDS)
 		on_inactive_hand(old_owner)
 
-/obj/item/bodypart/arm/set_disabled(new_disabled)
+/obj/item/bodypart/arm/set_disabled(new_disabled, update_limbs = TRUE)
 	. = ..()
-	if(isnull(.) || !owner)
+	if(isnull(.) || !owner || !update_limbs)
 		return
 
 	if(!.)

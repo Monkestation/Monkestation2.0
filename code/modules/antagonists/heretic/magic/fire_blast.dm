@@ -7,7 +7,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "flames"
-	sound = 'sound/magic/fireball.ogg'
+	sound = 'sound/effects/magic/fireball.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 45 SECONDS
@@ -136,7 +136,7 @@
 			continue
 		if(IS_HERETIC_OR_MONSTER(to_check))
 			continue
-		if(!length(get_path_to(center, to_check, max_distance = target_radius, simulated_only = FALSE)))
+		if(!length(get_path_to(center, to_check, max_distance = target_radius, simulated_only = FALSE, max_path_cost = target_radius * 14)))
 			continue
 
 		possibles += to_check

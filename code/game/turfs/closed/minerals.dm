@@ -6,13 +6,17 @@
 	name = "rock"
 	icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
 	icon_state = "rock"
+	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
+	canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	baseturfs = /turf/open/misc/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
 	opacity = TRUE
 	density = TRUE
+	// We're a BIG wall, larger then 32x32, so we need to be on the game plane
+	// Otherwise we'll draw under shit in weird ways
+	plane = GAME_PLANE
 	layer = EDGED_TURF_LAYER
-	plane = WALL_PLANE_UPPER
 	base_icon_state = "smoothrocks"
 
 	// This is static
@@ -24,7 +28,10 @@
 	var/turf/open/floor/plating/turf_type = /turf/open/misc/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
 	var/mineralAmt = 3
-	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
+	/// The icon of the image we display when we're pinged by a mining scanner, to be overridden if you want to use an alternate file for a subtype.
+	var/scan_icon = 'icons/effects/ore_visuals.dmi'
+	/// Placeholder for the icon_state of the image we display when we're pinged by a mining scanner
+	var/scan_state = ""
 	var/defer_change = 0
 	// If true you can mine the mineral turf without tools.
 	var/weak_turf = FALSE
@@ -35,14 +42,15 @@
 
 
 /turf/closed/mineral/Initialize(mapload)
-	var/static/list/smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
-	var/static/list/canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
-
-	// The cost of the list() being in the type def is very large for something as common as minerals
-	src.smoothing_groups = smoothing_groups
-	src.canSmoothWith = canSmoothWith
-
-	return ..()
+	. = ..()
+	// Mineral turfs are big, so they need to be on the game plane at a high layer
+	// But they're also turfs, so we need to cut them out from the light mask plane
+	// So we draw them as if they were on the game plane, and then overlay a copy onto
+	// The wall plane (so emissives/light masks behave)
+	// I am so sorry
+	var/static/mutable_appearance/wall_overlay = mutable_appearance('icons/turf/mining.dmi', "rock", appearance_flags = RESET_TRANSFORM)
+	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
+	overlays += wall_overlay
 
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
@@ -74,7 +82,7 @@
 /turf/closed/mineral/proc/Change_Ore(ore_type, random = 0)
 	if(random)
 		mineralAmt = rand(1, 5)
-	if(ispath(ore_type, /obj/item/stack/ore)) //If it has a scan_state, switch to it
+	if(ispath(ore_type, /obj/item/stack/ore)) // If it has a scan_state, switch to it
 		var/obj/item/stack/ore/the_ore = ore_type
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
 		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
@@ -271,7 +279,8 @@
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite = 4,
-		/turf/closed/mineral/artifact = 1,
+		/turf/closed/mineral/artifact = 4,
+		/turf/closed/mineral/mineral_sample = 4,
 	)
 
 /turf/closed/mineral/random/Initialize(mapload)
@@ -546,7 +555,13 @@
 
 /turf/closed/mineral/iron
 	mineralType = /obj/item/stack/ore/iron
-	scan_state = "rock_Iron"
+	scan_state = "rock_iron"
+
+/turf/closed/mineral/iron/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/iron/ice
 	icon_state = "icerock_iron"
@@ -560,11 +575,23 @@
 
 /turf/closed/mineral/uranium
 	mineralType = /obj/item/stack/ore/uranium
-	scan_state = "rock_Uranium"
+	scan_state = "rock_uranium"
+
+/turf/closed/mineral/uranium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/diamond
 	mineralType = /obj/item/stack/ore/diamond
-	scan_state = "rock_Diamond"
+	scan_state = "rock_diamond"
+
+/turf/closed/mineral/diamond/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/diamond/ice
 	icon_state = "icerock_iron"
@@ -578,7 +605,7 @@
 
 /turf/closed/mineral/gold
 	mineralType = /obj/item/stack/ore/gold
-	scan_state = "rock_Gold"
+	scan_state = "rock_gold"
 
 /turf/closed/mineral/gold/volcanic
 	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
@@ -588,7 +615,13 @@
 
 /turf/closed/mineral/silver
 	mineralType = /obj/item/stack/ore/silver
-	scan_state = "rock_Silver"
+	scan_state = "rock_silver"
+
+/turf/closed/mineral/silver/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/silver/ice/icemoon
 	turf_type = /turf/open/misc/asteroid/snow/ice/icemoon
@@ -597,11 +630,23 @@
 
 /turf/closed/mineral/titanium
 	mineralType = /obj/item/stack/ore/titanium
-	scan_state = "rock_Titanium"
+	scan_state = "rock_titanium"
+
+/turf/closed/mineral/titanium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/stack/ore/plasma
-	scan_state = "rock_Plasma"
+	scan_state = "rock_plasma"
+
+/turf/closed/mineral/plasma/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/plasma/ice
 	icon_state = "icerock_plasma"
@@ -616,12 +661,18 @@
 /turf/closed/mineral/bananium
 	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
-	scan_state = "rock_Bananium"
+	scan_state = "rock_bananium"
+
+/turf/closed/mineral/bananium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
 	mineralAmt = 1
-	scan_state = "rock_BScrystal"
+	scan_state = "rock_bscrystal"
 
 /turf/closed/mineral/bscrystal/volcanic
 	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
@@ -725,7 +776,7 @@
 
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
-	scan_state = "rock_Gibtonite"
+	scan_state = "rock_gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
@@ -750,7 +801,6 @@
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null)
 	if(stage == GIBTONITE_UNSTRUCK)
 		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_inactive", ON_EDGED_TURF_LAYER) //shows in gaps between pulses if there are any
-		SET_PLANE(activated_overlay, WALL_PLANE_UPPER, src)
 		add_overlay(activated_overlay)
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
@@ -902,7 +952,7 @@
 /turf/closed/mineral/artifact
 	mineralAmt = 1
 	//icon_state = "rock_Gibtonite_inactive"
-	scan_state = "rock_Artifact"
+	scan_state = "rock_artifact"
 
 /turf/closed/mineral/artifact/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
 	if(istype(user))
@@ -926,7 +976,7 @@
 /turf/closed/mineral/mineral_sample
 	mineralAmt = 1
 	//icon_state = "rock_Gibtonite_inactive"
-	scan_state = "rock_Artifact"
+	scan_state = "rock_artifact"
 
 /turf/closed/mineral/mineral_sample/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
 	if(istype(user))

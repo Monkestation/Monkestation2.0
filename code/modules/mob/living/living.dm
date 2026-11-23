@@ -52,6 +52,7 @@
 		subsystem = locate(life_subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)
 	GLOB.infected_contact_mobs -= src
+	clear_pathogen_image()
 	if(imaginary_group)
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
@@ -69,9 +70,16 @@
 	SEND_SIGNAL(T, COMSIG_TURF_MOB_FALL, src)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
 		return
+	// multiplier for the damage taken from falling
+	var/damage_softening_multiplier = 1
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		damage_softening_multiplier *= potential_spine.athletics_boost_multiplier
+
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
 					span_userdanger("You crash into [T] with a sickening noise!"))
-	adjustBruteLoss((levels * 5) ** 1.5)
+	adjustBruteLoss(((levels * 5) ** 1.5) * damage_softening_multiplier)
 	Knockdown(levels * 50)
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
@@ -209,10 +217,9 @@
 		if((borg.istate & ISTATE_HARM) && borg.stat != DEAD)
 			return TRUE
 	//anti-riot equipment is also anti-push
-	for(var/obj/item/I in M.held_items)
-		if(!isclothing(M))
-			if(prob(I.block_chance*2))
-				return
+	for(var/obj/item/I as anything in M.get_held_items())
+		if(!isclothing(M) && prob(I.block_chance*2))
+			return TRUE
 
 /mob/living/proc/can_mobswap_with(mob/other)
 	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
@@ -387,7 +394,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM, state, force)
 
 	if(!supress_message)
-		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+		var/sound_to_play = 'sound/items/weapons/thudswoosh.ogg'
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.dna.species.grab_sound)
@@ -449,9 +456,17 @@
 
 		set_pull_offsets(M, state)
 
-/mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
-	if(M.buckled)
+/**
+ * Updates the offsets of the passed mob according to the passed grab state and the direction between them and us
+ *
+ * * M - the mob to update the offsets of
+ * * grab_state - the state of the grab
+ * * animate - whether or not to animate the offsets
+ */
+/mob/living/proc/set_pull_offsets(mob/living/mob_to_set, grab_state = GRAB_PASSIVE, animate = TRUE)
+	if(mob_to_set.buckled)
 		return //don't make them change direction or offset them if they're buckled into something.
+	SEND_SIGNAL(mob_to_set, COMSIG_LIVING_SET_PULL_OFFSET)
 	var/offset = 0
 	switch(grab_state)
 		if(GRAB_PASSIVE)
@@ -462,32 +477,41 @@
 			offset = GRAB_PIXEL_SHIFT_NECK
 		if(GRAB_KILL)
 			offset = GRAB_PIXEL_SHIFT_NECK
-	M.setDir(get_dir(M, src))
-	var/target_pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
-	var/target_pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
-	switch(M.dir)
+	mob_to_set.setDir(get_dir(mob_to_set, src))
+	var/dir_filter = mob_to_set.dir
+	if(ISDIAGONALDIR(dir_filter))
+		dir_filter = EWCOMPONENT(dir_filter)
+	switch(dir_filter)
 		if(NORTH)
-			animate(M, pixel_x = target_pixel_x, pixel_y = target_pixel_y + offset, 3)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = offset, animate = animate)
 		if(SOUTH)
-			animate(M, pixel_x = target_pixel_x, pixel_y = target_pixel_y - offset, 3)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = -offset, animate = animate)
 		if(EAST)
-			if(M.lying_angle == 270) //update the dragged dude's direction if we've turned
-				M.set_lying_angle(90)
-			animate(M, pixel_x = target_pixel_x + offset, pixel_y = target_pixel_y, 3)
+			if(mob_to_set.lying_angle == 270) //update the dragged dude's direction if we've turned
+				mob_to_set.set_lying_angle(90)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = offset, y_add = 0, animate = animate)
 		if(WEST)
-			if(M.lying_angle == 90)
-				M.set_lying_angle(270)
-			animate(M, pixel_x = target_pixel_x - offset, pixel_y = target_pixel_y, 3)
+			if(mob_to_set.lying_angle == 90)
+				mob_to_set.set_lying_angle(270)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = -offset, y_add = 0, animate = animate)
 
+/**
+ * Removes any offsets from the passed mob that are related to being grabbed
+ *
+ * * M - the mob to remove the offsets from
+ * * override - if TRUE, the offsets will be removed regardless of the mob's buckled state
+ * otherwise we won't remove the offsets if the mob is buckled
+ */
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y, 1)
+	SEND_SIGNAL(M, COMSIG_LIVING_RESET_PULL_OFFSETS)
+	M.remove_offsets(GRABBING_TRAIT)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-GAME_VERB_CONTEXT(/mob/living, pulled, "Pull", "", "Object", /atom/movable)
-	VERB_ARG_TYPED(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable)
+GAME_VERB_CONTEXT_RANGE(/mob/living, pulled, "Pull", "", "Object", /atom/movable, oview(1))
+	VERB_ARG_TYPED_RANGE(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable, 1)
 	if(istype(thing_pulled) && Adjacent(thing_pulled))
 		start_pulling(thing_pulled)
 	else if(!(istate & ISTATE_HARM)) //Don;'t cancel pulls if misclicking in combat mode.
@@ -697,7 +721,14 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+
+	var/get_up_time = 1 SECONDS
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		get_up_time *= potential_spine.athletics_boost_multiplier
+
+	if(!instant && !do_after(src, get_up_time, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -723,7 +754,7 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	if(rotate_on_lying)
-		body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
+		add_offsets(LYING_DOWN_TRAIT, y_add = PIXEL_Y_OFFSET_LYING)
 	playsound(loc, 'goon/sounds/body_thud.ogg', ishuman(src) ? 40 : 15, 1, 0.3, mixer_channel = CHANNEL_MOB_EMOTES)
 
 
@@ -732,12 +763,7 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 	if(layer == LYING_MOB_LAYER)
 		layer = initial(layer)
 	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_UNDENSE), LYING_DOWN_TRAIT)
-	// Make sure it doesn't go out of the southern bounds of the tile when standing.
-	body_position_pixel_y_offset = get_pixel_y_offset_standing(current_size)
-
-/// Returns what the body_position_pixel_y_offset should be if the current size were `value`
-/mob/living/proc/get_pixel_y_offset_standing(value)
-	return (value - 1) * get_cached_height() * 0.5
+	remove_offsets(LYING_DOWN_TRAIT)
 
 /mob/living/proc/update_density()
 	if(HAS_TRAIT(src, TRAIT_UNDENSE))
@@ -960,8 +986,7 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 	cure_husk()
 
 	if(heal_flags & HEAL_TEMP)
-		bodytemperature = standard_body_temperature
-		body_temperature_alerts()
+		bodytemperature = get_body_temp_normal(apply_change = FALSE)
 	if(heal_flags & HEAL_BLOOD)
 		restore_blood()
 	if(reagents && (heal_flags & HEAL_ALL_REAGENTS))
@@ -1126,17 +1151,23 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 	. = TRUE
 	// Base chance to escape a grab. Divided by effective grab state
 	var/escape_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
-	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+	// Being staggered while hurt makes it harder to slip away, like being prone
+	var/staggered_and_hurt = get_timed_status_effect_duration(/datum/status_effect/staggered) && (getFireLoss()*0.5 + getBruteLoss()*0.5) >= 40
+	//If we're in an aggressive grab or higher, we're lying down, we're vulnerable to grabs, or we're staggered and we have some amount of damage, we must resist
+	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || staggered_and_hurt)
 		var/altered_grab_state = pulledby.grab_state
-		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
+		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || staggered_and_hurt) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
 		if(ishuman(pulledby))
 			var/mob/living/carbon/human/human_puller = pulledby
-			var/datum/martial_art/puller_art = human_puller?.mind.martial_art
+			var/datum/martial_art/puller_art = GET_ACTIVE_MARTIAL_ART(human_puller)
 			if(puller_art?.can_use(human_puller))
 				altered_grab_state += puller_art.grab_state_modifier
 				escape_chance += puller_art.grab_escape_chance_modifier
-		var/resist_chance = (escape_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE))
+			altered_grab_state--
+		///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		var/resist_chance = altered_grab_state ? (escape_chance / altered_grab_state) : 100
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -1185,8 +1216,8 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
-				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
-				base_pixel_y += 4
+				animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+				add_offsets(NEGATIVE_GRAVITY_TRAIT, y_add = 4)
 		if(NEGATIVE_GRAVITY + 0.01 to 0)
 			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
 				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
@@ -1209,8 +1240,8 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
-		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT)
-		base_pixel_y -= 4
+		animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+		remove_offsets(NEGATIVE_GRAVITY_TRAIT)
 
 /mob/living/singularity_pull(S, current_size)
 	..()
@@ -1242,6 +1273,63 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 		var/atom/movable/occupied_space = loc
 		loc_temp = ((1 - occupied_space.contents_thermal_insulation) * loc_temp) + (occupied_space.contents_thermal_insulation * bodytemperature)
 	return loc_temp
+
+/**
+ * add_body_temperature_change Adds modifications to the body temperature
+ *
+ * This collects all body temperature changes that the mob is experiencing to the list body_temp_changes
+ * the aggrogate result is used to derive the new body temperature for the mob
+ *
+ * arguments:
+ * * key_name (str) The unique key for this change, if it already exist it will be overridden
+ * * amount (int) The amount of change from the base body temperature
+ */
+/mob/living/proc/add_body_temperature_change(key_name, amount)
+	body_temp_changes["[key_name]"] = amount
+
+/**
+ * remove_body_temperature_change Removes the modifications to the body temperature
+ *
+ * This removes the recorded change to body temperature from the body_temp_changes list
+ *
+ * arguments:
+ * * key_name (str) The unique key for this change that will be removed
+ */
+/mob/living/proc/remove_body_temperature_change(key_name)
+	body_temp_changes -= key_name
+
+/**
+ * get_body_temp_normal_change Returns the aggregate change to body temperature
+ *
+ * This aggregates all the changes in the body_temp_changes list and returns the result
+ */
+/mob/living/proc/get_body_temp_normal_change()
+	var/total_change = 0
+	if(body_temp_changes.len)
+		for(var/change in body_temp_changes)
+			total_change += body_temp_changes["[change]"]
+	return total_change
+
+/**
+ * get_body_temp_normal Returns the mobs normal body temperature with any modifications applied
+ *
+ * This applies the result from proc/get_body_temp_normal_change() against the BODYTEMP_NORMAL and returns the result
+ *
+ * arguments:
+ * * apply_change (optional) Default True This applies the changes to body temperature normal
+ */
+/mob/living/proc/get_body_temp_normal(apply_change=TRUE)
+	if(!apply_change)
+		return BODYTEMP_NORMAL
+	return BODYTEMP_NORMAL + get_body_temp_normal_change()
+
+///Returns the body temperature at which this mob will start taking heat damage.
+/mob/living/proc/get_body_temp_heat_damage_limit()
+	return BODYTEMP_HEAT_DAMAGE_LIMIT
+
+///Returns the body temperature at which this mob will start taking cold damage.
+/mob/living/proc/get_body_temp_cold_damage_limit()
+	return BODYTEMP_COLD_DAMAGE_LIMIT
 
 /// Checks if this mob can be actively tracked by cameras / AI.
 /// Can optionally be passed a user, which is the mob who is tracking src.
@@ -1719,15 +1807,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * * fire_handler: The fire handler status effect that is managing the fire stacks
  */
 /mob/living/proc/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	var/amount_to_heat = HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick
-	var/amount_to_burn = BURN_DAMAGE_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick
-	if(bodytemperature > BODYTEMP_FIRE_TEMP_SOFTCAP)
-		// Apply dimishing returns upon temp beyond the soft cap
-		amount_to_heat = amount_to_heat ** (BODYTEMP_FIRE_TEMP_SOFTCAP / bodytemperature)
-
-	var/direct_damage = (HAS_TRAIT(src, TRAIT_RESISTHEAT) || bodytemp_heat_damage_limit == INFINITY) ? 0 : temperature_burns(amount_to_burn)
-	var/temp_change = adjust_bodytemperature(amount_to_heat)
-	return temp_change + direct_damage
+	return
 
 //Mobs on Fire end
 
@@ -1779,7 +1859,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	//No one is left after we're gone, shut off inactive ones
 	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
-			controller.set_ai_status(AI_STATUS_OFF)
+			controller.set_ai_status(controller.get_expected_ai_status())
 
 	if(new_z)
 		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
@@ -1816,14 +1896,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	SEND_SIGNAL(src, COMSIG_MOB_PICKED_UP, user, holder) // monkestation edit: COMSIG_MOB_PICKED_UP
 
 /mob/living/proc/set_name()
-	numba = rand(1, 1000)
-	name = "[name] ([numba])"
+	identifier = rand(1, 999)
+	name = "[name] ([identifier])"
 	real_name = name
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user))
 		return
-	if(!user.get_empty_held_indexes())
+	if(!length(user.get_empty_held_indexes()))
 		to_chat(user, span_warning("Your hands are full!"))
 		return FALSE
 	if(buckled)
@@ -1836,6 +1916,30 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!do_after(user, 2 SECONDS, target = src))
 			return FALSE
 	mob_pickup(user)
+	return TRUE
+
+///Attempts to stash the mob into a human's hands if able.
+/mob/living/proc/mob_try_stash(mob/living/carrier, instant=FALSE)
+	if(!(Adjacent(carrier)))
+		return
+	if(!ishuman(carrier))
+		return
+	if(IS_DEAD_OR_INCAP(carrier))
+		to_chat(src, span_warning("[carrier] is unable to hold on to you!"))
+		return
+	if(!length(carrier.get_empty_held_indexes()))
+		to_chat(src, span_warning("[carrier]'s hands are full!"))
+		return FALSE
+	if(buckled)
+		to_chat(src, span_warning("You are buckled to something!"))
+		return FALSE
+	if(!instant)
+		carrier.visible_message(span_warning("[src] starts trying to crawl into [carrier]'s hands!"), \
+						span_danger("[src] starts trying to crawl into your hands..."), null, null, src)
+		to_chat(src, span_userdanger("You start trying to crawl into [carrier]'s hands!"))
+		if(!do_after(src, 5 SECONDS, target = carrier))
+			return FALSE
+	mob_pickup(carrier)
 	return TRUE
 
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
@@ -2204,10 +2308,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
 
-/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
-/mob/living/proc/is_face_visible()
-	return TRUE
-
 
 ///Proc to modify the value of num_legs and hook behavior associated to this event.
 /mob/living/proc/set_num_legs(new_value)
@@ -2333,31 +2433,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Returns the attack damage type of a living mob such as [BRUTE].
 /mob/living/proc/get_attack_type()
 	return BRUTE
-
-
-/**
- * Apply a martial art move from src to target.
- *
- * This is used to process martial art attacks against nonhumans.
- * It is also used to process martial art attacks by nonhumans, even against humans
- * Human vs human attacks are handled in species code right now.
- */
-/mob/living/proc/apply_martial_art(mob/living/target, modifiers)
-	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
-		return MARTIAL_ATTACK_INVALID
-	var/datum/martial_art/style = mind?.martial_art
-	if (!style)
-		return MARTIAL_ATTACK_INVALID
-	// will return boolean below since it's not invalid
-	if ((istate & ISTATE_CONTROL))
-		return style.grab_act(src, target)
-	if ((istate & ISTATE_SECONDARY))
-		return style.disarm_act(src, target)
-	if((istate & ISTATE_HARM))
-		if (HAS_TRAIT(src, TRAIT_PACIFISM))
-			return FALSE
-		return style.harm_act(src, target)
-	return style.help_act(src, target)
 
 /**
  * Returns an assoc list of assignments and minutes for updating a client's exp time in the databse.
@@ -2641,3 +2716,31 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return TRUE
 
 	return FALSE
+
+/// Returns an arbitrary number which very roughly correlates with how buff you look
+/mob/living/proc/calculate_fitness()
+	var/athletics_level = mind?.get_skill_level(/datum/skill/athletics) || 1
+	var/damage = (melee_damage_lower + melee_damage_upper) / 2
+
+	return ceil(damage * (ceil(athletics_level / 2)) * maxHealth)
+
+/// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
+/mob/living/proc/compare_fitness(mob/living/scouter)
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return span_warning("It's impossible to tell whether this person lifts.")
+
+	var/our_fitness_level = calculate_fitness()
+	var/their_fitness_level = scouter.calculate_fitness()
+
+	var/comparative_fitness = our_fitness_level / their_fitness_level
+
+	if (comparative_fitness > 2)
+		scouter.set_jitter_if_lower(comparative_fitness SECONDS)
+		return "[span_notice("You'd estimate [p_their()] fitness level at about...")] [span_boldwarning("What?!? [our_fitness_level]???")]"
+
+	return span_notice("You'd estimate [p_their()] fitness level at about [our_fitness_level]. [comparative_fitness <= 0.33 ? "Pathetic." : ""]")
+/// Makes the mob scream in pain, unless it can't feel pain
+/mob/living/proc/painful_scream(force = FALSE)
+	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
+		return
+	INVOKE_ASYNC(src, PROC_REF(emote), "scream")

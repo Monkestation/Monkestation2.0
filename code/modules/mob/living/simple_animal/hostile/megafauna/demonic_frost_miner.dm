@@ -17,8 +17,8 @@ Difficulty: Extremely Hard
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummels"
-	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_MINING
+	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL|MOB_MINING
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
@@ -139,12 +139,12 @@ Difficulty: Extremely Hard
 	adjustHealth(-maxHealth)
 	enraged = TRUE
 	enraging = TRUE
-	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
+	animate(src, pixel_z = 96, time = 100, easing = ELASTIC_EASING, flags = ANIMATION_RELATIVE)
 	spin(100, 10)
 	SLEEP_CHECK_DEATH(60, src)
-	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100, TRUE)
 	icon_state = "demonic_miner_phase2"
-	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
+	animate(src, pixel_z = -96, time = 8, flags = ANIMATION_END_NOW, flags = ANIMATION_RELATIVE)
 	spin(8, 2)
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_PURPLE, 5)
@@ -366,7 +366,7 @@ Difficulty: Extremely Hard
 /obj/item/ice_energy_crystal
 	name = "ice energy crystal"
 	desc = "Remnants of the demonic frost miners ice energy."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/mining_zones/artifacts.dmi'
 	icon_state = "ice_crystal"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
@@ -374,7 +374,7 @@ Difficulty: Extremely Hard
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"
 	desc = "A magical crystal enhanced by a demonic presence."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "lightprism"
 	density = FALSE
 	anchored = TRUE

@@ -12,6 +12,7 @@
 	plane = AREA_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
+	tacmap_color = null
 
 	/// List of all turfs currently inside this area as nested lists indexed by zlevel.
 	/// Acts as a filtered version of area.contents For faster lookup
@@ -24,7 +25,11 @@
 	/// This uses the same nested list format as turfs_by_zlevel
 	var/list/list/turf/turfs_to_uncontain_by_zlevel = list()
 
-	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED
+	/// Flag for mapping related area properties (such as cavegen)
+	var/area_flags_mapping = UNIQUE_AREA
+	/// Terrain navigation cost groups applied to every turf in this area.
+	var/nav_cost_flags = NONE
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
@@ -91,13 +96,13 @@
 	///Does this area immediately play an ambience track upon enter?
 	var/forced_ambience = FALSE
 	///The background droning loop that plays 24/7
-	var/ambient_buzz = 'sound/ambience/shipambience.ogg'
+	var/ambient_buzz = 'sound/ambience/general/shipambience.ogg'
 	///The volume of the ambient buzz
 	var/ambient_buzz_vol = 65
 	///Used to decide what the minimum time between ambience is
-	var/min_ambience_cooldown = 30 SECONDS
+	var/min_ambience_cooldown = 4 SECONDS
 	///Used to decide what the maximum time between ambience is
-	var/max_ambience_cooldown = 60 SECONDS
+	var/max_ambience_cooldown = 10 SECONDS
 
 	flags_1 = CAN_BE_DIRTY_1
 
@@ -124,12 +129,15 @@
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
-	/// Extra A* weight applied to all turfs in this area.
-	var/astar_weight = 0
+	/// Are shuttles allowed to dock in this area
+	var/allow_shuttle_docking = FALSE
 	var/auto_renamed
 
 	/// Whether roundstart lockers should be anchored by default in this area, if eligible.
 	var/anchor_roundstart_lockers = TRUE
+
+	/// If TRUE, then this area will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
 
 /**
  * Called when an area loads
@@ -162,12 +170,22 @@
 
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
-	if (area_flags & UNIQUE_AREA)
+	if (area_flags_mapping & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 	GLOB.areas += src
 	energy_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	alarm_manager = new(src) // just in case
 	return ..()
+
+/// Changes this area's navigation cost groups and republishes affected turf costs.
+/area/proc/set_nav_cost_flags(new_flags)
+	if(nav_cost_flags == new_flags)
+		return
+	var/old_flags = nav_cost_flags
+	nav_cost_flags = new_flags
+	for(var/turf/area_turf as anything in contents)
+		if((area_turf.nav_cost_flags | old_flags) != (area_turf.nav_cost_flags | new_flags))
+			area_turf.nav_cost_dirty()
 
 /proc/combine_area_names(match, a, b)
 	return "[a][LOWER_TEXT(b)]"
@@ -388,6 +406,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//just for sanity sake cause why not
 	if(!isnull(GLOB.areas))
 		GLOB.areas -= src
+	if(!isnull(GLOB.custom_areas))
+		GLOB.custom_areas -= src
 	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
@@ -584,6 +604,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+	SEND_SIGNAL(gone, COMSIG_MOVABLE_EXITED_AREA, src, direction)
 
 	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
@@ -640,8 +661,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
 
-/// A hook so areas can modify the incoming args (of what??)
-/area/proc/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+/// A hook so areas can modify the incoming args of ChangeTurf
+/area/proc/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)
 	return flags
 
 

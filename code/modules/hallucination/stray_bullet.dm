@@ -175,8 +175,8 @@
 		return
 
 	var/image/hit_effect = image('icons/effects/blood.dmi', hit_atom, is_wall ? hal_impact_effect_wall : hal_impact_effect, ABOVE_MOB_LAYER)
-	hit_effect.pixel_x = hit_atom.pixel_x + rand(-4,4)
-	hit_effect.pixel_y = hit_atom.pixel_y + rand(-4,4)
+	hit_effect.pixel_w = hit_atom.pixel_x + rand(-4,4)
+	hit_effect.pixel_z = hit_atom.pixel_y + rand(-4,4)
 	parent.hallucinator.client.images |= hit_effect
 	addtimer(CALLBACK(src, PROC_REF(clean_up_hit), hit_effect), is_wall ? hit_duration_wall : hit_duration)
 
@@ -187,7 +187,7 @@
 	name = "bullet"
 	hal_icon_state = "bullet"
 	hal_fire_sound = "gunshot"
-	hal_hitsound = 'sound/weapons/pierce.ogg'
+	hal_hitsound = 'sound/items/weapons/pierce.ogg'
 	hal_hitsound_wall = SFX_RICOCHET
 	hal_impact_effect = "impact_bullet"
 	hal_impact_effect_wall = "impact_bullet"
@@ -201,9 +201,9 @@
 	name = "laser"
 	damage_type = BURN
 	hal_icon_state = "laser"
-	hal_fire_sound = 'sound/weapons/gun/energy/Laser1.ogg'
-	hal_hitsound = 'sound/weapons/sear.ogg'
-	hal_hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	hal_fire_sound = 'sound/items/weapons/gun/energy/Laser1.ogg'
+	hal_hitsound = 'sound/items/weapons/sear.ogg'
+	hal_hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	hal_impact_effect = "impact_laser"
 	hal_impact_effect_wall = "impact_laser_wall"
 	hit_duration = 4
@@ -223,8 +223,8 @@
 	damage_type = BURN
 	hal_icon_state = "spark"
 	color = "#FFFF00"
-	hal_fire_sound = 'sound/weapons/taser.ogg'
-	hal_hitsound = 'sound/weapons/taserhit.ogg'
+	hal_fire_sound = 'sound/items/weapons/taser.ogg'
+	hal_hitsound = 'sound/items/weapons/taserhit.ogg'
 	hal_hitsound_wall = null
 	hal_impact_effect = null
 	hal_impact_effect_wall = null
@@ -248,9 +248,9 @@
 	name = "disabler beam"
 	damage_type = STAMINA
 	hal_icon_state = "omnilaser"
-	hal_fire_sound = 'sound/weapons/gun/energy/Laser2.ogg'
-	hal_hitsound = 'sound/weapons/tap.ogg'
-	hal_hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	hal_fire_sound = 'sound/items/weapons/gun/energy/Laser2.ogg'
+	hal_hitsound = 'sound/items/weapons/tap.ogg'
+	hal_hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	hal_impact_effect = "impact_laser_blue"
 	hal_impact_effect_wall = null
 	hit_duration = 4
@@ -267,7 +267,7 @@
 	name = "bolt"
 	damage_type = TOX
 	hal_icon_state = "cbbolt"
-	hal_fire_sound = 'sound/weapons/genhit.ogg'
+	hal_fire_sound = 'sound/items/weapons/genhit.ogg'
 	hal_hitsound = null
 	hal_hitsound_wall = null
 	hal_impact_effect = null
@@ -283,7 +283,7 @@
 	name = "bolt of change"
 	damage_type = BURN
 	hal_icon_state = "ice_1"
-	hal_fire_sound = 'sound/magic/staff_change.ogg'
+	hal_fire_sound = 'sound/effects/magic/staff_change.ogg'
 	hal_hitsound = null
 	hal_hitsound_wall = null
 	hal_impact_effect = null
@@ -305,7 +305,7 @@
 	name = "bolt of death"
 	damage_type = BURN
 	hal_icon_state = "pulse1_bl"
-	hal_fire_sound = 'sound/magic/wandodeath.ogg'
+	hal_fire_sound = 'sound/effects/magic/wandodeath.ogg'
 	hal_hitsound = null
 	hal_hitsound_wall = null
 	hal_impact_effect = null

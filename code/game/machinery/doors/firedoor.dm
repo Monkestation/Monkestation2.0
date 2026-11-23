@@ -61,8 +61,8 @@
 	///Keeps track of if we're playing the alarm sound loop (as only one firelock per group should be). Used during power changes.
 	var/is_playing_alarm = FALSE
 
-	var/knock_sound = 'sound/effects/glassknock.ogg'
-	var/bash_sound = 'sound/effects/glassbash.ogg'
+	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
 
 
 /datum/armor/door_firedoor
@@ -657,12 +657,12 @@
 	if(alarm_type && powered() && !ignore_alarms)
 		var/mutable_appearance/hazards
 		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")
-		hazards.pixel_x = light_xoffset
-		hazards.pixel_y = light_yoffset
+		hazards.pixel_w = light_xoffset
+		hazards.pixel_z = light_yoffset
 		. += hazards
 		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
-		hazards.pixel_x = light_xoffset
-		hazards.pixel_y = light_yoffset
+		hazards.pixel_w = light_xoffset
+		hazards.pixel_z = light_yoffset
 		. += hazards
 
 /**
@@ -727,7 +727,7 @@
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	can_crush = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = parent_type::flags_1 | ON_BORDER_1
 	can_atmos_pass = ATMOS_PASS_PROC
 	auto_dir_align = FALSE
 

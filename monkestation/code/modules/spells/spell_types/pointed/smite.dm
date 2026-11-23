@@ -5,7 +5,7 @@
 	name = "Smite"
 	desc = "A spell to strike down your foes from the heavens."
 	button_icon_state = "gib"
-	sound = 'sound/magic/disintegrate.ogg'
+	sound = 'sound/effects/magic/disintegrate.ogg'
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 40 SECONDS
@@ -117,7 +117,7 @@
 	forced_smite_type = LIGHT_SMITE
 	spell_max_level = 1
 
-/datum/action/cooldown/spell/pointed/smite/light/New(Target)
+/datum/action/cooldown/spell/pointed/smite/light/New(Target, original = TRUE)
 	. = ..()
 	light_smites += /datum/smite/puzzle
 

@@ -61,7 +61,7 @@
 	// Go to target turf
 	// DO NOT USE WALK TO.
 	owner.balloon_alert_to_viewers("dashes into the air!", "you dash into the air!")
-	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+	playsound(get_turf(owner), 'sound/items/weapons/punchmiss.ogg', 25, 1, -1)
 	var/safety = get_dist(user, targeted_turf) * 3 + 1
 	var/consequetive_failures = 0
 	while(--safety && (get_turf(user) != targeted_turf))
@@ -89,6 +89,6 @@
 		if(hit.Find(hit_living))
 			continue
 		hit += hit_living
-		playsound(hit_living, "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
+		playsound(hit_living, "sound/items/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
 		hit_living.Knockdown(10 + level_current * 4)
 		hit_living.spin(10, 1)

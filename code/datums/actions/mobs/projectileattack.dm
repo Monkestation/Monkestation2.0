@@ -78,7 +78,7 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/attack_sequence(mob/living/firer, atom/target)
 	for(var/i in 1 to shot_count)
 		shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
-		SLEEP_CHECK_DEATH(shot_delay, src)
+		SLEEP_CHECK_DEATH(shot_delay, firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/direct
 	shot_count = 40
@@ -104,7 +104,7 @@
 	for(var/i in 1 to shot_count)
 		var/obj/projectile/to_explode = shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
 		addtimer(CALLBACK(src, PROC_REF(explode_into_shrapnel), firer, target, to_explode), break_time)
-		SLEEP_CHECK_DEATH(shot_delay, src)
+		SLEEP_CHECK_DEATH(shot_delay, firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/proc/explode_into_shrapnel(mob/living/firer, atom/target, obj/projectile/to_explode)
 	if(!to_explode)
@@ -126,7 +126,7 @@
 	desc = "Fires projectiles in a spiral pattern."
 	cooldown_time = 3 SECONDS
 	projectile_type = /obj/projectile/colossus
-	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
+	projectile_sound = 'sound/effects/magic/clockwork/invoke_general.ogg'
 	/// Whether or not the attack is the enraged form
 	var/enraged = FALSE
 
@@ -186,7 +186,7 @@
 	desc = "Fires projectiles in all directions."
 	cooldown_time = 3 SECONDS
 	projectile_type = /obj/projectile/colossus
-	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
+	projectile_sound = 'sound/effects/magic/clockwork/invoke_general.ogg'
 	var/projectile_amount = 32
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/attack_sequence(mob/living/firer, atom/target)
@@ -209,7 +209,7 @@
 	desc = "Fires projectiles in a shotgun pattern."
 	cooldown_time = 2 SECONDS
 	projectile_type = /obj/projectile/colossus
-	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
+	projectile_sound = 'sound/effects/magic/clockwork/invoke_general.ogg'
 	var/list/shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/attack_sequence(mob/living/firer, atom/target)
@@ -264,10 +264,10 @@
 	desc = "Fires projectiles in specific directions."
 	cooldown_time = 4 SECONDS
 	projectile_type = /obj/projectile/colossus
-	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
+	projectile_sound = 'sound/effects/magic/clockwork/invoke_general.ogg'
 	var/list/firing_directions
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target)
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target, original = TRUE)
 	. = ..()
 	if(!firing_directions)
 		firing_directions = GLOB.alldirs.Copy()
@@ -316,7 +316,7 @@
 	desc = "Fires a kinetic accelerator projectile at the target."
 	cooldown_time = 1.5 SECONDS
 	projectile_type = /obj/projectile/kinetic/miner
-	projectile_sound = 'sound/weapons/kenetic_accel.ogg'
+	projectile_sound = 'sound/items/weapons/kinetic_accel.ogg'
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator/Activate(atom/target_atom)
 	. = ..()
@@ -333,7 +333,8 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
 	. = ..()
-	Remove(owner)
+	if(owner)
+		Remove(owner)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/attack_sequence(mob/living/firer, atom/target)
 	var/mob/living/simple_animal/hostile/megafauna/colossus/colossus

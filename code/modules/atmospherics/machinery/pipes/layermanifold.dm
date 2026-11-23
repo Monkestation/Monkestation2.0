@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold
 	name = "layer adaptor"
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
+	icon = 'icons/obj/pipes_n_cables/manifold.dmi'
 	icon_state = "manifoldlayer"
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH
@@ -40,7 +40,7 @@
 	nodes = list()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_layer()
-	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
+	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER : initial(layer)) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_overlays()
 	. = ..()
@@ -74,7 +74,8 @@
 	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, passed_color)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
-	var/mutable_appearance/muta = mutable_appearance('icons/obj/atmospherics/pipes/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = layer - 0.01, appearance_flags = RESET_COLOR|KEEP_APART)
+	// a floating layer would draw these over the adapter body, they need to sit just under it
+	var/mutable_appearance/muta = mutable_appearance('icons/obj/pipes_n_cables/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = layer - 0.01, offset_spokesman = src, plane = PLANE_TO_TRUE(plane) == FLOOR_PLANE ? FLOOR_PLANE : FLOAT_PLANE, appearance_flags = RESET_COLOR|KEEP_APART)
 	muta.color = p_color
 	return muta
 

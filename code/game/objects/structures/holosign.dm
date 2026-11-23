@@ -19,16 +19,12 @@
 	fire = 20
 	acid = 20
 
-/obj/structure/holosign/Initialize(mapload, source_projector)
+/obj/structure/holosign/Initialize(mapload)
 	. = ..()
-	//create_vis_overlay()
 	if(use_vis_overlay)
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		var/turf/our_turf = get_turf(src)
-		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
-	if(source_projector)
-		projector = source_projector
-		LAZYADD(projector.signs, src)
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/holosign/Destroy()
 	if(projector)
@@ -55,16 +51,9 @@
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+			playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
-
-// /obj/structure/holosign/proc/create_vis_overlay() no idea why this doesn't work
-//	var/turf/our_turf = get_turf(src)
-// 	if(use_vis_overlay)
-//		alpha = 0
-// 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-// 		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
+			playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/holosign/wetsign
 	name = "wet floor sign"
@@ -112,7 +101,7 @@
 	if(use_vis_overlay)
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		var/turf/our_turf = get_turf(src)
-		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir) //you see mobs under it, but you hit them like they are above it
 	. = ..()
 
 /obj/structure/holosign/barrier/proc/open(user)
@@ -127,11 +116,11 @@
 	if(!opened)
 		density = FALSE
 		opened = TRUE
-		playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/door/door_open.ogg', 50, TRUE)
 	else
 		density = TRUE
 		opened = FALSE
-		playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/door/door_close.ogg', 50, TRUE)
 
 	update_icon_state()
 	COOLDOWN_START(src, cooldown_open, 1 SECONDS)
@@ -257,7 +246,7 @@
 		return
 	var/obj/item/holosign_creator/medical/medical = projector
 	medical.try_alert(AM, get_area(src))
-	playsound(get_turf(src),'sound/machines/buzz-sigh.ogg', 65, TRUE, 4)
+	playsound(get_turf(src),'sound/machines/buzz/buzz-sigh.ogg', 65, TRUE, 4)
 	COOLDOWN_START(src, virus_detected, 6 SECONDS)
 	icon_state = "holo_medical-deny"
 	update_icon_state()
@@ -286,7 +275,7 @@
 	if(use_vis_overlay)
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		var/turf/our_turf = get_turf(src)
-		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"

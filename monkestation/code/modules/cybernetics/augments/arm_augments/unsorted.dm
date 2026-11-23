@@ -18,7 +18,7 @@
 	///The amount of damage dealt by the empowered attack.
 	var/punch_damage = 5
 	///Biotypes we apply an additional amount of damage too
-	var/biotype_bonus_targets = MOB_BEAST | MOB_EPIC | MOB_MINING
+	var/biotype_bonus_targets = MOB_BEAST | MOB_SPECIAL | MOB_MINING
 	///Extra damage dealt to our targeted mobs
 	var/biotype_bonus_damage = 20
 	///IF true, the throw attack will not smash people into walls
@@ -108,20 +108,28 @@
 		var/mob/living/carbon/human/human_target = target
 		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
 			source.do_attack_animation(target)
-			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+			playsound(living_target.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	var/potential_damage = punch_damage
+	var/ground_bounce = FALSE // funny flavor. if you hit someone who's floored you slam them into the ground, breaking tiles
+	var/turf/target_turf = get_turf(living_target)
+
 	var/obj/item/bodypart/attacking_bodypart = hand
+	var/potential_damage = punch_damage
 	potential_damage += rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+
+	if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE) // get pummeled idiot
+		potential_damage *= attacking_bodypart.unarmed_pummeling_bonus
+		if(living_target.body_position == LYING_DOWN)
+			ground_bounce = TRUE
 
 	var/is_correct_biotype = living_target.mob_biotypes & biotype_bonus_targets
 	if(biotype_bonus_targets && is_correct_biotype) //If we are punching one of our special biotype targets, increase the damage floor by a factor of two.
 		potential_damage += biotype_bonus_damage
 
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(living_target.loc, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
 	var/armor_block = living_target.run_armor_check(target_zone, MELEE/*, armour_penetration = attacking_bodypart.unarmed_effectiveness*/)
@@ -131,16 +139,19 @@
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
 		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle = non_harmful_throw)
+		if(ground_bounce && isfloorturf(target_turf))
+			var/turf/open/floor/crunched = target_turf
+			crunched.crush() // crunch
 
 	living_target.visible_message(
-		span_danger("[source] [picked_hit_type]ed [living_target]!"),
-		span_userdanger("You're [picked_hit_type]ed by [source]!"),
+		span_danger("[source] [picked_hit_type]ed [living_target][ground_bounce ? " into [target_turf]" : ""]!"),
+		span_userdanger("You're [picked_hit_type]ed by [source][ground_bounce ? " into [target_turf]" : ""]!"),
 		span_hear("You hear a sickening sound of flesh hitting flesh!"),
 		COMBAT_MESSAGE_RANGE,
 		source,
 	)
 
-	to_chat(source, span_danger("You [picked_hit_type] [target]!"))
+	to_chat(source, span_danger("You [picked_hit_type] [target][ground_bounce ? " into [target_turf]" : ""]!"))
 
 	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
 
@@ -269,16 +280,10 @@
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#00e1ff"
 
-/obj/item/organ/internal/cyberimp/arm/cooler/on_life()
+/obj/item/organ/internal/cyberimp/arm/cooler/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(owner.bodytemperature > (owner.standard_body_temperature + 2 KELVIN))
-		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
-	else
-		owner.remove_homeostasis_level(REF(src))
-
-/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	organ_owner?.remove_homeostasis_level(REF(src))
+	if(owner.bodytemperature > (owner.get_body_temp_normal() + 2 KELVIN))
+		owner.adjust_bodytemperature(-0.25 KELVIN * seconds_per_tick, owner.get_body_temp_normal())
 
 /obj/item/organ/internal/cyberimp/arm/heater
 	name = "sub-dermal heater implant"
@@ -288,15 +293,9 @@
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#ff9100"
 
-/obj/item/organ/internal/cyberimp/arm/heater/on_life()
+/obj/item/organ/internal/cyberimp/arm/heater/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(owner.bodytemperature < (owner.standard_body_temperature - 2 KELVIN))
-		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
-	else
-		owner.remove_homeostasis_level(REF(src))
-
-/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	organ_owner.remove_homeostasis_level(REF(src))
+	if(owner.bodytemperature < (owner.get_body_temp_normal() - 2 KELVIN))
+		owner.adjust_bodytemperature(0.25 KELVIN * seconds_per_tick, 0, owner.get_body_temp_normal())
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION

@@ -44,8 +44,8 @@
 	thought_bubble.overlays += pointed_atom_appearance
 	pointed_atom_appearance.remove_filter(HOVER_OUTLINE_FILTER)
 
-	thought_bubble.pixel_x = 16
-	thought_bubble.pixel_y = 32
+	thought_bubble.pixel_w = 16
+	thought_bubble.pixel_z = 32
 	thought_bubble.alpha = 200
 
 	var/mutable_appearance/point_visual = mutable_appearance(
@@ -77,6 +77,14 @@
 	pixel_x = old_loc.pixel_x
 	pixel_y = old_loc.pixel_y
 	invisibility = set_invis
+
+/// Holographic arrow a holopad projects when the AI points at something
+/obj/effect/temp_visual/point/holo
+	icon_state = "arrow_large_white"
+
+/obj/effect/temp_visual/point/holo/Initialize(mapload, set_invis = 0)
+	. = ..()
+	makeHologram()
 
 #undef POINT_TIME
 

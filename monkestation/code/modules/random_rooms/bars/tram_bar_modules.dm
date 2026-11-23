@@ -41,7 +41,7 @@
 /turf/open/floor/fakesand
 	name = "synthetic beach"
 	desc = "Plastic."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "sand"
 	base_icon_state = "sand"
 	floor_tile = /obj/item/stack/tile/fakesand

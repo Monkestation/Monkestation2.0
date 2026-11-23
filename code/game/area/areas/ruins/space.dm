@@ -2,7 +2,7 @@
 
 /area/ruin/space
 	has_gravity = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/ruin/space/unpowered
 	always_unpowered = TRUE
@@ -20,7 +20,7 @@
 // Ruin solars define, /area/solars was moved to /area/station/solars, causing the solars specific areas to lose their properties
 /area/ruin/space/solars
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -33,6 +33,7 @@
 // Ruins of "onehalf" ship
 
 /area/ruin/space/has_grav/onehalf/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Hallway"
 
 /area/ruin/space/has_grav/onehalf/drone_bay
@@ -55,7 +56,7 @@
 
 /area/ruin/space/has_grav/powered/aesthetic
 	name = "Aesthetic"
-	ambientsounds = list('sound/ambience/ambivapor1.ogg')
+	ambientsounds = list('sound/ambience/misc/ambivapor1.ogg')
 
 
 //Ruin of Hotel
@@ -211,6 +212,7 @@
 	name = "\improper ASRC Laboratory"
 
 /area/ruin/space/has_grav/dangerous_research/maint
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper ASRC Maintenance"
 
 //Interdyne Ruin
@@ -241,6 +243,7 @@
 	icon_state = "os_beta_engine"
 
 /area/ruin/space/ancientstation/beta/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Beta Station Main Corridor"
 	icon_state = "os_beta_hall"
 
@@ -266,6 +269,7 @@
 	icon_state = "charliestation"
 
 /area/ruin/space/ancientstation/charlie/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Charlie Station Main Corridor"
 	icon_state = "os_charlie_hall"
 
@@ -299,7 +303,7 @@
 	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	sound_environment = SOUND_AREA_SPACE
 
 /area/ruin/space/ancientstation/charlie/storage
@@ -310,6 +314,7 @@
 	icon_state = "deltastation"
 
 /area/ruin/space/ancientstation/delta/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Delta Station Main Corridor"
 	icon_state = "os_delta_hall"
 
@@ -324,7 +329,7 @@
 /area/ruin/space/ancientstation/delta/ai
 	name = "\improper Delta Station AI Core"
 	icon_state = "os_delta_ai"
-	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
+	ambientsounds = list('sound/ambience/misc/ambimalf.ogg', 'sound/ambience/engineering/ambitech.ogg', 'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambiatmos.ogg', 'sound/ambience/engineering/ambiatmos2.ogg')
 
 /area/ruin/space/ancientstation/delta/storage
 	name = "\improper Delta Station Storage"
@@ -342,6 +347,7 @@
 
 // Area define for organization
 /area/ruin/space/ks13/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 
 /area/ruin/space/ks13/hallway/central
 	name = "\improper Derelict Central Hallway"
@@ -483,6 +489,7 @@
 	icon_state = "ks13_ord"
 
 /area/ruin/space/ks13/science/ordnance_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Ordnance Hallway"
 	icon_state = "ks13_ord_hall"
 
@@ -502,6 +509,7 @@
 	icon_state = "ks13_court"
 
 /area/ruin/space/ks13/security/court_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Courtroom Hallway"
 	icon_state = "ks13_court_hall"
 
@@ -513,6 +521,7 @@
 	icon_state = "ks13_bridge"
 
 /area/ruin/space/ks13/command/bridge_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Bridge Hallway"
 	icon_state = "ks13_bridge_hall"
 
@@ -528,6 +537,7 @@
 	icon_state = "ks13_ai_vault"
 
 /area/ruin/space/ks13/ai/corridor
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict AI Corridor"
 	icon_state = "ks13_ai_corridor"
 
@@ -558,7 +568,7 @@
 /area/ruin/space/djstation/solars
 	name = "\improper DJ Station Solars"
 	icon_state = "DJ"
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT
 	has_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/djstation/service
@@ -570,14 +580,14 @@
 
 /area/ruin/space/abandoned_tele
 	name = "\improper Abandoned Teleporter"
-	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/signal.ogg')
+	ambientsounds = list('sound/ambience/misc/ambimalf.ogg', 'sound/ambience/misc/signal.ogg')
 
 //OLD AI SAT
 
 /area/ruin/space/tcommsat_oldaisat // Since tcommsat was moved to /area/station/, this turf doesn't inhereit its properties anymore
 	name = "\improper Abandoned Satellite"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
-											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambisin2.ogg', 'sound/ambience/misc/signal.ogg', 'sound/ambience/misc/signal.ogg', 'sound/ambience/general/ambigen10.ogg', 'sound/ambience/engineering/ambitech.ogg',\
+											'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambitech3.ogg', 'sound/ambience/misc/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 
 //ABANDONED BOX WHITESHIP
@@ -601,7 +611,7 @@
 
 /area/ruin/space/has_grav/hellfactoryoffice
 	name = "\improper Hell Factory Office"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT //who decided blobs should be allowed, i don't know, but it's funny
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | NOTELEPORT //who decided blobs should be allowed, i don't know, but it's funny
 
 //Ruin of Spinward Smoothies
 
@@ -611,7 +621,7 @@
 // The planet of the clowns
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
-	ambientsounds = list('sound/ambience/clown.ogg')
+	ambientsounds = list('sound/music/lobby_music/clown.ogg')
 
 //DERELICT SULACO
 /area/ruin/space/has_grav/derelictsulaco
@@ -679,7 +689,7 @@
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "ruins"
 	requires_power = FALSE
-	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')
+	ambientsounds = list('sound/ambience/general/ambigen13.ogg','sound/ambience/general/ambigen14.ogg','sound/ambience/medical/ambinice.ogg')
 
 // the outlet
 /area/ruin/space/has_grav/the_outlet/storefront

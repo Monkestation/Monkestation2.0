@@ -12,7 +12,7 @@
 	integrity_failure = 0
 	armor_type = /datum/armor/door_window
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = parent_type::flags_1 | ON_BORDER_1
 	opacity = FALSE
 	pass_flags_self = PASSGLASS | PASSDOORS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -94,21 +94,25 @@
 	switch(dir)
 		if(NORTH,SOUTH)
 			if(unres_sides & NORTH)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
-				side_overlay.pixel_y = dir == NORTH ? 31 : 6
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_1", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
+				side_overlay.pixel_z = dir == NORTH ? 31 : 6
 				. += side_overlay
 			if(unres_sides & SOUTH)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
-				side_overlay.pixel_y = dir == NORTH ? -6 : -31
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_2", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
+				side_overlay.pixel_z = dir == NORTH ? -6 : -31
 				. += side_overlay
 		if(EAST,WEST)
 			if(unres_sides & EAST)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
-				side_overlay.pixel_x = dir == EAST ? 31 : 6
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_4", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
+				side_overlay.pixel_w = dir == EAST ? 31 : 6
 				. += side_overlay
 			if(unres_sides & WEST)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
-				side_overlay.pixel_x = dir == EAST ? -6 : -31
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_8", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
+				side_overlay.pixel_w = dir == EAST ? -6 : -31
 				. += side_overlay
 
 /obj/machinery/door/window/proc/open_and_close()
@@ -227,7 +231,6 @@
 	sleep(1 SECONDS)
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	if(operating == 1) //emag again
 		operating = FALSE
@@ -270,7 +273,6 @@
 
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 	sleep(1 SECONDS)
 
 	operating = FALSE
@@ -300,9 +302,9 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glasshit.ogg', 90, TRUE)
+			playsound(src, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)

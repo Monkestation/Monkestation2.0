@@ -32,13 +32,13 @@
 	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("echoes")
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC|MOB_UNDEAD|MOB_MINING
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL|MOB_UNDEAD|MOB_MINING
 	speed = 5
 	ranged = TRUE
 	del_on_death = TRUE
@@ -58,7 +58,7 @@
 	elimination = TRUE
 	appearance_flags = LONG_GLIDE
 	mouse_opacity = MOUSE_OPACITY_ICON
-	rawr_sound = 'sound/magic/RATTLEMEBONES.ogg' // MONKESTATION EDIT ADDITION
+	rawr_sound = 'sound/effects/magic/RATTLEMEBONES.ogg' // MONKESTATION EDIT ADDITION
 	var/size = LEGION_LARGE
 	/// Create Skulls ability
 	var/datum/action/cooldown/mob_cooldown/create_legion_skull/create_legion_skull
@@ -116,7 +116,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/small/update_overlays()
 	. = ..()
 	if (stat != DEAD) // Shouldn't really happen but just in case
-		. += emissive_appearance(icon, "[icon_state]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(client)

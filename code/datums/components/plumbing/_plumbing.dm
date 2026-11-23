@@ -182,24 +182,24 @@
 
 		var/image/overlay
 		if(turn_connects)
-			overlay = image('icons/obj/plumbing/connects.dmi', "[direction_text]-[ducting_layer]", layer = duct_layer)
+			overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "[direction_text]-[ducting_layer]", layer = duct_layer)
 		else
-			overlay = image('icons/obj/plumbing/connects.dmi', "[direction_text]-[ducting_layer]-s", layer = duct_layer)
+			overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "[direction_text]-[ducting_layer]-s", layer = duct_layer)
 			overlay.dir = direction
 
 		overlay.color = color
-		overlay.pixel_x = duct_x
-		overlay.pixel_y = duct_y
+		overlay.pixel_w = duct_x
+		overlay.pixel_z = duct_y
 
 		overlays += overlay
 
 		// This is a little wiggley extension to make wallmounts like sinks and showers visually link to the pipe
 		if(extend_pipe_to_edge && !extension_handled)
-			var/image/edge_overlay = image('icons/obj/plumbing/connects.dmi', "edge-extension", layer = duct_layer)
+			var/image/edge_overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "edge-extension", layer = duct_layer)
 			edge_overlay.dir = parent_movable.dir
 			edge_overlay.color = color
-			edge_overlay.pixel_x = -parent_movable.pixel_x - parent_movable.pixel_w
-			edge_overlay.pixel_y = -parent_movable.pixel_y - parent_movable.pixel_z
+			edge_overlay.pixel_w = -parent_movable.pixel_x - parent_movable.pixel_w
+			edge_overlay.pixel_z = -parent_movable.pixel_y - parent_movable.pixel_z
 			overlays += edge_overlay
 			// only show extension for the first pipe. This means we'll only reflect that color.
 			extension_handled = TRUE
@@ -342,7 +342,7 @@
 	parent_movable.update_appearance()
 
 	if(changer)
-		playsound(changer, 'sound/items/ratchet.ogg', 10, TRUE) //sound
+		playsound(changer, 'sound/items/tools/ratchet.ogg', 10, TRUE) //sound
 
 	//quickly disconnect and reconnect the network.
 	if(active)
@@ -413,3 +413,8 @@
 	return (buffer.mode == READY) ? ..() : FALSE
 
 #undef READY
+
+///Lazily demand from any direction. Overlays won't look good, and the aquarium sprite occupies about the entire 32x32 area anyway.
+/datum/component/plumbing/aquarium
+	demand_connects = SOUTH|NORTH|EAST|WEST
+	use_overlays = FALSE

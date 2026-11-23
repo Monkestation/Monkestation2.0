@@ -28,8 +28,8 @@
 	/// The name of the delusion image
 	var/delusion_name
 
-	/// A list of all images we've made
-	var/list/image/delusions
+	/// An assoc list of affected mobs -> delusions of them we've made
+	var/list/delusions
 
 /datum/hallucination/delusion/New(
 	mob/living/hallucinator,
@@ -55,7 +55,7 @@
 
 /datum/hallucination/delusion/Destroy()
 	if(!QDELETED(hallucinator) && LAZYLEN(delusions))
-		hallucinator.client?.images -= delusions
+		hallucinator.client?.images -= flatten_list(delusions)
 		LAZYNULL(delusions)
 
 	return ..()
@@ -87,14 +87,16 @@
 				continue
 			funny_looking_mobs -= nearby_human
 
-	for(var/mob/living/carbon/human/found_human in funny_looking_mobs)
+	for(var/mob/living/carbon/human/found_human as anything in funny_looking_mobs)
 		var/image/funny_image = make_delusion_image(found_human)
-		LAZYADD(delusions, funny_image)
+		RegisterSignal(found_human, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
+		RegisterSignal(found_human, COMSIG_QDELETING, PROC_REF(on_mob_delete), TRUE)
+		LAZYSET(delusions, found_human, funny_image)
 		hallucinator.client.images |= funny_image
 
 	if(play_wabbajack)
 		to_chat(hallucinator, span_hear("...wabbajack...wabbajack..."))
-		hallucinator.playsound_local(get_turf(hallucinator), 'sound/magic/staff_change.ogg', 50, TRUE)
+		hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/magic/staff_change.ogg', 50, TRUE)
 
 	if(duration > 0)
 		QDEL_IN(src, duration)
@@ -108,7 +110,23 @@
 		funny_image = image(delusion_icon_file, over_who, delusion_icon_state)
 	funny_image.name = delusion_name
 	funny_image.override = TRUE
+	SET_PLANE_EXPLICIT(funny_image, ABOVE_GAME_PLANE, over_who)
 	return funny_image
+
+/datum/hallucination/delusion/proc/on_mob_delete(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+
+	if (source == hallucinator)
+		qdel(src)
+		return
+
+	hallucinator.client?.images -= delusions[source]
+	LAZYREMOVE(delusions, source)
+
+/datum/hallucination/delusion/proc/on_z_change(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+	var/image/funny_image = delusions[source]
+	SET_PLANE_EXPLICIT(funny_image, ABOVE_GAME_PLANE, source)
 
 /// Used for making custom delusions.
 /datum/hallucination/delusion/custom
@@ -150,7 +168,7 @@
 	delusion_name = "???"
 
 /datum/hallucination/delusion/preset/monkey
-	delusion_icon_file = 'icons/mob/species/human/human.dmi'
+	delusion_icon_file = 'icons/mob/human/human.dmi'
 	delusion_icon_state = "monkey"
 	delusion_name = "monkey"
 
@@ -169,12 +187,12 @@
 	delusion_name = "carp"
 
 /datum/hallucination/delusion/preset/skeleton
-	delusion_icon_file = 'icons/mob/species/human/human.dmi'
+	delusion_icon_file = 'icons/mob/human/human.dmi'
 	delusion_icon_state = "skeleton"
 	delusion_name = "skeleton"
 
 /datum/hallucination/delusion/preset/zombie
-	delusion_icon_file = 'icons/mob/species/human/human.dmi'
+	delusion_icon_file = 'icons/mob/human/human.dmi'
 	delusion_icon_state = "zombie"
 	delusion_name = "zombie"
 
@@ -191,7 +209,7 @@
 
 /datum/hallucination/delusion/preset/cyborg/make_delusion_image(mob/over_who)
 	. = ..()
-	hallucinator.playsound_local(get_turf(over_who), 'sound/voice/liveagain.ogg', 75, TRUE)
+	hallucinator.playsound_local(get_turf(over_who), 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 
 /datum/hallucination/delusion/preset/ghost
 	delusion_icon_file = 'icons/mob/simple/mob.dmi'

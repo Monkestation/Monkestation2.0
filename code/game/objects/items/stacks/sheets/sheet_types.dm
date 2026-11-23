@@ -134,7 +134,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("extinguisher cabinet frame", /obj/item/wallframe/extinguisher_cabinet, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1, check_density = FALSE, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("slime pen management frame", /obj/item/wallframe/slime_pen_controller, 1, check_density = FALSE, category = CAT_EQUIPMENT), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, time = 2.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet, 2, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
@@ -155,7 +154,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("remote chemical input tank", /obj/structure/chemical_input, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote chemical grinder", /obj/structure/chemical_input/grinder, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote chemical fermenter", /obj/structure/chemical_input/fermenter, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("remote geyser pump", /obj/structure/chemical_input/liquid_pump, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE)
+	new/datum/stack_recipe("remote geyser pump", /obj/structure/chemical_input/liquid_pump, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("anvil",/obj/structure/anvil, 25, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("forge hammer",/obj/item/forging_hammer, 2, time = 2.5 SECONDS, category = CAT_EQUIPMENT)
 ))
 
 /obj/item/stack/sheet/iron
@@ -361,6 +362,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("easel", /obj/structure/easel, 5, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("noticeboard", /obj/item/wallframe/noticeboard, 1, time = 1 SECONDS, one_per_turf = FALSE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("fish mount", /obj/item/wallframe/fish, 2, time = 3 SECONDS, check_density = FALSE, category = CAT_FURNITURE),\
 	new/datum/stack_recipe("test tube rack", /obj/item/storage/test_tube_rack, 1, time = 1 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY), \
 	null, \
 	new/datum/stack_recipe_list("pews", list(
@@ -369,6 +371,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 		new /datum/stack_recipe("pew (right)", /obj/structure/chair/pew/right, 3, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE)
 		)),
 	null, \
+	new /datum/stack_recipe("assembly bench", /obj/structure/machine/assembly_bench, 15, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE)
 	))
 
 /obj/item/stack/sheet/mineral/wood
@@ -498,8 +501,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	grind_results = list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
@@ -529,8 +532,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/durathread
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
+	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 
 /obj/item/stack/sheet/durathread/get_main_recipes()
 	. = ..()

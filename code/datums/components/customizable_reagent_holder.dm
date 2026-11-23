@@ -89,10 +89,10 @@
 	))
 	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, REF(src))
 
-/datum/component/customizable_reagent_holder/PostTransfer()
-	if(!isatom(parent))
+/datum/component/customizable_reagent_holder/PostTransfer(datum/new_parent)
+	if(!isatom(new_parent))
 		return COMPONENT_INCOMPATIBLE
-	var/atom/atom_parent = parent
+	var/atom/atom_parent = new_parent
 	if (!atom_parent.reagents)
 		return COMPONENT_INCOMPATIBLE
 
@@ -155,9 +155,8 @@
 		handle_reagents(atom_parent)
 		qdel(atom_parent)
 
-	if(job && job_xp)
-		if(attacker.client?.prefs)
-			add_jobxp_chance_delayed_check(attacker.client, job_xp, job, 40, FALSE)
+	if(job && job_xp) // monkestation edit
+		add_jobxp_chance(attacker.client, job_xp, job, 40)
 
 	handle_reagents(ingredient)
 	add_ingredient(ingredient)
@@ -179,15 +178,15 @@
 
 	switch(fill_type)
 		if(CUSTOM_INGREDIENT_ICON_SCATTER)
-			filling.pixel_x = rand(-1,1)
+			filling.pixel_w = rand(-1,1)
 			filling.pixel_z = rand(-1,1)
 		if(CUSTOM_INGREDIENT_ICON_STACK)
-			filling.pixel_x = rand(-1,1)
+			filling.pixel_w = rand(-1,1)
 			// we're gonna abuse position layering to ensure overlays render right
 			filling.pixel_y = -LAZYLEN(ingredients)
 			filling.pixel_z = 2 * LAZYLEN(ingredients) - 1 + LAZYLEN(ingredients)
 		if(CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
-			filling.pixel_x = rand(-1,1)
+			filling.pixel_w = rand(-1,1)
 			// similar here
 			filling.pixel_y = -LAZYLEN(ingredients)
 			filling.pixel_z = 2 * LAZYLEN(ingredients) - 1 + LAZYLEN(ingredients)
@@ -205,7 +204,7 @@
 				atom_parent.cut_overlay(top_overlay)
 			top_overlay = filling
 		if(CUSTOM_INGREDIENT_ICON_LINE)
-			filling.pixel_x = filling.pixel_z = rand(-8,3)
+			filling.pixel_w = filling.pixel_z = rand(-8,3)
 	atom_parent.add_overlay(filling)
 
 

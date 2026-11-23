@@ -9,6 +9,8 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
+/// from /datum/element/undertile/hide()
+#define COMSIG_UNDERTILE_UPDATED "undertile_updated"
 /// from /obj/obj_reskin: (mob/user, skin)
 #define COMSIG_OBJ_RESKIN "obj_reskin"
 
@@ -262,3 +264,9 @@
 
 ///sent by the ark SS whenever an anchoring crystal is created (/obj/structure/destructible/clockwork/anchoring_crystal/charged_crystal)
 #define COMSIG_ANCHORING_CRYSTAL_CREATED "anchoring_crystal_created"
+
+/// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
+#define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"
+
+/// From /obj/item/multitool/remove_buffer(): (buffer)
+#define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"

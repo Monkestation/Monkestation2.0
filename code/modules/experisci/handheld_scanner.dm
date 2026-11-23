@@ -7,7 +7,7 @@
 	name = "Experi-Scanner"
 	desc = "A handheld scanner used for completing the many experiments of modern science."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "experiscanner"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -26,6 +26,7 @@
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical), \
 		disallowed_traits = EXPERIMENT_TRAIT_DESTRUCTIVE, \
+		config_flags = EXPERIMENT_CONFIG_ALWAYS_ANNOUNCE, \
 		experiment_signals = handheld_signals, \
 	)
 

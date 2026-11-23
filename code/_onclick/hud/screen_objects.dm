@@ -49,6 +49,8 @@
 	/// Generally we don't want default Click stuff, which results in bugs like using Telekinesis on a screen element
 	/// or trying to point your gun at your screen.
 	var/default_click = FALSE
+	/// The key this screen object is stored under in its hud's screen_objects, if it was added with [/datum/hud/proc/add_screen_object]
+	var/hud_key
 
 /atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -57,6 +59,11 @@
 	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
+	if(hud && !isnull(hud_key) && hud.screen_objects[hud_key] == src)
+		hud.screen_objects -= hud_key
+		if(!QDELETED(hud))
+			hud.static_inventory -= src
+			hud.mymob?.canon_client?.screen -= src
 	master_ref = null
 	hud = null
 	return ..()
@@ -91,7 +98,7 @@
 	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
 
 /// Returns the mob this is being displayed to, if any
-/atom/movable/screen/proc/get_mob()
+/atom/movable/screen/proc/get_mob() as /mob
 	return hud?.mymob
 
 /atom/movable/screen/proc/on_hud_delete(datum/source)
@@ -112,19 +119,20 @@
 	name = "swap hand"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
-/atom/movable/screen/swap_hand/Click()
+/atom/movable/screen/swap_hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
+	. = TRUE // but we're definitely handling this click
 
-	if(usr.incapacitated())
-		return 1
+	if(!ismob(usr))
+		return
 
-	if(ismob(usr))
-		var/mob/M = usr
-		M.swap_hand()
-	return 1
+	if(world.time <= usr.next_move || usr.incapacitated())
+		return
+
+	var/list/modifiers = params2list(params)
+	var/cycle_dir = modifiers[SHIFT_CLICK] ? NORTH : WEST
+	usr.cycle_hand(cycle_dir, FALSE)
 
 /atom/movable/screen/navigate
 	name = "navigate"
@@ -254,6 +262,8 @@
 /atom/movable/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
+	/// Shown on the slot when the held item can block attacks
+	var/static/mutable_appearance/shield_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "shielding")
 	var/held_index = 0
 	interaction_flags_atom = NONE //so dragging objects into hands icon don't skip adjacency & other checks
 
@@ -261,23 +271,32 @@
 	. = ..()
 
 	if(!handcuff_overlay)
+		var/ui_style = hud?.mymob?.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
-		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
+		handcuff_overlay = mutable_appearance((ui_style ? ui_style2icon(ui_style) : 'icons/hud/screen_gen.dmi'), state)
 
 	if(!hud?.mymob)
 		return
+
+	if(!held_index)
+		return // ?
+
+	if(held_index == hud.mymob.active_hand_index || held_index == hud.mymob.get_inactive_hand_index())
+		if(held_index == hud.mymob.active_hand_index)
+			. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
+
+		// Display that this item is blocking attacks
+		var/obj/item/held_item = hud.mymob.get_item_for_held_index(held_index)
+		if(!isclothing(held_item) && held_item?.block_chance)
+			. += shield_overlay
 
 	if(iscarbon(hud.mymob))
 		var/mob/living/carbon/C = hud.mymob
 		if(C.handcuffed)
 			. += handcuff_overlay
 
-		if(held_index)
-			if(!C.has_hand_for_held_index(held_index))
-				. += blocked_overlay
-
-	if(held_index == hud.mymob.active_hand_index)
-		. += (held_index % 2) ? "lhandactive" : "rhandactive"
+		if(!C.has_hand_for_held_index(held_index))
+			. += blocked_overlay
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -780,8 +799,11 @@
 
 	var/not_fake_healthy = !owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy)
 	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
-		var/icon_key = 0
 		var/part_zone = body_part.body_zone
+		// I hate that we "allow" support for more than 2 hands in the codebase
+		if(!limbs[part_zone])
+			continue
+		var/icon_key = 0
 
 		var/list/overridable_key = list(icon_key)
 		if(body_part.bodypart_disabled)
@@ -915,7 +937,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	for(var/i = 1; i <= length(streak); ++i)
 		var/intent_text = copytext(streak, i, i + 1)
 		var/image/intent_icon = image(icon,src,"combo_[intent_text]")
-		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
+		intent_icon.pixel_w = 16 * (i - 1) - 8 * length(streak)
 		add_overlay(intent_icon)
 	return ..()
 
@@ -1120,7 +1142,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
  */
 /atom/movable/screen/blood_level
 	name = "Blood Level"
-	icon = 'icons/bloodsuckers/actions_bloodsucker.dmi'
+	icon = 'icons/mob/actions/actions_bloodsucker.dmi'
 	icon_state = "blood_display"
 	screen_loc = ui_blooddisplay
 

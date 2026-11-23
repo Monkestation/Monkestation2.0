@@ -153,7 +153,7 @@
 
 /obj/structure/spawner/lavaland/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/cursed_dagger))
-		playsound(get_turf(src), 'sound/magic/demon_attack1.ogg', 50, TRUE)
+		playsound(get_turf(src), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 		cursed = !cursed
 		if(cursed)
 			src.add_atom_colour("#41007e", TEMPORARY_COLOUR_PRIORITY)
@@ -169,7 +169,7 @@
 
 /obj/structure/spawner/lavaland/Destroy()
 	if(cursed)
-		for(var/mob/living/carbon/human/selected_human in range(7))
+		for(var/mob/living/carbon/human/selected_human in range(7, src))
 			if(is_species(selected_human, /datum/species/lizard/ashwalker))
 				continue
 			selected_human.AddComponent(/datum/component/ash_cursed)
@@ -253,7 +253,7 @@
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You place [src] on [interacting_with]."))
 	new /obj/structure/railroad(interacting_with)
-	playsound(interacting_with, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(interacting_with, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/railroad
@@ -371,13 +371,21 @@
 	vehicle_move_delay = 0.5
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/vehicle/rail_cart/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 13), TEXT_EAST = list(0, 13), TEXT_WEST = list(0, 13)))
-	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+/datum/component/riding/vehicle/rail_cart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 13),
+		TEXT_SOUTH = list(0, 13),
+		TEXT_EAST =  list(0, 13),
+		TEXT_WEST =  list(0, 13),
+	)
+
+/datum/component/riding/vehicle/rail_cart/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, OBJ_LAYER),
+		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
+		TEXT_EAST =  list(0, 0, OBJ_LAYER),
+		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+	)
 
 /datum/component/riding/vehicle/rail_cart/turf_check(turf/next, turf/current)
 	if(!(locate(/obj/structure/railroad) in next))
@@ -598,7 +606,7 @@
 	if(!regen_core.preserve())
 		balloon_alert(user, "organ decayed!")
 		return
-	playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	balloon_alert_to_viewers("[src] revitalizes [regen_core]!")
 	return
 
@@ -607,7 +615,7 @@
 	var/compiled_string = "The [src] has been destroyed at [loc_name(src.loc)], nearest mobs are "
 	var/found_anyone = FALSE
 
-	for(var/mob/living/carbon/carbons_nearby in range(7))
+	for(var/mob/living/carbon/carbons_nearby in range(7, src))
 		compiled_string += "[key_name(carbons_nearby)],"
 		found_anyone = TRUE
 
@@ -636,7 +644,7 @@
 
 	if(allow_transform < REQUIRED_OBSERVERS)
 		balloon_alert_to_viewers("[src] rejects the request, not enough viewers!")
-		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		human_user.adjustBruteLoss(10)
 		return
 
@@ -646,7 +654,7 @@
 
 		if(choice != "Yes")
 			balloon_alert_to_viewers("[src] feels rejected and punishes [human_user]!")
-			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 			human_user.adjustBruteLoss(50)
 			return
 
@@ -662,7 +670,7 @@
 			ADD_TRAIT(human_user, TRAIT_RESISTCOLD, ROUNDSTART_TRAIT)
 
 		ADD_TRAIT(human_user, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
-		playsound(src, 'sound/magic/demon_dies.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/magic/demon_dies.ogg', 50, TRUE)
 		meat_counter++
 
 	return ..()
@@ -690,7 +698,7 @@
 		else
 			meat_counter++
 
-		playsound(get_turf(src),'sound/magic/demon_consume.ogg', 100, TRUE)
+		playsound(get_turf(src),'sound/effects/magic/demon_consume.ogg', 100, TRUE)
 		var/delivery_key = viewable_living.fingerprintslast //key of whoever brought the body
 		var/mob/living/delivery_mob = get_mob_by_key(delivery_key) //mob of said key
 
@@ -1080,6 +1088,8 @@
 
 /turf/open/misc/asteroid/basalt/getDug()
 	. = ..()
+	if(!.)
+		return
 	AddComponent(/datum/component/simple_farm)
 
 /turf/open/misc/asteroid/basalt/refill_dug()
@@ -1088,6 +1098,8 @@
 
 /turf/open/misc/asteroid/snow/getDug()
 	. = ..()
+	if(!.)
+		return
 	AddComponent(/datum/component/simple_farm)
 
 /turf/open/misc/asteroid/snow/refill_dug()
@@ -1098,7 +1110,7 @@
 	name = "\improper Ashland Clothing Storage"
 	desc = "A large container, filled with various clothes for the Ash Walkers."
 	product_ads = "Praise the Necropolis"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
 	use_power = NO_POWER_USE

@@ -34,7 +34,7 @@
 	if(!istype(user))
 		return
 
-	user.adjust_bodytemperature(capacitor.rating * seconds_per_tick, max_temp = user.standard_body_temperature)
+	user.adjust_bodytemperature(capacitor.rating * seconds_per_tick, max_temp = user.get_body_temp_normal())
 
 /obj/item/pocket_heater/examine(mob/user)
 	. = ..()

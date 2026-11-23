@@ -24,14 +24,16 @@
 	should_draw_greyscale = TRUE
 	burn_modifier = 0.75
 	brute_modifier = 0.25
-	unarmed_attack_verb = "bite"
-	//grappled_attack_verb = "maul"
+	unarmed_attack_verbs = list("bite", "chomp")
+	unarmed_attack_verbs_continuous = list("bites", "chomps")
+	grappled_attack_verb = "maul"
+	grappled_attack_verb_continuous = "mauls"
 	unarmed_attack_effect = ATTACK_EFFECT_BITE
-	unarmed_attack_sound = 'sound/weapons/bite.ogg'
-	unarmed_miss_sound = 'sound/weapons/bite.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/bite.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/bite.ogg'
 	unarmed_damage_low = 60
 	unarmed_damage_high = 75
-	//unarmed_effectiveness = 50
+	unarmed_effectiveness = 50
 	dmg_overlay_type = null
 	biological_state = BIO_FLESH|BIO_BLOODED
 	head_flags = HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN|HEAD_HAIR
@@ -49,7 +51,8 @@ IMPL_UPDATE_SPECIES_COLOR(head)
 	biological_state = BIO_FLESH|BIO_BLOODED
 	bodypart_traits = list(TRAIT_NO_JUMPSUIT, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_PUSHIMMUNE, TRAIT_STUNIMMUNE)
 	wing_types = null
-	acceptable_bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	acceptable_bodytype = BODYTYPE_ORGANIC
+	acceptable_bodyshape = BODYSHAPE_DIGITIGRADE
 
 IMPL_UPDATE_SPECIES_COLOR(chest)
 
@@ -57,14 +60,16 @@ IMPL_UPDATE_SPECIES_COLOR(chest)
 	limb_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
-	unarmed_attack_verb = "slash"
-	//grappled_attack_verb = "lacerate"
+	unarmed_attack_verbs = list("slash")
+	unarmed_attack_verbs_continuous = list("slashes")
+	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	unarmed_damage_low = 20
 	unarmed_damage_high = 25
-	//unarmed_effectiveness = 20
+	unarmed_effectiveness = 20
 	burn_modifier = 0.75
 	brute_modifier = 0.25
 	dmg_overlay_type = null
@@ -77,14 +82,16 @@ IMPL_UPDATE_SPECIES_COLOR(arm/left)
 	limb_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
-	unarmed_attack_verb = "slash"
-	//grappled_attack_verb = "lacerate"
+	unarmed_attack_verbs = list("slash")
+	unarmed_attack_verbs_continuous = list("slashes")
+	grappled_attack_verb = "lacerate"
+	grappled_attack_verb_continuous = "lacerates"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	unarmed_damage_low = 20
 	unarmed_damage_high = 25
-	//unarmed_effectiveness = 20
+	unarmed_effectiveness = 20
 	burn_modifier = 0.75
 	brute_modifier = 0.25
 	dmg_overlay_type = null
@@ -97,7 +104,7 @@ IMPL_UPDATE_SPECIES_COLOR(arm/right)
 	limb_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = NONE
 	burn_modifier = 0.75
 	brute_modifier = 0.25
 	speed_modifier = 3
@@ -107,11 +114,16 @@ IMPL_UPDATE_SPECIES_COLOR(arm/right)
 
 IMPL_UPDATE_SPECIES_COLOR(leg/left)
 
+/obj/item/bodypart/leg/left/werewolf/Initialize(mapload)
+	. = ..()
+	// No squished sprite, the component just keeps the digitigrade shape and bodytype in sync with what we wear
+	AddComponent(/datum/component/digitigrade_limb, initial(limb_id), initial(limb_id))
+
 /obj/item/bodypart/leg/right/werewolf
 	limb_id = SPECIES_WEREWOLF
 	icon_greyscale = 'monkestation/code/modules/the_wolf_inside_of_me/icons/werewolf_parts_greyscale.dmi'
 	should_draw_greyscale = TRUE
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+	bodyshape = NONE
 	burn_modifier = 0.75
 	brute_modifier = 0.25
 	speed_modifier = 3
@@ -122,3 +134,8 @@ IMPL_UPDATE_SPECIES_COLOR(leg/left)
 IMPL_UPDATE_SPECIES_COLOR(leg/right)
 
 #undef IMPL_UPDATE_SPECIES_COLOR
+
+/obj/item/bodypart/leg/right/werewolf/Initialize(mapload)
+	. = ..()
+	// No squished sprite, the component just keeps the digitigrade shape and bodytype in sync with what we wear
+	AddComponent(/datum/component/digitigrade_limb, initial(limb_id), initial(limb_id))

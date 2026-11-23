@@ -393,7 +393,9 @@
 	cost = CARGO_CRATE_VALUE * 12 // three times more expensive than regular armor
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen = 3,
 					/obj/item/clothing/suit/armor/swat = 3,
-					/obj/item/clothing/mask/gas/sechailer/swat = 3,
+					/obj/item/clothing/mask/gas/sechailer/swat,
+					/obj/item/clothing/mask/gas/sechailer/swat/alt,
+					/obj/item/clothing/mask/gas/sechailer/swat/alt/pig,
 					/obj/item/storage/belt/military/assault = 3,
 					/obj/item/clothing/gloves/tackler/combat = 3,
 				)

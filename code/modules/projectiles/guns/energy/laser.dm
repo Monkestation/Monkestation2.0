@@ -17,11 +17,13 @@
 	desc = "An advanced energy-based laser cannon that fires heavily concentrated beams of light which pass through glass and thin metal."
 	icon_state = "lasercannon"
 	inhand_icon_state = null
+	worn_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hitscan)
 	fire_delay = 10
 	ammo_x_offset = 3
 	weapon_weight = WEAPON_HEAVY
 	shaded_charge = FALSE
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/gun/energy/laser/lasrifle
 	name = "laser rifle"
@@ -31,7 +33,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "lasrifle"
 	fire_delay = 10
-	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasrifle)
 
@@ -104,6 +106,7 @@
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
 	inhand_icon_state = null
+	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
@@ -134,6 +137,21 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
 	automatic_charge_overlays = FALSE
 
+/obj/item/gun/energy/laser/scatter/shotty/compact
+	name = "compact laser shotgun"
+	desc = "Equipped with a refraction kit for projectile seperation, and easy to carry and stow. Unfortunately, this is at the cost of trigger speed, accuracy and some damage. \n\
+		Shame, really, or it would be perfect..."
+	icon_state = "cshotgunc"
+	worn_icon_state = "clshotgun"
+	w_class = WEIGHT_CLASS_NORMAL
+	pin = /obj/item/firing_pin
+	recoil = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/weak)
+
+/obj/item/gun/energy/laser/scatter/shotty/compact/shoot_live_shot(mob/living/user)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/weapons/gun/shotgun/rack.ogg', 30, TRUE), 0.2 SECONDS)
+
 ///Laser Cannon
 
 /obj/item/gun/energy/lasercannon
@@ -156,7 +174,7 @@
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/projectile/beam/laser/accelerator
 	select_name = "accelerator"
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
 /obj/projectile/beam/laser/accelerator
 	name = "accelerator laser"

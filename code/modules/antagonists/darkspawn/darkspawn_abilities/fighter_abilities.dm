@@ -34,7 +34,7 @@
 		desc = initial(desc)
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/can_cast_spell(feedback)
-	if(!owner.get_empty_held_indexes() && !active)
+	if(!length(owner.get_empty_held_indexes()) && !active)
 		if(feedback)
 			to_chat(owner, span_warning("You need an empty hand for this!"))
 		return FALSE
@@ -54,7 +54,7 @@
 	owner.visible_message(span_warning("[owner]'s arm[num_tendrils > 1 ? "s" : ""] contort into tentacles!"), \
 		span_velvet("You transform your arm[num_tendrils > 1 ? "s" : ""] into umbral tendrils. Examine them to see possible uses."))
 	owner.balloon_alert(owner, "ikna")
-	playsound(owner, 'sound/magic/darkspawn/pass_create.ogg', 50, TRUE)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_create.ogg', 50, TRUE)
 
 	if(num_tendrils > 1) //add an additional sound and balloon alert for the extra tendril
 		addtimer(CALLBACK(src, PROC_REF(echo)), 1)
@@ -67,12 +67,12 @@
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/proc/echo()
 	owner.balloon_alert(owner, "ikna")
-	playsound(owner, 'sound/magic/darkspawn/pass_create.ogg', 50, TRUE)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_create.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/Disable()
 	owner.balloon_alert(owner, "haoo")
 	owner.visible_message(span_warning("[owner]'s tentacles transform back!"), span_notice("You dispel the tendrils."))
-	playsound(owner, 'sound/magic/darkspawn/pass_dispel.ogg', 50, 1)
+	playsound(owner, 'sound/effects/magic/darkspawn/pass_dispel.ogg', 50, 1)
 	for(var/obj/item/umbral_tendrils/T in owner)
 		QDEL_NULL(T)
 
@@ -203,7 +203,7 @@
 	panel = "Darkspawn"
 	antimagic_flags = NONE
 	spell_requirements = SPELL_REQUIRES_HUMAN
-	sound = 'sound/creatures/darkspawn/darkspawn_howl.ogg'
+	sound = 'sound/mobs/non-humanoids/darkspawn/darkspawn_howl.ogg'
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 75)
 
 /datum/action/cooldown/spell/time_dilation/can_cast_spell(feedback)
@@ -257,7 +257,7 @@
 	casting = TRUE
 	owner.balloon_alert(owner, "kap...")
 	owner.visible_message(span_boldwarning("[owner] begins to growl as their chitin hardens..."), span_velvet("You begin focusing your power..."))
-	playsound(owner, 'sound/magic/darkspawn/demented_outburst_charge.ogg', 50, 0)
+	playsound(owner, 'sound/effects/magic/darkspawn/demented_outburst_charge.ogg', 50, 0)
 	if(!do_after(owner, cast_time, cast_on))
 		casting = FALSE
 		return . | SPELL_CANCEL_CAST
@@ -267,7 +267,7 @@
 	. = ..()
 	owner.balloon_alert(owner, "...WXSU!")
 	owner.visible_message(span_userdanger("[owner] lets out a deafening scream!"), span_velvet("You let out a deafening outburst!"))
-	playsound(owner, 'sound/magic/darkspawn/demented_outburst_scream.ogg', 75, 0)
+	playsound(owner, 'sound/effects/magic/darkspawn/demented_outburst_scream.ogg', 75, 0)
 
 /datum/action/cooldown/spell/aoe/demented_outburst/cast_on_thing_in_aoe(atom/movable/victim, atom/caster)
 	if(!can_see(victim, caster, aoe_radius))
@@ -331,7 +331,7 @@
 /datum/action/cooldown/spell/toggle/creep/Enable()
 	owner.balloon_alert(owner, "odeahz")
 	owner.visible_message(span_warning("Velvety shadows coalesce around [owner]!"), span_velvet("You begin using Psi to shield yourself from lightburn."))
-	playsound(owner, 'sound/magic/darkspawn/devour_will_victim.ogg', 50, TRUE)
+	playsound(owner, 'sound/effects/magic/darkspawn/devour_will_victim.ogg', 50, TRUE)
 	var/datum/antagonist/darkspawn/dude = IS_DARKSPAWN(owner)
 	if(dude)
 		ADD_TRAIT(dude, TRAIT_DARKSPAWN_CREEP, type)
@@ -339,7 +339,7 @@
 /datum/action/cooldown/spell/toggle/creep/Disable()
 	owner.balloon_alert(owner, "phwo")
 	to_chat(owner, span_velvet("You release your grip on the shadows."))
-	playsound(owner, 'sound/magic/darkspawn/devour_will_end.ogg', 50, TRUE)
+	playsound(owner, 'sound/effects/magic/darkspawn/devour_will_end.ogg', 50, TRUE)
 	var/datum/antagonist/darkspawn/dude = IS_DARKSPAWN(owner)
 	if(dude)
 		REMOVE_TRAIT(dude, TRAIT_DARKSPAWN_CREEP, type)
@@ -379,7 +379,7 @@
 /datum/action/cooldown/spell/toggle/indomitable/Enable()
 	owner.balloon_alert(owner, "zhaedo")
 	owner.visible_message(span_warning("Shadows stitch [owner]'s legs to the ground!"), span_velvet("You begin using Psi to defend yourself from disruption."))
-	playsound(owner, 'sound/magic/darkspawn/devour_will_form.ogg', 50, TRUE)
+	playsound(owner, 'sound/effects/magic/darkspawn/devour_will_form.ogg', 50, TRUE)
 	owner.add_traits(traits, type)
 	owner.move_resist = INFINITY
 	was_running = (owner.m_intent == MOVE_INTENT_RUN)
@@ -389,7 +389,7 @@
 /datum/action/cooldown/spell/toggle/indomitable/Disable()
 	owner.balloon_alert(owner, "phwo")
 	to_chat(owner, span_velvet("You release your grip on the shadows."))
-	playsound(owner, 'sound/magic/darkspawn/devour_will_end.ogg', 50, TRUE)
+	playsound(owner, 'sound/effects/magic/darkspawn/devour_will_end.ogg', 50, TRUE)
 	owner.remove_traits(traits, type)
 	owner.move_resist = initial(owner.move_resist)
 	if(was_running && owner.m_intent == MOVE_INTENT_WALK)
@@ -406,7 +406,7 @@
 	overlay_icon_state = "bg_alien_border"
 	buttontooltipstyle = "alien"
 	button_icon_state = "incite"
-	sound = 'sound/ambience/antag/darkspawn/veil_mind_scream.ogg'
+	sound = 'sound/music/antag/darkspawn/veil_mind_scream.ogg'
 	panel = "Darkspawn"
 	antimagic_flags = NONE
 	check_flags = AB_CHECK_CONSCIOUS

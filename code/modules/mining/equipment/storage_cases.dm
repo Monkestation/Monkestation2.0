@@ -41,8 +41,8 @@
 	name = "Spare Fenrir Shotgun Magazine Case"
 	desc = "A small gun case that contains three spare magazines for the Fenrir auto shotgun. It fits in explorer webbing too."
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	icon_state = "miner_case_small"
 	illustration = ""
 	foldable_result = /obj/item/stack/sheet/iron
@@ -84,8 +84,8 @@
 	desc = "A case containing three rapid reloaders for the 'Hellhound' LMG. For when you really just dont have time."
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	icon_state = "miner_case_small"
 	illustration = ""
 	foldable_result = /obj/item/stack/sheet/iron
@@ -148,8 +148,8 @@
 	name = "Case of 'Duster' Speedloaders"
 	desc = "A case containing three spare speedloaders for the 'Duster' revolver"
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	icon_state = "miner_case_small"
 	illustration = ""
 	foldable_result = /obj/item/stack/sheet/iron
@@ -172,8 +172,8 @@
 	name = ".950 JDJ Kinetic bullet case"
 	desc = "A pretty redundant small gun case that only contains a single .950 JDJ Kinetic round for the 'Thor' rifle... its more than enough honestly."
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "miner_case_small"
 	illustration = ""
@@ -234,8 +234,8 @@
 	name = "box of kinetic rock breaker"
 	desc = "A box for holding up to twenty shells of Rockbreaker for the PKShotgun. Surprisingly fits inside of explorer webbings."
 	icon = 'icons/obj/storage/toolbox.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	icon_state = "ammobox"
 	illustration = ""
 	foldable_result = /obj/item/stack/sheet/iron
@@ -263,8 +263,8 @@
 	desc = "A case containing a 'Rapier' SMG and three magazines. Designed for full auto but has limited ammo."
 	icon_state = "miner_case"
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	illustration = ""
 
 /obj/item/storage/box/pksmg/Initialize(mapload)
@@ -284,8 +284,8 @@
 	name = "'Fenrir' Shotgun case"
 	desc = "A mining gun case containing a 20. gauge Fenrir automatic shotgun and three spare magazines."
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	icon_state = "miner_case"
 	illustration = ""
 	foldable_result = /obj/item/stack/sheet/iron
@@ -309,8 +309,8 @@
 	name = "Kinetic 'Hellhound' LMG case"
 	desc = "A special and totally original gun case that contains a Kinetic 'Hellhound' LMG, and a box of spare rounds to refill it."
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "miner_case"
 	illustration = ""
@@ -333,8 +333,8 @@
 	name = "'Slab' grenade launcher case"
 	desc = "A mining gun case containing a six round rotary 'Slab' grenade launcher, and a box of spare grenades."
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	icon_state = "miner_case"
 	w_class = WEIGHT_CLASS_BULKY
 	illustration = ""
@@ -357,8 +357,8 @@
 	name = "Kinetic 'Duster' Revolver Case"
 	desc = "A case containing a 'Duster' kinetic revolver and three speedloaders."
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "miner_case"
 	illustration = ""
@@ -383,8 +383,8 @@
 	name = ".950 JDJ Kinetic 'Thor' Rifle case"
 	desc = "A pretty redundant gun case that only contains the .950 JDJ Kinetic 'Thor' Rifle... contains no spare ammo, so make your one shot count or buy some more bullets."
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "miner_case"
 	illustration = ""
@@ -406,8 +406,8 @@
 	name = "Kinetic 'Slayer' Shotgun Case"
 	desc = "A special and totally original gun case that contains a 'Slayer' Shotgun, eight shells of Rockbreaker, and four shells of Magnum Kinetic Buckshot. Beware, they dont fit back inside once taken out for some reason."
 	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "miner_case"
 	illustration = ""
