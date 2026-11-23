@@ -27,3 +27,10 @@
 /datum/aneri
 	VAR_FINAL/__aneri_key_low
 	VAR_FINAL/__aneri_key_high
+
+/datum/aneri/Del()
+	if(!gc_destroyed)
+		gc_destroyed = world.time
+		// no signal don't put a signal on this shit
+		UNLINT(Destroy())
+	return ..()
