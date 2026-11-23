@@ -85,8 +85,12 @@ GAME_VERB_DESC(/client, redeem_code, "Redeem Code", "Redeem a code given to you.
 		if(given_item.item_path in usr.client.prefs.inventory)
 			usr.client.prefs.adjust_metacoins(usr.ckey, given_item.item_cost, "Redeemed a Giveaway Code: Already owned the item", donator_multiplier = FALSE)
 			to_chat(usr, span_boldnotice("You already owned this item so you were instead given Monkecoins that is equal to the value."))
+		else if(!given_item.finalize_purchase(usr.client))
+			if(!(code in GLOB.code_metadata))
+				GLOB.redeemed_codes -= code
+			message_admins("[usr] tried to redeem the code: [code], for [path], but saving it to their inventory failed")
+			return
 		else
-			given_item.finalize_purchase(usr.client)
 			to_chat(usr, span_boldnotice("You have successfully redeemed a giveaway code for: [initial(given_item.item_path.name)]."))
 
 	message_admins("[usr] has just redeemed the code: [code], for [path]")

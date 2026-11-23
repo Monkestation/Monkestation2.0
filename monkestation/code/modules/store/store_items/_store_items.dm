@@ -27,44 +27,50 @@
 
 
 	if(!one_time_buy)
-		if(finalize_purchase(buyer))
-			buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, "[buyer] bought a [name] for [item_cost]", donator_multiplier = FALSE)
+		finalize_purchase(buyer, item_cost)
 		return
 	else
 		buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, "[buyer] bought a [name] for [item_cost]", donator_multiplier = FALSE)
 	attempt_spawn(buyer)
 
-
-/datum/store_item/proc/finalize_purchase(client/buyer)
+/// Takes `cost` coins in the same transaction as saving the item.
+/datum/store_item/proc/finalize_purchase(client/buyer, cost = 0)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/fail_message = span_warning("Failed to add purchase to database. You have not been charged.")
-	if(!SSdbcore.IsConnected())
-		to_chat(buyer, fail_message)
-		return FALSE
 	if(!buyer?.prefs)
 		return FALSE
-	if(!buyer.prefs.inventory[item_path])
-		buyer.prefs.inventory += item_path
-		var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
+	var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+	if(!transaction)
+		to_chat(buyer, fail_message)
+		return FALSE
+	var/datum/preferences/prefs = buyer.prefs
+	var/ckey = buyer.ckey
+	if(!prefs.inventory[item_path])
+		SSdbcore.FireAndForget({"
 			INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
-			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = 1))
-		if(!query_add_gear_purchase.Execute())
-			to_chat(buyer, fail_message)
-			qdel(query_add_gear_purchase)
-			return FALSE
-		qdel(query_add_gear_purchase)
+			list("ckey" = ckey, "item_id" = item_path, "amount" = 1), transaction = transaction)
 	else
-		buyer.prefs.inventory += item_path
-		var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
+		SSdbcore.FireAndForget({"
 			UPDATE [format_table_name("metacoin_item_purchases")] SET amount = :amount WHERE ckey = :ckey AND item_id = :item_id"},
-			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = 1))
-		if(!query_add_gear_purchase.Execute())
-			to_chat(buyer, fail_message)
-			qdel(query_add_gear_purchase)
-			return FALSE
-		qdel(query_add_gear_purchase)
-
+			list("ckey" = ckey, "item_id" = item_path, "amount" = 1), transaction = transaction)
+	if(cost)
+		SSdbcore.FireAndForget(
+			"UPDATE [format_table_name("player")] SET metacoins = metacoins - :cost WHERE ckey = :ckey",
+			list("cost" = cost, "ckey" = ckey), transaction = transaction)
+	var/reason = "[buyer] bought a [name] for [cost]"
+	// added before the commit sleeps so a second click can't buy it twice
+	prefs.inventory += item_path
+	if(!SSdbcore.CommitTransaction(transaction))
+		prefs.inventory -= item_path
+		to_chat(buyer, fail_message)
+		return FALSE
+	if(!cost)
+		return TRUE
+	var/previous_coins = prefs.metacoins
+	prefs.metacoins -= cost
+	logger.Log(LOG_CATEGORY_META, "[ckey]'s monkecoins were changed by [-cost] Reason: [reason]", list("currency_left" = prefs.metacoins, "reason" = reason, "previous_coins" = previous_coins))
+	to_chat(buyer, "<span class='rose bold'>[cost] Monkecoins have been withdrawn from your account! Reason: [reason]</span>")
 	return TRUE
 
 /datum/store_item/proc/attempt_spawn(client/buyer)

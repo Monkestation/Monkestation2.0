@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(plexora)
 	flags = SS_NO_INIT | SS_NO_FIRE
 #endif
 
-	/// This gets set to TRUE or FALSE during is_plexora_alive, it's just initially null to so logging works properly without spamming
+	/// This gets set to TRUE or FALSE during on_alive_response, it's just initially null to so logging works properly without spamming
 	var/plexora_is_alive = null
 	var/base_url = ""
 	var/enabled = TRUE
@@ -68,12 +68,8 @@ SUBSYSTEM_DEF(plexora)
 		"Authorization" = AUTH_HEADER,
 	)
 
-	// Do a ping test to check if Plexora is actually running
-	if (!is_plexora_alive())
-		stack_trace("SSplexora is enabled BUT plexora is not alive or running! SS has not been aborted, subsequent fires will take place.")
-	else
-		serverstarted()
-		check_servers()
+	serverstarted()
+	check_alive()
 
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(roundstarted))
 
@@ -101,27 +97,22 @@ SUBSYSTEM_DEF(plexora)
 	CONFIG_SET(string/plexora_url, "http://[old_config["ip"]]:[old_config["port"]]")
 	return TRUE
 
-/datum/controller/subsystem/plexora/proc/is_plexora_alive()
-	. = FALSE
+/datum/controller/subsystem/plexora/proc/check_alive()
 	if(!enabled)
 		return
-
 	var/datum/http_request/request = new("[base_url]/alive")
 	request.timeout = 10
-	var/datum/http_response/response = request.send().wait()
-	if (response.error)
+	request.send_queued(CALLBACK(src, PROC_REF(on_alive_response)))
+
+/datum/controller/subsystem/plexora/proc/on_alive_response(datum/http_response/response)
+	if(!response.ok)
 		// avoid spamming logs
 		if (isnull(plexora_is_alive) || plexora_is_alive)
 			plexora_is_alive = FALSE
 			log_admin("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
-			CRASH("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
-	else
-		plexora_is_alive = TRUE
-		return TRUE
-
-/datum/controller/subsystem/plexora/fire()
-	if(!is_plexora_alive())
+			stack_trace("Failed to check if Plexora is alive! She probably isn't. Check config on both sides ([response.error || response.status_code])")
 		return
+	plexora_is_alive = TRUE
 	// Send current status to Plexora
 	var/datum/world_topic/status/status_handler = new()
 	var/list/status = status_handler.Run()
@@ -136,6 +127,9 @@ SUBSYSTEM_DEF(plexora)
 
 	check_servers()
 
+/datum/controller/subsystem/plexora/fire()
+	check_alive()
+
 /datum/controller/subsystem/plexora/proc/check_servers()
 	var/list/servers_to_check = list(
 		PLEXORA_SERVERID_MRP,
@@ -146,7 +140,7 @@ SUBSYSTEM_DEF(plexora)
 	for(var/serverid in servers_to_check)
 		if(serverid == current_server_id)
 			continue
-		up_servers[serverid] = check_byondserver_status(serverid, null)
+		check_byondserver_status(serverid, null)
 
 /datum/controller/subsystem/plexora/proc/topic_listener_response(token, data)
 	if(!enabled)
@@ -179,13 +173,15 @@ SUBSYSTEM_DEF(plexora)
 	request.timeout = 10
 	var/datum/http_response/response = request.send().wait()
 	if (response.error)
-		if (response.status_code && try_return_statuscode_on_error)
-			return response.status_code
 		// avoid spamming logs
 		if (isnull(plexora_is_alive) || plexora_is_alive)
 			plexora_is_alive = FALSE
 			log_admin("Plexora down! HTTP requests will fail!")
 			CRASH("Failed HTTP request")
+	else if (!response.ok)
+		if (try_return_statuscode_on_error)
+			return response.status_code
+		CRASH("Plexora answered [path] with HTTP [response.status_code]")
 	else if (decode_json)
 		return json_decode(response.body)
 	else

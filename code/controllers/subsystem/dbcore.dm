@@ -170,7 +170,8 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/run_query(datum/db_query/query)
 	if(IsAdminAdvancedProcCall())
 		return
-	query.start_inner().execute()
+	// not the callback queue, run_query_sync and Shutdown spin on process() when it might not drain
+	query.start_inner().execute(query, TYPE_PROC_REF(/datum/db_query, inner_finished))
 
 /datum/controller/subsystem/dbcore/proc/queue_query(datum/db_query/query)
 	if(IsAdminAdvancedProcCall())
@@ -373,7 +374,7 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/ReportError(error)
 	last_error = error
 
-/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, arguments, allow_during_shutdown=FALSE)
+/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, arguments, allow_during_shutdown=FALSE, datum/sql_transaction/transaction)
 	//If the subsystem is shutting down, disallow new queries
 	if(!allow_during_shutdown && shutting_down)
 		CRASH("Attempting to create a new db query during the world shutdown")
@@ -382,24 +383,52 @@ SUBSYSTEM_DEF(dbcore)
 		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
 		return FALSE
-	return new /datum/db_query(pool, sql_query, arguments)
+	return new /datum/db_query(pool, sql_query, arguments, transaction)
 
 /**
  * Creates and executes a query without waiting for or tracking the results.
- * Query is executed asynchronously (without blocking) and deleted afterwards - any results or errors are discarded.
+ * Query is executed asynchronously (without blocking) and deleted afterwards - results are discarded, errors go to the SQL debug log.
  *
  * Arguments:
  * * sql_query - The SQL query string to execute
  * * arguments - List of arguments to pass to the query for parameter binding
  * * allow_during_shutdown - If TRUE, allows query to be created during subsystem shutdown. Generally, only cleanup queries should set this.
+ * * transaction - From BeginTransaction().
  */
-/datum/controller/subsystem/dbcore/proc/FireAndForget(sql_query, arguments, allow_during_shutdown = FALSE)
-	var/datum/db_query/query = NewQuery(sql_query, arguments, allow_during_shutdown)
+/datum/controller/subsystem/dbcore/proc/FireAndForget(sql_query, arguments, allow_during_shutdown = FALSE, datum/sql_transaction/transaction)
+	var/datum/db_query/query = NewQuery(sql_query, arguments, allow_during_shutdown, transaction)
 	if(!query)
 		return
-	ASYNC
-		query.Execute()
+	if(!IsConnected())
 		qdel(query)
+		return
+	query.fire_and_forget = TRUE
+	query.Activity("Execute")
+	query.status = DB_QUERY_STARTED
+	if(transaction || !MC_RUNNING(init_stage))
+		run_query(query)
+	else
+		queue_query(query)
+
+/// Returns null when NewQuery would refuse its statements, since those would leave an empty transaction that commits fine. Always end it with CommitTransaction().
+/datum/controller/subsystem/dbcore/proc/BeginTransaction() as /datum/sql_transaction
+	if(!IsConnected() || shutting_down || IsAdminAdvancedProcCall())
+		return null
+	return pool.begin()
+
+/// Sleeps until the commit is done, then deletes the transaction. aneri fails the commit if any statement in it failed, so this is the only check a caller needs.
+/datum/controller/subsystem/dbcore/proc/CommitTransaction(datum/sql_transaction/transaction, warn = FALSE)
+	var/datum/sql_query/commit = transaction.commit().wait()
+	var/error = commit.last_error
+	qdel(transaction)
+	if(!error)
+		return TRUE
+	logger.Log(LOG_CATEGORY_DEBUG_SQL, "sql transaction failed", list(
+		"error" = error,
+	))
+	if(warn)
+		to_chat(usr, span_danger("A SQL error occurred during this operation, check the server logs."))
+	return FALSE
 
 /** QuerySelect
 	Run a list of query datums in parallel, blocking until they all complete.
@@ -442,7 +471,7 @@ The duplicate_key arg can be true to automatically generate this part of the que
 Ignore_errors instructes mysql to continue inserting rows if some of them have errors.
 	the erroneous row(s) aren't inserted and there isn't really any way to know why or why errored
 */
-/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, warn = FALSE, async = TRUE, special_columns = null)
+/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, warn = FALSE, async = TRUE, special_columns = null, datum/sql_transaction/transaction)
 	if (!table || !rows || !istype(rows))
 		return
 
@@ -493,7 +522,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	else if (duplicate_key != FALSE)
 		query_parts += duplicate_key
 
-	var/datum/db_query/Query = NewQuery(query_parts.Join(), arguments)
+	var/datum/db_query/Query = NewQuery(query_parts.Join(), arguments, transaction = transaction)
 	if (warn)
 		. = Query.warn_execute(async)
 	else
@@ -546,6 +575,9 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	var/datum/sql_pool/pool
 	var/sql
 	var/arguments
+	var/datum/sql_transaction/transaction
+	/// Logs its own failure and deletes itself once it finishes.
+	var/fire_and_forget = FALSE
 
 	var/datum/callback/success_callback
 	var/datum/callback/fail_callback
@@ -567,7 +599,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 
 	var/list/item  //list of data values populated by NextRow()
 
-/datum/db_query/New(pool, sql, arguments)
+/datum/db_query/New(pool, sql, arguments, transaction)
 	if(IsAdminAdvancedProcCall())
 		CRASH("Advanced admin proc call tried to create a db query directly: [sql]")
 	SSdbcore.all_queries += src
@@ -578,9 +610,11 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	src.pool = pool
 	src.sql = sql
 	src.arguments = arguments
+	src.transaction = transaction
 
 /datum/db_query/Destroy()
 	inner?.cancel()
+	transaction = null
 	Close()
 	SSdbcore.all_queries -= src
 	SSdbcore.queries_standby -= src
@@ -630,8 +664,9 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 		start_time = REALTIMEOFDAY
 	Close()
 	status = DB_QUERY_STARTED
-	if(async)
-		if(!MC_RUNNING(SSdbcore.init_stage))
+	// aneri can't block on a transaction's statements, and the standby queue would reorder them
+	if(async || transaction)
+		if(transaction || !MC_RUNNING(SSdbcore.init_stage))
 			SSdbcore.run_query_sync(src)
 		else
 			SSdbcore.queue_query(src)
@@ -673,9 +708,22 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	store_data()
 	return TRUE
 
+/datum/db_query/proc/inner_finished(datum/sql_query/finished)
+	store_data()
+	if(!fire_and_forget)
+		return
+	if(status == DB_QUERY_BROKEN)
+		logger.Log(LOG_CATEGORY_DEBUG_SQL, "sql query failed", list(
+			"query" = sql,
+			"arguments" = json_encode(arguments),
+			"error" = last_error,
+		))
+	qdel(src)
+
 /// Makes a fresh aneri query for this run and returns it, unstarted.
 /datum/db_query/proc/start_inner() as /datum/sql_query
-	inner = pool.query(sql, coerce_arguments(arguments))
+	var/list/coerced = coerce_arguments(arguments)
+	inner = transaction ? transaction.query(sql, coerced) : pool.query(sql, coerced)
 	inner.timeout = max(CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
 	return inner
 

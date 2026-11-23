@@ -213,25 +213,20 @@
 		message_admins("[admin.ckey] tried to hide a book without the required perms")
 		return
 
-	var/datum/db_query/query_hide_book = SSdbcore.NewQuery({"
+	var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+	if(!transaction)
+		return
+	SSdbcore.FireAndForget({"
 		UPDATE [format_table_name("library")]
 		SET deleted = 1
 		WHERE id = :id
-	"}, list("id" = id))
-	if(!query_hide_book.warn_execute())
-		qdel(query_hide_book)
-		return
-	qdel(query_hide_book)
-
-
-	var/datum/db_query/query_update_log = SSdbcore.NewQuery({"
+	"}, list("id" = id), transaction = transaction)
+	SSdbcore.FireAndForget({"
 		INSERT INTO [format_table_name("library_action")] (book, reason, ckey, datetime, action, ip_addr)
 		VALUES (:book, :reason, :ckey, Now(), :action, INET_ATON(:ip_addr))
-	"}, list("book" = id, "reason" = reason, "ckey" = admin.ckey, "action" = BOOK_ADMIN_DELETE, "ip_addr" = admin.address))
-	if(!query_update_log.warn_execute())
-		qdel(query_update_log)
+	"}, list("book" = id, "reason" = reason, "ckey" = admin.ckey, "action" = BOOK_ADMIN_DELETE, "ip_addr" = admin.address), transaction = transaction)
+	if(!SSdbcore.CommitTransaction(transaction, warn = TRUE))
 		return
-	qdel(query_update_log)
 
 	var/log_reason = "([admin.ckey]) hid book #[id][reason ? ": \"[reason]\"" : ""]"
 	log_admin_private(log_reason)
@@ -248,25 +243,20 @@
 		message_admins("[admin.ckey] tried to unhide a book without the required perms")
 		return
 
-	var/datum/db_query/query_unhide_book = SSdbcore.NewQuery({"
+	var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+	if(!transaction)
+		return
+	SSdbcore.FireAndForget({"
 		UPDATE [format_table_name("library")]
 		SET deleted = NULL
 		WHERE id = :id
-	"}, list("id" = id))
-
-	if(!query_unhide_book.warn_execute())
-		qdel(query_unhide_book)
-		return
-	qdel(query_unhide_book)
-
-	var/datum/db_query/query_update_log = SSdbcore.NewQuery({"
+	"}, list("id" = id), transaction = transaction)
+	SSdbcore.FireAndForget({"
 		INSERT INTO [format_table_name("library_action")] (book, reason, ckey, datetime, action, ip_addr)
 		VALUES (:book, :reason, :ckey, Now(), :action, INET_ATON(:ip_addr))
-	"}, list("book" = id, "reason" = reason, "ckey" = admin.ckey, "action" = BOOK_ADMIN_RESTORE, "ip_addr" = admin.address))
-	if(!query_update_log.warn_execute())
-		qdel(query_update_log)
+	"}, list("book" = id, "reason" = reason, "ckey" = admin.ckey, "action" = BOOK_ADMIN_RESTORE, "ip_addr" = admin.address), transaction = transaction)
+	if(!SSdbcore.CommitTransaction(transaction, warn = TRUE))
 		return
-	qdel(query_update_log)
 
 	log_admin_private("([admin.ckey]) unhid book #[id]")
 	library_updated()

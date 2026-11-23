@@ -13,6 +13,8 @@ SUBSYSTEM_DEF(floxy)
 	var/base_url
 	/// List of IDs that we're waiting on results from.
 	var/list/pending_ids = list()
+	/// IDs in pending_ids with a poll still in flight.
+	var/list/polling_ids = list()
 	/// Assoc list of [id] -> completed requests.
 	/// If a value is null, that means it errored somehow, and floxy.log should be checked for more info.
 	var/alist/completed_ids = alist()
@@ -60,17 +62,27 @@ SUBSYSTEM_DEF(floxy)
 /datum/controller/subsystem/floxy/fire(resumed)
 	renew_if_needed()
 	for(var/id in pending_ids)
-		var/list/info = http_basicasync("api/media/[id]", method = "GET")
-		if(!info)
-			pending_ids -= id
+		if(id in polling_ids)
 			continue
-		var/status = info["status"]
-		if(status != FLOXY_STATUS_COMPLETED && status != FLOXY_STATUS_FAILED)
-			continue
+		polling_ids += id
+		build_request("api/media/[id]", method = "GET").send_queued(CALLBACK(src, PROC_REF(on_media_polled), id))
+
+/datum/controller/subsystem/floxy/proc/on_media_polled(id, datum/http_response/response)
+	polling_ids -= id
+	if(!(id in pending_ids))
+		return
+	var/list/info = response.ok ? safe_json_decode(response.body) : null
+	if(!islist(info))
 		pending_ids -= id
-		log_floxy("[id] [status]")
-		testing("FLOXY: [id] [status]\n---[json_encode(info, JSON_PRETTY_PRINT)]\n---")
-		completed_ids[id] = info
+		log_floxy("Polling [id] failed: [response.error || "HTTP [response.status_code]"]")
+		return
+	var/status = info["status"]
+	if(status != FLOXY_STATUS_COMPLETED && status != FLOXY_STATUS_FAILED)
+		return
+	pending_ids -= id
+	log_floxy("[id] [status]")
+	testing("FLOXY: [id] [status]\n---[json_encode(info, JSON_PRETTY_PRINT)]\n---")
+	completed_ids[id] = info
 
 /datum/controller/subsystem/floxy/stat_entry(msg)
 	if(auth_token)
@@ -93,7 +105,7 @@ SUBSYSTEM_DEF(floxy)
 	return ..()
 
 /datum/controller/subsystem/floxy/CanProcCall(procname)
-	if(procname == "login" || procname == "http_basicasync")
+	if(procname == "login" || procname == "http_basicasync" || procname == "build_request")
 		return FALSE
 	return ..()
 #endif
@@ -139,7 +151,7 @@ SUBSYSTEM_DEF(floxy)
 		params["force"] = "true"
 	if(hard)
 		params["hard"] = "true"
-	var/datum/http_response/response = http_basicasync("api/media/[id]?[list2params(params)]", method = "DELETE", just_response = TRUE)
+	var/datum/http_response/response = http_basicasync("api/media/[id]?[list2params(params)]", method = "DELETE", decode_json = FALSE, just_response = TRUE)
 	if(!response)
 		return FALSE
 	pending_ids -= id
@@ -219,7 +231,8 @@ SUBSYSTEM_DEF(floxy)
 	else
 		auth_expiry = null
 
-/datum/controller/subsystem/floxy/proc/http_basicasync(path, list/body, method = "POST", decode_json = TRUE, timeout = 10 SECONDS, auth = TRUE, just_response = FALSE)
+/// The request carries the auth token, hence the CanProcCall block.
+/datum/controller/subsystem/floxy/proc/build_request(path, list/body, method = "POST", timeout = 10 SECONDS, auth = TRUE) as /datum/http_request
 	var/list/headers = default_headers
 	if(auth)
 		headers = default_headers.Copy()
@@ -231,10 +244,14 @@ SUBSYSTEM_DEF(floxy)
 		headers
 	)
 	request.timeout = timeout / (1 SECONDS)
-	var/datum/http_response/response = request.send().wait()
-	if(response.error)
-		log_floxy("Floxy response errored: [response.error || "N/A"]")
-		CRASH("Floxy response errored: [response.error || "N/A"]")
+	return request
+
+/datum/controller/subsystem/floxy/proc/http_basicasync(path, list/body, method = "POST", decode_json = TRUE, timeout = 10 SECONDS, auth = TRUE, just_response = FALSE)
+	var/datum/http_response/response = build_request(path, body, method, timeout, auth).send().wait()
+	if(!response.ok)
+		var/reason = response.error || "HTTP [response.status_code]"
+		log_floxy("Floxy response errored: [reason]")
+		CRASH("Floxy response errored: [reason]")
 	else if(decode_json)
 		return json_decode(response.body)
 	else if(just_response)

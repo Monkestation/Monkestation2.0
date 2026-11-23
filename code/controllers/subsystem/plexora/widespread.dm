@@ -90,13 +90,16 @@
 
 	var/datum/http_request/request = new("[base_url]/byondserver_alive", "POST", json_encode(body), default_headers)
 	request.timeout = 5
-	var/datum/http_response/response = request.send().wait()
-	if (response.error)
-		stack_trace("check_byondserver_status failed, likely an bad id passed ([id]) aka id of a server that doesnt exist")
-		return FALSE
-	else
-		var/list/json_body = json_decode(response.body)
-		return json_body["alive_likely"]
+	request.send_queued(CALLBACK(src, PROC_REF(on_server_status), id))
+
+/datum/controller/subsystem/plexora/proc/on_server_status(id, datum/http_response/response)
+	if (!response.ok)
+		if (up_servers[id] != FALSE)
+			stack_trace("check_byondserver_status failed, likely an bad id passed ([id]) aka id of a server that doesnt exist")
+		up_servers[id] = FALSE
+		return
+	var/list/json_body = json_decode(response.body)
+	up_servers[id] = json_body["alive_likely"]
 
 
 /datum/controller/subsystem/plexora/proc/relay_mentor_say(client/user, message, prefix)

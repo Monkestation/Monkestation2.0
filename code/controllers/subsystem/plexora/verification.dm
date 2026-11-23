@@ -39,8 +39,8 @@
 	)
 	request.timeout = 5
 	var/datum/http_response/response = request.send().wait()
-	if (response.error)
-		stack_trace(response.body)
+	if (!response.ok)
+		stack_trace("Failed to poll ckey [ckey]: [response.error || "HTTP [response.status_code]"]")
 		plexora_is_alive = FALSE
 		log_access("Plexora is down. Failed to poll ckey [ckey]")
 		return list(

@@ -234,22 +234,18 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 			to_chat(usr, span_danger("[admin_key] already listed in admin database. Check the Management tab if they don't appear in the list of admins."), confidential = TRUE)
 			return FALSE
 		qdel(query_admin_in_db)
-		var/datum/db_query/query_add_admin = SSdbcore.NewQuery(
-			"INSERT INTO [format_table_name("admin")] (ckey, `rank`) VALUES (:ckey, 'NEW ADMIN')",
-			list("ckey" = .)
-		)
-		if(!query_add_admin.warn_execute())
-			qdel(query_add_admin)
+		var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+		if(!transaction)
 			return FALSE
-		qdel(query_add_admin)
-		var/datum/db_query/query_add_admin_log = SSdbcore.NewQuery({"
+		SSdbcore.FireAndForget(
+			"INSERT INTO [format_table_name("admin")] (ckey, `rank`) VALUES (:ckey, 'NEW ADMIN')",
+			list("ckey" = .), transaction = transaction)
+		SSdbcore.FireAndForget({"
 			INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
 			VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'add admin', :target, CONCAT('New admin added: ', :target))
-		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = .))
-		if(!query_add_admin_log.warn_execute())
-			qdel(query_add_admin_log)
+		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = .), transaction = transaction)
+		if(!SSdbcore.CommitTransaction(transaction, warn = TRUE))
 			return FALSE
-		qdel(query_add_admin_log)
 
 /datum/admins/proc/remove_admin(admin_ckey, admin_key, use_db, datum/admins/D)
 	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
@@ -269,22 +265,18 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 		var/m1 = "[key_name_admin(usr)] removed [admin_key] from the admins list [use_db ? "permanently" : "temporarily"]"
 		var/m2 = "[key_name(usr)] removed [admin_key] from the admins list [use_db ? "permanently" : "temporarily"]"
 		if(use_db)
-			var/datum/db_query/query_add_rank = SSdbcore.NewQuery(
-				"DELETE FROM [format_table_name("admin")] WHERE ckey = :ckey",
-				list("ckey" = admin_ckey)
-			)
-			if(!query_add_rank.warn_execute())
-				qdel(query_add_rank)
+			var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+			if(!transaction)
 				return
-			qdel(query_add_rank)
-			var/datum/db_query/query_add_rank_log = SSdbcore.NewQuery({"
+			SSdbcore.FireAndForget(
+				"DELETE FROM [format_table_name("admin")] WHERE ckey = :ckey",
+				list("ckey" = admin_ckey), transaction = transaction)
+			SSdbcore.FireAndForget({"
 				INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
 				VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'remove admin', :admin_ckey, CONCAT('Admin removed: ', :admin_ckey))
-			"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "admin_ckey" = admin_ckey))
-			if(!query_add_rank_log.warn_execute())
-				qdel(query_add_rank_log)
+			"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "admin_ckey" = admin_ckey), transaction = transaction)
+			if(!SSdbcore.CommitTransaction(transaction, warn = TRUE))
 				return
-			qdel(query_add_rank_log)
 			sync_lastadminrank(admin_ckey, admin_key)
 		message_admins(m1)
 		log_admin(m2)
@@ -433,39 +425,32 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 				return
 			if(!query_rank_in_db.NextRow())
 				QDEL_NULL(query_rank_in_db)
-				var/datum/db_query/query_add_rank = SSdbcore.NewQuery({"
+				var/datum/sql_transaction/rank_transaction = SSdbcore.BeginTransaction()
+				if(!rank_transaction)
+					return
+				SSdbcore.FireAndForget({"
 					INSERT INTO [format_table_name("admin_ranks")] (`rank`, flags, exclude_flags, can_edit_flags)
 					VALUES (:new_rank, '0', '0', '0')
-				"}, list("new_rank" = custom_rank.name))
-				if(!query_add_rank.warn_execute())
-					qdel(query_add_rank)
-					return
-				qdel(query_add_rank)
-				var/datum/db_query/query_add_rank_log = SSdbcore.NewQuery({"
+				"}, list("new_rank" = custom_rank.name), transaction = rank_transaction)
+				SSdbcore.FireAndForget({"
 					INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
 					VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'add rank', :new_rank, CONCAT('New rank added: ', :new_rank))
-				"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "new_rank" = custom_rank.name))
-				if(!query_add_rank_log.warn_execute())
-					qdel(query_add_rank_log)
+				"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "new_rank" = custom_rank.name), transaction = rank_transaction)
+				if(!SSdbcore.CommitTransaction(rank_transaction, warn = TRUE))
 					return
-				qdel(query_add_rank_log)
 			qdel(query_rank_in_db)
-		var/datum/db_query/query_change_rank = SSdbcore.NewQuery(
-			"UPDATE [format_table_name("admin")] SET `rank` = :new_rank WHERE ckey = :admin_ckey",
-			list("new_rank" = joined_rank, "admin_ckey" = admin_ckey)
-		)
-		if(!query_change_rank.warn_execute())
-			qdel(query_change_rank)
+		var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+		if(!transaction)
 			return
-		qdel(query_change_rank)
-		var/datum/db_query/query_change_rank_log = SSdbcore.NewQuery({"
+		SSdbcore.FireAndForget(
+			"UPDATE [format_table_name("admin")] SET `rank` = :new_rank WHERE ckey = :admin_ckey",
+			list("new_rank" = joined_rank, "admin_ckey" = admin_ckey), transaction = transaction)
+		SSdbcore.FireAndForget({"
 			INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
 			VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'change admin rank', :target, CONCAT('Rank of ', :target, ' changed from ', :old_rank, ' to ', :new_rank))
-		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = admin_ckey, "old_rank" = old_rank, "new_rank" = joined_rank))
-		if(!query_change_rank_log.warn_execute())
-			qdel(query_change_rank_log)
+		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = admin_ckey, "old_rank" = old_rank, "new_rank" = joined_rank), transaction = transaction)
+		if(!SSdbcore.CommitTransaction(transaction, warn = TRUE))
 			return
-		qdel(query_change_rank_log)
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
 		D.update_ranks(new_ranks) //set the admin_rank as our rank
@@ -572,22 +557,18 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 	if(tgui_alert(usr,"Are you sure you want to remove [admin_rank]?","Confirm Removal",list("Do it","Cancel")) == "Do it")
 		var/m1 = "[key_name_admin(usr)] removed rank [admin_rank] permanently"
 		var/m2 = "[key_name(usr)] removed rank [admin_rank] permanently"
-		var/datum/db_query/query_add_rank = SSdbcore.NewQuery(
-			"DELETE FROM [format_table_name("admin_ranks")] WHERE `rank` = :admin_rank",
-			list("admin_rank" = admin_rank)
-		)
-		if(!query_add_rank.warn_execute())
-			qdel(query_add_rank)
+		var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+		if(!transaction)
 			return
-		qdel(query_add_rank)
-		var/datum/db_query/query_add_rank_log = SSdbcore.NewQuery({"
+		SSdbcore.FireAndForget(
+			"DELETE FROM [format_table_name("admin_ranks")] WHERE `rank` = :admin_rank",
+			list("admin_rank" = admin_rank), transaction = transaction)
+		SSdbcore.FireAndForget({"
 			INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
 			VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'remove rank', :admin_rank, CONCAT('Rank removed: ', :admin_rank))
-		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "admin_rank" = admin_rank))
-		if(!query_add_rank_log.warn_execute())
-			qdel(query_add_rank_log)
+		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "admin_rank" = admin_rank), transaction = transaction)
+		if(!SSdbcore.CommitTransaction(transaction, warn = TRUE))
 			return
-		qdel(query_add_rank_log)
 		message_admins(m1)
 		log_admin(m2)
 
