@@ -1,18 +1,27 @@
+[CONTRIBUTING.MD.md](https://github.com/user-attachments/files/35296231/CONTRIBUTING.MD.md)
+
 # CONTRIBUTING
 
-1. [Reporting Issues](#reporting-issues)
-2. [Introduction](#introduction)
-3. [Getting Started](#getting-started)
-4. [Meet the Team](#meet-the-team)
-   1. [Headcoder](#headcoder)
-   2. [Maintainers](#maintainers)
-   3. [Issue Managers](#issue-managers)
-5. [Development Guides](#development-guides)
-6. [Pull Request Process](#pull-request-process)
-7. [Good Boy Points](#good-boy-points)
+1. [Monkestation Design Axioms](#monkestation-design-axioms)
+2. [Reporting Issues](#reporting-issues)
+3. [Introduction](#introduction)
+4. [Getting Started](#getting-started)
+5. [Meet the Team](#meet-the-team)
+   1. [Maintainers](#maintainers)
+6. [Development Guides](#development-guides)
+7. [Pull Request Process](#pull-request-process)
 8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
 9. [Banned content](#banned-content)
 10. [A word on Git](#a-word-on-git)
+
+## Monkestation Design Axioms
+
+As a contributor, please consider if your work aligns with our design philosophy.
+
+- We should improve/rework content instead of removing it, whenever possible.
+- We should attempt to preserve the cultural artifacts and rich history of SS13 whilst still striving to improve it as a game.
+- We should allow some features to remain stupid and/or potentially broken if they are fun or (positively) engaging. Think: is an issue fundamental to the item or mechanic, or is a player's abuse causing fatigue? If one person ruins the fun, the problem may be administrative rather than mechanical.
+- In place of direct nerfs to powerful items or mechanic combinations, we should consider including escalating chances for backfire or major drawbacks, without taking away what makes those items or mechanics special. Don't nerf something to the ground just because it killed you, and do remember that the game is supposed to be unfair to a degree.
 
 ## Reporting Issues
 
@@ -24,73 +33,53 @@ If you have difficulty, ask for help in the #coding-general channel on our disco
 
 ## Introduction
 
-Hello and welcome to /tg/station's contributing page. You are here because you are curious or interested in contributing - thank you! Everyone is free to contribute to this project as long as they follow the simple guidelines and specifications below; at /tg/station, we strive to maintain code stability and maintainability, and to do that, we need all pull requests to hold up to those specifications. It's in everyone's best interests - including yours! - if the same bug doesn't have to be fixed twice because of duplicated code.
+Hello and welcome to Monkestation's contributing page. You are here because you are curious or interested in contributing - thank you! Everyone is free to contribute to this project as long as they follow the simple guidelines and specifications below; at Monkestation, we strive to maintain code stability and maintainability, and to do that, we need all pull requests to hold up to those specifications. It's in everyone's best interests - including yours! - if the same bug doesn't have to be fixed twice because of duplicated code.
 
 First things first, we want to make it clear how you can contribute (if you've never contributed before), as well as the kinds of powers the team has over your additions, to avoid any unpleasant surprises if your pull request is closed for a reason you didn't foresee.
 
 ## Getting Started
 
-/tg/station doesn't have a list of goals and features to add; we instead allow freedom for contributors to suggest and create their ideas for the game. That doesn't mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful starting guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
+Monkestation doesn't have a list of goals and features to add; we instead allow freedom for contributors to suggest and create their ideas for the game. That doesn't mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful starting guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
-If you want to contribute the first thing you'll need to do is [set up Git](https://hackmd.io/@tgstation/HJ8OdjNBc) so you can download the source code.
+If you want to contribute the first thing you'll need to do is set up Git so you can download the Monkestation source code. You can use /tg/station's [Git setup guide](https://hackmd.io/@tgstation/HJ8OdjNBc) as an example to set up our repository: just use [Monkestation/Monkestation2.0](https://github.com/Monkestation/Monkestation2.0) wherever it mentions the tgstation repository.
 After setting it up, optionally navigate your git commandline to the project folder and run the command: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
 
-We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+You may also want to read /tg/station's [guide to contributing](https://github.com/tgstation/tgstation/blob/master/.github/CONTRIBUTING.md). While we do have different rules, it's a good place to start.
 
-There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/tgstation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
+We have a [Coding Tools guide on our wiki](https://wiki.monkestation.com/Coding_Tools) that will help you get started contributing to Monkestation with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+
+There is an open list of issues for [your inspiration here](https://github.com/Monkestation/Monkestation2.0/issues).
 
 You can of course, as always, ask for help on the Discord channels or the forums. We're just here to have fun and help out, so please don't expect professional support.
 
 ## Meet the Team
 
-### Headcoder
-
-The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
-
 ### Maintainers
 
 Maintainers are quality control. If a proposed pull request doesn't meet the following specifications, they can request you to change it, or simply just close the pull request. Maintainers are required to give a reason for closing the pull request.
 
+Maintainers have the final decision on which code changes get in and which don't. If you're unsure whether a contribution is OK, you should ideally talk to a maintainer and get their approval first, to avoid wasting your time and work.
+
 Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
+
+When maintainers disagree, the Maintainer Council votes. The Host (Aberra) breaks any ties.
 
 <details>
 <summary>Maintainer Guidelines</summary>
 
 These are the few directives we have for project maintainers.
 
-- Do not merge PRs you create.
-- Do not merge PRs until 24 hours have passed since it was opened. Exceptions include:
-  - Emergency fixes.
-    - Try to get secondary maintainer approval before merging if you are able to.
-  - PRs with empty commits intended to generate a changelog.
+- Do not merge PRs you create. The only exception is emergency fixes, which you may merge yourself.
+- Do not merge other people's Balance, Feature, Mapping or Removal PRs until 24 hours have passed since they were opened.
 - Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
 - Do not close PRs purely for breaking a template if the same information is contained without it.
+- Do not merge PRs with the Do Not Merge (`Process: do not merge`) label, and do not remove the label, without the consent of the maintainer who applied it.
+- PRs with the `Process: do not merge` label are closed after a week, unless another maintainer disputes the label. In that case, the Maintainer Council votes to either lift the label or close the PR.
+- In case of a conflict between maintainers, the Maintainer Council votes on whether the PR gets approved. In case of a tie, the Host acts as the tiebreaker.
 
 These are not steadfast rules as maintainers are expected to use their best judgement when operating.
 
-Our team is entirely voluntary, as such we extend our thanks to maintainers, issue managers, and contributors alike for helping keep the project alive.
-
-</details>
-
-### Issue Managers
-
-Issue Managers help out the project by labelling bug reports and PRs and closing bug reports which are duplicates or are no longer applicable.
-
-<details>
-<summary>What You Can and Can't Do as an Issue Manager</summary>
-
-This should help you understand what you can and can't do with your newfound github permissions.
-
-Things you **CAN** do:
-
-- Label issues appropriately
-- Close issues when appropriate
-- Label PRs, unless you are goofball.
-
-Things you **CAN'T** do:
-
-- [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
-- Close issues purely for breaking a template if the same information is contained without it.
+Our team is entirely voluntary, as such we extend our thanks to maintainers and contributors alike for helping keep the project alive.
 
 </details>
 
@@ -110,7 +99,7 @@ Things you **CAN'T** do:
 
 #### Misc
 
-- [AI Datums](../code/datums/ai/making_your_ai.md)
+- [AI Datums](../code/datums/ai/learn_ai.md)
 - [Embedding TGUI Components in Chat](../tgui/docs/chat-embedded-components.md)
 - [Hard Deletes](./guides/HARDDELETES.md)
 - [MC Tab Guide](./guides/MC_tab.md)
@@ -131,7 +120,7 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 - You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data. Should you be optimizing a routine you must provide proof by way of profiling that your changes are faster.
 
-- We ask that you use the changelog system to document your player facing changes, which prevents our players from being caught unaware by said changes - you can find more information about this [on this wiki page](http://tgstation13.org/wiki/Guide_to_Changelogs).
+- We ask that you use the changelog system to document your player facing changes, which prevents our players from being caught unaware by said changes - you can find more information about this [on this wiki page](https://wiki.tgstation13.org/Guide_to_Changelogs).
 
 - If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
@@ -155,40 +144,27 @@ Your "Why It's Good For The Game" section must make a good faith and reasonable 
 
 More controversial changes have higher standards for justification to be considered reasonable. A bugfix for example does not typically require any effort at all in justification as its value to the game is usually self evident, however a major feature overhaul or balance change may require significant explanation to adequately justify its supposed benefit to the game.
 
-This is still a requirement if your pull request is supported and/or requested by maintainers before it is opened. This is still a requirement if your pull request is supported and/or requested by head coders before it is opened. The purpose of arguing for your changes is not to convince just the maintainer team of its merits, it is to document the "why" behind your changes to the game to a necessary level of detail. The reason behind a change must exist as it is the purpose of this codebase to improve the game, thus said reasoning must be adequately stated and explained.
+This is still a requirement if your pull request is supported and/or requested by maintainers before it is opened. This is still a requirement if your pull request is supported and/or requested by the Host before it is opened. The purpose of arguing for your changes is not to convince just the maintainer team of its merits, it is to document the "why" behind your changes to the game to a necessary level of detail. The reason behind a change must exist as it is the purpose of this codebase to improve the game, thus said reasoning must be adequately stated and explained.
 
 This is also still a requirement if your pull request has a corresponding design document that justifies your changes inside it. You must always properly justify changes (those that actually need justification) within the pull request, even if you also do it elsewhere. This is to ensure that:
 
 1. All reviewers can easily see the reasoning behind your changes on the pull request itself, no reliance on other sites required.
 2. The actual, manifested implementation of the idea behind the design document is being justified after said implementation is actually realized. This is in contrast to any reasoning put on the design document itself, which very well may have been made before any work was done on it, possibly even by an author different from the author of the pull request. Any idea in the design document may have had compromises put into it due to complications not seen in the original vision, thus the current state of the implementation (the pull request as it stands) must be defended, explained, and ultimately justified in and of itself. Of course, you should still list the design document the pull request is implementing, and may even use arguments from the design document if said arguments are applicable to the current reality of your proposed changes.
 
-## Good Boy Points
-
-Each GitHub account has a score known as Good Boy Points, or GBP. This is a system we use to ensure that the codebase stays maintained and that contributors fix bugs as well as add features.
-
-The GBP gain or loss for a PR depends on the type of changes the PR makes, represented by the tags assigned to the PR by the tgstation github bot or maintainers. Generally speaking, fixing bugs, updating sprites, or improving maps increases your GBP score, while adding mechanics, or rebalancing things will cost you GBP.
-
-The GBP change of a PR is the sum of greatest positive and lowest negative values it has. For example, a PR that has tags worth +10, +4, -1, -7, will net 3 GBP (10 - 7).
-
-Negative GBP increases the likelihood of a maintainer closing your PR. With that chance being higher the lower your GBP is. Be sure to use the proper tags in the changelog to prevent unnecessary GBP loss. Maintainers reserve the right to change tags as they deem appropriate.
-
-There is no benefit to having a higher positive GBP score, since GBP only comes into consideration when it is negative.
-
-You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml).
-
 ## Porting features/sprites/sounds/tools from other codebases
 
 If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use though, porting stuff from AGPLv3 and GPLv3 codebases are allowed.
 
-Regarding sprites & sounds, you must credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+Regarding sprites & sounds, you must credit the artist and possibly the codebase. All Monkestation assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
 
 ## Banned content
 
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 
 - National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-- Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
-- Code which violates GitHub's [terms of service](https://github.com/site/terms).
+- Code which violates GitHub's [terms of service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service).
+- Anything AI-generated, including code, sprites, sounds and text such as PR descriptions, bug reports, comments or reviews.
+  - Using AI to help you learn how to code is completely fine, but you should be writing the code yourself.
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
@@ -202,8 +178,8 @@ Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?ite
 
 Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.
 
-## Using the Maintainer Role Ping in Discord
+## Using the Maintainer Council Ping in Discord
 
-This role `@Maintainer` is pingable as a compromise reached with the server host MrStonedOne over the auto-stale system we presently have in the codebase. It should be used only to ping Maintainers when your PR has had the "Stale" label applied. Using it before then can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
+The `@SS13 Maintainer Council` role should be used only to ping maintainers when your PR has had the "Stale" label applied. Using it before then can be met with escalating timeouts and referral to the Discord moderators for further infractions.
 
 Feel free to engage and obtain general feedback in the Coding General channel without the role ping before your PR goes stale to build interest and get reviews.
