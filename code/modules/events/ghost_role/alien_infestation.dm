@@ -60,13 +60,6 @@
 	prompted_picking = cast_control.prompted_picking
 	var/list/candidates = cast_control.get_candidates()
 
-	//guh
-	var/list/cliented_list = list()
-	for(var/mob/living/mob as anything in candidates)
-		cliented_list += mob.client
-	if(length(cliented_list))
-		mass_adjust_antag_rep(cliented_list, 1)
-
 	if(prompted_picking)
 		candidates = SSpolling.poll_candidates(
 			question = "Would you like to be a [cast_control.name]?",
@@ -78,8 +71,6 @@
 			role_name_text = LOWER_TEXT(cast_control.name),
 			chat_text_border_icon = /mob/living/carbon/alien/larva
 		)
-
-	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
@@ -98,23 +89,15 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
-	var/selected_count = 0
-	while(length(weighted_candidates) && selected_count < larva_count)
-		var/client/candidate_ckey = pick_n_take_weighted(weighted_candidates)
-		var/client/candidate_client = GLOB.directory[candidate_ckey]
-		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
-			continue
-		var/mob/candidate = candidate_client.mob
-		candidate_client.prefs?.reset_antag_rep()
+	for(var/mob/candidate as anything in roll_antag_candidates(candidates, larva_count, cast_control.antag_debt_cost))
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
 		var/obj/vent = pick_n_take(vents)
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.PossessByPlayer(candidate_ckey)
+		new_xeno.PossessByPlayer(candidate.ckey)
 		new_xeno.move_into_vent(vent)
 		setup_minds += new_xeno.mind
-		selected_count++
 
 		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")
 		new_xeno.log_message("was spawned as an alien by an event.", LOG_GAME)

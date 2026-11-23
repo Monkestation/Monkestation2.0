@@ -61,6 +61,11 @@
 	message_admins("Scheduled Event: [event] successfully triggered.")
 	var/datum/round_event/antagonist/round_event = SSgamemode.TriggerEvent(event, ignores_checks)
 	if(round_event == EVENT_INTERRUPTED && !QDELETED(src))
+		var/datum/round_event_control/antagonist/antag_event = event
+		if(istype(antag_event) && antag_event.last_run_no_takers)
+			message_admins("Scheduled Event: [event] asked everyone it could and nobody took it, points were not refunded.")
+			qdel(src)
+			return
 		message_admins("Scheduled Event: [event] was interrupted and has been refunded.")
 		SSgamemode.refund_scheduled_event(src)
 		return

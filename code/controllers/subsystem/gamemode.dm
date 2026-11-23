@@ -107,6 +107,8 @@ SUBSYSTEM_DEF(gamemode)
 
 	/// List of new player minds we currently want to give our roundstart antag to
 	var/list/roundstart_antag_minds = list()
+	/// ckey -> list of antag flags that player was asked about this round and didn't say yes to. They are left out of later prompted rolls for those antags.
+	var/list/unanswered_antag_prompts = list()
 
 	/// Do we allow magic events to trigger
 //	var/allow_magic = FALSE
@@ -271,6 +273,8 @@ SUBSYSTEM_DEF(gamemode)
 			else if(living_players && isliving(player))
 				if(!ishuman(player) && !isAI(player))
 					continue
+				if(player.client?.is_afk())
+					continue
 				// I split these checks up to make the code more readable ~Lucy
 				var/is_on_station = is_station_level(player.z)
 				if(!is_on_station && !is_late_arrival(player))
@@ -317,6 +321,12 @@ SUBSYSTEM_DEF(gamemode)
 
 /// Gets the correct popcount, returning READY people if roundstart, and active people if not.
 /datum/controller/subsystem/gamemode/proc/get_correct_popcount()
+	if(!SSticker.HasRoundStarted())
+		. = 0
+		for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+			if(player.ready == PLAYER_READY_TO_PLAY)
+				.++
+		return .
 	update_crew_infos()
 	return active_players
 

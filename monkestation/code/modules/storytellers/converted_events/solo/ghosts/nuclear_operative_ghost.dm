@@ -23,6 +23,7 @@
 	)
 	base_antags = 3
 	maximum_antags = 4
+	antag_debt_cost = 1
 	enemy_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,

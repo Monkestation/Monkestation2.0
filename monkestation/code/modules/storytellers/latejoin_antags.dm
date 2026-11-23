@@ -17,7 +17,7 @@
 	else
 		if(!COOLDOWN_FINISHED(src, latejoin_antag_cooldown))
 			return
-		var/latejoin_chance = get_latejoin_antag_chance()
+		var/latejoin_chance = clamp(get_latejoin_antag_chance() * get_latejoin_weight_multiplier(latejoiner), 0, 100)
 		if(!prob(latejoin_chance))
 			log_storyteller("Latejoin: chance failed for [key_name(latejoiner)] ([latejoin_chance]% chance)")
 			return
@@ -43,6 +43,17 @@
 	picked_event.calculated_weight = null
 	message_admins("Latejoin: [ADMIN_LOOKUPFLW(latejoiner)] has been selected for [picked_event.name].")
 	log_storyteller("Latejoin: [key_name(latejoiner)] has been selected for [picked_event.name]")
+
+/// How much more (or less) likely the latejoiner is than the average alive player to win a weighted antag roll, so the chance averages out to the plain latejoin chance.
+/datum/controller/subsystem/gamemode/proc/get_latejoin_weight_multiplier(mob/living/carbon/human/latejoiner)
+	var/list/weights = get_antag_roll_weights(GLOB.alive_player_list | latejoiner)
+	var/joiner_weight = weights[latejoiner.ckey]
+	if(isnull(joiner_weight))
+		return 1
+	var/total = 0
+	for(var/ckey in weights)
+		total += weights[ckey]
+	return joiner_weight / (total / length(weights))
 
 /// The percent chance that a latejoiner gets rolled for a latejoin antag right now.
 /datum/controller/subsystem/gamemode/proc/get_latejoin_antag_chance()

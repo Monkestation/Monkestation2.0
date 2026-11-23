@@ -4,6 +4,7 @@
 	typepath = /datum/round_event/ghost_role/abandoned_ipc
 	track = EVENT_TRACK_MODERATE
 	weight = 10
+	antag_debt_cost = 0.5
 
 /datum/round_event/ghost_role/abandoned_ipc
 	minimum_required = 1
@@ -18,10 +19,11 @@
 		alert_pic = /datum/antagonist/abandoned_ipc,
 		role_name_text = "abandoned IPC"
 	)
-	if(!length(candidates))
+	var/list/rolled = roll_antag_candidates(candidates, cost = control.antag_debt_cost)
+	if(!length(rolled))
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected = pick(candidates)
+	var/mob/dead/selected = rolled[1]
 
 	var/turf/spawn_loc = find_safe_turf_in_maintenance()
 	if(isnull(spawn_loc))

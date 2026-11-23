@@ -72,9 +72,7 @@
 	var/datum/team/cortical_borers/team = new()
 	team.create_objectives()
 
-	for(var/index in 1 to choosing_number)
-		var/mob/dead/observer/new_borer = pick(candidates)
-		candidates -= new_borer
+	for(var/mob/dead/observer/new_borer as anything in roll_antag_candidates(candidates, floor(choosing_number), control.antag_debt_cost))
 		var/vent = pick(vents)
 		var/mob/living/basic/cortical_borer/empowered/spawned_cb = new /mob/living/basic/cortical_borer/empowered(get_turf(vent))
 		spawned_cb.move_into_vent(vent)

@@ -1271,13 +1271,8 @@ SUBSYSTEM_DEF(job)
 
 	var/list/candidates = SSgamemode.current_roundstart_event.get_candidates()
 
-	var/list/cliented_list = list()
-	for(var/mob/living/mob as anything in candidates)
-		cliented_list += mob.client
-	if(length(cliented_list))
-		mass_adjust_antag_rep(cliented_list, 1)
-
-	var/list/weighted_candidates = return_antag_rep_weight(candidates)
+	var/list/weighted_candidates = get_antag_roll_weights(candidates)
+	var/list/pool_ckeys = assoc_to_keys(weighted_candidates)
 	var/antag_selection_loops = SSgamemode.current_roundstart_event.get_antag_amount()
 	var/iter = 0
 	while(iter < antag_selection_loops)
@@ -1360,6 +1355,7 @@ SUBSYSTEM_DEF(job)
 		if(!try_reassign_job(player, enemy_job_instances, restricted_job_instances))
 			log_storyteller("h_r_a failed, we were unable to reassign an antag player with a restricted role")
 			return FALSE
+	credit_antag_roll(pool_ckeys, length(SSgamemode.roundstart_antag_minds) * SSgamemode.current_roundstart_event.antag_debt_cost)
 	return TRUE
 
 /// Try and reassign the job of input player and return based on if we succeed or not, if need_new_enemy is passed then we will return FALSE if we cant find someone else to be an enemy

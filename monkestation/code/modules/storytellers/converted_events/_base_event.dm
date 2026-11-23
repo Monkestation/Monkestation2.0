@@ -38,6 +38,7 @@
 	antag_datum = cast_control.antag_datum
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
+	var/pool_was_handed_in = !isnull(candidate_pool)
 	var/list/possible_candidates = cast_control.get_candidates(candidate_pool)
 	candidate_pool = null
 	var/list/candidates = list()
@@ -51,15 +52,13 @@
 			SSgamemode.roundstart_antag_minds -= antag_mind
 			log_storyteller("Roundstart antag_mind, [key_name(antag_mind)]")
 
-	//guh
-	var/list/cliented_list = list()
-	for(var/mob/living/mob in possible_candidates)
-		cliented_list += mob.client
+	// the roll before spawn can pick more than the post-spawn count wants, those picks are already committed
+	antag_count = max(antag_count, length(candidates))
+	possible_candidates -= candidates
+	var/inherited_count = length(candidates)
 
-	if(length(cliented_list))
-		mass_adjust_antag_rep(cliented_list, 1)
-
-	var/list/weighted_candidates = return_antag_rep_weight(possible_candidates)
+	var/list/weighted_candidates = get_antag_roll_weights(possible_candidates)
+	var/list/pool_ckeys = assoc_to_keys(weighted_candidates)
 
 	while(length(weighted_candidates) && length(candidates) < antag_count) //both of these pick_n_take from weighted_candidates so this should be fine
 		if(prompted_picking)
@@ -70,7 +69,7 @@
 			var/mob/picked_mob = picked_client.mob
 			log_storyteller("Prompted antag event mob: [key_name(picked_mob)], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			if(picked_mob)
-				candidates |= SSpolling.poll_candidates(
+				var/list/accepted = SSpolling.poll_candidates(
 					question = "Would you like to be a [cast_control.name]?",
 					check_jobban = antag_flag,
 					role = antag_flag,
@@ -81,6 +80,9 @@
 					chat_text_border_icon = antag_datum,
 					show_candidate_amount = FALSE,
 				)
+				if(!length(accepted))
+					LAZYORASSOCLIST(SSgamemode.unanswered_antag_prompts, picked_ckey, antag_flag)
+				candidates |= accepted
 		else
 			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]
@@ -91,6 +93,10 @@
 			log_storyteller("Picked antag event mob: [key_name(picked_mob)], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
+	// a pool handed in is a latejoiner alone, 1/1 would cancel out the cost of being picked
+	if(!pool_was_handed_in)
+		credit_antag_roll(pool_ckeys, (length(candidates) - inherited_count) * cast_control.antag_debt_cost)
+
 	var/list/picked_mobs = list()
 	for(var/i in 1 to antag_count)
 		if(!length(candidates))
@@ -100,7 +106,7 @@
 		var/mob/candidate = pick_n_take(candidates)
 		log_storyteller("Antag event spawned mob: [key_name(candidate)], special role: [candidate.mind?.special_role ? candidate.mind.special_role : "none"]")
 
-		candidate.client?.prefs.reset_antag_rep()
+		candidate.client?.prefs.adjust_antag_debt(-cast_control.antag_debt_cost)
 
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
@@ -171,13 +177,6 @@
 	prompted_picking = cast_control.prompted_picking
 	var/list/candidates = cast_control.get_candidates()
 
-	//guh
-	var/list/cliented_list = list()
-	for(var/mob/living/mob as anything in candidates)
-		cliented_list += mob.client
-	if(length(cliented_list))
-		mass_adjust_antag_rep(cliented_list, 1)
-
 	if(prompted_picking)
 		candidates = SSpolling.poll_candidates(
 			question = "Would you like to be a [cast_control.name]?",
@@ -190,22 +189,11 @@
 			chat_text_border_icon = antag_datum,
 		)
 
-	var/list/weighted_candidates = return_antag_rep_weight(candidates)
-	var/selected_count = 0
-	while(length(weighted_candidates) && selected_count < antag_count)
-		var/candidate_ckey = pick_n_take_weighted(weighted_candidates)
-		var/client/candidate_client = GLOB.directory[candidate_ckey]
-		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
-			continue
-		var/mob/candidate = candidate_client.mob
-
-		candidate_client.prefs?.reset_antag_rep()
-
+	for(var/mob/candidate as anything in roll_antag_candidates(candidates, antag_count, cast_control.antag_debt_cost))
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 		var/mob/living/carbon/human/new_human = make_body(candidate)
 		new_human.mind.special_role = antag_flag
 		new_human.mind.restricted_roles = restricted_roles
 		setup_minds += new_human.mind
-		selected_count++
 	setup = TRUE
