@@ -53,16 +53,6 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
 /datum/species/proc/set_custom_worn_icon_cached(file_to_use, state_to_use, meta, cached_value)
 	GLOB.species_clothing_fallback_cache[name]["[file_to_use]-[state_to_use]-[meta]"] = cached_value
 
-/// Returns a shared instance of the species with this id, for reading its data. Null if there's no such species.
-/proc/get_species_prototype(species_id)
-	var/static/list/prototypes = list()
-	var/datum/species/species_type = GLOB.species_list[species_id]
-	if(!species_type)
-		return null
-	if(!prototypes[species_id])
-		prototypes[species_id] = new species_type()
-	return prototypes[species_id]
-
 /**
  * Allow for custom clothing icon generation. Only called if the wearer is BODYSHAPE_CUSTOM
  * If null is returned, use default human icon.
@@ -79,7 +69,7 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
 	if(isnull(limb_ids)) // the limbs don't decide this slot
 		limb_ids = list(id)
 	for(var/limb_id in limb_ids)
-		var/datum/species/limb_species = (limb_id == id) ? src : get_species_prototype(limb_id)
+		var/datum/species/limb_species = (limb_id == id) ? src : GLOB.species_prototypes[GLOB.species_list[limb_id]]
 		var/fitted_icon = limb_species?.get_fitted_worn_icon(item_slot, item)
 		if(fitted_icon)
 			item.species_fitted = limb_id

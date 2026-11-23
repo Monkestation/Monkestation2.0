@@ -214,12 +214,24 @@
 
 	// Heads that can't grow hair get their hair-like features (vox quills) sculpted instead
 	var/obj/item/bodypart/head/noggin = target_human.get_bodypart(BODY_ZONE_HEAD)
-	if(location == BODY_ZONE_HEAD && noggin && !(noggin.head_flags & HEAD_HAIR) && noggin.has_restylable_features(EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR))
+	var/list/hairlike_features = list()
+	if(location == BODY_ZONE_HEAD && noggin && !(noggin.head_flags & HEAD_HAIR))
+		for(var/obj/item/organ/external/feature in noggin)
+			if(feature.restyle_flags & (EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR))
+				hairlike_features[capitalize(feature.name)] = feature
+	if(length(hairlike_features))
 		if(!get_location_accessible(target_human, BODY_ZONE_HEAD))
 			balloon_alert(user, "the headgear is in the way!")
 			return
+		var/obj/item/organ/external/feature = hairlike_features[hairlike_features[1]]
+		if(length(hairlike_features) > 1)
+			var/selected_part = tgui_alert(user, "Please select which part of [target_human] you would like to sculpt!", "It's sculpting time!", hairlike_features + "Cancel")
+			if(!selected_part || selected_part == "Cancel")
+				return
+			feature = hairlike_features[selected_part]
+		var/is_facial = feature.restyle_flags & EXTERNAL_RESTYLE_FACIAL_HAIR
 		playsound(target_human, 'monkestation/code/modules/blueshift/sounds/haircut.ogg', 100)
-		if(noggin.attempt_feature_restyle(src, user, target_human, BODY_ZONE_HEAD, EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR, haircut_duration))
+		if(feature.attempt_feature_restyle(src, user, target_human, BODY_ZONE_HEAD, feature.restyle_flags, is_facial ? facial_haircut_duration : haircut_duration))
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
 		return
 

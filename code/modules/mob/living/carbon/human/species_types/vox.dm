@@ -39,6 +39,11 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	breathid = "n2"
 	inherent_respiration_type = RESPIRATION_N2
+	mirror_race_change_features = list(
+		/datum/preference/choiced/vox_skin_tone,
+		/datum/preference/choiced/vox_body_markings,
+		/datum/preference/choiced/vox_tail_markings,
+	)
 	suicide_messages = list(
 		"%SUICIDER% is jamming %THEIR% claws into %THEIR% eye sockets!",
 		"%SUICIDER% is deeply inhaling oxygen!",
@@ -81,12 +86,6 @@
 	source.reagents.remove_reagent(chem.type, 0.1 * seconds_per_tick)
 	return COMSIG_MOB_STOP_REAGENT_TICK
 
-/// Vox heads can't grow hair, but their quills take the hair colors and gradient
-/datum/species/vox/get_features()
-	var/list/features = ..()
-	features |= list("hair_color", "facial_hair_color", "hair_gradient", "hair_gradient_color")
-	return features
-
 /datum/species/vox/randomize_features()
 	var/list/features = ..()
 	features["vox_body_markings"] = pick(GLOB.vox_body_markings_list)
@@ -106,7 +105,7 @@
 	human.update_body(is_creating = TRUE)
 
 /// Vox start the shift on internals, with the mask and tank from their preferences
-/datum/species/vox/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+/datum/species/vox/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE, datum/preferences/used_pref)
 	// Job masks we can breathe through (like the clown's) stay on, others go in the bag
 	var/obj/item/job_mask = equipping.wear_mask
 	if(job_mask && !equipping.can_breathe_mask())
@@ -114,9 +113,9 @@
 		if(!equipping.equip_to_slot_if_possible(job_mask, ITEM_SLOT_BACKPACK, disable_warning = TRUE))
 			equipping.put_in_hands(job_mask)
 	if(!equipping.wear_mask)
-		var/mask_type = (equipping.dna.features["vox_mask"] == "Respirator") ? /obj/item/clothing/mask/breath/vox/respirator : /obj/item/clothing/mask/breath/vox
+		var/mask_type = (used_pref?.read_preference(/datum/preference/choiced/vox_mask) == "Respirator") ? /obj/item/clothing/mask/breath/vox/respirator : /obj/item/clothing/mask/breath/vox
 		equipping.equip_to_slot_or_del(new mask_type(equipping), ITEM_SLOT_MASK)
-	var/tank_type = (equipping.dna.features["vox_tank_type"] == "Large") ? /obj/item/tank/internals/nitrogen : /obj/item/tank/internals/emergency_oxygen/vox
+	var/tank_type = (used_pref?.read_preference(/datum/preference/choiced/vox_tank_type) == "Large") ? /obj/item/tank/internals/nitrogen : /obj/item/tank/internals/emergency_oxygen/vox
 	var/obj/item/tank/internals/tank = new tank_type(equipping)
 	if(!equipping.equip_to_appropriate_slot(tank))
 		equipping.put_in_hands(tank)

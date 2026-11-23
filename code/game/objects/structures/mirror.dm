@@ -216,15 +216,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	race_changer.update_mutations_overlay() // no hulk lizard
 
 /**
- * Lets someone pick the secondary features of their species, like markings or a skin tone,
+ * Lets someone pick the features of their new species listed in its mirror_race_change_features, like vox markings or skin tone,
  * with the same choices as in the character preferences.
  */
 /obj/structure/mirror/proc/choose_species_features(mob/living/carbon/human/race_changer)
-	var/list/species_features = race_changer.dna.species.get_features()
-	for(var/datum/preference/choiced/preference in get_preferences_in_priority_order())
-		if(preference.savefile_identifier != PREFERENCE_CHARACTER || preference.category != PREFERENCE_CATEGORY_SECONDARY_FEATURES)
-			continue
-		if(!(preference.savefile_key in species_features))
+	var/list/feature_preferences = race_changer.dna.species.mirror_race_change_features
+	if(!length(feature_preferences))
+		return
+	for(var/preference_type in feature_preferences)
+		var/datum/preference/choiced/preference = GLOB.preference_entries[preference_type]
+		if(!istype(preference))
 			continue
 		var/feature_name = preference.main_feature_name || replacetext(replacetext(preference.savefile_key, "feature_", ""), "_", " ")
 		var/new_value = tgui_input_list(race_changer, "Choose your [LOWER_TEXT(feature_name)]", "Race change", preference.get_choices())

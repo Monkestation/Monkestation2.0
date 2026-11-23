@@ -240,6 +240,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/custom_worn_icons = list()
 	/// Extra messages for bare-handed suicides in combat mode. %SUICIDER% is replaced with the human, %THEIR% with their possessive pronoun.
 	var/list/suicide_messages
+	/// Choiced preferences for features the magic mirror lets you pick after changing into this species, like vox markings. See /obj/structure/mirror/proc/choose_species_features()
+	var/list/mirror_race_change_features
 	///our color palette
 	var/datum/color_palette/color_palette
 

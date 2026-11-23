@@ -77,11 +77,13 @@
 
 /datum/preference/choiced/vox_quills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_quills"] = value
+	// A mob that keeps its species (the preferences preview) keeps its quills, so they take the new style here
+	var/obj/item/organ/external/vox_quills/quills = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_QUILLS)
+	quills?.bodypart_overlay.set_appearance_from_name(value)
 
-/// Quills take the hair color, see /datum/species/vox/get_features()
 /datum/preference/choiced/vox_quills/compile_constant_data()
 	var/list/data = ..()
-	data[SUPPLEMENTAL_FEATURE_KEY] = list("hair_color")
+	data[SUPPLEMENTAL_FEATURE_KEY] = "feature_vox_quills_color"
 	return data
 
 /datum/preference/choiced/vox_facial_quills
@@ -103,12 +105,81 @@
 
 /datum/preference/choiced/vox_facial_quills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_facial_quills"] = value
+	var/obj/item/organ/external/vox_quills/facial/quills = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_FACIAL_QUILLS)
+	quills?.bodypart_overlay.set_appearance_from_name(value)
 
-/// Facial quills take the facial hair color
 /datum/preference/choiced/vox_facial_quills/compile_constant_data()
 	var/list/data = ..()
-	data[SUPPLEMENTAL_FEATURE_KEY] = list("facial_hair_color")
+	data[SUPPLEMENTAL_FEATURE_KEY] = "feature_vox_facial_quills_color"
 	return data
+
+// Quills are colored by the hair colors and gradient, which these set under quill names.
+// The normal hair preferences are hidden for heads that can't grow hair, but still applied, so these apply after them.
+
+/// Returns TRUE if the human's species has quills, so the quill preferences below are theirs to set
+/proc/species_has_quills(mob/living/carbon/human/target)
+	return (/obj/item/organ/external/vox_quills in target.dna.species.external_organs)
+
+/datum/preference/color/vox_quills_color
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	savefile_key = "feature_vox_quills_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
+	relevant_external_organ = /obj/item/organ/external/vox_quills
+
+/datum/preference/color/vox_quills_color/create_default_value()
+	return COLOR_DARKER_BROWN
+
+/datum/preference/color/vox_quills_color/apply_to_human(mob/living/carbon/human/target, value)
+	if(species_has_quills(target))
+		target.set_haircolor(value, update = FALSE)
+
+/datum/preference/color/vox_facial_quills_color
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	savefile_key = "feature_vox_facial_quills_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
+	relevant_external_organ = /obj/item/organ/external/vox_quills/facial
+
+/datum/preference/color/vox_facial_quills_color/create_default_value()
+	return COLOR_DARKER_BROWN
+
+/datum/preference/color/vox_facial_quills_color/apply_to_human(mob/living/carbon/human/target, value)
+	if(species_has_quills(target))
+		target.set_facial_haircolor(value, update = FALSE)
+
+/datum/preference/choiced/vox_quills_gradient
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	savefile_key = "feature_vox_quills_gradient"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_external_organ = /obj/item/organ/external/vox_quills
+
+/datum/preference/choiced/vox_quills_gradient/init_possible_values()
+	return assoc_to_keys_features(GLOB.hair_gradients_list)
+
+/datum/preference/choiced/vox_quills_gradient/create_default_value()
+	return SPRITE_ACCESSORY_NONE
+
+/datum/preference/choiced/vox_quills_gradient/apply_to_human(mob/living/carbon/human/target, value)
+	if(species_has_quills(target))
+		target.set_hair_gradient_style(value, update = FALSE)
+
+/datum/preference/color/vox_quills_gradient_color
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
+	savefile_key = "feature_vox_quills_gradient_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_external_organ = /obj/item/organ/external/vox_quills
+
+/datum/preference/color/vox_quills_gradient_color/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
+	return preferences.read_preference(/datum/preference/choiced/vox_quills_gradient) != SPRITE_ACCESSORY_NONE
+
+/datum/preference/color/vox_quills_gradient_color/apply_to_human(mob/living/carbon/human/target, value)
+	if(species_has_quills(target))
+		target.set_hair_gradient_color(value, update = FALSE)
 
 /// Colored by the mutant color
 /datum/preference/choiced/vox_body_markings
@@ -143,8 +214,12 @@
 
 /datum/preference/choiced/vox_tail_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["vox_tail_markings"] = value
+	// Like the quills, a tail that's already there takes the new markings
+	var/obj/item/organ/external/tail/vox/tail = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(istype(tail))
+		tail.bodypart_overlay.set_appearance_from_name(value)
 
-/// Which nitrogen tank a vox starts the shift with, see /datum/species/vox/pre_equip_species_outfit()
+/// Which nitrogen tank a vox starts the shift with, see /datum/species/vox/post_equip_species_outfit()
 /datum/preference/choiced/vox_tank_type
 	savefile_key = "feature_vox_tank_type"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -158,9 +233,9 @@
 	return "Specialized"
 
 /datum/preference/choiced/vox_tank_type/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_tank_type"] = value
+	return // read from the preferences when the gear is equipped
 
-/// Which breath mask a vox starts the shift with, see /datum/species/vox/pre_equip_species_outfit()
+/// Which breath mask a vox starts the shift with, see /datum/species/vox/post_equip_species_outfit()
 /datum/preference/choiced/vox_mask
 	savefile_key = "feature_vox_mask"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -174,7 +249,7 @@
 	return "Breath Mask"
 
 /datum/preference/choiced/vox_mask/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["vox_mask"] = value
+	return // read from the preferences when the gear is equipped
 
 // Underwear that only lists what has a vox fitted sprite, see is_underwear_preference_accessible()
 

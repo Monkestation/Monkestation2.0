@@ -15,24 +15,21 @@
 /**
  * Underwear, undershirt and socks preferences come in a normal version, and fitted versions (see their fitted_species var)
  * for species whose limbs have underwear sprites of their own (/datum/species/var/custom_worn_icons).
- * A species with a fitted version only sees that one. Returns whether the preference is shown for the selected species.
+ * A species with fitted sprites for a slot sees only the fitted version, so it needs one. Returns whether the preference is shown for the selected species.
+ * * underwear_slot: LOADOUT_ITEM_UNDERWEAR, LOADOUT_ITEM_UNDERSHIRT or LOADOUT_ITEM_SOCKS
  */
-/proc/is_underwear_preference_accessible(datum/preferences/preferences, datum/preference/choiced/preference, datum/species/fitted_species)
+/proc/is_underwear_preference_accessible(datum/preferences/preferences, datum/species/fitted_species, underwear_slot)
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
+	var/datum/species/species = GLOB.species_prototypes[species_type]
 	if(TRAIT_NO_UNDERWEAR in species.inherent_traits)
 		return FALSE
 	if(fitted_species)
 		return species_type == fitted_species
-	for(var/fitted_type in subtypesof(preference.type))
-		var/datum/preference/choiced/fitted_preference = GLOB.preference_entries[fitted_type]
-		if(fitted_preference?.vars["fitted_species"] == species_type)
-			return FALSE
-	return TRUE
+	return !species.custom_worn_icons[underwear_slot]
 
 /// Returns the icon file a species' fitted underwear sprites are in, for fitted underwear preferences
 /proc/get_fitted_underwear_icon(datum/species/fitted_species, underwear_slot)
-	var/datum/species/species = get_species_prototype(initial(fitted_species.id))
+	var/datum/species/species = GLOB.species_prototypes[fitted_species]
 	return species?.custom_worn_icons[underwear_slot]
 
 /// Returns the names of the accessories that have a sprite fitted to the given species, for fitted underwear preferences
@@ -49,7 +46,7 @@
 
 /// Returns an icon of a species' default limbs in the given body zones, for previews of fitted underwear
 /proc/generate_species_limbs_icon(datum/species/species_type, list/body_zones)
-	var/datum/species/species = new species_type
+	var/datum/species/species = GLOB.species_prototypes[species_type]
 	var/datum/universal_icon/final_icon = uni_icon('icons/blanks/32x32.dmi', "nothing")
 	for(var/zone in body_zones)
 		var/limb_zone = zone
@@ -177,7 +174,7 @@
 /datum/preference/choiced/socks/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return is_underwear_preference_accessible(preferences, src, fitted_species)
+	return is_underwear_preference_accessible(preferences, fitted_species, LOADOUT_ITEM_SOCKS)
 
 /datum/preference/choiced/socks/compile_constant_data()
 	var/list/data = ..()
@@ -244,7 +241,7 @@
 /datum/preference/choiced/undershirt/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return is_underwear_preference_accessible(preferences, src, fitted_species)
+	return is_underwear_preference_accessible(preferences, fitted_species, LOADOUT_ITEM_UNDERSHIRT)
 
 /// Underwear preference
 /datum/preference/choiced/underwear
@@ -288,7 +285,7 @@
 /datum/preference/choiced/underwear/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return is_underwear_preference_accessible(preferences, src, fitted_species)
+	return is_underwear_preference_accessible(preferences, fitted_species, LOADOUT_ITEM_UNDERWEAR)
 
 /datum/preference/choiced/underwear/compile_constant_data()
 	var/list/data = ..()

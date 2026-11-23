@@ -21,6 +21,8 @@
 	var/obj/item/bodypart/ownerlimb
 	///If not null, overrides the appearance with this sprite accessory datum
 	var/sprite_accessory_override
+	///If TRUE, we're still added when our feature is "None", and draw nothing. For features that can be restyled back from nothing, like vox quills
+	var/kept_without_style = FALSE
 
 	///Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
 	///This will not work if it doesn't have a limb to generate it's icon with
@@ -140,6 +142,9 @@
 	if(isnull(organpath) || isnull(target))
 		stack_trace("passed a null path or mob to 'should_external_organ_apply_to'")
 		return FALSE
+
+	if(initial(organpath.kept_without_style))
+		return TRUE
 
 	var/datum/bodypart_overlay/mutant/bodypart_overlay = initial(organpath.bodypart_overlay)
 	var/feature_key = !isnull(bodypart_overlay) && initial(bodypart_overlay.feature_key)

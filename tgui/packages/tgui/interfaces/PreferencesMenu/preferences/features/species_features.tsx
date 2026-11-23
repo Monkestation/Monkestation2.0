@@ -378,10 +378,34 @@ export const feature_vox_quills: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
+export const feature_vox_quills_color: Feature<string> = {
+  name: 'Quill Color',
+  small_supplemental: true,
+  description: "The color of your character's quills.",
+  component: FeatureColorInput,
+};
+
 export const feature_vox_facial_quills: FeatureChoiced = {
   name: 'Facial Quillstyle',
   small_supplemental: false,
   component: FeatureDropdownInput,
+};
+
+export const feature_vox_facial_quills_color: Feature<string> = {
+  name: 'Facial Quill Color',
+  small_supplemental: true,
+  description: "The color of your character's facial quills.",
+  component: FeatureColorInput,
+};
+
+export const feature_vox_quills_gradient: FeatureChoiced = {
+  name: 'Quill Gradient',
+  component: FeatureDropdownInput,
+};
+
+export const feature_vox_quills_gradient_color: Feature<string> = {
+  name: 'Quill Gradient Color',
+  component: FeatureColorInput,
 };
 
 export const feature_vox_body_markings: FeatureChoiced = {

@@ -258,6 +258,7 @@
 	feature_key = "vox_tail_markings"
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR_SECONDARY
+	fallback_key = MUTANT_COLOR // like floran leaves, the markings take the mutant color if there's no secondary one
 	/// The skin tone of the body this tail grew on, which it keeps when transplanted or severed
 	var/skin_tone = VOX_DEFAULT_SKIN_TONE
 	/// The mob this tail grew on, see /obj/item/organ/external/tail/var/original_owner

@@ -1,4 +1,5 @@
 /// Vox quills, which vox have instead of hair. They take the hair color and gradient, are restyled and shaved like hair, and hidden by whatever hides hair.
+/// Kept even when styled "None", like a bald head, so they can be grown back at a mirror or a barber.
 /obj/item/organ/external/vox_quills
 	name = "vox quills"
 	desc = "A bundle of quills, plucked from a vox's head."
@@ -9,7 +10,16 @@
 	preference = "feature_vox_quills"
 	dna_block = DNA_VOX_QUILLS_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_HAIR
+	kept_without_style = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/vox_quills
+	/// What stops these quills from growing back
+	var/regrowth_blocker = TRAIT_BALD
+
+/// TRUE if there are quills to show: styled, and not plucked for good
+/obj/item/organ/external/vox_quills/proc/has_quills()
+	if(!owner || HAS_TRAIT(owner, regrowth_blocker))
+		return FALSE
+	return bodypart_overlay.sprite_datum && bodypart_overlay.sprite_datum.name != SPRITE_ACCESSORY_NONE
 
 /// The quill sprites are dark, their color gets added to them
 /datum/bodypart_overlay/mutant/vox_quills
@@ -61,6 +71,8 @@
 	overlay.color = color_matrix_additive(draw_color)
 
 /datum/bodypart_overlay/mutant/vox_quills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	if(!sprite_datum || sprite_datum.name == SPRITE_ACCESSORY_NONE)
+		return FALSE
 	var/mob/living/carbon/human/human = bodypart_owner.owner
 	if(!istype(human))
 		return TRUE
@@ -74,6 +86,7 @@
 	dna_block = DNA_VOX_FACIAL_QUILLS_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FACIAL_HAIR
 	bodypart_overlay = /datum/bodypart_overlay/mutant/vox_quills/facial
+	regrowth_blocker = TRAIT_SHAVED
 
 /datum/bodypart_overlay/mutant/vox_quills/facial
 	feature_key = "vox_facial_quills"

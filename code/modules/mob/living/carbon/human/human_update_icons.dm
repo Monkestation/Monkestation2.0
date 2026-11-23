@@ -224,7 +224,7 @@ There are several things that need to be remembered:
  */
 /mob/living/carbon/human/proc/get_underwear_icon(datum/sprite_accessory/accessory, underwear_slot)
 	for(var/limb_id in get_fitting_limb_ids(underwear_slot == LOADOUT_ITEM_SOCKS ? LOADOUT_ITEM_SHOES : LOADOUT_ITEM_UNIFORM))
-		var/datum/species/limb_species = get_species_prototype(limb_id)
+		var/datum/species/limb_species = GLOB.species_prototypes[GLOB.species_list[limb_id]]
 		var/fitted_icon = limb_species?.custom_worn_icons[underwear_slot]
 		if(fitted_icon && icon_exists(fitted_icon, accessory.icon_state))
 			return fitted_icon

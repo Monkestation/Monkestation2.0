@@ -231,7 +231,13 @@
 	if(obscured_slots & HIDESNOUT)
 		all_limb_flags &= ~BODYSHAPE_SNOUTED
 
+	var/lost_custom_shape = (bodyshape & BODYSHAPE_CUSTOM) && !(all_limb_flags & BODYSHAPE_CUSTOM)
 	bodyshape = all_limb_flags
+
+	// Worn items are only fitted to custom shapes, so without one they're back to their normal sprite, blood included
+	if(lost_custom_shape)
+		for(var/obj/item/worn_item in get_equipped_items())
+			worn_item.species_fitted = null
 
 /proc/skintone2hex(skin_tone)
 	. = 0
