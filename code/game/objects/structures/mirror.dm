@@ -154,6 +154,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	head.attempt_feature_restyle(src, user, user, BODY_ZONE_HEAD, restyle_flag, 0)
 	return TRUE
 
+/// Returns the name of the hair-like feature with these restyle flags our head has instead of hair (like "vox quills"), or null if it has none
+/obj/structure/mirror/proc/get_hairlike_feature_name(mob/living/carbon/human/user, restyle_flags)
+	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(!head || (head.head_flags & ((restyle_flags & EXTERNAL_RESTYLE_HAIR) ? HEAD_HAIR : HEAD_FACIAL_HAIR)))
+		return null
+	for(var/obj/item/organ/external/feature in head)
+		if(feature.restyle_flags & restyle_flags)
+			return feature.name
+	return null
+
 /obj/structure/mirror/proc/change_name(mob/living/carbon/human/user)
 	var/newname = sanitize_name(tgui_input_text(user, "Who are we again?", "Name change", user.name, MAX_NAME_LEN, encode = FALSE), allow_numbers = TRUE) //It's magic so whatever.
 	if(!newname)
@@ -363,18 +373,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	selectable_races = sort_list(selectable_races)
 
 //Magic mirrors can change hair color as well
-/obj/structure/mirror/magic/mirror/change_hair(mob/living/carbon/human/user)
-	var/hairchoice = tgui_alert(user, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
+/obj/structure/mirror/magic/change_hair(mob/living/carbon/human/user)
+	// Heads that can't grow hair color their hair-like features (like vox quills) with the hair colors instead
+	var/hair_name = get_hairlike_feature_name(user, EXTERNAL_RESTYLE_HAIR) || "hair"
+	var/facial_hair_name = get_hairlike_feature_name(user, EXTERNAL_RESTYLE_FACIAL_HAIR)
+	var/hairchoice = tgui_alert(user, "[capitalize(hair_name)] style or [hair_name] color?", "Change [capitalize(hair_name)]", list("Style", "Color"))
 	if(hairchoice == "Style") //So you just want to use a mirror then?
 		return ..()
+	if(hairchoice != "Color")
+		return TRUE
 
-	var/new_hair_color = tgui_color_picker(user, "Choose your hair color", "Hair Color", user.hair_color)
+	var/new_hair_color = tgui_color_picker(user, "Choose your [hair_name] color", "[capitalize(hair_name)] Color", user.hair_color)
 
 	if(new_hair_color)
 		user.set_haircolor(sanitize_hexcolor(new_hair_color), update = FALSE)
 		user.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
-	if(user.physique == MALE)
-		var/new_face_color = tgui_color_picker(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color)
+	if(user.physique == MALE || facial_hair_name)
+		var/new_face_color = tgui_color_picker(user, "Choose your [facial_hair_name || "facial hair"] color", "[capitalize(hair_name)] Color", user.facial_hair_color)
 		if(new_face_color)
 			user.set_facial_haircolor(sanitize_hexcolor(new_face_color), update = FALSE)
 			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)

@@ -64,8 +64,8 @@
 
 	//equip them in the original's clothes
 	if(!isplasmaman(original_human))
-		clone_human.dna.species.give_important_for_life(clone_human) // vox internals
 		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
+		clone_human.dna.species.post_equip_species_outfit(null, clone_human)
 	else
 		clone_human.equipOutfit(original_human.mind.assigned_role.plasmaman_outfit)
 		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)

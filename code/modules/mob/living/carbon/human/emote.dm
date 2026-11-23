@@ -180,7 +180,7 @@ monkestation edit end */
 	sound = 'sound/voice/vox_species/voxrustle.ogg'
 
 /datum/emote/living/carbon/human/quill/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	if(!user.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_QUILLS))
+	if(!isvox(user))
 		return FALSE
 	return ..()
 

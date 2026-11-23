@@ -64,6 +64,23 @@
 		return random_unique_vox_name()
 	return capitalize(vox_name())
 
+/datum/species/vox/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+	. = ..()
+	RegisterSignal(human_who_gained_species, COMSIG_MOB_REAGENT_TICK, PROC_REF(on_reagent_tick))
+
+/datum/species/vox/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
+	UnregisterSignal(human, COMSIG_MOB_REAGENT_TICK)
+	return ..()
+
+/// Oxygen is as toxic to vox in the blood as it is in the lungs, so it replaces oxygen's normal metabolism
+/datum/species/vox/proc/on_reagent_tick(mob/living/carbon/human/source, datum/reagent/chem, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+	if(chem.type != /datum/reagent/oxygen)
+		return NONE
+	source.adjustToxLoss(0.5 * seconds_per_tick)
+	source.reagents.remove_reagent(chem.type, 0.1 * seconds_per_tick)
+	return COMSIG_MOB_STOP_REAGENT_TICK
+
 /// Vox heads can't grow hair, but their quills take the hair colors and gradient
 /datum/species/vox/get_features()
 	var/list/features = ..()
@@ -141,8 +158,11 @@
 		return item_worn_icons[item.type]
 	if(is_type_in_typecache(item, mismatched_sprites) || !is_type_in_list(item, fitted_types[item_slot]))
 		return null
-	// Greyscale jumpsuits and sneakers generate their worn sprite, from a vox shaped config
+	// Greyscale jumpsuits and sneakers generate their worn sprite from a vox shaped config, which only fits vox legs
 	if(item.greyscale_config_worn)
+		var/mob/living/carbon/human/wearer = item.loc
+		if(ishuman(wearer) && !(id in wearer.get_fitting_limb_ids(LOADOUT_ITEM_SHOES)))
+			return null
 		var/static/list/fitted_configs = list(
 			/datum/greyscale_config/jumpsuit/worn = /datum/greyscale_config/jumpsuit/worn/vox,
 			/datum/greyscale_config/jumpsuit_prison_worn = /datum/greyscale_config/jumpsuit_prison_worn/vox,

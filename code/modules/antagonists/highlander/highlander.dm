@@ -58,7 +58,6 @@
 			qdel(I)
 	H.regenerate_icons()
 	H.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
-	H.dna.species.give_important_for_life(H) // plasmaman suits, vox internals
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
@@ -72,6 +71,7 @@
 	W.update_label()
 	W.update_icon()
 	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)
+	H.dna.species.post_equip_species_outfit(null, H) // vox internals, kept out of the hands the sword needs
 
 	sword = new(H)
 	if(!GLOB.highlander_controller)

@@ -218,7 +218,9 @@
 		if(!get_location_accessible(target_human, BODY_ZONE_HEAD))
 			balloon_alert(user, "the headgear is in the way!")
 			return
-		noggin.attempt_feature_restyle(src, user, target_human, BODY_ZONE_HEAD, EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR, haircut_duration)
+		playsound(target_human, 'monkestation/code/modules/blueshift/sounds/haircut.ogg', 100)
+		if(noggin.attempt_feature_restyle(src, user, target_human, BODY_ZONE_HEAD, EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR, haircut_duration))
+			new /obj/effect/decal/cleanable/hair(get_turf(src))
 		return
 
 	if(target_human.hairstyle == "Bald" && target_human.facial_hairstyle == "Shaved")

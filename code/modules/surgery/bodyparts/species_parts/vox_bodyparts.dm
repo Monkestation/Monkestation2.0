@@ -130,6 +130,8 @@
 	icon = 'icons/mob/human/species/vox/body_markings.dmi'
 	icon_state = null
 	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	/// Whether our limb has taken the looks of a body yet. A severed limb keeps its own, a limbgrown one takes them from the first body it's attached to.
+	var/took_owner_looks = FALSE
 
 /datum/bodypart_overlay/simple/vox_body_markings/added_to_limb(obj/item/bodypart/limb)
 	RegisterSignal(limb, COMSIG_BODYPART_UPDATED, PROC_REF(on_limb_updated))
@@ -140,8 +142,13 @@
 /// Takes the markings and their color from the limb's owner when their looks get applied. A severed limb keeps its markings.
 /datum/bodypart_overlay/simple/vox_body_markings/proc/on_limb_updated(obj/item/bodypart/limb, dropping_limb, is_creating)
 	SIGNAL_HANDLER
-	if(!is_creating || !ishuman(limb.owner))
+	if(!ishuman(limb.owner) || dropping_limb)
 		return
+	if(!is_creating)
+		if(!took_owner_looks) // first time on a body: the whole limb takes its looks, skin tone included
+			limb.update_limb(is_creating = TRUE)
+		return
+	took_owner_looks = TRUE
 	var/mob/living/carbon/human/human_owner = limb.owner
 	var/datum/sprite_accessory/vox_body_markings/markings = GLOB.vox_body_markings_list[human_owner.dna.features["vox_body_markings"]]
 	if(!istype(markings) || !(limb.body_zone in markings.body_slots))

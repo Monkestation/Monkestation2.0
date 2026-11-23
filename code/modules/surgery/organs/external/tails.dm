@@ -209,6 +209,16 @@
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/vox
 
+/obj/item/organ/external/tail/vox/Initialize(mapload, accessory_type)
+	. = ..()
+	if(accessory_type || !loc)
+		return
+	// Spawned on its own (loot, the limbgrower): plain and lime, until it's first worn
+	bodypart_overlay.set_appearance(/datum/sprite_accessory/vox_tail_markings/plain)
+	bodypart_overlay.draw_color = null
+	bodypart_overlay.imprint_on_next_insertion = TRUE
+	update_appearance()
+
 /obj/item/organ/external/tail/vox/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	if(!.)
