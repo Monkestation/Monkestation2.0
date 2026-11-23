@@ -33,9 +33,9 @@
 
 			var/list/entry = list(list(
 				author = warrant.author,
-				details = warrant.details,
+				details = html_decode(warrant.details),
 				fine = warrant.fine,
-				fine_name = warrant.name,
+				fine_name = html_decode(warrant.name),
 				fine_ref = REF(warrant),
 				paid = warrant.paid,
 				time = warrant.time,

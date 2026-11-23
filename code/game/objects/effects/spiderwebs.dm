@@ -118,7 +118,7 @@
 	opacity = TRUE
 	density = TRUE
 	max_integrity = 90
-	plane = GAME_PLANE_UPPER
+	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
 /obj/structure/spider/solid/Initialize(mapload)
@@ -134,7 +134,7 @@
 	opacity = TRUE
 	max_integrity = 60
 	alpha = 200
-	plane = GAME_PLANE_UPPER
+	layer = ABOVE_MOB_LAYER
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
 /obj/structure/spider/passage/Initialize(mapload)

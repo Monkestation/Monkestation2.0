@@ -475,7 +475,7 @@
 
 	switch(action)
 		if("rename")
-			var/new_name = reject_bad_name(html_encode(params["new_name"]), TRUE)
+			var/new_name = reject_bad_name(params["new_name"], TRUE)
 			if(!new_name)
 				created_name = ""
 				return

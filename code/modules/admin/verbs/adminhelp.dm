@@ -127,7 +127,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/datum/admin_help/AH as anything in active_tickets)
 		if(AH.initiator)
 			var/obj/effect/statclick/updated = AH.statclick.update()
-			L[++L.len] = list("#[AH.id]. [AH.initiator_key_name]:", "[updated.name]", REF(AH))
+			L[++L.len] = list("#[AH.id]. [AH.initiator_key_name]:", html_decode(updated.name), REF(AH))
 		else
 			++num_disconnected
 	if(num_disconnected)

@@ -381,8 +381,8 @@
 	var/list/factions = list(FACTION_MINING, FACTION_BOSS) // MONKESTATION ADDITION
 	if(faction_check(owner.faction, factions)) //MONKESTATION EDIT, only marks mining mobs no longer large mobs
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', boosted ? "shield" : "shield2")
-		marked_underlay.pixel_x = -owner.pixel_x
-		marked_underlay.pixel_y = -owner.pixel_y
+		marked_underlay.pixel_w = -(owner.base_pixel_x + owner.base_pixel_w)
+		marked_underlay.pixel_z = -(owner.base_pixel_y + owner.base_pixel_z)
 		owner.underlays += marked_underlay
 		return TRUE
 	return FALSE

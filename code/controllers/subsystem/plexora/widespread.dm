@@ -230,7 +230,7 @@
 		"world_time" = world.time,
 		"opened_at" = aneri_unix_timestamp(),
 //		"icon_b64" = icon2base64(getFlatIcon(ticket.owner.mob, SOUTH, no_anim = TRUE)),
-		"message" = ticket.message,
+		"message" = html_decode(ticket.message),
 	))
 
 /datum/controller/subsystem/plexora/proc/mticket_pm(datum/request/ticket, mob/frommob, mob/tomob, msg,)

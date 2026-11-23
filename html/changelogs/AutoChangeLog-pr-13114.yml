@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Heretic-infused fishing rods no longer get harder to fish with every catch after the infusion wears off."

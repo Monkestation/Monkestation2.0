@@ -76,7 +76,7 @@ ADMIN_VERB(law_panel, R_ADMIN, FALSE, "Law Panel", "View the AI laws.", ADMIN_CA
 	return TRUE
 
 /datum/law_panel/proc/edit_law_text_helper(mob/living/user, mob/living/silicon/borgo, lawtype, oldlaw)
-	var/newlaw = tgui_input_text(user, "Edit this law's text.", "Edit law", oldlaw)
+	var/newlaw = tgui_input_text(user, "Edit this law's text.", "Edit law", html_decode(oldlaw))
 	if(!newlaw || QDELETED(src) || QDELETED(borgo))
 		return FALSE
 
@@ -203,6 +203,23 @@ ADMIN_VERB(law_panel, R_ADMIN, FALSE, "Law Panel", "View the AI laws.", ADMIN_CA
 			to_chat(usr, span_danger("That cyborg is invalid."))
 			return TRUE
 
+	// ui_data sends laws decoded, so map the text back to the stored (escaped) law, in the list it came from
+	var/law = params["law"]
+	var/list/law_list
+	switch(params["lawtype"] || (action == "edit_law_prio" ? LAW_SUPPLIED : LAW_INHERENT))
+		if(LAW_HACKED)
+			law_list = borgo?.laws?.hacked
+		if(LAW_ION)
+			law_list = borgo?.laws?.ion
+		if(LAW_INHERENT)
+			law_list = borgo?.laws?.inherent
+		if(LAW_SUPPLIED)
+			law_list = borgo?.laws?.supplied
+	for(var/stored_law in law_list)
+		if(html_decode(stored_law) == law)
+			law = stored_law
+			break
+
 	switch(action)
 		if("lawchange_logs")
 			ui.user?.client?.holder?.list_law_changes()
@@ -228,16 +245,16 @@ ADMIN_VERB(law_panel, R_ADMIN, FALSE, "Law Panel", "View the AI laws.", ADMIN_CA
 			. = add_law_helper(usr, borgo)
 
 		if("remove_law")
-			. = remove_law_helper(usr, borgo, params["lawtype"], params["law"])
+			. = remove_law_helper(usr, borgo, params["lawtype"], law)
 
 		if("move_law")
-			. = move_law_helper(usr, borgo, params["direction"], params["law"])
+			. = move_law_helper(usr, borgo, params["direction"], law)
 
 		if("edit_law_text")
-			. = edit_law_text_helper(usr, borgo, params["lawtype"], params["law"])
+			. = edit_law_text_helper(usr, borgo, params["lawtype"], law)
 
 		if("edit_law_prio")
-			. = edit_law_priority_helper(usr, borgo, params["law"])
+			. = edit_law_priority_helper(usr, borgo, law)
 
 	if(. && !QDELETED(borgo))
 		// One of our functions successfully changed a law
@@ -287,20 +304,20 @@ ADMIN_VERB(law_panel, R_ADMIN, FALSE, "Law Panel", "View the AI laws.", ADMIN_CA
 			var/list/borg_laws = list()
 			// zeroth law on top
 			if(lawset.zeroth || lawset.zeroth_borg)
-				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_ZEROTH, "law" = lawset.zeroth || lawset.zeroth_borg, "num" = 0))
+				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_ZEROTH, "law" = html_decode(lawset.zeroth || lawset.zeroth_borg), "num" = 0))
 			// then goes ion / hacked
 			for(var/law in lawset.hacked)
-				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_HACKED, "law" = law, "num" = -1))
+				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_HACKED, "law" = html_decode(law), "num" = -1))
 			for(var/law in lawset.ion)
-				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_ION, "law" = law, "num" = -1))
+				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_ION, "law" = html_decode(law), "num" = -1))
 			// normie laws
 			var/lawnum = 1
 			for(var/law in lawset.inherent)
-				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_INHERENT, "law" = law, "num" = lawnum))
+				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_INHERENT, "law" = html_decode(law), "num" = lawnum))
 				lawnum += 1
 			for(var/law in lawset.supplied)
 				if(law) // Supplied is full of a bunch of empties
-					UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_SUPPLIED, "law" = law, "num" = lawnum))
+					UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_SUPPLIED, "law" = html_decode(law), "num" = lawnum))
 				lawnum += 1
 
 			borg_information["laws"] = borg_laws

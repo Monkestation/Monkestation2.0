@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(media_tracks)
 		return
 
 	// Required
-	var/url = tgui_input_text(user, "REQUIRED: Provide URL for track, or paste JSON if you know what you're doing. See code comments.", "Track URL", multiline = TRUE)
+	var/url = tgui_input_text(user, "REQUIRED: Provide URL for track, or paste JSON if you know what you're doing. See code comments.", "Track URL", multiline = TRUE, encode = FALSE)
 	if(!url)
 		return
 
@@ -131,11 +131,11 @@ SUBSYSTEM_DEF(media_tracks)
 			var/datum/media_track/track = new(songdata["url"], songdata["title"], songdata["duration"], songdata["artist"], songdata["genre"], songdata["secret"], songdata["lobby"])
 			all_tracks += track
 
-			message_admins("New media track added by [key_name(user)]: [track.title]")
+			message_admins("New media track added by [key_name(user)]: [html_encode(track.title)]")
 		sort_tracks()
 		return
 
-	var/title = tgui_input_text(user, "REQUIRED: Provide title for track", "Track Title")
+	var/title = tgui_input_text(user, "REQUIRED: Provide title for track", "Track Title", encode = FALSE)
 	if(!title)
 		return
 
@@ -144,11 +144,11 @@ SUBSYSTEM_DEF(media_tracks)
 		return
 
 	// Optional
-	var/artist = tgui_input_text(user, "Optional: Provide artist for track", "Track Artist")
+	var/artist = tgui_input_text(user, "Optional: Provide artist for track", "Track Artist", encode = FALSE)
 	if(isnull(artist)) // Cancel rather than empty string
 		return
 
-	var/genre = tgui_input_text(user, "Optional: Provide genre for track (try to match an existing one)", "Track Genre")
+	var/genre = tgui_input_text(user, "Optional: Provide genre for track (try to match an existing one)", "Track Genre", encode = FALSE)
 	if(isnull(genre)) // Cancel rather than empty string
 		return
 
@@ -175,14 +175,14 @@ SUBSYSTEM_DEF(media_tracks)
 
 	all_tracks += track
 
-	message_admins("New media track added by [key_name(user)]: [title]")
+	message_admins("New media track added by [key_name(user)]: [html_encode(title)]")
 	sort_tracks()
 
 /datum/controller/subsystem/media_tracks/proc/manual_track_remove(mob/user = usr)
 	if(!check_rights(R_DEBUG|R_FUN))
 		return
 
-	var/track_to_remove = tgui_input_text(user, "Input track title or URL to remove (must be exact)", "Remove Track")
+	var/track_to_remove = tgui_input_text(user, "Input track title or URL to remove (must be exact)", "Remove Track", encode = FALSE)
 	if(!track_to_remove)
 		return
 

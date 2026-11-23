@@ -175,7 +175,7 @@
 			"justification" = opfor.justification,
 			"approved" = opfor.status == OPFOR_OBJECTIVE_STATUS_APPROVED ? TRUE : FALSE,
 			"status_text" = opfor.status,
-			"denied_text" = opfor.denied_reason,
+			"denied_text" = html_decode(opfor.denied_reason),
 			)
 		objective_num++
 		data["objectives"] += list(objective_data)
@@ -208,7 +208,7 @@
 			"status" = equipment.status,
 			"approved" = equipment.status == OPFOR_EQUIPMENT_STATUS_APPROVED ? TRUE : FALSE,
 			"reason" = equipment.reason,
-			"denied_reason" = equipment.denied_reason,
+			"denied_reason" = html_decode(equipment.denied_reason),
 			"count" = equipment.count,
 			"admin_note" = equipment.opposing_force_equipment.admin_note,
 			)

@@ -104,7 +104,7 @@
 /// Returns the emissive overlay of the starfish while it's alive
 /obj/item/fish/starfish/proc/add_emissive()
 	if(status == FISH_ALIVE)
-		return emissive_appearance(icon, "starfish_emissive", src)
+		return emissive_appearance(icon, "starfish_emissive", src, effect_type = EMISSIVE_NO_BLOOM)
 
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()

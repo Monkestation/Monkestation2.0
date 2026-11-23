@@ -77,7 +77,7 @@
 	maptext_obj.maptext_y = 0
 
 /obj/effect/abstract/maptext_holder/floor_scanner
-	plane = GAME_PLANE_UPPER
+	layer = ABOVE_MOB_LAYER
 
 	maptext_x = -16
 	maptext_width = 64

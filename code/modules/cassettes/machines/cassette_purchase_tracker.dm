@@ -133,7 +133,7 @@
 
 		results += list(list(
 			"cassette_id" = cassette_id,
-			"cassette_name" = cassette_name,
+			"cassette_name" = html_decode(cassette_name),
 			"purchase_count" = purchase_count
 		))
 
@@ -182,7 +182,7 @@
 	for(var/cassette_id in cassette_counts)
 		results += list(list(
 			"cassette_id" = cassette_id,
-			"cassette_name" = cassette_names[cassette_id],
+			"cassette_name" = html_decode(cassette_names[cassette_id]),
 			"purchase_count" = length(cassette_counts[cassette_id])
 		))
 

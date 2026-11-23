@@ -2,7 +2,7 @@
 	name = "void"
 	desc = "A white, empty void, quite unlike anything you've seen before."
 	icon_state = "reebemap"
-	layer = SPACE_LAYER
+	layer = LOWER_FLOOR_LAYER
 	baseturfs = /turf/open/indestructible/reebe_void
 	planetary_atmos = TRUE
 	bullet_bounce_sound = null //forever falling

@@ -36,9 +36,13 @@ GLOBAL_LIST_EMPTY(shared_particles)
  * pool_size controls how many particle holders per type are created. Any objects over this cap will pick an existing holder from the pool
  */
 /atom/movable/proc/add_shared_particles(particle_type, custom_key = null, particle_flags = NONE, pool_size = 3)
-	var/particle_key = custom_key || "[particle_type]"
+	var/is_floor_plane = PLANE_TO_TRUE(plane) == FLOOR_PLANE
+	var/particle_key = "[custom_key || particle_type][is_floor_plane ? "-floor" : ""]"
 	if (!GLOB.shared_particles[particle_key])
-		GLOB.shared_particles[particle_key] = list(list(new /obj/effect/abstract/shared_particle_holder(null, particle_type, particle_flags)), 1)
+		var/obj/effect/abstract/shared_particle_holder/new_holder = new(null, particle_type, particle_flags)
+		if(is_floor_plane) // Keeps us off the floor plane, we'll just sit on game plane
+			new_holder.vis_flags &= ~VIS_INHERIT_PLANE
+		GLOB.shared_particles[particle_key] = list(list(new_holder), 1)
 		vis_contents += GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX][1]
 		return GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX][1]
 
@@ -49,6 +53,8 @@ GLOBAL_LIST_EMPTY(shared_particles)
 
 	if (length(type_holders) < pool_size)
 		var/obj/effect/abstract/shared_particle_holder/new_holder = new(null, particle_type, particle_flags)
+		if(is_floor_plane) // See above, we don't want to be on floor
+			new_holder.vis_flags &= ~VIS_INHERIT_PLANE
 		type_holders += new_holder
 		vis_contents += new_holder
 		GLOB.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
@@ -68,6 +74,9 @@ GLOBAL_LIST_EMPTY(shared_particles)
 
 	if (ispath(particle_key))
 		particle_key = "[particle_key]"
+
+	if (PLANE_TO_TRUE(plane) == FLOOR_PLANE)
+		particle_key += "-floor" // nb: unfortunately if the plane changes between the particles being removed, this will break.
 
 	if (!GLOB.shared_particles[particle_key])
 		return

@@ -7,6 +7,7 @@
 			/area/ocean,
 			/area/shuttle,
 			/area/space,
+			/area/misc/warped_room,
 		))
 
 	// ALREADY CLAIMED
