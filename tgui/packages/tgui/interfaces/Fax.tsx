@@ -1,10 +1,12 @@
+import type { BooleanLike } from 'tgui-core/react';
+
 import { sortBy } from '../../common/collections';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type FaxData = {
-  ai_fax: boolean;
+  ai_fax: BooleanLike;
   faxes: FaxInfo[];
   fax_id: string;
   fax_name: string;
@@ -50,7 +52,7 @@ export const Fax = (props) => {
       )
     : [];
   return (
-    <Window width={540} height={540}>
+    <Window width={data.ai_fax ? 540 : 340} height={540}>
       <Window.Content scrollable>
         <Section title="About Fax">
           <LabeledList.Item label="Network name">
@@ -58,14 +60,14 @@ export const Fax = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Network ID">{data.fax_id}</LabeledList.Item>
           <LabeledList.Item label="Visible to Network">
-            {!!data.visible}
+            {data.visible ? 'Yes' : 'No'}
           </LabeledList.Item>
         </Section>
         <Section
           title="Paper"
           buttons={
             <>
-              {data.ai_fax && (
+              {!!data.ai_fax && (
                 <Button
                   onClick={() => act('edit_paper')}
                   color="blue"
@@ -75,7 +77,7 @@ export const Fax = (props) => {
                   Edit Paper
                 </Button>
               )}
-              {data.ai_fax && (
+              {!!data.ai_fax && (
                 <Button
                   onClick={() => act('generate_paper')}
                   color="green"

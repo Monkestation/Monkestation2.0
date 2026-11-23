@@ -3,6 +3,7 @@
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
+	icon_angle = -45
 	inhand_icon_state = "crowbar"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -91,6 +92,7 @@
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science."
 	icon_state = "jaws"
+	icon_angle = 180
 	inhand_icon_state = "jawsoflife"
 	worn_icon_state = "jawsoflife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -173,6 +175,7 @@
 	desc = "A hydraulic prying tool, simple but powerful."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_engiborg_crowbar"
+	icon_angle = 0
 	worn_icon_state = "crowbar"
 	usesound = 'sound/items/tools/jaws_pry.ogg'
 	force = 10
@@ -182,6 +185,7 @@
 	name = "mech removal tool"
 	desc = "A... really big crowbar. You're pretty sure it could pry open a mech, but it seems unwieldy otherwise."
 	icon_state = "mechremoval0"
+	icon_angle = -65
 	base_icon_state = "mechremoval"
 	inhand_icon_state = null
 	icon = 'icons/obj/mechremoval.dmi'

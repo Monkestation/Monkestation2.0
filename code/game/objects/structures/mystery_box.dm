@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	desc = "Who knows what it'll be??"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
-	pixel_y = -8
+	pixel_z = -8
 	uses_integrity = FALSE
 
 	/// The currently selected item. Constantly changes while choosing, determines what is spawned if the prize is claimed, and its current icon
@@ -338,7 +338,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/change_counter = 0 // The running count of the running count
 
 	var/matrix/starting = matrix()
-	animate(src, pixel_y = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
+	animate(src, pixel_z = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
 
 	while((change_counter + change_delay_delta + change_delay) < MBOX_DURATION_CHOOSING)
 		change_delay += change_delay_delta
@@ -365,7 +365,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/mystery_box_item/proc/expire_animation()
 	var/matrix/shrink_back = matrix()
 	shrink_back.Scale(0.5,0.5)
-	animate(src, pixel_y = -8, transform = shrink_back, time = MBOX_DURATION_EXPIRING)
+	animate(src, pixel_z = -8, transform = shrink_back, time = MBOX_DURATION_EXPIRING)
 
 #undef MYSTERY_BOX_COOLING_DOWN
 #undef MYSTERY_BOX_STANDBY

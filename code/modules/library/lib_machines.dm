@@ -453,7 +453,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			if(isnull(checking_out_book))
 				return TRUE
 			var/datum/borrowbook/loan = new /datum/borrowbook
-			var/loan_to = copytext(sanitize(params["loaned_to"]), 1, MAX_NAME_LEN)
+			var/loan_to = copytext(sanitize(params["loaned_to"], encode = FALSE), 1, MAX_NAME_LEN)
 			var/checkoutperiod = max(params["checkout_time"], 1)
 			loan.book_data = checking_out_book.return_copy()
 			loan.loanedto = loan_to

@@ -70,6 +70,7 @@
 	desc = "Maybe alien surgeons have finally found a use for the drill... \
 			Making it cost more then your rent."
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = 180
 
 /obj/item/cautery/fake_alien
 	name = "immitation alien cautery"

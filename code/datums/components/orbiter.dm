@@ -3,6 +3,8 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/orbiter_list
 	var/datum/movement_detector/tracker
+	/// The next registration completes a component transfer, rather than initial construction.
+	var/transferring = FALSE
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -25,6 +27,12 @@
 		tracker = new(target, CALLBACK(src, PROC_REF(move_react)))
 
 	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(orbiter_glide_size_update))
+	if(transferring)
+		transferring = FALSE
+		for(var/atom/movable/orbiter as anything in orbiter_list)
+			orbiter.orbit_target = target
+			SEND_SIGNAL(target, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
+	move_react(target)
 
 /datum/component/orbiter/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
@@ -53,13 +61,22 @@
 		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
 		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
 
-	orbiter_list += newcomp.orbiter_list
+	var/list/incoming_orbiters = newcomp.orbiter_list
+	orbiter_list += incoming_orbiters
 	newcomp.orbiter_list = null
+	for(var/atom/movable/incoming_orbiter as anything in incoming_orbiters)
+		incoming_orbiter.orbit_target = parent
+		SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, incoming_orbiter)
+	move_react(parent)
+
+/datum/component/orbiter/PreTransfer(datum/new_parent)
+	for(var/atom/movable/orbiter as anything in orbiter_list)
+		SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 
 /datum/component/orbiter/PostTransfer(datum/new_parent)
-	if(!isatom(parent) || isarea(new_parent) || !get_turf(new_parent))
+	if(!isatom(new_parent) || isarea(new_parent) || !get_turf(new_parent))
 		return COMPONENT_INCOMPATIBLE
-	move_react(new_parent)
+	transferring = TRUE
 
 /datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(orbiter.orbiting)
@@ -108,7 +125,8 @@
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
-	orbiter.SpinAnimation(0, 0)
+	SEND_SIGNAL(orbiter, COMSIG_MOVABLE_STOPPED_ORBITING, parent)
+	orbiter.SpinAnimation(0, 0, parallel = FALSE)
 	if(istype(orbiter_list[orbiter],/matrix)) //This is ugly.
 		orbiter.transform = orbiter_list[orbiter]
 	orbiter_list -= orbiter

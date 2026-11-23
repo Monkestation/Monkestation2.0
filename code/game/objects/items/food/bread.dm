@@ -413,6 +413,7 @@
 
 /// Deadly bread used by a mime
 /obj/item/food/baguette/combat
+	icon_angle = -45
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	/// Force when wielded as a sword by a mime

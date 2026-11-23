@@ -9,7 +9,7 @@
 /datum/martial_art/slasher_grab/proc/big_grab(mob/living/attacker, mob/living/defender, grab_attack)
 	if(COOLDOWN_FINISHED(src, grabby_cd))
 		if(attacker.grab_state >= GRAB_AGGRESSIVE)
-			defender.grabbedby(attacker, 1)
+			INVOKE_ASYNC(defender, TYPE_PROC_REF(/mob/living, grabbedby), attacker, 1)
 		else
 			attacker.start_pulling(defender, supress_message = TRUE)
 			if(attacker.pulling)

@@ -384,7 +384,7 @@
 	for(var/atom/movable/thing as anything in location)
 		if(thing == src)
 			continue
-		if(location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(thing, TRAIT_T_RAY_VISIBLE))
+		if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
 			continue
 		reagents.expose(thing, TOUCH, fraction)
 

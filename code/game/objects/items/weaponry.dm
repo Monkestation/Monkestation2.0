@@ -3,6 +3,7 @@
 	name = "banhammer"
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "toyhammer"
+	icon_angle = -45
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	force = 1
@@ -45,6 +46,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "balloon_mallet"
+	icon_angle = -45
 	inhand_icon_state = "balloon_mallet"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
@@ -86,6 +88,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "sord"
+	icon_angle = -35
 	inhand_icon_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -107,6 +110,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "claymore"
+	icon_angle = -45
 	inhand_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -197,7 +201,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
-		SET_PLANE_EXPLICIT(holder, GAME_PLANE_UPPER_FOV_HIDDEN, src) //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
+		holder.layer = ABOVE_ALL_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		ADD_TRAIT(holder, TRAIT_NOBLOOD, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
@@ -318,13 +322,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
-	SET_PLANE_IMPLICIT(loc, GAME_PLANE_UPPER_FOV_HIDDEN)
+	loc.layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "katana"
+	icon_angle = -45
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -366,6 +371,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "wiredrod"
+	icon_angle = -45
 	inhand_icon_state = "rods"
 	flags_1 = CONDUCT_1
 	force = 9
@@ -476,6 +482,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "switchblade"
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "switchblade"
+	icon_angle = -90
 	base_icon_state = "switchblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -558,6 +565,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A cane used by a true gentleman. Or a clown."
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "cane"
+	icon_angle = 135
 	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -587,6 +595,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "white cane"
 	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
+	icon_angle = 45
 	inhand_icon_state = "cane_white"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -664,6 +673,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A great tool to drag someone else's drinks across the bar."
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "cane"
+	icon_angle = 135
 	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -721,6 +731,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "For the beating to death of lizards with their own tails."
 	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "tailclub"
+	icon_angle = -25
 	force = 14
 	throwforce = 1 // why are you throwing a club do you even weapon
 	throw_speed = 1
@@ -827,6 +838,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "There ain't a skull in the league that can withstand a swatter."
 	icon = 'icons/obj/weapons/bat.dmi'
 	icon_state = "baseball_bat"
+	icon_angle = -45
 	inhand_icon_state = "baseball_bat"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -996,6 +1008,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Useful for killing pests of all sizes."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "flyswatter"
+	icon_angle = -45
 	inhand_icon_state = "flyswatter"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -1086,6 +1099,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
 	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "gohei"
+	icon_angle = -65
 	inhand_icon_state = "gohei"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -1095,6 +1109,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Don't tell anyone you put any points into dex, though."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "swordon"
+	icon_angle = -45
 	inhand_icon_state = "swordon"
 	worn_icon_state = "swordon"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -1118,6 +1133,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		This oscillation weakens the molecular bonds of anything it cuts, thereby increasing its cutting ability."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "hfrequency0"
+	icon_angle = -45
 	worn_icon_state = "hfrequency0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -1270,6 +1286,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/hammer.dmi'
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "sledgehammer"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	force = 5 /// The weapon requires two hands

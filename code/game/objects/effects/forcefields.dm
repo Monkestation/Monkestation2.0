@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	icon_state = "cosmic_carpet"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	layer = LOW_SIGIL_LAYER /* GIB_LAYER */
+	layer = GIB_LAYER
 	density = FALSE
 	can_atmos_pass = ATMOS_PASS_NO
 	initial_duration = 30 SECONDS

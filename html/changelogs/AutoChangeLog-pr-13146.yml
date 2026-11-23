@@ -1,0 +1,6 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - bugfix: "fixed borers having a button that makes you invisible"
+  - bugfix: "fixed xeno larva having a button that makes you invisible"
+  - bugfix: "fixed borers still being sugar-affected after leaving a host"

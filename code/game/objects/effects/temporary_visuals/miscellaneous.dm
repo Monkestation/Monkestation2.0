@@ -372,6 +372,15 @@
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
 
+/obj/effect/temp_visual/crit
+	name = "critical hit"
+	icon_state = "crit"
+	duration = 15
+
+/obj/effect/temp_visual/crit/Initialize(mapload)
+	. = ..()
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
+
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
@@ -642,8 +651,10 @@
 	. = ..()
 	if(!looker || !creature)
 		return INITIALIZE_HINT_QDEL
-	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
+	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER)
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	modsuit_image.pixel_w = (creature.x - looker.x) * 32
+	modsuit_image.pixel_z = (creature.y - looker.y) * 32
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	mod_man = WEAKREF(looker)
 	add_mind(looker)

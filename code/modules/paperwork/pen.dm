@@ -15,6 +15,7 @@
 	name = "pen"
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pen"
+	icon_angle = -135
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS

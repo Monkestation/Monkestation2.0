@@ -105,7 +105,7 @@
  * * awakener: user who interacted with the blade
  */
 /datum/component/ghost_object_control/proc/custom_name(mob/subject)
-	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
+	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN, encode = FALSE))
 	if(!chosen_name) // with the way that sanitize_name works, it'll actually send the error message to the awakener as well.
 		return custom_name(subject) //YOU WILL PICK A NAME.
 	return chosen_name

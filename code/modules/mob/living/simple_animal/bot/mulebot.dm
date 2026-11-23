@@ -225,7 +225,7 @@
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
-	load_overlay.pixel_y = initial(load.pixel_y) + 9
+	load_overlay.pixel_z = initial(load.pixel_y) + 9
 	. += load_overlay
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -340,7 +340,7 @@
 		if("setid")
 			var/new_id
 			if(pda)
-				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
+				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN, encode = FALSE)
 			else
 				new_id = params["value"]
 			if(new_id)
@@ -479,7 +479,7 @@
 	else
 		. += text("No Cell Inserted!")
 	if(load)
-		. += "Current Load: [get_load_name()]"
+		. += "Current Load: [html_decode(get_load_name())]"
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
@@ -879,7 +879,7 @@
 	if(!isobserver(load))
 		return
 	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
-	ghost_overlay.pixel_y = 12
+	ghost_overlay.pixel_z = 12
 	. += ghost_overlay
 
 /mob/living/simple_animal/bot/mulebot/paranormal/get_load_name() //Don't reveal the name of ghosts so we can't metagame who died and all that.

@@ -53,7 +53,7 @@ Difficulty: Hard
 	armour_penetration = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	mob_biotypes = MOB_ROBOTIC|MOB_EPIC|MOB_MINING
+	mob_biotypes = MOB_ROBOTIC|MOB_SPECIAL|MOB_MINING
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
@@ -803,8 +803,7 @@ Difficulty: Hard
 /obj/effect/hierophant_rays_holder
 	icon = null
 	pixel_y = 16
-	layer = BELOW_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
+	layer = SPACEVINE_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/hierophant_rays_holder/Initialize(mapload)
