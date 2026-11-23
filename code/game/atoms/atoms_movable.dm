@@ -70,7 +70,7 @@
 	var/movement_type = GROUND
 
 	var/atom/movable/pulling
-	var/grab_state = 0
+	var/grab_state = GRAB_PASSIVE
 	/// The strongest grab we can acomplish
 	var/max_grab = GRAB_PASSIVE
 	var/throwforce = 0
@@ -167,6 +167,8 @@
 		blocker.dir = dir
 		blocker.appearance_flags = appearance_flags | EMISSIVE_APPEARANCE_FLAGS
 		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Takes a light path through the normal macro for a microop
+		if (IS_TOPDOWN_PLANE(plane))
+			blocker.layer = TOPDOWN_TO_EMISSIVE_LAYER(layer)
 		// Ok so this is really cursed, but I want to set with this blocker cheaply while
 		// Still allowing it to be removed from the overlays list later
 		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
@@ -608,7 +610,7 @@
 	if(!. || !isliving(moving_atom))
 		return
 	var/mob/living/pulled_mob = moving_atom
-	set_pull_offsets(pulled_mob, grab_state)
+	set_pull_offsets(pulled_mob, grab_state, animate = FALSE)
 
 /**
  * Checks if the pulling and pulledby should be stopped because they're out of reach.
@@ -1505,9 +1507,9 @@
 	return
 
 
-/atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE)
+/atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE, item_animation_override = null)
 	if(!no_effect && (visual_effect_icon || used_item))
-		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item)
+		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = item_animation_override)
 
 	if(attacked_atom == src)
 		return //don't do an animation if attacking self

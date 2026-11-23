@@ -7,8 +7,7 @@
 	icon = 'icons/obj/toys/car.dmi'
 	icon_state = "hoverdog"
 	layer = LYING_MOB_LAYER
-	pixel_y = -48
-	pixel_x = -48
+	SET_BASE_VISUAL_PIXEL(-48, -48)
 	max_buckled_mobs = 1
 	max_occupants = 1
 	pass_flags_self = null

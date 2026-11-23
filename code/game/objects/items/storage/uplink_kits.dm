@@ -474,7 +474,7 @@
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie
 	name = "Boxed Rebar Crossbow"
-	desc = "A scoped weapon with low armor penetration, but devastating against flesh. Features instruction manual for making specialty ammo."
+	desc = "A scoped weapon with high armor penetration, devastating against flesh. Features instruction manual for making specialty ammo."
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
 	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
@@ -857,6 +857,8 @@
 	new /obj/item/book/manual/nuclear(src) // Very important
 	// The most important part of the kit, the implant that gives them the syndicate faction.
 	new /obj/item/implanter/induction_implant(src)
+	// Tactical map implant so they can see the minimap with the rest of the team.
+	new /obj/item/implanter/tacmap/nuclear(src)
 	// All in all, 6+3+3+2+5+2+4 = ~25 TC of 'miscellaneous' items.
 	// This is a lot of value for 10 TC, but you have to keep in mind that you NEED someone to get this stuff station-side.
 	// Pretty much all of it is a bad deal for reinforcements or yourself as they already have similar or good-enough alternatives.

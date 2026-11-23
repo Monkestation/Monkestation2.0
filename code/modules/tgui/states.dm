@@ -92,6 +92,10 @@
 		return UI_DISABLED
 	return ..()
 
+/// quick viewcheck for UI interactions
+/mob/living/proc/view_can_ui_interact(atom/target, range = 5)
+	return target in view(range, src)
+
 /**
  * public
  *
@@ -102,21 +106,18 @@
  * return UI_state The state of the UI.
  */
 /mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
-	// If the object is obscured, close it.
-	if(viewcheck && !(src_object in view(src)))
-		return UI_CLOSE
 	var/dist = get_dist(src_object, src)
-	// Open and interact if 1-0 tiles away.
-	if(dist <= 1)
-		return UI_INTERACTIVE
-	// View only if 2-3 tiles away.
-	else if(dist <= 2)
-		return UI_UPDATE
-	// Disable if 5 tiles away.
-	else if(dist <= 5)
+	// If the object is obscured or too far away, close it.
+	if (dist > 5 || (viewcheck && !view_can_ui_interact(src_object)))
+		return UI_CLOSE
+	// Disable if further than 2 tiles
+	if (dist > 2)
 		return UI_DISABLED
-	// Otherwise, we got nothing.
-	return UI_CLOSE
+	// Update but block interactions if further than a tile away
+	if (dist > 1)
+		return UI_UPDATE
+	// Open and interact if 1-0 tiles away.
+	return UI_INTERACTIVE
 
 /mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
 	if(allow_tk && dna.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, src_object))

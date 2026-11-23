@@ -31,7 +31,7 @@
 	SIGNAL_HANDLER
 
 	var/lying_offset = (owner.body_position == LYING_DOWN && owner.rotate_on_lying) ? PIXEL_Y_OFFSET_LYING : 0
-	animate(our_slime, pixel_y = initial(our_slime.pixel_y) + lying_offset, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT), flags = ANIMATION_PARALLEL)
+	our_slime.add_offsets(type, y_add = lying_offset)
 
 ///If the buckling ends
 /datum/status_effect/slime_leech/proc/on_buckle_end(datum/source, new_buckled)
@@ -54,7 +54,7 @@
 /datum/status_effect/slime_leech/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_POST_UPDATE_TRANSFORM)
 	if(!QDELETED(our_slime))
-		animate(our_slime, pixel_y = initial(our_slime.pixel_y), time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT), flags = ANIMATION_PARALLEL)
+		our_slime.remove_offsets(type)
 	our_slime = null
 
 /datum/status_effect/slime_leech/tick(seconds_between_ticks)

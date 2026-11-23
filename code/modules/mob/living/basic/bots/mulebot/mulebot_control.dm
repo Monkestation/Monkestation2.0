@@ -65,7 +65,7 @@
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
-			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, max_length = MAX_NAME_LEN)
+			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, max_length = MAX_NAME_LEN, encode = FALSE)
 			if(new_id)
 				set_id(new_id)
 				name = "\improper MULEbot [new_id]"

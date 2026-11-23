@@ -7,7 +7,7 @@
 	if(!source_turf)
 		return
 
-	var/mutable_appearance/chain_appearance = mutable_appearance('goon/icons/effects/electile.dmi', "holder", TURF_LAYER, src, ABOVE_LIGHTING_PLANE)
+	var/mutable_appearance/chain_appearance = mutable_appearance('goon/icons/effects/electile.dmi', "holder", ABOVE_NORMAL_TURF_LAYER, src, ABOVE_LIGHTING_PLANE)
 	chain_appearance.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	chain_appearance.icon_state = "[power][pick("a","b","c")]"
 

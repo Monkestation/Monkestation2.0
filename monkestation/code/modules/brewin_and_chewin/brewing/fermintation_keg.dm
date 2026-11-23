@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	for(var/datum/brewing_recipe/recipe in GLOB.custom_fermentation_recipes)
 		var/prereq = recipe.pre_reqs
 		if((!ready_to_bottle && prereq == null) || (selected_recipe?.reagent_to_brew == prereq && ready_to_bottle))
-			options[recipe.display_name] = recipe
+			options[html_decode(recipe.display_name)] = recipe
 
 	if(options.len == 0)
 		to_chat(user, "Their is no further brewing to be done, clear this barrel out or sell it.")

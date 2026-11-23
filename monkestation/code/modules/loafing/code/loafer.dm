@@ -123,6 +123,7 @@
 	spawn_scatter_radius = 5
 	spawn_loot_chance = 20
 	layer = DISPOSAL_PIPE_LAYER
+	plane = FLOOR_PLANE
 
 /obj/effect/spawner/random/loafer/Initialize(mapload)
 	loot = list(/obj/structure/disposalpipe/loafer)

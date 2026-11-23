@@ -71,6 +71,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
+#define iscatwalkturf(A) (istype(A, /turf/open/floor/catwalk_floor))
+
 #define isaicore(A) (istype(A, /obj/machinery/ai/data_core))
 
 #define isvalidAIloc(A) (isturf(A) || isaicore(A))
@@ -113,6 +115,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 #define iswerewolf(A) (is_species(A,/datum/species/werewolf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
+#define iscerulean(A) (is_species(A, /datum/species/human/cerulean))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isshadowperson(A) (is_species(A, /datum/species/shadow))
@@ -263,8 +266,6 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
 #define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))
-
-#define ismopable(A) (A && (A.layer <= FLOOR_CLEAN_LAYER)) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 

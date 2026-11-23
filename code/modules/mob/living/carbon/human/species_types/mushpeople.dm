@@ -46,12 +46,12 @@
 		if(!H.dna.features["caps"])
 			H.dna.features["caps"] = "Round"
 			handle_mutant_bodyparts(H)
-		mush = new(null)
+		mush = new(src)
+		mush.locked_to_use = TRUE
 		mush.teach(H)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	mush.remove(C)
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)

@@ -6,7 +6,7 @@
 	status_flags = NONE
 	abstract_type = /mob/living/basic/boss
 	sentience_type = SENTIENCE_BOSS
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_MINING, FACTION_BOSS)
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // same as our megafauna
 	obj_damage = 400

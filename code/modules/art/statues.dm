@@ -275,6 +275,7 @@
 	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "chisel"
+	icon_angle = -90
 	inhand_icon_state = "screwdriver_nuke"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -412,19 +413,22 @@ Moving interrupts
 	stop_sculpting()
 
 /obj/item/chisel/proc/show_generic_statues_prompt(mob/living/user)
+	var/obj/structure/carving_block/block = prepared_block
 	var/list/choices = list()
-	for(var/statue_path in prepared_block.get_possible_statues())
+	for(var/statue_path in block.get_possible_statues())
 		var/obj/structure/statue/abstract_statue = statue_path
 		choices[statue_path] = image(icon = initial(abstract_statue.icon), icon_state = initial(abstract_statue.icon_state))
-	if(!choices.len)
+	if(!length(choices))
 		user.balloon_alert(user, "no abstract statues for material!")
+		return
 
-	var/choice = show_radial_menu(user, prepared_block, choices, require_near = TRUE)
-	if(choice)
-		prepared_block.current_preset_type = choice
-		var/image/chosen_looks = choices[choice]
-		prepared_block.current_target = chosen_looks.appearance
-		user.balloon_alert(user, "abstract statue selected")
+	var/choice = show_radial_menu(user, block, choices, require_near = TRUE)
+	if(!choice || prepared_block != block)
+		return
+	block.current_preset_type = choice
+	var/image/chosen_looks = choices[choice]
+	block.current_target = chosen_looks.appearance
+	user.balloon_alert(user, "abstract statue selected")
 
 /obj/structure/carving_block
 	name = "block"
@@ -572,7 +576,7 @@ Moving interrupts
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
 
-	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE)
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
 	var/list/overlays_to_remove = list()

@@ -97,7 +97,8 @@
 #define MOB_HUMANOID (1 << 4)
 #define MOB_BUG (1 << 5)
 #define MOB_BEAST (1 << 6)
-#define MOB_EPIC (1 << 7) //megafauna
+///The mob is some kind of a creature that should be exempt from certain **fun** interactions for balance reasons, i.e. megafauna or a headslug.
+#define MOB_SPECIAL (1 << 7)
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
@@ -150,6 +151,8 @@
 #define ROBOTIC_LIGHT_BRUTE_MSG "marred"
 #define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
 #define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
+///The limb has a Cerulean (large fish) tail
+#define BODYSHAPE_CERULEAN (1<<5)
 
 #define ROBOTIC_LIGHT_BURN_MSG "scorched"
 #define ROBOTIC_MEDIUM_BURN_MSG "charred"
@@ -175,6 +178,7 @@
 #define SPECIES_LIZARD_ASH "ashwalker"
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
+#define SPECIES_CERULEAN "cerulean"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
@@ -415,6 +419,10 @@
 #define CRYSTALIZE_STAGE_ENGULFING 100 //Cant use second defines
 #define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
 #define CRYSTALIZE_STAGE_SMALL 600 //Because they're not static
+
+// Strings used by modsuit mob sprite generation for Ceruleans/mobs with a big fish tail
+#define FLIPPERS "flippers"
+#define NO_FLIPPERS "no_flippers"
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10

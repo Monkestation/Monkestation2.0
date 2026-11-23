@@ -1,3 +1,9 @@
+/mob/living/silicon/pai/mob_try_stash(mob/living/carrier, instant = FALSE)
+	if(!possible_chassis[chassis])
+		to_chat(src, span_warning("Your current form isn't able to be carried!"))
+		return FALSE
+	return ..()
+
 /mob/living/silicon/pai/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!possible_chassis[chassis])
 		to_chat(user, span_warning("[src]'s current form isn't able to be carried!"))

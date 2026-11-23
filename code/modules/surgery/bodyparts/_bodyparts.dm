@@ -178,8 +178,14 @@
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
-	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
-	var/unarmed_attack_verb = "bump"
+	/// the verbs used for an unarmed attack when using this limb, such as arm.unarmed_attack_verbs = list("punch")
+	var/list/unarmed_attack_verbs = list("bump")
+	/// Continuous tense attack verbs for successful attacks
+	var/list/unarmed_attack_verbs_continuous = list("bumps")
+	/// if we have a special attack verb for hitting someone who is grappled by us, it goes here.
+	var/grappled_attack_verb
+	/// Continuous tense grapple verb for successful attacks
+	var/grappled_attack_verb_continuous
 	/// what visual effect is used when this limb is used to strike someone.
 	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
 	/// Sounds when this bodypart is used in an umarmed attack
@@ -189,8 +195,12 @@
 	var/unarmed_damage_low = 1
 	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
-	///Damage at which attacks from this bodypart will stun
-	var/unarmed_stun_threshold = 2
+	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	var/unarmed_effectiveness = 10
+	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
+	var/unarmed_pummeling_bonus = 1
+	/// The 'sharpness' of the limb. Could indicate claws, teeth or spines. Should default to NONE, or blunt.
+	var/unarmed_sharpness = NONE
 
 	/// Traits that are given to the holder of the part. If you want an effect that changes this, don't add directly to this. Use the add_bodypart_trait() proc
 	var/list/bodypart_traits = list()
@@ -388,23 +398,22 @@
 		check_list += span_notice("\t There is some <a href='byond://?src=[REF(examiner)];gauze_limb=[REF(src)]'>[current_gauze.name]</a> wrapped around your [name].")
 
 /// Gets overlays to apply to the mob when damaged.
-/obj/item/bodypart/proc/get_bodypart_damage_state()
+/obj/item/bodypart/proc/get_bodypart_damage_state(damage_icon)
 	if(!dmg_overlay_type)
 		return
 
 	var/list/overlays
 	if(brutestate)
 		// divided into two overlays: one that gets colored and one that doesn't.
-		var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
+		var/mutable_appearance/brute_blood_overlay = mutable_appearance(damage_icon, "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
 		brute_blood_overlay.color = get_color_from_blood_list(blood_dna_info)
-		var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
-		if(brute_damage_overlay)
-			brute_blood_overlay.overlays += brute_damage_overlay
 		LAZYADD(overlays, brute_blood_overlay)
+		var/mutable_appearance/brute_damage_overlay = mutable_appearance(damage_icon, "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
+		LAZYADD(overlays, brute_damage_overlay)
 
 	if(burnstate)
 		var/mutable_appearance/burn_overlay = mutable_appearance(
-			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon = damage_icon,
 			icon_state = "[dmg_overlay_type]_[body_zone]_0[burnstate]",
 			layer = -DAMAGE_LAYER,
 		)
@@ -1100,8 +1109,8 @@
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
 	for(var/image/img as anything in standing)
-		img.pixel_x = px_x
-		img.pixel_y = px_y
+		img.pixel_w = px_x
+		img.pixel_z = px_y
 	add_overlay(standing)
 
 /obj/item/bodypart/update_atom_colour()
@@ -1161,6 +1170,13 @@
 	limb.icon = icon_greyscale
 	if(!should_draw_greyscale || !icon_greyscale)
 		limb.icon = icon_static
+
+	var/icon_squashed = FALSE
+	if(!dropped && !is_husked && owner)
+		var/squashed_icon = owner.get_squashed_icon(limb.icon)
+		if(squashed_icon)
+			limb.icon = squashed_icon
+			icon_squashed = TRUE
 
 	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
 		limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
@@ -1229,7 +1245,7 @@
 	var/has_height = !dropped && !isnull(owner)
 	// Apply height to the overlays we generated so far
 	// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
-	if(has_height)
+	if(has_height && !icon_squashed)
 		for(var/image/generated_overlay in .)
 			// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
 			// it's more important to keep it consistent for things like getflaticon

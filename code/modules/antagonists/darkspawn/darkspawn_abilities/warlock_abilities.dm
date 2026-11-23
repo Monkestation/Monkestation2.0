@@ -610,7 +610,7 @@
 	icon_state = "consuming"
 	duration = 4 SECONDS //functions as the delay until the explosion, just make sure it's not shorter than 1.1 seconds or it fucks up the animation
 	plane = WALL_PLANE
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CLOSED_TURF_LAYER
 	alpha = 0
 
 /obj/effect/temp_visual/darkspawn/chasm/Initialize(mapload)
@@ -634,7 +634,7 @@
 /obj/effect/temp_visual/darkspawn/detonate //the explosion effect, applies damage when it disappears
 	icon_state = "detonate"
 	plane = WALL_PLANE
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CLOSED_TURF_LAYER
 	duration = 2
 
 /obj/effect/temp_visual/darkspawn/detonate/Destroy()

@@ -56,7 +56,7 @@
 /// Returns the items in your "active hand set", essentially your active hand and offhand
 /mob/proc/get_active_handset_items() as /list
 	RETURN_TYPE(/list/obj/item)
-	
+
 	var/list/ret = list(get_active_held_item(), get_inactive_held_item())
 	ret.RemoveAll(null)
 	return ret

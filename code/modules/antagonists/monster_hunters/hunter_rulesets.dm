@@ -1,5 +1,3 @@
-#define MINIMUM_MONSTERS_REQUIRED 2
-
 //gives monsterhunters an icon in the antag selection panel
 /datum/dynamic_ruleset/midround/monsterhunter
 	name = "Monster Hunter"
@@ -47,8 +45,7 @@
 /datum/dynamic_ruleset/midround/monsterhunter/ready(forced = FALSE)
 	if(required_candidates > length(living_players))
 		return FALSE
-	var/count = length(get_all_monster_hunter_prey())
-	if(MINIMUM_MONSTERS_REQUIRED > count)
+	if(!can_monster_hunter_spawn())
 		message_admins("[name] ruleset has attempted to run, but there were not enough monsters!")
 		log_game("DYNAMIC: [name] ruleset has attempted to run, but there were not enough monsters!")
 		return FALSE
@@ -63,5 +60,3 @@
 	message_admins("[ADMIN_LOOKUPFLW(player)] was selected by the [name] ruleset and has been made into a Monsterhunter.")
 	log_game("DYNAMIC: [key_name(player)] was selected by the [name] ruleset and has been made into a Monsterhunter.")
 	return TRUE
-
-#undef MINIMUM_MONSTERS_REQUIRED

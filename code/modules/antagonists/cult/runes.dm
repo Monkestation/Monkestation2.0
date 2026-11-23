@@ -38,7 +38,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	icon = 'icons/obj/antags/cult/rune.dmi'
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	color = RUNE_COLOR_RED
 
 	/// The name of the rune to cultists
@@ -84,6 +85,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/image/I = image(icon = 'icons/effects/blood.dmi', icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_runes", I)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /obj/effect/rune/examine(mob/user)
 	. = ..()
@@ -483,7 +485,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/teleportnames = list()
 	for(var/obj/effect/rune/teleport/teleport_rune as anything in GLOB.teleport_runes)
 		if(teleport_rune != src && !is_away_level(teleport_rune.z))
-			potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
+			potential_runes[avoid_assoc_duplicate_keys(html_decode(teleport_rune.listkey), teleportnames)] = teleport_rune
 
 	if(!length(potential_runes))
 		to_chat(user, span_warning("There are no valid runes to teleport to!"))
@@ -592,7 +594,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
-	pixel_y = -32
+	pixel_y = 16
+	pixel_z = -48
 	scribe_delay = 50 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
@@ -624,6 +627,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/invoker in invokers)
 			to_chat(invoker, span_warning("Nar'Sie is already on this plane!"))
 		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - already summoned.")
+		return
+	if(GLOB.wonderland_apocalypse)
+		for(var/invoker in invokers)
+			to_chat(invoker, span_hearts_decree("A god? I did not send for a god. Send it back! Fine it! Mop it up! ...And who has been drawing on my floor?"))
+		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - Wonderland has sealed it.")
 		return
 //monkestation edit start
 	used = TRUE
@@ -1073,7 +1081,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "apoc"
 	pixel_x = -32
-	pixel_y = -32
+	pixel_y = 16
+	pixel_z = -48
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100

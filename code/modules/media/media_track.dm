@@ -26,9 +26,9 @@
 
 /datum/media_track/proc/display()
 	SHOULD_BE_PURE(TRUE)
-	. = "\"[title]\""
+	. = "\"[html_encode(title)]\""
 	if(artist)
-		. += " by [artist]"
+		. += " by [html_encode(artist)]"
 
 /datum/media_track/proc/get_data() as /list
 	return list(

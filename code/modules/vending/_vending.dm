@@ -694,7 +694,6 @@
 			tilted = TRUE
 			tilted_rotation = picked_rotation
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	if(get_turf(fatty) != get_turf(src))
 		throw_at(get_turf(fatty), range, 1, spin = FALSE, quickstart = FALSE)
@@ -1026,7 +1025,6 @@
 
 	tilted = FALSE
 	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
 
 	var/matrix/to_turn = turn(transform, -tilted_rotation)
 	animate(src, transform = to_turn, 0.2 SECONDS)
@@ -1652,13 +1650,13 @@
 	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attacking_item))
 		return ..()
 
-	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
+	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, 20, encode = FALSE), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
 	if (new_name)
 		name = new_name
-	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, 60))
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", html_decode(desc), 60))
 	if (new_desc)
 		desc = new_desc
-	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60))
+	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60, encode = FALSE))
 	if (new_slogan)
 		slogan_list += new_slogan
 		last_slogan = world.time + rand(0, slogan_delay)

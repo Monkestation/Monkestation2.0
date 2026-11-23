@@ -12,6 +12,7 @@
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
+	icon_angle = -45
 	inhand_icon_state = "cultdagger"
 	worn_icon_state = "render"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -58,6 +59,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "cultblade"
+	icon_angle = -45
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -1077,6 +1079,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "A halberd with a volatile axehead made from crystallized blood. It seems linked to its creator. And, admittedly, more of a poleaxe than a halberd."
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "occultpoleaxe0"
+	icon_angle = -45
 	base_icon_state = "occultpoleaxe"
 	inhand_icon_state = "occultpoleaxe0"
 	w_class = WEIGHT_CLASS_HUGE

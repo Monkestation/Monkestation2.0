@@ -53,13 +53,13 @@
 
 /mob/living/basic/pet/gondola/gondolapod/setOpened()
 	opened = TRUE
-	SET_PLANE_IMPLICIT(src, GAME_PLANE)
+	layer = initial(layer)
 	update_appearance()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, setClosed)), 5 SECONDS)
 
 /mob/living/basic/pet/gondola/gondolapod/setClosed()
 	opened = FALSE
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_FOV_HIDDEN)
+	layer = LOW_MOB_LAYER
 	update_appearance()
 
 ///Opens the gondola pod and delivers its package, one-time use as it removes all delivery-related actions.
@@ -70,7 +70,7 @@
 	button_icon_state = "arrow"
 	check_flags = AB_CHECK_PHASED
 
-/datum/action/innate/deliver_gondola_package/Trigger(mob/clicker, trigger_flags)
+/datum/action/innate/deliver_gondola_package/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -90,7 +90,7 @@
 	button_icon_state = "storage"
 	check_flags = AB_CHECK_PHASED
 
-/datum/action/innate/check_gondola_contents/Trigger(mob/clicker, trigger_flags)
+/datum/action/innate/check_gondola_contents/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return

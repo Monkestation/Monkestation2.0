@@ -163,7 +163,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		icon_state = icon_state_off
 	if(announcement)
-		say(announcement)
+		say(html_decode(announcement))
 
 /// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
 /obj/machinery/computer/security/telescreen/entertainment/proc/on_network_broadcast_updated(datum/source, tv_show_id, is_show_active, announcement)

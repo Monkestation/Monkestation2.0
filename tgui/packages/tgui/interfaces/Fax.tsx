@@ -1,14 +1,17 @@
+import type { BooleanLike } from 'tgui-core/react';
+
 import { sortBy } from '../../common/collections';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type FaxData = {
+  ai_fax: BooleanLike;
   faxes: FaxInfo[];
   fax_id: string;
   fax_name: string;
   visible: boolean;
-  has_paper: string;
+  has_paper: boolean;
   syndicate_network: boolean;
   fax_history: FaxHistory[];
   special_faxes: FaxSpecial[];
@@ -49,7 +52,7 @@ export const Fax = (props) => {
       )
     : [];
   return (
-    <Window width={340} height={540}>
+    <Window width={data.ai_fax ? 540 : 340} height={540}>
       <Window.Content scrollable>
         <Section title="About Fax">
           <LabeledList.Item label="Network name">
@@ -57,15 +60,37 @@ export const Fax = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Network ID">{data.fax_id}</LabeledList.Item>
           <LabeledList.Item label="Visible to Network">
-            {!!data.visible}
+            {data.visible ? 'Yes' : 'No'}
           </LabeledList.Item>
         </Section>
         <Section
           title="Paper"
           buttons={
-            <Button onClick={() => act('remove')} disabled={!data.has_paper}>
-              Remove
-            </Button>
+            <>
+              {!!data.ai_fax && (
+                <Button
+                  onClick={() => act('edit_paper')}
+                  color="blue"
+                  icon="file"
+                  disabled={!data.has_paper}
+                >
+                  Edit Paper
+                </Button>
+              )}
+              {!!data.ai_fax && (
+                <Button
+                  onClick={() => act('generate_paper')}
+                  color="green"
+                  icon="clipboard"
+                  disabled={data.has_paper}
+                >
+                  Print Paper
+                </Button>
+              )}
+              <Button onClick={() => act('remove')} disabled={!data.has_paper}>
+                Remove
+              </Button>
+            </>
           }
         >
           <LabeledList.Item label="Paper">

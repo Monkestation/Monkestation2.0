@@ -1359,7 +1359,7 @@
 "avc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6;
-	layer = 2.03
+	layer = 10007
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -3518,12 +3518,10 @@
 	},
 /area/station/holodeck/rec_center)
 "bce" = (
-/obj/structure/lattice/catwalk{
-	layer = 2.047
-	},
+/obj/structure/lattice/catwalk,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4;
-	layer = 2.4
+	layer = 10015
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12559,7 +12557,7 @@
 "dKM" = (
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 4;
-	layer = 2.4
+	layer = 10015
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/hallway)
@@ -18997,7 +18995,7 @@
 "fIl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6;
-	layer = 2.03
+	layer = 10007
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -19318,7 +19316,7 @@
 "fLA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5;
-	layer = 2.03
+	layer = 10007
 	},
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron/dark,
@@ -25983,12 +25981,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "hIO" = (
-/obj/structure/lattice/catwalk{
-	layer = 2.047
-	},
+/obj/structure/lattice/catwalk,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8;
-	layer = 2.4
+	layer = 10015
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28406,9 +28402,7 @@
 /area/station/service/chapel)
 "itu" = (
 /obj/structure/cable,
-/obj/structure/lattice/catwalk{
-	layer = 2.047
-	},
+/obj/structure/lattice/catwalk,
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/hallway)
 "itB" = (
@@ -29327,9 +29321,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pathology/isolation)
 "iFY" = (
-/obj/structure/lattice/catwalk{
-	layer = 2.047
-	},
+/obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -31648,7 +31640,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "jqf" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
@@ -31776,7 +31768,7 @@
 "jrW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5;
-	layer = 2.03
+	layer = 10007
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -32934,7 +32926,7 @@
 "jHx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6;
-	layer = 2.03
+	layer = 10007
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32950,7 +32942,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "jHE" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/machinery/light/small/red/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -39038,7 +39030,7 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5;
-	layer = 2.03;
+	layer = 10007;
 	pixel_x = -6
 	},
 /turf/open/floor/plating,
@@ -45468,7 +45460,7 @@
 /obj/machinery/door/window/right/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6;
-	layer = 2.03
+	layer = 10007
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47799,7 +47791,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5;
-	layer = 2.03
+	layer = 10007
 	},
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
@@ -52117,7 +52109,7 @@
 "pjN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6;
-	layer = 2.03
+	layer = 10007
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -57178,7 +57170,7 @@
 "qFt" = (
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 1;
-	layer = 2.4
+	layer = 10015
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/hallway)
@@ -58912,7 +58904,7 @@
 /obj/machinery/light/warm/directional/east,
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 4;
-	layer = 2.4
+	layer = 10015
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -60774,7 +60766,7 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6;
-	layer = 2.03
+	layer = 10007
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -64447,12 +64439,10 @@
 /area/station/service/hydroponics/chicken)
 "sJp" = (
 /obj/structure/cable,
-/obj/structure/lattice/catwalk{
-	layer = 2.047
-	},
+/obj/structure/lattice/catwalk,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8;
-	layer = 2.4
+	layer = 10015
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/hallway)
@@ -66785,7 +66775,7 @@
 /area/station/maintenance/starboard/aft)
 "tqZ" = (
 /obj/effect/turf_decal/siding/yellow/corner{
-	layer = 2.4
+	layer = 10015
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/hallway)
@@ -72294,13 +72284,11 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/exit/departure_lounge)
 "uST" = (
-/obj/structure/lattice/catwalk{
-	layer = 2.047
-	},
+/obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4;
-	layer = 2.4
+	layer = 10015
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/hallway)
@@ -80801,7 +80789,7 @@
 "xsl" = (
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8;
-	layer = 2.4
+	layer = 10015
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/hallway)
@@ -81253,7 +81241,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "xyL" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -81965,7 +81953,7 @@
 /obj/machinery/light/warm/directional/south,
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8;
-	layer = 2.4
+	layer = 10015
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,

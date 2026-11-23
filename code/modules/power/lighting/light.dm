@@ -5,7 +5,6 @@
 	icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = WALL_OBJ_LAYER
-	//plane = GAME_PLANE_UPPER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
@@ -567,6 +566,8 @@
 	)
 	cut_overlays()
 	stoplag(0.7 SECONDS)
+	if(QDELETED(src))
+		return
 	if(prob(30))
 		do_sparks(number = 2, cardinal_only = TRUE, source = src)
 
@@ -576,6 +577,8 @@
 		flickering = !flickering
 		update(FALSE)
 		stoplag(pick(list(2 SECONDS, 4 SECONDS, 6 SECONDS)))
+		if(QDELETED(src))
+			return
 
 	if(has_power())
 		on = (status == LIGHT_OK)
@@ -782,7 +785,7 @@
 	icon_state = "floor"
 	bulb_outer_range = 4
 	light_angle = 360
-	layer = LOW_OBJ_LAYER
+	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

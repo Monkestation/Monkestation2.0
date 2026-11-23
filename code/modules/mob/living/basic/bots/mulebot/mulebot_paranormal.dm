@@ -11,7 +11,7 @@
 	if(!isobserver(load))
 		return
 	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
-	ghost_overlay.pixel_y = 12
+	ghost_overlay.pixel_z = 12
 	. += ghost_overlay
 
 /mob/living/basic/bot/mulebot/paranormal/get_load_name() //Don't reveal the name of ghosts so we can't metagame who died and all that.

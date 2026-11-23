@@ -387,3 +387,5 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 
 /// Above this level of assessed threat, you are extremely threatening
 #define THREAT_ASSESS_MAXIMUM 10
+/// Default offsets for riding a cyborg
+#define DEFAULT_ROBOT_RIDING_OFFSETS list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list(6, 3))

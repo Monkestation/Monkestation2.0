@@ -66,6 +66,8 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE)
 		return
+	if(QDELETED(target))
+		return
 	if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille) || istype(target, /obj/structure/window_sill))
 		target.atom_destruction("fireaxe")
 
@@ -78,6 +80,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi' //End Of Monke Edit
 	icon_state = "bone_axe0"
+	icon_angle = 180
 	base_icon_state = "bone_axe"
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
@@ -89,6 +92,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
  */
 /obj/item/fireaxe/metal_h2_axe
 	icon_state = "metalh2_axe0"
+	icon_angle = -45
 	base_icon_state = "metalh2_axe"
 	name = "metallic hydrogen axe"
 	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades it's hefty as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."

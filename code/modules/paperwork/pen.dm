@@ -15,6 +15,7 @@
 	name = "pen"
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pen"
+	icon_angle = -135
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
@@ -580,3 +581,8 @@
 	desc = "It's a fancy banana pen, set to [chosen_color]."
 	balloon_alert(user, "clicked")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)
+
+/obj/item/pen/silicon
+	name = "ink printer"
+	desc = "a customized ink printer to allow silicons to write on parchments."
+	font = ROBOT_FONT

@@ -2,6 +2,7 @@
 /obj/item/spear
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "spearglass0"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "spear"
@@ -153,7 +154,7 @@
 	. += span_notice("Alt-click to set your war cry.")
 
 /obj/item/spear/explosive/click_alt(mob/user)
-	var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)
+	var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50, encode = FALSE)
 	if(input)
 		war_cry = input
 	return CLICK_ACTION_SUCCESS

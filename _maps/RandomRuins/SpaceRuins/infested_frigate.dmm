@@ -602,9 +602,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/has_grav/infested_frigate)
 "jx" = (
-/obj/effect/decal/cleanable/glass{
-	layer = 3.1
-	},
+/obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
@@ -617,9 +615,7 @@
 	desc = "It would have been locked anyway.";
 	name = "syndicate navigation console"
 	},
-/obj/effect/decal/cleanable/glass{
-	layer = 3.1
-	},
+/obj/effect/decal/cleanable/glass,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "jA" = (

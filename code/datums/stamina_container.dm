@@ -72,7 +72,7 @@
 		if(current != last_current)
 			should_notify_parent = TRUE
 		loss = maximum - current
-		loss_as_percent = loss ? (loss == maximum ? 0 : loss / maximum * 100) : 0
+		loss_as_percent = loss * 100 / maximum
 
 	if(current == maximum)
 		process_stamina = FALSE
@@ -179,6 +179,7 @@
 	if(value == maximum)
 		return
 	maximum = value
+	current = min(current, maximum)
 	update()
 	return TRUE
 

@@ -104,7 +104,7 @@
 /obj/vehicle/ridden/artilleryheavy/Initialize(mapload)
 	. = ..()
 	add_overlay(image(icon, "m1938_cover", ABOVE_MOB_LAYER))
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/artillery_light)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/artillery_heavy)
 
 /obj/vehicle/ridden/artilleryheavy/welder_act(mob/living/user, obj/item/welder)
 	if(user.istate & ISTATE_HARM)

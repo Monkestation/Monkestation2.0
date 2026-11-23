@@ -6,7 +6,7 @@
 //Have the liquid group handle the total reagents datum, and reactions too (apply fraction?)
 
 GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
-
+GLOBAL_VAR_INIT(liquid_pool_react, TRUE)
 /datum/liquid_group
 	///the generated color given to the group on creation for debugging
 	var/color
@@ -90,6 +90,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	cached_fire_spreads = null
 	cached_reagent_list = null
 	splitting_array = null
+	QDEL_NULL(reagents)
 	return ..()
 
 /datum/liquid_group/proc/copy_properties(datum/liquid_group/from)
@@ -403,7 +404,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	process_group()
 
 /datum/liquid_group/proc/add_reagent(obj/effect/abstract/liquid_turf/member, datum/reagent/reagent, amount, temperature)
-	reagents.add_reagent(reagent, amount, temperature, no_react = TRUE)
+	reagents.add_reagent(reagent, amount, reagtemp = temperature, no_react = TRUE)
 	handle_visual_changes()
 	process_group()
 

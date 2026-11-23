@@ -218,7 +218,7 @@
 	var/datum/atom_hud/borer_hud = GLOB.huds[DATA_HUD_BORER]
 	borer_hud.show_to(src)
 
-/mob/living/basic/cortical_borer/Destroy()
+/mob/living/basic/cortical_borer/Destroy(force)
 	QDEL_NULL(reagent_holder)
 	body_focuses = null
 	if(human_host)
@@ -345,6 +345,9 @@
 			loc_temp = host.coretemperature // set the local temp to that of the host's core temp
 		else
 			loc_temp = human_host.bodytemperature
+		// a corpse stays as cold as wherever it was left, so a body pulled out of the cold would freeze us in a warm room
+		if(human_host.stat == DEAD)
+			loc_temp = max(loc_temp, get_temperature(environment))
 	else
 		loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
@@ -377,6 +380,8 @@
 
 	REMOVE_TRAIT(src, TRAIT_WEATHER_IMMUNE, "borer_in_host")
 	set_survivable_temperatures(initial(minimum_survivable_temperature), initial(maximum_survivable_temperature)) //reset body tempature
+	if(has_status_effect(/datum/status_effect/borer_sugar))
+		remove_status_effect(/datum/status_effect/borer_sugar)
 	human_host = null
 	SEND_SIGNAL(src, COMSIG_HOST_CHANGED)
 

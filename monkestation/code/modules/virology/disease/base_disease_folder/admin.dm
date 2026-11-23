@@ -273,9 +273,3 @@ ADMIN_VERB(diseases_panel, R_ADMIN, FALSE, "Disease Panel", "See diseases and di
 		</html>
 	"}
 	usr << browse(dat, "window=diseasespanel;size=705x450")
-
-/datum/admins/Topic(href, href_list)
-	. = ..()
-	if(href_list["diseasepanel_examine"])
-		viewingID = href_list["diseasepanel_examine"]
-		diseases_panel()
