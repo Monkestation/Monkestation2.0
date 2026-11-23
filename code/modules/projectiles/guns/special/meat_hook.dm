@@ -5,6 +5,7 @@
 	desc = "Mid or feed."
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
+	icon_angle = 45
 	inhand_icon_state = "hook"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -99,6 +100,7 @@
 	desc = "A hardlight hook used to non-lethally pull targets much closer to the user."
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "contractor_hook"
+	icon_angle = 0
 	inhand_icon_state = "" //nah
 	ammo_type = /obj/item/ammo_casing/magic/hook/contractor
 

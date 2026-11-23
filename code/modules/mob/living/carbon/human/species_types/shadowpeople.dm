@@ -444,6 +444,7 @@
 	name = "light eater" //as opposed to heavy eater
 	icon = 'icons/obj/darkspawn_items.dmi'
 	icon_state = "light_eater"
+	icon_angle = 135
 	inhand_icon_state  = "light_eater"
 	force = 18
 	lefthand_file = 'icons/mob/inhands/antag/darkspawn/darkspawn_lefthand.dmi'

@@ -6,6 +6,7 @@
 	desc = "A frontiersman's classic, closer to a shortsword than a knife. It boasts a full-tanged build, a brass handguard and pommel, a wicked sharp point, and a large, heavy blade, It's almost everything you could want in a knife, besides portability."
 	icon = 'monkestation/code/modules/blueshift/icons/bowie.dmi'
 	icon_state = "bowiehand"
+	icon_angle = -45
 	inhand_icon_state = "bowiehand"
 	lefthand_file = 'monkestation/code/modules/blueshift/icons/bowie_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/blueshift/icons/bowie_righthand.dmi'

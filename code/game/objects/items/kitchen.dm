@@ -22,6 +22,7 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
+	icon_angle = -90
 	force = 4
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
@@ -108,6 +109,7 @@
 	name = "Kitchen Toolset"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sili_knife"
+	icon_angle = 0
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
 	throwforce = 0
@@ -146,6 +148,7 @@
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
+	icon_angle = -45
 	worn_icon_state = "rolling_pin"
 	inhand_icon_state = "rolling_pin"
 	force = 8
@@ -180,6 +183,7 @@
 	name = "spoon"
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "spoon"
+	icon_angle = -90
 	base_icon_state = "spoon"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
@@ -313,6 +317,7 @@
 	name = "ladle"
 	desc = "What is a ladle but a comically large spoon?"
 	icon_state = "ladle"
+	icon_angle = 90
 	base_icon_state = "ladle"
 	inhand_icon_state = "spoon"
 	custom_price = PAYCHECK_LOWER * 4

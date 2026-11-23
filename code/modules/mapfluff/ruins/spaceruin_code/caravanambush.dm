@@ -2,6 +2,7 @@
 
 /obj/item/wrench/caravan
 	icon_state = "wrench_caravan"
+	icon_angle = -90
 	desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster."
 	name = "experimental wrench"
 	toolspeed = 0.3

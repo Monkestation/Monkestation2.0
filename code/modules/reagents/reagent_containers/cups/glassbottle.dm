@@ -21,6 +21,7 @@
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "glassbottle"
+	icon_angle = 90
 	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
 	custom_price = PAYCHECK_CREW * 1.1
