@@ -215,7 +215,8 @@
 	else
 		message = "<font color='[COLOR_SYNDIE_RED]'>-!-YOU ARE UNDER ATTACK-!-</font>"
 		for(var/obj/machinery/computer/ai_control_console/downloader in AI.download_sources)
-			message += "<br>[get_area(downloader)] - [downloader.download_progress]% downloaded"
+			var/area/download_area = get_area(downloader)
+			message += "<br>[uppertext(download_area.name) || "NIL REF ERR"] - [downloader.download_progress]% DOWNLOADED"
 
 	maptext = MAPTEXT(message)
 
