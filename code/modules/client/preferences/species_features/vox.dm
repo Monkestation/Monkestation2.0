@@ -115,10 +115,7 @@
 
 // Quills are colored by the hair colors and gradient, which these set under quill names.
 // The normal hair preferences are hidden for heads that can't grow hair, but still applied, so these apply after them.
-
-/// Returns TRUE if the human's species has quills, so the quill preferences below are theirs to set
-/proc/species_has_quills(mob/living/carbon/human/target)
-	return (/obj/item/organ/external/vox_quills in target.dna.species.external_organs)
+// Like trait preferences in apply_prefs_to(), they only apply to species that have the organ they're for.
 
 /datum/preference/color/vox_quills_color
 	priority = PREFERENCE_PRIORITY_BODY_TYPE
@@ -131,7 +128,7 @@
 	return COLOR_DARKER_BROWN
 
 /datum/preference/color/vox_quills_color/apply_to_human(mob/living/carbon/human/target, value)
-	if(species_has_quills(target))
+	if(relevant_external_organ in target.dna.species.external_organs)
 		target.set_haircolor(value, update = FALSE)
 
 /datum/preference/color/vox_facial_quills_color
@@ -145,7 +142,7 @@
 	return COLOR_DARKER_BROWN
 
 /datum/preference/color/vox_facial_quills_color/apply_to_human(mob/living/carbon/human/target, value)
-	if(species_has_quills(target))
+	if(relevant_external_organ in target.dna.species.external_organs)
 		target.set_facial_haircolor(value, update = FALSE)
 
 /datum/preference/choiced/vox_quills_gradient
@@ -162,7 +159,7 @@
 	return SPRITE_ACCESSORY_NONE
 
 /datum/preference/choiced/vox_quills_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	if(species_has_quills(target))
+	if(relevant_external_organ in target.dna.species.external_organs)
 		target.set_hair_gradient_style(value, update = FALSE)
 
 /datum/preference/color/vox_quills_gradient_color
@@ -178,7 +175,7 @@
 	return preferences.read_preference(/datum/preference/choiced/vox_quills_gradient) != SPRITE_ACCESSORY_NONE
 
 /datum/preference/color/vox_quills_gradient_color/apply_to_human(mob/living/carbon/human/target, value)
-	if(species_has_quills(target))
+	if(relevant_external_organ in target.dna.species.external_organs)
 		target.set_hair_gradient_color(value, update = FALSE)
 
 /// Colored by the mutant color
