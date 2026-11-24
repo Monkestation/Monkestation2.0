@@ -180,8 +180,3 @@ Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?ite
 
 Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.
 
-## Using the Maintainer Council Ping in Discord
-
-The `@SS13 Maintainer Council` role should be used only to ping maintainers when your PR has had the "Stale" label applied. Using it before then can be met with escalating timeouts and referral to the Discord moderators for further infractions.
-
-Feel free to engage and obtain general feedback in the Coding General channel without the role ping before your PR goes stale to build interest and get reviews.
