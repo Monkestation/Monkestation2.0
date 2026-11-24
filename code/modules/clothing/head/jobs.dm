@@ -345,7 +345,7 @@
 	greyscale_colors = "#39393f#f0cc8f"
 
 /obj/item/clothing/head/hats/hos/beret/red //gloat version
-	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection. It seems rather worn, it must have seen a lot of action."
+	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection. It looks rather worn, it must have been through a lot."
 	greyscale_colors = "#a52f29#f0cc8f"
 
 /obj/item/clothing/head/hats/hos/beret/navyhos
