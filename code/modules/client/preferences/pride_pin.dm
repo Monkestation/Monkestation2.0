@@ -1,5 +1,5 @@
 /datum/preference/choiced/pride_pin
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "pride_pin"
 	savefile_identifier = PREFERENCE_CHARACTER
 
