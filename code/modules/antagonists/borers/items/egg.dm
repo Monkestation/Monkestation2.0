@@ -8,6 +8,7 @@
 	chick_throw_prob = 0 // please no
 	food_buffs = STATUS_EFFECT_FOOD_HEALTH_LARGE
 	preserved_food = TRUE // Egg Cuticle
+	fresh_mutation = TRUE // If we dont set this to true the borers become chicken when incubated.
 	obj_flags = NONE
 	/// The spawner that ghosts use to actually get created
 	var/obj/effect/mob_spawn/ghost_role/borer_egg/host_spawner
