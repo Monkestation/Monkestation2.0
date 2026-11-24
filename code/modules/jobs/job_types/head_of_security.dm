@@ -82,6 +82,10 @@
 	if(visualsOnly || !CONFIG_GET(flag/use_exp_tracking))
 		return
 
+	var/client/equipped_client = GLOB.directory[ckey(human.mind?.key)]
+	if(isnull(equipped_client))
+		return
+
 	var/player_playtime = text2num(equipped_client.prefs.exp[JOB_DETECTIVE])
 
 	if(player_playtime >= HOS_VETERAN_PLAYTIME)
