@@ -279,6 +279,7 @@
  * restyle_flags: EXTERNAL_RESTYLE_HAIR and/or EXTERNAL_RESTYLE_FACIAL_HAIR
  */
 /obj/item/bodypart/head/proc/get_hairlike_features(restyle_flags)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/obj/item/organ/external/feature in src)
 		if(!(feature.restyle_flags & restyle_flags))
