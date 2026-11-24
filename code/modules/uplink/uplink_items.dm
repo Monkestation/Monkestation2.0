@@ -87,6 +87,8 @@
 	var/population_minimum = 0
 	/// Whether this purchase is visible in the purchase log.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
+	/// Whether the purchase log lists what this kit held. Only for kits with randomized contents
+	var/log_contents = FALSE
 	/// Whether this purchase is restricted or not (VR/Events related)
 	var/restricted = FALSE
 	/// Can this item be deconstructed to unlock certain techweb research nodes?
@@ -141,9 +143,9 @@
 	var/atom/A = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
 	if(purchase_log_vis && uplink_handler.purchase_log)
-		// Crates that can't be handed back tell us what they held, otherwise kits and boxes are read off the thing that was bought
+		// Crates that can't be handed back tell us what they held, otherwise randomized kits are read off the thing that was bought
 		var/list/bought_contents = uplink_handler.logged_purchase_contents
-		if(!bought_contents && A && A != source && (A.atom_storage || istype(A, /obj/structure/closet)))
+		if(!bought_contents && log_contents && A && A != source)
 			bought_contents = summarize_contents(A.contents)
 		uplink_handler.purchase_log.LogPurchase(A, src, cost, bought_contents)
 	uplink_handler.logged_purchase_contents = null

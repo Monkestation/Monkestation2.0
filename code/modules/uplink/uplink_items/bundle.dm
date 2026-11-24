@@ -58,6 +58,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
 	cost = 25
+	log_contents = TRUE
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
@@ -70,6 +71,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
 	cost = 25
+	log_contents = TRUE
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
 
@@ -197,6 +199,7 @@
 			(Usable in the provided uplink) and Contractor Points. Can not be bought if you have taken any secondary objectives."
 	item = /obj/item/storage/box/syndie_kit/contract_kit
 	cost = 25
+	log_contents = TRUE
 	purchasable_from = UPLINK_TRAITORS
 
 /datum/uplink_item/bundles_tc/contract_kit/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
@@ -287,5 +290,6 @@
 			The Syndicate provides only one Mini-Kit per agent."
 	item = /obj/item/storage/box/syndie_kit/mini_kit
 	cost = 10
+	log_contents = TRUE
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
