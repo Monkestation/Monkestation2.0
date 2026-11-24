@@ -132,6 +132,8 @@ There are several things that need to be remembered:
 				icon_file = species_icon_file
 				handled_by_bodyshape = TRUE
 				woman = FALSE
+			else
+				uniform.species_fitted = null // no fitted sprite for how it's worn (like rolled down), so its blood isn't fitted either
 
 		//END SPECIES HANDLING
 		uniform_overlay = uniform.build_worn_icon(
