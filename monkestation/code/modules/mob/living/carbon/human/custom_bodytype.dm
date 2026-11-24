@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
 	return species_worn_icon
 
 /**
- * Generate a fallback worn icon, if the species supports it. You must call it in an override of generate_custom_worn_icon()
+ * Generate a fallback worn icon, if the species supports it. You must call it in an override of get_fitted_worn_icon()
  */
 /datum/species/proc/generate_custom_worn_icon_fallback(item_slot, obj/item/item)
 	var/icon/human_icon = item.worn_icon || item.icon

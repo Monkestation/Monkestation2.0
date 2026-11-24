@@ -91,7 +91,7 @@
 	if(chem.type != /datum/reagent/oxygen)
 		return NONE
 	source.adjustToxLoss(0.5 * seconds_per_tick)
-	source.reagents.remove_reagent(chem.type, 0.1 * seconds_per_tick)
+	source.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 	return COMSIG_MOB_STOP_REAGENT_TICK
 
 /datum/species/vox/randomize_features()

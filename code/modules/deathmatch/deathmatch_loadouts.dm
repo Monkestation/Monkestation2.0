@@ -35,7 +35,10 @@
 
 		else // If both hands are taken, just turn them human
 			user.set_species(/datum/species/human)
-	user.dna.species.give_important_for_life(user) //i think its worth it to let plasmemes play DM at the cost of outfits
+	// Only plasmamen need this before the loadout goes on. Vox get their mask and tank from post_equip_species_outfit() once it's on,
+	// so the tank goes on their belt or in a pocket, not in a hand the loadout wants.
+	if(isplasmaman(user))
+		user.dna.species.give_important_for_life(user) //i think its worth it to let plasmemes play DM at the cost of outfits
 
 	for(var/datum/action/act as anything in spells_to_add)
 		var/datum/action/new_ability = new act(user)
