@@ -344,6 +344,10 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#39393f#f0cc8f"
 
+/obj/item/clothing/head/hats/hos/beret/red //gloat version
+	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection. It seems rather worn, it must have seen a lot of action."
+	greyscale_colors = "#a52f29#f0cc8f"
+
 /obj/item/clothing/head/hats/hos/beret/navyhos
 	name = "head of security's formal beret"
 	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
