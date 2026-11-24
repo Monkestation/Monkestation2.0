@@ -18,8 +18,18 @@
 	var/sanity = SANITY_NEUTRAL
 	/// the total combined value of all visible moodlets for the mob
 	var/shown_mood
-	/// Moodlet value modifier
+	/// Multiplier to the sum total of mood the mob is experiencing
 	var/mood_modifier = 1
+	/// Multiplier to positive moodlet values. Stacks with mood_modifier
+	var/positive_mood_modifier = 1
+	/// Multiplier to negative moodlet values. Stacks with mood_modifier
+	var/negative_mood_modifier = 1
+	/// Multiplier to the length of positive moodlets.
+	/// Please don't set this to 0
+	var/positive_moodlet_length_modifier = 1
+	/// Multiplier to the length of negative moodlets.
+	/// Please don't set this to 0
+	var/negative_moodlet_length_modifier = 1
 	/// Used to track what stage of moodies they're on (1-9)
 	var/mood_level = MOOD_LEVEL_NEUTRAL
 	/// To track what stage of sanity they're on (1-6)
@@ -31,10 +41,6 @@
 
 	/// List of mood events currently active on this datum
 	var/list/mood_events = list()
-
-	/// Tracks the last mob stat, updates on change
-	/// Used to stop processing SSmood
-	var/last_stat = CONSCIOUS
 
 /datum/mood/New(mob/living/mob_to_make_moody)
 	if (!istype(mob_to_make_moody))
@@ -75,40 +81,32 @@
 /datum/mood/process(seconds_per_tick)
 	switch(mood_level)
 		if(MOOD_LEVEL_SAD4)
-			set_sanity(sanity - 0.3 * seconds_per_tick, SANITY_INSANE)
+			adjust_sanity(-0.3 * seconds_per_tick, SANITY_INSANE)
 		if(MOOD_LEVEL_SAD3)
-			set_sanity(sanity - 0.15 * seconds_per_tick, SANITY_CRAZY)
+			adjust_sanity(-0.15 * seconds_per_tick, SANITY_CRAZY)
 		if(MOOD_LEVEL_SAD2)
-			set_sanity(sanity - 0.1 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(-0.1 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_SAD1)
-			set_sanity(sanity - 0.05 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(-0.05 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_NEUTRAL)
-			set_sanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
+			adjust_sanity(0, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
 		if(MOOD_LEVEL_HAPPY1)
-			set_sanity(sanity + 0.2 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(0.2 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_HAPPY2)
-			set_sanity(sanity + 0.3 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(0.3 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_HAPPY3)
-			set_sanity(sanity + 0.4 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			adjust_sanity(0.4 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(MOOD_LEVEL_HAPPY4)
-			set_sanity(sanity + 0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			adjust_sanity(0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 
-	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
-	// mood runtime, so 50% average uptime across the hour.
-	if(HAS_TRAIT(mob_parent, TRAIT_DEPRESSION) && SPT_PROB(0.416, seconds_per_tick))
-		add_mood_event("depression_mild", /datum/mood_event/depression_mild)
-
-	if(HAS_TRAIT(mob_parent, TRAIT_JOLLY) && SPT_PROB(0.416, seconds_per_tick))
-		add_mood_event("jolly", /datum/mood_event/jolly)
-
-/datum/mood/proc/handle_mob_death(datum/source)
+/// Stops mood processing while dead and starts it again on revival
+/datum/mood/proc/handle_mob_death(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 
-	if (last_stat == DEAD && mob_parent.stat != DEAD)
+	if (old_stat == DEAD && new_stat != DEAD)
 		START_PROCESSING(SSmood, src)
-	else if (last_stat != DEAD && mob_parent.stat == DEAD)
+	else if (old_stat != DEAD && new_stat == DEAD)
 		STOP_PROCESSING(SSmood, src)
-	last_stat = mob_parent.stat
 
 /// Handles mood given by nutrition
 /datum/mood/proc/update_nutrition_moodlets()
@@ -148,36 +146,95 @@
  *
  * Arguments:
  * * category - (text) category of the mood event - see /datum/mood_event for category explanation
- * * type - (path) any /datum/mood_event
+ * * type - (path) any /datum/mood_event (besides /datum/mood_event/conditional)
  */
-/datum/mood/proc/add_mood_event(category, type, ...)
-	if (!ispath(type, /datum/mood_event))
-		CRASH("A non path ([type]), was used to add a mood event. This shouldn't be happening.")
+/datum/mood/proc/add_mood_event(category, new_type, ...)
+	if (!ispath(new_type, /datum/mood_event))
+		CRASH("A non path ([new_type]), was used to add a mood event. This shouldn't be happening.")
+	if (ispath(new_type, /datum/mood_event/conditional))
+		CRASH("A conditional mood event ([new_type]) was used in add_mood_event. Use add_conditional_mood_event instead.")
 	if (!istext(category))
 		category = REF(category)
 
-	var/datum/mood_event/the_event
-	if (mood_events[category])
-		the_event = mood_events[category]
-		if (the_event.type != type)
-			clear_mood_event(category)
-		else
-			if (the_event.timeout)
-				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
-			return // Don't need to update the event.
 	var/list/params = args.Copy(3)
-
-	params.Insert(1, mob_parent)
-	the_event = new type(arglist(params))
-	if (QDELETED(the_event)) // the mood event has been deleted for whatever reason (requires a job, etc)
+	var/datum/mood_event/new_event = new new_type(category)
+	if(!new_event.can_effect_mob(arglist(list(src, mob_parent) + params)))
+		qdel(new_event)
 		return
 
-	mood_events[category] = the_event
-	the_event.category = category
-	update_mood()
+	add_mood_event_instance(new_event, params)
 
-	if (the_event.timeout)
-		addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
+/**
+ * Handles adding a mood event instance, including replacing or refreshing existing events
+ */
+/datum/mood/proc/add_mood_event_instance(datum/mood_event/new_event, list/params)
+	PRIVATE_PROC(TRUE)
+	var/category = new_event.category
+	var/datum/mood_event/existing_event = mood_events[category]
+	if(existing_event)
+		var/continue_adding = FALSE
+		if(existing_event.type == new_event.type)
+			continue_adding = existing_event.be_refreshed(arglist(list(src) + params))
+		else
+			continue_adding = existing_event.be_replaced(arglist(list(src, new_event) + params))
+		if(!continue_adding)
+			update_mood()
+			qdel(new_event)
+			return
+		clear_mood_event(category)
+
+	new_event.on_add(src, mob_parent, params)
+	mood_events[category] = new_event
+	update_mood()
+	if(new_event.mood_change == 0 || new_event.hidden)
+		return
+	if(new_event.mood_change > 0)
+		add_personality_mood_to_viewers(mob_parent, "other_good_moodlet", list(
+			/datum/personality/empathetic = /datum/mood_event/empathetic_happy,
+			/datum/personality/misanthropic = /datum/mood_event/misanthropic_sad
+		), range = 4)
+	else
+		add_personality_mood_to_viewers(mob_parent, "other_bad_moodlet", list(
+			/datum/personality/empathetic = /datum/mood_event/empathetic_sad,
+			/datum/personality/misanthropic = /datum/mood_event/misanthropic_happy
+		), range = 4)
+
+/**
+ * Adds a conditional mood event to the mob
+ *
+ * Arguments:
+ * * category - (text) category of the mood event - see /datum/mood_event for category explanation
+ * * base_type - (path) any /datum/mood_event/conditional
+ */
+/datum/mood/proc/add_conditional_mood_event(category, datum/base_type, ...)
+	if (!ispath(base_type, /datum/mood_event/conditional))
+		if (ispath(base_type, /datum/mood_event))
+			CRASH("A non-conditional mood event ([base_type]) was used in add_conditional_mood_event. Use add_mood_event instead.")
+		CRASH("A non path ([base_type]), was used to add a mood event. This shouldn't be happening.")
+	if (!istext(category))
+		category = REF(category)
+
+	var/list/params = args.Copy(3)
+	var/list/datum/mood_event/conditional/all_valid_conditional_events = list()
+	for(var/event_subtype in valid_typesof(base_type))
+		var/datum/mood_event/potential_event = new event_subtype(category)
+		if(!potential_event.can_effect_mob(arglist(list(src, mob_parent) + params)))
+			qdel(potential_event)
+			continue
+
+		all_valid_conditional_events += potential_event
+
+	if(!length(all_valid_conditional_events))
+		return //no valid events to add
+
+	var/datum/mood_event/conditional/highest_priority_event
+	for(var/datum/mood_event/conditional/checked_event as anything in all_valid_conditional_events)
+		if(!highest_priority_event || checked_event.priority > highest_priority_event.priority)
+			highest_priority_event = checked_event
+
+	add_mood_event_instance(highest_priority_event, params)
+	all_valid_conditional_events -= highest_priority_event // you are the chosen one
+	QDEL_LIST(all_valid_conditional_events) // clean up the losers
 
 /**
  * Removes a mood event from the mob
@@ -197,6 +254,10 @@
 	qdel(event)
 	update_mood()
 
+/// Returns the mood event in this category, if any
+/datum/mood/proc/get_mood_event(category)
+	return mood_events[category]
+
 /// Updates the mobs mood.
 /// Called after mood events have been added/removed.
 /datum/mood/proc/update_mood()
@@ -205,15 +266,16 @@
 	mood = 0
 	shown_mood = 0
 
-	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
-
 	for(var/category in mood_events)
 		var/datum/mood_event/the_event = mood_events[category]
-		mood += the_event.mood_change
+		var/event_mood = the_event.mood_change
+		event_mood *= max((event_mood > 0) ? positive_mood_modifier : negative_mood_modifier, 0)
+		mood += event_mood
 		if (!the_event.hidden)
-			shown_mood += the_event.mood_change
-	mood *= mood_modifier
-	shown_mood *= mood_modifier
+			shown_mood += event_mood
+
+	mood *= max(mood_modifier, 0)
+	shown_mood *= max(mood_modifier, 0)
 
 	switch(mood)
 		if (-INFINITY to MOOD_SAD4)
@@ -236,6 +298,7 @@
 			mood_level = MOOD_LEVEL_HAPPY4
 
 	update_mood_icon()
+	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
 
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
@@ -409,6 +472,9 @@
 	else
 		msg += "&bull; [span_grey("I don't have much of a reaction to anything right now.")]\n"
 
+	if(LAZYLEN(mob_parent.personalities))
+		msg += span_notice("You know yourself to be [mob_parent.get_parsonality_string()].<br>")
+
 	if(LAZYLEN(mob_parent.quirks))
 		msg += span_notice("You have these quirks: [mob_parent.get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
 	to_chat(user, boxed_message(msg))
@@ -462,10 +528,16 @@
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum && sanity < minimum)
 		amount = sanity + 0.7
-	if((!override && HAS_TRAIT(mob_parent, TRAIT_UNSTABLE)) || amount > maximum)
+
+	if(!override && HAS_TRAIT(mob_parent, TRAIT_UNSTABLE))
 		amount = min(sanity, amount)
+
+	if (amount > maximum)
+		amount = min(amount, maximum)
+
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
+
 	sanity = amount
 	SEND_SIGNAL(mob_parent, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
@@ -535,11 +607,10 @@
 
 /// Helper to forcefully drain sanity
 /datum/mood/proc/direct_sanity_drain(amount)
-	set_sanity(sanity + amount, override = TRUE)
+	adjust_sanity(amount, override = TRUE)
 
 /**
  * Returns true if you already have a mood from a provided category.
- * You may think to yourself, why am I trying to get a boolean from a component? Well, this system probably should not be a component.
  *
  * Arguments
  * * category - Mood category to validate against.

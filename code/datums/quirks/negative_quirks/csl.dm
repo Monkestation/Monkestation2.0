@@ -12,6 +12,11 @@
 	/// What language typepath is our primary language?
 	var/native_language
 
+/// Lists the preferences shown under the customize button of this quirk
+/datum/quirk_constant_data/csl
+	associated_typepath = /datum/quirk/csl
+	customization_options = list(/datum/preference/choiced/csl_strength)
+
 /datum/quirk/csl/add(client/client_source)
 	if(iscarbon(quirk_holder))
 		quirk_holder.remove_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)

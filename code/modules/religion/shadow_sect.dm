@@ -35,7 +35,7 @@
 	if(isblessedshadow(blessed))
 		blessed.heal_overall_damage(5, 5, 20, BODYTYPE_ORGANIC)
 		to_chat(user, span_notice("You bless [blessed] with the power of [GLOB.deity], healing them and spreading blessings."))
-	return TRUE
+	return BLESSING_IGNORED
 
 /datum/religion_sect/shadow_sect/on_sacrifice(obj/item/N, mob/living/L)
 	if(!istype(N, /obj/item/flashlight))

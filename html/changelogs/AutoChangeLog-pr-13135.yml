@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "(SmArtKar) Added new (purely visual) animations to sharp and pointy items."
-  - bugfix: "(SmArtKar) Fixed attack animations being offset when attacking large objects or mobs."
-  - bugfix: "wide items like the Kiboko grenade launcher now swing centered on their target"
