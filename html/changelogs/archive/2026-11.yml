@@ -1265,6 +1265,9 @@
       instead of only from a wheelchair
   - map: The nukie base now has the tactical map holotable in place of the shuttle
       manipulator.
+  - bugfix: sliced food gets the reagents of what it was cut from again, so custom
+      sushi slices can be eaten
+  - bugfix: custom food gets foodtypes and tastes from its ingredients again
   Gboster-0:
   - bugfix: fixed borers having a button that makes you invisible
   - bugfix: fixed xeno larva having a button that makes you invisible
