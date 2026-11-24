@@ -264,8 +264,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -1636,16 +1635,14 @@
 /area/centcom/syndicate_mothership/control)
 "aec" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -2384,8 +2381,7 @@
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "agq" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/dark{
@@ -6718,8 +6714,7 @@
 /area/centcom/central_command_areas/admin)
 "arW" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 1
@@ -6882,8 +6877,7 @@
 /area/centcom/central_command_areas/ferry)
 "asw" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -6891,8 +6885,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -7131,8 +7124,7 @@
 	pixel_x = 6
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 1
@@ -9743,8 +9735,7 @@
 	pixel_x = 6
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -10203,12 +10194,9 @@
 /area/centcom/central_command_areas/admin_hangout)
 "aBg" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
 	},
@@ -10824,8 +10812,7 @@
 "aCT" = (
 /obj/structure/table/reinforced,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -11463,8 +11450,7 @@
 /area/centcom/central_command_areas/admin_hangout)
 "aEE" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -12684,16 +12670,14 @@
 /area/centcom/tdome/observation)
 "aHZ" = (
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
 	dir = 6
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -13808,9 +13792,7 @@
 	},
 /area/centcom/syndicate_mothership/control)
 "aKX" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 4
 	},
@@ -14022,16 +14004,14 @@
 /area/centcom)
 "aLz" = (
 /obj/structure/railing{
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -14245,9 +14225,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
 "aMd" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
@@ -15870,8 +15848,7 @@
 "aQB" = (
 /obj/structure/table/reinforced,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -19934,8 +19911,7 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
@@ -20749,8 +20725,7 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,

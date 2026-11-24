@@ -10737,9 +10737,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "cmo" = (
@@ -11247,8 +11245,7 @@
 /area/station/maintenance/department/cargo)
 "cvC" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing,
 /turf/open/openspace,
@@ -15553,9 +15550,7 @@
 /area/station/command/teleporter)
 "dOJ" = (
 /obj/effect/turf_decal/stripes/end,
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2{
 	dir = 1
 	},
@@ -15706,8 +15701,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/openspace,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -26657,8 +26651,7 @@
 /area/station/command/heads_quarters/hos)
 "hla" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 1
@@ -28389,9 +28382,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/openspace,
 /area/station/maintenance/department/security)
 "hPw" = (
@@ -29213,8 +29204,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/openspace,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -30191,8 +30181,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -34277,12 +34266,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/moisture_trap,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
@@ -38324,8 +38311,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/openspace,
 /area/station/asteroid/tram/junction/east)
@@ -39630,8 +39616,7 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -41077,13 +41062,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
-"lIK" = (
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
-	},
-/turf/open/openspace,
-/area/station/security/brig)
 "lIQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -42368,8 +42346,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/openspace,
 /area/station/asteroid/tram/junction/east)
@@ -48194,9 +48171,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -49563,8 +49538,7 @@
 /area/station/engineering/atmos)
 "ore" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/structure/railing{
 	dir = 1
@@ -49902,8 +49876,7 @@
 	},
 /obj/machinery/smartfridge/petri/preloaded,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -50604,14 +50577,6 @@
 "oIa" = (
 /turf/closed/wall,
 /area/station/medical/morgue)
-"oIb" = (
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
-	},
-/turf/open/openspace,
-/area/station/security/brig)
 "oIc" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -59728,8 +59693,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 1
@@ -62532,8 +62496,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/openspace,
 /area/station/asteroid)
@@ -66001,12 +65964,10 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
@@ -74448,12 +74409,10 @@
 /area/station/service/chapel/monastery)
 "vML" = (
 /obj/structure/railing{
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/openspace,
 /area/station/maintenance/department/security)
@@ -75565,8 +75524,7 @@
 /area/station/service/chapel/monastery)
 "wfc" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/openspace,
 /area/station/maintenance/department/security)
@@ -75753,13 +75711,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"whJ" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/turf/open/openspace,
-/area/station/security/brig)
 "whL" = (
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/supply)
@@ -76373,8 +76324,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
@@ -77114,8 +77064,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing,
 /turf/open/floor/plating,
@@ -77544,8 +77493,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -80719,9 +80667,7 @@
 "xPZ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/ladder,
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/openspace,
 /area/station/maintenance/department/cargo)
 "xQc" = (
@@ -81182,8 +81128,7 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -81804,8 +81749,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/openspace,
 /area/station/asteroid)
@@ -164573,7 +164517,7 @@ awy
 eSM
 iJh
 hla
-whJ
+vvV
 cvC
 lzT
 iUE
@@ -165858,8 +165802,8 @@ awz
 rOh
 iJh
 ore
-lIK
-oIb
+fXd
+cZb
 hPw
 nyt
 phB

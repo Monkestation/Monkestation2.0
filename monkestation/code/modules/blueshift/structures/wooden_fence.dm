@@ -5,10 +5,13 @@
 	desc = "A basic wooden fence meant to prevent people like you either in or out of somewhere."
 	icon = 'monkestation/code/modules/blueshift/icons/wooden_fence.dmi'
 	icon_state = "fence"
-	layer = BELOW_OBJ_LAYER // I think this is the default but lets be safe?
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
 	resistance_flags = FLAMMABLE
 	flags_1 = ON_BORDER_1
-	standard_smoothing = FALSE
+	material_flags = NONE
+	auto_join = FALSE
+	layer_by_dir = TRUE
 	/// If we randomize our icon on spawning
 	var/random_icons = TRUE
 
@@ -22,17 +25,6 @@
 		"fence_3",
 	)
 	update_appearance()
-
-/obj/structure/railing/wirecutter_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return NONE
-	var/deconstruct_time = anchored ? (1.5 SECONDS) : (0.5 SECONDS)
-	if(do_after(user, deconstruct_time, src))
-		user.visible_message(span_info("[user] cuts apart \the [src]."), span_warning("You cut apart \the [src]."))
-		tool.play_tool_sound(src, 50)
-		deconstruct()
-		return TRUE
 
 // Fence gates for the above mentioned fences
 

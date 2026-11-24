@@ -18,19 +18,6 @@
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"ar" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "aI" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -67,8 +54,7 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -335,8 +321,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 2;
-	layer = 3.1
+	dir = 2
 	},
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder{
@@ -493,12 +478,10 @@
 	},
 /obj/structure/flora/bush/style_4,
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -530,8 +513,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 2;
-	layer = 3.1
+	dir = 2
 	},
 /obj/machinery/microwave,
 /obj/structure/table/wood,
@@ -749,12 +731,10 @@
 	},
 /obj/structure/flora/bush/style_3,
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -776,12 +756,10 @@
 	dir = 10
 	},
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -835,12 +813,10 @@
 	name = "Peacekeeper Henry"
 	},
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -855,22 +831,6 @@
 /obj/structure/reagent_dispensers/foamtank,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"pM" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/grass,
 /area/shuttle/escape)
 "pN" = (
 /obj/item/paper_bin{
@@ -1088,12 +1048,10 @@
 	dir = 6
 	},
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -1153,9 +1111,7 @@
 /area/shuttle/escape)
 "uR" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
 "uT" = (
@@ -1195,12 +1151,10 @@
 /area/shuttle/escape)
 "vB" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/iron/stairs{
 	dir = 1
@@ -1318,8 +1272,7 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -1392,8 +1345,7 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -1606,19 +1558,6 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
-"Dv" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "DC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -1649,8 +1588,7 @@
 	},
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 2;
-	layer = 3.1
+	dir = 2
 	},
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
@@ -1866,9 +1804,7 @@
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Hq" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/iron/dark/small,
@@ -2072,8 +2008,7 @@
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/flowers_pp/style_2,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2107,8 +2042,7 @@
 	dir = 5
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/structure/railing{
 	dir = 1
@@ -2169,8 +2103,7 @@
 	},
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2225,12 +2158,10 @@
 	dir = 10
 	},
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2406,15 +2337,11 @@
 /area/shuttle/escape)
 "Sl" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "St" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/machinery/computer/communications{
 	dir = 8
 	},
@@ -3123,7 +3050,7 @@ oB
 Bs
 qw
 ni
-pM
+UU
 ow
 os
 IR
@@ -3147,7 +3074,7 @@ sW
 NC
 ux
 zo
-ar
+vT
 iM
 aj
 oj
@@ -3247,7 +3174,7 @@ UF
 pe
 ux
 AN
-Dv
+HS
 hk
 ij
 jM

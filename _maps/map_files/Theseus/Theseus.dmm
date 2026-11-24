@@ -13052,8 +13052,7 @@
 /area/station/maintenance/starboard/upper)
 "dRz" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing,
 /turf/open/floor/grass,
@@ -15865,8 +15864,7 @@
 "eLk" = (
 /obj/effect/turf_decal/tile/dark,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 4
@@ -18478,8 +18476,7 @@
 "fzD" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)
@@ -18544,8 +18541,7 @@
 /area/station/command/meeting_room/council)
 "fAr" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/sink/directional/south,
 /obj/structure/flora/bush/grassy/style_random,
@@ -29852,8 +29848,7 @@
 /area/station/security/prison/garden)
 "iOj" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 1
@@ -35049,8 +35044,7 @@
 /area/station/cargo/storage)
 "kok" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/cable,
@@ -44906,14 +44900,12 @@
 /obj/structure/railing{
 	dir = 8;
 	pixel_y = 18;
-	pixel_x = -2;
-	layer = 4.3
+	pixel_x = -2
 	},
 /obj/structure/railing{
 	dir = 4;
 	pixel_y = 18;
-	pixel_x = 3;
-	layer = 4.3
+	pixel_x = 3
 	},
 /turf/open/floor/wood,
 /area/station/commons/fitness)
@@ -58922,8 +58914,7 @@
 "rhn" = (
 /mob/living/basic/chicken/clown_sad,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/space/nearstation)
@@ -67048,8 +67039,7 @@
 "tuX" = (
 /mob/living/basic/chicken/clown,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/space/nearstation)
@@ -75287,8 +75277,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
@@ -76097,8 +76086,7 @@
 /area/station/service/bar/backroom)
 "vZg" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,

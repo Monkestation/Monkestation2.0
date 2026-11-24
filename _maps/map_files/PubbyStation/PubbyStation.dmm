@@ -55939,8 +55939,7 @@
 /area/space/nearstation)
 "xOV" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)

@@ -24,12 +24,6 @@
 /obj/effect/spawner/random/medical/injector,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
-"x" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/turf/open/floor/iron/freezer,
-/area/virtual_domain/safehouse)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/blacklight/directional/west,
@@ -123,7 +117,7 @@ G
 (5,1,1) = {"
 G
 V
-x
+D
 N
 T
 G

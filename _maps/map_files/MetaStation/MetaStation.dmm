@@ -27881,8 +27881,7 @@
 /area/station/hallway/primary/central)
 "jLG" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -43946,8 +43945,7 @@
 /area/station/hallway/secondary/entry)
 "pdU" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/airless,
@@ -48521,8 +48519,7 @@
 /area/station/cargo/quartermaster)
 "qIL" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/ballpit,
 /area/station/security/bitden)

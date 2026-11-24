@@ -2095,9 +2095,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "aJh" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
 /turf/open/floor/iron/stairs/old{
 	dir = 4
 	},
@@ -19470,7 +19467,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "fUn" = (
-/obj/structure/railing/corner/end/flip,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
@@ -19649,9 +19645,6 @@
 /turf/open/floor/wood,
 /area/station/maintenance/space_hut/cabin)
 "fWU" = (
-/obj/structure/railing/corner/end{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -22811,7 +22804,6 @@
 "gUv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/segment,
-/obj/structure/railing/corner/end/flip,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "gUx" = (
@@ -23135,9 +23127,6 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "gZl" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -25861,8 +25850,7 @@
 	name = "landing marker"
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/structure/railing{
 	dir = 1
@@ -28992,8 +28980,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/openspace,
 /area/station/science/ordnance/office)
@@ -39673,13 +39660,6 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
-"meB" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/railing/corner/end/flip{
-	dir = 1
-	},
-/turf/open/floor/stone,
-/area/station/service/bar/atrium)
 "meF" = (
 /obj/machinery/chem_dispenser,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -43197,9 +43177,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "njl" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -44954,9 +44931,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "nIr" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
 /turf/open/floor/iron/stairs/old{
 	dir = 8
 	},
@@ -45071,8 +45045,7 @@
 "nKl" = (
 /obj/structure/railing,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -50616,9 +50589,6 @@
 "pub" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
-	},
-/obj/structure/railing/corner/end/flip{
-	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -63914,8 +63884,7 @@
 	},
 /obj/structure/sign/warning/biohazard/directional/west,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -246050,7 +246019,7 @@ mnj
 uVn
 eWo
 wvb
-meB
+mIB
 uUV
 xWa
 iHF

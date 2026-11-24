@@ -7597,8 +7597,7 @@
 	dir = 10
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/wood/parquet,
 /area/station/engineering/break_room)
@@ -37270,8 +37269,7 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 1
@@ -38932,8 +38930,7 @@
 	dir = 9
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/structure/railing{
 	dir = 1
@@ -59806,8 +59803,7 @@
 /area/station/cargo/miningdock)
 "snu" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 1
@@ -60476,8 +60472,7 @@
 	dir = 10
 	},
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/atmospherics_engine)
