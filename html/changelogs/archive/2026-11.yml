@@ -1246,3 +1246,77 @@
       not meant to be snowflake items for one and one purpose only.
   chumtoadmonke:
   - rscdel: Removed acarp
+2026-11-24:
+  Absolucy:
+  - bugfix: fixed layering of stacked hats
+  - rscadd: (Arturlang) beams now animate when moving tile to tile, this is mostly
+      noticeable for constant beam effects
+  - bugfix: (Arturlang) beam emissives now work
+  - refactor: (Melbert) Infrared emitters now function better (or at least more how
+      you would expect them) (hopefully). Report any oddities
+  - bugfix: legion turret tracer beams now actually show up
+  - rscadd: (SmArtKar) Added new (purely visual) animations to sharp and pointy items.
+  - bugfix: (SmArtKar) Fixed attack animations being offset when attacking large objects
+      or mobs.
+  - bugfix: wide items like the Kiboko grenade launcher now swing centered on their
+      target
+  AitorLogedo:
+  - bugfix: people without legs can now take off with functional wings from the floor
+      instead of only from a wheelchair
+  - map: The nukie base now has the tactical map holotable in place of the shuttle
+      manipulator.
+  Gboster-0:
+  - bugfix: fixed borers having a button that makes you invisible
+  - bugfix: fixed xeno larva having a button that makes you invisible
+  - bugfix: fixed borers still being sugar-affected after leaving a host
+  Kmla2:
+  - balance: plushes from maint loot have hands and can be killed
+  - bugfix: sentient plush can no longer roll invisible sprites
+  Longestarmlonglaw:
+  - bugfix: 'Fixed an issue where traitors couldn''t roll hijack
+
+      ## Pre-Merge Checklist
+
+      - [ ] You tested this on a local server.
+
+      - [ ] This code did not runtime during testing.
+
+      - [ ] You documented all of your changes.'
+  MrMelbert, PowerfulAtom111, SmArtKar, Fghj240, nikothedude, DATAxPUNGED, lelandkemble, Profakos, timothymtorres:
+  - rscadd: Personality is now available in character preferences! Choose how your
+      character reacts to the whims and woes of the station.
+  - rscdel: 'Several quirks are now personalities: Extrovert, Introvert, Bad Touch,
+      Apathetic, Snob, and Spiritual.'
+  - rscadd: You're now afforded 2 free quirks points when selecting a quirk loadout.
+  - rscadd: 'New negative quirk: Erratic. Randomizes your personality throughout the
+      round.'
+  - rscadd: Spacemen now get upset at seeing their fellow crewmembers or pets die.
+      Unless your personality says you don't, of course.
+  - balance: Certain jobs and antags are now "desensitized" to death, meaning they
+      receive a weaker penalty for seeing someone die.
+  - rscadd: Many moodlets have been added, some depending on your personality.
+  - refactor: Mood events were refactored a lot. Report any oddities.
+  - qol: Quirk options are set with a cog button on the quirks page instead of the
+      character preferences list.
+  - rscadd: Junkies can pick their drug, smokers can pick cigars and alcoholics have
+      a lot more drinks to choose from.
+  - balance: Junkie, Smoker and Alcoholic check for a relapse every 30 seconds instead
+      of every 2 minutes.
+  - bugfix: Species that can't breathe with smoker lungs can no longer take the Smoker
+      quirk.
+  - rscadd: Insane people can speak Gibbering, and taking your meds makes you deaf
+      to it.
+  - qol: The Smooth-Headed wig shows up on the preference dummy.
+  - qol: Socially anxious people talk a bit clearer while keeping their stutter.
+  - balance: Blood Deficiency drains you down to 85% blood instead of 80%, so you
+      don't start gasping and seeing blurry.
+  - bugfix: Blood Deficiency mail sends a blood bag of your blood type instead of
+      always O-.
+  - balance: 'Cursed: vending machines can tip onto you when you buy something, airlocks
+      can crush you when they close on you, nearby lights can shock you when they
+      break or toggle, and mirrors react when you step up to them. Walking past things
+      no longer triggers accidents by itself.'
+  - bugfix: Burning a bible gives you one bad luck incident instead of a permanent
+      curse.
+  - admin: Bad luck smite set to permanent can no longer be removed by chaplains.
+  - code_imp: Empath is a component now, quirks and mood code are closer to tg.
