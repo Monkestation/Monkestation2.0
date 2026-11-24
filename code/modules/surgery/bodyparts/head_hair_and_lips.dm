@@ -289,19 +289,18 @@
 
 /**
  * Shaves off the hair-like features of our head with these restyle flags (like vox quills), turning them to "None".
- * Returns TRUE if anything was shaved.
+ * Returns what was shaved, organ slot -> the sprite accessory type it had, so it can be grown back.
  */
 /mob/living/carbon/human/proc/shave_hairlike_features(restyle_flags)
+	. = list()
 	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
-	if(!head)
-		return FALSE
-	. = FALSE
-	for(var/obj/item/organ/external/feature as anything in head.get_hairlike_features(restyle_flags))
+	for(var/obj/item/organ/external/feature as anything in head?.get_hairlike_features(restyle_flags))
 		var/datum/sprite_accessory/shaved = feature.bodypart_overlay.get_global_feature_list()[SPRITE_ACCESSORY_NONE]
-		if(!shaved || feature.bodypart_overlay.sprite_datum == shaved)
+		var/datum/sprite_accessory/old_style = feature.bodypart_overlay.sprite_datum
+		if(!shaved || !old_style || old_style == shaved)
 			continue
+		.[feature.slot] = old_style.type
 		feature.simple_change_sprite(shaved.type)
-		. = TRUE
 
 /**
  * Set the hair gradient style of a human.
