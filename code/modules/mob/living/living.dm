@@ -42,8 +42,9 @@
 		else
 			effect.be_replaced()
 
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+	clear_personalities() // must be done for the personalities which process
+
+	buckled?.unbuckle_mob(src,force=1)
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
@@ -2546,7 +2547,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/add_mood_event(category, type, ...)
 	if(QDELETED(mob_mood))
 		return
-	mob_mood.add_mood_event(arglist(args))
+
+	if(ispath(type, /datum/mood_event/conditional))
+		mob_mood.add_conditional_mood_event(arglist(args))
+	else
+		mob_mood.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
@@ -2716,6 +2721,92 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return TRUE
 
 	return FALSE
+
+//general disarm proc
+/mob/living/proc/disarm(mob/living/carbon/target)
+	do_attack_animation(target, ATTACK_EFFECT_DISARM)
+	playsound(target, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	if (ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		human_target.w_uniform?.add_fingerprint(src)
+
+	SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, src, zone_selected)
+	var/shove_dir = get_dir(loc, target.loc)
+	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+	var/turf/target_old_turf = target.loc
+
+	//Are we hitting anything? or
+	if(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_PRESHOVE) & COMSIG_CARBON_ACT_SOLID)
+		shove_blocked = TRUE
+	else
+		target.Move(target_shove_turf, shove_dir)
+		if(get_turf(target) == target_old_turf)
+			shove_blocked = TRUE
+
+	if(!shove_blocked)
+		target.setGrabState(GRAB_PASSIVE)
+
+	if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
+		target.Paralyze(SHOVE_CHAIN_PARALYZE)
+		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
+						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
+		log_combat(src, target, "kicks", "onto their side (paralyzing)")
+
+	var/directional_blocked = FALSE
+	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
+
+	//Directional checks to make sure that we're not shoving through a windoor or something like that
+	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
+		var/target_turf = get_turf(target)
+		for(var/obj/obj_content in target_turf)
+			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
+				directional_blocked = TRUE
+				break
+		if(target_turf != target_shove_turf && !directional_blocked) //Make sure that we don't run the exact same check twice on the same tile
+			for(var/obj/obj_content in target_shove_turf)
+				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
+					directional_blocked = TRUE
+					break
+
+	if(can_hit_something)
+		//Don't hit people through windows, ok?
+		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
+			return
+		if(directional_blocked || shove_blocked || HAS_TRAIT(target, TRAIT_FEEBLE))
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
+				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
+			log_combat(src, target, "shoved", "knocking them down")
+			return
+
+	target.visible_message(span_danger("[name] shoves [target.name]!"),
+		span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name]!"))
+
+	//Take their lunch money
+	var/target_held_item = target.get_active_held_item()
+	var/append_message = ""
+	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
+		target_held_item = null
+
+	if(!target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
+		if(target_held_item)
+			append_message = "loosening [target.p_their()] grip on [target_held_item]"
+			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing
+				span_warning("Your grip on \the [target_held_item] loosens!"), null, COMBAT_MESSAGE_RANGE)
+
+	else if(target_held_item)
+		target.dropItemToGround(target_held_item)
+		append_message = "causing [target.p_them()] to drop [target_held_item]"
+		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
+			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+
+	log_combat(src, target, "shoved", append_message)
 
 /// Returns an arbitrary number which very roughly correlates with how buff you look
 /mob/living/proc/calculate_fitness()

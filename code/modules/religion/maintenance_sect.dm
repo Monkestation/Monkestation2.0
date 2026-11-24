@@ -12,17 +12,19 @@
 
 /datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/chap)
 	if(!ishuman(blessed_living))
-		return TRUE
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/blessed = blessed_living
 	if(blessed.reagents.has_reagent(/datum/reagent/drug/maint/sludge))
 		to_chat(blessed, span_warning("[GLOB.deity] has already empowered them."))
-		return TRUE
+		return BLESSING_IGNORED
+
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
+	return BLESSING_SUCCESS //trust me, you'll be feeling the pain from the maint drugs all well enough
 
 /datum/religion_sect/maintenance/on_sacrifice(obj/item/reagent_containers/offering, mob/living/user)
 	if(!istype(offering))

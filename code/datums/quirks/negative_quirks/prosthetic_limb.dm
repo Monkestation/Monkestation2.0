@@ -12,6 +12,11 @@
 	var/limb_zone
 	species_blacklist = list(SPECIES_OOZELING)
 
+/// Lists the preferences shown under the customize button of this quirk
+/datum/quirk_constant_data/prosthetic_limb
+	associated_typepath = /datum/quirk/prosthetic_limb
+	customization_options = list(/datum/preference/choiced/limb/prosthetic)
+
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/list/zone_options = list()
