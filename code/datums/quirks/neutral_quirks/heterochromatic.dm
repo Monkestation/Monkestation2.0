@@ -1,11 +1,17 @@
 /datum/quirk/heterochromatic
 	name = "Heterochromatic"
 	desc = "One of your eyes is a different color than the other!"
-	icon = FA_ICON_LOW_VISION // Ignore the icon name, its actually a fairly good representation of different color eyes
+	icon = FA_ICON_EYE_LOW_VISION // Ignore the icon name, its actually a fairly good representation of different color eyes
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_CHANGES_APPEARANCE
+	medical_record_text = "Patient's irises are different colors."
 	value = 0
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
 	var/color
+
+/// Lists the preferences shown under the customize button of this quirk
+/datum/quirk_constant_data/heterochromatic
+	associated_typepath = /datum/quirk/heterochromatic
+	customization_options = list(/datum/preference/color/heterochromatic)
 
 // Only your first eyes are heterochromatic
 // If someone comes and says "well mr coder you can have DNA bound heterochromia so it's not unrealistic

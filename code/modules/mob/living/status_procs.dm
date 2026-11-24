@@ -578,6 +578,36 @@
 			return quirk
 	return null
 
+/// Helper to easily add a personality by a typepath
+/mob/living/proc/add_personality(personality_type)
+	if(HAS_PERSONALITY(src, personality_type))
+		return
+	var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
+	personality.apply_to_mob(src)
+
+/// Helper to easily add multiple personalities by a list of typepaths
+/mob/living/proc/add_personalities(list/new_personalities)
+	for(var/personality_type in new_personalities)
+		add_personality(personality_type)
+
+/// Helper to easily remove a personality by a typepath
+/mob/living/proc/remove_personality(personality_type)
+	var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
+	personality.remove_from_mob(src)
+
+/// Helper to clear all personalities from a mob
+/mob/living/proc/clear_personalities()
+	for(var/personality_type in personalities)
+		remove_personality(personality_type)
+
+/// Returns a string with the names of the personalities of this mob, and their description as tooltip
+/mob/living/proc/get_parsonality_string()
+	var/list/return_list = list()
+	for(var/personality_type in personalities)
+		var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
+		return_list += span_tooltip(personality.desc, personality.name)
+	return english_list(return_list)
+
 /mob/living/proc/cure_husk(source)
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
@@ -610,6 +640,8 @@
 			emote("deathgasp")
 		tod = station_time_timestamp()
 
+	if(!HAS_TRAIT(src, TRAIT_FAKEDEATH) && !silent)
+		send_death_moodlets()
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_FAKE_DEATH)

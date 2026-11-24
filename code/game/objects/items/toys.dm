@@ -1843,7 +1843,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/projectile/sickly_blade_toy/dragging/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = chain_iconstate, emissive = FALSE)
+		chain = firer.Beam(src, icon_state = chain_iconstate, emissive = NONE)
 	..()
 
 /obj/projectile/sickly_blade_toy/dragging/on_hit(atom/movable/target, blocked = 0, pierce_hit)

@@ -1,0 +1,4 @@
+author: "Longestarmlonglaw"
+delete-after: True
+changes:
+  - bugfix: "fixed objective targets cyroing not changing targets."
