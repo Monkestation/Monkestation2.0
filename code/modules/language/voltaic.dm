@@ -2,7 +2,7 @@
 /datum/language/voltaic
 	name = "Voltaic"
 	desc = "A sparky language made by manipulating electrical discharge."
-	key = "V"
+	key = "v"
 	space_chance = 20
 	sentence_chance = 0
 	between_word_sentence_chance = 10

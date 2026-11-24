@@ -216,9 +216,8 @@
 	var/obj/item/bodypart/head/noggin = target_human.get_bodypart(BODY_ZONE_HEAD)
 	var/list/hairlike_features = list()
 	if(location == BODY_ZONE_HEAD && noggin && !(noggin.head_flags & HEAD_HAIR))
-		for(var/obj/item/organ/external/feature in noggin)
-			if(feature.restyle_flags & (EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR))
-				hairlike_features[capitalize(feature.name)] = feature
+		for(var/obj/item/organ/external/feature as anything in noggin.get_hairlike_features(EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR))
+			hairlike_features[capitalize(feature.name)] = feature
 	if(length(hairlike_features))
 		if(!get_location_accessible(target_human, BODY_ZONE_HEAD))
 			balloon_alert(user, "the headgear is in the way!")
@@ -627,7 +626,7 @@
 			to_chat(user, span_warning("The mask is in the way!"))
 			return
 
-		var/hairlike_facial = !(noggin.head_flags & HEAD_FACIAL_HAIR) && noggin.has_restylable_features(EXTERNAL_RESTYLE_FACIAL_HAIR)
+		var/hairlike_facial = length(noggin.get_hairlike_features(EXTERNAL_RESTYLE_FACIAL_HAIR))
 		if(!(noggin.head_flags & HEAD_FACIAL_HAIR) && !hairlike_facial)
 			to_chat(user, span_warning("There is no facial hair to style!"))
 			return
@@ -656,7 +655,7 @@
 			to_chat(user, span_warning("The headgear is in the way!"))
 			return
 
-		var/hairlike_hair = !(noggin.head_flags & HEAD_HAIR) && noggin.has_restylable_features(EXTERNAL_RESTYLE_HAIR)
+		var/hairlike_hair = length(noggin.get_hairlike_features(EXTERNAL_RESTYLE_HAIR))
 		if(!(noggin.head_flags & HEAD_HAIR) && !hairlike_hair)
 			to_chat(user, span_warning("There is no hair to shave!"))
 			return

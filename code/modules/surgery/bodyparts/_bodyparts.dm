@@ -1029,9 +1029,10 @@
 	var/mob/living/carbon/human/human_owner = owner
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 	var/owner_limb_style = limb_style_feature ? human_owner.dna.features[limb_style_feature] : human_owner.limb_style
-	if (HAS_TRAIT(human_owner, TRAIT_GREYSCALE_TOGGLE))
+	var/has_limb_styles = HAS_TRAIT(human_owner, TRAIT_GREYSCALE_TOGGLE)
+	if (has_limb_styles)
 		should_draw_greyscale = (owner_limb_style == LIMB_STYLE_MUTANT_COLORS)
-	if(style_icons)
+	if(style_icons && (has_limb_styles || limb_style_feature))
 		var/style_icon = style_icons[owner_limb_style]
 		if(style_icon)
 			icon_static = style_icon

@@ -34,11 +34,6 @@
 	exotic_bloodtype = BLOOD_TYPE_VOX
 	species_language_holder = /datum/language_holder/vox
 	outfit_important_for_life = /datum/outfit/vox
-	survival_box_overrides = list(
-		SURVIVAL_MASK_TYPE = /obj/item/clothing/mask/breath/vox,
-		SURVIVAL_INTERNALS_TYPE = /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen,
-		SURVIVAL_MEDIPEN_TYPE = /obj/item/reagent_containers/medipen,
-	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	breathid = "n2"
 	cough_sound = 'sound/voice/vox_species/shriekcough.ogg'
@@ -145,6 +140,7 @@
 	if(!equipping.wear_mask)
 		equipping.equip_to_slot_or_del(new mask_type(equipping), ITEM_SLOT_MASK)
 
+	var/already_told = istype(equipping.internal, /obj/item/tank/internals/emergency_oxygen/vox) // swapping out the default vox tank for the preferred one
 	var/obj/item/tank/internals/tank
 	for(var/obj/item/tank/internals/carried_tank in equipping.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD))
 		if(carried_tank.type == tank_type)
@@ -157,7 +153,8 @@
 			equipping.put_in_hands(tank)
 	if(visuals_only || equipping.internal == tank)
 		return
-	to_chat(equipping, span_notice("You are now running on nitrogen internals from [tank]. Your species finds oxygen toxic, so you must breathe pure nitrogen."))
+	if(!already_told)
+		to_chat(equipping, span_notice("You are now running on nitrogen internals from [tank]. Your species finds oxygen toxic, so you must breathe pure nitrogen."))
 	equipping.open_internals(tank)
 
 /// Fitted sprites only exist for some kinds of items. Anything else is drawn with its normal sprite.
@@ -225,15 +222,11 @@
 /// Fitted to the box: breath masks become ones that fit a beak, the nitrogen tank matches the box's tank size,
 /// and the box keeps its other masks (like gas masks) and its medipen
 /datum/species/vox/get_survival_box_overrides(obj/item/storage/box/survival/box)
-	var/list/overrides = survival_box_overrides.Copy()
-	if(ispath(box.internal_type, /obj/item/tank/internals/emergency_oxygen/engi))
-		overrides[SURVIVAL_INTERNALS_TYPE] = /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi
-	if(ispath(box.mask_type, /obj/item/clothing/mask/breath))
-		overrides[SURVIVAL_MASK_TYPE] = pick(/obj/item/clothing/mask/breath/vox, /obj/item/clothing/mask/breath/vox/respirator)
-	else
-		overrides[SURVIVAL_MASK_TYPE] = box.mask_type
-	overrides[SURVIVAL_MEDIPEN_TYPE] = box.medipen_type
-	return overrides
+	return list(
+		SURVIVAL_MASK_TYPE = ispath(box.mask_type, /obj/item/clothing/mask/breath) ? pick(/obj/item/clothing/mask/breath/vox, /obj/item/clothing/mask/breath/vox/respirator) : box.mask_type,
+		SURVIVAL_INTERNALS_TYPE = ispath(box.internal_type, /obj/item/tank/internals/emergency_oxygen/engi) ? /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi : /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen,
+		SURVIVAL_MEDIPEN_TYPE = box.medipen_type,
+	)
 
 /datum/species/vox/get_species_description()
 	return "The Vox are remnants of an ancient race, that originate from arkships. \

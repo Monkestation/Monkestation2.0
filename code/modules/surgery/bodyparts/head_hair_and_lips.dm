@@ -275,6 +275,19 @@
 		update_body_parts()
 
 /**
+ * Returns the hair-like features with these restyle flags (like vox quills) that we have instead of the hair or facial hair we can't grow.
+ * restyle_flags: EXTERNAL_RESTYLE_HAIR and/or EXTERNAL_RESTYLE_FACIAL_HAIR
+ */
+/obj/item/bodypart/head/proc/get_hairlike_features(restyle_flags)
+	. = list()
+	for(var/obj/item/organ/external/feature in src)
+		if(!(feature.restyle_flags & restyle_flags))
+			continue
+		if(head_flags & ((feature.restyle_flags & EXTERNAL_RESTYLE_HAIR) ? HEAD_HAIR : HEAD_FACIAL_HAIR))
+			continue // we grow the real thing
+		. += feature
+
+/**
  * Shaves off the hair-like features of our head with these restyle flags (like vox quills), turning them to "None".
  * Returns TRUE if anything was shaved.
  */
@@ -283,9 +296,7 @@
 	if(!head)
 		return FALSE
 	. = FALSE
-	for(var/obj/item/organ/external/feature in head)
-		if(!(feature.restyle_flags & restyle_flags))
-			continue
+	for(var/obj/item/organ/external/feature as anything in head.get_hairlike_features(restyle_flags))
 		var/datum/sprite_accessory/shaved = feature.bodypart_overlay.get_global_feature_list()[SPRITE_ACCESSORY_NONE]
 		if(!shaved || feature.bodypart_overlay.sprite_datum == shaved)
 			continue

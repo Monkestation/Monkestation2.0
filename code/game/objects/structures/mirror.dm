@@ -153,12 +153,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 /// Returns the hair-like feature with these restyle flags our head has instead of hair (like vox quills), or null if it has none
 /obj/structure/mirror/proc/get_hairlike_feature(mob/living/carbon/human/user, restyle_flags)
 	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
-	if(!head || (head.head_flags & ((restyle_flags & EXTERNAL_RESTYLE_HAIR) ? HEAD_HAIR : HEAD_FACIAL_HAIR)))
-		return null
-	for(var/obj/item/organ/external/feature in head)
-		if(feature.restyle_flags & restyle_flags)
-			return feature
-	return null
+	var/list/features = head?.get_hairlike_features(restyle_flags)
+	return length(features) ? features[1] : null
 
 /obj/structure/mirror/proc/change_name(mob/living/carbon/human/user)
 	var/newname = sanitize_name(tgui_input_text(user, "Who are we again?", "Name change", user.name, MAX_NAME_LEN, encode = FALSE), allow_numbers = TRUE) //It's magic so whatever.
