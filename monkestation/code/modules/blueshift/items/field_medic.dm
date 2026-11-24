@@ -35,6 +35,7 @@
 	desc = "Did that sting? SAW-ry!"
 	force = 20
 	icon_state = "bonesaw"
+	icon_angle = 0
 	icon = 'monkestation/code/modules/blueshift/icons/bonesaw.dmi'
 	lefthand_file = 'monkestation/code/modules/blueshift/icons/bonesaw_l.dmi'
 	righthand_file = 'monkestation/code/modules/blueshift/icons/bonesaw_r.dmi'
@@ -120,6 +121,7 @@
 	desc = "While very well weighted for throwing, the distribution of mass makes it unwieldy for use in melee."
 	icon = 'monkestation/code/modules/blueshift/icons/throwing.dmi'
 	icon_state = "throwing"
+	icon_angle = -135
 	force = 12 // don't stab with this
 	throwforce = 30 // 38 force on embed? compare contrast with throwing stars.
 	throw_speed = 4

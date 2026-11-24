@@ -36,7 +36,7 @@
 	host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * user.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)
 	host.say(message = borer_message, forced = "borer ([key_name(user)])")
 	var/turf/human_turf = get_turf(user.human_host)
-	var/logging_text = "[key_name(user)] forced [key_name(user.human_host)] to say [borer_message] at [loc_name(human_turf)]"
+	var/logging_text = "[key_name(user)] forced [key_name(user.human_host)] to say [html_encode(borer_message)] at [loc_name(human_turf)]"
 	user.log_message(logging_text, LOG_GAME)
 	user.human_host.log_message(logging_text, LOG_GAME)
 

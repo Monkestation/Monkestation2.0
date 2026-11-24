@@ -74,7 +74,7 @@
 	. = ..()
 	for(var/i in 1 to SUNBEAM_OVERLAYS)
 		var/mutable_appearance/beam_overlay = mutable_appearance(icon, "sunray")
-		beam_overlay.pixel_y = beam_offset_y * i
+		beam_overlay.pixel_z = beam_offset_y * i
 		. += beam_overlay
 
 /obj/effect/sunbeam/process(seconds_per_tick)

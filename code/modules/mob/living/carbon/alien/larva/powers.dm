@@ -3,28 +3,26 @@
 	desc = "Allows you to hide beneath tables and certain objects."
 	button_icon_state = "alien_hide"
 	plasma_cost = 0
-	var/hidden = FALSE
-	//the status of our hide
-//	var/hide_layer = ABOVE_NORMAL_TURF_LAYER
-//	var/hide_plane = WALL_PLANE
+	/// The layer we are on while hiding
+	var/hide_layer = ABOVE_NORMAL_TURF_LAYER
 
 /datum/action/cooldown/alien/hide/Activate(atom/target)
-	if(hidden == TRUE)
-		owner.plane += 2
+	if(owner.layer == hide_layer)
+		owner.layer = initial(owner.layer)
 		owner.visible_message(
 			span_notice("[owner] slowly peeks up from the ground..."),
 			span_noticealien("You stop hiding."),
 		)
-		hidden = FALSE
 		REMOVE_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
+
 	else
-		owner.plane -= 2
+		owner.layer = hide_layer
 		owner.visible_message(
 			span_name("[owner] scurries to the ground!"),
 			span_noticealien("You are now hiding."),
 		)
 		ADD_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
-		hidden = TRUE
+
 	return TRUE
 
 /datum/action/cooldown/alien/larva_evolve

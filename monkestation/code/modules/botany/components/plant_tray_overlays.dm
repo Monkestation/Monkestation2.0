@@ -90,7 +90,7 @@
 	var/list/current_offsets = offsets[text2num(id)]
 
 	visuals.layer = ABOVE_MOB_LAYER
-	SET_PLANE_EXPLICIT(visuals, GAME_PLANE_FOV_HIDDEN, movable)
+	SET_PLANE_EXPLICIT(visuals, GAME_PLANE, movable)
 	if(current_offsets[2] > 0)
 		visuals.layer -= 0.01
 

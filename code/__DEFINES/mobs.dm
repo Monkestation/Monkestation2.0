@@ -97,7 +97,8 @@
 #define MOB_HUMANOID (1 << 4)
 #define MOB_BUG (1 << 5)
 #define MOB_BEAST (1 << 6)
-#define MOB_EPIC (1 << 7) //megafauna
+///The mob is some kind of a creature that should be exempt from certain **fun** interactions for balance reasons, i.e. megafauna or a headslug.
+#define MOB_SPECIAL (1 << 7)
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
@@ -150,6 +151,8 @@
 #define ROBOTIC_LIGHT_BRUTE_MSG "marred"
 #define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
 #define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
+///The limb has a Cerulean (large fish) tail
+#define BODYSHAPE_CERULEAN (1<<5)
 
 #define ROBOTIC_LIGHT_BURN_MSG "scorched"
 #define ROBOTIC_MEDIUM_BURN_MSG "charred"
@@ -175,6 +178,7 @@
 #define SPECIES_LIZARD_ASH "ashwalker"
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
+#define SPECIES_CERULEAN "cerulean"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
@@ -312,51 +316,6 @@
 #define SCREWYDOLL_L_LEG /obj/item/bodypart/leg/left
 #define SCREWYDOLL_R_LEG /obj/item/bodypart/leg/right
 
-//Threshold levels for beauty for humans
-#define BEAUTY_LEVEL_HORRID -66
-#define BEAUTY_LEVEL_BAD -33
-#define BEAUTY_LEVEL_DECENT 33
-#define BEAUTY_LEVEL_GOOD 66
-#define BEAUTY_LEVEL_GREAT 100
-
-//Moods levels for humans
-#define MOOD_HAPPY4 15
-#define MOOD_HAPPY3 10
-#define MOOD_HAPPY2 6
-#define MOOD_HAPPY1 2
-#define MOOD_NEUTRAL 0
-#define MOOD_SAD1 -3
-#define MOOD_SAD2 -7
-#define MOOD_SAD3 -15
-#define MOOD_SAD4 -20
-
-//Moods levels for humans
-#define MOOD_LEVEL_HAPPY4 9
-#define MOOD_LEVEL_HAPPY3 8
-#define MOOD_LEVEL_HAPPY2 7
-#define MOOD_LEVEL_HAPPY1 6
-#define MOOD_LEVEL_NEUTRAL 5
-#define MOOD_LEVEL_SAD1 4
-#define MOOD_LEVEL_SAD2 3
-#define MOOD_LEVEL_SAD3 2
-#define MOOD_LEVEL_SAD4 1
-
-//Sanity values for humans
-#define SANITY_MAXIMUM 150
-#define SANITY_GREAT 125
-#define SANITY_NEUTRAL 100
-#define SANITY_DISTURBED 75
-#define SANITY_UNSTABLE 50
-#define SANITY_CRAZY 25
-#define SANITY_INSANE 0
-
-//Sanity levels for humans
-#define SANITY_LEVEL_GREAT 1
-#define SANITY_LEVEL_NEUTRAL 2
-#define SANITY_LEVEL_DISTURBED 3
-#define SANITY_LEVEL_UNSTABLE 4
-#define SANITY_LEVEL_CRAZY 5
-#define SANITY_LEVEL_INSANE 6
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -415,6 +374,10 @@
 #define CRYSTALIZE_STAGE_ENGULFING 100 //Cant use second defines
 #define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
 #define CRYSTALIZE_STAGE_SMALL 600 //Because they're not static
+
+// Strings used by modsuit mob sprite generation for Ceruleans/mobs with a big fish tail
+#define FLIPPERS "flippers"
+#define NO_FLIPPERS "no_flippers"
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10

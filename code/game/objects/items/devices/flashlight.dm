@@ -35,6 +35,8 @@
 	/// Is the light turned on or off currently
 	var/on = FALSE
 	var/start_on = FALSE
+	/// When true, painting the flashlight won't change its light color
+	var/ignore_base_color = FALSE
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
@@ -279,6 +281,16 @@
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
 	return TRUE
 
+/obj/item/flashlight/update_atom_colour()
+	. = ..()
+	if (ignore_base_color)
+		return
+	var/list/applied_matrix = cached_color_filter
+	if (!applied_matrix)
+		applied_matrix = color_transition_filter(color, SATURATION_OVERRIDE)
+	var/new_light_color = apply_matrix_to_color(initial(light_color), applied_matrix["color"], applied_matrix["space"] || COLORSPACE_RGB)
+	set_light_color(new_light_color)
+
 /obj/item/flashlight/pen
 	name = "penlight"
 	desc = "A high-powered UV penlight intended to help stave off infection in the field on seriously burned patients. Probably really bad to look into. It can also be used to create a hologram to alert people of incoming medical assistance."
@@ -499,7 +511,8 @@
 /obj/item/flashlight/flare/proc/on_light_eater(atom/source, datum/light_eater)
 	SIGNAL_HANDLER
 	if(light_on)
-		new trash_type(loc)
+		if(trash_type)
+			new trash_type(loc)
 		qdel(src)
 	return COMPONENT_BLOCK_LIGHT_EATER
 
@@ -527,6 +540,14 @@
 
 	/// Pollutant type for scented candles
 	var/scented_type
+
+/obj/item/flashlight/flare/candle/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(src_location == over_location)
+		var/list/modifiers = params2list(params)
+		if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
+			var/x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), (ICON_SIZE_X/2))
+			var/y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), (ICON_SIZE_Y/2))
+			user.transfer_item_to_turf(src, src_location, x_offset, y_offset, silent = FALSE)
 
 /obj/item/flashlight/flare/candle/Initialize(mapload)
 	. = ..()
@@ -634,6 +655,25 @@
 	randomize_fuel = FALSE
 	can_be_extinguished = FALSE
 
+/obj/item/flashlight/flare/candle/holo_candle
+	name = "red candle"
+	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \
+		humankind. The jewelry he kept for himself. Seems this one is actually a hologram though...."
+	heat = 0 //its a hologram
+	icon_state = "holo_candle1"
+	base_icon_state = "holo_candle"
+	anchored = TRUE
+	trash_type = null
+	fuel = INFINITY
+	on = TRUE
+	randomize_fuel = FALSE
+	can_be_extinguished = FALSE
+
+/obj/item/flashlight/flare/candle/holo_candle/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state][current_wax_level][on ? "_lit" : ""]"
+	inhand_icon_state = "[base_icon_state][on ? "_lit" : ""]"
+
 /obj/item/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
@@ -677,7 +717,6 @@
 	name = "jade lantern"
 	desc = "An ornate, green lantern."
 	color = LIGHT_COLOR_GREEN
-	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/flashlight/slime
 	gender = PLURAL
@@ -770,6 +809,7 @@
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
 	toggle_context = FALSE
+	ignore_base_color = TRUE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 
@@ -872,6 +912,7 @@
 	light_outer_range = 4
 	light_power = 10
 	alpha = 0
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	on = TRUE
 	anchored = TRUE
@@ -893,15 +934,20 @@
 
 /obj/item/flashlight/flashdark
 	name = "flashdark"
-	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
+	desc = "A powerful antiphoton projector, capable of projecting a bubble of darkness around the user."
 	icon_state = "flashdark"
 	inhand_icon_state = "flashdark"
 	light_system = COMPLEX_LIGHT //The overlay light component is not yet ready to produce darkness.
 	light_outer_range = 0
+	light_color = COLOR_WHITE
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
-	var/dark_light_outer_range = 2.5
+	var/dark_light_outer_range = 3.5
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_power = -3
+
+/obj/item/flashlight/flashdark/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/overlay_lighting, force = TRUE)
 
 /obj/item/flashlight/flashdark/update_brightness()
 	. = ..()

@@ -8,6 +8,7 @@
 	desc = "A tool used by great men to placate the frothing masses."
 	icon = 'icons/obj/weapons/whip.dmi'
 	icon_state = "chain"
+	icon_angle = -90
 	inhand_icon_state = "chain"
 	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -34,6 +35,7 @@
 	desc = "A grotesque blade that on closer inspection seems to be made out of synthetic flesh, it still feels like it would hurt very badly as a weapon."
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
+	icon_angle = 180
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
@@ -58,6 +60,7 @@
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "sabre"
+	icon_angle = -45
 	inhand_icon_state = "sabre"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -150,6 +153,7 @@
 	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "beesword"
+	icon_angle = -45
 	inhand_icon_state = "stinger"
 	worn_icon_state = "stinger"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -173,7 +177,7 @@
 	return ..()
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, click_parameters)
-	if(iscarbon(target))
+	if(iscarbon(target) && !QDELETED(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
 
@@ -187,6 +191,7 @@
 	desc = "In a station full of bad ideas, this might just be the worst."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "supermatter_sword"
+	icon_angle = -90
 	inhand_icon_state = "supermatter_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -298,6 +303,7 @@
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "roastingstick"
+	icon_angle = -45
 	inhand_icon_state = null
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
@@ -468,6 +474,7 @@
 	name = "cleric mace"
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
 	icon = 'icons/map_icons/items/_item.dmi'
+	icon_angle = -45
 	SETUP_MAP_ICONS("default", "/obj/item/melee/cleric_mace")
 	inhand_icon_state = "default"
 	worn_icon_state = "default_worn"

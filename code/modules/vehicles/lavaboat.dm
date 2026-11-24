@@ -22,6 +22,7 @@
 	desc = "Not to be confused with the kind Research hassles you for."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "oar"
+	icon_angle = 45
 	inhand_icon_state = "oar"
 	lefthand_file = 'icons/mob/inhands/items/lavaland_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/lavaland_righthand.dmi'

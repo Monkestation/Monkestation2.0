@@ -4,7 +4,7 @@
 	icon_state = "small_rune_1"
 	anchored = TRUE
 	plane = FLOOR_PLANE
-	layer = LOW_SIGIL_LAYER
+	layer = LOWER_RUNE_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/glowing_rune/Initialize(mapload)
@@ -13,4 +13,4 @@
 	pixel_x = rand(-6, 6)
 	icon_state = "small_rune_[rand(1, 12)]"
 	update_appearance()
-	// ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)

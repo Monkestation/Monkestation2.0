@@ -39,6 +39,7 @@
 	strip_delay = 3 SECONDS
 	equip_delay_other = 4 SECONDS
 	// /var/hit_reflect_chance = 50  //monkestation removal
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/hooded/ablative/Initialize(mapload)
 	. = ..()

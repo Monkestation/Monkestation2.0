@@ -40,7 +40,7 @@
 
 
 /obj/effect/temp_visual/ratvar/beam/catwalk
-	layer = LATTICE_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 
 
 /obj/effect/temp_visual/ratvar/wall
@@ -56,7 +56,7 @@
 
 
 /obj/effect/temp_visual/ratvar/floor/catwalk
-	layer = LATTICE_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 
 
 /obj/effect/temp_visual/ratvar/window

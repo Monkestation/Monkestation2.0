@@ -23,7 +23,7 @@
 
 		var/ticket_data = list()
 		ticket_data["id"] = ahelp.id
-		ticket_data["name"] = ahelp.name
+		ticket_data["name"] = html_decode(ahelp.name)
 		ticket_data["admin_key"] = ahelp.handling_admin_ckey
 		ticket_data["initiator_key_name"] = ahelp.initiator_key_name
 		ticket_data["initiator_ckey"] = ahelp.initiator_ckey
@@ -54,6 +54,11 @@
 
 /datum/admin_help/ui_state(mob/user)
 	return GLOB.always_state
+
+/datum/admin_help/ui_status(mob/user, datum/ui_state/state)
+	if(!user.client?.holder && user.ckey != initiator_ckey)
+		return UI_CLOSE
+	return ..()
 
 /datum/admin_help/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -128,7 +133,7 @@
 			if(!istype(ahelp)) continue
 			var/ticket_data = list()
 			ticket_data["id"] = ahelp.id
-			ticket_data["title"] = ahelp.name
+			ticket_data["title"] = html_decode(ahelp.name)
 			.["related_tickets"] += list(ticket_data)
 
 /datum/admin_help/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -155,6 +160,7 @@
 				COOLDOWN_START(src, client_message_cooldown, 3 SECONDS)
 			if(usr.client.current_ticket != src)
 				to_chat(usr, span_warning("You are not able to reply to this ticket. To open a ticket, please use the adminhelp verb."))
+				return
 			if(handling_admin_ckey)
 				usr.client.cmd_admin_pm(handling_admin_ckey, message)
 			else

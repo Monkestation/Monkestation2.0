@@ -476,6 +476,7 @@ Behavior that's still missing from this component that original food items had t
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(!owner.reagents.total_volume)
 		return
+	SEND_SIGNAL(eater, COMSIG_LIVING_EAT_FOOD, owner, foodtypes)
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
@@ -590,8 +591,7 @@ Behavior that's still missing from this component that original food items had t
 	/* MONKESTATION REMOVAL START - food complexity is unported
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
-	var/event = GLOB.food_quality_events[food_quality]
-	gourmand.add_mood_event("quality_food", event, timeout_mod)
+	gourmand.add_mood_event("quality_food", /datum/mood_event/food, food_quality, timeout_mod)
 	*/
 	gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
 	var/quality_label = GLOB.food_quality_description[food_quality]

@@ -194,10 +194,9 @@
 			else if (deviation == DEVIATION_NONE)
 				flashed.stamina.adjust(-80)
 
-			if (!flashed.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				flashed.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(flashed, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
-				flashed.Disorient(SHOVE_SLOWDOWN_LENGTH)
+			if (!flashed.get_timed_status_effect_duration(/datum/status_effect/staggered))
+				flashed.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
+				flashed.Disorient(STAGGERED_SLOWDOWN_LENGTH)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))

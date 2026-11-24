@@ -5,6 +5,7 @@
 	desc = "Unleash the cosmic ingenuity at your fingertips. It seamlessly shifts forms, revealing hidden talents that might just save the day. Who knows what secrets lie within this celestial tool?"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "spess_knife"
+	icon_angle = -90
 	worn_icon_state = "spess_knife"
 	belt_icon_state = "spess_knife"
 	inhand_icon_state = "spess_knife"

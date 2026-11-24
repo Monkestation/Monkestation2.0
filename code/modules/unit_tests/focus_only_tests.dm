@@ -51,3 +51,6 @@
 
 ///Checks primarily that emissives aren't mistakenly not tagged with the meta flag
 /datum/unit_test/focus_only/bodypart_overlay_flags
+
+/// Ensures only whitelisted planes can have TOPDOWN_LAYERing, and vis versa
+/datum/unit_test/focus_only/topdown_filtering

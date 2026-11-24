@@ -106,6 +106,17 @@
 		/obj/item/flashlight/glowstick/pink,
 	)
 
+/obj/effect/spawner/random/decoration/glowstick/on
+	name = "random colored glowstick (on)"
+
+/obj/effect/spawner/random/decoration/glowstick/on/make_item(spawn_loc, type_path_to_make)
+	. = ..()
+
+	var/obj/item/flashlight/glowstick/glowstick = .
+	glowstick.on = TRUE
+	glowstick.update_brightness()
+	glowstick.update_appearance(UPDATE_OVERLAYS)
+
 /obj/effect/spawner/random/decoration/paint
 	name = "paint spawner"
 	icon_state = "paint"

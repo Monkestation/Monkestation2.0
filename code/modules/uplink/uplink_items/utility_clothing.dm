@@ -74,7 +74,7 @@
 	item = /obj/item/mod/module/noslip
 	cost = 2
 
-/datum/uplink_item/suits/shock_absorber
+/datum/uplink_item/utility_clothing/shock_absorber
 	name = "MODsuit Shock-Absorber Module"
 	desc = "A MODsuit module making the user resistant to batons and tasers."
 	item = /obj/item/mod/module/shock_absorber
@@ -154,7 +154,7 @@
 	item = /obj/item/clothing/glasses/thermal/chameleon
 	cost = 4
 
-/datum/uplink_item/steutility_clothingalthy_tools/military_belt
+/datum/uplink_item/utility_clothing/military_belt
 	name = "Chest Rig"
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
 	item = /obj/item/storage/belt/military

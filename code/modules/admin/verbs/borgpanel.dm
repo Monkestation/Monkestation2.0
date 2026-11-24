@@ -150,7 +150,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPT
 				message_admins("[key_name_admin(user)] disabled scrambled codes on [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] disabled scrambled codes on [key_name(borg)].")
 		if ("rename")
-			var/new_name = sanitize_name(tgui_input_text(user, "What would you like to name this cyborg?", "Cyborg Reclassification", borg.real_name, MAX_NAME_LEN), allow_numbers = TRUE)
+			var/new_name = sanitize_name(tgui_input_text(user, "What would you like to name this cyborg?", "Cyborg Reclassification", borg.real_name, MAX_NAME_LEN, encode = FALSE), allow_numbers = TRUE)
 			if(!new_name)
 				return
 			message_admins("[key_name_admin(user)] renamed [ADMIN_LOOKUPFLW(borg)] to [new_name].")

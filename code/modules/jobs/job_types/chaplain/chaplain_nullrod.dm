@@ -113,6 +113,7 @@
 	desc = "It has a mysterious, protective aura."
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "godstaff-red"
+	icon_angle = -45
 	inhand_icon_state = "godstaff-red"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -146,6 +147,7 @@
 	desc = "A weapon fit for a crusade!"
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "claymore_gold"
+	icon_angle = -45
 	inhand_icon_state = "claymore_gold"
 	worn_icon_state = "claymore_gold"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -170,6 +172,7 @@
 	desc = "Spread the glory of the dark gods!"
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "cultblade"
+	icon_angle = -45
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -265,6 +268,7 @@
 	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "sord"
+	icon_angle = -35
 	inhand_icon_state = "sord"
 	worn_icon_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -287,6 +291,7 @@
 	desc = "Ask not for whom the bell tolls..."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "scythe1"
+	icon_angle = -45
 	inhand_icon_state = "scythe1"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -325,6 +330,7 @@
 	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "spellblade"
+	icon_angle = -135
 	inhand_icon_state = "spellblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -337,6 +343,7 @@
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "talking_sword"
+	icon_angle = -135
 	inhand_icon_state = "talking_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -354,6 +361,7 @@
 	name = "possessed chainsaw sword"
 	desc = "Suffer not a heretic to live."
 	icon_state = "chainswordon"
+	icon_angle = -45
 	inhand_icon_state = "chainswordon"
 	worn_icon_state = "chainswordon"
 	force = 30
@@ -370,6 +378,7 @@
 	desc = "This war hammer cost the chaplain forty thousand space dollars."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "hammeron"
+	icon_angle = -45
 	inhand_icon_state = "hammeron"
 	worn_icon_state = "hammeron"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
@@ -417,6 +426,7 @@
 	desc = "Used for absolutely hilarious sacrifices."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "clownrender"
+	icon_angle = -45
 	inhand_icon_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -447,6 +457,7 @@
 	desc = "It resonates an aura of Pride."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "pride"
+	icon_angle = -45
 	inhand_icon_state = "pride"
 	worn_icon_state = "pride"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
@@ -477,6 +488,7 @@
 	desc = "What a terrible night to be on Space Station 13."
 	icon = 'icons/obj/weapons/whip.dmi'
 	icon_state = "chain"
+	icon_angle = -90
 	inhand_icon_state = "chain"
 	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -515,6 +527,7 @@
 	desc = "Particularly twisted deities grant gifts of dubious value."
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
+	icon_angle = 180
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
@@ -586,6 +599,7 @@
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "crysknife"
+	icon_angle = -45
 	inhand_icon_state = "crysknife"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -622,6 +636,7 @@
 	desc = "Holding this makes you look absolutely devilish."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "pitchfork0"
+	icon_angle = -45
 	inhand_icon_state = "pitchfork0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -654,6 +669,7 @@
 	desc = "A tool so powerful even you cannot perfectly use it."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hypertool"
+	icon_angle = -45
 	inhand_icon_state = "hypertool"
 	worn_icon_state = "hypertool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -671,6 +687,7 @@
 	desc = "An ancient spear made of brass, I mean gold, I mean bronze. It looks highly mechanical."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "ratvarian_spear"
+	icon_angle = -45
 	inhand_icon_state = "ratvarian_spear"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'

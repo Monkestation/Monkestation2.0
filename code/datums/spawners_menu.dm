@@ -33,6 +33,8 @@
 			if(!this["desc"])
 				if(istype(spawner_obj, /obj/effect/mob_spawn))
 					var/obj/effect/mob_spawn/ghost_role/mob_spawner = spawner_obj
+					if(mob_spawner.uses <= 0 && !mob_spawner.infinite_use) // used up spawners that stick around (like the siren pods) shouldnt show
+						continue
 					if(!mob_spawner.allow_spawn(user, silent = TRUE))
 						continue
 					this["you_are_text"] = mob_spawner.you_are_text
@@ -68,11 +70,12 @@
 	var/list/spawnerlist = list()
 
 	if (group_name in GLOB.mob_spawners)
-		spawnerlist = GLOB.mob_spawners[group_name]
+		var/list/group_spawners = GLOB.mob_spawners[group_name]
+		spawnerlist = group_spawners.Copy() // we take things out of it below, dont touch the global list
 		if(!length(spawnerlist))
 			return
 		for(var/obj/effect/mob_spawn/ghost_role/current_spawner as anything in spawnerlist)
-			if(!current_spawner.allow_spawn(usr, silent = TRUE))
+			if(!current_spawner.allow_spawn(usr, silent = TRUE) || (current_spawner.uses <= 0 && !current_spawner.infinite_use))
 				spawnerlist -= current_spawner
 	else if (group_name in GLOB.joinable_mobs)
 		spawnerlist = GLOB.joinable_mobs[group_name]

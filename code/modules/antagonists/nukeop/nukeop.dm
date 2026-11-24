@@ -37,6 +37,7 @@
 		return
 
 	var/mob/living/carbon/human/operative = owner.current
+	ADD_TRAIT(operative, TRAIT_DESENSITIZED, INNATE_TRAIT)
 
 	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
@@ -57,6 +58,7 @@
 /datum/antagonist/nukeop/on_gain()
 	give_alias()
 	forge_objectives()
+	owner.current.add_personality(/datum/personality/callous)
 	. = ..()
 	equip_op()
 	if(send_to_spawnpoint)
@@ -319,7 +321,7 @@
 
 /datum/antagonist/nukeop/leader/proc/ask_name()
 	var/randomname = pick(GLOB.last_names)
-	var/newname = tgui_input_text(owner.current, "You are the nuclear operative [title]. Please choose a last name for your family.", "Name change", randomname, MAX_NAME_LEN)
+	var/newname = tgui_input_text(owner.current, "You are the nuclear operative [title]. Please choose a last name for your family.", "Name change", randomname, MAX_NAME_LEN, encode = FALSE)
 	if (!newname)
 		newname = randomname
 	else

@@ -8,6 +8,7 @@
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	cell = /obj/item/stock_parts/power_store/cell/hyper
+	cerulean_flipper_palette = "#f99000"
 
 /datum/armor/space_hunter
 	melee = 60

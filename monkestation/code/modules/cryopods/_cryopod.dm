@@ -190,7 +190,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		/datum/quirk/indebted,
 		/datum/quirk/item_quirk/allergic,
 		/datum/quirk/item_quirk/brainproblems,
-		/datum/quirk/item_quirk/junkie,
+		/datum/quirk/item_quirk/addict,
 	))
 	/// Quirks that should just be completely skipped.
 	var/static/list/skip_quirks = typecacheof(list(

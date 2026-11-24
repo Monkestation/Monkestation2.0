@@ -23,7 +23,6 @@
 	gravity_setup()
 	if(!blood_volume)
 		ADD_TRAIT(src, TRAIT_NOBLOOD, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_UNIQUE_IMMERSE, INNATE_TRAIT)
 
 /mob/living/prepare_huds()
 	..()
@@ -43,8 +42,9 @@
 		else
 			effect.be_replaced()
 
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+	clear_personalities() // must be done for the personalities which process
+
+	buckled?.unbuckle_mob(src,force=1)
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
@@ -71,9 +71,16 @@
 	SEND_SIGNAL(T, COMSIG_TURF_MOB_FALL, src)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
 		return
+	// multiplier for the damage taken from falling
+	var/damage_softening_multiplier = 1
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		damage_softening_multiplier *= potential_spine.athletics_boost_multiplier
+
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
 					span_userdanger("You crash into [T] with a sickening noise!"))
-	adjustBruteLoss((levels * 5) ** 1.5)
+	adjustBruteLoss(((levels * 5) ** 1.5) * damage_softening_multiplier)
 	Knockdown(levels * 50)
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
@@ -450,9 +457,17 @@
 
 		set_pull_offsets(M, state)
 
-/mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
-	if(M.buckled)
+/**
+ * Updates the offsets of the passed mob according to the passed grab state and the direction between them and us
+ *
+ * * M - the mob to update the offsets of
+ * * grab_state - the state of the grab
+ * * animate - whether or not to animate the offsets
+ */
+/mob/living/proc/set_pull_offsets(mob/living/mob_to_set, grab_state = GRAB_PASSIVE, animate = TRUE)
+	if(mob_to_set.buckled)
 		return //don't make them change direction or offset them if they're buckled into something.
+	SEND_SIGNAL(mob_to_set, COMSIG_LIVING_SET_PULL_OFFSET)
 	var/offset = 0
 	switch(grab_state)
 		if(GRAB_PASSIVE)
@@ -463,27 +478,36 @@
 			offset = GRAB_PIXEL_SHIFT_NECK
 		if(GRAB_KILL)
 			offset = GRAB_PIXEL_SHIFT_NECK
-	M.setDir(get_dir(M, src))
-	var/target_pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
-	var/target_pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
-	switch(M.dir)
+	mob_to_set.setDir(get_dir(mob_to_set, src))
+	var/dir_filter = mob_to_set.dir
+	if(ISDIAGONALDIR(dir_filter))
+		dir_filter = EWCOMPONENT(dir_filter)
+	switch(dir_filter)
 		if(NORTH)
-			animate(M, pixel_x = target_pixel_x, pixel_y = target_pixel_y + offset, 3)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = offset, animate = animate)
 		if(SOUTH)
-			animate(M, pixel_x = target_pixel_x, pixel_y = target_pixel_y - offset, 3)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = 0, y_add = -offset, animate = animate)
 		if(EAST)
-			if(M.lying_angle == 270) //update the dragged dude's direction if we've turned
-				M.set_lying_angle(90)
-			animate(M, pixel_x = target_pixel_x + offset, pixel_y = target_pixel_y, 3)
+			if(mob_to_set.lying_angle == 270) //update the dragged dude's direction if we've turned
+				mob_to_set.set_lying_angle(90)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = offset, y_add = 0, animate = animate)
 		if(WEST)
-			if(M.lying_angle == 90)
-				M.set_lying_angle(270)
-			animate(M, pixel_x = target_pixel_x - offset, pixel_y = target_pixel_y, 3)
+			if(mob_to_set.lying_angle == 90)
+				mob_to_set.set_lying_angle(270)
+			mob_to_set.add_offsets(GRABBING_TRAIT, x_add = -offset, y_add = 0, animate = animate)
 
+/**
+ * Removes any offsets from the passed mob that are related to being grabbed
+ *
+ * * M - the mob to remove the offsets from
+ * * override - if TRUE, the offsets will be removed regardless of the mob's buckled state
+ * otherwise we won't remove the offsets if the mob is buckled
+ */
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y, 1)
+	SEND_SIGNAL(M, COMSIG_LIVING_RESET_PULL_OFFSETS)
+	M.remove_offsets(GRABBING_TRAIT)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -698,7 +722,14 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+
+	var/get_up_time = 1 SECONDS
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		get_up_time *= potential_spine.athletics_boost_multiplier
+
+	if(!instant && !do_after(src, get_up_time, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -724,7 +755,7 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	if(rotate_on_lying)
-		body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
+		add_offsets(LYING_DOWN_TRAIT, y_add = PIXEL_Y_OFFSET_LYING)
 	playsound(loc, 'goon/sounds/body_thud.ogg', ishuman(src) ? 40 : 15, 1, 0.3, mixer_channel = CHANNEL_MOB_EMOTES)
 
 
@@ -733,12 +764,7 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 	if(layer == LYING_MOB_LAYER)
 		layer = initial(layer)
 	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_UNDENSE), LYING_DOWN_TRAIT)
-	// Make sure it doesn't go out of the southern bounds of the tile when standing.
-	body_position_pixel_y_offset = get_pixel_y_offset_standing(current_size)
-
-/// Returns what the body_position_pixel_y_offset should be if the current size were `value`
-/mob/living/proc/get_pixel_y_offset_standing(value)
-	return (value - 1) * get_cached_height() * 0.5
+	remove_offsets(LYING_DOWN_TRAIT)
 
 /mob/living/proc/update_density()
 	if(HAS_TRAIT(src, TRAIT_UNDENSE))
@@ -1126,13 +1152,16 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 	. = TRUE
 	// Base chance to escape a grab. Divided by effective grab state
 	var/escape_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
-	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+	// Being staggered while hurt makes it harder to slip away, like being prone
+	var/staggered_and_hurt = get_timed_status_effect_duration(/datum/status_effect/staggered) && (getFireLoss()*0.5 + getBruteLoss()*0.5) >= 40
+	//If we're in an aggressive grab or higher, we're lying down, we're vulnerable to grabs, or we're staggered and we have some amount of damage, we must resist
+	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || staggered_and_hurt)
 		var/altered_grab_state = pulledby.grab_state
-		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
+		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || staggered_and_hurt) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
 		if(ishuman(pulledby))
 			var/mob/living/carbon/human/human_puller = pulledby
-			var/datum/martial_art/puller_art = human_puller?.mind.martial_art
+			var/datum/martial_art/puller_art = GET_ACTIVE_MARTIAL_ART(human_puller)
 			if(puller_art?.can_use(human_puller))
 				altered_grab_state += puller_art.grab_state_modifier
 				escape_chance += puller_art.grab_escape_chance_modifier
@@ -1188,8 +1217,8 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
-				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
-				base_pixel_y += 4
+				animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+				add_offsets(NEGATIVE_GRAVITY_TRAIT, y_add = 4)
 		if(NEGATIVE_GRAVITY + 0.01 to 0)
 			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
 				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
@@ -1212,8 +1241,8 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
-		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT)
-		base_pixel_y -= 4
+		animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+		remove_offsets(NEGATIVE_GRAVITY_TRAIT)
 
 /mob/living/singularity_pull(S, current_size)
 	..()
@@ -1890,6 +1919,30 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	mob_pickup(user)
 	return TRUE
 
+///Attempts to stash the mob into a human's hands if able.
+/mob/living/proc/mob_try_stash(mob/living/carrier, instant=FALSE)
+	if(!(Adjacent(carrier)))
+		return
+	if(!ishuman(carrier))
+		return
+	if(IS_DEAD_OR_INCAP(carrier))
+		to_chat(src, span_warning("[carrier] is unable to hold on to you!"))
+		return
+	if(!length(carrier.get_empty_held_indexes()))
+		to_chat(src, span_warning("[carrier]'s hands are full!"))
+		return FALSE
+	if(buckled)
+		to_chat(src, span_warning("You are buckled to something!"))
+		return FALSE
+	if(!instant)
+		carrier.visible_message(span_warning("[src] starts trying to crawl into [carrier]'s hands!"), \
+						span_danger("[src] starts trying to crawl into your hands..."), null, null, src)
+		to_chat(src, span_userdanger("You start trying to crawl into [carrier]'s hands!"))
+		if(!do_after(src, 5 SECONDS, target = carrier))
+			return FALSE
+	mob_pickup(carrier)
+	return TRUE
+
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))
 		return
@@ -2382,31 +2435,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/get_attack_type()
 	return BRUTE
 
-
-/**
- * Apply a martial art move from src to target.
- *
- * This is used to process martial art attacks against nonhumans.
- * It is also used to process martial art attacks by nonhumans, even against humans
- * Human vs human attacks are handled in species code right now.
- */
-/mob/living/proc/apply_martial_art(mob/living/target, modifiers)
-	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
-		return MARTIAL_ATTACK_INVALID
-	var/datum/martial_art/style = mind?.martial_art
-	if (!style)
-		return MARTIAL_ATTACK_INVALID
-	// will return boolean below since it's not invalid
-	if ((istate & ISTATE_CONTROL))
-		return style.grab_act(src, target)
-	if ((istate & ISTATE_SECONDARY))
-		return style.disarm_act(src, target)
-	if((istate & ISTATE_HARM))
-		if (HAS_TRAIT(src, TRAIT_PACIFISM))
-			return FALSE
-		return style.harm_act(src, target)
-	return style.help_act(src, target)
-
 /**
  * Returns an assoc list of assignments and minutes for updating a client's exp time in the databse.
  *
@@ -2519,7 +2547,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/add_mood_event(category, type, ...)
 	if(QDELETED(mob_mood))
 		return
-	mob_mood.add_mood_event(arglist(args))
+
+	if(ispath(type, /datum/mood_event/conditional))
+		mob_mood.add_conditional_mood_event(arglist(args))
+	else
+		mob_mood.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
@@ -2690,6 +2722,114 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	return FALSE
 
+//general disarm proc
+/mob/living/proc/disarm(mob/living/carbon/target)
+	do_attack_animation(target, ATTACK_EFFECT_DISARM)
+	playsound(target, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	if (ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		human_target.w_uniform?.add_fingerprint(src)
+
+	SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, src, zone_selected)
+	var/shove_dir = get_dir(loc, target.loc)
+	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+	var/turf/target_old_turf = target.loc
+
+	//Are we hitting anything? or
+	if(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_PRESHOVE) & COMSIG_CARBON_ACT_SOLID)
+		shove_blocked = TRUE
+	else
+		target.Move(target_shove_turf, shove_dir)
+		if(get_turf(target) == target_old_turf)
+			shove_blocked = TRUE
+
+	if(!shove_blocked)
+		target.setGrabState(GRAB_PASSIVE)
+
+	if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
+		target.Paralyze(SHOVE_CHAIN_PARALYZE)
+		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
+						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
+		log_combat(src, target, "kicks", "onto their side (paralyzing)")
+
+	var/directional_blocked = FALSE
+	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
+
+	//Directional checks to make sure that we're not shoving through a windoor or something like that
+	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
+		var/target_turf = get_turf(target)
+		for(var/obj/obj_content in target_turf)
+			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
+				directional_blocked = TRUE
+				break
+		if(target_turf != target_shove_turf && !directional_blocked) //Make sure that we don't run the exact same check twice on the same tile
+			for(var/obj/obj_content in target_shove_turf)
+				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
+					directional_blocked = TRUE
+					break
+
+	if(can_hit_something)
+		//Don't hit people through windows, ok?
+		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
+			return
+		if(directional_blocked || shove_blocked || HAS_TRAIT(target, TRAIT_FEEBLE))
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
+				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
+			log_combat(src, target, "shoved", "knocking them down")
+			return
+
+	target.visible_message(span_danger("[name] shoves [target.name]!"),
+		span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name]!"))
+
+	//Take their lunch money
+	var/target_held_item = target.get_active_held_item()
+	var/append_message = ""
+	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
+		target_held_item = null
+
+	if(!target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
+		if(target_held_item)
+			append_message = "loosening [target.p_their()] grip on [target_held_item]"
+			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing
+				span_warning("Your grip on \the [target_held_item] loosens!"), null, COMBAT_MESSAGE_RANGE)
+
+	else if(target_held_item)
+		target.dropItemToGround(target_held_item)
+		append_message = "causing [target.p_them()] to drop [target_held_item]"
+		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
+			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+
+	log_combat(src, target, "shoved", append_message)
+
+/// Returns an arbitrary number which very roughly correlates with how buff you look
+/mob/living/proc/calculate_fitness()
+	var/athletics_level = mind?.get_skill_level(/datum/skill/athletics) || 1
+	var/damage = (melee_damage_lower + melee_damage_upper) / 2
+
+	return ceil(damage * (ceil(athletics_level / 2)) * maxHealth)
+
+/// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
+/mob/living/proc/compare_fitness(mob/living/scouter)
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return span_warning("It's impossible to tell whether this person lifts.")
+
+	var/our_fitness_level = calculate_fitness()
+	var/their_fitness_level = scouter.calculate_fitness()
+
+	var/comparative_fitness = our_fitness_level / their_fitness_level
+
+	if (comparative_fitness > 2)
+		scouter.set_jitter_if_lower(comparative_fitness SECONDS)
+		return "[span_notice("You'd estimate [p_their()] fitness level at about...")] [span_boldwarning("What?!? [our_fitness_level]???")]"
+
+	return span_notice("You'd estimate [p_their()] fitness level at about [our_fitness_level]. [comparative_fitness <= 0.33 ? "Pathetic." : ""]")
 /// Makes the mob scream in pain, unless it can't feel pain
 /mob/living/proc/painful_scream(force = FALSE)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
