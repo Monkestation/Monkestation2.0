@@ -176,6 +176,7 @@
 /area/ruin/space/has_grav/listeningstation/support)
 "de" = (
 /obj/structure/table/reinforced,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "dg" = (
@@ -446,7 +447,6 @@
 /obj/machinery/atmospherics/components/binary/valve/layer4{
 	name = "Main Oxygen Supply Valve"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "in" = (
@@ -536,10 +536,6 @@
 /obj/structure/sign/poster/contraband/syndicate_medical/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lounge)
-"js" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/support)
 "jD" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/table/reinforced,
@@ -597,11 +593,11 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "lU" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/west,
-/obj/structure/window/reinforced/unanchored/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "lY" = (
@@ -798,13 +794,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation/dorms)
-"sl" = (
-/obj/machinery/atmospherics/components/binary/valve/on{
-	name = "Backup Oxygen Supply."
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/support)
 "sQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/paper/fluff/ruins/listeningstation{
@@ -861,6 +850,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/table/reinforced,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "vp" = (
@@ -890,12 +880,12 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Life Support"
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold/visible,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "listening_post_atmos_and_relay"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/support)
 "wk" = (
@@ -981,10 +971,10 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/listeningstation/asteroid)
 "yc" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "ye" = (
@@ -1162,6 +1152,7 @@
 "Bs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/listeningstation/medical)
 "BN" = (
@@ -1314,9 +1305,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lobby)
 "Ev" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional/south,
 /obj/structure/table/reinforced,
 /obj/item/autosurgeon/syndicate/polyglot_voicebox,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "Ew" = (
@@ -1326,6 +1317,9 @@
 /turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "ED" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "Fl" = (
@@ -1367,6 +1361,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/white/small,
 /area/ruin/space/has_grav/listeningstation/medical)
 "Gm" = (
@@ -1376,7 +1371,7 @@
 /area/ruin/space/has_grav/listeningstation/lobby)
 "Gn" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/structure/window/reinforced/unanchored/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/space/has_grav/listeningstation/medical)
 "Gs" = (
@@ -1401,6 +1396,7 @@
 "HI" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "Iq" = (
@@ -1739,7 +1735,6 @@
 "OX" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "listening_post_atmos_and_relay"
@@ -1963,6 +1958,13 @@
 	},
 /turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/listeningstation/dorms)
+"Wk" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/small,
+/area/ruin/space/has_grav/listeningstation/lounge)
 "WD" = (
 /obj/machinery/modular_computer/preset/civilian,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -2222,8 +2224,8 @@ VK
 VK
 VK
 go
-LP
-LP
+go
+go
 LP
 LP
 LP
@@ -2261,7 +2263,7 @@ VK
 LP
 LP
 LP
-fh
+LP
 LP
 Gb
 LP
@@ -2299,7 +2301,7 @@ VK
 LP
 fh
 or
-js
+fh
 LP
 JX
 LP
@@ -2339,7 +2341,7 @@ fh
 or
 ic
 OX
-sl
+or
 wf
 Kl
 Kl
@@ -2794,7 +2796,7 @@ JB
 OT
 BX
 de
-PC
+Wk
 KI
 KI
 Yf
