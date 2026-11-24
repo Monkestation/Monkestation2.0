@@ -17,6 +17,11 @@
 		owner.balloon_alert(owner, "already absorbing!")
 		return
 
+	// You can't strangle grab simplemobs like headslugs so any grab will do.
+	if(istype(owner.pulling, /mob/living/basic/headslug))
+		var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
+		return changeling.can_absorb_headslug(owner.pulling)
+
 	if(!owner.pulling || !iscarbon(owner.pulling))
 		owner.balloon_alert(owner, "needs grab!")
 		return
@@ -35,6 +40,10 @@
 
 	if(!attempt_absorb(target))
 		return
+
+	if(istype(target, /mob/living/basic/headslug))
+		absorb_headslug(target)
+		return TRUE
 
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
 	owner.visible_message(span_danger("[owner] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
@@ -64,7 +73,35 @@
 	target.Drain()
 	return TRUE
 
-/datum/action/changeling/absorb_dna/proc/absorb_memories(mob/living/carbon/human/target)
+/// Absorbs the changeling inside a dead headslug, deleting the slug. They have no body to take DNA from, so we take their original form instead
+/datum/action/changeling/absorb_dna/proc/absorb_headslug(mob/living/basic/headslug/slug)
+	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/slug_ling = slug.mind?.has_antag_datum(/datum/antagonist/changeling)
+	is_absorbing = FALSE
+	if(!slug_ling)
+		return
+
+	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
+	owner.visible_message(span_danger("[owner] sucks [slug] dry!"), span_notice("We have absorbed [slug]."))
+	to_chat(slug, span_userdanger("You are absorbed by the changeling!"))
+
+	var/datum/changeling_profile/original_form = slug_ling.first_profile
+	if(original_form && !changeling.has_profile_with_dna(original_form.dna))
+		var/datum/changeling_profile/stolen_form = new()
+		original_form.copy_profile(stolen_form)
+		stolen_form.protected = FALSE
+		changeling.add_profile(stolen_form)
+		changeling.true_absorbs++
+
+	absorb_memories(slug)
+
+	changeling.adjust_chemicals(10)
+	changeling.can_respec = TRUE
+
+	slug.ghostize(can_reenter_corpse = FALSE)
+	qdel(slug)
+
+/datum/action/changeling/absorb_dna/proc/absorb_memories(mob/living/target)
 	var/datum/mind/suckedbrain = target.mind
 
 	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -132,7 +169,7 @@
 		var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)
 		fallen.objectives = copied_objectives
 
-/datum/action/changeling/absorb_dna/proc/attempt_absorb(mob/living/carbon/human/target)
+/datum/action/changeling/absorb_dna/proc/attempt_absorb(mob/living/target)
 	if(!zucckynoises)
 		zucckynoises = new(owner, FALSE)
 	for(var/absorbing_iteration in 1 to 3)
