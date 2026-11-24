@@ -81,6 +81,34 @@
 		/obj/item/gun/energy/disabler/smoothbore = 2,
 	),src)
 
+/obj/item/storage/belt/holster/duty
+	name = "duty holster"
+	desc = "A sturdy shoulder holster with a spare pouch on the strap. Fits most sidearms, with room left over for a reload."
+
+/obj/item/storage/belt/holster/duty/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/ammo_box/magazine/m9mm,
+		/obj/item/ammo_box/magazine/m9mm_aps,
+		/obj/item/ammo_box/magazine/r10mm,
+		/obj/item/ammo_box/magazine/m10mm,
+		/obj/item/ammo_box/magazine/m35,
+		/obj/item/ammo_box/magazine/m45,
+		/obj/item/ammo_box/magazine/m50,
+		/obj/item/ammo_box/magazine/c35sol_pistol,
+		/obj/item/ammo_box/magazine/c585trappiste_pistol,
+		/obj/item/ammo_box/magazine/whispering_jester_45_magazine,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/ballistic/modular/mk_58, // I don't think this is actually obtainable outside of admins.
+		/obj/item/ammo_box/c38,
+		/obj/item/ammo_box/a357,
+		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/magazine/toy/pistol,
+		))
+
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
