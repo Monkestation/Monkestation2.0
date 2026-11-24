@@ -3,6 +3,7 @@
 	id = SPECIES_ETHEREAL
 	meat = /obj/item/food/meat/slab/human/mutant/ethereal
 	mutantlungs = /obj/item/organ/internal/lungs/ethereal
+	smoker_lungs = /obj/item/organ/internal/lungs/ethereal/ethereal_smoker
 	mutantstomach = /obj/item/organ/internal/stomach/ethereal
 	mutanteyes = /obj/item/organ/internal/eyes/ethereal
 	mutanttongue = /obj/item/organ/internal/tongue/ethereal

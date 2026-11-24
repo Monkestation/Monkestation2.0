@@ -16,6 +16,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/slime
 	mutantears = /obj/item/organ/internal/ears/jelly
 	mutantlungs = /obj/item/organ/internal/lungs/slime
+	smoker_lungs = /obj/item/organ/internal/lungs/slime/slime_smoker
 	mutanttongue = /obj/item/organ/internal/tongue/jelly
 	mutantheart = /obj/item/organ/internal/heart/slime
 	inherent_traits = list(

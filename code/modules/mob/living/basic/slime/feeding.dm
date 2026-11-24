@@ -78,6 +78,7 @@
 	layer = MOB_ABOVE_PIGGYBACK_LAYER //appear above the target mob
 	target_mob.apply_status_effect(/datum/status_effect/slime_leech, src)
 	// marked here, so letting go early doesn't undo it
+	ADD_TRAIT(target_mob, TRAIT_WAS_SLIME_FOOD, TRAIT_GENERIC)
 	target_mob.visible_message(
 		span_danger("[name] latches onto [target_mob]!"),
 		span_userdanger("[name] latches onto [target_mob]!"),
