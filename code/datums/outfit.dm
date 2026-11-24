@@ -247,7 +247,6 @@
 					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BACKPACK)
 
 	post_equip(H, visualsOnly)
-	H.dna?.species?.post_equip_species_outfit(H, visualsOnly)
 
 	if(!visualsOnly)
 		apply_fingerprints(H)
@@ -258,6 +257,11 @@
 					H.open_internals(internals)
 			else
 				H.open_internals(H.get_item_by_slot(internals_slot))
+
+	// After the outfit's own internals, so species that breathe from their own tank (like vox) end up on it
+	H.dna?.species?.post_equip_species_outfit(H, visualsOnly)
+
+	if(!visualsOnly)
 		for(var/implant_type in implants)
 			var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)
 			I.implant(H, null, TRUE)
