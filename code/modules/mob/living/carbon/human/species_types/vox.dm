@@ -184,7 +184,7 @@
 	))
 	// Items with a vox sprite in a file of their own
 	var/static/list/item_worn_icons = list(
-		/obj/item/clothing/mask/breath/vox/octus = 'icons/mob/clothing/donator/mask_vox.dmi',
+		/obj/item/clothing/mask/breath/octus = 'icons/mob/clothing/donator/mask_vox.dmi',
 	)
 	if(item_worn_icons[item.type])
 		return item_worn_icons[item.type]
