@@ -202,10 +202,8 @@
 	COOLDOWN_DECLARE(ghost_notify_cooldown)
 
 /datum/nanite_program/defib/on_trigger(comm_message)
-	if(!iscarbon(host_mob)) //nonstandard biology
-			return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(COOLDOWN_FINISHED(src, ghost_notify_cooldown) && C.can_defib())
+	if(iscarbon(host_mob) && COOLDOWN_FINISHED(src, ghost_notify_cooldown) && C.can_defib())
 		host_mob.notify_ghost_cloning("Your heart is being defibrillated by nanites. Re-enter your corpse if you want to be revived!")
 		COOLDOWN_START(src, ghost_notify_cooldown, 1 MINUTES)
 	addtimer(CALLBACK(src, PROC_REF(zap)), 5 SECONDS)
