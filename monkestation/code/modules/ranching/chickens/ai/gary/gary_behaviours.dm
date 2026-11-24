@@ -32,6 +32,8 @@
 	VAR_PRIVATE/atom/destination
 	/// Set when the movement system gives up on the path
 	VAR_PRIVATE/movement_failed = FALSE
+	/// If we still haven't arrived by then, leap there anyway
+	VAR_PRIVATE/give_up_time = 0
 
 /datum/bt_node/ai_behavior/gary_travel/setup(datum/ai_controller/controller)
 	destination = get_destination(controller)
@@ -40,6 +42,7 @@
 		return FALSE
 	RegisterSignal(controller.pawn, COMSIG_MOB_AI_MOVEMENT_FAILED, PROC_REF(on_movement_failed))
 	controller.ai_movement.start_moving_towards(controller, destination, required_distance)
+	give_up_time = world.time + 90 SECONDS
 	return TRUE
 
 /// Pathing gave up, gary leaps there instead
@@ -54,7 +57,7 @@
 	if(get_dist(pawn, destination) <= required_distance)
 		arrived(controller)
 		return AI_BEHAVIOR_SUCCEEDED
-	if(movement_failed)
+	if(movement_failed || world.time > give_up_time)
 		var/turf/landing = get_turf(destination)
 		if(landing)
 			INVOKE_ASYNC(pawn, TYPE_PROC_REF(/mob/living/basic/chicken/gary, leap_to), landing)

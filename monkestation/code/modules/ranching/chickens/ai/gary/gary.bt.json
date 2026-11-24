@@ -75,26 +75,22 @@
 			}
 		},
 		{
-			"type": "subplan",
-			"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
-			"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+			"type": "selector",
 			"children": [
 				{
-					"type": "selector",
-					"children": [
-						{
-							"type": "decorator",
-							"decorator": "/datum/bt_node/decorator/gary_wants_to_wander",
-							"child": {
-								"type": "leaf",
-								"behavior": "/datum/bt_node/ai_behavior/gary_travel/visit_player"
-							}
-						},
-						{
-							"type": "subtree",
-							"subtype": "/datum/bt_node/subtree/random_walk"
-						}
-					]
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/gary_wants_to_wander",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/gary_travel/visit_player"
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_walk"
 				}
 			]
 		}
