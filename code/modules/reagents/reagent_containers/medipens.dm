@@ -310,7 +310,7 @@
 	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 10)
 
 ///Stims used in /datum/outfit/myststranger
-/obj/item/reagent_containers/medipen/lone_wanderer
+/obj/item/reagent_containers/medipen/ancient
 	name = "ancient stim-pac"
 	desc = "Quit squirming, im trying to help you!"
 	icon_state = "syndipen"
@@ -320,7 +320,7 @@
 	label_text = "Never seems to run dry, and always seems clean. Great in a fire-fight."
 	infinite = TRUE
 
-/obj/item/reagent_containers/medipen/lone_wanderer/painkiller
+/obj/item/reagent_containers/medipen/ancient/painkiller
 	name = "ancient med-x"
 	desc = "The pain, make it stop..."
 	icon_state = "morphen"
@@ -330,7 +330,7 @@
 	label_text = "Never seems to run dry, and always seems clean. Great when your patient won't stop screaming."
 	infinite = TRUE
 
-/obj/item/reagent_containers/medipen/lone_wanderer/single
+/obj/item/reagent_containers/medipen/ancient/single
 	name = "super stim-pac"
 	desc = "Looks ancient; where did this come from?"
 	icon_state = "gorillapen"
@@ -339,7 +339,7 @@
 	label_text = "Something something not liable for.... wait how many sieverts did that just say this contains!?"
 	infinite = FALSE
 
-/obj/item/reagent_containers/medipen/lone_wanderer/single_painkiller
+/obj/item/reagent_containers/medipen/ancient/single_painkiller
 	name = "med-x pen"
 	desc = "The pain, make it stop..."
 	icon_state = "stimpen"

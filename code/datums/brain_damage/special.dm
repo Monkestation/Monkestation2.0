@@ -100,7 +100,6 @@
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
-	image_plane = GAME_PLANE_UPPER
 	var/obj/effect/client_image_holder/bluespace_stream/linked_to
 
 /obj/effect/client_image_holder/bluespace_stream/Initialize(mapload, list/mobs_which_see_us)
@@ -242,18 +241,17 @@
 	scan_desc = "violent psychosis"
 	gain_text = span_warning("You feel unhinged...")
 	lose_text = span_notice("You feel more balanced.")
+	/// The martial art we teach
 	var/datum/martial_art/psychotic_brawling/psychotic_brawling
 
 /datum/brain_trauma/special/psychotic_brawling/on_gain()
-	..()
-	psychotic_brawling = new(null)
-	if(!psychotic_brawling.teach(owner, TRUE))
-		to_chat(owner, span_notice("But your martial knowledge keeps you grounded."))
-		qdel(src)
+	. = ..()
+	psychotic_brawling = new(src)
+	psychotic_brawling.locked_to_use = TRUE
+	psychotic_brawling.teach(owner)
 
 /datum/brain_trauma/special/psychotic_brawling/on_lose()
-	..()
-	psychotic_brawling.remove(owner)
+	. = ..()
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
@@ -594,7 +592,7 @@
 	owner.clear_mood_event("fireaxe")
 	UnregisterSignal(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_ATOM_EXAMINE))
 	if(GLOB.bridge_axe)
-		UnregisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK)
+		UnregisterSignal(GLOB.bridge_axe, list(COMSIG_ITEM_AFTERATTACK, COMSIG_QDELETING))
 	return ..()
 
 /datum/brain_trauma/special/axedoration/proc/axe_gone(source)

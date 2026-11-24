@@ -6,6 +6,8 @@
 #define SLIME_STACK_PIXEL_Z_BABY 7
 /// Chance per second that a riding slime gets bored and hops off.
 #define SLIME_STACK_HOP_OFF_CHANCE 2
+/// Offset source for how high up the tower we sit.
+#define SLIME_STACK_OFFSET "slime_stack"
 
 /// Whether we're bored enough to go sit on another slime right now
 /mob/living/basic/slime/proc/wants_to_stack()
@@ -61,6 +63,16 @@
 	for(var/mob/living/basic/slime/below = buckled; isslime(below); below = below.buckled)
 		. += below.life_stage == SLIME_LIFE_STAGE_ADULT ? SLIME_STACK_PIXEL_Z_ADULT : SLIME_STACK_PIXEL_Z_BABY
 
+/// Sits us at the right height and layer for wherever we are in the tower.
+/mob/living/basic/slime/proc/update_stack_position()
+	var/height = stack_pixel_z()
+	if(!height)
+		remove_offsets(SLIME_STACK_OFFSET, animate = FALSE)
+		layer = initial(layer)
+		return
+	add_offsets(SLIME_STACK_OFFSET, z_add = height, animate = FALSE)
+	layer = buckled.layer + 0.1
+
 /// Everyone riding us falls off, and everyone riding them, all the way up.
 /mob/living/basic/slime/proc/dump_riders()
 	for(var/mob/living/basic/slime/rider in buckled_mobs)
@@ -94,9 +106,6 @@
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/misc/moist_impact.ogg', 30, TRUE), fall_time)
 	ai_controller?.PauseAi(fall_time + 1.5 SECONDS) // sits there dazed for a bit
 	set_temporary_mood(SLIME_MOOD_POUT)
-
-/mob/living/basic/slime/get_mob_buckling_height(mob/seat)
-	return 0
 
 /datum/ai_planning_subtree/slime_target/stack
 	target_key = BB_SLIME_STACK_TARGET
@@ -152,6 +161,7 @@
 	slime_pawn.hop_off_stack()
 	return ..()
 
+#undef SLIME_STACK_OFFSET
 #undef SLIME_STACK_HOP_OFF_CHANCE
 #undef SLIME_STACK_PIXEL_Z_BABY
 #undef SLIME_STACK_PIXEL_Z_ADULT

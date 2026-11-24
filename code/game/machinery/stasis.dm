@@ -142,14 +142,14 @@
 	if(stasis_running() && check_nap_violations())
 		chill_out(buckled)
 	update_appearance()
-	buckled.pixel_y -= 2
+	buckled.add_offsets(type, z_add = -2)
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/buckled)
 	thaw_them(buckled)
 	if(buckled == occupant)
 		set_occupant(null)
 	update_appearance()
-	buckled.pixel_y += 2
+	buckled.remove_offsets(type)
 
 /obj/machinery/stasis/process()
 	if(!(occupant && isliving(occupant) && check_nap_violations()))

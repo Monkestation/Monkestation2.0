@@ -19,6 +19,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon = 'icons/obj/clock_cult/tools.dmi'
 	icon_state = "screwdriver_brass"
+	icon_angle = -45
 	toolspeed = BRASS_TOOLSPEED_MOD
 	random_color = FALSE
 	greyscale_config_inhand_left = null

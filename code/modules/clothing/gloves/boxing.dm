@@ -6,6 +6,19 @@
 	equip_delay_other = 60
 	species_exception = list(/datum/species/golem) // now you too can be a golem boxing champion
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+	/// Determines the version of boxing (or any martial art for that matter) that the boxing gloves gives
+	var/style_to_give = /datum/martial_art/boxing
+
+/obj/item/clothing/gloves/boxing/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/martial_art_giver, style_to_give)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
+
+/obj/item/clothing/gloves/boxing/evil
+	name = "evil boxing gloves"
+	desc = "These strange gloves radiate an unsually evil aura."
+	greyscale_colors = "#21211f"
+	style_to_give = /datum/martial_art/boxing/evil
 
 /obj/item/clothing/gloves/boxing/green
 	icon_state = "boxinggreen"
@@ -19,7 +32,15 @@
 	icon_state = "boxingyellow"
 	greyscale_colors = "#d2a800"
 
+/obj/item/clothing/gloves/boxing/golden
+	name = "golden gloves"
+	desc = "The reigning champ of the station!"
+	icon_state = "boxinggold"
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*1)  //LITERALLY GOLD
+	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
+	equip_delay_other = 120
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
-/obj/item/clothing/gloves/boxing/Initialize(mapload)
+/obj/item/clothing/gloves/boxing/golden/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
+	AddElement(/datum/element/skill_reward, /datum/skill/athletics)

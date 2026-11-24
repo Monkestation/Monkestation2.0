@@ -170,7 +170,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	icon = 'icons/mob/effects/durand_shield.dmi'
 	icon_state = "shield_null"
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
-	pixel_y = 4
+	pixel_z = 4
 	max_integrity = 10000
 	armor_type = /datum/armor/durand_shield
 	anchored = TRUE

@@ -8,7 +8,7 @@
 /datum/martial_art/the_tunnel_arts
 	name = "The Tunnel Arts"
 	id = MARTIALART_TUNNELARTS
-	allow_temp_override = FALSE
+	locked_to_use = TRUE
 	help_verb = /mob/living/proc/tunnel_arts_help
 	display_combos = TRUE
 	/// Probability of successfully blocking attacks while on throw mode
@@ -22,13 +22,13 @@
 		TRAIT_NOGUNS
 	)
 
-/datum/martial_art/the_tunnel_arts/teach(mob/living/new_holder)
+/datum/martial_art/the_tunnel_arts/activate_style(mob/living/new_holder)
 	. = ..()
 	new_holder.add_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	new_holder.faction |= FACTION_RAT //:D
 
-/datum/martial_art/the_tunnel_arts/on_remove(mob/living/remove_from)
+/datum/martial_art/the_tunnel_arts/deactivate_style(mob/living/remove_from)
 	remove_from.remove_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
 	remove_from.faction -= FACTION_RAT //:(
 	return ..()

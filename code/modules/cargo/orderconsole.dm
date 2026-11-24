@@ -150,7 +150,7 @@
 			"object" = pack.name,
 			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
-			"reason" = order.reason,
+			"reason" = html_decode(order.reason),
 			"id" = order.id,
 			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
 		))

@@ -5,7 +5,9 @@
 	density = 0
 	anchored = 1
 	mouse_opacity = 1
+	plane = GAME_PLANE
 	layer = OBJ_LAYER
+	is_mopped = FALSE
 	var/last_openner
 	var/datum/disease/acute/contained_virus
 

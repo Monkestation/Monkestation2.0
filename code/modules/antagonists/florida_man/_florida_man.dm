@@ -32,7 +32,7 @@
 	return ..()
 
 /datum/antagonist/florida_man/on_removal()
-	wrassling?.remove(owner.current)
+	wrassling?.unlearn(owner.current)
 	QDEL_NULL(wrassling)
 	QDEL_NULL(doorbuster)
 	QDEL_NULL(cuff_break)
@@ -66,7 +66,7 @@
 	QDEL_NULL(cuff_break)
 	QDEL_NULL(regen)
 	var/mob/living/carbon/human/floridan = mob_override || owner.current
-	wrassling?.remove(floridan)
+	wrassling?.unlearn(floridan)
 	if(ishuman(floridan))
 		floridan.remove_traits(florida_traits, type)
 		floridan.physiology?.stun_mod /= 0.25

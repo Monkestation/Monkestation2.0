@@ -23,6 +23,7 @@
 	return TRUE
 
 /datum/round_event/shuttle_catastrophe
+	fakeable = FALSE
 	var/datum/map_template/shuttle/new_shuttle
 
 /datum/round_event/shuttle_catastrophe/announce(fake)

@@ -85,7 +85,7 @@
 	var/list/object_targets = list()
 	var/list/non_dense_targets = list()
 	for(var/atom/movable/possible_target in target_turf)
-		if(possible_target.layer <= PROJECTILE_HIT_THRESHHOLD_LAYER)
+		if(!COMPARE_LAYERS(possible_target.layer, PROJECTILE_HIT_THRESHHOLD_LAYER))
 			continue
 		if(possible_target.invisibility > tracker.owner.see_invisible)
 			continue

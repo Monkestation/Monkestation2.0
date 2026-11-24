@@ -170,6 +170,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 		var/list/pdata = painting.to_json()
 		pdata["ref"] = REF(painting)
+		pdata["creator_name"] = html_decode(pdata["creator_name"])
 		UNTYPED_LIST_ADD(admin_painting_data, pdata)
 
 /**

@@ -53,6 +53,7 @@
 /obj/effect/temp_visual/cult/turf/floor
 	icon_state = "floorglow"
 	duration = 5
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 
 /obj/effect/temp_visual/holy_grass
@@ -60,6 +61,7 @@
 	randomdir = FALSE
 	duration = 10
 	icon_state = "grass_convert"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 
 /obj/effect/temp_visual/cult/portal

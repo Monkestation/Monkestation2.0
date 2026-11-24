@@ -96,9 +96,9 @@
 			citations += list(list(
 				author = warrant.author,
 				crime_ref = REF(warrant),
-				details = warrant.details,
+				details = html_decode(warrant.details),
 				fine = warrant.fine,
-				name = warrant.name,
+				name = html_decode(warrant.name),
 				paid = warrant.paid,
 				time = warrant.time,
 				valid = warrant.valid,
@@ -109,8 +109,8 @@
 			crimes += list(list(
 				author = crime.author,
 				crime_ref = REF(crime),
-				details = crime.details,
-				name = crime.name,
+				details = html_decode(crime.details),
+				name = html_decode(crime.name),
 				time = crime.time,
 				valid = crime.valid,
 			))
@@ -122,8 +122,8 @@
 			crimes = crimes,
 			fingerprint = target.fingerprint,
 			gender = target.gender,
-			name = target.name,
-			note = target.security_note,
+			name = html_decode(target.name),
+			note = html_decode(target.security_note),
 			rank = target.rank,
 			species = target.species,
 			wanted_status = target.wanted_status,
@@ -223,7 +223,7 @@
 	target.citations += new_citation
 	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]]cr citation for [input_name]. Fines are payable at Security.")
 	investigate_log("New Citation: <strong>[input_name]</strong> Fine: [params["fine"]] | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
-	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, target.name, input_name, params["fine"])
+	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, target.name, html_decode(input_name), params["fine"])
 
 	return TRUE
 

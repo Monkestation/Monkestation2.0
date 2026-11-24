@@ -75,6 +75,22 @@
 	if(can_be_tied && tied == SHOES_UNTIED)
 		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
 		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags |= ITEM_SLOT_HEAD
+
+/obj/item/clothing/shoes/give_clothing_traits(mob/living/wearer, slot)
+	if((astype(wearer, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN) && (slot & ITEM_SLOT_HEAD))
+		return
+
+	return ..()
+
+/obj/item/clothing/shoes/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = ..()
+	if(!hand_index && (bodyshape & BODYSHAPE_CERULEAN))
+		// offsets up to head
+		offsets.y = 28
+
+	return offsets
 
 /obj/item/clothing/shoes/dropped(mob/user)
 	var/atom/movable/screen/alert/our_alert = our_alert_ref?.resolve()
@@ -83,6 +99,8 @@
 	if(our_alert?.owner == user)
 		user.clear_alert(ALERT_SHOES_KNOT)
 	. = ..()
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags &= ~ITEM_SLOT_HEAD
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -205,6 +223,8 @@
 	var/mob/living/carbon/human/our_guy = loc
 	if(!istype(our_guy)) // are they REALLY /our guy/?
 		return
+	if(our_guy.head == src) //a cerulean couldnt even fathom creating a triphazard by putting shoes on your feet
+		return
 
 	if(tied == SHOES_KNOTTED)
 		our_guy.Paralyze(5)
@@ -235,9 +255,7 @@
 
 			if(14 to 25) // 1.3ish% chance to stumble and be a bit off balance (like being disarmed)
 				to_chat(our_guy, span_danger("You stumble a bit on your untied shoelaces!"))
-				if(!our_guy.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					our_guy.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-					addtimer(CALLBACK(our_guy, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+				our_guy.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
 
 			if(26 to 1000)
 				wiser = FALSE
@@ -283,3 +301,14 @@
 		var/mob/wearer = loc
 		wearer.update_equipment_speed_mods()
 	return ..()
+
+/// when the shoes are worn on the headslot we have to override the overlay's icon to look for the correct file
+/obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
+	. = ..()
+	if(isinhands || !(bodyshape & BODYSHAPE_CERULEAN))
+		return
+	var/list/current_overlays = .
+	var/icon_to_use = worn_icon || DEFAULT_SHOES_FILE
+	var/mutable_appearance/standing_overlay = current_overlays[1]
+	standing_overlay.icon = icon_to_use
+	standing.icon = icon_to_use

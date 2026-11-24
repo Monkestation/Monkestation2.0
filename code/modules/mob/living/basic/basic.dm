@@ -96,6 +96,27 @@
 	///This damage is taken when atmos doesn't fit all the requirements above. Set to 0 to avoid adding the atmos_requirements element.
 	var/unsuitable_atmos_damage = 1
 
+	///rendered posession overlays
+	var/list/possession_overlays[2]
+	/// do we have hands?
+	var/dexterous = FALSE
+
+	var/uses_directional_offsets = TRUE
+	///the shifted y offset of the left hand
+	var/list/l_y_shift
+	///the shifted y offset of the right hand
+	var/list/r_y_shift
+	///the shifted x offset of the right hand
+	var/list/r_x_shift
+	///the shifted x offset of the left hand
+	var/list/l_x_shift
+	/// base amount of pixels this offsets upwards for each set of additional arms past 2
+	var/base_vertical_shift = 0
+	///the shifted y offset of the head
+	var/list/head_y_shift
+	/// the shifted x offset of the head
+	var/list/head_x_shift
+
 //MONKESTATION EDIT START
 	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
 	var/list/weather_immunities
@@ -246,6 +267,18 @@
 		melee_attack(attack_target, modifiers)
 	//monkestation edit
 
+/mob/living/basic/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_ADJUST_HANDS, "Grant Hands")
+
+/mob/living/basic/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_ADJUST_HANDS] && check_rights(R_FUN))
+		AddComponent(/datum/component/basic_inhands, y_offset = -6)
+		AddComponent(/datum/component/max_held_weight, WEIGHT_CLASS_SMALL)
+		AddElement(/datum/element/dextrous)
+
 /mob/living/basic/vv_edit_var(vname, vval)
 	switch(vname)
 		if(NAMEOF(src, habitable_atmos), NAMEOF(src, unsuitable_atmos_damage))
@@ -310,6 +343,18 @@
 
 	return GLOB.fire_appearances[fire_icon]
 
+/// Applies an overlay to the mob
+/mob/living/basic/proc/apply_overlay(cache_index)
+	if((. = possession_overlays[cache_index]))
+		add_overlay(.)
+
+/// Removes an overlay from the mob
+/mob/living/basic/proc/remove_overlay(cache_index)
+	var/I = possession_overlays[cache_index]
+	if(I)
+		cut_overlay(I)
+		possession_overlays[cache_index] = null
+
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
 	if (.)
@@ -325,6 +370,25 @@
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
+
+/mob/living/basic/can_hold_items(obj/item/I)
+	return dexterous && ..()
+
+/mob/living/basic/activate_hand(selhand)
+	if(!dexterous)
+		return ..()
+	if(!selhand)
+		selhand = (active_hand_index % held_items.len)+1
+	if(istext(selhand))
+		selhand = LOWER_TEXT(selhand)
+		if(selhand == "right" || selhand == "r")
+			selhand = 2
+		if(selhand == "left" || selhand == "l")
+			selhand = 1
+	if(selhand != active_hand_index)
+		swap_hand(selhand)
+	else
+		mode()
 
 /mob/living/basic/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
@@ -348,3 +412,9 @@
 	Move(get_step(src, dir), dir)
 	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
 	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
+
+/mob/living/basic/mouse_drop_dragged(atom/target_atom, mob/user)
+	if(isliving(target_atom) && target_atom != src && user == src)
+		var/mob/living/carrier  = target_atom
+		if(can_be_held)
+			mob_try_stash(carrier )

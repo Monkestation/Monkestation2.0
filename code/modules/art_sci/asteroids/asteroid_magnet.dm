@@ -67,7 +67,7 @@
 
 /obj/machinery/asteroid_magnet/proc/ping(coords_x, coords_y)
 	var/datum/map_template/asteroid/T = map.return_coordinate(coords_x, coords_y)
-	if(T && !T.found)
+	if(T && !T.summoned)
 		T.found = TRUE
 		ping_result = "LOCATED"
 		return

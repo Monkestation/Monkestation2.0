@@ -45,8 +45,8 @@
 		return
 
 	if(pipe_state == PIPE_STATE_FINE)
-		var/mutable_appearance/pipe_connector = mutable_appearance(icon, "pipe-connector", src, plane)
-		pipe_connector.pixel_y += 7
+		var/mutable_appearance/pipe_connector = mutable_appearance(icon, "pipe-connector", offset_spokesman = src)
+		pipe_connector.pixel_z += 7
 		. += pipe_connector
 
 	switch(pipe_status)
@@ -196,13 +196,21 @@
 	vehicle_move_delay = 0.5
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/vehicle/sick_grinder/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 13), TEXT_EAST = list(0, 13), TEXT_WEST = list(0, 13)))
-	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+/datum/component/riding/vehicle/sick_grinder/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 13),
+		TEXT_SOUTH = list(0, 13),
+		TEXT_EAST =  list(0, 13),
+		TEXT_WEST =  list(0, 13),
+	)
+
+/datum/component/riding/vehicle/sick_grinder/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, OBJ_LAYER),
+		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
+		TEXT_EAST =  list(0, 0, OBJ_LAYER),
+		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+	)
 
 
 /datum/component/particle_spewer/movement/sparks

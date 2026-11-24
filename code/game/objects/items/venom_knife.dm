@@ -5,6 +5,7 @@
 	desc = "An infamous knife of syndicate design, it has a tiny hole going through the blade to the handle which stores toxins."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "venom_knife"
+	icon_angle = -45
 	force = 12
 	throwforce = 15
 	throw_speed = 5

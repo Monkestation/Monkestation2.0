@@ -18,7 +18,6 @@
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	/// The sound this plays on impact.
 	var/hitsound = 'sound/items/weapons/pierce.ogg'
 	/// Sound played when the projectile hits a wall
@@ -660,7 +659,7 @@
 	if(!isliving(target))
 		if(isturf(target)) // non dense turfs
 			return can_hit_turfs && direct_target
-		if(target.layer < hit_threshhold && !HAS_TRAIT(target, TRAIT_PROJECTILE_SINK))
+		if(COMPARE_LAYERS(hit_threshhold, target.layer) && !HAS_TRAIT(target, TRAIT_PROJECTILE_SINK))
 			return FALSE
 		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE
@@ -1211,7 +1210,7 @@
 		color_override = color,
 		scaling = pixel_length_between_points(start_point, end_point) / ICON_SIZE_ALL
 	)
-	SET_PLANE_EXPLICIT(tracer_effect, GAME_PLANE_FOV_HIDDEN, src)
+	SET_PLANE_EXPLICIT(tracer_effect, GAME_PLANE, src)
 
 	QDEL_IN(tracer_effect, PROJECTILE_TRACER_DURATION)
 

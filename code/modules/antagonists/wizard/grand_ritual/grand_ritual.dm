@@ -136,6 +136,9 @@
 
 /// Checks if you're actually able to draw a rune here
 /datum/action/cooldown/grand_ritual/proc/start_drawing_rune()
+	if(GLOB.wonderland_apocalypse)
+		to_chat(owner, span_hearts_decree("No scribbling! There will be one grand finale today, and it is mine. Hat off in my court - yes, the pointed one."))
+		return
 	var/atom/existing_rune = rune?.resolve()
 	if (existing_rune)
 		owner.balloon_alert(owner, "rune already exists!")
@@ -295,11 +298,12 @@
 /obj/effect/temp_visual/wizard_rune
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = null
-	pixel_x = -28
-	pixel_y = -33
+	pixel_x = -33
+	pixel_y = 16
+	pixel_z = -48
 	anchored = TRUE
-	layer = SIGIL_LAYER
-	plane = GAME_PLANE
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	duration = 0 SECONDS
 
 /obj/effect/temp_visual/wizard_rune/Initialize(mapload)

@@ -30,7 +30,8 @@
 	if(!result)
 		tgui_alert(user, "Invalid name.")
 		return ""
-	return sanitize(result)
+	// reject_bad_name already strips < > " ; so escaping here just leaves &#39; in tgui windows
+	return result
 
 
 /// Runs byond's html encoding sanitization proc, after replacing new-lines and tabs for the # character.

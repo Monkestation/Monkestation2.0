@@ -20,6 +20,7 @@
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_ORGANIC
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
+	smoker_lungs = /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
 	mutanteyes = /obj/item/organ/internal/eyes/plasmaman
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/internal/liver/bone/plasmaman
@@ -41,6 +42,10 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/plasmaman,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/plasmaman,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
+	)
+	survival_box_overrides = list(
+		SURVIVAL_INTERNALS_TYPE = /obj/item/tank/internals/plasmaman/belt,
+		SURVIVAL_MEDIPEN_TYPE = /obj/item/reagent_containers/medipen,
 	)
 
 	// Body temperature for Plasmen is much lower human as they can handle colder environments

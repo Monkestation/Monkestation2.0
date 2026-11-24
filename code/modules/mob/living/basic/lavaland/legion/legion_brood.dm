@@ -106,7 +106,7 @@
 /mob/living/basic/mining/legion_brood/update_overlays()
 	. = ..()
 	if (has_emissive)
-		. += emissive_appearance(icon, "[icon_living]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Like the Legion's summoned skull but funnier (it's snow now)
 /mob/living/basic/mining/legion_brood/snow
