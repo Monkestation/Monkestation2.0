@@ -1,6 +1,6 @@
 /// Base preference for limb specific quirks
 /datum/preference/choiced/limb
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_identifier = PREFERENCE_CHARACTER
 	abstract_type = /datum/preference/choiced/limb
 	var/quirk_name
@@ -32,7 +32,7 @@
 
 /// Preference for hemiplegic players to choose a specific side
 /datum/preference/choiced/hemiplegic_side
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hemiplegic_side"
 

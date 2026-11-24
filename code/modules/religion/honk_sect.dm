@@ -18,11 +18,11 @@
 // only works on clumsy people and clowns
 /datum/religion_sect/honk/sect_bless(mob/living/blessed, mob/living/user)
 	if(!ishuman(blessed))
-		return
+		return BLESSING_FAILED
 	var/mob/living/carbon/human/H = blessed
 	var/datum/mind/M = H.mind
 	if(M.assigned_role != "Clown" || !HAS_TRAIT(user, TRAIT_CLUMSY))
-		return
+		return BLESSING_FAILED
 
 	var/heal_amt = 10 // should probably lessen
 	if(H.getBruteLoss() > 0 || H.getFireLoss() > 0)
@@ -33,7 +33,7 @@
 	to_chat(H, span_boldnotice("The radiance of [GLOB.deity] heals you!"))
 	playsound(user, "sound/miscitems/bikehorn.ogg", 25, TRUE, -1)
 	H.add_mood_event("honk", /datum/mood_event/honk)
-	return TRUE
+	return BLESSING_IGNORED
 
 /datum/religion_sect/honk/on_sacrifice(obj/item/N, mob/living/L)
 	if(!istype(N, /obj/item/food/grown/banana))
