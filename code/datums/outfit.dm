@@ -249,7 +249,6 @@
 	post_equip(H, visualsOnly)
 
 	if(!visualsOnly)
-		apply_fingerprints(H)
 		if(internals_slot)
 			if(internals_slot & ITEM_SLOT_HANDS)
 				var/obj/item/tank/internals/internals = H.is_holding_item_of_type(/obj/item/tank/internals)
@@ -262,6 +261,7 @@
 	H.dna?.species?.post_equip_species_outfit(H, visualsOnly)
 
 	if(!visualsOnly)
+		apply_fingerprints(H)
 		for(var/implant_type in implants)
 			var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)
 			I.implant(H, null, TRUE)

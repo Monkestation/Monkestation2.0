@@ -105,7 +105,7 @@
 /// A bare lime vox with cyan eyes, like the species icon on Yogstation
 /datum/species/vox/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.delete_equipment()
-	human.dna.features["vox_skin_tone"] = VOX_DEFAULT_SKIN_TONE
+	human.dna.features["vox_skin_tone"] = "lime"
 	human.dna.features["vox_quills"] = SPRITE_ACCESSORY_NONE
 	human.dna.features["vox_facial_quills"] = SPRITE_ACCESSORY_NONE
 	human.dna.features["vox_body_markings"] = SPRITE_ACCESSORY_NONE

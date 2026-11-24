@@ -1,6 +1,6 @@
 /// Makes a preview icon of a vox head wearing the passed quills
 /proc/generate_vox_head_shot(datum/sprite_accessory/sprite_accessory, key)
-	var/datum/universal_icon/final_icon = uni_icon(GLOB.vox_skin_tones[VOX_DEFAULT_SKIN_TONE], "vox_head", SOUTH)
+	var/datum/universal_icon/final_icon = uni_icon(GLOB.vox_skin_tones["lime"], "vox_head", SOUTH)
 	for(var/eye_state in list("eyes_l", "eyes_r"))
 		var/datum/universal_icon/eye = uni_icon('icons/mob/human/species/vox/eyes.dmi', eye_state, SOUTH)
 		eye.blend_color(COLOR_CYAN, ICON_MULTIPLY)
@@ -28,7 +28,7 @@
 	return assoc_to_keys(GLOB.vox_skin_tones)
 
 /datum/preference/choiced/vox_skin_tone/create_default_value()
-	return VOX_DEFAULT_SKIN_TONE
+	return "lime"
 
 /datum/preference/choiced/vox_skin_tone/compile_constant_data()
 	var/list/data = ..()

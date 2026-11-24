@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(vox_skin_tones, list(
 	"crimson" = 'icons/mob/human/species/vox/bodyparts_crimson.dmi',
 	"emerald" = 'icons/mob/human/species/vox/bodyparts_emerald.dmi',
 	"grey" = 'icons/mob/human/species/vox/bodyparts_grey.dmi',
-	VOX_DEFAULT_SKIN_TONE = 'icons/mob/human/species/vox/bodyparts_lime.dmi',
+	"lime" = 'icons/mob/human/species/vox/bodyparts_lime.dmi',
 	"mossy" = 'icons/mob/human/species/vox/bodyparts_mossy.dmi',
 	"nebula" = 'icons/mob/human/species/vox/bodyparts_nebula.dmi',
 	"plum" = 'icons/mob/human/species/vox/bodyparts_plum.dmi',

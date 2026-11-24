@@ -240,7 +240,7 @@
 /// A severed tail looks like the tail it was: skin tone and markings
 /obj/item/organ/external/tail/vox/update_icon_state()
 	var/datum/bodypart_overlay/mutant/tail/vox/vox_overlay = bodypart_overlay
-	icon_state = "m_tail_vox_[vox_overlay?.skin_tone || VOX_DEFAULT_SKIN_TONE]_BEHIND"
+	icon_state = "m_tail_vox_[vox_overlay?.skin_tone || "lime"]_BEHIND"
 	return ..()
 
 /obj/item/organ/external/tail/vox/update_overlays()
@@ -249,7 +249,7 @@
 	if(isnull(vox_overlay?.sprite_datum) || vox_overlay.sprite_datum.icon_state == "plain")
 		return
 	var/mutable_appearance/markings = mutable_appearance(vox_overlay.sprite_datum.icon, "m_vox_tail_markings_[vox_overlay.sprite_datum.icon_state]_BEHIND")
-	markings.color = color_matrix_additive(vox_overlay.draw_color)
+	markings.color = COLOR_MATRIX_ADD(vox_overlay.draw_color)
 	. += markings
 
 /// The tail is drawn in the skin tone of the body it grew on, with its markings (the sprite accessory) on top.
@@ -260,7 +260,7 @@
 	palette_key = MUTANT_COLOR_SECONDARY
 	fallback_key = MUTANT_COLOR // like floran leaves, the markings take the mutant color if there's no secondary one
 	/// The skin tone of the body this tail grew on, which it keeps when transplanted or severed
-	var/skin_tone = VOX_DEFAULT_SKIN_TONE
+	var/skin_tone = "lime"
 	/// The mob this tail grew on, see /obj/item/organ/external/tail/var/original_owner
 	var/datum/weakref/original_owner
 
@@ -279,12 +279,12 @@
 /datum/bodypart_overlay/mutant/tail/vox/get_image(obj/item/bodypart/limb, layer_index, layer_real, layer_name)
 	if(limb && on_original_body(limb))
 		var/limb_style = limb.get_drawn_limb_style()
-		skin_tone = (limb_style in GLOB.vox_skin_tones) ? limb_style : VOX_DEFAULT_SKIN_TONE // other limb styles, like tundra moth fur, have no tail
+		skin_tone = (limb_style in GLOB.vox_skin_tones) ? limb_style : "lime" // other limb styles, like tundra moth fur, have no tail
 	var/wagging_prefix = wagging ? "wagging_" : ""
 	var/mutable_appearance/tail = mutable_appearance('icons/mob/human/species/vox/tails.dmi', "m_tail_vox_[wagging_prefix][skin_tone]_[layer_index]", layer = layer_real)
 	if(sprite_datum.icon_state != "plain")
 		var/mutable_appearance/markings = mutable_appearance(sprite_datum.icon, "m_[wagging_prefix]vox_tail_markings_[sprite_datum.icon_state]_[layer_index]")
-		markings.color = color_matrix_additive(draw_color)
+		markings.color = COLOR_MATRIX_ADD(draw_color)
 		tail.overlays += markings
 	return tail
 

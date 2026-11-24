@@ -72,14 +72,21 @@
 	else
 		to_chat(trimmer, span_warning("This tool is incompatible with the [src.name]!"))
 
+///Returns the trait that stops us growing back once styled to nothing: baldness for hair-like features, a shave for facial hair-like ones. Null if nothing does.
+/obj/item/organ/external/proc/get_regrowth_blocker()
+	if(restyle_flags & EXTERNAL_RESTYLE_HAIR)
+		return TRAIT_BALD
+	if(restyle_flags & EXTERNAL_RESTYLE_FACIAL_HAIR)
+		return TRAIT_SHAVED
+	return null
+
 ///Restyles the external organ from a list of valid options. Returns TRUE if it was restyled.
 /obj/item/organ/external/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	var/list/restyles = get_valid_restyles()
 	var/new_style = tgui_input_list(trimmer, "Select a new style", "Grooming", restyles)
 	if(isnull(new_style))
 		return FALSE
-	// Hair-like features don't grow back on the bald and shaved
-	var/regrowth_blocker = (restyle_flags & EXTERNAL_RESTYLE_HAIR) ? TRAIT_BALD : ((restyle_flags & EXTERNAL_RESTYLE_FACIAL_HAIR) ? TRAIT_SHAVED : null)
+	var/regrowth_blocker = get_regrowth_blocker()
 	if(regrowth_blocker && owner && new_style != SPRITE_ACCESSORY_NONE && HAS_TRAIT(owner, regrowth_blocker))
 		to_chat(trimmer, span_warning("[original_target == trimmer ? "Your" : "[original_target]'s"] [name] won't grow back!"))
 		return FALSE

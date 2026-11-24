@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	return display_radial_menu(user)
 
 /obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
-	if(restyle_hairlike_features(beard_dresser, HEAD_FACIAL_HAIR))
+	if(restyle_hairlike_features(beard_dresser, EXTERNAL_RESTYLE_FACIAL_HAIR))
 		return TRUE
 	if(beard_dresser.physique != FEMALE && !magical_mirror)
 		var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
@@ -123,7 +123,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 		beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
-	if(restyle_hairlike_features(hairdresser, HEAD_HAIR))
+	if(restyle_hairlike_features(hairdresser, EXTERNAL_RESTYLE_HAIR))
 		return TRUE
 	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 	if(isnull(new_style))
@@ -137,31 +137,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /**
  * Heads that can't grow (facial) hair restyle their hair-like features instead, such as vox quills.
- * Returns TRUE if the head has such features, which means the normal hair styling should be skipped.
+ * Returns TRUE if the head has such a feature, which means the normal hair styling should be skipped.
  */
-/obj/structure/mirror/proc/restyle_hairlike_features(mob/living/carbon/human/user, head_flag)
-	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
-	if(!head || (head.head_flags & head_flag))
+/obj/structure/mirror/proc/restyle_hairlike_features(mob/living/carbon/human/user, restyle_flag)
+	var/obj/item/organ/external/feature = get_hairlike_feature(user, restyle_flag)
+	if(!feature)
 		return FALSE
-	var/facial = (head_flag == HEAD_FACIAL_HAIR)
-	var/restyle_flag = facial ? EXTERNAL_RESTYLE_FACIAL_HAIR : EXTERNAL_RESTYLE_HAIR
-	if(!head.has_restylable_features(restyle_flag))
-		return FALSE
-	if(HAS_TRAIT(user, facial ? TRAIT_SHAVED : TRAIT_BALD))
-		to_chat(user, span_notice("If only growing it back were that easy for you... The reminder makes you feel terrible."))
+	if(HAS_TRAIT(user, feature.get_regrowth_blocker()))
+		to_chat(user, span_notice("If only growing back your [feature.name] were that easy for you... The reminder makes you feel terrible."))
 		user.add_mood_event("bald_hair_day", /datum/mood_event/bald_reminder)
 		return TRUE
-	head.attempt_feature_restyle(src, user, user, BODY_ZONE_HEAD, restyle_flag, 0)
+	feature.attempt_feature_restyle(src, user, user, BODY_ZONE_HEAD, restyle_flag, 0)
 	return TRUE
 
-/// Returns the name of the hair-like feature with these restyle flags our head has instead of hair (like "vox quills"), or null if it has none
-/obj/structure/mirror/proc/get_hairlike_feature_name(mob/living/carbon/human/user, restyle_flags)
+/// Returns the hair-like feature with these restyle flags our head has instead of hair (like vox quills), or null if it has none
+/obj/structure/mirror/proc/get_hairlike_feature(mob/living/carbon/human/user, restyle_flags)
 	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!head || (head.head_flags & ((restyle_flags & EXTERNAL_RESTYLE_HAIR) ? HEAD_HAIR : HEAD_FACIAL_HAIR)))
 		return null
 	for(var/obj/item/organ/external/feature in head)
 		if(feature.restyle_flags & restyle_flags)
-			return feature.name
+			return feature
 	return null
 
 /obj/structure/mirror/proc/change_name(mob/living/carbon/human/user)
@@ -374,8 +370,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 //Magic mirrors can change hair color as well
 /obj/structure/mirror/magic/change_hair(mob/living/carbon/human/user)
 	// Heads that can't grow hair color their hair-like features (like vox quills) with the hair colors instead
-	var/hair_name = get_hairlike_feature_name(user, EXTERNAL_RESTYLE_HAIR) || "hair"
-	var/facial_hair_name = get_hairlike_feature_name(user, EXTERNAL_RESTYLE_FACIAL_HAIR)
+	var/hair_name = get_hairlike_feature(user, EXTERNAL_RESTYLE_HAIR)?.name || "hair"
+	var/facial_hair_name = get_hairlike_feature(user, EXTERNAL_RESTYLE_FACIAL_HAIR)?.name
 	var/hairchoice = tgui_alert(user, "[capitalize(hair_name)] style or [hair_name] color?", "Change [capitalize(hair_name)]", list("Style", "Color"))
 	if(hairchoice == "Style") //So you just want to use a mirror then?
 		return ..()

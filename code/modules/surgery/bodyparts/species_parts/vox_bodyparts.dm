@@ -153,7 +153,7 @@
 	return !isnull(icon_state) && !bodypart_owner.is_invisible
 
 /datum/bodypart_overlay/simple/vox_body_markings/color_image(image/overlay, obj/item/bodypart/limb, layer_index)
-	overlay.color = color_matrix_additive(draw_color)
+	overlay.color = COLOR_MATRIX_ADD(draw_color)
 
 /datum/bodypart_overlay/simple/vox_body_markings/generate_icon_cache()
 	. = ..()

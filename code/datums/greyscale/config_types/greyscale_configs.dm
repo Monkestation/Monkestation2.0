@@ -1657,7 +1657,7 @@
 	name = "Plasmaman Double Belt Suit (Worn)"
 	json_config = 'code/datums/greyscale/json_configs/plasmaman/suit/doublebelt/plasmaman_suit_doublebelt_worn.json'
 
-// Vox shaped worn sprites, see /datum/species/vox/generate_custom_worn_icon()
+// Vox shaped worn sprites, see /datum/species/vox/get_fitted_worn_icon()
 
 /datum/greyscale_config/jumpsuit/worn/vox
 	name = "Jumpsuit (Worn, Vox)"

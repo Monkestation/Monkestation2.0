@@ -244,8 +244,6 @@
 #define LIMB_STYLE_MUTANT_COLORS "Mutant colors"
 ///The limbs use their tundra fur sprites
 #define LIMB_STYLE_TUNDRA "Tundra fur"
-///The skin tone vox limbs are drawn in by default, see GLOB.vox_skin_tones for the others
-#define VOX_DEFAULT_SKIN_TONE "lime"
 
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100
