@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "people without legs can now take off with functional wings from the floor instead of only from a wheelchair"

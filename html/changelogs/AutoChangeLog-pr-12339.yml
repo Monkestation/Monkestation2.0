@@ -1,0 +1,5 @@
+author: "Kmla2"
+delete-after: True
+changes:
+  - balance: "plushes from maint loot have hands and can be killed"
+  - bugfix: "sentient plush can no longer roll invisible sprites"
