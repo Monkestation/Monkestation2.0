@@ -100,6 +100,7 @@
 					loaded_atmospherics += thing
 				loaded_atom_movables |= thing
 
+	SSair.hold_machinery_for_template(loaded_atmospherics)
 	SSatoms.InitializeAtoms(loaded_areas + loaded_atom_movables + loaded_turfs)
 	SSmachines.setup_template_powernets(loaded_cables)
 	SSair.setup_template_machinery(loaded_atmospherics)

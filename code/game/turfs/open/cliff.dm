@@ -30,8 +30,8 @@
 	if(isnull(underlay_tile))
 		return
 	var/image/underlay = image(icon_state = initial(underlay_tile.icon_state), icon = initial(underlay_tile.icon))
-	underlay.pixel_x = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
-	underlay.pixel_y = undertile_pixel_y
+	underlay.pixel_w = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
+	underlay.pixel_z = undertile_pixel_y
 	SET_PLANE(underlay, underlay_plane || plane, src)
 	underlays += underlay
 

@@ -1015,12 +1015,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 // Warp Effect //
 /atom/movable/warp_effect
-	plane = GRAVITY_PULSE_PLANE
+	plane = DISPLACEMENT_PLANE
 	appearance_flags = PIXEL_SCALE|LONG_GLIDE // no tile bound so you can see it around corners and so
 	icon = 'icons/effects/light_overlays/light_352.dmi'
 	icon_state = "light"
-	pixel_x = -176
-	pixel_y = -176
+	pixel_x = -160
+	pixel_y = -160
 
 /atom/movable/warp_effect/Initialize(mapload)
 	. = ..()

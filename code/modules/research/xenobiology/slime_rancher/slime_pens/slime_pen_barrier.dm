@@ -53,7 +53,6 @@
 
 /// Puts the sprite on the tile border and picks whether mobs draw in front of us or behind us.
 /obj/structure/slime_pen_barrier/proc/update_offsets()
-	SET_PLANE_IMPLICIT(src, (dir & (NORTH|SOUTH)) ? GAME_PLANE_UPPER : GAME_PLANE)
 	// the extra 2px keeps us level with the posts, which sit up off the tile line so they don't draw over the wall below
 	switch(dir)
 		if(NORTH)

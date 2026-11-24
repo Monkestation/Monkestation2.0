@@ -213,10 +213,15 @@
 				if (do_after(user,20, target = src))
 					grave_dug_open = TRUE
 					open(user, force = TRUE)
-					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
+					var/is_chill_with_robbing = HAS_MIND_TRAIT(user, TRAIT_MORBID) || HAS_PERSONALITY(user, /datum/personality/callous) || HAS_PERSONALITY(user, /datum/personality/misanthropic)
+					if(!is_chill_with_robbing)
+						user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
-						user.gain_trauma(/datum/brain_trauma/magic/stalker)
-						to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+						if(is_chill_with_robbing)
+							to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
+						else
+							user.gain_trauma(/datum/brain_trauma/magic/stalker)
+							to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
 						first_open = FALSE
 					return 1
 				return 1

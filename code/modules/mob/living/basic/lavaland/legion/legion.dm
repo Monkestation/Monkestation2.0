@@ -59,7 +59,7 @@
 	UnregisterSignal(stored_mob, list(COMSIG_LIVING_REVIVE, COMSIG_MOVABLE_MOVED))
 	ai_controller.clear_blackboard_key(BB_LEGION_CORPSE)
 	stored_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
-	stored_mob.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman/long_term) // This will still probably mostly be gone before you are alive
+	stored_mob.add_mood_event("legion_core", /datum/mood_event/healsbadman/long_term) // This will still probably mostly be gone before you are alive
 	stored_mob = null
 
 /mob/living/basic/mining/legion/death(gibbed)
@@ -75,7 +75,7 @@
 /mob/living/basic/mining/legion/update_overlays()
 	. = ..()
 	if (stat != DEAD && has_emissive) // Shouldn't really happen but just in case
-		. += emissive_appearance(icon, "[icon_living]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Put a corpse in this guy
 /mob/living/basic/mining/legion/proc/consume(mob/living/consumed)

@@ -255,22 +255,34 @@
 	if(cosmic_passive.passive_level > HERETIC_LEVEL_UPGRADE)
 		new_field.reflects_projectiles()
 
+/// Multiplier to ballistic projectile damage a fat fles heretic gets
+#define FLESH_PROJECTILE_DAMAGE_MULT 0.15
+/// How many embedded items a fat flesh heretic can hold before shooting them out
+#define FLESH_EMBED_BURST_THRESHOLD 8
+
 //---- Flesh Passive
-// Makes you never get disgust, virus immune and immune to damage from space ants
+// Makes you never get disgust, virus immune, immune to damage from space ants and halves your hunger rate
 // Level 2, organs and raw meat heals you. You also become a voracious glutton who likes all food. No slowdown from being fat
-// Level 3, being fat gives damage resistance
+// Level 3, being fat gives baton resistance, makes ballistic projectiles embed for reduced damage, and expels them all at a threshold
 /datum/status_effect/heretic_passive/flesh
 	name = "Ravenous Hunger"
 	id = "flesh_passive"
 	passive_descriptions = list(
-		"Immunity to Diseases, Disgust and space ants.",
+		"Immunity to Diseases, Disgust and space ants. You get hungry half as fast.",
 		"Eating organs or meat now heals you, gain the voracious and gluttonous trait and being fat doesn't slow you down.",
-		"Gain a flat 25% damage and stamina damage reduction when fat as well as baton resistance."
+		"When fat you gain baton resistance and bolas sink harmlessly into your flesh instead of tangling your legs. \
+		Ballistic projectiles always embed in your flesh and only deal 15% of their damage, as does anything embedded in you. \
+		Once enough is lodged in you, your flesh violently expels it all in a ring around you."
 	)
+	/// assoc list of embedded item to list(pixel_x, pixel_y, rotation)
+	var/list/embed_visuals
 
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), TRAIT_STATUS_EFFECT(id))
+	if(ishuman(owner))
+		var/mob/living/carbon/human/heretic = owner
+		heretic.physiology.hunger_mod *= 0.5 // the flesh hoards everything it's fed
 
 /datum/status_effect/heretic_passive/flesh/tick(seconds_between_ticks)
 	. = ..()
@@ -285,6 +297,8 @@
 	var/mob/living/carbon/human/fat_human = owner
 	fat_human.on_fat() // Make sure to update the movespeed modifier in case we gain the trait while already fat
 	var/obj/item/organ/internal/tongue/tongue = fat_human.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
 	tongue.liked_foodtypes = ALL
 	tongue.disliked_foodtypes = NONE
 	tongue.toxic_foodtypes = NONE
@@ -301,6 +315,7 @@
 		heal_glutton() // Heal the owner if they eat meat
 
 /datum/status_effect/heretic_passive/flesh/proc/heal_glutton()
+	owner.overeatduration = min(owner.overeatduration + 20 SECONDS, 20 MINUTES) // Feasting on flesh fattens you up quickly
 	var/healed_amount = owner.heal_overall_damage(2, 2, updating_health = FALSE)
 	healed_amount += owner.adjustOxyLoss(-2, FALSE)
 	healed_amount += owner.adjustToxLoss(-2, FALSE, TRUE)
@@ -321,32 +336,205 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/fat_human = owner
-	RegisterSignals(fat_human, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat))
+	RegisterSignals(fat_human, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat), override = TRUE)
+	RegisterSignal(fat_human, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(on_pre_bullet_act), override = TRUE)
+	RegisterSignal(fat_human, COMSIG_ATOM_PREHITBY, PROC_REF(on_pre_hitby), override = TRUE)
+	RegisterSignal(fat_human, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(on_damage_modifiers), override = TRUE)
+	RegisterSignal(fat_human, COMSIG_CARBON_EMBED_ADDED, PROC_REF(on_embed_added), override = TRUE)
+	RegisterSignal(fat_human, COMSIG_CARBON_EMBED_REMOVED, PROC_REF(on_embed_removed), override = TRUE)
+	RegisterSignal(fat_human, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays), override = TRUE)
+	for(var/obj/item/bodypart/limb as anything in fat_human.bodyparts)
+		for(var/obj/item/embedded as anything in limb.embedded_objects)
+			add_embed_visual(embedded)
+	fat_human.update_appearance(UPDATE_OVERLAYS)
 	on_fat()
 
-/// Gives/Removes damage resistance when we become/lose fatness
 /datum/status_effect/heretic_passive/flesh/proc/on_fat(datum/source)
+	SIGNAL_HANDLER
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/heretic = owner
 	if(HAS_TRAIT(heretic, TRAIT_FAT))
-		heretic.physiology.damage_resistance += 25
+		if(source)
+			heretic.balloon_alert(heretic, "your flesh feels dense")
 		ADD_TRAIT(heretic, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 	else
-		heretic.physiology.damage_resistance -= 25
+		if(source)
+			heretic.balloon_alert(heretic, "your flesh feels thinner")
 		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/heretic_passive/flesh/proc/is_physical_projectile(obj/projectile/proj)
+	return proj.armor_flag == BULLET && proj.damage_type == BRUTE && proj.damage > 0
+
+/datum/status_effect/heretic_passive/flesh/proc/on_pre_bullet_act(mob/living/carbon/human/source, obj/projectile/proj, def_zone, piercing_hit, blocked)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FAT) || piercing_hit || !is_physical_projectile(proj))
+		return NONE
+	proj.damage *= FLESH_PROJECTILE_DAMAGE_MULT
+	proj.stamina *= FLESH_PROJECTILE_DAMAGE_MULT
+	var/shrapnel_type = proj.shrapnel_type || /obj/item/shrapnel/bullet
+	var/obj/item/payload = new shrapnel_type(get_turf(source))
+	if(istype(payload, /obj/item/shrapnel/bullet))
+		payload.name = proj.name
+	var/datum/embedding/heretic_flesh/flesh_embed = new()
+	flesh_embed.projectile_type = proj.type
+	flesh_embed.hit_angle = proj.angle + proj.projectile_angle
+	flesh_embed.register_on(payload)
+	payload.set_embed(flesh_embed)
+	payload.force_embed(source, source.check_hit_limb_zone_name(def_zone))
+	// hey it would be funny if you get hit by a rocket and it doesn't blow you up
+	return COMPONENT_BULLET_ACTED
+
+// too thick to get a bola around you
+/datum/status_effect/heretic_passive/flesh/proc/on_pre_hitby(mob/living/carbon/human/source, obj/item/restraints/legcuffs/bola/bola, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FAT) || !istype(bola))
+		return NONE
+	var/datum/embedding/heretic_flesh/bola/bola_embed = new()
+	bola_embed.register_on(bola)
+	bola.set_embed(bola_embed)
+	bola.force_embed(source, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+	return COMSIG_HIT_PREVENTED
+
+/datum/status_effect/heretic_passive/flesh/proc/on_damage_modifiers(mob/living/carbon/human/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FAT) || !istype(attacking_item))
+		return
+	if(attacking_item.get_embed()?.owner == source)
+		damage_mods += FLESH_PROJECTILE_DAMAGE_MULT
+
+/datum/status_effect/heretic_passive/flesh/proc/on_embed_added(mob/living/carbon/source, obj/item/embedded, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	add_embed_visual(embedded)
+	source.update_appearance(UPDATE_OVERLAYS)
+	if(!HAS_TRAIT(source, TRAIT_FAT) || LAZYLEN(embed_visuals) < FLESH_EMBED_BURST_THRESHOLD)
+		return
+	addtimer(CALLBACK(src, PROC_REF(expel_embeds)), 0.1 SECONDS, TIMER_UNIQUE)
+
+/datum/status_effect/heretic_passive/flesh/proc/on_embed_removed(mob/living/carbon/source, obj/item/embedded, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	LAZYREMOVE(embed_visuals, embedded)
+	source.update_appearance(UPDATE_OVERLAYS)
+
+/datum/status_effect/heretic_passive/flesh/proc/add_embed_visual(obj/item/embedded)
+	if(LAZYACCESS(embed_visuals, embedded))
+		return
+	LAZYSET(embed_visuals, embedded, list(rand(-7, 7), rand(-9, 7), rand(0, 359)))
+
+/datum/status_effect/heretic_passive/flesh/proc/on_update_overlays(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	for(var/obj/item/embedded as anything in embed_visuals)
+		var/list/visual = embed_visuals[embedded]
+		var/overlay_icon = embedded.icon
+		var/overlay_state = embedded.icon_state
+		var/overlay_scale = 0.5
+		var/overlay_angle = visual[3]
+		var/datum/embedding/heretic_flesh/flesh_embed = embedded.get_embed()
+		if(istype(flesh_embed) && flesh_embed.projectile_type)
+			overlay_icon = initial(flesh_embed.projectile_type.icon)
+			overlay_state = initial(flesh_embed.projectile_type.icon_state)
+			overlay_scale = 1 // Projectile sprites are already tiny (usually)
+			overlay_angle = flesh_embed.hit_angle
+		var/mutable_appearance/embed_overlay = mutable_appearance(overlay_icon, overlay_state, -HIGHEST_LAYER)
+		embed_overlay.pixel_w = visual[1]
+		embed_overlay.pixel_z = visual[2]
+		var/matrix/embed_matrix = matrix()
+		embed_matrix.Scale(overlay_scale, overlay_scale)
+		// looks cute if it points at the source
+		embed_matrix.Turn(overlay_angle)
+		embed_overlay.transform = embed_matrix
+		overlays += embed_overlay
+
+/datum/status_effect/heretic_passive/flesh/proc/expel_embeds()
+	var/mob/living/carbon/carbon_owner = owner
+	if(QDELETED(carbon_owner))
+		return
+	var/list/to_expel = LAZYCOPY(embed_visuals)
+	if(!length(to_expel))
+		return
+
+	var/turf/our_turf = get_turf(carbon_owner)
+	carbon_owner.visible_message(
+		span_danger("[carbon_owner]'s flesh convulses and violently spits out everything lodged in it!"),
+		span_hypnophrase("Your flesh heaves and hurls out everything lodged within it!"),
+	)
+	playsound(carbon_owner, 'sound/effects/splat.ogg', 70, TRUE)
+	carbon_owner.add_splatter_floor(our_turf)
+
+	var/angle_step = 360 / length(to_expel)
+	var/current_angle = rand(0, 359)
+	for(var/obj/item/embedded as anything in to_expel)
+		current_angle += angle_step
+		var/datum/embedding/embed_data = embedded.get_embed()
+		if(embed_data?.owner != carbon_owner)
+			continue
+		var/datum/embedding/heretic_flesh/flesh_embed = embed_data
+		var/projectile_type = istype(flesh_embed) ? flesh_embed.projectile_type : null
+		embed_data.remove_embedding()
+		if(projectile_type)
+			if(!QDELETED(embedded))
+				qdel(embedded)
+			var/obj/projectile/expelled = new projectile_type(our_turf)
+			expelled.starting = our_turf
+			expelled.firer = carbon_owner
+			expelled.fired_from = carbon_owner
+			expelled.original = get_turf_in_angle(current_angle, our_turf, 7) || our_turf
+			expelled.fire(current_angle)
+		else if(!QDELETED(embedded) && embedded.loc == our_turf)
+			embedded.throw_at(get_turf_in_angle(current_angle, our_turf, 7), 7, EMBED_THROWSPEED_THRESHOLD, carbon_owner)
 
 /datum/status_effect/heretic_passive/flesh/on_remove()
 	. = ..()
 	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON, TRAIT_BATON_RESISTANCE), TRAIT_STATUS_EFFECT(id))
-	UnregisterSignal(owner, list(COMSIG_LIVING_EAT_FOOD, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/heretic = owner
-	if(!HAS_TRAIT(heretic, TRAIT_FAT))
-		return
-	heretic.physiology.damage_resistance -= 25
-	heretic.on_fat()
+	UnregisterSignal(owner, list(
+		COMSIG_LIVING_EAT_FOOD,
+		SIGNAL_ADDTRAIT(TRAIT_FAT),
+		SIGNAL_REMOVETRAIT(TRAIT_FAT),
+		COMSIG_ATOM_PRE_BULLET_ACT,
+		COMSIG_ATOM_PREHITBY,
+		COMSIG_MOB_APPLY_DAMAGE_MODIFIERS,
+		COMSIG_CARBON_EMBED_ADDED,
+		COMSIG_CARBON_EMBED_REMOVED,
+		COMSIG_ATOM_UPDATE_OVERLAYS,
+	))
+	embed_visuals = null
+	owner.update_appearance(UPDATE_OVERLAYS)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/heretic = owner
+		heretic.physiology.hunger_mod *= 2
+		heretic.on_fat()
+
+/datum/embedding/heretic_flesh
+	fall_chance = 0
+	pain_chance = 1
+	jostle_chance = 0.1
+	pain_stam_pct = 0
+
+	var/obj/projectile/projectile_type
+	var/hit_angle = 0
+
+/datum/embedding/heretic_flesh/embed_message()
+	owner.visible_message(span_danger("[parent] sinks into the swollen flesh of [owner]'s [owner_limb.plaintext_zone]!"),
+		span_hypnophrase("[parent] sinks into the flesh of your [owner_limb.plaintext_zone]."))
+
+/datum/embedding/heretic_flesh/bola
+	pain_mult = 0
+	impact_pain_mult = 0
+	remove_pain_mult = 0
+	jostle_pain_mult = 0
+
+/datum/embedding/heretic_flesh/bola/embed_message()
+	owner.visible_message(span_danger("[parent] wraps around [owner]'s [owner_limb.plaintext_zone], but sinks harmlessly into the folds of fat!"),
+		span_hypnophrase("[parent] tangles into the folds of your [owner_limb.plaintext_zone]."))
+
+/datum/embedding/heretic_flesh/bola/remove_embedding(mob/living/to_hands)
+	var/obj/item/bola = parent
+	. = ..()
+	if(!QDELETED(bola))
+		bola.set_embed(bola.embed_type) // This deletes us
+
+#undef FLESH_PROJECTILE_DAMAGE_MULT
+#undef FLESH_EMBED_BURST_THRESHOLD
 
 //---- Lock Passive
 // On gain you can understand and speak every language

@@ -50,6 +50,7 @@ GAME_VERB_DESC(/client, redeem_code, "Redeem Code", "Redeem a code given to you.
 		if(code in GLOB.redeemed_codes)
 			tgui_alert(usr, "Sorry the code you've tried to redeem has already been redeemed", "Code Redemption", list("Close"))
 			return
+		GLOB.redeemed_codes += code
 
 	var/path = GLOB.stored_codes[code]
 	var/list/list_path = params2list(path)

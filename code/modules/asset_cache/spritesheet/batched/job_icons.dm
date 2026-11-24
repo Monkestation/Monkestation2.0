@@ -12,5 +12,5 @@
 		var/datum/universal_icon/job_icon = get_job_hud_icon(job)
 		if(!job_icon)
 			continue
-		insert_icon(id, job_icon)
+		insert_icon(id, job_icon.copy().scale(icon_size, icon_size))
 		id_list[id] = TRUE

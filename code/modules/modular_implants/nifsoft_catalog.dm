@@ -110,6 +110,9 @@ GLOBAL_LIST_INIT(purchasable_nifsofts, list(
 				return FALSE
 
 			var/obj/item/organ/internal/cyberimp/brain/nif/buyer_nif = target_nif.resolve()
+			if(!buyer_nif)
+				paying_account.bank_card_talk("You are unable to buy this.")
+				return FALSE
 
 			if(rewards_purchase)
 				if(buyer_nif.rewards_points < amount_to_charge)

@@ -3,6 +3,7 @@
 	desc = "The bones seem to still be twitching."
 	ui_desc = "A claw made from the bones of monster. It can be transformed into a heavier, more wound-inducing version."
 	icon_state = "beast_claw"
+	icon_angle = 90
 	base_icon_state = "beast_claw"
 	w_class =  WEIGHT_CLASS_SMALL
 	block_chance = 20

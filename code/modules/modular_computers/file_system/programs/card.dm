@@ -163,7 +163,7 @@
 
 			// Sanitize the name first. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
 			// would not pass as a formal character name, but would still be valid on an ID card created by a player.
-			var/new_name = sanitize(params["name"])
+			var/new_name = sanitize(params["name"], encode = FALSE)
 
 			if(!new_name)
 				inserted_auth_card.registered_name = null
@@ -266,7 +266,7 @@
 
 /datum/computer_file/program/card_mod/ui_static_data(mob/user)
 	var/list/data = list()
-	data["station_name"] = station_name()
+	data["station_name"] = html_decode(station_name())
 	data["centcom_access"] = is_centcom
 	data["minor"] = target_dept || minor ? TRUE : FALSE
 
@@ -295,13 +295,13 @@
 	var/list/data = list()
 
 	var/obj/item/card/id/inserted_id = computer.computer_id_slot
-	data["authIDName"] = inserted_id ? inserted_id.name : "-----"
+	data["authIDName"] = inserted_id ? html_decode(inserted_id.name) : "-----"
 	data["authenticatedUser"] = authenticated_card
 
 	data["has_id"] = !!inserted_id
-	data["id_name"] = inserted_id ? inserted_id.name : "-----"
+	data["id_name"] = inserted_id ? html_decode(inserted_id.name) : "-----"
 	if(inserted_id)
-		data["id_rank"] = inserted_id.assignment ? inserted_id.assignment : "Unassigned"
+		data["id_rank"] = inserted_id.assignment ? html_decode(inserted_id.assignment) : "Unassigned"
 		data["id_owner"] = inserted_id.registered_name ? inserted_id.registered_name : "-----"
 		data["access_on_card"] = inserted_id.access
 		data["wildcardSlots"] = inserted_id.wildcard_slots

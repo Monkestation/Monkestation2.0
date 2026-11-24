@@ -254,6 +254,8 @@ SUBSYSTEM_DEF(wardrobe)
 	stock_info[WARDROBE_STOCK_CONTENTS] += object
 
 /datum/controller/subsystem/wardrobe/proc/provide_type(datum/requested_type, atom/movable/location)
+	if(!ispath(requested_type, /atom/movable))
+		CRASH("provide_type() was given [isnull(requested_type) ? "null" : requested_type], it needs an /atom/movable typepath!")
 	var/atom/movable/requested_object
 	var/list/stock_info = preloaded_stock[requested_type]
 	if(!stock_info)
@@ -318,7 +320,7 @@ SUBSYSTEM_DEF(wardrobe)
 	initial_callbacks[/obj/item/organ] = play_with
 
 	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/storage/box/survival, wardrobe_removal))
+	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/storage/box/survival, apply_overrides))
 	initial_callbacks[/obj/item/storage/box/survival] = play_with
 
 /datum/controller/subsystem/wardrobe/proc/load_outfits()

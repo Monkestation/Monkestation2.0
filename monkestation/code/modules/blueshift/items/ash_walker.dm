@@ -124,6 +124,7 @@
 	name = "primitive surgical drill"
 	icon = 'monkestation/code/modules/blueshift/icons/ashwalker_tools.dmi'
 	icon_state = "surgical_drill"
+	icon_angle = -45
 
 	greyscale_colors = null
 	greyscale_config = null
@@ -215,6 +216,7 @@
 	name = "primitive screwdriver"
 	icon = 'monkestation/code/modules/blueshift/icons/ashwalker_tools.dmi'
 	icon_state = "screwdriver"
+	icon_angle = -45
 
 	greyscale_colors = null
 	greyscale_config = null

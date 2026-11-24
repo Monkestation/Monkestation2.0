@@ -114,6 +114,7 @@
 	desc = "Their success will be yours."
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
+	icon_angle = -45
 	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
@@ -123,7 +124,7 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, click_parameters)
-	if(!istype(user) || !ishuman(target))
+	if(!istype(user) || !ishuman(target) || QDELETED(target))
 		return
 
 	var/mob/living/carbon/human/H = target

@@ -525,7 +525,7 @@
 	surplus = 35
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/dangerous/syndicat
+/datum/uplink_item/explosives/syndicat
 	name = "Syndie cat grenade"
 	desc = "This grenade is filled with 3 trained angry cats in special syndicate modsuits. Upon activation, the Syndicate cats are awoken and unleashed unto unlucky bystanders."
 	item = /obj/item/grenade/spawnergrenade/cat/syndicate
@@ -666,7 +666,7 @@
 	surplus = 100 //monkestation edit: from 0 to 100 HONK
 	purchasable_from = UPLINK_CLOWN_OPS
 
-/datum/uplink_item/stealthy_tools/syndigaloshes/nuke
+/datum/uplink_item/utility_clothing/syndigaloshes/nuke
 	item = /obj/item/clothing/shoes/chameleon/noslip
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS
@@ -697,14 +697,6 @@
 	name = "MODsuit Injector Module"
 	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
 	item = /obj/item/mod/module/injector
-	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
-
-/datum/uplink_item/utility_clothing/holster
-	name = "MODsuit Holster Module"
-	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
-	item = /obj/item/mod/module/holster
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
@@ -820,7 +812,7 @@
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/stealthy_weapons/romerol_kit
+/datum/uplink_item/stealthy_tools/romerol_kit
 	name = "Romerol"
 	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
 			On death, these nodules take control of the dead body, causing limited revivification, \
@@ -931,7 +923,7 @@
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear/max
 	cost = 35
 
-/datum/uplink_item/reinforcement/monkey_agent
+/datum/uplink_item/support/monkey_agent
 	name = "Simian Agent Reinforcements"
 	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
 		They've been trained to operate machinery and can read, but they can't speak Common."
@@ -941,7 +933,7 @@
 	restricted = TRUE
 	refundable = TRUE
 
-/datum/uplink_item/reinforcement/monkey_supplies
+/datum/uplink_item/support/monkey_supplies
 	name = "Simian Agent Supplies"
 	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
 		Monkeys can unpack this kit to recieve a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."

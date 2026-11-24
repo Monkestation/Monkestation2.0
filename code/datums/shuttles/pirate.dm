@@ -29,3 +29,7 @@
 /datum/map_template/shuttle/pirate/geode
 	suffix = "geode"
 	name = "pirate ship (Lustrous Geode)"
+
+/datum/map_template/shuttle/pirate/siren
+	suffix = "siren"
+	name = "pirate ship (Siren Shimai)"

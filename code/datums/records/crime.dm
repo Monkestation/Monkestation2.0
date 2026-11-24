@@ -57,7 +57,7 @@
 			"automated" = TRUE
 		))
 		signal.send_to_receivers()
-		sender.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
+		sender.log_message("(PDA: Citation Server) sent \"[html_encode(message)]\" to [signal.format_target()]", LOG_PDA)
 		break
 
 	return TRUE

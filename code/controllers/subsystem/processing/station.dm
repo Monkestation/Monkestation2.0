@@ -15,7 +15,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 	//If doing unit tests we don't do none of that trait shit ya know?
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
-	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
+	// same for navmap bakes, one bake gets shared by every round so it can't depend on this one's dice
+	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI) && !defined(NAVMAP_BAKE_GENERATION)
 	SetupTraits()
 	display_lobby_traits()
 	#endif

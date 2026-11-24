@@ -121,6 +121,7 @@
 	desc = "It's a plunger for plunging."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
+	icon_angle = 90
 	worn_icon_state = "plunger"
 	inhand_icon_state = "plunger"
 

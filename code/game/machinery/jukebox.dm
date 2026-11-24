@@ -44,7 +44,7 @@
 /obj/machinery/jukebox/examine(mob/user)
 	. = ..()
 	if(playing && current_track)
-		. += span_notice("It is currently playing <b>\"[current_track.title]\"</b>[current_track.artist ? " by <b>[current_track.artist]</b>" : ""].")
+		. += span_notice("It is currently playing <b>\"[html_encode(current_track.title)]\"</b>[current_track.artist ? " by <b>[html_encode(current_track.artist)]</b>" : ""].")
 
 /obj/machinery/jukebox/update_icon_state()
 	if(machine_stat & (NOPOWER | BROKEN))

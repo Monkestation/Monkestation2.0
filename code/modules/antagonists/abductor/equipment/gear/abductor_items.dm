@@ -29,6 +29,7 @@
 	name = "science tool"
 	desc = "A dual-mode tool for retrieving specimens and scanning appearances. Scanning can be done through cameras."
 	icon_state = "gizmo_scan"
+	icon_angle = -45
 	inhand_icon_state = "silencer"
 	var/mode = GIZMO_SCAN
 	var/datum/weakref/marked_target_weakref
@@ -104,6 +105,7 @@
 	name = "abductor silencer"
 	desc = "A compact device used to shut down communications equipment."
 	icon_state = "silencer"
+	icon_angle = -45
 	inhand_icon_state = "gizmo"
 
 /obj/item/abductor/silencer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -143,6 +145,7 @@
 	desc = "A dual-mode tool for directly communicating with sentient brains. It can be used to send a direct message to a target, \
 			or to send a command to a test subject with a charged gland."
 	icon_state = "mind_device_message"
+	icon_angle = -45
 	inhand_icon_state = "silencer"
 	var/mode = MIND_DEVICE_MESSAGE
 
@@ -294,6 +297,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	icon_state = "wonderprodStun"
+	icon_angle = -45
 	inhand_icon_state = "wonderprod"
 
 	force = 7
@@ -593,6 +597,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien scalpel"
 	desc = "It's a gleaming sharp knife made out of silvery-green metal."
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = 180
 	surgical_tray_overlay = "scalpel_alien"
 	toolspeed = 0.25
 
@@ -600,6 +605,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien hemostat"
 	desc = "You've never seen this before."
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = 180
 	surgical_tray_overlay = "hemostat_alien"
 	toolspeed = 0.25
 
@@ -607,6 +613,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien retractor"
 	desc = "You're not sure if you want the veil pulled back."
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = 180
 	surgical_tray_overlay = "retractor_alien"
 	toolspeed = 0.25
 
@@ -614,6 +621,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien saw"
 	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = 180
 	surgical_tray_overlay = "saw_alien"
 	toolspeed = 0.25
 
@@ -621,6 +629,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien drill"
 	desc = "Maybe alien surgeons have finally found a use for the drill."
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = 180
 	surgical_tray_overlay = "drill_alien"
 	toolspeed = 0.25
 
@@ -629,6 +638,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Why would bloodless aliens have a tool to stop bleeding? \
 		Unless..."
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = 180
 	surgical_tray_overlay = "cautery_alien"
 	toolspeed = 0.25
 
@@ -659,6 +669,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "quizzandric interfacer"
 	desc = "Effectively just a Space Swiss Army Knife. Contains a multitude of integrated tools. Right-click it to switch which toolset is active."
 	icon_state = "omnitool"
+	icon_angle = -45
 	inhand_icon_state = "silencer"
 	toolspeed = 0.25
 	tool_behaviour = null
