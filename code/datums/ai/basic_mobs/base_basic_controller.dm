@@ -16,11 +16,12 @@
 
 /datum/ai_controller/basic_controller/setup_able_to_run()
 	. = ..()
+	RegisterSignals(pawn, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED)), PROC_REF(update_able_to_run))
 	if(ai_traits & PAUSE_DURING_DO_AFTER)
 		RegisterSignals(pawn, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_able_to_run))
 
 /datum/ai_controller/basic_controller/clear_able_to_run()
-	UnregisterSignal(pawn, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
+	UnregisterSignal(pawn, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED), COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
 	return ..()
 
 /datum/ai_controller/basic_controller/get_able_to_run()
@@ -29,6 +30,8 @@
 		return .
 	var/mob/living/living_pawn = pawn
 	if(living_pawn.stat && !(ai_traits & CAN_ACT_WHILE_DEAD))
+		return AI_UNABLE_TO_RUN
+	if(HAS_TRAIT(living_pawn, TRAIT_INCAPACITATED) && !(ai_traits & CAN_ACT_WHILE_DEAD))
 		return AI_UNABLE_TO_RUN
 	if(ai_traits & PAUSE_DURING_DO_AFTER && LAZYLEN(living_pawn.do_afters))
 		return AI_UNABLE_TO_RUN

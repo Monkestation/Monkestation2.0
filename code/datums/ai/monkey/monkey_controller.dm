@@ -101,9 +101,17 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	set_trip_mode(mode = TRUE)
 
+/datum/ai_controller/monkey/setup_able_to_run()
+	. = ..()
+	RegisterSignals(pawn, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED)), PROC_REF(update_able_to_run))
+
+/datum/ai_controller/monkey/clear_able_to_run()
+	UnregisterSignal(pawn, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED)))
+	return ..()
+
 /datum/ai_controller/monkey/get_able_to_run()
 	var/mob/living/living_pawn = pawn
-	if(living_pawn.stat)
+	if(living_pawn.stat || HAS_TRAIT(living_pawn, TRAIT_INCAPACITATED))
 		return AI_UNABLE_TO_RUN
 	return ..()
 
