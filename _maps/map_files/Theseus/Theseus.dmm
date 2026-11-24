@@ -93,6 +93,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"aao" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/landmark/start/quartermaster,
+/obj/structure/weightmachine,
+/turf/open/floor/wood,
+/area/station/commons)
 "aap" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/structure/slime_pen_post/premade{
@@ -186,6 +192,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"aaF" = (
+/obj/structure/weightmachine/weightlifter,
+/obj/effect/landmark/start/assistant,
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/weightmachine/weightlifter,
+/turf/open/floor/wood,
+/area/station/commons)
 "aaG" = (
 /obj/structure/transit_tube,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -1034,6 +1049,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"acF" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/hangover,
+/obj/structure/weightmachine,
+/turf/open/floor/wood,
+/area/station/commons)
 "acG" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -1208,6 +1230,11 @@
 "adc" = (
 /turf/closed/wall,
 /area/station/commons/vacant_room/commissary)
+"add" = (
+/obj/machinery/light/small/red/directional/north,
+/obj/structure/weightmachine/weightlifter,
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "ade" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -8155,36 +8182,15 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"atJ" = (
-/obj/structure/weightmachine/stacklifter,
-/obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/quartermaster,
-/turf/open/floor/wood,
-/area/station/commons)
 "atK" = (
 /obj/structure/table,
 /obj/item/toy/basketball,
-/turf/open/floor/wood,
-/area/station/commons)
-"atL" = (
-/obj/structure/weightmachine/weightlifter,
-/obj/effect/landmark/start/assistant,
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/commons)
 "atM" = (
 /obj/structure/table,
 /obj/item/toy/basketball,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
-/area/station/commons)
-"atN" = (
-/obj/structure/weightmachine/stacklifter,
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
 /area/station/commons)
 "atO" = (
@@ -39488,11 +39494,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
-"jHE" = (
-/obj/structure/weightmachine/stacklifter,
-/obj/machinery/light/small/red/directional/north,
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "jHK" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /obj/machinery/light{
@@ -119972,7 +119973,7 @@ abw
 lsl
 auo
 aub
-atJ
+aao
 aqZ
 ate
 asL
@@ -120478,7 +120479,7 @@ uyy
 uyy
 uyy
 kab
-jHE
+add
 tyW
 nEF
 tlE
@@ -120486,7 +120487,7 @@ jUZ
 dTI
 auq
 aub
-atL
+aaF
 atA
 atf
 asN
@@ -121000,7 +121001,7 @@ oRB
 lsl
 aur
 aue
-atN
+acF
 aqZ
 atf
 asP
