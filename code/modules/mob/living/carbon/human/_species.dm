@@ -1106,6 +1106,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
 
+/// Returns what replaces the mask, tank and medipen of a survival box handed to us, see survival_box_overrides. Override to fit them to the box.
+/datum/species/proc/get_survival_box_overrides(obj/item/storage/box/survival/box)
+	return survival_box_overrides
+
 /// Equips species-relevant gear after putting on an outfit.
 /datum/species/proc/post_equip_species_outfit(mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return

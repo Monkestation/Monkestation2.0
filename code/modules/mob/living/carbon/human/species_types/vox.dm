@@ -228,6 +228,19 @@
 /datum/species/vox/get_scream_message(mob/living/carbon/human/vox)
 	return "shrieks!"
 
+/// Fitted to the box: breath masks become ones that fit a beak, the nitrogen tank matches the box's tank size,
+/// and the box keeps its other masks (like gas masks) and its medipen
+/datum/species/vox/get_survival_box_overrides(obj/item/storage/box/survival/box)
+	var/list/overrides = survival_box_overrides.Copy()
+	if(ispath(box.internal_type, /obj/item/tank/internals/emergency_oxygen/engi))
+		overrides[SURVIVAL_INTERNALS_TYPE] = /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi
+	if(ispath(box.mask_type, /obj/item/clothing/mask/breath))
+		overrides[SURVIVAL_MASK_TYPE] = pick(/obj/item/clothing/mask/breath/vox, /obj/item/clothing/mask/breath/vox/respirator)
+	else
+		overrides[SURVIVAL_MASK_TYPE] = box.mask_type
+	overrides[SURVIVAL_MEDIPEN_TYPE] = box.medipen_type
+	return overrides
+
 /datum/species/vox/get_species_description()
 	return "The Vox are remnants of an ancient race, that originate from arkships. \
 		These bioengineered, reptilian, beaked, and quilled beings have a physiological caste system and follow 'The Inviolate' tenets. \
