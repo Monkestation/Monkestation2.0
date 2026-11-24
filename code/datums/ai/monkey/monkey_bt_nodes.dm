@@ -4,6 +4,14 @@
 	time_between_perform = 5 SECONDS
 	screeches = list("roar", "screech")
 
+// getting eaten flips a monkey into the combat subtree, which screeches from its own list.
+// penned ones use their quiet idle emotes instead.
+/datum/bt_node/ai_behavior/battle_screech/monkey/perform(seconds_per_tick, datum/ai_controller/controller)
+	if(!controller.blackboard[BB_MONKEY_PENNED])
+		return ..()
+	INVOKE_ASYNC(controller.pawn, TYPE_PROC_REF(/mob, emote), pick(controller.blackboard[BB_MONKEY_IDLE_COMMON_EMOTES]))
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
 
 /// Base equip behavior; handles blacklist updates and key cleanup on finish
 /datum/bt_node/ai_behavior/monkey_equip
@@ -378,7 +386,10 @@
 /datum/target_source/monkey_press_target/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
 	var/locate_path = controller.blackboard[BB_MONKEY_PRESS_TYPEPATH]
 	var/list/candidates = list()
+	var/penned = controller.blackboard[BB_MONKEY_PENNED]
 	for(var/obj/potential_candidate in oview(range, pawn))
+		if(penned && istype(potential_candidate, /obj/machinery/light))
+			continue
 		if(locate_path)
 			if(istype(potential_candidate, locate_path))
 				candidates += potential_candidate
