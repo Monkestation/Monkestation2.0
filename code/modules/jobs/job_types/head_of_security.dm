@@ -1,4 +1,4 @@
-#define HOS_VETERAN_PLAYTIME 3000 // 50 hours
+#define HOS_VETERAN_PLAYTIME 6000 // 100 hours
 
 /datum/job/head_of_security
 	title = JOB_HEAD_OF_SECURITY
