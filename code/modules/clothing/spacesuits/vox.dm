@@ -41,12 +41,10 @@
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
 	desc = "Hey, wasn't this a prop in \'The Abyss\'?"
-	icon_state = "vox-pressure"
 
 /obj/item/clothing/suit/space/vox/pressure
 	name = "alien pressure suit"
 	desc = "A huge, armoured, pressurized suit, designed for distinctly nonhuman proportions."
-	icon_state = "vox-pressure"
 
 /obj/item/clothing/head/helmet/space/vox/carapace
 	name = "alien visor"

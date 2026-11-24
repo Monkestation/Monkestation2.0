@@ -50,7 +50,7 @@
 	quills_base.layer = FLOAT_LAYER
 	quills_overlay.overlays += quills_base
 	var/mutable_appearance/gradient_quills = mutable_appearance(gradient.icon, gradient.icon_state)
-	gradient_quills.color = list(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, sanitize_hexcolor(gradient_color, include_crunch = TRUE))
+	gradient_quills.color = list(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, sanitize_hexcolor(gradient_color))
 	gradient_quills.blend_mode = BLEND_INSET_OVERLAY
 	quills_overlay.overlays += gradient_quills
 	return quills_overlay

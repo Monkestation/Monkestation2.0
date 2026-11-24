@@ -87,10 +87,8 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/cough/get_sound(mob/living/user)
-	if(!ishuman(user))
-		return ..()
 	var/mob/living/carbon/human/human_user = user
-	return human_user.dna.species.get_cough_sound(human_user) || ..()
+	return (ishuman(human_user) && human_user.dna.species.cough_sound) || ..()
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
 	. = ..()
@@ -393,7 +391,7 @@ monkestation edit end */
 		return "makes a loud and pained whimper."
 	if(. == /datum/emote/living/scream::message && ishuman(user)) // not for other screams, like screeching
 		var/mob/living/carbon/human/human_user = user
-		return human_user.dna.species.get_scream_message(human_user) || .
+		return human_user.dna.species.scream_message || .
 
 /datum/emote/living/scowl
 	key = "scowl"
@@ -455,10 +453,8 @@ monkestation edit end */
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/sneeze/get_sound(mob/living/user)
-	if(!ishuman(user))
-		return ..()
 	var/mob/living/carbon/human/human_user = user
-	return human_user.dna.species.get_sneeze_sound(human_user) || ..()
+	return (ishuman(human_user) && human_user.dna.species.sneeze_sound) || ..()
 
 /datum/emote/living/smug
 	key = "smug"

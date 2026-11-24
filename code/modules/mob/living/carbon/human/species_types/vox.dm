@@ -41,6 +41,9 @@
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	breathid = "n2"
+	cough_sound = 'sound/voice/vox_species/shriekcough.ogg'
+	sneeze_sound = 'sound/voice/vox_species/shrieksneeze.ogg'
+	scream_message = "shrieks!"
 	inherent_respiration_type = RESPIRATION_N2
 	// Not set on Yogstation either, left as ideas. Other species use these:
 	// species_cookie = /obj/item/food/meat/slab // what admins give for a prayer, a cookie by default. Lizards get meat, and vox tongues like it
@@ -218,15 +221,6 @@
 		if(icon_exists(icon_file, worn_state))
 			return icon_file
 	return null
-
-/datum/species/vox/get_cough_sound(mob/living/carbon/human/vox)
-	return 'sound/voice/vox_species/shriekcough.ogg'
-
-/datum/species/vox/get_sneeze_sound(mob/living/carbon/human/vox)
-	return 'sound/voice/vox_species/shrieksneeze.ogg'
-
-/datum/species/vox/get_scream_message(mob/living/carbon/human/vox)
-	return "shrieks!"
 
 /// Fitted to the box: breath masks become ones that fit a beak, the nitrogen tank matches the box's tank size,
 /// and the box keeps its other masks (like gas masks) and its medipen

@@ -242,6 +242,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/suicide_messages
 	/// Choiced and color preferences for features the magic mirror lets you pick after changing into this species, like vox markings. See /obj/structure/mirror/proc/choose_species_features()
 	var/list/mirror_race_change_features
+	/// Sound our coughs make instead of the normal one, if set
+	var/cough_sound
+	/// Sound our sneezes make instead of the normal one, if set
+	var/sneeze_sound
+	/// Message shown when we scream instead of the normal one, like "shrieks!", if set
+	var/scream_message
 	///our color palette
 	var/datum/color_palette/color_palette
 
@@ -1117,18 +1123,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Swaps species-relevant gear for what the player picked in their preferences, like the vox mask and tank. Called once a job's outfit and loadout are on.
 /datum/species/proc/apply_gear_preferences(mob/living/carbon/human/equipping, datum/preferences/used_pref, visuals_only = FALSE)
 	return
-
-/// Returns the sound a human of this species makes when coughing, or null for none
-/datum/species/proc/get_cough_sound(mob/living/carbon/human/human)
-	return null
-
-/// Returns the sound a human of this species makes when sneezing, or null for none
-/datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
-	return null
-
-/// Returns the message shown when a human of this species screams, like "shrieks!", or null for the normal one
-/datum/species/proc/get_scream_message(mob/living/carbon/human/human)
-	return null
 
 /**
  * Equip the outfit required for life. Replaces items currently worn.

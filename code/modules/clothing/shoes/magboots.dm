@@ -138,7 +138,6 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 	. = ..()
 	if(magpulse)
 		user.visible_message(span_notice("[src] go limp as they are removed from [user]'s feet."), span_notice("[src] go limp as they are removed from your feet."))
-		REMOVE_TRAIT(src, TRAIT_NODROP, REF(src))
 		attack_self(user)
 
 /obj/item/clothing/shoes/magboots/vox/examine(mob/user)
