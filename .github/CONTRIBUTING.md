@@ -69,7 +69,7 @@ When maintainers disagree, the Maintainer Council votes. The Host (Aberra) break
 
 These are the few directives we have for project maintainers.
 
-- Do not merge PRs you create. The only exception is emergency fixes, which you may merge yourself.
+- Do not merge PRs you create. The only exception is bug fixes and typos, which you may merge yourself.
 - Do not merge other people's Balance, Feature, Mapping or Removal PRs until 24 hours have passed since they were opened.
 - Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
 - Do not close PRs purely for breaking a template if the same information is contained without it.
