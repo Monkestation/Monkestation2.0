@@ -86,7 +86,7 @@
 	if(isnull(equipped_client))
 		return
 
-	var/player_playtime = text2num(equipped_client.prefs.exp[JOB_DETECTIVE])
+	var/player_playtime = text2num(equipped_client.prefs.exp[JOB_HEAD_OF_SECURITY])
 
 	if(player_playtime >= HOS_VETERAN_PLAYTIME)
 		head = /obj/item/clothing/head/hats/hos/beret/red
