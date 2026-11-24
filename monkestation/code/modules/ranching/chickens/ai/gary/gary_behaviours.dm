@@ -93,14 +93,14 @@
 /datum/bt_node/ai_behavior/gary_travel/head_to_hideout/get_destination(datum/ai_controller/chicken/gary/controller)
 	return controller.get_hideout()
 
-/datum/bt_node/ai_behavior/gary_travel/head_to_hideout/arrived(datum/ai_controller/controller)
+/datum/bt_node/ai_behavior/gary_travel/head_to_hideout/arrived(datum/ai_controller/chicken/gary/controller)
 	controller.set_blackboard_key(BB_GARY_COME_HOME, FALSE)
 	if(!controller.blackboard[BB_GARY_HAS_SHINY])
 		return
 	controller.set_blackboard_key(BB_GARY_HAS_SHINY, FALSE)
 	var/mob/living/basic/chicken/gary/pawn = controller.pawn
 	var/obj/item/shiny = pawn.held_item
-	shiny?.forceMove(get_turf(pawn))
+	shiny?.forceMove(controller.get_hideout() || get_turf(pawn))
 	if(!QDELETED(shiny))
 		pawn.held_shinies += shiny.type
 		shiny.AddComponent(/datum/component/garys_item, pawn)
@@ -133,7 +133,8 @@
 	if(!pawn.hideout)
 		pawn.hideout = new()
 
-	var/turf/current_home = get_turf(pawn)
+	var/datum/ai_controller/chicken/gary/gary_controller = controller
+	var/turf/current_home = gary_controller.get_hideout() || get_turf(pawn)
 	for(var/shiny_object in stored_items)
 		if(!shiny_object)
 			continue
