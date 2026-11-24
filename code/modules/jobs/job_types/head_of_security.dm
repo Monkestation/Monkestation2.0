@@ -82,7 +82,7 @@
 	if(visualsOnly || !CONFIG_GET(flag/use_exp_tracking))
 		return
 
-	var/client/equipped_client = GLOB.directory[ckey(human.mind?.key)]
+	var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
 	if(isnull(equipped_client))
 		return
 
