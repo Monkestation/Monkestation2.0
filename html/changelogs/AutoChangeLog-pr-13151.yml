@@ -1,0 +1,5 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "sliced food gets the reagents of what it was cut from again, so custom sushi slices can be eaten"
+  - bugfix: "custom food gets foodtypes and tastes from its ingredients again"
