@@ -71,7 +71,7 @@
 	W.update_label()
 	W.update_icon()
 	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)
-	H.dna.species.post_equip_species_outfit(null, H, used_pref = H.client?.prefs) // vox internals, kept out of the hands the sword needs
+	H.dna.species.post_equip_species_outfit(H) // equipped without an outfit, so species gear (like vox internals) is given here. Kept out of the hands the sword needs
 
 	sword = new(H)
 	if(!GLOB.highlander_controller)

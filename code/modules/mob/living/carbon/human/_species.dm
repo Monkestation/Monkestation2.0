@@ -1110,6 +1110,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/post_equip_species_outfit(mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
 
+/// Swaps species-relevant gear for what the player picked in their preferences, like the vox mask and tank. Called once a job's outfit and loadout are on.
+/datum/species/proc/apply_gear_preferences(mob/living/carbon/human/equipping, datum/preferences/used_pref, visuals_only = FALSE)
+	return
+
 /// Returns the sound a human of this species makes when coughing, or null for none
 /datum/species/proc/get_cough_sound(mob/living/carbon/human/human)
 	return null

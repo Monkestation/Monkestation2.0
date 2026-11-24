@@ -52,7 +52,8 @@
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
 	limb_style_feature = "vox_skin_tone"
-	unarmed_attack_verb = "scratch"
+	unarmed_attack_verbs = list("scratch", "claw")
+	unarmed_attack_verbs_continuous = list("scratches", "claws")
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -61,9 +62,6 @@
 	. = ..()
 	style_icons = GLOB.vox_skin_tones
 	add_bodypart_overlay(new /datum/bodypart_overlay/simple/vox_body_markings())
-
-/obj/item/bodypart/arm/left/vox/get_unarmed_attack_verb()
-	return pick("scratch", "claw")
 
 /obj/item/bodypart/arm/right/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'
@@ -74,7 +72,8 @@
 	should_draw_greyscale = FALSE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_CUSTOM
 	limb_style_feature = "vox_skin_tone"
-	unarmed_attack_verb = "scratch"
+	unarmed_attack_verbs = list("scratch", "claw")
+	unarmed_attack_verbs_continuous = list("scratches", "claws")
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -83,9 +82,6 @@
 	. = ..()
 	style_icons = GLOB.vox_skin_tones
 	add_bodypart_overlay(new /datum/bodypart_overlay/simple/vox_body_markings())
-
-/obj/item/bodypart/arm/right/vox/get_unarmed_attack_verb()
-	return pick("scratch", "claw")
 
 /obj/item/bodypart/leg/left/vox
 	icon_static = 'icons/mob/human/species/vox/bodyparts_lime.dmi'

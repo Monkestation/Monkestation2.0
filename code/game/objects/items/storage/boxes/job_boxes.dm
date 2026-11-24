@@ -27,10 +27,8 @@
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)
 		return
-	var/datum/species/holder_species = get_holder_species()
-	var/box_mask = holder_species ? holder_species.get_survival_box_mask(src) : mask_type
-	if(!isnull(box_mask))
-		new box_mask(src)
+	if(!isnull(mask_type))
+		new mask_type(src)
 
 	give_internals()
 
@@ -47,15 +45,11 @@
 	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels) && !length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
 		new /obj/item/climbing_hook/emergency(src)
 
-/// Returns the species of whoever this box is for, if it's in their hands. Some species need other gear, see /datum/species/proc/get_survival_box_internals()
-/obj/item/storage/box/survival/proc/get_holder_species()
-	var/mob/living/carbon/human/holder = loc
-	return ishuman(holder) ? holder.dna.species : null
-
 /obj/item/storage/box/survival/proc/give_internals()
-	var/datum/species/holder_species = get_holder_species()
-	var/box_internals = holder_species ? holder_species.get_survival_box_internals(src) : internal_type
-	return new box_internals(src)
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	return new internal_type(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
@@ -94,6 +88,12 @@
 	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
+/obj/item/storage/box/survival/engineer/give_internals()
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	return new internal_type(src)
+
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)
@@ -107,6 +107,13 @@
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 	medipen_type =  /obj/item/reagent_containers/medipen/atropine
+
+/obj/item/storage/box/survival/syndie/give_internals()
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	return new internal_type(src)
+
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()

@@ -34,6 +34,11 @@
 	exotic_bloodtype = BLOOD_TYPE_VOX
 	species_language_holder = /datum/language_holder/vox
 	outfit_important_for_life = /datum/outfit/vox
+	survival_box_overrides = list(
+		SURVIVAL_MASK_TYPE = /obj/item/clothing/mask/breath/vox,
+		SURVIVAL_INTERNALS_TYPE = /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen,
+		SURVIVAL_MEDIPEN_TYPE = /obj/item/reagent_containers/medipen,
+	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	breathid = "n2"
 	inherent_respiration_type = RESPIRATION_N2
@@ -109,22 +114,45 @@
 	human.set_eye_color("#17fdfb")
 	human.update_body(is_creating = TRUE)
 
-/// Vox start the shift on internals, with the mask and tank from their preferences
-/datum/species/vox/post_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE, datum/preferences/used_pref)
-	// Job masks we can breathe through (like the clown's) stay on, others go in the bag
-	var/obj/item/job_mask = equipping.wear_mask
-	if(job_mask && !equipping.can_breathe_mask())
-		equipping.temporarilyRemoveItemFromInventory(job_mask, force = TRUE)
-		if(!equipping.equip_to_slot_if_possible(job_mask, ITEM_SLOT_BACKPACK, disable_warning = TRUE))
-			equipping.put_in_hands(job_mask)
+/// Any outfit gets vox their mask and nitrogen tank, see equip_internals()
+/datum/species/vox/post_equip_species_outfit(mob/living/carbon/human/equipping, visuals_only = FALSE)
+	equip_internals(equipping, /obj/item/clothing/mask/breath/vox, /obj/item/tank/internals/emergency_oxygen/vox, visuals_only)
+
+/// Jobs swap them for the mask and tank picked in the preferences
+/datum/species/vox/apply_gear_preferences(mob/living/carbon/human/equipping, datum/preferences/used_pref, visuals_only = FALSE)
+	if(!used_pref)
+		return
+	var/mask_type = (used_pref.read_preference(/datum/preference/choiced/vox_mask) == "Respirator") ? /obj/item/clothing/mask/breath/vox/respirator : /obj/item/clothing/mask/breath/vox
+	var/tank_type = (used_pref.read_preference(/datum/preference/choiced/vox_tank_type) == "Large") ? /obj/item/tank/internals/nitrogen : /obj/item/tank/internals/emergency_oxygen/vox
+	equip_internals(equipping, mask_type, tank_type, visuals_only)
+
+/**
+ * Makes sure a vox wears a mask of mask_type and runs on a tank of tank_type.
+ * Masks they can't breathe through go in the bag, and the other kind of vox mask or the default vox tank is swapped out,
+ * so equipping again never stacks up tanks.
+ */
+/datum/species/vox/proc/equip_internals(mob/living/carbon/human/equipping, mask_type, tank_type, visuals_only = FALSE)
+	var/obj/item/current_mask = equipping.wear_mask
+	if(istype(current_mask, /obj/item/clothing/mask/breath/vox) && current_mask.type != mask_type)
+		qdel(current_mask)
+	else if(current_mask && !equipping.can_breathe_mask()) // job masks we can breathe through (like the clown's) stay on
+		equipping.temporarilyRemoveItemFromInventory(current_mask, force = TRUE)
+		if(!equipping.equip_to_slot_if_possible(current_mask, ITEM_SLOT_BACKPACK, disable_warning = TRUE))
+			equipping.put_in_hands(current_mask)
 	if(!equipping.wear_mask)
-		var/mask_type = (used_pref?.read_preference(/datum/preference/choiced/vox_mask) == "Respirator") ? /obj/item/clothing/mask/breath/vox/respirator : /obj/item/clothing/mask/breath/vox
 		equipping.equip_to_slot_or_del(new mask_type(equipping), ITEM_SLOT_MASK)
-	var/tank_type = (used_pref?.read_preference(/datum/preference/choiced/vox_tank_type) == "Large") ? /obj/item/tank/internals/nitrogen : /obj/item/tank/internals/emergency_oxygen/vox
-	var/obj/item/tank/internals/tank = new tank_type(equipping)
-	if(!equipping.equip_to_appropriate_slot(tank))
-		equipping.put_in_hands(tank)
-	if(visuals_only)
+
+	var/obj/item/tank/internals/tank
+	for(var/obj/item/tank/internals/carried_tank in equipping.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD))
+		if(carried_tank.type == tank_type)
+			tank = carried_tank
+		else if(carried_tank.type == /obj/item/tank/internals/emergency_oxygen/vox)
+			qdel(carried_tank)
+	if(!tank)
+		tank = new tank_type(equipping)
+		if(!equipping.equip_to_appropriate_slot(tank))
+			equipping.put_in_hands(tank)
+	if(visuals_only || equipping.internal == tank)
 		return
 	to_chat(equipping, span_notice("You are now running on nitrogen internals from [tank]. Your species finds oxygen toxic, so you must breathe pure nitrogen."))
 	equipping.open_internals(tank)
@@ -199,17 +227,6 @@
 
 /datum/species/vox/get_scream_message(mob/living/carbon/human/vox)
 	return "shrieks!"
-
-/datum/species/vox/get_survival_box_internals(obj/item/storage/box/survival/box)
-	if(ispath(box.internal_type, /obj/item/tank/internals/emergency_oxygen/engi))
-		return /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi
-	return /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen
-
-/// Breath masks get swapped for ones that fit a beak, other masks (like gas masks) are kept
-/datum/species/vox/get_survival_box_mask(obj/item/storage/box/survival/box)
-	if(ispath(box.mask_type, /obj/item/clothing/mask/breath))
-		return pick(/obj/item/clothing/mask/breath/vox, /obj/item/clothing/mask/breath/vox/respirator)
-	return box.mask_type
 
 /datum/species/vox/get_species_description()
 	return "The Vox are remnants of an ancient race, that originate from arkships. \

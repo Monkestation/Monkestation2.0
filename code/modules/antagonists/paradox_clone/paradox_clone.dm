@@ -65,7 +65,6 @@
 	//equip them in the original's clothes
 	if(!isplasmaman(original_human))
 		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
-		clone_human.dna.species.post_equip_species_outfit(null, clone_human, used_pref = original_human.client?.prefs) // gear picked like the original's
 	else
 		clone_human.equipOutfit(original_human.mind.assigned_role.plasmaman_outfit)
 		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)

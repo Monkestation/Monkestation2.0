@@ -137,12 +137,6 @@
 	else
 		give_important_for_life(equipping)
 
-/datum/species/plasmaman/get_survival_box_internals(obj/item/storage/box/survival/box)
-	return /obj/item/tank/internals/plasmaman/belt
-
-/datum/species/plasmaman/get_survival_box_mask(obj/item/storage/box/survival/box)
-	return null // the envirosuit helmet does the job
-
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_plasmaman_name()

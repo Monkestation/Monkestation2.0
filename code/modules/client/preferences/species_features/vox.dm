@@ -262,7 +262,7 @@
 /datum/preference/choiced/vox_tail_markings/get_value_from_human(mob/living/carbon/human/target)
 	return target.dna.features["vox_tail_markings"]
 
-/// Which nitrogen tank a vox starts the shift with, see /datum/species/vox/post_equip_species_outfit()
+/// Which nitrogen tank a vox starts the shift with, see /datum/species/vox/apply_gear_preferences()
 /datum/preference/choiced/vox_tank_type
 	savefile_key = "feature_vox_tank_type"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -278,7 +278,7 @@
 /datum/preference/choiced/vox_tank_type/apply_to_human(mob/living/carbon/human/target, value)
 	return // read from the preferences when the gear is equipped
 
-/// Which breath mask a vox starts the shift with, see /datum/species/vox/post_equip_species_outfit()
+/// Which breath mask a vox starts the shift with, see /datum/species/vox/apply_gear_preferences()
 /datum/preference/choiced/vox_mask
 	savefile_key = "feature_vox_mask"
 	savefile_identifier = PREFERENCE_CHARACTER

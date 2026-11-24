@@ -1063,10 +1063,6 @@
 	recolor_external_organs()
 	return TRUE
 
-/// Returns the verb for one unarmed attack with this limb. Override to pick from several.
-/obj/item/bodypart/proc/get_unarmed_attack_verb()
-	return unarmed_attack_verb
-
 /// Returns the limb style from style_icons this limb is drawn with right now, or null if it uses its normal icon
 /obj/item/bodypart/proc/get_drawn_limb_style()
 	for(var/style in style_icons)
