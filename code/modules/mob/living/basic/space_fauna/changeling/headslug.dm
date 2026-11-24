@@ -39,11 +39,10 @@
 
 /mob/living/basic/headslug/examine(mob/user)
 	. = ..()
-	if(stat != DEAD)
-		if(isnull(client))
-			. += span_notice("It appears to be moving around listlessly.")
-		else
-			. += span_warning("It's moving around intelligently!")
+	if(isnull(client))
+		. += span_notice("It appears to be moving around listlessly.")
+	else
+		. += span_warning("It's moving around intelligently!")
 
 	if(user == src || !user.mind?.has_antag_datum(/datum/antagonist/changeling) || !mind?.has_antag_datum(/datum/antagonist/changeling))
 		return
