@@ -7370,11 +7370,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/service/hydroponics/garden)
-"ary" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/hydroponics,
-/turf/open/floor/plating,
-/area/station/service/hydroponics/garden)
 "arz" = (
 /obj/structure/table/wood,
 /obj/machinery/button/door{
@@ -115568,7 +115563,7 @@ anu
 amk
 arX
 arM
-ary
+arx
 akC
 hoK
 qxI
