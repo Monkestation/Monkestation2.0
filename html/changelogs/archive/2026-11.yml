@@ -1265,6 +1265,13 @@
       instead of only from a wheelchair
   - map: The nukie base now has the tactical map holotable in place of the shuttle
       manipulator.
+  - bugfix: sliced food gets the reagents of what it was cut from again, so custom
+      sushi slices can be eaten
+  - bugfix: custom food gets foodtypes and tastes from its ingredients again
+  - bugfix: fixed an economy exploit
+  EnterTheJake:
+  - bugfix: The infiltrator MODsuit hides lizard tails again.
+  - spellcheck: new contributing guidelines
   Gboster-0:
   - bugfix: fixed borers having a button that makes you invisible
   - bugfix: fixed xeno larva having a button that makes you invisible
@@ -1282,6 +1289,11 @@
       - [ ] This code did not runtime during testing.
 
       - [ ] You documented all of your changes.'
+  - rscadd: Added a new holster called the duty holster. Find it in sectechs or use
+      a security primary voucher and choose paco.
+  - bugfix: fixed objective targets cyroing not changing targets.
+  Mantlecrawler:
+  - server: further secured the server
   MrMelbert, PowerfulAtom111, SmArtKar, Fghj240, nikothedude, DATAxPUNGED, lelandkemble, Profakos, timothymtorres:
   - rscadd: Personality is now available in character preferences! Choose how your
       character reacts to the whims and woes of the station.
@@ -1320,3 +1332,6 @@
       curse.
   - admin: Bad luck smite set to permanent can no longer be removed by chaplains.
   - code_imp: Empath is a component now, quirks and mood code are closer to tg.
+  SirNightKnight:
+  - rscadd: added a changeling blood test inspired by John Carpenter's The Thing.
+  - sound: added a unique scream sound for changeling blood boiling.
