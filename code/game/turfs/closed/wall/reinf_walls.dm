@@ -235,7 +235,7 @@
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
-	explosive_resistance = 4 //20 is Probably a bit much
+	explosive_resistance = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	hardness = 25 //plastitanium
 	turf_flags = IS_SOLID
@@ -284,3 +284,13 @@
 	icon_state = "map-overspace"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
+
+/turf/closed/wall/r_wall/syndicate/less_bombresist
+	explosive_resistance = 4
+
+
+/turf/closed/wall/r_wall/syndicate/less_bombresist/nodiagonal
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle_nd"
+	base_icon_state = "plastitanium_wall"
+	smoothing_flags = SMOOTH_BITMASK

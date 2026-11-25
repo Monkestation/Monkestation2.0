@@ -1239,7 +1239,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "mz" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/syndicate/less_bombresist/nodiagonal,
 /area/ruin/space/has_grav/syndicate_depot/vault)
 "mS" = (
 /obj/effect/turf_decal/sand/plating,
@@ -2105,9 +2105,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/security)
-"vz" = (
-/turf/closed/wall/mineral/plastitanium/explosive,
-/area/ruin/space/has_grav/syndicate_depot/vault)
 "vB" = (
 /obj/machinery/vending/medical/syndicate_access,
 /obj/machinery/firealarm/directional/north,
@@ -7769,7 +7766,7 @@ Xk
 vZ
 jw
 eC
-iD
+dn
 MZ
 lx
 dU
@@ -7851,7 +7848,7 @@ hc
 IG
 mz
 mz
-vz
+mz
 mz
 mz
 BW
