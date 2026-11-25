@@ -376,6 +376,11 @@
 		return
 	var/atom/old_loc = moving.loc
 	var/turf/next = get_step_to(moving, target)
+	// byond pathing refuses dense atoms even when CanPass lets us through (flying over sills)
+	if(isnull(next))
+		var/turf/direct = get_step_towards(moving, target)
+		if(direct && !direct.is_blocked_turf(source_atom = moving))
+			next = direct
 	moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 

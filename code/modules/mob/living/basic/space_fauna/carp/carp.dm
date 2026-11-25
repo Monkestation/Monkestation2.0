@@ -69,6 +69,7 @@
 	var/static/list/allowed_obstacle_targets = typecacheof(list(
 		/obj/structure/closet,
 		/obj/machinery/door,
+		/obj/machinery/fax,
 		/obj/structure/door_assembly,
 		/obj/structure/filingcabinet,
 		/obj/structure/frame,
