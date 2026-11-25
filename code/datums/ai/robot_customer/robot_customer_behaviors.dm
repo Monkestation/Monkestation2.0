@@ -113,7 +113,7 @@
 	else
 		INVOKE_ASYNC(customer_pawn, TYPE_PROC_REF(/atom/movable, say), pick(customer_data.leave_mad_lines))
 
-/// Resolves the venue exit portal from attending_venue.current_visitors and stores it in BB_CUSTOMER_EXIT_PORTAL.
+/// Resolves the venue exit portal and stores it in BB_CUSTOMER_EXIT_PORTAL.
 /datum/bt_node/ai_behavior/robot_customer/find_exit_portal
 
 /datum/bt_node/ai_behavior/robot_customer/find_exit_portal/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -122,9 +122,8 @@
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	if(isnull(attending_venue))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	var/datum/weakref/portal_ref = attending_venue.current_visitors[controller.pawn]
-	var/atom/portal = portal_ref?.resolve()
-	if(isnull(portal) || QDELETED(portal))
+	var/atom/portal = attending_venue.restaurant_portal
+	if(QDELETED(portal))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	controller.set_blackboard_key(BB_CUSTOMER_EXIT_PORTAL, portal)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
