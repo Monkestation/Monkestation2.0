@@ -577,7 +577,6 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	SEND_SIGNAL(src, COMSIG_NANITE_EMP, severity)
 	for(var/obj/inside in contents)
 		inside.emp_act(severity)
 
