@@ -147,6 +147,8 @@
 
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates(candidate_pool)
+	if(prompted_picking)
+		candidates = SSgamemode.remove_recent_decliners(candidates)
 	if(length(candidates) < antag_amt)
 		return FALSE
 
