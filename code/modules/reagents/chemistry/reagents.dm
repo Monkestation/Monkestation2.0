@@ -298,6 +298,11 @@ Primarily used in reagents/reaction_agents
 	if(!chems)
 		return
 
+/// Called when the reagent holders temperature is set to a new temperature
+/datum/reagent/proc/on_holder_temperature_update(new_holder_temperature, old_holder_temperature)
+	SEND_SIGNAL(src, COMSIG_REAGENT_TEMP_CHANGE, new_holder_temperature, old_holder_temperature)
+
+
 /**
  * Specifically made for mutation reagent reactions
  */
