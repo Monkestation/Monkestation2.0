@@ -26,7 +26,7 @@
 	var/idle_decay_max = 2
 	///Amount of percentage decay affects endurance.max_integrity =
 	var/endurance_decay_rate = 0.1
-	var/original_endurance = /obj/item/seeds/glowshroom::endurance
+	var/last_decay = 0
 	/// Internal seed of the glowshroom, stats are stored here
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
 	/// The world.time of the last successful glowshroom spread.
@@ -73,8 +73,8 @@
 		myseed.forceMove(src)
 	else
 		myseed = new myseed(src)
-	original_endurance = myseed.endurance
-	modify_max_integrity(GLOWSHROOM_BASE_INTEGRITY + ((100 - GLOWSHROOM_BASE_INTEGRITY) / 100 * myseed.endurance)) //goes up to 100 with peak endurance
+	last_decay = world.time
+	modify_max_integrity(GLOWSHROOM_BASE_INTEGRITY + ((100 - GLOWSHROOM_BASE_INTEGRITY) / 100 * min(myseed.endurance, 100))) //goes up to 100 with peak endurance
 	var/datum/plant_gene/trait/glow/our_glow_gene = myseed.get_gene(/datum/plant_gene/trait/glow)
 	if(ispath(our_glow_gene)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
 		myseed.genes -= our_glow_gene
@@ -142,9 +142,10 @@
 		last_successful_spread = INFINITY
 		return
 
-	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * length(SSglowshrooms.glowshrooms)) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
+	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * length(SSglowshrooms.glowshrooms)) / clamp(myseed.potency, 1, 100) * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
 
-	for(var/i in 1 to myseed.yield)
+	// botany yields are scaled by 10
+	for(var/i in 1 to clamp(round(myseed.yield / 10), 1, 10))
 		if(!length(possible_locs))
 			return
 		if(!SPT_PROB(chance_generation, seconds_per_tick))
@@ -177,9 +178,7 @@
 		if(shroom_count >= place_count)
 			continue
 
-		var/obj/item/seeds/new_seeds = myseed.Copy()
-		new_seeds.set_endurance(clamp(original_endurance * (rand(80, 110) * 0.01), initial(new_seeds.endurance), MAX_PLANT_ENDURANCE))
-		var/obj/structure/glowshroom/child = new type(new_loc, new_seeds)
+		var/obj/structure/glowshroom/child = new type(new_loc, myseed.Copy())
 		child.generation = generation + 1
 		last_successful_spread = world.time
 		if(TICK_CHECK)
