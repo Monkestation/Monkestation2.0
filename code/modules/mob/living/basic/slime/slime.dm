@@ -305,6 +305,9 @@
 		return
 	if(isslime(old_seat))
 		start_stack_cooldown()
+		// the seat too, or the two of them just keep taking turns
+		var/mob/living/basic/slime/old_slime = old_seat
+		old_slime.start_stack_cooldown()
 	update_stack_position()
 	// whatever we just did, we moved out from under anyone sitting on us
 	dump_riders()
