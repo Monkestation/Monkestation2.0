@@ -13,6 +13,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "ad" = (
@@ -241,14 +242,9 @@
 /area/ruin/space/has_grav/listeningstation/support)
 "eB" = (
 /obj/machinery/suit_storage_unit/syndicate,
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	req_access = list("syndicate");
-	name = "Modsuits"
-	},
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "eH" = (
@@ -550,8 +546,8 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/item/gps{
-	pixel_x = 0;
-	pixel_y = 12
+	pixel_x = 9;
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
@@ -566,6 +562,13 @@
 /obj/item/shovel,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"ky" = (
+/obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/support)
 "kA" = (
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white/small,
@@ -598,7 +601,9 @@
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 4
+	},
 /area/ruin/space/has_grav/listeningstation/lounge)
 "lY" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -681,7 +686,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/support)
 "oh" = (
-/obj/structure/falsewall,
+/obj/structure/falsewall/reinforced,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "oi" = (
@@ -791,7 +796,10 @@
 /area/ruin/space/has_grav/listeningstation/lobby)
 "si" = (
 /obj/structure/sink/directional/west,
-/obj/machinery/light/directional/east,
+/obj/structure/toilet{
+	pixel_y = 18
+	},
+/obj/structure/mirror/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation/dorms)
 "sQ" = (
@@ -875,6 +883,11 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
+"vU" = (
+/obj/machinery/power/rtg/portable,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation/support)
 "wf" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -943,19 +956,6 @@
 /obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation/lounge)
-"xL" = (
-/obj/structure/sign/poster/contraband/random/directional/west,
-/obj/machinery/suit_storage_unit/syndicate,
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	req_access = list("syndicate");
-	name = "Modsuits"
-	},
-/obj/structure/window/reinforced/plasma/spawner/directional/north,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/listeningstation/comms)
 "xR" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Supplies Storeroom"
@@ -975,7 +975,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured_corner,
 /area/ruin/space/has_grav/listeningstation/lounge)
 "ye" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -1058,21 +1058,39 @@
 	},
 /turf/open/floor/iron/white/small,
 /area/ruin/space/has_grav/listeningstation/medical)
+"zK" = (
+/obj/machinery/button/door/directional/west{
+	name = "Bathroom Lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	id = "lpost_bathroom2"
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/listeningstation/dorms)
 "zO" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm/directional/east,
 /obj/item/stamp/chameleon{
 	pixel_x = 12;
-	pixel_y = 12
-	},
-/obj/item/storage/toolbox/syndicate{
-	pixel_x = -3;
-	pixel_y = 5
+	pixel_y = 15
 	},
 /obj/item/stamp/syndicate{
 	pixel_x = 12;
-	pixel_y = 2
+	pixel_y = 8
+	},
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/storage/toolbox/syndicate{
+	pixel_x = 1;
+	pixel_y = -4
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
@@ -1308,7 +1326,9 @@
 /obj/structure/table/reinforced,
 /obj/item/autosurgeon/syndicate/polyglot_voicebox,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 1
+	},
 /area/ruin/space/has_grav/listeningstation/lounge)
 "Ew" = (
 /obj/structure/table/wood,
@@ -1345,6 +1365,14 @@
 /obj/structure/water_source/puddle,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/listeningstation/asteroid)
+"FV" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/suit_storage_unit/syndicate,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/listeningstation/comms)
 "Gb" = (
 /obj/machinery/telecomms/relay/preset/ruskie,
 /obj/machinery/light/small/directional/west,
@@ -1391,7 +1419,9 @@
 "HD" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/holopad/secure/hacked,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
 /area/ruin/space/has_grav/listeningstation/lounge)
 "HI" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -1430,31 +1460,10 @@
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/listeningstation/lounge)
-"IT" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation/support)
-"Jg" = (
-/obj/structure/toilet{
-	pixel_y = 18
-	},
-/obj/structure/mirror/directional/east,
-/obj/machinery/button/door/directional/west{
-	name = "Bathroom Lock";
-	normaldoorcontrol = 1;
-	specialfunctions = 4;
-	id = "lpost_bathroom2"
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/ruin/space/has_grav/listeningstation/dorms)
 "Jj" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/photocopier/gratis,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "JB" = (
@@ -1648,8 +1657,6 @@
 /obj/item/ammo_box/magazine/c35sol_pistol/stendo,
 /obj/item/storage/belt/military,
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
-/obj/structure/window/reinforced/plasma/spawner/directional/north,
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation/comms)
 "MQ" = (
@@ -1848,7 +1855,9 @@
 	name = "Communication Chamber";
 	req_access = list("syndicate")
 	},
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
 /area/ruin/space/has_grav/listeningstation/lounge)
 "So" = (
 /obj/structure/rack,
@@ -1880,7 +1889,9 @@
 /obj/machinery/light_switch/directional/east,
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syndie_kit/chameleon,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 8
+	},
 /area/ruin/space/has_grav/listeningstation/lounge)
 "TO" = (
 /obj/effect/turf_decal/sand/plating,
@@ -1974,7 +1985,9 @@
 /area/ruin/space/has_grav/listeningstation/lobby)
 "WW" = (
 /obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/photocopier/gratis,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/comms)
 "Xc" = (
 /obj/effect/turf_decal/delivery/white,
@@ -2111,9 +2124,9 @@ AV
 VK
 VK
 AV
-AV
 Ca
 AV
+go
 VK
 VK
 VK
@@ -2149,9 +2162,9 @@ VK
 VK
 VK
 VK
-go
 XM
-VK
+go
+go
 VK
 VK
 go
@@ -2275,7 +2288,7 @@ LP
 LP
 LP
 LP
-go
+LP
 go
 go
 AV
@@ -2312,8 +2325,8 @@ Qv
 LP
 bg
 bg
+vU
 LP
-go
 go
 go
 go
@@ -2349,9 +2362,9 @@ Kl
 eR
 hx
 TW
-IT
+wk
+ky
 LP
-go
 go
 go
 go
@@ -2388,8 +2401,8 @@ jq
 LP
 bg
 bg
+vU
 LP
-go
 go
 go
 go
@@ -2427,7 +2440,7 @@ LP
 LP
 LP
 LP
-go
+LP
 go
 go
 go
@@ -2751,10 +2764,10 @@ JB
 JB
 eB
 MG
-JB
-Jg
+FV
+Yy
 si
-zd
+zK
 ME
 BX
 ux
@@ -2792,7 +2805,7 @@ vQ
 WW
 JB
 JB
-JB
+zd
 OT
 BX
 de
@@ -2830,7 +2843,7 @@ vP
 Jj
 jD
 JB
-xL
+JB
 OT
 Uw
 Gu
