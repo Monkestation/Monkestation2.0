@@ -2,7 +2,7 @@
 	name = "Hive"
 	area_flags = NOTELEPORT | EVENT_PROTECTED | ABDUCTOR_PROOF
 	area_flags_mapping = NONE
-	has_gravity = TRUE
+	default_gravity = STANDARD_GRAVITY
 
 /area/station/hive/one
 

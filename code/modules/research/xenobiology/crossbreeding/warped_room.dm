@@ -153,7 +153,7 @@ GLOBAL_LIST(warped_rooms)
 /area/misc/warped_room
 	name = "warped room"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = NOTELEPORT
 	static_lighting = FALSE
 	base_lighting_alpha = 255

@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define AREA_BLOCKS_OUTGOING_RADIO (1<<17)
 /// Fishing here won't remove unique/limited loot from sources that are also used outside of it
 #define UNLIMITED_FISHING (1<<18)
-/// Gravity generators don't affect this area, so it has no gravity unless has_gravity is set
+/// This area is prevented from having gravity (ie. space, nearstation, or outside solars)
 #define NO_GRAVITY (1<<19)
 
 ////////////////Area Mapping Flags\\\\\\\\\\\\\\

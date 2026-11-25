@@ -8,7 +8,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	name = "Strange Location"
 	icon = 'icons/area/areas_away_missions.dmi'
 	icon_state = "away"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_AWAY
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 	skip_minimap_rendering = TRUE
@@ -20,7 +20,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 
 /area/awaymission/secret
 	area_flags = NOTELEPORT | HIDDEN_AREA
@@ -32,7 +32,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	outdoors = TRUE
 
 /area/awaymission/secret/unpowered/no_grav
-	has_gravity = FALSE
+	default_gravity = ZERO_GRAVITY
 
 /area/awaymission/secret/fullbright
 	static_lighting = FALSE

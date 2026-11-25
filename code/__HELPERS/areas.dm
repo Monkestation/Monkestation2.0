@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		newA = new new_area_type
 		newA.AddComponent(/datum/component/custom_area)
 		newA.setup(str)
-		newA.has_gravity = oldA.has_gravity
+		newA.default_gravity = oldA.default_gravity
 		GLOB.custom_areas[newA] = TRUE
 		require_area_resort() //new area registered. resort the names
 	else

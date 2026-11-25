@@ -39,7 +39,7 @@
 	name = "GoldenEye Satellite"
 	icon_state = "syndie-ship"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = VALID_TERRITORY | NOTELEPORT
 	ambientsounds = AMBIENCE_GENERIC
 

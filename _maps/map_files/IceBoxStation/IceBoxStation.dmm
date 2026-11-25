@@ -743,7 +743,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "anP" = (
 /obj/structure/table,
 /obj/machinery/light_switch/directional/north,
@@ -2943,7 +2943,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "aWc" = (
 /obj/structure/railing{
 	dir = 8
@@ -3530,7 +3530,7 @@
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
 	name = "hyper-reinforced wall"
 	},
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "bfa" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
@@ -4286,7 +4286,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "bqt" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/circuit,
@@ -4868,7 +4868,7 @@
 "byB" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "byK" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9373,7 +9373,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "cJC" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/four,
@@ -14997,7 +14997,7 @@
 /area/station/security/processing)
 "evT" = (
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "ewd" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -24868,7 +24868,7 @@
 "hDA" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "hDC" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -28364,7 +28364,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "iJK" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -28389,7 +28389,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "iKc" = (
 /obj/structure/chair/sofa/right/brown{
 	dir = 8
@@ -36557,7 +36557,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "lhv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38953,7 +38953,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "lRf" = (
 /obj/machinery/teleport/station,
 /turf/open/floor/plating,
@@ -40327,7 +40327,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "mpy" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -40683,7 +40683,7 @@
 "mvE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "mvG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 8
@@ -41700,7 +41700,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "mNj" = (
 /obj/machinery/computer/security{
 	dir = 4
@@ -47984,7 +47984,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "oDg" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -48480,7 +48480,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "oLz" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -52239,7 +52239,7 @@
 /area/station/maintenance/port/greater)
 "pRa" = (
 /turf/closed/wall,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "pRj" = (
 /turf/closed/wall,
 /area/station/maintenance/port/aft)
@@ -54945,7 +54945,7 @@
 	},
 /obj/item/toy/plush/argemia,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "qKH" = (
 /obj/structure/sign/warning/cold_temp/directional/north,
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
@@ -67090,7 +67090,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "uza" = (
 /obj/machinery/computer/exoscanner_control{
 	dir = 1
@@ -75919,7 +75919,7 @@
 	name = "BOMB RANGE"
 	},
 /turf/closed/wall,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "xgK" = (
 /obj/structure/table,
 /obj/item/transfer_valve{

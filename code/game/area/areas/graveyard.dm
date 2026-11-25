@@ -1,7 +1,7 @@
 /area/graveyard // For Graveyard
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	area_flags = VALID_TERRITORY
 	area_flags_mapping = UNIQUE_AREA | FLORA_ALLOWED
