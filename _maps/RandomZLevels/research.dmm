@@ -411,7 +411,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bR" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bS" = (
@@ -460,7 +460,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bZ" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -503,14 +503,14 @@
 /area/awaymission/research/interior/gateway)
 "cj" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "ck" = (
 /obj/machinery/door/window/right/directional/east{
 	dir = 2
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
@@ -1812,7 +1812,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
@@ -2060,7 +2060,7 @@
 "jU" = (
 /obj/structure/bed,
 /obj/item/bedsheet/blue,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jV" = (
@@ -2621,7 +2621,7 @@
 "lT" = (
 /obj/structure/bed,
 /obj/item/bedsheet/patriot,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lX" = (
@@ -3114,7 +3114,7 @@
 /area/awaymission/research/interior)
 "sM" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)

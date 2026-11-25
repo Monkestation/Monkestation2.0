@@ -156,12 +156,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/bar)
-"fw" = (
-/obj/structure/railing,
-/turf/open/misc/beach/coastline_b{
-	dir = 6
-	},
-/area/station/commons/lounge)
 "fy" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/misc/beach/sand,
@@ -171,11 +165,6 @@
 /obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/wood,
 /area/station/service/bar)
-"hh" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 1
-	},
-/area/station/commons/lounge)
 "hi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -312,14 +301,12 @@
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "jY" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 5
 	},
 /area/station/commons/lounge)
 "kB" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 10
-	},
+/turf/open/water/beach/biodome,
 /area/station/commons/lounge)
 "lb" = (
 /turf/open/openspace,
@@ -346,7 +333,7 @@
 /area/station/commons/lounge)
 "lE" = (
 /obj/structure/railing,
-/turf/open/misc/beach/coastline_t/sandwater_inner{
+/turf/open/misc/beach/coast/corner{
 	dir = 4
 	},
 /area/station/commons/lounge)
@@ -368,7 +355,7 @@
 	name = "la creatura";
 	desc = "ay dios mios..."
 	},
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 4
 	},
 /area/station/commons/lounge)
@@ -449,8 +436,8 @@
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
 "ot" = (
-/turf/open/misc/beach/coastline_t/sandwater_inner{
-	dir = 1
+/turf/open/misc/beach/coast/corner{
+	dir = 8
 	},
 /area/station/commons/lounge)
 "oy" = (
@@ -463,9 +450,6 @@
 /obj/effect/area_lighting_helper/max_alpha,
 /turf/open/floor/wood,
 /area/station/service/kitchen)
-"oL" = (
-/turf/open/misc/beach/coastline_b,
-/area/station/commons/lounge)
 "oN" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/sand,
@@ -494,13 +478,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
-"pi" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 5
-	},
-/area/station/commons/lounge)
 "pj" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/station/commons/lounge)
@@ -576,14 +555,6 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/wood,
 /area/station/service/bar)
-"rn" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/misc/beach/coastline_b{
-	dir = 5
-	},
-/area/station/commons/lounge)
 "rw" = (
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/sand,
@@ -644,7 +615,7 @@
 /area/station/commons/lounge)
 "sM" = (
 /obj/effect/landmark/start/hangover,
-/turf/open/misc/beach/coastline_b,
+/turf/open/water/beach/biodome/sinking,
 /area/station/commons/lounge)
 "tk" = (
 /obj/structure/disposalpipe/junction{
@@ -748,15 +719,6 @@
 /obj/structure/cable,
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
-"wI" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 4
-	},
-/area/station/commons/lounge)
-"wR" = (
-/obj/structure/flora/bush/reed/style_random,
-/turf/open/misc/beach/coastline_b,
-/area/station/commons/lounge)
 "xw" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -791,12 +753,12 @@
 /turf/open/floor/iron,
 /area/station/service/theater)
 "xI" = (
-/turf/open/misc/beach/coastline_t/sandwater_inner{
+/turf/open/misc/beach/coast/corner{
 	dir = 4
 	},
 /area/station/commons/lounge)
 "xU" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 9
 	},
 /area/station/commons/lounge)
@@ -812,11 +774,6 @@
 /obj/machinery/grill,
 /turf/open/floor/wood,
 /area/station/service/kitchen)
-"zh" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 6
-	},
-/area/station/commons/lounge)
 "zo" = (
 /obj/machinery/door/window/left/directional/south{
 	name = "Kitchen"
@@ -842,7 +799,7 @@
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
 "zQ" = (
-/turf/open/misc/beach/coastline_t,
+/turf/open/misc/beach/coast,
 /area/station/commons/lounge)
 "Ad" = (
 /obj/machinery/button/door/directional/east{
@@ -929,7 +886,7 @@
 /area/station/service/bar)
 "BO" = (
 /obj/effect/landmark/start/hangover,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 1
 	},
 /area/station/commons/lounge)
@@ -988,7 +945,7 @@
 /area/station/commons/lounge)
 "DP" = (
 /obj/item/toy/seashell,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 1
 	},
 /area/station/commons/lounge)
@@ -1039,7 +996,7 @@
 /turf/open/misc/beach/sand,
 /area/station/commons/lounge)
 "EN" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 4
 	},
 /area/station/commons/lounge)
@@ -1225,7 +1182,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "KJ" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 1
 	},
 /area/station/commons/lounge)
@@ -1244,11 +1201,6 @@
 /obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/wood,
 /area/station/service/bar)
-"LD" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 8
-	},
-/area/station/commons/lounge)
 "LE" = (
 /obj/machinery/restaurant_portal/restaurant,
 /turf/open/misc/beach/sand,
@@ -1282,7 +1234,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "Na" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 6
 	},
 /area/station/commons/lounge)
@@ -1394,7 +1346,7 @@
 /area/station/service/kitchen)
 "OO" = (
 /obj/item/toy/seashell,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/station/commons/lounge)
@@ -1402,8 +1354,8 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/beach/coastline_t/sandwater_inner{
-	dir = 8
+/turf/open/misc/beach/coast/corner{
+	dir = 1
 	},
 /area/station/commons/lounge)
 "Ps" = (
@@ -1413,12 +1365,12 @@
 /area/station/service/kitchen)
 "Pt" = (
 /obj/structure/railing,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 9
 	},
 /area/station/commons/lounge)
 "Px" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 10
 	},
 /area/station/commons/lounge)
@@ -1501,7 +1453,7 @@
 /area/station/service/kitchen)
 "RK" = (
 /obj/effect/landmark/start/assistant,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 1
 	},
 /area/station/commons/lounge)
@@ -1640,7 +1592,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/station/commons/lounge)
@@ -1738,7 +1690,7 @@
 /area/station/service/kitchen)
 "YC" = (
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/east_offset,
-/turf/open/misc/beach/coastline_t,
+/turf/open/misc/beach/coast,
 /area/station/commons/lounge)
 "YE" = (
 /obj/structure/table/wood,
@@ -1765,7 +1717,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 10
 	},
 /area/station/commons/lounge)
@@ -1779,12 +1731,12 @@
 
 (1,1,1) = {"
 KP
-LD
-LD
-LD
+KP
+kB
 jm
 jm
-hh
+jm
+jm
 KJ
 Gz
 yg
@@ -1805,13 +1757,13 @@ lL
 lL
 "}
 (2,1,1) = {"
-hh
+KP
 xU
 OO
 Px
-oL
 jm
-hh
+jm
+jm
 KJ
 mV
 MX
@@ -1832,13 +1784,13 @@ lL
 lL
 "}
 (3,1,1) = {"
-hh
+kB
 KJ
 mS
 zQ
-oL
 jm
-hh
+jm
+jm
 BO
 VI
 MX
@@ -1859,13 +1811,13 @@ lL
 lL
 "}
 (4,1,1) = {"
-hh
+kB
 KJ
 Qz
 zQ
-oL
 jm
-hh
+jm
+jm
 KJ
 Yb
 MX
@@ -1886,13 +1838,13 @@ lL
 lL
 "}
 (5,1,1) = {"
-hh
+kB
 KJ
 js
 zQ
-oL
 jm
-hh
+jm
+jm
 KJ
 Va
 nx
@@ -1913,13 +1865,13 @@ lL
 lL
 "}
 (6,1,1) = {"
-hh
+kB
 KJ
 Zc
 zQ
-oL
 jm
-hh
+jm
+jm
 RK
 mV
 MX
@@ -1940,13 +1892,13 @@ lL
 lL
 "}
 (7,1,1) = {"
-hh
+jm
 jY
 mp
 Na
-oL
 jm
-hh
+jm
+jm
 BO
 GK
 MX
@@ -1968,12 +1920,12 @@ lL
 "}
 (8,1,1) = {"
 jm
-wI
-wI
-wI
+jm
+jm
+jm
 jm
 Nm
-hh
+jm
 KJ
 xG
 MX
@@ -2000,7 +1952,7 @@ jm
 jm
 jm
 jm
-hh
+jm
 KJ
 Va
 qc
@@ -2027,7 +1979,7 @@ jm
 jm
 hG
 jm
-hh
+jm
 DP
 qT
 iY
@@ -2054,7 +2006,7 @@ jm
 jm
 jm
 jm
-hh
+jm
 KJ
 oV
 br
@@ -2081,7 +2033,7 @@ jm
 jm
 jm
 jm
-hh
+jm
 jY
 EN
 ot
@@ -2109,7 +2061,7 @@ jm
 jm
 jm
 jm
-wI
+jm
 kB
 KJ
 Qm
@@ -2137,7 +2089,7 @@ dP
 dP
 dP
 jm
-hh
+jm
 KJ
 Hk
 TC
@@ -2164,7 +2116,7 @@ Iq
 TG
 Nt
 me
-hh
+jm
 BO
 pR
 Um
@@ -2191,7 +2143,7 @@ ZG
 Xc
 Xc
 jm
-hh
+jm
 KJ
 WJ
 Um
@@ -2218,7 +2170,7 @@ jm
 jm
 jm
 jm
-hh
+jm
 KJ
 Em
 QW
@@ -2245,7 +2197,7 @@ jm
 jm
 jm
 jm
-hh
+jm
 KJ
 ME
 Um
@@ -2265,14 +2217,14 @@ ef
 "}
 (19,1,1) = {"
 jm
-fw
+HB
 RL
-rn
+me
 jm
 AZ
 jm
 jm
-hh
+jm
 KJ
 Fj
 Ge
@@ -2291,15 +2243,15 @@ pR
 LK
 "}
 (20,1,1) = {"
-zh
+jm
 Pt
 RL
 ZH
-pi
-LD
-LD
-LD
-zh
+jm
+jm
+jm
+jm
+kB
 KJ
 Ex
 Ge
@@ -2448,7 +2400,7 @@ sL
 pR
 pR
 zQ
-oL
+jm
 jm
 jm
 "}
@@ -2475,7 +2427,7 @@ hD
 wm
 pR
 zQ
-oL
+jm
 jm
 lt
 "}
@@ -2529,7 +2481,7 @@ hD
 pR
 Fc
 zQ
-oL
+jm
 jm
 jm
 "}
@@ -2556,7 +2508,7 @@ hD
 pR
 ee
 zQ
-wR
+lt
 jm
 jm
 "}
@@ -2583,7 +2535,7 @@ hD
 pR
 pR
 YC
-oL
+jm
 jm
 jm
 "}

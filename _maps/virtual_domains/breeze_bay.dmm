@@ -111,7 +111,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "P" = (
-/turf/open/floor/holofloor/beach/coast_t,
+/turf/open/misc/beach/coast,
 /area/virtual_domain/powered)
 "Q" = (
 /obj/structure/flora/bush/stalky/style_random,

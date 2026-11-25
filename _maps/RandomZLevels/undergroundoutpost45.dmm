@@ -120,7 +120,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ax" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/underground,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -129,7 +129,7 @@
 /obj/structure/chair/comfy/beige{
 	dir = 4
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/underground,
 /turf/open/floor/carpet/grimey{
 	heat_capacity = 1e+006
 	},
@@ -141,7 +141,7 @@
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/underground,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -151,7 +151,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "aB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/underground,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -263,7 +263,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aT" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/underground,
 /turf/open/floor/carpet/grimey{
 	heat_capacity = 1e+006
 	},

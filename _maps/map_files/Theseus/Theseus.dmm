@@ -22823,11 +22823,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/station/ai_monitored/turret_protected/ai)
-"gNY" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 8
-	},
-/area/station/maintenance/department/medical)
 "gOf" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -25021,9 +25016,7 @@
 	name = "Robbie";
 	real_name = "Robbie"
 	},
-/turf/open/misc/beach/coastline_b{
-	dir = 8
-	},
+/turf/open/water/beach/biodome,
 /area/station/maintenance/department/medical)
 "huH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -54846,7 +54839,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
 "qae" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/station/maintenance/department/medical)
@@ -110549,8 +110542,8 @@ lnl
 nLV
 dAp
 snA
-gNY
-gNY
+uEt
+uEt
 huF
 edF
 lXw
