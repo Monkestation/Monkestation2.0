@@ -637,7 +637,7 @@
 	helptext = "We may reabsorb the mass in the same way it was formed. It is too heavy to be used in our lesser form."
 	button_icon_state = "flesh_maul"
 	chemical_cost = 20
-	dna_cost = 3
+	dna_cost = 2
 	req_human = TRUE
 	weapon_type = /obj/item/melee/flesh_maul
 	weapon_name_simple = "maul"
@@ -663,7 +663,7 @@
 	attack_verb_continuous = list("smashes", "slams", "crushes", "whacks")
 	attack_verb_simple = list("smashed", "slammed", "crushed", "whacked")
 	sharpness = NONE
-	wound_bonus = 30			//But your bones will be sad :(
+	wound_bonus = 40			//But your bones will be sad :(
 	bare_wound_bonus = 20
 	resistance_flags = FLAMMABLE
 
@@ -693,12 +693,12 @@
 		var/structure_damage = structure_or_machinery.max_integrity
 		var/make_sound = TRUE
 		if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille))
-			structure_damage *= 2 				// Because of melee armor
+			structure_damage *= 3.5				// Because of melee armor
 			make_sound = FALSE
 		if(ismachinery(target) || istype(target, /obj/structure/door_assembly))
-			structure_damage *= 0.5
+			structure_damage *= 0.75
 		if(istype(target, /obj/machinery/door/airlock))
-			structure_damage = 75				//Should make it better than armblades for airlock smashing. No bonus vs plasteel-reinforced airlocks, though.
+			structure_damage = 96				//Should make it better than armblades for airlock smashing. No bonus vs plasteel-reinforced airlocks, though.
 		if(istype(target, /obj/structure/table))	//Hate tables
 			var/obj/structure/table/table_target = target
 			table_target.deconstruct(FALSE)
