@@ -2809,11 +2809,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
-"agK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/hydroponics/soil,
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "agL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -2871,20 +2866,9 @@
 /obj/structure/sign/warning/xeno_mining/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
-"agR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/north,
-/obj/machinery/hydroponics,
-/turf/open/floor/plating,
-/area/station/service/hydroponics/garden)
 "agS" = (
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/port/lesser)
-"agT" = (
-/obj/machinery/camera/autoname/directional/north,
-/obj/machinery/hydroponics/soil,
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "agU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5369,6 +5353,10 @@
 /obj/effect/spawner/random/trash/graffiti,
 /turf/closed/wall,
 /area/station/maintenance/port/fore)
+"amk" = (
+/obj/machinery/growing/tray,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "aml" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/structure/lattice/catwalk,
@@ -5816,6 +5804,11 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"anu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/growing/tray,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "anv" = (
 /obj/structure/lattice/catwalk{
 	dir = 8
@@ -5824,6 +5817,10 @@
 	dir = 8
 	},
 /area/space)
+"anw" = (
+/obj/machinery/growing/soil,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "anx" = (
 /obj/structure/lattice{
 	dir = 8
@@ -5843,6 +5840,22 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
+"anz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/growing/soil,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
+"anA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/north,
+/obj/machinery/growing/tray,
+/turf/open/floor/plating,
+/area/station/service/hydroponics/garden)
+"anB" = (
+/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/growing/soil,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "anH" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -7905,10 +7918,6 @@
 /area/station/engineering/atmos)
 "asH" = (
 /obj/machinery/holopad,
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
-"asI" = (
-/obj/machinery/hydroponics/soil,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "asJ" = (
@@ -115553,10 +115562,10 @@ xUS
 lrP
 avq
 wjC
-agR
-asX
-asX
-arZ
+anA
+anu
+anu
+amk
 arX
 arM
 ary
@@ -116067,9 +116076,9 @@ jIh
 wao
 lsK
 wjC
-agT
-agK
-asI
+anB
+anz
+anw
 asr
 arZ
 arO
