@@ -101,6 +101,9 @@
 			continue
 		item.on_equip_item(preference_source, src, visuals_only)
 
+	// Species gear picked in the preferences, like the vox mask and tank, once the outfit and loadout are on
+	dna.species.apply_gear_preferences(src, preference_source, visuals_only)
+
 	//regenerate_icons()
 	return TRUE
 
