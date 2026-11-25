@@ -10,7 +10,6 @@
 	fire_sound_volume = 90
 	rack_sound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	suppressed_sound = 'sound/items/weapons/gun/smg/shot_suppressed.ogg'
-	var/select = 1 ///fire selector position. 1 = semi, 2 = burst. anything past that can vary between guns.
 	var/selector_switch_icon = FALSE ///if it has an icon for a selector switch indicating current firemode.
 	gun_flags = GUN_SMOKE_PARTICLES
 
@@ -24,29 +23,6 @@
 			. += "[initial(icon_state)]_semi"
 		if(1)
 			. += "[initial(icon_state)]_burst"
-
-/obj/item/gun/ballistic/automatic/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
-		burst_select()
-	else
-		..()
-
-/obj/item/gun/ballistic/automatic/proc/burst_select()
-	var/mob/living/carbon/human/user = usr
-	select = !select
-	if(!select)
-		burst_size = 1
-		fire_delay = 0
-		balloon_alert(user, "switched to semi-automatic")
-	else
-		burst_size = initial(burst_size)
-		fire_delay = initial(fire_delay)
-		balloon_alert(user, "switched to [burst_size]-round burst")
-
-	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
-	update_appearance()
-	update_item_action_buttons()
-
 
 ///SMGs
 
