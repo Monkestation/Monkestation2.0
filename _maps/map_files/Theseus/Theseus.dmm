@@ -355,6 +355,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
+"aaY" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/engineering/hallway)
 "aaZ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -1040,6 +1051,24 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"acF" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/engineering/hallway)
 "acG" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -2345,17 +2374,12 @@
 	},
 /area/station/engineering/hallway)
 "afI" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/engineering/hallway)
+/obj/effect/landmark/start/hangover,
+/obj/structure/weightmachine,
+/turf/open/floor/wood,
+/area/station/commons)
 "afJ" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -2371,25 +2395,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
-"afL" = (
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/engineering/hallway)
 "afM" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
@@ -8413,12 +8418,6 @@
 /obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/service/hydroponics/garden)
-"att" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/wood,
-/area/station/commons)
 "atu" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/newscaster/directional/north,
@@ -120981,7 +120980,7 @@ oRB
 rLO
 aur
 aue
-att
+afI
 aqZ
 atf
 asP
@@ -122853,7 +122852,7 @@ mDn
 vTH
 lUj
 ktT
-afI
+aaY
 bHg
 afh
 aeG
@@ -123110,7 +123109,7 @@ rCb
 cLm
 oaE
 oMM
-afL
+acF
 mFJ
 uLS
 qxc
