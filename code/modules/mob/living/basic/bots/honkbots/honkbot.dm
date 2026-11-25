@@ -92,7 +92,7 @@
 
 /mob/living/basic/bot/secbot/honkbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_access_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
+	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["slip_people"] = security_mode_flags & HONKBOT_MODE_SLIP
 		data["custom_controls"]["fake_cuff"] = security_mode_flags & SECBOT_HANDCUFF_TARGET
 		data["custom_controls"]["check_ids"] = security_mode_flags & SECBOT_CHECK_IDS
@@ -102,7 +102,7 @@
 /mob/living/basic/bot/secbot/honkbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/user = ui.user
-	if(. || !isliving(user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
+	if(. || !isliving(user) || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !HAS_SILICON_ACCESS(user))
 		return
 	switch(action)
 		if("slip_people")

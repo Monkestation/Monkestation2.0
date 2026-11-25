@@ -109,7 +109,7 @@
 // Variables sent to TGUI
 /mob/living/basic/bot/secbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_access_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
+	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["check_id"] = security_mode_flags & SECBOT_CHECK_IDS
 		data["custom_controls"]["check_weapons"] = security_mode_flags & SECBOT_CHECK_WEAPONS
 		data["custom_controls"]["check_warrants"] = security_mode_flags & SECBOT_CHECK_RECORDS
@@ -121,7 +121,7 @@
 /mob/living/basic/bot/secbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/user = ui.user
-	if(. || (bot_access_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
+	if(. || (!(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)

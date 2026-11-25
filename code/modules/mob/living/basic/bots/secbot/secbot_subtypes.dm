@@ -55,7 +55,7 @@
 	health = 50
 	faction = list(FACTION_NANOTRASEN_PRIVATE)
 	bot_mode_flags = BOT_MODE_ON
-	bot_access_flags = BOT_COVER_LOCKED | BOT_COVER_EMAGGED
+	bot_access_flags = BOT_COVER_EMAGGED
 
 /mob/living/basic/bot/secbot/beepsky/explode()
 	var/atom/current_location = drop_location()
