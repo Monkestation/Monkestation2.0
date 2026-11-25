@@ -2237,7 +2237,7 @@
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/south,
 /mob/living/basic/crab,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/virtual_domain/powered_lighting)
@@ -2805,7 +2805,7 @@
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/east,
 /obj/effect/overlay/palmtree_l,
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/virtual_domain/powered_lighting)

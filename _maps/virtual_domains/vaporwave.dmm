@@ -168,7 +168,7 @@
 	},
 /area/ruin/space/has_grav/powered/virtual_domain)
 "HA" = (
-/turf/open/floor/holofloor/beach/coast_t,
+/turf/open/floor/holofloor/beach/coast,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "HV" = (
 /obj/structure/chair/comfy/black{

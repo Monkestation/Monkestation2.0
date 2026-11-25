@@ -140,6 +140,12 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
+"dP" = (
+/obj/machinery/light/directional/south,
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/virtual_domain/powered)
 "dZ" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood,
@@ -153,6 +159,16 @@
 "er" = (
 /obj/structure/noticeboard/staff,
 /turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"eA" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 4
+	},
+/area/virtual_domain/powered)
+"eQ" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 1
+	},
 /area/virtual_domain/powered)
 "fr" = (
 /obj/item/melee/skateboard/hoverboard,
@@ -215,10 +231,6 @@
 "jl" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"js" = (
-/obj/machinery/light/directional/south,
-/turf/open/misc/beach/sand/coastline_b,
 /area/virtual_domain/powered)
 "jy" = (
 /obj/effect/turf_decal/sand{
@@ -478,9 +490,6 @@
 "xw" = (
 /turf/open/floor/pod/dark,
 /area/virtual_domain/powered)
-"xz" = (
-/turf/open/misc/beach/sand/coastline_b,
-/area/virtual_domain/powered)
 "xJ" = (
 /obj/structure/closet/cabinet,
 /obj/item/storage/backpack/duffelbag,
@@ -555,6 +564,11 @@
 /obj/item/instrument/guitar,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/powered)
+"yJ" = (
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/virtual_domain/powered)
 "yU" = (
 /obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/plating,
@@ -562,12 +576,6 @@
 "yX" = (
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/carpet/red,
-/area/virtual_domain/powered)
-"zc" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/misc/beach/sand/coastline_b,
 /area/virtual_domain/powered)
 "zw" = (
 /obj/structure/punching_bag,
@@ -577,10 +585,6 @@
 /obj/structure/marker_beacon/indigo,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"zQ" = (
-/obj/machinery/light/directional/east,
-/turf/open/misc/beach/sand/coastline_b,
-/area/virtual_domain/powered)
 "zT" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -856,6 +860,9 @@
 /obj/structure/chair/sofa/left/brown,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
+"MF" = (
+/turf/open/misc/beach/coast,
+/area/virtual_domain/powered)
 "Nr" = (
 /obj/machinery/light/directional/north,
 /turf/open/misc/beach/sand,
@@ -930,6 +937,12 @@
 "Qb" = (
 /obj/machinery/griddle,
 /turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Qg" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/beach/coast/corner,
 /area/virtual_domain/powered)
 "Qm" = (
 /obj/effect/turf_decal/sand,
@@ -1018,6 +1031,12 @@
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
+"VF" = (
+/obj/machinery/light/directional/east,
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/virtual_domain/powered)
 "VH" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood,
@@ -1073,6 +1092,11 @@
 /obj/structure/bedsheetbin,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
+"XB" = (
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/virtual_domain/powered)
 "XL" = (
 /obj/machinery/light/directional/east,
 /turf/open/misc/beach/sand,
@@ -1084,6 +1108,12 @@
 /obj/effect/turf_decal/sand,
 /obj/structure/sign/departments/botany/directional/south,
 /turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"XU" = (
+/obj/machinery/light/directional/south,
+/turf/open/misc/beach/coast/corner{
+	dir = 8
+	},
 /area/virtual_domain/powered)
 "Yi" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -1117,6 +1147,14 @@
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Zn" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
 /area/virtual_domain/powered)
 "Zt" = (
 /obj/structure/table/wood,
@@ -1966,13 +2004,13 @@ TJ
 wb
 wD
 wD
-zc
-zc
-zc
-zc
-zc
-zc
-js
+Qg
+Zn
+Zn
+Zn
+Zn
+Zn
+XU
 Fn
 gl
 gl
@@ -2009,13 +2047,13 @@ yl
 ag
 wD
 wD
-xz
+MF
 KZ
 Ww
 Ww
 Ww
 cG
-xz
+yJ
 Fn
 Al
 Al
@@ -2052,13 +2090,13 @@ Au
 wD
 rT
 wD
-xz
+MF
 Ww
 Ww
 Ww
 Ww
 Ww
-xz
+yJ
 Fn
 Al
 iz
@@ -2095,13 +2133,13 @@ YJ
 YJ
 wD
 wD
-xz
+MF
 Ww
 Ww
 Ww
 Ww
 Ww
-xz
+yJ
 Fn
 Al
 iz
@@ -2138,13 +2176,13 @@ bQ
 wD
 wD
 wD
-xz
+MF
 Ww
 Ww
 KZ
 KZ
 Ww
-js
+dP
 Fn
 Al
 iz
@@ -2181,13 +2219,13 @@ XP
 yB
 wD
 wD
-xz
+MF
 KZ
 Ww
 KZ
 gh
 Ww
-xz
+yJ
 Fn
 Al
 iz
@@ -2224,13 +2262,13 @@ XL
 wD
 wD
 wD
-xz
+MF
 Ww
 Ww
 Ww
 Ww
 Ww
-xz
+yJ
 Fn
 Al
 iz
@@ -2267,13 +2305,13 @@ xq
 jy
 wD
 wD
-xz
+MF
 Ww
 cG
 Ww
 Ww
 KZ
-xz
+yJ
 Fn
 Al
 iz
@@ -2310,13 +2348,13 @@ CA
 Uh
 wD
 qW
-xz
+MF
 Ww
 Ww
 Ww
 Ww
 Ww
-js
+dP
 Fn
 Al
 iz
@@ -2352,14 +2390,14 @@ wD
 wD
 wD
 Jt
-xz
-xz
-zQ
-xz
-xz
-xz
-xz
-xz
+wD
+eQ
+VF
+XB
+XB
+XB
+XB
+eA
 Fn
 Al
 iz

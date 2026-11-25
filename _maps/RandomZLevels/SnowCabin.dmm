@@ -738,7 +738,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "cH" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowcabin,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -800,7 +800,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "cQ" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowcabin,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -2170,7 +2170,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hI" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowcabin,
 /obj/structure/sign/poster/official/report_crimes/directional/south,
 /obj/structure/cable,
 /turf/open/floor/carpet,

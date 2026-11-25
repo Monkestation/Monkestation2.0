@@ -2737,7 +2737,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/moonoutpost,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "tZ" = (
@@ -2881,7 +2881,7 @@
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/moonoutpost,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "vH" = (
@@ -3142,7 +3142,7 @@
 	},
 /area/awaymission/moonoutpost19/hive)
 "xS" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/moonoutpost,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "xV" = (
@@ -5197,7 +5197,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "Qx" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/moonoutpost,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "Qz" = (

@@ -1312,7 +1312,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "oq" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/pool)
@@ -4510,9 +4510,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "RQ" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 8
-	},
+/turf/open/water/beach/biodome,
 /area/ruin/space/has_grav/hotel/pool)
 "RX" = (
 /obj/structure/cable,
@@ -4520,7 +4518,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "RZ" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/pool)

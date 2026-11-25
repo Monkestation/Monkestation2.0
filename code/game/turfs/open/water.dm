@@ -110,7 +110,7 @@
 	planetary_atmos = FALSE
 	gender = PLURAL
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
-	icon = 'icons/obj/fluff/beach.dmi'
+	icon = 'icons/turf/beach.dmi'
 	icon_state = "water"
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
@@ -139,7 +139,7 @@
 	desc = "Don't forget your life jacket."
 	slowdown = 8
 	immerse_overlay = "immerse_deep"
-	icon = 'icons/obj/fluff/beach.dmi'
+	icon = 'icons/turf/beach.dmi'
 	icon_state = "deepwater"
 	base_icon_state = "deepwater"
 	baseturfs = /turf/open/water/deep_beach

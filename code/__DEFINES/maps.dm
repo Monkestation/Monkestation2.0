@@ -252,6 +252,16 @@ Always compile, always use that verb, and always make sure that it works for wha
 /// Checks the job changes in the map config for the passed change key.
 #define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.current_map.job_changes?[job]?[change]
 
+///Identifiers for away mission spawnpoints
+#define AWAYSTART_BEACH "AWAYSTART_BEACH"
+#define AWAYSTART_MUSEUM "AWAYSTART_MUSEUM"
+#define AWAYSTART_RESEARCH "AWAYSTART_RESEARCH"
+#define AWAYSTART_CAVES "AWAYSTART_CAVES"
+#define AWAYSTART_MOONOUTPOST "AWAYSTART_MOONOUTPOST"
+#define AWAYSTART_SNOWCABIN "AWAYSTART_SNOWCABIN"
+#define AWAYSTART_SNOWDIN "AWAYSTART_SNOWDIN"
+#define AWAYSTART_UNDERGROUND "AWAYSTART_UNDERGROUND"
+
 #define ZTRAIT_OSHAN "OshanTrait"
 
 #define ZTRAIT_OSHAN_MINING "Oshan Mining"

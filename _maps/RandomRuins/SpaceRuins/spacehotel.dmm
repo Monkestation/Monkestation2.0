@@ -352,9 +352,7 @@
 	},
 /area/ruin/space/has_grav/hotel/dock)
 "db" = (
-/turf/open/misc/beach/coastline_b{
-	dir = 8
-	},
+/turf/open/water/beach/biodome,
 /area/ruin/space/has_grav/hotel/pool)
 "dd" = (
 /obj/structure/sink/directional/west,
@@ -3139,7 +3137,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "CG" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/coast{
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/pool)
@@ -3232,7 +3230,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
 "DK" = (
-/turf/open/misc/beach/coastline_t{
+/turf/open/misc/beach/sand{
 	dir = 4
 	},
 /area/ruin/space/has_grav/hotel/pool)
