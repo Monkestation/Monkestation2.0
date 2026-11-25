@@ -23,6 +23,10 @@
 	mood_change = -15
 	timeout = 10 MINUTES
 
+// otherwise the next feed would wash the kill off your conscience
+/datum/mood_event/drankkilled/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
+	return BLOCK_NEW_MOOD
+
 /datum/mood_event/coffinsleep
 	description = span_nicegreen("I slept in a coffin during the day. I feel whole again.")
 	mood_change = 10

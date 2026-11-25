@@ -6,11 +6,11 @@
  * You cannot manually exit Torpor, it is instead entered/exited by:
  *
  * Torpor is triggered by:
- * - Entering a Coffin with more than 10 combined Brute/Burn damage, dealt with by /closet/crate/coffin/close() [coffins.dm]
+ * - Entering a Coffin with more than 10 combined Brute/Burn damage, wounds, or missing limbs, dealt with by /closet/crate/coffin/close() [coffins.dm]
  * - Death, dealt with by /HandleDeath()
  * Torpor is ended by:
  * - Having less than 10 Burn damage while OUTSIDE of your Coffin while it isnt Sol.
- * - Having less than 10 Brute & Burn Combined while INSIDE of your Coffin while it isnt Sol.
+ * - Having less than 10 Brute & Burn Combined and no missing limbs while INSIDE of your Coffin while it isnt Sol.
  * - Sol being over, dealt with by /sunlight/process() [vampire_daylight.dm]
 **/
 /datum/antagonist/vampire/proc/check_begin_torpor()
@@ -18,7 +18,7 @@
 	if(QDELETED(carbon_owner))
 		return
 	var/total_damage = carbon_owner.getBruteLoss() + carbon_owner.getFireLoss()
-	if(total_damage >= 10 || length(carbon_owner.all_wounds))
+	if(total_damage >= 10 || length(carbon_owner.all_wounds) || length(carbon_owner.get_missing_limbs()))
 		carbon_owner.apply_status_effect(/datum/status_effect/vampire_torpor)
 
 /datum/status_effect/vampire_torpor
@@ -93,7 +93,8 @@
 
 	// You are in a coffin, so instead we'll check TOTAL damage.
 	if(istype(owner.loc, /obj/structure/closet/crate/coffin))
-		if((total_brute + total_burn) <= 10)
+		var/mob/living/carbon/carbon_owner = owner
+		if((total_brute + total_burn) <= 10 && !length(carbon_owner.get_missing_limbs()))
 			owner.heal_overall_damage(brute = 10, burn = 10) // heal minor leftover damage
 			return TRUE
 	else if(total_brute <= 10)

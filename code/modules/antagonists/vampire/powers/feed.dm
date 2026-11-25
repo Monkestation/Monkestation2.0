@@ -489,11 +489,11 @@
 
 			if(!completing_thirster)
 				if(feed_target.stat == DEAD)
-					living_owner.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
+					living_owner.add_mood_event("drankblood", /datum/mood_event/drankkilled)
 					if(target_died && COOLDOWN_FINISHED(src, release_grace))
 						vampiredatum_power.adjust_humanity(-1)
 				else if(feed_fatal)
-					living_owner.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
+					living_owner.add_mood_event("drankblood", /datum/mood_event/drankkilled)
 					to_chat(owner, span_userdanger("No way will [feed_target.p_they()] survive that..."))
 					vampiredatum_power.adjust_humanity(-1)
 

@@ -69,8 +69,8 @@
 	if(HAS_TRAIT_FROM(current, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return FALSE
 
-	// wet slimes can't heal
-	if(isoozeling(current) && (locate(/datum/status_effect/fire_handler/wet_stacks) in current.status_effects))
+	// wet slimes can't heal. has_status_effect matches by id, so the oozeling's own membrane subtype doesn't count as wet
+	if(isoozeling(current) && current.has_status_effect(/datum/status_effect/fire_handler/wet_stacks))
 		return FALSE
 
 	var/actual_regen = vampire_regen_rate + additional_regen
@@ -153,7 +153,7 @@
 	var/mob/living/carbon/carbon_owner = owner.current
 	if(!iscarbon(carbon_owner) || QDELING(carbon_owner))
 		return
-	var/limb_regen_cost = 50 * -cost_muliplier
+	var/limb_regen_cost = 50 * cost_muliplier
 
 	var/list/missing = carbon_owner.get_missing_limbs()
 	if(length(missing) && (current_vitae < limb_regen_cost + 5))
