@@ -167,7 +167,7 @@
 	else
 		desc = get_stun_description(target, user)
 
-	if(desc)
+	if(desc && cooldown_check <= world.time )
 		target.visible_message(desc["visible"], desc["local"])
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
