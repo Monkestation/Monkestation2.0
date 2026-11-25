@@ -4,6 +4,7 @@
 	desc = "A mass of pulsing, chitonous tendrils with exposed violet flesh."
 	icon = 'icons/obj/darkspawn_items.dmi'
 	icon_state = "umbral_tendrils"
+	icon_angle = 180
 	inhand_icon_state = "umbral_tendrils"
 	lefthand_file = 'icons/mob/inhands/antag/darkspawn/darkspawn_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/darkspawn/darkspawn_righthand.dmi'

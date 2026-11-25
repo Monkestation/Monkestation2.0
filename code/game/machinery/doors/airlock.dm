@@ -694,20 +694,21 @@
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
 			if(!(unres_sides & heading))
 				continue
-			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+			floorlight.color = LIGHT_COLOR_DEFAULT
 			switch (heading)
 				if (NORTH)
-					floorlight.pixel_x = 0
-					floorlight.pixel_y = 32
+					floorlight.pixel_w = 0
+					floorlight.pixel_z = 32
 				if (SOUTH)
-					floorlight.pixel_x = 0
-					floorlight.pixel_y = -32
+					floorlight.pixel_w = 0
+					floorlight.pixel_z = -32
 				if (EAST)
-					floorlight.pixel_x = 32
-					floorlight.pixel_y = 0
+					floorlight.pixel_w = 32
+					floorlight.pixel_z = 0
 				if (WEST)
-					floorlight.pixel_x = -32
-					floorlight.pixel_y = 0
+					floorlight.pixel_w = -32
+					floorlight.pixel_z = 0
 			. += floorlight
 
 /obj/machinery/door/proc/auto_dir_align()
@@ -1492,6 +1493,11 @@
 	if(!dangerous_close)
 		for(var/turf/checked_turf in locs)
 			for(var/atom/movable/blocking in checked_turf)
+				var/sigreturn = SEND_SIGNAL(blocking, COMSIG_MOVABLE_BLOCKING_AIRLOCK, src, forced, force_crush)
+				if(sigreturn & AIRLOCK_BLOCK_FORCE_CRUSH)
+					dangerous_close = TRUE
+					continue
+
 				if(blocking.density && blocking != src)
 					autoclose_in(DOOR_CLOSE_WAIT)
 					return FALSE

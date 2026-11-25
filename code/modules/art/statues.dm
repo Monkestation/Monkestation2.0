@@ -275,6 +275,7 @@
 	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "chisel"
+	icon_angle = -90
 	inhand_icon_state = "screwdriver_nuke"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -378,6 +379,10 @@ Moving interrupts
 	if(!interrupted && !QDELETED(prepared_block))
 		prepared_block.create_statue()
 		user.balloon_alert(user, "statue finished")
+		if(HAS_PERSONALITY(user, /datum/personality/creative))
+			user.add_mood_event("creative_sculpting", /datum/mood_event/creative_sculpting)
+		if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+			user.add_mood_event("unimaginative_sculpting", /datum/mood_event/unimaginative_sculpting)
 	stop_sculpting(silent = !interrupted)
 
 /// To setup the sculpting target for the carving block
@@ -575,7 +580,7 @@ Moving interrupts
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
 
-	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE)
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
 	var/list/overlays_to_remove = list()

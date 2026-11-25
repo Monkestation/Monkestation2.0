@@ -6,7 +6,7 @@
 	density = FALSE
 	icon = 'icons/obj/fluff/flora/glowshroom.dmi'
 	icon_state = "glowshroom1"
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 	max_integrity = GLOWSHROOM_BASE_INTEGRITY
 	///Cooldown for when next to try to spread.
 	COOLDOWN_DECLARE(spread_cooldown)

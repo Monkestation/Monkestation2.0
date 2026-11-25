@@ -1,6 +1,7 @@
 /obj/item/melee/energy
 	abstract_type = /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
+	icon_angle = -45
 	max_integrity = 200
 	armor_type = /datum/armor/melee_energy
 	attack_verb_continuous = list("hits", "taps", "pokes")
@@ -170,53 +171,60 @@
 	return (BRUTELOSS|FIRELOSS)
 
 ///Lone wander jaunt axe, used in /datum/outfit/myststranger
-/obj/item/melee/energy/axe/lone_wanderer
+/obj/item/melee/energy/axe/prot_inv_axe
 	name = "experimental protonic inversal axe"
 	///Fallout NV OWB refrence FTW.
 	desc = "Yes, because the intellectually challenged see an M and a T next to each other and take Occam's razor to it!"
-	desc_controls = "Right-Click to dash."
+	desc_controls = "Right-Click to dash. Activate in hand to turn on."
 	var/datum/effect_system/spark_spread/spark_system
-	var/datum/action/innate/dash/lone_wanderer/jaunt
+	var/datum/action/innate/dash/prot_inv_axe/jaunt
+	force = 5
+	throwforce = 1
+	throw_speed = 3
+	throw_range = 7
+	armour_penetration = 40
+	active_force = 35
+	active_throwforce = 70
 
-/obj/item/melee/energy/axe/lone_wanderer/Initialize(mapload)
+/obj/item/melee/energy/axe/prot_inv_axe/Initialize(mapload)
 	. = ..()
 	jaunt = new(src)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-/obj/item/melee/energy/axe/lone_wanderer/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/melee/energy/axe/prot_inv_axe/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.density)
 		jaunt?.teleport(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/melee/energy/axe/lone_wanderer/equipped(mob/user, slot, initial)
+/obj/item/melee/energy/axe/prot_inv_axe/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!QDELETED(jaunt))
 		jaunt.Grant(user, src)
 
-/obj/item/melee/energy/axe/lone_wanderer/dropped(mob/user)
+/obj/item/melee/energy/axe/prot_inv_axe/dropped(mob/user)
 	. = ..()
 	if(!QDELETED(jaunt))
 		jaunt.Remove(user)
 
-/obj/item/melee/energy/axe/lone_wanderer/Destroy()
+/obj/item/melee/energy/axe/prot_inv_axe/Destroy()
 	QDEL_NULL(spark_system)
 	QDEL_NULL(jaunt)
 	return ..()
 
-/datum/action/innate/dash/lone_wanderer
+/datum/action/innate/dash/prot_inv_axe
 	current_charges = 5
 	max_charges = 5
-	charge_rate = 20
-	beam_length = 0.1 SECONDS
+	charge_rate = 400
+	beam_length = 0.5 SECONDS
 	recharge_sound = null
 
-/datum/action/innate/dash/lone_wanderer/GiveAction(mob/viewer)
+/datum/action/innate/dash/prot_inv_axe/GiveAction(mob/viewer)
 	return
 
-/datum/action/innate/dash/lone_wanderer/HideFrom(mob/viewer)
+/datum/action/innate/dash/prot_inv_axe/HideFrom(mob/viewer)
 	return
 
 /// Energy swords.
@@ -411,5 +419,6 @@
 	name = "hardlight blade"
 	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
 	icon_state = "lightblade"
+	icon_angle = 0
 	inhand_icon_state = "lightblade"
 	base_icon_state = "lightblade"

@@ -44,7 +44,13 @@
 	var/turf/T = get_turf(source)
 
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		SET_PLANE_IMPLICIT(source, FLOOR_PLANE) // We do this so that turfs that allow you to see what's underneath them don't have to be on the game plane (which causes ambient occlusion weirdness)
+		// We only want to change the layer/plane for things that aren't already on the floor plane,
+		// as overriding the settings for those would cause layering issues
+		if(PLANE_TO_TRUE(source.plane) != FLOOR_PLANE)
+			// We do this so that turfs that allow you to see what's underneath them don't have to be on the game plane (which causes ambient occlusion weirdness)
+			SET_PLANE_IMPLICIT(source, FLOOR_PLANE)
+			source.layer = BELOW_CATWALK_LAYER
+
 		ADD_TRAIT(source, TRAIT_UNDERFLOOR, REF(src))
 
 		if(tile_overlay)
@@ -61,7 +67,13 @@
 				ADD_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
 
 	else
-		SET_PLANE_IMPLICIT(source, initial(source.plane))
+		if(!HAS_TRAIT(source.loc, TRAIT_UNCOVERED_TURF))
+			SET_PLANE_IMPLICIT(source, initial(source.plane))
+			source.layer = initial(source.layer)
+		else
+			SET_PLANE_IMPLICIT(source, FLOOR_PLANE)
+			source.layer = BELOW_CATWALK_LAYER
+
 		REMOVE_TRAIT(source, TRAIT_UNDERFLOOR, REF(src))
 
 		if(invisibility_trait)
@@ -75,6 +87,8 @@
 
 		if(use_anchor)
 			source.set_anchored(FALSE)
+
+	SEND_SIGNAL(source, COMSIG_UNDERTILE_UPDATED)
 
 
 /datum/element/undertile/Detach(atom/movable/source, visibility_trait, invisibility_level = INVISIBILITY_MAXIMUM)

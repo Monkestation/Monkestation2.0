@@ -694,7 +694,6 @@
 			tilted = TRUE
 			tilted_rotation = picked_rotation
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	if(get_turf(fatty) != get_turf(src))
 		throw_at(get_turf(fatty), range, 1, spin = FALSE, quickstart = FALSE)
@@ -1026,7 +1025,6 @@
 
 	tilted = FALSE
 	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
 
 	var/matrix/to_turn = turn(transform, -tilted_rotation)
 	animate(src, transform = to_turn, 0.2 SECONDS)
@@ -1390,7 +1388,8 @@
 	if(greyscale_colors)
 		vended_item.set_greyscale(colors=greyscale_colors)
 	R.amount--
-	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
+	var/sigreturn = SEND_SIGNAL(usr, COMSIG_MOB_VENDING_PURCHASE, src, vended_item)
+	if(!(sigreturn & VENDING_NO_PICKUP) && usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take \the [R.name] out of the slot."))
 	else
 		to_chat(usr, span_warning("[capitalize(format_text(R.name))] falls onto the floor!"))

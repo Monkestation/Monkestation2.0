@@ -90,6 +90,8 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignals(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, PROC_REF(OnCraft))
+	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(OnProcessed))
+	RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
 	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, PROC_REF(on_ooze_eat))
 	RegisterSignal(parent, COMSIG_TRY_EAT_TRAIT, PROC_REF(try_eat_trait))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(show_radial_recipes)) //Monkestation edit: CHEWIN COOKING
@@ -476,6 +478,7 @@ Behavior that's still missing from this component that original food items had t
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(!owner.reagents.total_volume)
 		return
+	SEND_SIGNAL(eater, COMSIG_LIVING_EAT_FOOD, owner, foodtypes)
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
@@ -590,8 +593,7 @@ Behavior that's still missing from this component that original food items had t
 	/* MONKESTATION REMOVAL START - food complexity is unported
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
-	var/event = GLOB.food_quality_events[food_quality]
-	gourmand.add_mood_event("quality_food", event, timeout_mod)
+	gourmand.add_mood_event("quality_food", /datum/mood_event/food, food_quality, timeout_mod)
 	*/
 	gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
 	var/quality_label = GLOB.food_quality_description[food_quality]

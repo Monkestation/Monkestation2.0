@@ -1,5 +1,6 @@
 /turf/open
 	abstract_type = /turf/open
+	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	///negative for faster, positive for slower
 	var/slowdown = 0
@@ -476,11 +477,7 @@
 	for(var/mob/living/basic/slime/M in src)
 		M.apply_water()
 
-	wash(CLEAN_WASH)
-	for(var/atom/movable/movable_content as anything in src)
-		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
-			continue
-		movable_content.wash(CLEAN_WASH)
+	wash(CLEAN_WASH, TRUE)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
@@ -520,7 +517,6 @@
 		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
-	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 	if(force_drop)
 		for(var/obj/item/item as anything in slipper.get_held_items())
 			slipper.accident(item)

@@ -43,6 +43,7 @@
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER), INNATE_TRAIT)
 	AddComponent(/datum/component/profound_fisher)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
@@ -65,7 +66,7 @@
 /mob/living/basic/mining/lobstrosity/update_overlays()
 	. = ..()
 	if (stat != DEAD)
-		. += emissive_appearance(icon, "[icon_living]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /mob/living/basic/mining/lobstrosity/ranged_secondary_attack(atom/atom_target, modifiers)
 	charge.Trigger(target = atom_target)

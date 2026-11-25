@@ -16,7 +16,7 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	speak_emote = list("roars")
 	mob_size = MOB_SIZE_HUGE
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_EPIC
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_SPECIAL
 
 	armour_penetration = 40
 	melee_damage_upper = 40

@@ -1,3 +1,4 @@
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -9,25 +10,55 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 
-type Beaker = {
-  maxVolume: number;
-  currentVolume: number;
-  contents: { name: string; volume: number }[];
+type DispensableReagent = {
+  title: string;
+  id: string;
+  pH: number;
+  color: string;
+  pHCol: string;
+};
+
+type TransferableBeaker = Beaker & {
+  transferAmounts: number[];
 };
 
 type Data = {
+  showpH: BooleanLike;
   amount: number;
-  purity: number;
-  beaker: Beaker | null;
+  energy: number;
+  maxEnergy: number;
+  displayedUnits: string;
+  displayedMaxUnits: string;
+  chemicals: DispensableReagent[];
+  recipes: string[];
+  recordingRecipe: string[];
+  recipeReagents: string[];
+  beaker: TransferableBeaker;
 };
 
-export const ChemDebugSynthesizer = (props) => {
+export type BeakerReagent = {
+  name: string;
+  volume: number;
+};
+
+export type Beaker = {
+  maxVolume: number;
+  pH: number;
+  currentVolume: number;
+  contents: BeakerReagent[];
+};
+
+type BeakerProps = {
+  beaker: Beaker;
+  replace_contents?: BeakerReagent[];
+  title_label?: string;
+  showpH?: BooleanLike;
+};
+
+export const ChemDebugSynthesizer = (props: BeakerProps) => {
   const { act, data } = useBackend<Data>();
-  const { amount, purity, beaker } = data;
-  const isBeakerLoaded = !!beaker;
-  const beakerCurrentVolume = beaker?.currentVolume || 0;
-  const beakerMaxVolume = beaker?.maxVolume || 0;
-  const beakerContents = beaker?.contents || [];
+  const { beaker, replace_contents, title_label, showpH } = data;
+  const beakerContents = replace_contents || beaker?.contents || [];
 
   return (
     <Window width={520} height={330}>
@@ -35,7 +66,7 @@ export const ChemDebugSynthesizer = (props) => {
         <Section
           title="Recipient"
           buttons={
-            isBeakerLoaded ? (
+            beaker ? (
               <>
                 <Button
                   icon="eject"
@@ -43,27 +74,14 @@ export const ChemDebugSynthesizer = (props) => {
                   onClick={() => act('ejectBeaker')}
                 />
                 <NumberInput
-                  value={amount}
+                  value={data.amount}
                   unit="u"
                   minValue={1}
-                  maxValue={beakerMaxVolume}
+                  maxValue={beaker.maxVolume}
                   step={1}
                   stepPixelSize={2}
                   onChange={(value) =>
                     act('amount', {
-                      amount: value,
-                    })
-                  }
-                />
-                <NumberInput
-                  value={purity}
-                  unit="%"
-                  minValue={0}
-                  maxValue={120}
-                  step={1}
-                  stepPixelSize={2}
-                  onChange={(value) =>
-                    act('purity', {
                       amount: value,
                     })
                   }
@@ -88,11 +106,11 @@ export const ChemDebugSynthesizer = (props) => {
             )
           }
         >
-          {isBeakerLoaded ? (
+          {beaker ? (
             <>
               <Box>
-                <AnimatedNumber value={beakerCurrentVolume} />
-                {` / ${beakerMaxVolume} u`}
+                <AnimatedNumber value={beaker.currentVolume} />
+                {` / ${beaker.maxVolume} u`}
               </Box>
               {beakerContents.length > 0 ? (
                 <LabeledList>

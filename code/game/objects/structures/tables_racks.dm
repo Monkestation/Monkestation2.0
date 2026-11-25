@@ -47,6 +47,7 @@
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	if(climbable)
+		AddComponent(/datum/component/climb_walkable)
 		AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
@@ -62,6 +63,7 @@
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
+	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
@@ -222,13 +224,12 @@
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
-	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
-		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
 								span_userdanger("[user] slams you onto \the [src]!"))
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table)
+	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAMMING, pushed_mob, src)
 
 /obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
@@ -239,13 +240,12 @@
 	banged_limb?.receive_damage(30, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
-	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
-		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
 								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
+	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_LIMB_SLAMMING, pushed_mob, src)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
@@ -864,6 +864,14 @@
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
+
+///Align the mob with the table when buckled.
+/obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
+	buckled.add_offsets(type, z_add = 6)
+
+///Disalign the mob with the table when unbuckled.
+/obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
+	buckled.remove_offsets(type)
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)

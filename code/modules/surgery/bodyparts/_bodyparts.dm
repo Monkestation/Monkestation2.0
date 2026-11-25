@@ -178,8 +178,14 @@
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
-	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
-	var/unarmed_attack_verb = "bump"
+	/// the verbs used for an unarmed attack when using this limb, such as arm.unarmed_attack_verbs = list("punch")
+	var/list/unarmed_attack_verbs = list("bump")
+	/// Continuous tense attack verbs for successful attacks
+	var/list/unarmed_attack_verbs_continuous = list("bumps")
+	/// if we have a special attack verb for hitting someone who is grappled by us, it goes here.
+	var/grappled_attack_verb
+	/// Continuous tense grapple verb for successful attacks
+	var/grappled_attack_verb_continuous
 	/// what visual effect is used when this limb is used to strike someone.
 	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
 	/// Sounds when this bodypart is used in an umarmed attack
@@ -189,8 +195,12 @@
 	var/unarmed_damage_low = 1
 	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
-	///Damage at which attacks from this bodypart will stun
-	var/unarmed_stun_threshold = 2
+	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	var/unarmed_effectiveness = 10
+	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
+	var/unarmed_pummeling_bonus = 1
+	/// The 'sharpness' of the limb. Could indicate claws, teeth or spines. Should default to NONE, or blunt.
+	var/unarmed_sharpness = NONE
 
 	/// Traits that are given to the holder of the part. If you want an effect that changes this, don't add directly to this. Use the add_bodypart_trait() proc
 	var/list/bodypart_traits = list()
@@ -1099,8 +1109,8 @@
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
 	for(var/image/img as anything in standing)
-		img.pixel_x = px_x
-		img.pixel_y = px_y
+		img.pixel_w = px_x
+		img.pixel_z = px_y
 	add_overlay(standing)
 
 /obj/item/bodypart/update_atom_colour()

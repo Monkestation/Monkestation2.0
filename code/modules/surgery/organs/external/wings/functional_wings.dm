@@ -8,13 +8,15 @@
 /datum/action/innate/flight/Activate()
 	var/mob/living/carbon/human/human = owner
 	var/obj/item/organ/external/wings/functional/wings = human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(wings?.can_fly(human))
+	if(wings?.can_fly(human, taking_off = !(human.movement_type & FLYING)))
 		wings.toggle_flight(human)
 		if(!(human.movement_type & FLYING))
 			to_chat(human, span_notice("You settle gently back onto the ground..."))
 		else
 			to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
-			human.set_resting(FALSE, TRUE)
+			human.set_resting(FALSE, silent = TRUE, instant = TRUE)
+			if(human.body_position == LYING_DOWN)
+				human.get_up(instant = TRUE)
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/external/wings/functional
@@ -60,8 +62,11 @@
 
 
 ///Check if we're still eligible for flight (wings covered, atmosphere too thin, etc)
-/obj/item/organ/external/wings/functional/proc/can_fly(mob/living/carbon/human/human)
-	if(human.stat || human.body_position == LYING_DOWN)
+/obj/item/organ/external/wings/functional/proc/can_fly(mob/living/carbon/human/human, taking_off = FALSE)
+	if(human.stat)
+		return FALSE
+	// legless mobs can take off from the floor, knocked down ones can't
+	if(human.body_position == LYING_DOWN && (!taking_off || HAS_TRAIT_NOT_FROM(human, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)))
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 	if((human.obscured_slots & HIDEJUMPSUIT) && (!human.wear_suit?.species_exception || !is_type_in_list(src, human.wear_suit.species_exception)))

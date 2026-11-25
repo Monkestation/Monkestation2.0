@@ -80,15 +80,6 @@
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 
-	if(!(flags_inv & HIDEHAIR))
-		if(ismob(loc) && ishuman(loc))
-			var/mob/living/carbon/human/user = loc
-			var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
-			if(head.head_flags & HEAD_HAIR)
-				var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[user.hairstyle]
-				if(hair_style?.vertical_offset)
-					standing.pixel_y = hair_style.vertical_offset
-
 	if(contents && can_stack_hat)
 		var/current_hat = 1
 		for(var/obj/item/clothing/head/selected_hat in contents)
@@ -96,10 +87,22 @@
 			if(selected_hat.worn_icon)
 				head_icon = selected_hat.icon
 			var/mutable_appearance/hat_adding = selected_hat.build_worn_icon(HEAD_LAYER, head_icon, FALSE, FALSE)
-			hat_adding.pixel_y = ((current_hat * 2) - 1)
-			hat_adding.pixel_x = (rand(-1, 1))
+			hat_adding.pixel_z += ((current_hat * 2) - 1)
+			hat_adding.pixel_w += (rand(-1, 1))
 			current_hat++
 			. += hat_adding
+
+/obj/item/clothing/head/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = ..()
+	if(hand_index || (flags_inv & HIDEHAIR) || !ishuman(loc))
+		return offsets
+	var/mob/living/carbon/human/user = loc
+	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(head.head_flags & HEAD_HAIR)
+		var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[user.hairstyle]
+		if(hair_style?.vertical_offset)
+			offsets.y += hair_style.vertical_offset
+	return offsets
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -225,9 +228,9 @@ GAME_VERB_SRC(/obj/item/clothing/head, detach_stacked_hat, usr, "Remove Stacked 
 			selected_hat.desc = initial(desc)
 			var/mutable_appearance/hat_adding = mutable_appearance(selected_hat.icon, "[initial(selected_hat.icon_state)]")
 			if(random_hat_stack_y_offset)
-				hat_adding.pixel_y = ((current_hat * 6 * hat_stack_y_offset_modifier) - 1)
+				hat_adding.pixel_z = ((current_hat * 6 * hat_stack_y_offset_modifier) - 1)
 			if(random_hat_stack_x_offset)
-				hat_adding.pixel_x = (rand(-1, 1) * hat_stack_x_offset_modifier)
+				hat_adding.pixel_w = (rand(-1, 1) * hat_stack_x_offset_modifier)
 			current_hat++
 			add_overlay(hat_adding)
 

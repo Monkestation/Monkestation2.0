@@ -77,6 +77,16 @@
 		/obj/item/storage/backpack/duffelbag/mining_conscript,
 	)
 
+/datum/voucher_set/mining/punching_mitts
+	name = "Punching Mitts"
+	description = "Contains a pair of punching mitts for turning the local wilderness into the local gravel pit with your BARE HANDS."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "punch_mitts"
+	set_items = list(
+		/obj/item/clothing/gloves/fingerless/punch_mitts,
+		/obj/item/clothing/head/cowboy,
+	)
+
 // monkestation explorer vouchers
 /datum/voucher_set/explorer
 
@@ -220,10 +230,11 @@
 
 /datum/voucher_set/security/primary/paco
 	name = "Paco"
-	description = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines."
+	description = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines. Comes with its own holster."
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "35r-16"
 	set_items = list(
+		/obj/item/storage/belt/holster/duty,
 		/obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
 		/obj/item/ammo_box/magazine/m35/rubber,
 		/obj/item/ammo_box/magazine/m35/rubber,

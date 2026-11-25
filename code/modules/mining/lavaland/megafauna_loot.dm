@@ -46,6 +46,7 @@
 	name = "hierophant club"
 	desc = "The strange technology of this large club allows various nigh-magical teleportation feats. It used to beat you, but now you can set the beat."
 	icon_state = "hierophant_club_ready_beacon"
+	icon_angle = -135
 	inhand_icon_state = "hierophant_club_ready_beacon"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -365,6 +366,7 @@
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "spectral"
+	icon_angle = -45
 	inhand_icon_state = "spectral"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -506,6 +508,7 @@
 	name = "staff of lava"
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "lavastaff"
+	icon_angle = -45
 	inhand_icon_state = "lavastaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -751,6 +754,7 @@
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
+	icon_angle = -45
 	inhand_icon_state = "staffofstorms"
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'

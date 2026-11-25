@@ -159,6 +159,8 @@
 	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	add_item_coverage(item)
+	if(item.hair_mask && (slot & item.slot_flags))
+		update_body_parts()
 
 /mob/living/carbon/has_unequipped(obj/item/item)
 	. = ..() // NB: ATP the item is still in the slot, but no longer has the IN_INVENTORY flag (so is not returned by get_equipped_items)
@@ -168,6 +170,8 @@
 	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	remove_item_coverage(item)
+	if(item.hair_mask)
+		update_body_parts()
 
 /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.

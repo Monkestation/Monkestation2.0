@@ -20,7 +20,7 @@
 /obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/head/cone/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	if(!isturf(interacting_with) || isgroundlessturf(interacting_with))

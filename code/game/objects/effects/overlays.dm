@@ -23,7 +23,6 @@
 	icon_state = "palm1"
 	density = TRUE
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	anchored = TRUE
 
 /obj/effect/overlay/palmtree_l
@@ -32,7 +31,6 @@
 	icon_state = "palm2"
 	density = TRUE
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	anchored = TRUE
 
 /obj/effect/overlay/coconut
@@ -76,3 +74,12 @@
 	layer = FLOAT_LAYER
 	vis_flags = VIS_INHERIT_ID
 	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE
+
+/obj/effect/overlay/spotlight
+	icon = 'icons/effects/light_overlays/light_64.dmi'
+	icon_state = "spotlight"
+	pixel_x = -16
+	plane = ABOVE_GAME_PLANE
+	layer = FLY_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = RESET_TRANSFORM | LONG_GLIDE | PIXEL_SCALE | TILE_BOUND

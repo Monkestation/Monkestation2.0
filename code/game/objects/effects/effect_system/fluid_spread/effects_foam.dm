@@ -17,7 +17,6 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate_movement = NO_STEPS
 	/// The types of turfs that this foam cannot spread to.
@@ -41,7 +40,7 @@
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
 	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
-		plane = FLOOR_PLANE
+		layer = WATER_LEVEL_LAYER
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	playsound(src, 'sound/effects/bubbles/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -98,13 +97,13 @@
 			for(var/obj/object in turf_location)
 				if(object == src)
 					continue
-				if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+				if(HAS_TRAIT(object, TRAIT_UNDERFLOOR))
 					continue
 				reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
 	for(var/mob/living/foamer in loc)
-		if(HAS_TRAIT(foamer, TRAIT_ON_ELEVATED_SURFACE))
+		if(HAS_TRAIT(foamer, TRAIT_MOB_ELEVATED))
 			continue
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
@@ -156,7 +155,7 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
-			if(HAS_TRAIT(foaming, TRAIT_ON_ELEVATED_SURFACE))
+			if(HAS_TRAIT(foaming, TRAIT_MOB_ELEVATED))
 				continue
 			foam_mob(foaming, seconds_per_tick)
 
@@ -313,7 +312,6 @@
 	opacity = TRUE // changed in New()
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall that can be used as a base to construct a wall."

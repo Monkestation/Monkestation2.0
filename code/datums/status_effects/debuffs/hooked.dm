@@ -14,13 +14,13 @@
 /datum/status_effect/grouped/hooked/proc/still_exists()
 	return !QDELETED(src)
 
-/datum/status_effect/grouped/hooked/on_creation(mob/living/new_owner, datum/beam/fishing_line/source)
+/datum/status_effect/grouped/hooked/on_creation(mob/living/new_owner, datum/beam/held/source)
 	. = ..()
 	if(!.) //merged with an existing effect
 		return
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
 
-/datum/status_effect/grouped/hooked/merge_with_existing(datum/status_effect/grouped/hooked/existing, datum/beam/fishing_line/source)
+/datum/status_effect/grouped/hooked/merge_with_existing(datum/status_effect/grouped/hooked/existing, datum/beam/held/source)
 	existing.RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
 
 /// Removes the status effect from the fishing line that just got deleted
@@ -44,7 +44,7 @@
 	if(!effect.try_unhook())
 		return
 	owner.balloon_alert(owner, "hook removed")
-	var/datum/beam/fishing_line/rand_source = pick(effect.sources)
+	var/datum/beam/held/rand_source = pick(effect.sources)
 	qdel(rand_source)
 
 ///Version used by the jawed fishing hook, which also applies slowdown

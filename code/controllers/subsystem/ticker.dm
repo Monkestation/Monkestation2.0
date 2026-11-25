@@ -507,10 +507,14 @@ SUBSYSTEM_DEF(ticker)
 			var/acting_captain = !is_captain_job(player_assigned_role)
 			SSjob.promote_to_captain(new_player_living, acting_captain)
 			OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), player_assigned_role.get_captaincy_announcement(new_player_living)))
-		if((player_assigned_role.job_flags & JOB_ASSIGN_QUIRKS) && ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
-			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
-				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
-			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
+		if(ishuman(new_player_living))
+			if(player_assigned_role.job_flags & JOB_ASSIGN_QUIRKS)
+				if(CONFIG_GET(flag/roundstart_traits))
+					if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
+						new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
+					SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
+			else // clear any personalities the prefs added since our job clearly does not want them
+				new_player_living.clear_personalities()
 
 		if(ishuman(new_player_living))
 			for(var/datum/loadout_item/item as anything in loadout_list_to_datums(new_player_mob.client?.prefs?.loadout_list))
@@ -832,15 +836,14 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, span_boldannounce("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
 
-	var/start_wait = world.time
+	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), delay, TIMER_STOPPABLE)
+	// SetRoundEndSound() schedules the sound itself once every client has it
 	if(!round_end_sound)
 		var/song = choose_round_end_song()
 		if(song)
 			SetRoundEndSound(song)
-	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
-	var/time_left = delay - (world.time - start_wait)
-	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), time_left, TIMER_STOPPABLE)
-	schedule_round_end_sound(time_left)
+	else if(round_end_sound_sent)
+		schedule_round_end_sound(delay)
 
 
 /datum/controller/subsystem/ticker/proc/reboot_callback(reason, end_string)
