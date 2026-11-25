@@ -152,6 +152,8 @@
 	// before the round starts the ready count can still shrink, so only the minimum has to be there
 	var/antag_amt = SSticker.HasRoundStarted() ? get_antag_amount() : base_antags
 	var/list/candidates = get_candidates(candidate_pool)
+	if(prompted_picking)
+		candidates = SSgamemode.remove_recent_decliners(candidates)
 	if(length(candidates) < antag_amt)
 		return FALSE
 

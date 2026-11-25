@@ -441,6 +441,8 @@
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)
 	var/hurt_this_guy = FALSE
 
+	var/hurtguy_smiteable = SEND_SIGNAL(hurtguy, COMSIG_ON_LAY_ON_HANDS, mendicant)
+
 	if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
 		return FALSE //always return false if we're pacifist
 
@@ -453,7 +455,7 @@
 	else if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy evil and we're not evil? If so, hurt.
 		hurt_this_guy = TRUE
 
-	else if(!(hurtguy.mob_biotypes & MOB_UNDEAD) && HAS_TRAIT(hurtguy, TRAIT_EMPATH) && HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy not undead, they're an empath and we're evil? If so, hurt.
+	else if(hurtguy_smiteable) //Is some other property of the target (like the empath component) causing them to be smited? If so, hurt.
 		hurt_this_guy = TRUE
 
 	return hurt_this_guy

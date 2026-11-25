@@ -1,5 +1,6 @@
 /obj/item/kinetic_crusher/pilebunker
 	icon_state = "pb_spike"
+	icon_angle = 0
 	inhand_icon_state = "pb_spike"
 	icon = 'icons/obj/mining 64x.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -133,6 +134,7 @@
 
 /obj/item/kinetic_crusher/adminpilebunker
 	icon_state = "THEpilebunker_spike"
+	icon_angle = 180
 	inhand_icon_state = "THEpilebunker_spike"
 	icon = 'icons/obj/mining 256x32.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/256x32_melee_lefthand.dmi'

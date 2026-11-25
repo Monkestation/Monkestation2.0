@@ -114,9 +114,37 @@ SUBSYSTEM_DEF(economy)
 			return
 
 		station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_ECONOMY_ALERTS))
+			spotlight_report()
 
 	var/effective_mailcount = round(living_player_count()) ///(inflation_value - 0.5)) //More mail at low inflation, and vis versa. | MONKESTATION EDIT
 	mail_waiting += clamp(effective_mailcount, 4, MAX_MAIL_PER_MINUTE * seconds_per_tick)
+
+/datum/controller/subsystem/economy/proc/spotlight_report()
+	var/datum/bank_account/moneybags
+	var/static/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
+	for(var/i in bank_accounts_by_id)
+		var/datum/bank_account/current_acc = bank_accounts_by_id[i]
+		if(typecache_bank[current_acc.type])
+			continue
+		if(!moneybags || moneybags.account_balance < current_acc.account_balance)
+			moneybags = current_acc
+	if(!moneybags)
+		return
+	GLOB.news_network.submit_article("Our GMM Spotlight would like to alert you that <b>[moneybags.account_holder]</b> is your station's most affulent crewmate! They've hit it big with [moneybags.account_balance] credits saved. That's all from the <i>Nanotrasen Economist Division</i>.", "Station Earnings Report", "Station Announcements", null)
+	inflict_moneybags(moneybags)
+
+/datum/controller/subsystem/economy/proc/inflict_moneybags(datum/bank_account/moneybags)
+	if(!moneybags)
+		return FALSE
+	var/mob/living/card_holder
+	for(var/obj/card in moneybags?.bank_cards)
+		if(isidcard(card))
+			card_holder = recursive_loc_check(card, /mob/living)
+	if(!isliving(card_holder)) //If on a living mob
+		return FALSE
+	card_holder.adjust_timed_status_effect(wait, /datum/status_effect/spotlight_light)
+	return TRUE
 
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.

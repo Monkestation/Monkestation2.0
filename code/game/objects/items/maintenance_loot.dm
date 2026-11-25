@@ -7,6 +7,7 @@
 	name = "lead pipe"
 	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "lead_pipe"
+	icon_angle = -45
 	inhand_icon_state = "lead_pipe"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

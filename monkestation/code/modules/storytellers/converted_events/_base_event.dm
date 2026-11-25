@@ -57,6 +57,8 @@
 	possible_candidates -= candidates
 	var/inherited_count = length(candidates)
 
+	if(prompted_picking)
+		possible_candidates = SSgamemode.remove_recent_decliners(possible_candidates)
 	var/list/weighted_candidates = get_antag_roll_weights(possible_candidates)
 	var/list/pool_ckeys = assoc_to_keys(weighted_candidates)
 
@@ -80,9 +82,11 @@
 					chat_text_border_icon = antag_datum,
 					show_candidate_amount = FALSE,
 				)
-				if(!length(accepted))
+				if(picked_mob in accepted)
+					candidates |= picked_mob
+				else
 					LAZYORASSOCLIST(SSgamemode.unanswered_antag_prompts, picked_ckey, antag_flag)
-				candidates |= accepted
+					SSgamemode.antag_poll_declines[picked_ckey] = world.time
 		else
 			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]

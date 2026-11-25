@@ -312,6 +312,7 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
+	icon_angle = -135
 	base_icon_state = "bostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'

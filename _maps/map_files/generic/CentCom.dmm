@@ -6111,8 +6111,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "aqk" = (
-/obj/machinery/shuttle_manipulator,
-/turf/open/floor/circuit/red,
+/obj/machinery/minimap_table,
+/turf/open/floor/circuit/red/no_power,
 /area/centcom/syndicate_mothership/control)
 "aql" = (
 /obj/structure/flora/grass/both/style_random,
@@ -15630,7 +15630,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
 "aPU" = (
-/turf/open/floor/circuit/red,
+/turf/open/floor/circuit/red/no_power,
 /area/centcom/syndicate_mothership/control)
 "aPV" = (
 /obj/machinery/door/airlock{

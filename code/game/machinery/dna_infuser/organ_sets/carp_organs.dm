@@ -27,6 +27,7 @@
 	SETUP_MAP_ICONS("lungs", "/obj/item/organ/internal/lungs/carp")
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
+	organ_traits = list(TRAIT_NODROWN)
 
 /obj/item/organ/internal/lungs/carp/Initialize(mapload)
 	. = ..()
@@ -98,6 +99,7 @@
 	name = "carp tooth"
 	desc = "Looks sharp. Sharp enough to poke someone's eye out. Holy fuck it's big."
 	icon_state = "carptooth"
+	icon_angle = -45
 
 ///carp brain. you need to occasionally go to a new zlevel. think of it as... walking your dog!
 /obj/item/organ/internal/brain/carp

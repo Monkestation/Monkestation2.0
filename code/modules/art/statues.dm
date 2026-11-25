@@ -275,6 +275,7 @@
 	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "chisel"
+	icon_angle = -90
 	inhand_icon_state = "screwdriver_nuke"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -378,6 +379,10 @@ Moving interrupts
 	if(!interrupted && !QDELETED(prepared_block))
 		prepared_block.create_statue()
 		user.balloon_alert(user, "statue finished")
+		if(HAS_PERSONALITY(user, /datum/personality/creative))
+			user.add_mood_event("creative_sculpting", /datum/mood_event/creative_sculpting)
+		if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+			user.add_mood_event("unimaginative_sculpting", /datum/mood_event/unimaginative_sculpting)
 	stop_sculpting(silent = !interrupted)
 
 /// To setup the sculpting target for the carving block

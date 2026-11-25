@@ -105,6 +105,8 @@ SUBSYSTEM_DEF(gamemode)
 	/// Is storyteller secret or not
 	var/secret_storyteller = FALSE
 
+	var/alist/antag_poll_declines = alist()
+
 	/// List of new player minds we currently want to give our roundstart antag to
 	var/list/roundstart_antag_minds = list()
 	/// ckey -> list of antag flags that player was asked about this round and didn't say yes to. They are left out of later prompted rolls for those antags.
@@ -225,7 +227,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/datum/job/player_role = player.mind?.assigned_role
 		if(player_role)
 			points += player_role.antag_capacity_points
-	return ANTAG_CAP_FLAT + max(points - (ANTAG_CAP_FLAT + 5), 1)
+	return max(points * ANTAG_CAP_LOWPOP_MULT, points - ANTAG_CAP_OFFSET)
 
 /// Return the total point value of active antags
 /datum/controller/subsystem/gamemode/proc/get_antag_count()
@@ -250,6 +252,14 @@ SUBSYSTEM_DEF(gamemode)
 /// Whether events can inject more antagonists into the round
 /datum/controller/subsystem/gamemode/proc/can_inject_antags()
 	return (get_antag_cap() > get_antag_count())
+
+/datum/controller/subsystem/gamemode/proc/remove_recent_decliners(list/candidates)
+	. = list()
+	for(var/mob/candidate as anything in candidates)
+		var/declined_at = antag_poll_declines[candidate.ckey]
+		if(declined_at && world.time < declined_at + ANTAG_DECLINE_COOLDOWN)
+			continue
+		. += candidate
 
 /// Gets candidates for antagonist roles.
 /datum/controller/subsystem/gamemode/proc/get_candidates(role, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, \

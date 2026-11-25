@@ -328,6 +328,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "Bar brawl essential."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
+	icon_angle = 180
 	inhand_icon_state = "chair"
 	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/chairs_righthand.dmi'

@@ -36,6 +36,7 @@
 	desc = "The original hypertool, born before them all. Use it in hand to unleash its true power."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hypertool"
+	icon_angle = -45
 	inhand_icon_state = "hypertool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'

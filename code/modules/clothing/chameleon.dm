@@ -238,6 +238,7 @@
 			if(initial(picked_item.greyscale_config_inhand_right))
 				item_target.righthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_right), initial(picked_item.greyscale_colors))
 		item_target.worn_icon_state = initial(picked_item.worn_icon_state)
+		item_target.hair_mask = initial(picked_item.hair_mask)
 		item_target.inhand_icon_state = initial(picked_item.inhand_icon_state)
 		if(isclothing(item_target) && ispath(picked_item, /obj/item/clothing))
 			var/obj/item/clothing/clothing_target = item_target
