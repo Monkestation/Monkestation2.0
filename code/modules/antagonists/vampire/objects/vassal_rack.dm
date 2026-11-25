@@ -134,9 +134,10 @@
 			user_unbuckle_mob(buckled_carbons, user)
 
 /obj/structure/vampire/vassalrack/proc/pick_discipline(mob/living/user, datum/antagonist/vampire/vampiredatum, mob/living/carbon/target)
+	var/datum/antagonist/vassal/vassaldatum = IS_VASSAL(target)
 	var/list/radial_display = list()
 	for(var/datum/discipline/discipline as anything in vampiredatum.owned_disciplines)
-		if(!discipline.vassal_power || discipline.level < 2)
+		if(!discipline.vassal_power || discipline.level < 2 || vassaldatum.taught_power?.type == discipline.vassal_power)
 			continue
 		var/datum/radial_menu_choice/option = new
 		option.image = image(icon = 'icons/mob/actions/actions_vampire_disciplines.dmi', icon_state = discipline.icon_state)
@@ -163,6 +164,9 @@
 		return FALSE
 	if(discipline.level < 2)
 		balloon_alert(user, "you don't know [discipline.name]!")
+		return FALSE
+	if(vassaldatum.taught_power?.type == discipline.vassal_power)
+		balloon_alert(user, "[target.p_they()] already know[target.p_s()] it!")
 		return FALSE
 	if(vampiredatum.current_vitae < RACK_TEACH_COST)
 		balloon_alert(user, "not enough blood!")
