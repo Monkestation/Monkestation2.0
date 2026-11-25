@@ -17,7 +17,7 @@
 
 //plant bibles don't heal or do anything special apart from the standard holy water blessings
 /datum/religion_sect/plant_sect/sect_bless(mob/living/blessed, mob/living/user)
-	return TRUE
+	return BLESSING_IGNORED
 
 /datum/religion_sect/plant_sect/on_sacrifice(obj/item/N, mob/living/L)
 	if(!istype(N, /obj/item/food/grown))

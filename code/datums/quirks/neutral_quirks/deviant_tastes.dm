@@ -1,7 +1,7 @@
 /datum/quirk/deviant_tastes
 	name = "Deviant Tastes"
 	desc = "You dislike food that most people enjoy, and find delicious what they don't."
-	icon = FA_ICON_FACE_GRIN_TONGUE_SQUINT
+	icon = FA_ICON_GRIN_TONGUE_SQUINT
 	value = 0
 	gain_text = span_notice("You start craving something that tastes strange.")
 	lose_text = span_notice("You feel like eating normal food again.")

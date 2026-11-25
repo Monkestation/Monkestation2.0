@@ -1,5 +1,5 @@
 /datum/preference/choiced/language
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "language"
 	savefile_identifier = PREFERENCE_CHARACTER
 	should_update_preview = FALSE
@@ -33,7 +33,7 @@
 	return
 
 /datum/preference/choiced/language_skill
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "language_skill"
 	savefile_identifier = PREFERENCE_CHARACTER
 	can_randomize = FALSE
@@ -53,7 +53,7 @@
 	return
 
 /datum/preference/choiced/csl_strength
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "csl_strength"
 	savefile_identifier = PREFERENCE_CHARACTER
 	can_randomize = FALSE

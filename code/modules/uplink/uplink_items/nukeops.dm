@@ -108,15 +108,6 @@
 	illegal_tech = FALSE
 	surplus = 80
 
-/datum/uplink_item/firearms/shotgun
-	name = "Bulldog Shotgun"
-	desc = "A fully-loaded semi-automatic drum-fed shotgun, complete with a secondary magazine. Compatible with all 12g rounds. Designed for close \
-			quarter anti-personnel engagements."
-	item = /obj/item/gun/ballistic/shotgun/bulldog
-	cost = 8
-	surplus = 40
-	purchasable_from = UPLINK_NUKE_OPS
-
 /datum/uplink_item/firearms/smg
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \

@@ -1,4 +1,0 @@
-author: "Longestarmlonglaw"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue where traitors couldn't roll hijack\n## Pre-Merge Checklist\n- [ ] You tested this on a local server.\n- [ ] This code did not runtime during testing.\n- [ ] You documented all of your changes."
