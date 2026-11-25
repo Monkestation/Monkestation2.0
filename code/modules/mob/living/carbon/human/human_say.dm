@@ -20,6 +20,12 @@
 		verb_say = tongue.temp_say_mod || tongue.say_mod
 	return ..()
 
+/mob/living/carbon/human/uses_language_verbs()
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(tongue?.temp_say_mod) // a deliberate override, like a voice concealer's "states"
+		return FALSE
+	return ..()
+
 /mob/living/carbon/human/GetVoice()
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS))
 		return ("Unknown")

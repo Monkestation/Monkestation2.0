@@ -139,8 +139,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	else if(message_mods[WHISPER_MODE])
 		. = verb_whisper
 	else
-		// Signed languages aren't shrieked, so signers keep their own verbs
-		var/datum/language/spoken_language = HAS_TRAIT(src, TRAIT_SIGN_LANG) ? null : GLOB.language_datum_instances[message_mods[LANGUAGE_EXTENSION]]
+		var/datum/language/spoken_language = uses_language_verbs() ? GLOB.language_datum_instances[message_mods[LANGUAGE_EXTENSION]] : null
 		if(ending == "?")
 			return spoken_language?.ask_verb || verb_ask
 		else if(ending == "!")
@@ -248,6 +247,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/GetSource()
 
+/// Whether the spoken language's own verbs (like the Vox language's "shrieks") replace ours
+/atom/movable/proc/uses_language_verbs()
+	// Signed languages aren't shrieked, so signers keep their own verbs
+	return !HAS_TRAIT(src, TRAIT_SIGN_LANG)
+
 /atom/movable/proc/GetRadio()
 
 //VIRTUALSPEAKERS
@@ -293,6 +297,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		job = "Machine"
 	else if(isnull(job)) // Unidentifiable mob
 		job = "Unknown"
+
+// Radio messages take their verbs from whoever actually spoke them
+/atom/movable/virtualspeaker/uses_language_verbs()
+	return source ? source.uses_language_verbs() : ..()
 
 /atom/movable/virtualspeaker/GetJob()
 	return job
