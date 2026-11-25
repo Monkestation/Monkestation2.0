@@ -1,5 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - balance: "Midround antag cap now scales with population at lowpop."
-  - balance: "Declining or ignoring a midround antag prompt puts you on a 20 minute cooldown for further prompts."
