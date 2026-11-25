@@ -94,6 +94,8 @@
 
 /obj/effect/temp_visual/tenebrous_sink/Initialize(mapload, atom/movable/mimic)
 	. = ..()
+	if(QDELETED(mimic))
+		return INITIALIZE_HINT_QDEL
 	appearance = mimic.appearance
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	setDir(mimic.dir)
