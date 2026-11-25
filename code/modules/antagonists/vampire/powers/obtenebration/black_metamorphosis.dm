@@ -2,6 +2,7 @@
 #define METAMORPHOSIS_SHADOW "black_metamorphosis_shadow"
 /// Choking stops here, since 50 oxyloss knocks people out and that'd be a hard stun.
 #define METAMORPHOSIS_MAX_OXYLOSS 40
+#define METAMORPHOSIS_DARK_DAMAGE_MOD 0.7
 
 /datum/action/cooldown/vampire/black_metamorphosis
 	name = "Black Metamorphosis"
@@ -9,8 +10,9 @@
 	button_icon = 'icons/mob/actions/actions_darkspawn.dmi'
 	button_icon_state = "shadow_skin"
 	power_explanation = "Toggle a fighting form wreathed in living shadow.\n\
+		While you stand in the dark, you take 30% less brute and burn damage.\n\
 		Your punches also choke the target, though never enough to knock them out on their own.\n\
-		Mortals who can see you within 4 tiles are filled with dread: they shake, stutter, and their vision blurs. It never knocks anyone down."
+		Mortals who can see you within 4 tiles are filled with dread: they shake, stutter, and their vision blurs. It never knocks anyone down, tho."
 	vampire_power_flags = BP_AM_TOGGLE
 	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 75
@@ -24,6 +26,7 @@
 	. = ..()
 	var/mob/living/user = owner
 	RegisterSignal(user, COMSIG_HUMAN_PUNCHED, PROC_REF(on_punch))
+	RegisterSignal(user, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(on_damage_modifiers))
 	user.add_shared_particles(/particles/lasombra_shadow/dense)
 	user.add_filter(METAMORPHOSIS_OUTLINE, 2, outline_filter(size = 2, color = "#000000"))
 	user.add_filter(METAMORPHOSIS_SHADOW, 3, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#6b0014aa"))
@@ -39,7 +42,7 @@
 
 /datum/action/cooldown/vampire/black_metamorphosis/deactivate_power()
 	var/mob/living/user = owner
-	UnregisterSignal(user, COMSIG_HUMAN_PUNCHED)
+	UnregisterSignal(user, list(COMSIG_HUMAN_PUNCHED, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS))
 	user.remove_shared_particles(/particles/lasombra_shadow/dense)
 	animate(user.get_filter(METAMORPHOSIS_SHADOW))
 	user.remove_filter(list(METAMORPHOSIS_OUTLINE, METAMORPHOSIS_SHADOW))
@@ -51,6 +54,8 @@
 	if(!. || owner.stat != CONSCIOUS)
 		return
 	for(var/mob/living/carbon/witness in oviewers(dread_range, owner))
+		if(IS_MONSTERHUNTER(witness))
+			continue
 		if(vampiredatum_power.is_mortal_witness(witness))
 			witness.apply_status_effect(/datum/status_effect/lasombra_dread)
 
@@ -61,6 +66,13 @@
 		return
 	target.adjustOxyLoss(choke)
 	to_chat(target, span_warning("Shadow forces its way down your throat!"))
+
+/datum/action/cooldown/vampire/black_metamorphosis/proc/on_damage_modifiers(mob/living/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+	SIGNAL_HANDLER
+	if(damagetype != BRUTE && damagetype != BURN)
+		return
+	if(is_obtenebration_dark(get_turf(source)))
+		damage_mods += METAMORPHOSIS_DARK_DAMAGE_MOD
 
 /datum/status_effect/lasombra_dread
 	id = "lasombra_dread"
@@ -85,3 +97,4 @@
 #undef METAMORPHOSIS_OUTLINE
 #undef METAMORPHOSIS_SHADOW
 #undef METAMORPHOSIS_MAX_OXYLOSS
+#undef METAMORPHOSIS_DARK_DAMAGE_MOD

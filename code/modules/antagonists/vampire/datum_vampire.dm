@@ -810,7 +810,7 @@ GLOBAL_LIST_EMPTY(all_vampires)
 		lost_limb.burn_modifier *= initial(lost_limb.burn_modifier)
 
 	if(lost_limb.body_zone in BODY_ZONES_LIMBS)
-		var/extra_damage = 1 + (vampire_level / extra_damage_per_rank)
+		var/extra_damage = 1 + (vampire_level * extra_damage_per_rank)
 		// safety measure in case we ever accidentally fuck up the math or something
 		lost_limb.unarmed_damage_low = max(lost_limb.unarmed_damage_low - extra_damage, initial(lost_limb.unarmed_damage_low))
 		lost_limb.unarmed_damage_high = max(lost_limb.unarmed_damage_high - extra_damage, initial(lost_limb.unarmed_damage_high))

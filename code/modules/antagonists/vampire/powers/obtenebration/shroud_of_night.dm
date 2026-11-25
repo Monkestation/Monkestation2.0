@@ -32,8 +32,8 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	alpha = 0
 	light_system = COMPLEX_LIGHT
-	light_outer_range = 2.5
-	light_power = -3
+	light_outer_range = 3
+	light_power = -4
 	light_on = FALSE
 	/// Whoever made this, who gets to see through it.
 	var/datum/weakref/caster_ref
@@ -70,9 +70,8 @@
 	animate(src, alpha = 0, time = 1 SECONDS)
 
 /obj/effect/temp_visual/shroud_of_night/process(seconds_per_tick)
-	var/mob/living/caster = caster_ref?.resolve()
 	for(var/mob/living/victim in range(1, src))
-		if(victim == caster || victim.stat == DEAD)
+		if(IS_WEAKREF_OF(victim, caster_ref) || victim.stat == DEAD)
 			continue
 		if(IS_TEAM_DARKSPAWN(victim) || isnightmare(victim))
 			continue

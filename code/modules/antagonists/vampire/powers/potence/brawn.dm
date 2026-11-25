@@ -138,7 +138,7 @@
 				span_danger("[carbon_owner] lands a vicious punch, sending [living_target] away!"), \
 				span_userdanger("[carbon_owner] has landed a horrifying punch on you, sending you flying!"),
 			)
-			living_target.Knockdown(min(5, rand(10, 10 * powerlevel)))
+			living_target.Knockdown(rand(1 SECONDS, powerlevel SECONDS))
 
 		// Attack!
 		owner.balloon_alert(owner, "you punch [living_target]!")
