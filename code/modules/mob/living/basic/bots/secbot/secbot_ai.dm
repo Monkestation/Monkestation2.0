@@ -23,8 +23,12 @@
 	if(human_target in my_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
 		return TRUE
 	var/mob/living/basic/bot/secbot/my_bot = living_mob
-	if(human_target.IsParalyzed() && !(my_bot.security_mode_flags & SECBOT_HANDCUFF_TARGET))
-		return FALSE
+	if(human_target.IsParalyzed())
+		if(!(my_bot.security_mode_flags & SECBOT_HANDCUFF_TARGET))
+			return FALSE
+		// stunned people drop their guns, keep going for the cuffs
+		if(my_controller.blackboard[BB_CURRENT_TARGET] == human_target)
+			return TRUE
 	var/assess_flags = my_bot.judgement_criteria()
 	var/assessed_threat = human_target.assess_threat(assess_flags)
 	if(assessed_threat > THREAT_ASSESS_DANGEROUS)
