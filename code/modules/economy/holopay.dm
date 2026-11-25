@@ -97,7 +97,7 @@
 			return TRUE
 		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 			return FALSE
-		if(!chip.spend(cash_deposit, FALSE))
+		if(!chip.spend(cash_deposit, FALSE, linked_card?.registered_account))
 			balloon_alert(user, "insufficient credits")
 			to_chat(user, span_warning("You don't have enough credits to pay with this chip."))
 			return FALSE
@@ -240,7 +240,7 @@
 	/// Exit checks in case the user cancelled or entered an invalid amount
 	if(!amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return FALSE
-	if(!payee.adjust_money(-amount, "Holopay: [capitalize(name)]"))
+	if(!payee.adjust_money(-amount, "Holopay: [capitalize(name)]", linked_card?.registered_account))
 		balloon_alert(user, "insufficient credits")
 		to_chat(user, span_warning("You don't have the money to pay for this."))
 		return FALSE

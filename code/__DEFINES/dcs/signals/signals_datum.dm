@@ -52,3 +52,5 @@
 
 ///from /datum/component/bubble_icon_override/get_bubble_icon(): (list/holder)
 #define COMSIG_GET_BUBBLE_ICON "get_bubble_icon"
+/// Currency is transferred or consumed: (datum/recipient, amount). A null recipient denotes an economic sink.
+#define COMSIG_CREDITS_TRANSFERRED "credits_transferred"
