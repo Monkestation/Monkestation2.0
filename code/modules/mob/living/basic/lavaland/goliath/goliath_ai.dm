@@ -38,7 +38,7 @@
 	if(!istype(check_turf) || check_turf.dug)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	controller.set_blackboard_key(target_key, check_turf)
-	finish_action(controller, succeeded = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Melee-attacks the stored hole target turf and clears the key when done
 /datum/bt_node/ai_behavior/goliath_dig
@@ -51,7 +51,7 @@
 	if(isnull(target_turf) || !target_turf.IsReachableBy(basic_mob))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	basic_mob.melee_attack(target_turf)
-	finish_action(controller, succeeded = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/goliath_dig/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()

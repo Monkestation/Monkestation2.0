@@ -46,7 +46,7 @@
 	// Add to shitlist  set_blackboard_key_assoc_lazylist calls post_blackboard_key_set, waking the combat branch
 	controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target, world.time)
 	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
-	finish_action(controller, TRUE, ignore_faction)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/capricious_retaliate/proc/failed_targeting(atom/pawn)
 	pawn.visible_message(span_notice("[pawn] grumbles."))

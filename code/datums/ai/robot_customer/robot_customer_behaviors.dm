@@ -71,8 +71,7 @@
 
 /datum/bt_node/ai_behavior/robot_customer/wait_for_food/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(controller.blackboard[BB_CUSTOMER_EATING])
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	controller.add_blackboard_key(BB_CUSTOMER_PATIENCE, seconds_per_tick * -1 SECONDS)
 	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING])
@@ -97,6 +96,7 @@
 			customer.eat_order(I, attending_venue)
 			break
 
+	return AI_BEHAVIOR_DELAY
 
 /datum/bt_node/ai_behavior/robot_customer/wait_for_food/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()

@@ -16,8 +16,7 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/message_relayed = ""
 	for(var/i in 1 to length_of_message)
 		message_relayed += prob(50) ? "1" : "0"

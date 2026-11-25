@@ -14,8 +14,7 @@
 	var/mob/living_pawn = controller.pawn
 	var/list/mom_types = controller.blackboard[mom_types_key]
 	if(!length(mom_types))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/list/ignore_types = controller.blackboard[ignore_types_key]
 	var/list/all_moms = list()

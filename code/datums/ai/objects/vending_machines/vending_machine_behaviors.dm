@@ -41,6 +41,7 @@
 	controller.set_blackboard_key(BB_VENDING_BUSY_TILTING, TRUE)
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target_turf)
 	addtimer(CALLBACK(src, PROC_REF(tiltonmob), controller, target_turf), time_to_tilt)
+	return AI_BEHAVIOR_DELAY
 
 /datum/bt_node/ai_behavior/vendor_crush/proc/tiltonmob(datum/ai_controller/controller, turf/target_turf)
 	if(QDELETED(controller) || QDELETED(controller.pawn))
@@ -72,4 +73,4 @@
 	if(controller.blackboard[BB_VENDING_LAST_HIT_SUCCESSFUL])
 		controller.set_blackboard_key(BB_VENDING_TILT_COOLDOWN, world.time + success_tilt_cooldown)
 	vendor_pawn.untilt()
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
