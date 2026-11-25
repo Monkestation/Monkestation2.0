@@ -198,6 +198,15 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_WAXWALL S_OBJ(76)
 
 #define SMOOTH_GROUP_SILK_WALLS S_OBJ(77)
+
+#define SMOOTH_GROUP_PLATFORMS S_OBJ(80) ///obj/structure/platform & rusty
+#define SMOOTH_GROUP_PLATFORMS_SHUTTLE S_OBJ(81) ///obj/structure/platform/titanium & plastitanium
+#define SMOOTH_GROUP_PLATFORMS_MATERIAL S_OBJ(82) ///obj/structure/platform/material & iron & silver & gold & uranium & bronze
+#define SMOOTH_GROUP_PLATFORMS_WOOD S_OBJ(83) ///obj/structure/platform/wood & bamboo & hotel
+#define SMOOTH_GROUP_PLATFORMS_STONE S_OBJ(84) ///obj/structure/platform/sandstone & cult
+#define SMOOTH_GROUP_PLATFORMS_PIZZA S_OBJ(85) ///obj/structure/platform/pizza
+#define SMOOTH_GROUP_PLATFORMS_PAPER S_OBJ(86) ///obj/structure/platform/paper
+
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
 #define SETUP_SMOOTHING(...) \

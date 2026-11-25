@@ -25,6 +25,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_BRIGHT_DAY "station_trait_bright_day"
 #define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
 #define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
+#define STATION_TRAIT_ECONOMY_ALERTS "station_trait_economy_alerts"
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_FORESTED "station_trait_forested"
@@ -265,6 +266,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TOXIMMUNE "toxin_immune"
 /// Mob is immune to oxygen damage, does not need to breathe
 #define TRAIT_NOBREATH "no_breath"
+/// Mob doesn't take oxygen damage in deep water
+#define TRAIT_NODROWN "amphibious"
+/// Mob doesn't take stamina damage from deep water
+#define TRAIT_SWIMMER "swimmer"
 /// Mob is currently disguised as something else (like a morph being another mob or an object). Holds a reference to the thing that applied the trait.
 #define TRAIT_DISGUISED "disguised"
 /// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
@@ -1605,5 +1610,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mob gets far less severe negative moodlets from seeing death / blood
 #define TRAIT_DESENSITIZED "desensitized"
+
+
+///Attached to objects currently on tables and such, allowing them to walk on other objects without the climbing delay
+#define TRAIT_ON_CLIMBABLE "on_climbable"
 
 
