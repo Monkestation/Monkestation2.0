@@ -17,33 +17,39 @@
 	return "In the eyes of [GLOB.deity], your wealth is your favor."
 
 /datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/chap)
+	if(!ishuman(blessed_living))
+		return BLESSING_FAILED
+
 	var/datum/bank_account/account = chap.get_bank_account()
 	if(!account)
 		to_chat(chap, span_warning("You need a way to pay for the heal!"))
-		return TRUE
+		return BLESSING_IGNORED
+
 	if(account.account_balance < GREEDY_HEAL_COST)
 		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!"))
-		return TRUE
-	if(!ishuman(blessed_living))
-		return FALSE
+		return BLESSING_IGNORED
+
 	var/mob/living/carbon/human/blessed = blessed_living
 	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
 		if(IS_ROBOTIC_LIMB(robolimb))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
-			return TRUE
+			return BLESSING_IGNORED
 
 	account.adjust_money(-GREEDY_HEAL_COST, "Church Donation: Treatment")
 	var/heal_amt = 30
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-	if(hurt_limbs.len)
-		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, BODYTYPE_ORGANIC))
-				blessed.update_damage_overlays()
-		blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
-		playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
-		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	if(!length(hurt_limbs))
+		return BLESSING_IGNORED
+
+	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+		if(affecting.heal_damage(heal_amt, heal_amt, BODYTYPE_ORGANIC))
+			blessed.update_damage_overlays()
+
+	blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
+	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
+	playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
+	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 ///all greed rites cost money instead
 /datum/religion_rites/greed

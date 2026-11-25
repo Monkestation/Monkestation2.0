@@ -21,6 +21,7 @@ import {
   createSetPreference,
   type PreferencesMenuData,
   RandomSetting,
+  type ServerData,
 } from './data';
 import { MultiNameInput, NameInput } from './names';
 import features from './preferences/features';
@@ -475,10 +476,11 @@ const sortPreferences = sortBy<[string, unknown]>(([featureId, _]) => {
   return feature?.name;
 });
 
-const PreferenceList = (props: {
+export const PreferenceList = (props: {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
+  maxHeight: string;
   children?: ReactNode;
 }) => {
   return (
@@ -489,7 +491,8 @@ const PreferenceList = (props: {
         padding: '4px',
       }}
       overflowX="hidden"
-      overflowY="scroll"
+      overflowY="auto"
+      maxHeight={props.maxHeight}
     >
       <LabeledList>
         {sortPreferences(Object.entries(props.preferences)).map(
@@ -541,6 +544,36 @@ const PreferenceList = (props: {
   );
 };
 
+export const getRandomization = (
+  preferences: Record<string, unknown>,
+  serverData: ServerData | undefined,
+  randomBodyEnabled: boolean,
+): Record<string, RandomSetting> => {
+  if (!serverData) {
+    return {};
+  }
+
+  const { data } = useBackend<PreferencesMenuData>();
+
+  return Object.fromEntries(
+    filterMap(Object.keys(preferences), (preferenceKey) => {
+      if (serverData.random.randomizable.indexOf(preferenceKey) === -1) {
+        return undefined;
+      }
+
+      if (!randomBodyEnabled) {
+        return undefined;
+      }
+
+      return [
+        preferenceKey,
+        data.character_preferences.randomization[preferenceKey] ||
+          RandomSetting.Disabled,
+      ];
+    }),
+  );
+};
+
 export const MainPage = (props: { openSpecies: () => void }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState<
@@ -584,36 +617,10 @@ export const MainPage = (props: { openSpecies: () => void }) => {
           data.character_preferences.non_contextual.random_body !==
             RandomSetting.Disabled || randomToggleEnabled;
 
-        const getRandomization = (
-          preferences: Record<string, unknown>,
-        ): Record<string, RandomSetting> => {
-          if (!serverData) {
-            return {};
-          }
-
-          return Object.fromEntries(
-            filterMap(Object.keys(preferences), (preferenceKey) => {
-              if (
-                serverData.random.randomizable.indexOf(preferenceKey) === -1
-              ) {
-                return undefined;
-              }
-
-              if (!randomBodyEnabled) {
-                return undefined;
-              }
-
-              return [
-                preferenceKey,
-                data.character_preferences.randomization[preferenceKey] ||
-                  RandomSetting.Disabled,
-              ];
-            }),
-          );
-        };
-
         const randomizationOfMainFeatures = getRandomization(
           Object.fromEntries(mainFeatures),
+          serverData,
+          randomBodyEnabled,
         );
 
         const nonContextualPreferences = {
@@ -735,14 +742,24 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                 <Stack vertical fill>
                   <PreferenceList
                     act={act}
-                    randomizations={getRandomization(contextualPreferences)}
+                    randomizations={getRandomization(
+                      contextualPreferences,
+                      serverData,
+                      randomBodyEnabled,
+                    )}
                     preferences={contextualPreferences}
+                    maxHeight="auto"
                   />
 
                   <PreferenceList
                     act={act}
-                    randomizations={getRandomization(nonContextualPreferences)}
+                    randomizations={getRandomization(
+                      nonContextualPreferences,
+                      serverData,
+                      randomBodyEnabled,
+                    )}
                     preferences={nonContextualPreferences}
+                    maxHeight="auto"
                   />
                 </Stack>
               </Stack.Item>

@@ -136,6 +136,7 @@
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
+		ADD_TRAIT(current, TRAIT_DESENSITIZED, CULT_TRAIT)
 	if(cult_team.cult_ascendent)
 		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 
@@ -151,7 +152,7 @@
 	communion.Remove(current)
 	magic.Remove(current)
 	current.clear_alert("bloodsense")
-	current.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_NO_MINDSWAP, TRAIT_HEALS_FROM_CULT_PYLONS), CULT_TRAIT)
+	current.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_NO_MINDSWAP, TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_DESENSITIZED), CULT_TRAIT)
 	if (HAS_TRAIT(current, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 		current.RemoveElement(/datum/element/cult_eyes)
 	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
@@ -299,6 +300,7 @@
 				SEND_SOUND(mind.current, 'sound/music/antag/bloodcult/bloodcult_eyes.ogg')
 				to_chat(mind.current, span_cultlarge(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
 				mind.current.AddElement(/datum/element/cult_eyes)
+				ADD_TRAIT(mind.current, TRAIT_DESENSITIZED, CULT_TRAIT)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
 
