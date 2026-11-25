@@ -114,12 +114,12 @@
 
 		if(info.plant_state == HYDROTRAY_PLANT_DEAD)
 			balloon_alert_to_viewers("dead plant removed")
-			SEND_SIGNAL(hydro, COMSIG_REMOVE_PLANT, seed_item)
+			SEND_SIGNAL(hydro, COMSIG_REMOVE_PLANT, _item)
 			return
 
 		if(growing.weed_level > 0)
 			balloon_alert_to_viewers("weeds uprooted")
-			SEND_SIGNAL(hydro, COMSIG_PLANT_ADJUST_WEED, -10)
+			SEND_SIGNAL(hydro, COMSIG_GROWING_ADJUST_WEED, -10)
 			return
 
 	var/list/can_reagents = held_can?.reagents.reagent_list

@@ -5,7 +5,12 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/machinery/hydroponics/hydro = target
-	if(!istype(hydro) || isnull(hydro.myseed))
+	var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
+	if(!growing)
 		return FALSE
-	return hydro.plant_health < hydro.myseed.endurance
+	for(var/slot in growing.managed_seeds)
+		var/obj/item/seeds/seed = growing.managed_seeds[slot]
+		var/datum/component/growth_information/info = seed?.GetComponent(/datum/component/growth_information)
+		if(info && info.health_value < seed.endurance)
+			return TRUE
+	return FALSE

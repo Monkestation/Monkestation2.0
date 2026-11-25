@@ -81,7 +81,7 @@
 	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/pollinate_hydro/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/obj/machinery/hydroponics/tray = controller.blackboard[BB_TARGET_HYDRO]
+	var/atom/movable/tray = controller.blackboard[BB_TARGET_HYDRO]
 	var/mob/living/basic/bee/bee_pawn = controller.pawn
 	if(QDELETED(tray) || !bee_pawn.Adjacent(tray))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED

@@ -1,19 +1,20 @@
-/// Accepts hydroponics trays that need watering (if pawn holds a watering can) or weeding/dead plant removal.
-/// Reads thresholds from the controller blackboard.
 /datum/targeting_strategy/treatable_hydro
 
 /datum/targeting_strategy/treatable_hydro/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/machinery/hydroponics/hydro = target
-	if(!istype(hydro) || isnull(hydro.myseed))
+	var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
+	if(!growing || !controller || !(locate(/obj/item/seeds) in target.contents))
 		return FALSE
-	if(!controller)
-		return FALSE
-	var/waterlevel_threshold = controller.blackboard[BB_WATERLEVEL_THRESHOLD]
-	var/weedlevel_threshold = controller.blackboard[BB_WEEDLEVEL_THRESHOLD]
-	if(hydro.waterlevel < waterlevel_threshold)
+	if(growing.water_precent < controller.blackboard[BB_WATERLEVEL_THRESHOLD])
 		if(locate(/obj/item/reagent_containers/cup/watering_can) in living_mob)
 			return TRUE
-	return hydro.weedlevel > weedlevel_threshold || hydro.plant_status == HYDROTRAY_PLANT_DEAD
+	if(growing.weed_level > controller.blackboard[BB_WEEDLEVEL_THRESHOLD])
+		return TRUE
+	for(var/slot in growing.managed_seeds)
+		var/obj/item/seeds/seed = growing.managed_seeds[slot]
+		var/datum/component/growth_information/info = seed?.GetComponent(/datum/component/growth_information)
+		if(info?.plant_state == HYDROTRAY_PLANT_DEAD)
+			return TRUE
+	return FALSE

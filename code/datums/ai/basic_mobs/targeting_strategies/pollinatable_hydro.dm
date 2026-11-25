@@ -5,7 +5,6 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/machinery/hydroponics/candidate = target
-	if(!istype(candidate) || !candidate.can_bee_pollinate())
+	if(!target.GetComponent(/datum/component/plant_growing) || SEND_SIGNAL(target, COMSIG_GROWER_CHECK_POLLINATED))
 		return FALSE
-	return can_see(living_mob, candidate, vision_range)
+	return can_see(living_mob, target, vision_range)

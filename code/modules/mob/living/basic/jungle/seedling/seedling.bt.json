@@ -60,7 +60,8 @@
 											"type": "leaf",
 											"behavior": "/datum/bt_node/ai_behavior/ai_interact",
 											"vars": {
-												"target_key": "BB_HYDROPLANT_TARGET"
+												"target_key": "BB_HYDROPLANT_TARGET",
+												"unarmed": true
 											}
 										},
 										{
