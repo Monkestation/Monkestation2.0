@@ -1,5 +1,7 @@
 ///() returns TRUE if nanites are found
 #define COMSIG_HAS_NANITES "has_nanites"
+///from /mob/living/emp_act() when the mob isn't shielded from EMPs: (severity)
+#define COMSIG_NANITE_EMP "nanite_emp"
 ///() returns TRUE if nanites have stealth
 #define COMSIG_NANITE_IS_STEALTHY "nanite_is_stealthy"
 ///() deletes the nanite component

@@ -59,7 +59,7 @@
 	RegisterSignal(parent, COMSIG_NANITE_SYNC, PROC_REF(sync))
 
 	if(isliving(parent))
-		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
+		RegisterSignal(parent, COMSIG_NANITE_EMP, PROC_REF(on_emp))
 		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 		RegisterSignal(parent, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
@@ -85,7 +85,7 @@
 								COMSIG_NANITE_ADD_PROGRAM,
 								COMSIG_NANITE_SCAN,
 								COMSIG_NANITE_SYNC,
-								COMSIG_ATOM_EMP_ACT,
+								COMSIG_NANITE_EMP,
 								COMSIG_LIVING_DEATH,
 								COMSIG_MOB_RETRIEVE_ACCESS,
 								COMSIG_LIVING_ELECTROCUTE_ACT,
