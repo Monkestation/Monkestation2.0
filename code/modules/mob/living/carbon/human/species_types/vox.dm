@@ -151,7 +151,7 @@
 		tank = new tank_type(equipping)
 		if(!equipping.equip_to_appropriate_slot(tank))
 			equipping.put_in_hands(tank)
-	if(visuals_only || equipping.internal == tank)
+	if(visuals_only || equipping.internal == tank || tank.loc != equipping) // a tank that ended up on the floor can't be breathed from
 		return
 	if(!already_told)
 		to_chat(equipping, span_notice("You are now running on nitrogen internals from [tank]. Your species finds oxygen toxic, so you must breathe pure nitrogen."))
@@ -224,7 +224,7 @@
 /datum/species/vox/get_survival_box_overrides(obj/item/storage/box/survival/box)
 	return list(
 		SURVIVAL_MASK_TYPE = ispath(box.mask_type, /obj/item/clothing/mask/breath) ? pick(/obj/item/clothing/mask/breath/vox, /obj/item/clothing/mask/breath/vox/respirator) : box.mask_type,
-		SURVIVAL_INTERNALS_TYPE = ispath(box.internal_type, /obj/item/tank/internals/emergency_oxygen/engi) ? /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi : /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen,
+		SURVIVAL_INTERNALS_TYPE = (ispath(box.internal_type, /obj/item/tank/internals/emergency_oxygen/engi) || ispath(box.internal_type, /obj/item/tank/internals/emergency_oxygen/double)) ? /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi : /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen,
 		SURVIVAL_MEDIPEN_TYPE = box.medipen_type,
 	)
 

@@ -635,7 +635,7 @@
 			to_chat(user, span_warning("[target_human] is just way too shaved. Like, really really shaved."))
 			return
 
-		if(!hairlike_facial && target_human.facial_hairstyle == "Shaved")
+		if(hairlike_facial ? !length(noggin.get_hairlike_features(EXTERNAL_RESTYLE_FACIAL_HAIR, styled_only = TRUE)) : target_human.facial_hairstyle == "Shaved")
 			to_chat(user, span_warning("Already clean-shaven!"))
 			return
 
@@ -660,7 +660,7 @@
 			to_chat(user, span_warning("There is no hair to shave!"))
 			return
 
-		if(!hairlike_hair && (target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead"))
+		if(hairlike_hair ? !length(noggin.get_hairlike_features(EXTERNAL_RESTYLE_HAIR, styled_only = TRUE)) : (target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead"))
 			to_chat(user, span_warning("There is not enough hair left to shave!"))
 			return
 

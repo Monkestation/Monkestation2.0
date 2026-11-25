@@ -139,7 +139,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	else if(message_mods[WHISPER_MODE])
 		. = verb_whisper
 	else
-		var/datum/language/spoken_language = GLOB.language_datum_instances[message_mods[LANGUAGE_EXTENSION]]
+		// Signed languages aren't shrieked, so signers keep their own verbs
+		var/datum/language/spoken_language = HAS_TRAIT(src, TRAIT_SIGN_LANG) ? null : GLOB.language_datum_instances[message_mods[LANGUAGE_EXTENSION]]
 		if(ending == "?")
 			return spoken_language?.ask_verb || verb_ask
 		else if(ending == "!")
