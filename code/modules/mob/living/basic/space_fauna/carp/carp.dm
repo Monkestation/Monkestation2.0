@@ -72,6 +72,7 @@
 		/obj/machinery/fax,
 		/obj/structure/door_assembly,
 		/obj/structure/filingcabinet,
+		/obj/structure/flippedtable,
 		/obj/structure/frame,
 		/obj/structure/grille,
 		/obj/structure/plasticflaps,
