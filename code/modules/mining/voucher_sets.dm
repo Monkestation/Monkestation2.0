@@ -230,10 +230,11 @@
 
 /datum/voucher_set/security/primary/paco
 	name = "Paco"
-	description = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines."
+	description = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines. Comes with its own holster."
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "35r-16"
 	set_items = list(
+		/obj/item/storage/belt/holster/duty,
 		/obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
 		/obj/item/ammo_box/magazine/m35/rubber,
 		/obj/item/ammo_box/magazine/m35/rubber,
