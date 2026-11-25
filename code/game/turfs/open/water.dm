@@ -21,6 +21,9 @@
 	var/max_sinkage
 	///The transparency of the immerse element's overlay
 	var/immerse_overlay_alpha = 180
+	///Icon state to use for the immersion mask
+	var/immerse_overlay = "immerse"
+
 	/// Fishing element for this specific water tile
 	var/datum/fish_source/fishing_datum = /datum/fish_source/river
 
@@ -58,10 +61,7 @@
 /turf/open/water/proc/on_atom_inited(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
-	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
-		return
-	AddElement(/datum/element/immerse, "immerse", immerse_overlay_alpha)
-	immerse_added = TRUE
+	make_immersed(movable)
 
 /turf/open/water/Destroy()
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
@@ -74,10 +74,15 @@
  */
 /turf/open/water/Entered(atom/movable/arrived)
 	. = ..()
-	if(immerse_added || is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
-		return
-	AddElement(/datum/element/immerse, "immerse", immerse_overlay_alpha)
+	make_immersed(arrived)
+
+///Makes this turf immersable, return true if we actually did anything so child procs don't have to repeat our checks
+/turf/open/water/proc/make_immersed(atom/movable/triggering_atom)
+	if(immerse_added || is_type_in_typecache(triggering_atom, GLOB.immerse_ignored_movable))
+		return FALSE
+	AddElement(/datum/element/immerse, immerse_overlay, immerse_overlay_alpha)
 	immerse_added = TRUE
+	return TRUE
 
 /turf/open/water/jungle
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
@@ -85,6 +90,20 @@
 /turf/open/water/no_planet_atmos
 	baseturfs = /turf/open/water/no_planet_atmos
 	planetary_atmos = FALSE
+
+/turf/open/water/no_planet_atmos/deep
+	name = "deep water"
+	desc = "Less shallow water."
+	icon_state = "deep_riverwater_motion"
+	immerse_overlay = "immerse_deep"
+	slowdown = 8
+	baseturfs = /turf/open/water/no_planet_atmos/deep
+
+/turf/open/water/no_planet_atmos/deep/make_immersed()
+	. = ..()
+	if (!.)
+		return
+	AddElement(/datum/element/swimming_tile)
 
 //This version of the beach turf uses low pressure, inherieted from above
 /turf/open/water/beach
@@ -113,6 +132,24 @@
 //the tram beachside bar has 1 tile of this
 /turf/open/water/beach/biodome/sinking/deep
 	max_sinkage = 28
+
+/// Deep water drains stamina and starts drowning you
+/turf/open/water/deep_beach
+	name = "deep water"
+	desc = "Don't forget your life jacket."
+	slowdown = 8
+	immerse_overlay = "immerse_deep"
+	icon = 'icons/obj/fluff/beach.dmi'
+	icon_state = "deepwater"
+	base_icon_state = "deepwater"
+	baseturfs = /turf/open/water/deep_beach
+	fishing_datum = /datum/fish_source/ocean
+
+/turf/open/water/deep_beach/make_immersed()
+	. = ..()
+	if (!.)
+		return
+	AddElement(/datum/element/swimming_tile)
 
 /turf/open/water/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

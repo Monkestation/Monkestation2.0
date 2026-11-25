@@ -712,3 +712,11 @@
 
 /obj/effect/temp_visual/circle_wave/star_blast
 	color = COLOR_VOID_PURPLE
+
+/obj/effect/temp_visual/spotlight
+	name = "Spotlight"
+	icon = 'icons/effects/light_overlays/light_64.dmi'
+	icon_state = "spotlight"
+	duration = 5 MINUTES
+	pixel_x = -16
+	pixel_y = -8 //32

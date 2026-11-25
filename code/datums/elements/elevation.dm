@@ -28,6 +28,7 @@
 		ADD_TRAIT(turf, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(target))
 
 /datum/element/elevation/Detach(atom/movable/source)
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	unregister_turf(source, source.loc)
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	return ..()
