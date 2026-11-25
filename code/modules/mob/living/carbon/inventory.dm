@@ -145,7 +145,8 @@
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
 	if(!not_handled)
 		has_equipped(I, slot, initial)
-
+	if(ITEM_SLOT_HEAD && wear_neck)
+		update_worn_neck()
 	return not_handled
 
 /mob/living/carbon/get_equipped_speed_mod_items()

@@ -445,8 +445,7 @@ There are several things that need to be remembered:
 		apply_height(head_overlay, UPPER_BODY)
 		overlays_standing[HEAD_LAYER] = head_overlay
 
-	if(wear_neck)
-		update_worn_neck()
+	update_worn_neck()
 
 	apply_overlay(HEAD_LAYER)
 
