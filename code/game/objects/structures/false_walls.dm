@@ -244,21 +244,6 @@
 	mineral = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
 
-/obj/structure/falsewall/sandstone/wall_fill
-	mineral = /obj/item/stack/wall_filling/sandstone/basic
-	mineral_amount = 1
-	walltype = /turf/closed/wall/mineral/sandstone/wall_fill
-
-/obj/structure/falsewall/sandstone/ornate
-	mineral = /obj/item/stack/wall_filling/sandstone/ornate
-	mineral_amount = 1
-	walltype = /turf/closed/wall/mineral/sandstone/ornate
-
-/obj/structure/falsewall/sandstone/basalt
-	mineral = /obj/item/stack/wall_filling/sandstone/basalt
-	mineral_amount = 1
-	walltype = /turf/closed/wall/mineral/sandstone/basalt
-
 /obj/structure/falsewall/wood
 	mineral = /obj/item/stack/sheet/mineral/wood
 	walltype = /turf/closed/wall/mineral/wood
@@ -299,30 +284,6 @@
 /obj/structure/falsewall/plastitanium/survival
 	mineral = /obj/item/stack/wall_filling/plastitanium/survivalpod
 	walltype = /turf/closed/wall/mineral/plastitanium/survival
-
-/obj/structure/falsewall/bone
-	mineral = /obj/item/stack/sheet/bone
-	walltype = /turf/closed/wall/mineral/bone
-
-/obj/structure/falsewall/runite
-	mineral = /obj/item/stack/sheet/mineral/runite
-	walltype = /turf/closed/wall/mineral/runite
-
-/obj/structure/falsewall/adamantine
-	mineral = /obj/item/stack/sheet/mineral/adamantine
-	walltype = /turf/closed/wall/mineral/adamantine
-
-/obj/structure/falsewall/metalhydrogen
-	mineral = /obj/item/stack/sheet/mineral/metal_hydrogen
-	walltype = /turf/closed/wall/mineral/metalhydrogen
-
-/obj/structure/falsewall/hauntium
-	mineral = /obj/item/stack/sheet/hauntium
-	walltype = /turf/closed/wall/mineral/hauntium
-
-/obj/structure/falsewall/mythril
-	mineral = /obj/item/stack/sheet/mineral/mythril
-	walltype = /turf/closed/wall/mineral/mythril
 
 /obj/structure/falsewall/material
 	walltype = /turf/closed/wall/material

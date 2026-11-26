@@ -435,13 +435,12 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 	. = ..()
 	. += GLOB.snow_recipes
 
+
 /****************************** Others ****************************/
 
 /*
  * Adamantine
-*/
-
-
+ */
 GLOBAL_LIST_INIT(adamantine_recipes, list(
 	new /datum/stack_recipe("adamantine tile", /obj/item/stack/tile/mineral/adamantine, 1, 4, 20, category = CAT_TILES), \
 	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1, category = CAT_ROBOT),
@@ -459,13 +458,12 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	. = ..()
 	. += GLOB.adamantine_recipes
 
-GLOBAL_LIST_INIT(runite_recipes, list(
-	new /datum/stack_recipe("runite tile", /obj/item/stack/tile/mineral/runite, 1, 4, 20, category = CAT_TILES), \
-	))
-
 /*
  * Runite
  */
+GLOBAL_LIST_INIT(runite_recipes, list(
+	new /datum/stack_recipe("runite tile", /obj/item/stack/tile/mineral/runite, 1, 4, 20, category = CAT_TILES), \
+	))
 
 /obj/item/stack/sheet/mineral/runite
 	name = "runite"
@@ -534,7 +532,6 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 /*
  * Coal
  */
-
 /obj/item/stack/sheet/mineral/coal
 	name = "coal"
 	desc = "Someone's gotten on the naughty list."
@@ -565,7 +562,9 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 /obj/item/stack/sheet/mineral/coal/ten
 	amount = 10
 
-//Metal Hydrogen
+/*
+ * Metal Hydrogen
+ */
 GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	new /datum/stack_recipe("metallic hydrogen tile", /obj/item/stack/tile/mineral/metal_hydrogen, 1, 4, 20, category = CAT_TILES), \
 	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=20, res_amount=1, check_density = FALSE, category = CAT_ROBOT),

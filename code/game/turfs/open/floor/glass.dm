@@ -180,4 +180,3 @@
 	base_icon_state = "glass_stained_black"
 	floor_tile = /obj/item/stack/tile/stained_glass/black
 	starlight_color = COLOR_CRAYON_BLACK
-
