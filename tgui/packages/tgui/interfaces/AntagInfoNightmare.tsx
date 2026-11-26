@@ -11,7 +11,7 @@ const noticestyle = {
 
 export const AntagInfoNightmare = (props) => {
   return (
-    <Window width={620} height={470}>
+    <Window width={620} height={510}>
       <Window.Content backgroundColor="#0d0d0d">
         <Stack fill>
           <Stack.Item width="46.2%">
@@ -76,7 +76,9 @@ export const AntagInfoNightmare = (props) => {
                   Your twisted appendage. It will consume the light of what it
                   touches, be it victim or object. When unobstructed by bright
                   light, it&apos;ll lash out at anything dim in your vicinity,
-                  completely hiding you in the shadows.
+                  completely hiding you in the shadows. After 7 seconds of
+                  being in jaunt, stabbing a foe will stun them or do extra
+                  damage.
                 </LabeledList.Item>
               </LabeledList>
             </Section>

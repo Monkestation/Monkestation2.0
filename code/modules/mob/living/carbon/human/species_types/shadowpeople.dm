@@ -47,6 +47,31 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/shadow,
 	)
 
+/datum/species/shadow/on_species_gain(mob/living/carbon/carbon_mob, datum/species/old_species, pref_load)
+	. = ..()
+	RegisterSignal(carbon_mob, COMSIG_MOB_FLASH_OVERRIDE_CHECK, PROC_REF(on_flashed))
+
+/datum/species/shadow/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(human, COMSIG_MOB_FLASH_OVERRIDE_CHECK)
+
+/datum/species/shadow/proc/on_flashed(source, mob/living/carbon/flashed, flash, deviation)
+	SIGNAL_HANDLER
+
+	if(deviation == DEVIATION_FULL) //If no deviation, we can assume it's a non-assembly flash and should do max flash damage.
+		flashed.apply_damage(16, BURN, attacking_item = flash)
+		flashed.adjust_confusion_up_to(3 SECONDS, 6 SECONDS)
+	else //If it's anything less than a full hit, it does less than stellar damage. Bear in mind that this damage is dished out much faster since flashes have a quicker cooldown on clicks.
+		flashed.apply_damage(8, BURN, attacking_item = flash)
+		flashed.adjust_confusion_up_to(1 SECONDS, 3 SECONDS)
+
+	INVOKE_ASYNC(flashed, TYPE_PROC_REF(/mob, emote), "scream")
+	flashed.visible_message(span_danger("[flashed] wails in pain as a burst of light singes their flesh!"), \
+		span_danger("You wail in pain as the sudden burst of light singes your flesh!"), \
+		span_danger("Something wails in pain! It sounds like a terrifying monster! Good thing you can't see it, or you'd probably be freaking out right now."))
+
+	return FLASH_OVERRIDDEN
+
 /datum/species/shadow/proc/regen_shadow()
 	shadow_charges = min(shadow_charges++, initial(shadow_charges))
 
@@ -152,6 +177,7 @@
 	icon_state = "eyes"
 	color_cutoffs = list(20, 10, 40)
 	pepperspray_protect = TRUE
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 ////////////////////////////////////////////////////////////////////////////////////
 //------------------------Midround antag exclusive species------------------------//
@@ -180,6 +206,7 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_NEVER_WOUNDED,
 		TRAIT_NOHUNGER,
 		TRAIT_NOBLOOD,
 		// monkestation addition: pain system
@@ -266,6 +293,7 @@
 
 /datum/species/shadow/darkspawn/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_FLASH_OVERRIDE_CHECK) // darkspawn keep their own flash rules and the anti-flash upgrade
 	C.fully_replace_character_name(null, nightmare_name())
 
 /datum/species/shadow/darkspawn/spec_updatehealth(mob/living/carbon/human/H)
@@ -367,11 +395,13 @@
 /obj/item/organ/internal/heart/nightmare
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
-	icon = 'icons/obj/medical/organs/organs.dmi'
-	icon_state = "demon_heart-on"
+	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	icon_state = "dark_heart-on"
+	base_icon_state = "dark_heart"
 	visual = TRUE
-	color = "#1C1C1C"
 	decay_factor = 0
+	// In case you want to drink light as well as eat it
+	organ_traits = list(TRAIT_LIGHT_DRINKER)
 	/// How many life ticks in the dark the owner has been dead for. Used for nightmare respawns.
 	var/respawn_progress = 0
 	/// The armblade granted to the host of this heart.
@@ -379,6 +409,10 @@
 
 /obj/item/organ/internal/heart/nightmare/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
+
+/obj/item/organ/internal/heart/nightmare/Destroy()
+	QDEL_NULL(blade)
 	return ..()
 
 /obj/item/organ/internal/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
@@ -399,9 +433,11 @@
 
 /obj/item/organ/internal/heart/nightmare/on_insert(mob/living/carbon/heart_owner, special)
 	. = ..()
-	if(special != HEART_SPECIAL_SHADOWIFY)
-		blade = new/obj/item/light_eater/nightmare
-		heart_owner.put_in_hands(blade)
+	if(special == HEART_SPECIAL_SHADOWIFY)
+		return
+	blade = new /obj/item/light_eater/nightmare
+	heart_owner.put_in_hands(blade)
+	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(on_blade_deleted))
 
 /obj/item/organ/internal/heart/nightmare/on_remove(mob/living/carbon/heart_owner, special)
 	. = ..()
@@ -412,6 +448,11 @@
 
 /obj/item/organ/internal/heart/nightmare/Stop()
 	return 0
+
+// Happens if the blade was deleted before we were during mob destruction
+/obj/item/organ/internal/heart/nightmare/proc/on_blade_deleted(datum/source)
+	SIGNAL_HANDLER
+	blade = null
 
 /obj/item/organ/internal/heart/nightmare/on_death(seconds_per_tick, times_fired)
 	if(!owner)
