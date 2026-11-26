@@ -297,3 +297,20 @@
 /obj/structure/fluff/tram_rail/electric/attack_hand(mob/living/user, list/modifiers)
 	if(user.electrocute_act(75, src))
 		do_sparks(5, TRUE, src)
+
+/obj/structure/fluff/shower_drain
+	name = "shower drain"
+	desc = "Ew, I think I see a hairball."
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
+	icon_state = "fan_tiny"
+	plane = FLOOR_PLANE
+	layer = BELOW_CATWALK_LAYER
+
+/obj/structure/fluff/wallsign
+	name = "direction sign"
+	desc = "Now, where to go?"
+	density = FALSE
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "wallsign"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/wallsign, 32)

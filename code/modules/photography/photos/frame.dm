@@ -271,3 +271,15 @@
 	if(SSmapping.current_map.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
 		persistence_id = "frame_bar_[SSmapping.current_map.map_name]"
 	return ..()
+
+/obj/structure/sign/picture_frame/hall_of_fame/one
+	persistence_id = "frame_hall_of_fame_1"
+
+/obj/structure/sign/picture_frame/hall_of_fame/two
+	persistence_id = "frame_hall_of_fame_2"
+
+/obj/structure/sign/picture_frame/hall_of_fame/three
+	persistence_id = "frame_hall_of_fame_3"
+
+/obj/structure/sign/picture_frame/hall_of_fame/four
+	persistence_id = "frame_hall_of_fame_4"

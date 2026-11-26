@@ -260,3 +260,96 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat, 32)
 	icon_state = "vault"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/vault, 32)
+
+/obj/structure/sign/departments/med
+	name = "\improper Medbay sign"
+	sign_change_name = "Department - Medbay"
+	desc = "A sign labelling an area of the medical department."
+	icon_state = "med"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med, 32)
+
+/obj/structure/sign/departments/med_alt
+	name = "\improper Medbay sign"
+	sign_change_name = "Department - Medbay Alt"
+	icon_state = "medbay"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med_alt, 32)
+
+/obj/structure/sign/departments/virology
+	name = "\improper Virology sign"
+	sign_change_name = "Department - Medbay: Virology"
+	desc = "A sign labelling an area where the virologist's laboratory is located."
+	icon_state = "pharmacy"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/virology, 32)
+
+/obj/structure/sign/departments/morgue
+	name = "\improper Morgue sign"
+	sign_change_name = "Department - Medbay: Morgue"
+	desc = "A sign labelling an area where the station stores its ever-piling bodies."
+	icon_state = "morgue"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue, 32)
+
+/obj/structure/sign/departments/atmospherics
+	name = "\improper Atmospherics sign"
+	sign_change_name = "Department - Engineering: Atmospherics"
+	desc = "A sign labelling an area where your life-giving air comes from."
+	icon_state = "atmos"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/atmospherics, 32)
+
+/obj/structure/sign/departments/genetics
+	name = "\improper Genetics sign"
+	sign_change_name = "Department - Science: Genetics"
+	desc = "A sign labelling an area where the field of genetics is researched."
+	icon_state = "gene"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/genetics, 32)
+
+/obj/structure/sign/departments/botany/botany/alt3
+	sign_change_name = "Department - Botany (Tray) Alt"
+	icon_state = "botany"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/botany/alt3, 32)
+
+/obj/structure/sign/departments/custodian_alt
+	name = "\improper Janitor sign"
+	sign_change_name = "Department - Janitor Alt"
+	desc = "A sign labelling an area where the janitor works."
+	icon_state = "custodian2"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian_alt, 32)
+
+/obj/structure/sign/departments/holy_alt
+	name = "\improper Chapel sign"
+	sign_change_name = "Department - Chapel Alt"
+	desc = "A sign labelling a religious area."
+	icon_state = "chapel"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy_alt, 32)
+
+/obj/structure/sign/departments/restaurant
+	name = "\improper Restaurant sign"
+	sign_change_name = "Department - Restaurant"
+	desc = "A sign labelling an area where the food is served."
+	icon_state = "restaurant"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restaurant, 32)
+
+/obj/structure/sign/departments/bar
+	name = "\improper Bar sign"
+	sign_change_name = "Department - Bar"
+	desc = "A sign labelling an area where drinks are mixed."
+	icon_state = "bar"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/bar, 32)
+
+/obj/structure/sign/departments/exodrone
+	name = "\improper Exodrone sign"
+	sign_change_name = "Department - Cargo: exodrone"
+	desc = "A sign labelling an area where exodrones are used."
+	icon_state = "exodrone"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone, 32)

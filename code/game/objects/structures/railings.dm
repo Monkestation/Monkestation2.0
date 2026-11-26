@@ -36,6 +36,18 @@
 /obj/structure/railing/wood
 	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT)
 
+/obj/structure/railing/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/railing/corner/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/railing/corner/end/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/railing/corner/end/flip/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
 	ini_dir = dir
