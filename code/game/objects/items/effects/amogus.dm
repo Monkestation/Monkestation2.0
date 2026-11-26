@@ -8,5 +8,5 @@
 		return FALSE
 	granter.apply_displacement_icon(/obj/effect/distortion/large/amogus)
 	granter.AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
-	granter.can_be_held = TRUE
+	granter.AddElement(/datum/element/can_be_held)
 	return ..()

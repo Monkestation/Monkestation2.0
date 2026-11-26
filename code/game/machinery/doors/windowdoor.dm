@@ -156,7 +156,7 @@
 	add_fingerprint(user)
 	if(isliving(user) && isnull(user.mind))
 		var/mob/living/living_user = user
-		if(living_user.mob_size < MOB_SIZE_HUMAN)
+		if(living_user.mob_size < MOB_SIZE_HUMAN && !isbot(living_user))
 			return
 
 	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)

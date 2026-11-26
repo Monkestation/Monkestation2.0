@@ -76,7 +76,8 @@
 		if(prob(60) && ishuman(meal) && meal.client && !our_slime.ai_controller?.blackboard[BB_SLIME_RABID])
 			our_slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE) //we might go rabid after finishing to feed on a human with a client.
 
-		our_slime.stop_feeding()
+		if(our_slime)
+			our_slime.stop_feeding()
 		return
 
 	// measured off health, since monke's damage procs don't agree on what sign they return (carbons give it back positive)

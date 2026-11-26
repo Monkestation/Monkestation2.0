@@ -84,26 +84,16 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
-#ifdef NAVMAP_PATHFINDER
 	ai_movement = /datum/ai_movement/navmap_astar
-#else
-	ai_movement = /datum/ai_movement/jps
-#endif
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/wonderland_rabbit_roam,
-		/datum/ai_planning_subtree/travel_to_point/and_clear_target,
-	)
+	behavior_tree_json = "code/modules/antagonists/monster_hunters/monsters/monster_effects/wonderland_rabbit.bt.json"
 
-/// Now and then, picks somewhere far off for travel_to_point to walk us to
-/datum/ai_planning_subtree/wonderland_rabbit_roam
+/// Now and then, picks somewhere far off to walk to
+/datum/bt_node/ai_behavior/wonderland_rabbit_roam
 
-/datum/ai_planning_subtree/wonderland_rabbit_roam/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/bt_node/ai_behavior/wonderland_rabbit_roam/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/basic/wonderland_rabbit/rabbit = controller.pawn
 	if(!COOLDOWN_FINISHED(rabbit, roam_cooldown) || controller.blackboard_key_exists(BB_TRAVEL_DESTINATION))
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	COOLDOWN_START(rabbit, roam_cooldown, rand(4 MINUTES, 8 MINUTES))
 	var/turf/here = get_turf(rabbit)
 	for(var/i in 1 to 10)
@@ -111,7 +101,8 @@
 		if(!isopenturf(candidate) || get_dist(here, candidate) < 10 || candidate.is_blocked_turf(exclude_mobs = TRUE))
 			continue
 		controller.set_blackboard_key(BB_TRAVEL_DESTINATION, candidate)
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 /obj/effect/wonderland_rabbit_enter
 	name = "rabbit?"

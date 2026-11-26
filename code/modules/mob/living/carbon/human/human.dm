@@ -470,12 +470,12 @@
 		threatcount += 4
 
 	//Check for weapons
-	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck)
+	if(judgement_criteria & JUDGE_WEAPONCHECK)
 		if(!idcard || !(ACCESS_WEAPONS in idcard.access))
 			for(var/obj/item/I in held_items) //if they're holding a gun
-				if(weaponcheck.Invoke(I))
+				if(CHECK_PERMIT(I))
 					threatcount += 4
-			if(weaponcheck.Invoke(belt) || weaponcheck.Invoke(back)) //if a weapon is present in the belt or back slot
+			if(CHECK_PERMIT(belt) || CHECK_PERMIT(back)) //if a weapon is present in the belt or back slot
 				threatcount += 2 //not enough to trigger look_for_perp() on it's own unless they also have criminal status.
 
 	//Check for arrest warrant
@@ -511,6 +511,7 @@
 
 	return threatcount
 
+#undef CHECK_PERMIT
 
 //Used for new human mobs created by cloning/goleming/podding
 /mob/living/carbon/human/proc/set_cloned_appearance()

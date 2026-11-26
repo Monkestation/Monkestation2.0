@@ -71,6 +71,16 @@
 	SIGNAL_HANDLER
 	set_temporary_mood(SLIME_MOOD_SMILE)
 
+/datum/bt_node/ai_behavior/update_slime_mood
+
+/datum/bt_node/ai_behavior/update_slime_mood/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	if(!istype(slime_pawn) || IS_UNCONSCIOUS_OR_CRIT(slime_pawn))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+
+	slime_pawn.update_mood()
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+
 #undef SLIME_MOOD_GRUDGE_TIME
 #undef SLIME_MOOD_HURT_RATIO
 #undef SLIME_REACTION_MOOD_DURATION

@@ -33,10 +33,8 @@
 	else
 		spawn_turf = get_turf(spawned_from)
 
-	var/mob/living/simple_animal/hostile/illusion/blob/fake_clone = new(spawn_turf)
-	fake_clone.faction = list(ROLE_BLOB) | creator?.faction
-	fake_clone.copy_parent(spawned_from, 10 SECONDS)
-	fake_clone.GiveTarget(target)
+	var/mob/living/basic/illusion/blob/fake_clone = new(spawn_turf)
+	fake_clone.full_setup(spawned_from, target_mob = target, faction_override = list(ROLE_BLOB) | creator?.faction, life = 10 SECONDS)
 
 /datum/reagent/blob/reforming_synapse
 	name = "Reforming Synapse"
@@ -50,3 +48,17 @@
 		exposed_mob.apply_damage(max(trunc(reac_volume/5), 2), BRAIN)
 	else
 		exposed_mob.apply_damage(trunc(reac_volume/3), BRUTE) //our damage is VERY low due to dealing brain, so our damage is boosted vs things without brains
+
+/// Illusions made by reforming synapse, they hurt your brain
+/mob/living/basic/illusion/blob
+	melee_damage_type = BRAIN
+	melee_damage_lower = 2
+	melee_damage_upper = 2
+	obj_damage = 0
+	maxHealth = 20
+	health = 20
+	pass_flags = parent_type::pass_flags | PASSBLOB
+
+/mob/living/basic/illusion/blob/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)

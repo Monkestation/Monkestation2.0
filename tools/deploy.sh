@@ -13,6 +13,7 @@ mkdir -p \
     $1/_maps \
     $1/build/navmaps \
     $1/data/cassette_storage \
+    $1/build/behavior_trees \
     $1/code/datums/greyscale/json_configs \
     $1/data/spritesheets \
     $1/icons \
@@ -31,6 +32,7 @@ cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/
 cp -r build/navmaps/* $1/build/navmaps/
 cp -r data/cassette_storage/* $1/data/cassette_storage/
+cp -r build/behavior_trees/* $1/build/behavior_trees/
 cp -r code/datums/greyscale/json_configs/* $1/code/datums/greyscale/json_configs/
 cp -r icons/* $1/icons/
 cp -r sound/runtime/* $1/sound/runtime/
