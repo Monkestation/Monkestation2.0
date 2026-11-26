@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		for(var/mob/living/mob in GLOB.mob_living_list)
 			if(istype(mob, /mob/living/carbon/human/dummy) || istype(mob, /mob/living/carbon/human/ghost))
 				continue
-			mob.dust(TRUE, FALSE, TRUE)
+			mob.dust(just_ash = TRUE, drop_items = FALSE, force = TRUE)
 			CHECK_TICK
 
 	spawnable_turfs = list()
