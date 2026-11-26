@@ -242,7 +242,7 @@
 "XJ" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Yo" = (
 /obj/structure/statue/sandstone/venus{

@@ -50,17 +50,17 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "bk" = (
 /obj/effect/turf_decal/trimline/dark_blue/line,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "bv" = (
 /obj/structure/chair/wood,
 /obj/effect/landmark/start/mime,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "by" = (
 /obj/structure/table/wood,
@@ -101,7 +101,7 @@
 /obj/structure/table/wood,
 /obj/structure/mirror/directional/south,
 /obj/item/food/baguette,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "cr" = (
 /obj/structure/chair/sofa/corp/corner{
@@ -128,7 +128,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "dl" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -161,7 +161,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "ed" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -196,7 +196,7 @@
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "eU" = (
 /obj/machinery/vending/boozeomat,
@@ -228,7 +228,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "fZ" = (
 /obj/structure/chair/stool/bar/directional/north,
@@ -309,12 +309,12 @@
 /area/station/commons/lounge)
 "iq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "iu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "iY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -347,7 +347,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "jO" = (
 /obj/machinery/duct,
@@ -365,7 +365,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "kb" = (
 /obj/structure/table/wood,
@@ -394,7 +394,7 @@
 "kz" = (
 /obj/structure/flora/tree/pine/style_random,
 /obj/machinery/growing/soil,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "kA" = (
 /obj/machinery/duct,
@@ -446,7 +446,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "mC" = (
 /turf/closed/wall/r_wall,
@@ -454,7 +454,7 @@
 "mE" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "mP" = (
 /obj/machinery/newscaster/directional/north,
@@ -467,7 +467,7 @@
 /area/station/service/theater)
 "mQ" = (
 /obj/machinery/vending/autodrobe,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "mV" = (
 /obj/structure/sign/poster/official/random/directional/north,
@@ -495,7 +495,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "nm" = (
 /turf/open/floor/wood,
@@ -546,7 +546,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "oj" = (
 /obj/structure/table/wood,
@@ -559,7 +559,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "oq" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -588,7 +588,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "oL" = (
 /obj/structure/chair/wood,
@@ -597,7 +597,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "oO" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -619,7 +619,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/corner{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "oW" = (
 /obj/structure/table/wood,
@@ -681,7 +681,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Civilian - Theatre Backstage"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "qm" = (
 /obj/machinery/holopad,
@@ -798,7 +798,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "tc" = (
 /turf/open/misc/snow/actually_safe,
@@ -842,7 +842,7 @@
 "us" = (
 /obj/structure/closet/crate/wooden/toy,
 /obj/machinery/light/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "uV" = (
 /obj/effect/spawner/structure/window,
@@ -892,7 +892,7 @@
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "wM" = (
 /obj/machinery/light/warm/directional/south,
@@ -907,7 +907,7 @@
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "xa" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1058,7 +1058,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "As" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
@@ -1185,7 +1185,7 @@
 "CF" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/trimline/dark_green/line,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "CG" = (
 /turf/closed/wall/mineral/wood,
@@ -1291,7 +1291,7 @@
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "EP" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1434,7 +1434,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/corner{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "GS" = (
 /obj/machinery/door/airlock{
@@ -1444,13 +1444,13 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "Hj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "Ht" = (
 /obj/structure/cable,
@@ -1511,7 +1511,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "JN" = (
 /obj/machinery/vending/dinnerware,
@@ -1547,7 +1547,7 @@
 "KN" = (
 /obj/structure/table/wood/poker,
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "KT" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1561,7 +1561,7 @@
 /area/station/service/kitchen)
 "Lh" = (
 /obj/structure/dresser,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "Lj" = (
 /obj/structure/cable,
@@ -1597,12 +1597,12 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "LD" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/dice,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "LQ" = (
 /obj/structure/flora/grass/both/style_random,
@@ -1621,7 +1621,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "ME" = (
 /obj/machinery/elevator_control_panel/directional/north{
@@ -1738,7 +1738,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "Pc" = (
 /turf/closed/wall/r_wall,
@@ -1800,7 +1800,7 @@
 "Qu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "QC" = (
 /turf/template_noop,
@@ -1836,7 +1836,7 @@
 "RJ" = (
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/entertainment/deck,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "RN" = (
 /obj/structure/sink/kitchen/directional/south,
@@ -1920,7 +1920,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 "TV" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1969,13 +1969,13 @@
 /turf/open/misc/snow/actually_safe,
 /area/station/service/theater)
 "Vd" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "Vq" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atm/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "Vs" = (
 /obj/machinery/camera/directional/east{
@@ -1992,7 +1992,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/dark_blue/corner,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "VU" = (
 /turf/closed/wall/r_wall,
@@ -2027,7 +2027,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Skill Games"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "WA" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
@@ -2099,7 +2099,7 @@
 /obj/machinery/holopad{
 	pixel_y = 16
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "Xu" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -2197,7 +2197,7 @@
 /area/station/service/theater)
 "YX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/commons/lounge)
 "YZ" = (
 /obj/structure/flora/grass/both/style_random,
@@ -2207,7 +2207,7 @@
 /turf/open/misc/snow/actually_safe,
 /area/station/commons/lounge)
 "ZD" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/station/service/theater)
 
 (1,1,1) = {"

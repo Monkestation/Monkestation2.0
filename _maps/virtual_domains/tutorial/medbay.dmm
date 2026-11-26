@@ -432,7 +432,7 @@
 /obj/machinery/light/directional/south,
 /obj/structure/sign/flag/nanotrasen/directional/north,
 /obj/machinery/light/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "eV" = (
 /obj/effect/turf_decal/trimline/blue/corner{
@@ -791,7 +791,7 @@
 /turf/open/floor/iron/dark,
 /area/virtual_domain/powered_lighting)
 "iM" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "iP" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -3160,7 +3160,7 @@
 "EL" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/vendor_meal_sides/nt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "EN" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
@@ -3436,7 +3436,7 @@
 /area/virtual_domain/powered_lighting)
 "Hm" = (
 /obj/machinery/station_map/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "Hw" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
@@ -3514,7 +3514,7 @@
 "HQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "HT" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
@@ -3845,7 +3845,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Front Desk"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "LY" = (
 /obj/structure/rack,
@@ -4426,7 +4426,7 @@
 /area/virtual_domain/powered_lighting)
 "Qg" = (
 /obj/structure/chair/office,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "Qs" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -4443,7 +4443,7 @@
 "QC" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "QH" = (
 /obj/machinery/vending/wardrobe/sec_wardrobe,
@@ -4584,7 +4584,7 @@
 /area/virtual_domain/powered_lighting)
 "RE" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/virtual_domain/powered_lighting)
 "RI" = (
 /obj/structure/table/reinforced,

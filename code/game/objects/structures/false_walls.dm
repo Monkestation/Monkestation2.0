@@ -269,6 +269,22 @@
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
 
+/obj/structure/falsewall/plastitanium/wall_fill
+	mineral = /obj/item/stack/wall_filling/plastitanium/basic
+	walltype = /turf/closed/wall/mineral/plastitanium/wall_fill
+
+/obj/structure/falsewall/plastitanium/darkpod
+	mineral = /obj/item/stack/wall_filling/plastitanium/pod
+	walltype = /turf/closed/wall/mineral/plastitanium/darkpod
+
+/obj/structure/falsewall/plastitanium/redpod
+	mineral = /obj/item/stack/wall_filling/plastitanium/redpod
+	walltype = /turf/closed/wall/mineral/plastitanium/redpod
+
+/obj/structure/falsewall/plastitanium/survival
+	mineral = /obj/item/stack/wall_filling/plastitanium/survivalpod
+	walltype = /turf/closed/wall/mineral/plastitanium/survival
+
 /obj/structure/falsewall/material
 	walltype = /turf/closed/wall/material
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS

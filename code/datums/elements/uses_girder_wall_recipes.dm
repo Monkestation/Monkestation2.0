@@ -84,7 +84,10 @@
 
 	// Save refernce to the materials for the case when we place last tile in the stack
 	var/list/saved_mats_per_unit = stack.mats_per_unit
-	if (!stack.use_tool(structure, user, recipe.make_delay, recipe.stack_amount, extra_checks = CALLBACK(src, PROC_REF(check_recipe), structure, user, recipe)))
+	var/make_delay = recipe.make_delay
+	if (HAS_TRAIT(user, TRAIT_QUICK_BUILD))
+		make_delay *= 0.7
+	if (!stack.use_tool(structure, user, make_delay, recipe.stack_amount, extra_checks = CALLBACK(src, PROC_REF(check_recipe), structure, user, recipe)))
 		return
 
 	var/atom/wall

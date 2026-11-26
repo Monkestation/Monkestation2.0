@@ -3048,6 +3048,7 @@
 #include "code\game\objects\items\stacks\telecrystal.dm"
 #include "code\game\objects\items\stacks\tickets.dm"
 #include "code\game\objects\items\stacks\tile_types.dm"
+#include "code\game\objects\items\stacks\wall_filling.dm"
 #include "code\game\objects\items\stacks\wrap.dm"
 #include "code\game\objects\items\stacks\sheets\fleshmass.dm"
 #include "code\game\objects\items\stacks\sheets\glass.dm"

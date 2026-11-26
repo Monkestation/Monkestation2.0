@@ -1360,7 +1360,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate/siren)
 "Tx" = (
 /obj/structure/platform,
@@ -1551,7 +1551,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate/siren)
 "ZH" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,

@@ -8,7 +8,7 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "ab" = (
 /obj/structure/table,
@@ -75,7 +75,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "aj" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -140,7 +140,7 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "ap" = (
 /obj/machinery/door/airlock/hatch{
@@ -150,7 +150,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "aq" = (
 /obj/structure/chair/stool/directional/south,
@@ -213,7 +213,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "aw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -436,7 +436,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/recharger,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "bk" = (
 /obj/effect/turf_decal/stripes/line{
@@ -459,11 +459,11 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/high,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "bm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "bo" = (
 /obj/machinery/light/small/directional/east,
@@ -507,7 +507,7 @@
 	pixel_x = 13;
 	pixel_y = 6
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "bu" = (
 /obj/machinery/firealarm/directional/north,
@@ -536,13 +536,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/piratepad,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "bA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "bB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -585,7 +585,7 @@
 /obj/machinery/computer/piratepad_control{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "bJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -715,7 +715,7 @@
 	pixel_x = 5
 	},
 /obj/structure/sign/poster/contraband/bountyhunters/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "ep" = (
 /obj/structure/window/reinforced/spawner/directional/north{
@@ -773,7 +773,7 @@
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "eE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -789,14 +789,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "gY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "km" = (
 /obj/machinery/atmospherics/components/tank/air,
@@ -819,7 +819,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "np" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -856,7 +856,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "wf" = (
 /obj/machinery/door/airlock{
@@ -887,7 +887,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "zw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -934,12 +934,12 @@
 	pixel_x = 2;
 	pixel_y = -1
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/pirate)
 "Mx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/holopad/secure/hacked,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/pirate)
 "Ni" = (
 /obj/effect/turf_decal/stripes/line,

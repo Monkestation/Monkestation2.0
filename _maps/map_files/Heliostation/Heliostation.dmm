@@ -39292,7 +39292,7 @@
 /area/station/medical/psychology)
 "ihs" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/station/hallway/secondary/entry)
 "ihx" = (
 /obj/machinery/electroplater,
@@ -45154,7 +45154,7 @@
 /area/station/commons/lounge)
 "knq" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/station/hallway/secondary/entry)
 "knt" = (
 /obj/effect/turf_decal/tile/neutral/half,
@@ -60783,7 +60783,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "qet" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/station/hallway/secondary/entry)
 "qey" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{

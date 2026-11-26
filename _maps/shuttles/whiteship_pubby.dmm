@@ -128,7 +128,7 @@
 /obj/machinery/holopad/secure,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "eU" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -142,7 +142,7 @@
 /obj/structure/frame/computer,
 /obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned)
 "gN" = (
 /obj/effect/turf_decal/trimline/purple/filled/end,
@@ -250,7 +250,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "lO" = (
 /obj/effect/turf_decal/bot_white,
@@ -276,7 +276,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/recharger,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "lV" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
@@ -285,7 +285,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned)
 "mh" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -340,7 +340,7 @@
 /area/shuttle/abandoned)
 "oI" = (
 /obj/structure/bookcase/manuals/research_and_development,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "oT" = (
 /obj/effect/turf_decal/trimline/purple/filled/end{
@@ -681,7 +681,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/door_assembly/door_assembly_com,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "DQ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -887,7 +887,7 @@
 "Lf" = (
 /obj/machinery/computer/shuttle/white_ship/bridge,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned)
 "Lg" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
@@ -907,7 +907,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/item/stack/tile/pod/light{
+/obj/item/stack/tile/mineral/plastitanium/pod/light{
 	pixel_x = 6;
 	pixel_y = -4
 	},
@@ -1220,7 +1220,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/built/directional/west,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/abandoned)
 "ZT" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{

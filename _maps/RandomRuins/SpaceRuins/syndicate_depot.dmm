@@ -731,7 +731,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/syndicate_blackbox_recorder,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/syndicate_depot/vault)
 "hJ" = (
 /obj/effect/turf_decal/delivery/white,
@@ -1036,7 +1036,7 @@
 	pixel_x = 4;
 	pixel_y = 0
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/syndicate_depot/vault)
 "kR" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -1356,7 +1356,7 @@
 /obj/structure/frame/machine/secured,
 /obj/item/circuitboard/machine/ore_silo,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/syndicate_depot/vault)
 "oq" = (
 /obj/machinery/firealarm/directional/east,
@@ -2228,7 +2228,7 @@
 /obj/structure/filingcabinet,
 /obj/item/folder/syndicate/red,
 /obj/machinery/firealarm/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/syndicate_depot/vault)
 "xg" = (
 /obj/effect/turf_decal/tile/brown{

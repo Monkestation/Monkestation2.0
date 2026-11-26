@@ -397,6 +397,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
+	new/datum/stack_recipe("plastitanium wall filler", /obj/item/stack/wall_filling/plastitanium/basic, 2, 1, 10, check_density = FALSE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("plastitanium platform", /obj/structure/platform/plastitanium, 2, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	))
 
