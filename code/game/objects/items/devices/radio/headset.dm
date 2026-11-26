@@ -52,6 +52,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			avail_chans += "use [MODE_TOKEN_BINARY] for [MODE_BINARY]"
 		if(length(channels))
 			for(var/i in 1 to length(channels))
+				if(channels[i] == RADIO_CHANNEL_SYNDICATE && !IS_TRAITOR(user) && !IS_NUKE_OP(user) && !user.mind?.has_antag_datum(/datum/antagonist/battlecruiser))
+					continue
 				if(i == 1)
 					avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [LOWER_TEXT(channels[i])]"
 				else

@@ -68,6 +68,14 @@
 
 	if(give_uplink)
 		owner.give_uplink(silent = TRUE, antag_datum = src)
+		var/mob/living/carbon/carbon_owner = owner.current
+		if(istype(carbon_owner))
+			var/obj/item/radio/headset/headset = carbon_owner.ears
+			if(istype(headset) && !headset.keyslot2)
+				headset.keyslot2 = new /obj/item/encryptionkey/syndicate(headset)
+				headset.recalculateChannels()
+			else
+				carbon_owner.equip_conspicuous_item(new /obj/item/encryptionkey/syndicate)
 	generate_replacement_codes()
 
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
