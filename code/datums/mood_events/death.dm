@@ -72,7 +72,7 @@
 /// Changes "I saw Joe x" to "I saw the engineer x"
 /datum/mood_event/conditional/see_death/proc/get_descriptor(mob/dead_mob)
 	if(is_pet(dead_mob))
-		return "\the [dead_mob]"
+		return "[dead_mob]"
 	if(dead_mob.name != "Unknown" && dead_mob.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER)
 		return "the [LOWER_TEXT(dead_mob.mind?.assigned_role.title)]"
 	return "someone"
