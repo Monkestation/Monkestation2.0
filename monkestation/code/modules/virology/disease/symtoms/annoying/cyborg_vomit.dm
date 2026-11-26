@@ -19,9 +19,9 @@
 		sleep(100)
 		var/list/possible_bots = list(
 			/mob/living/basic/bot/medbot,
-			/mob/living/simple_animal/bot/secbot,
-			/mob/living/simple_animal/bot/floorbot,
-			/mob/living/simple_animal/bot/buttbot
+			/mob/living/basic/bot/secbot,
+			/mob/living/basic/bot/repairbot,
+			/mob/living/basic/bot/buttbot
 		)
 		var/chosen_bot = pick(possible_bots)
 		var/mob/living/newbot = new chosen_bot(get_turf(mob))

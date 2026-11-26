@@ -1,9 +1,0 @@
-author: "V2LenKagamine"
-delete-after: True
-changes:
-  - rscadd: "Liquids in pools now react. Suffer."
-  - bugfix: "Banned BB's are reminded they don't remember being flashed, just like declined BB's."
-  - bugfix: "Debug Chem synth GUI now works."
-  - admin: "Badmin [Strange Contract] now alerts admins when someone does it."
-  - admin: "Mysterious Stranger kit nerfed to be somewhat more balanced so it can be used in more senarios. And lighter."
-  - code_imp: "Refactor'd names of some items used in above kit so people know they're not meant to be snowflake items for one and one purpose only."

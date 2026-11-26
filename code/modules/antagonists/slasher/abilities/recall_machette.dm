@@ -45,6 +45,7 @@
 
 	icon = 'goon/icons/obj/items/weapons.dmi'
 	icon_state = "welder_machete"
+	icon_angle = -45
 	hitsound = 'goon/sounds/impact_sounds/Flesh_Cut_1.ogg'
 
 	inhand_icon_state = "PKMachete0"

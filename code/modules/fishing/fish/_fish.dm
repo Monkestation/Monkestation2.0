@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	desc = "very bland"
 	abstract_type = /obj/item/fish
 	icon = 'icons/obj/aquarium/fish.dmi'
+	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	force = 6

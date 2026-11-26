@@ -372,6 +372,15 @@
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
 
+/obj/effect/temp_visual/crit
+	name = "critical hit"
+	icon_state = "crit"
+	duration = 15
+
+/obj/effect/temp_visual/crit/Initialize(mapload)
+	. = ..()
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
+
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
@@ -703,3 +712,11 @@
 
 /obj/effect/temp_visual/circle_wave/star_blast
 	color = COLOR_VOID_PURPLE
+
+/obj/effect/temp_visual/spotlight
+	name = "Spotlight"
+	icon = 'icons/effects/light_overlays/light_64.dmi'
+	icon_state = "spotlight"
+	duration = 5 MINUTES
+	pixel_x = -16
+	pixel_y = -8 //32

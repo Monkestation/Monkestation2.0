@@ -1,0 +1,75 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/bumbles",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "subplan",
+			"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+			"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"key": "BB_TARGET_FOOD",
+								"observer_abort": "BT_ABORT_BOTH"
+							},
+							"child": {
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_TARGET_FOOD",
+											"required_dist": 1
+										}
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/hunt_target/bumbles_smell",
+										"vars": {
+											"target_key": "BB_TARGET_FOOD",
+											"cooldown_key": "BB_NEXT_FOOD_EAT"
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/pawn_resting",
+							"vars": {
+								"invert": true
+							},
+							"child": {
+								"type": "subtree",
+								"subtype": "/datum/bt_node/subtree/random_walk"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/find_food"
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/bumbles_rest"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/random_speech_loop"
+		}
+	]
+}

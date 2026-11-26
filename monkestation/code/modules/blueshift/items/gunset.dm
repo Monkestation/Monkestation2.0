@@ -27,10 +27,19 @@
 	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/bulldog
 	extra_to_spawn = /obj/item/ammo_box/magazine/m12g
 
+/obj/item/storage/toolbox/guncase/bulldog/PopulateContents()
+	new weapon_to_spawn (src)
+	for(var/i in 1 to 4)
+		new extra_to_spawn (src)
+
 /obj/item/storage/toolbox/guncase/c20r
 	name = "c-20r gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/c20r
 	extra_to_spawn = /obj/item/ammo_box/magazine/smgm45
+
+/obj/item/storage/toolbox/guncase/c20r/PopulateContents()
+	. = ..()
+	new /obj/item/suppressor(src)
 
 /obj/item/storage/toolbox/guncase/clandestine
 	name = "clandestine gun case"

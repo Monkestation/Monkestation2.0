@@ -2,6 +2,7 @@
 	name = "\improper cane sword"
 	desc = "wrong one silly heads this one dont do damage haha"
 	icon = 'icons/obj/caneswords/caneswords.dmi'
+	icon_angle = 135
 	lefthand_file = 'icons/obj/caneswords/caneswordinhandL.dmi'
 	righthand_file = 'icons/obj/caneswords/caneswordinhandR.dmi'
 

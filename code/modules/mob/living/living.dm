@@ -42,8 +42,9 @@
 		else
 			effect.be_replaced()
 
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+	clear_personalities() // must be done for the personalities which process
+
+	buckled?.unbuckle_mob(src,force=1)
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
@@ -70,9 +71,16 @@
 	SEND_SIGNAL(T, COMSIG_TURF_MOB_FALL, src)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
 		return
+	// multiplier for the damage taken from falling
+	var/damage_softening_multiplier = 1
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		damage_softening_multiplier *= potential_spine.athletics_boost_multiplier
+
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
 					span_userdanger("You crash into [T] with a sickening noise!"))
-	adjustBruteLoss((levels * 5) ** 1.5)
+	adjustBruteLoss(((levels * 5) ** 1.5) * damage_softening_multiplier)
 	Knockdown(levels * 50)
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
@@ -714,7 +722,14 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+
+	var/get_up_time = 1 SECONDS
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINAL)
+	if(istype(potential_spine))
+		get_up_time *= potential_spine.athletics_boost_multiplier
+
+	if(!instant && !do_after(src, get_up_time, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -1021,7 +1036,8 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 		if (!buckled.anchored)
 			buckled.moving_from_pull = moving_from_pull
 			. = buckled.Move(newloc, direct, glide_size)
-			buckled.moving_from_pull = null
+			if(buckled) //buckled can become unbuckled, apparently
+				buckled.moving_from_pull = null
 		return
 
 	var/old_direction = dir
@@ -1137,13 +1153,16 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 	. = TRUE
 	// Base chance to escape a grab. Divided by effective grab state
 	var/escape_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
-	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+	// Being staggered while hurt makes it harder to slip away, like being prone
+	var/staggered_and_hurt = get_timed_status_effect_duration(/datum/status_effect/staggered) && (getFireLoss()*0.5 + getBruteLoss()*0.5) >= 40
+	//If we're in an aggressive grab or higher, we're lying down, we're vulnerable to grabs, or we're staggered and we have some amount of damage, we must resist
+	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || staggered_and_hurt)
 		var/altered_grab_state = pulledby.grab_state
-		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
+		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || staggered_and_hurt) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
 		if(ishuman(pulledby))
 			var/mob/living/carbon/human/human_puller = pulledby
-			var/datum/martial_art/puller_art = human_puller?.mind.martial_art
+			var/datum/martial_art/puller_art = GET_ACTIVE_MARTIAL_ART(human_puller)
 			if(puller_art?.can_use(human_puller))
 				altered_grab_state += puller_art.grab_state_modifier
 				escape_chance += puller_art.grab_escape_chance_modifier
@@ -1571,8 +1590,8 @@ GAME_VERB_PROC(/mob/living, toggle_resting, "Rest", "IC")
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-				/mob/living/simple_animal/pet/cat,
-				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/basic/pet/cat,
+				/mob/living/basic/pet/cat/cak,
 				/mob/living/basic/pony,
 				/mob/living/basic/pony/syndicate,
 			)
@@ -1839,7 +1858,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	//Check the amount of clients exists on the Z level we're leaving from,
 	//this excludes us because at this point we are not registered to any z level.
 	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
-	//No one is left after we're gone, shut off inactive ones
+	//No one is left after we're gone, recalculate AI status so eligible ones shut off
 	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
 			controller.set_ai_status(controller.get_expected_ai_status())
@@ -1862,15 +1881,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
 	update_z(new_turf?.z)
-
-/mob/living/mouse_drop_receive(atom/dropping, atom/user, params)
-	var/mob/living/U = user
-	if(isliving(dropping))
-		var/mob/living/M = dropping
-		if(M.can_be_held && U.pulling == M)
-			M.mob_try_pickup(U)//blame kevinz
-			return//dont open the mobs inventory if you are picking them up
-	return ..()
 
 /mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
@@ -2417,31 +2427,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/get_attack_type()
 	return BRUTE
 
-
-/**
- * Apply a martial art move from src to target.
- *
- * This is used to process martial art attacks against nonhumans.
- * It is also used to process martial art attacks by nonhumans, even against humans
- * Human vs human attacks are handled in species code right now.
- */
-/mob/living/proc/apply_martial_art(mob/living/target, modifiers)
-	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
-		return MARTIAL_ATTACK_INVALID
-	var/datum/martial_art/style = mind?.martial_art
-	if (!style)
-		return MARTIAL_ATTACK_INVALID
-	// will return boolean below since it's not invalid
-	if ((istate & ISTATE_CONTROL))
-		return style.grab_act(src, target)
-	if ((istate & ISTATE_SECONDARY))
-		return style.disarm_act(src, target)
-	if((istate & ISTATE_HARM))
-		if (HAS_TRAIT(src, TRAIT_PACIFISM))
-			return FALSE
-		return style.harm_act(src, target)
-	return style.help_act(src, target)
-
 /**
  * Returns an assoc list of assignments and minutes for updating a client's exp time in the databse.
  *
@@ -2554,7 +2539,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/add_mood_event(category, type, ...)
 	if(QDELETED(mob_mood))
 		return
-	mob_mood.add_mood_event(arglist(args))
+
+	if(ispath(type, /datum/mood_event/conditional))
+		mob_mood.add_conditional_mood_event(arglist(args))
+	else
+		mob_mood.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
@@ -2584,6 +2573,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(new_friend, COMSIG_LIVING_MADE_NEW_FRIEND, src)
+	if(QDELETED(new_friend))
+		return
 	var/friend_ref = REF(new_friend)
 	if (faction.Find(friend_ref))
 		return FALSE
@@ -2725,6 +2717,114 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	return FALSE
 
+//general disarm proc
+/mob/living/proc/disarm(mob/living/carbon/target)
+	do_attack_animation(target, ATTACK_EFFECT_DISARM)
+	playsound(target, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	if (ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		human_target.w_uniform?.add_fingerprint(src)
+
+	SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, src, zone_selected)
+	var/shove_dir = get_dir(loc, target.loc)
+	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+	var/turf/target_old_turf = target.loc
+
+	//Are we hitting anything? or
+	if(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_PRESHOVE) & COMSIG_CARBON_ACT_SOLID)
+		shove_blocked = TRUE
+	else
+		target.Move(target_shove_turf, shove_dir)
+		if(get_turf(target) == target_old_turf)
+			shove_blocked = TRUE
+
+	if(!shove_blocked)
+		target.setGrabState(GRAB_PASSIVE)
+
+	if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
+		target.Paralyze(SHOVE_CHAIN_PARALYZE)
+		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
+						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
+		log_combat(src, target, "kicks", "onto their side (paralyzing)")
+
+	var/directional_blocked = FALSE
+	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
+
+	//Directional checks to make sure that we're not shoving through a windoor or something like that
+	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
+		var/target_turf = get_turf(target)
+		for(var/obj/obj_content in target_turf)
+			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
+				directional_blocked = TRUE
+				break
+		if(target_turf != target_shove_turf && !directional_blocked) //Make sure that we don't run the exact same check twice on the same tile
+			for(var/obj/obj_content in target_shove_turf)
+				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
+					directional_blocked = TRUE
+					break
+
+	if(can_hit_something)
+		//Don't hit people through windows, ok?
+		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
+			return
+		if(directional_blocked || shove_blocked || HAS_TRAIT(target, TRAIT_FEEBLE))
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
+				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
+			log_combat(src, target, "shoved", "knocking them down")
+			return
+
+	target.visible_message(span_danger("[name] shoves [target.name]!"),
+		span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name]!"))
+
+	//Take their lunch money
+	var/target_held_item = target.get_active_held_item()
+	var/append_message = ""
+	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
+		target_held_item = null
+
+	if(!target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
+		if(target_held_item)
+			append_message = "loosening [target.p_their()] grip on [target_held_item]"
+			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing
+				span_warning("Your grip on \the [target_held_item] loosens!"), null, COMBAT_MESSAGE_RANGE)
+
+	else if(target_held_item)
+		target.dropItemToGround(target_held_item)
+		append_message = "causing [target.p_them()] to drop [target_held_item]"
+		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
+			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+
+	log_combat(src, target, "shoved", append_message)
+
+/// Returns an arbitrary number which very roughly correlates with how buff you look
+/mob/living/proc/calculate_fitness()
+	var/athletics_level = mind?.get_skill_level(/datum/skill/athletics) || 1
+	var/damage = (melee_damage_lower + melee_damage_upper) / 2
+
+	return ceil(damage * (ceil(athletics_level / 2)) * maxHealth)
+
+/// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
+/mob/living/proc/compare_fitness(mob/living/scouter)
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return span_warning("It's impossible to tell whether this person lifts.")
+
+	var/our_fitness_level = calculate_fitness()
+	var/their_fitness_level = scouter.calculate_fitness()
+
+	var/comparative_fitness = our_fitness_level / their_fitness_level
+
+	if (comparative_fitness > 2)
+		scouter.set_jitter_if_lower(comparative_fitness SECONDS)
+		return "[span_notice("You'd estimate [p_their()] fitness level at about...")] [span_boldwarning("What?!? [our_fitness_level]???")]"
+
+	return span_notice("You'd estimate [p_their()] fitness level at about [our_fitness_level]. [comparative_fitness <= 0.33 ? "Pathetic." : ""]")
 /// Makes the mob scream in pain, unless it can't feel pain
 /mob/living/proc/painful_scream(force = FALSE)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)

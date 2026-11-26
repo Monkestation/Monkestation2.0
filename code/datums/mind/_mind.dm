@@ -51,9 +51,6 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	/// Martial art on this mind
-	var/datum/martial_art/martial_art
-	var/static/default_martial_art = new/datum/martial_art
 	/// List of antag datums on this mind
 	var/list/antag_datums
 	/// this mind's ANTAG_HUD should have this icon_state
@@ -116,7 +113,6 @@
 
 /datum/mind/New(_key)
 	key = _key
-	martial_art = default_martial_art
 	init_known_skills()
 	set_assigned_role(SSjob.GetJobType(/datum/job/unassigned)) // Unassigned by default.
 
@@ -138,7 +134,6 @@
 	.["name"] = name
 	.["ghostname"] = ghostname
 	.["memories"] = length(memories) ? memories : null
-	.["martial_art"] = martial_art
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
 	.["special_role"] = special_role
@@ -193,9 +188,9 @@
 		new_character.mind.set_current(null)
 
 	var/mob/living/old_current = current
-	if(current)
+	if(old_current)
 		//transfer anyone observing the old character to the new one
-		current.transfer_observers_to(new_character)
+		old_current.transfer_observers_to(new_character)
 
 		// Offload all mind languages from the old holder to a temp one
 		var/datum/language_holder/empty/temp_holder = new()
@@ -217,7 +212,7 @@
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
-	transfer_martial_arts(new_character)
+
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
 		new_character.PossessByPlayer(key) //now transfer the key to link the client to our new body
@@ -226,7 +221,7 @@
 		new_character.client.init_verbs() // re-initialize character specific verbs
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
-	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current)
 	if(!isnull(old_current))
 		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
 
@@ -532,19 +527,6 @@
 		usr = current
 	traitor_panel()
 
-/datum/mind/proc/transfer_martial_arts(mob/living/new_character)
-	if(!ishuman(new_character))
-		return
-	if(martial_art)
-		if(martial_art.base) //Is the martial art temporary?
-			martial_art.remove(new_character)
-		else
-			martial_art.teach(new_character)
-
-/datum/mind/proc/has_martialart(string)
-	if(martial_art && martial_art.id == string)
-		return martial_art
-	return FALSE
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients) as /mob/dead/observer
 	RETURN_TYPE(/mob/dead/observer)
@@ -581,6 +563,8 @@
 		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
 	assigned_role = new_role
+	if(!isnull(current))
+		SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_ROLE, new_role)
 
 /// Sets us to the passed job datum, then greets them to their new job.
 /// Use this one for when you're assigning this mind to a new job for the first time,
@@ -622,3 +606,13 @@
 
 /mob/dead/observer/sync_mind()
 	return
+
+/// Iterates over this mind's assigned role's departments and returns a list of their primary work areas.
+/datum/mind/proc/get_work_areas()
+	var/list/work_areas = list()
+	for(var/department in assigned_role.departments_list)
+		var/datum/job_department/dep = SSjob.joinable_departments_by_type[department]
+		if(dep.primary_work_area)
+			work_areas += dep.primary_work_area
+
+	return work_areas

@@ -91,7 +91,11 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/quirks = list()
+	/// Lazylist of all quirks the mob has. These are not singletons
+	var/list/quirks
+	/// Lazylist of all typepaths of personalities the mob has.
+	var/list/personalities
+
 	///a list of surgery datums. generally empty, they're added when the player wants them.
 	var/list/surgeries = list()
 	///Mob specific surgery speed modifier
@@ -176,8 +180,6 @@
 	///used for database logging
 	var/last_words
 
-	///whether this can be picked up and held.
-	var/can_be_held = FALSE
 	/// The w_class of the holder when held.
 	var/held_w_class = WEIGHT_CLASS_NORMAL
 	///if it can be held, can it be equipped to any slots? (think pAI's on head)
@@ -240,6 +242,10 @@
 	///a reference to a stored /datum/component/tracking_beacon used by victims of antags
 	var/datum/component/tracking_beacon/tracking_beacon
 
+	/// Lazylist of martial arts this mob knows
+	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
+	/// Reference handling is done by the martial arts themselves
+	var/list/datum/martial_art/martial_arts
 	/// Lazylists of pixel offsets this mob is currently using
 	/// Modify this via add_offsets and remove_offsets,
 	/// NOT directly (and definitely avoid modifying offsets directly)

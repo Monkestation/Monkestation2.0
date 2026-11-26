@@ -246,5 +246,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_DEFAULT_FISH_SLAP "default_fish_slap"
 #define SFX_ALT_FISH_SLAP "alt_fish_slap"
 #define SFX_FISH_PICKUP "fish_pickup"
+
+#define SFX_CAT_MEOW "cat_meow"
 #define SFX_GENERIC_DEVICE_PICKUP "generic_device_pickup"
 #define SFX_GENERIC_DEVICE_DROP "generic_device_drop"

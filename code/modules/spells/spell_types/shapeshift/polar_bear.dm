@@ -6,4 +6,4 @@
 	spell_requirements = NONE
 	keep_name = TRUE
 
-	possible_shapes = list(/mob/living/simple_animal/hostile/asteroid/polarbear/lesser)
+	possible_shapes = list(/mob/living/basic/mining/polarbear/lesser)

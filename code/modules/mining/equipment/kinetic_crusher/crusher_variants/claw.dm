@@ -1,6 +1,7 @@
 /obj/item/kinetic_crusher/claw
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "PKClaw"
+	icon_angle = 135
 	inhand_icon_state = "PKClaw0"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

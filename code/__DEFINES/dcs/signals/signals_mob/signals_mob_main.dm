@@ -24,11 +24,11 @@
 	#define COMSIG_MOB_CANCEL_CLICKON (1<<0)
 ///from base of mob/alt_click_on_secodary(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON_SECONDARY "mob_altclickon_secondary"
-/// From base of /mob/living/simple_animal/bot/proc/bot_step()
+/// From base of /mob/living/basic/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_PRE_STEP "mob_bot_pre_step"
 	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
 	#define COMPONENT_MOB_BOT_BLOCK_PRE_STEP COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-/// From base of /mob/living/simple_animal/bot/proc/bot_step()
+/// From base of /mob/living/basic/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_STEP "mob_bot_step"
 
 /// From base of /mob/proc/update_held_items
@@ -73,6 +73,8 @@
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 
 #define COMSIG_MOB_RETRIEVE_ACCESS "retrieve_access"
+///signal sent when a mob has their job role set. Sent to the mob having their role changed.
+#define COMSIG_MOB_MIND_SET_ROLE "mob_mind_set_role"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
@@ -182,6 +184,9 @@
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
+///Called when a mob's strip menu is attempting to be opened,from base /datum/element/strippable/proc/mouse_drop_onto (datum/source, atom/over, mob/user)
+#define COMSIG_MOB_STRIP_MENU_OPEN "mob_strip_menu_open"
+	#define COMPONENT_BLOCK_STRIP_MENU_OPEN (1<<0)
 ///From /datum/component/face_decal/splat/Initialize()
 #define COMSIG_MOB_HIT_BY_SPLAT "hit_by_splat"
 ///From /obj/item/gun/proc/check_botched()

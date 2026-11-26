@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/darkspawn_progenitor
+/mob/living/basic/darkspawn_progenitor
 	name = "void progenitor"
 	desc = "..."
 
@@ -22,11 +22,11 @@
 	melee_damage_upper = 40
 	armour_penetration = 100
 	obj_damage = INFINITY
-	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	weather_immunities = ALL
 	status_flags = NONE
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Leaving something at 0 means it's off - has no maximum
+	habitable_atmos = null
 	unsuitable_atmos_damage = 0
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = INFINITY
 
 	//movement stats
 	speed = 0 //slower than a person, RUN RUN RUN RUN
@@ -45,10 +45,13 @@
 
 	//flavour
 	attack_sound = 'sound/mobs/non-humanoids/darkspawn/progenitor_attack.ogg'
-	attack_verb_simple = "rends"
-	friendly_verb_simple = "stares down"
+	attack_verb_continuous = "rends"
+	attack_verb_simple = "rend"
+	friendly_verb_continuous = "stares down"
+	friendly_verb_simple = "stare down"
 	speech_span = SPAN_PROGENITOR //pretty sure this is how i'd go about doing this, hopefully
 	faction = list("darkspawn")
+	ai_controller = null
 
 	//progenitor specific variables
 	var/time_to_next_roar = 0
@@ -82,7 +85,7 @@
 		/datum/action/cooldown/spell/pointed/progenitor_curse
 	)
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/Initialize(mapload, darkspawn_name, class_colour = COLOR_DARKSPAWN_PSI)
+/mob/living/basic/darkspawn_progenitor/Initialize(mapload, darkspawn_name, class_colour = COLOR_DARKSPAWN_PSI)
 	. = ..()
 	//add_atom_colour(class_colour, FIXED_COLOUR_PRIORITY)
 
@@ -92,7 +95,8 @@
 		new_spell.Grant(src)
 
 	//add passive traits, elements, and components
-	add_traits(list(TRAIT_HOLY, TRAIT_ANTIMAGIC), INNATE_TRAIT) //sorry no magic
+	add_traits(list(TRAIT_HOLY, TRAIT_ANTIMAGIC, TRAIT_WEATHER_IMMUNE), INNATE_TRAIT) //sorry no magic
+	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT) //so people can actually look at the sprite without the weird bobbing up and down
 	AddElement(/datum/element/death_explosion, 20, 20, 20) //with INFINITY health, they're not really able to die, but IF THEY DO
 	AddComponent(/datum/component/light_eater)
@@ -117,30 +121,30 @@
 	update_appearance(UPDATE_OVERLAYS)
 	//make u smol
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/update_overlays()
+/mob/living/basic/darkspawn_progenitor/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, icon_state, src)
 
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/AttackingTarget(atom/attacked_target)
-	if(istype(attacked_target, /obj/machinery/door) || istype(attacked_target, /obj/structure/door_assembly))
-		playsound(get_turf(attacked_target), 'sound/effects/magic/darkspawn/pass_smash_door.ogg', 100, FALSE)
+/mob/living/basic/darkspawn_progenitor/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	if(istype(target, /obj/machinery/door) || istype(target, /obj/structure/door_assembly))
+		playsound(get_turf(target), 'sound/effects/magic/darkspawn/pass_smash_door.ogg', 100, FALSE)
 	return ..()
 
 //////////////////////////////////////////////////////////////////////////
 //-------------------------------Roar-----------------------------------//
 //////////////////////////////////////////////////////////////////////////
-/mob/living/simple_animal/hostile/darkspawn_progenitor/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/darkspawn_progenitor/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(time_to_next_roar + roar_cooldown <= world.time) //gives time to roar manually if you want to
 		roar()
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, message_range = 7, forced = null)
+/mob/living/basic/darkspawn_progenitor/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, message_range = 7, forced = null)
 	..()
 	if(time_to_next_roar <= world.time)
 		roar()
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/proc/roar()
+/mob/living/basic/darkspawn_progenitor/proc/roar()
 	playsound(src, 'sound/mobs/non-humanoids/darkspawn/progenitor_roar.ogg', 70, TRUE)
 	for(var/mob/M in GLOB.player_list)
 		if(get_dist(M, src) > 7)
@@ -159,22 +163,22 @@
 //////////////////////////////////////////////////////////////////////////
 //--------------------------Ignoring physics----------------------------//
 //////////////////////////////////////////////////////////////////////////
-/mob/living/simple_animal/hostile/darkspawn_progenitor/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
+/mob/living/basic/darkspawn_progenitor/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/narsie_act()
+/mob/living/basic/darkspawn_progenitor/narsie_act()
 	return
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/ratvar_act()
+/mob/living/basic/darkspawn_progenitor/ratvar_act()
 	return
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/singularity_act()
+/mob/living/basic/darkspawn_progenitor/singularity_act()
 	return
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/ex_act() //sorry no bombs
+/mob/living/basic/darkspawn_progenitor/ex_act() //sorry no bombs
 	return
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE) //no shuttlegib either
+/mob/living/basic/darkspawn_progenitor/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE) //no shuttlegib either
 	return
 
 //////////////////////////////////////////////////////////////////////////

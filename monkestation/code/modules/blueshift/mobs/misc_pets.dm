@@ -1,8 +1,8 @@
-/mob/living/simple_animal/pet/gondola/funky
+/mob/living/basic/pet/gondola/funky
 	name = "Funky"
 	real_name = "Funky"
 	desc = "Gondola is the silent walker. Having no hands he embodies the Taoist principle of wu-wei (non-action) while his smiling facial expression shows his utter and complete acceptance of the world as it is. Its hide is extremely valuable. This one seems a little skinny and attached to the Theater."
-	loot = list(/obj/effect/decal/cleanable/blood/gibs)
+	loot = list(/obj/effect/decal/cleanable/blood/gibs = 1)
 
 /mob/living/basic/pet/dog/dobermann/walter
 	name = "Walter"
@@ -86,7 +86,6 @@
 		)
 	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
 	gender = MALE
-	can_be_held = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	///can this mob breed?
 	var/can_breed = TRUE
@@ -96,6 +95,7 @@
 
 /mob/living/basic/pet/dog/markus/Initialize(mapload)
 	. = ..()
+	RemoveElement(/datum/element/can_be_held)
 	if(!can_breed)
 		return
 	AddComponent(\
@@ -109,9 +109,9 @@
 		message = pick(markus_speak) // markus only talks business
 	return ..()
 
-/mob/living/basic/pet/dog/markus/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+/mob/living/basic/pet/dog/markus/update_dog_speech(list/speech_data)
 	. = ..()
-	speech.speak = markus_speak
+	speech_data[BB_EMOTE_SAY] = markus_speak
 
 /datum/chemical_reaction/mark_reaction
 	results = list(/datum/reagent/consumable/liquidgibs = 15)

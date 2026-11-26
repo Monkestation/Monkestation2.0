@@ -62,6 +62,7 @@
 	else
 		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	if(elevation)
+		AddComponent(/datum/component/climb_walkable)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	update_appearance()
 	AddComponent(/datum/component/soapbox)

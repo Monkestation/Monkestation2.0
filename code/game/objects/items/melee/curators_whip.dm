@@ -3,6 +3,7 @@
 	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
 	icon = 'icons/obj/weapons/whip.dmi'
 	icon_state = "whip"
+	icon_angle = -90
 	inhand_icon_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

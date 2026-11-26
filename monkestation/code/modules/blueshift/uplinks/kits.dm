@@ -24,18 +24,19 @@
 	cost = 14
 
 /datum/uplink_item/weapon_kits/medium_cost/bulldog
-	name = "Bulldog bundle (Easy)"
-	desc = "Lean and mean: Optimized for people that want to get up close and personal. Contains the popular \
-			Bulldog shotgun, two 12g buckshot drums, and a pair of Thermal imaging goggles."
-	item = /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
-	cost = 13 // normally 16
+	name = "Bulldog Shotgun Case (Moderate)"
+	desc = "A fully-loaded 2-round burst fire drum-fed shotgun, complete with a secondary magazine you can hotswap. \
+		Compatible with all 12g rounds. Designed for close quarter anti-personnel engagements. Comes with four spare magazines."
+	item = /obj/item/storage/toolbox/guncase/bulldog
+	cost = 8
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/weapon_kits/medium_cost/c20r
-	name = "C-20r bundle (Easy)"
-	desc = "Old Faithful: The classic C-20r, bundled with two magazines and a suppressor at discount price."
-	item = /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
-	cost = 14 // normally 16
+	name = "C-20r Submachine Gun Case (Easy)"
+	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
+		42-round magazine and is compatible with suppressors. Comes with three spare magazines and a suppressor."
+	item = /obj/item/storage/toolbox/guncase/c20r
+	cost = 14
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/weapon_kits/medium_cost/revolvercase

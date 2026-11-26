@@ -16,7 +16,7 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	speak_emote = list("roars")
 	mob_size = MOB_SIZE_HUGE
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_EPIC
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_SPECIAL
 
 	armour_penetration = 40
 	melee_damage_upper = 40
@@ -37,7 +37,7 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 
-	ai_controller = /datum/ai_controller/basic_controller/red_rabbit
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
 	basic_mob_flags = DEL_ON_DEATH
 
 	var/list/actions_to_give = list(

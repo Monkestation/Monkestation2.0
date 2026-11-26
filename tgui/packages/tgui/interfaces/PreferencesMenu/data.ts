@@ -81,12 +81,24 @@ export type Quirk = {
   icon: string;
   name: string;
   value: number;
+  customizable: boolean;
+  customization_options?: string[];
 };
 
 export type QuirkInfo = {
   max_positive_quirks: number;
   quirk_info: Record<string, Quirk>;
   quirk_blacklist: string[][];
+};
+
+export type Personality = {
+  name: string;
+  description: string;
+  pos_gameplay_description: string | null;
+  neg_gameplay_description: string | null;
+  neut_gameplay_description: string | null;
+  path: string;
+  groups: string[] | null;
 };
 
 export type LoadoutInfo = {
@@ -162,6 +174,7 @@ export type PreferencesMenuData = {
     };
     secondary_features: Record<string, unknown>;
     supplemental_features: Record<string, unknown>;
+    manually_rendered_features: Record<string, string>;
 
     names: Record<string, string>;
 
@@ -195,7 +208,11 @@ export type PreferencesMenuData = {
   keybindings: Record<string, string[]>;
   overflow_role: string;
   selected_quirks: string[];
+  default_quirk_balance: number;
   species_disallowed_quirks: string[];
+  selected_personalities: string[] | null;
+  max_personalities: number;
+  mood_enabled: BooleanLike;
 
   antag_bans?: string[];
   antag_days_left?: Record<string, number>;
@@ -249,6 +266,10 @@ export type ServerData = {
     types: Record<string, Name>;
   };
   quirks: QuirkInfo;
+  personality: {
+    personalities: Personality[];
+    personality_incompatibilities: Record<string, string[]>;
+  };
   loadout: LoadoutInfo;
   random: {
     randomizable: string[];

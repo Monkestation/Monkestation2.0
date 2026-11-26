@@ -25,6 +25,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_BRIGHT_DAY "station_trait_bright_day"
 #define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
 #define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
+#define STATION_TRAIT_ECONOMY_ALERTS "station_trait_economy_alerts"
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_FORESTED "station_trait_forested"
@@ -265,6 +266,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TOXIMMUNE "toxin_immune"
 /// Mob is immune to oxygen damage, does not need to breathe
 #define TRAIT_NOBREATH "no_breath"
+/// Mob doesn't take oxygen damage in deep water
+#define TRAIT_NODROWN "amphibious"
+/// Mob doesn't take stamina damage from deep water
+#define TRAIT_SWIMMER "swimmer"
 /// Mob is currently disguised as something else (like a morph being another mob or an object). Holds a reference to the thing that applied the trait.
 #define TRAIT_DISGUISED "disguised"
 /// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
@@ -319,10 +324,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGICALLY_GIFTED "magically_gifted"
 /// This object innately spawns with fantasy variables already applied (the magical component is given to it on initialize), and thus we never want to give it the component again.
 #define TRAIT_INNATELY_FANTASTICAL_ITEM "innately_fantastical_item"
-#define TRAIT_DEPRESSION "depression"
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
-#define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
+/// Prevents shovies and some strong blows such as unarmed punches and (unreliably) tackles the owner down
+#define TRAIT_BRAWLING_KNOCKDOWN_BLOCKED "brawling_knockdown_blocked"
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
 /// Mobs with this trait are allowed to use silicon emotes
@@ -438,6 +443,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
+
+/// Improves boxing damage against boxers and athletics experience gain
+#define TRAIT_STRENGTH "strength"
+
+/// Increases the duration of having exercised
+#define TRAIT_STIMMED "stimmed"
+
+/// Indicates that the target is able to be boxed at a boxer's full power.
+#define TRAIT_BOXING_READY "boxing_ready"
+
+/// This trait lets you evaluate someone's fitness level against your own
+#define TRAIT_EXAMINE_FITNESS "reveal_power_level"
+
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
 #define TRAIT_SOOTHED_HEADACHE "soothed-headache"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
@@ -1058,10 +1076,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PHOTOGRAPHER "photographer"
 #define TRAIT_MUSICIAN "musician"
 #define TRAIT_LIGHT_DRINKER "light_drinker"
-#define TRAIT_EMPATH "empath"
 #define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
+/// Trait that determines whether our mob gains more strength from drinking during a fist fight
+#define TRAIT_DRUNKEN_BRAWLER "drunken brawler"
 #define TRAIT_SNOB "snob"
 #define TRAIT_NO_CLONE "NO_CLONE"
 #define TRAIT_BALD "bald"
@@ -1339,6 +1358,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Simple trait that just holds if we came into growth from a specific mob type. Should hold a REF(src) to the type of mob that caused the growth, not anything else.
 #define TRAIT_WAS_EVOLVED "was_evolved_from_the_mob_we_hold_a_textref_to"
 
+/// slapped on anything a slime has latched onto, and it never comes back off. if it's a monkey, nobody feels bad when it dies
+#define TRAIT_WAS_SLIME_FOOD "was_slime_food"
+
 // Traits to heal for
 
 /// This mob heals from carp rifts.
@@ -1402,6 +1424,41 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOB_BREEDER "mob_breeder"
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
+///trait given to food that can be baked by /datum/component/bakeable
+#define TRAIT_BAKEABLE "bakeable"
+
+/// Whether bots will salute this mob.
+#define TRAIT_COMMISSIONED "commissioned"
+
+/// Object is dangerous to mobs buckled to it
+#define TRAIT_DANGEROUS_BUCKLE "dangerous_buckle"
+
+///Trait granted by the miner skillchip, allows communication with minebots
+#define TRAIT_ROCK_STONER "rock_stoner"
+
+/// Has this mob been tamed?
+#define TRAIT_TAMED "tamed"
+
+/// Mobs with this trait will always have be a priority target for mining mobs
+#define TRAIT_MINING_AGGRO "mining_aggro"
+
+///Trait given to the birthday boy
+#define TRAIT_BIRTHDAY_BOY "birthday_boy"
+
+#define TRAIT_FIREDOOR_OPENER "firedoor_opener"
+
+///Mob that can merge stacks in its contents
+#define TRAIT_MOB_MERGE_STACKS "mob_merge_stacks"
+
+///Trait given when a mob has been tipped
+#define TRAIT_MOB_TIPPED "mob_tipped"
+
+/// Trait given to mobs wearing the clown mask
+#define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
+
+
+/// From [/datum/component/defaceable] marks that something has been... marked
+#define TRAIT_DEFACED "defaced"
 
 /// Trait determines if this mob has examined an eldritch painting
 #define TRAIT_ELDRITCH_PAINTING_EXAMINE "eldritch_painting_examine"
@@ -1585,5 +1642,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CAN_MOUNT_HUMANS "can_mount_humans"
 /// Apply this trait to mobs which can "buckle" to cyborgs
 #define TRAIT_CAN_MOUNT_CYBORGS "can_mount_cyborgs"
+
+/// Mob gets far less severe negative moodlets from seeing death / blood
+#define TRAIT_DESENSITIZED "desensitized"
+
+/// Turf is one that ai mobs will generally avoid pathing through
+/// Doesn't need to be applied to any turfs that override can_cross_safely
+#define TRAIT_AI_AVOID_TURF "warning_turf"
+
+
+///Attached to objects currently on tables and such, allowing them to walk on other objects without the climbing delay
+#define TRAIT_ON_CLIMBABLE "on_climbable"
 
 

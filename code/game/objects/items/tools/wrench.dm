@@ -3,6 +3,7 @@
 	desc = "A wrench with common uses. Can be found in your hand."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "wrench"
+	icon_angle = -135
 	inhand_icon_state = "wrench"
 	worn_icon_state = "wrench"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -41,6 +42,7 @@
 	name = "alien wrench"
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
 	icon = 'icons/obj/antags/abductor.dmi'
+	icon_angle = -135
 	belt_icon_state = "wrench_alien"
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	usesound = 'sound/effects/empulse.ogg'
@@ -88,12 +90,14 @@
 	desc = "An advanced robotic wrench, powered by internal hydraulics. Twice as fast as the handheld version."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_engiborg_wrench"
+	icon_angle = 0
 	toolspeed = 0.5
 
 /obj/item/wrench/combat
 	name = "combat wrench"
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
+	icon_angle = -90
 	inhand_icon_state = "wrench_combat"
 	belt_icon_state = "wrench_combat"
 	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
@@ -143,5 +147,6 @@
 	name = "bolter wrench"
 	desc = "A wrench designed to grab into airlock's bolting system and raise it regardless of the airlock's power status."
 	icon_state = "bolter_wrench"
+	icon_angle = -90
 	inhand_icon_state = "bolter_wrench"
 	w_class = WEIGHT_CLASS_NORMAL

@@ -46,6 +46,7 @@
 	var/list/data = list()
 
 	data["selected_quirks"] = get_selected_quirks()
+	data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points)
 	data["species_disallowed_quirks"] = get_species_compatibility()
 
 	return data
@@ -67,11 +68,17 @@
 
 	for (var/quirk_name in quirks)
 		var/datum/quirk/quirk = quirks[quirk_name]
+
+		var/datum/quirk_constant_data/constant_data = GLOB.all_quirk_constant_data[quirk]
+		var/list/datum/preference/customization_options = constant_data?.get_customization_data()
+
 		quirk_info[sanitize_css_class_name(quirk_name)] = list(
 			"description" = initial(quirk.desc),
 			"icon" = initial(quirk.icon),
 			"name" = quirk_name,
 			"value" = initial(quirk.value),
+			"customizable" = constant_data?.is_customizable(),
+			"customization_options" = customization_options,
 		)
 
 	return list(

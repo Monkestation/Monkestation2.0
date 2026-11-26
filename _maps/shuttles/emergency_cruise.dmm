@@ -53,7 +53,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "bE" = (
-/mob/living/simple_animal/bot/secbot{
+/mob/living/basic/bot/secbot{
 	name = "Officer Beefsky";
 	damage_deflection = 21
 	},

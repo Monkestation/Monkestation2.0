@@ -82,6 +82,24 @@ export const DmMapsIncludeTarget = new Juke.Target({
   },
 });
 
+export const BehaviorTreeCompilerTarget = new Juke.Target({
+  inputs: [
+    'code/**/*.bt.json',
+    'monkestation/code/**/*.bt.json',
+    'code/__DEFINES/**/*.dm',
+    'tools/build_bt.py',
+  ],
+  outputs: () => {
+    return Juke.glob('code/**/*.bt.json').map((file) => {
+      const rel = file.replace(/\.bt\.json$/, '');
+      return `build/behavior_trees/${rel}.bt.compiled.json`;
+    });
+  },
+  executes: async () => {
+    await Juke.exec('python', ['tools/build_bt.py']);
+  },
+});
+
 export const NavmapBakeTarget = new Juke.Target({
   executes: async () => {
     const suffix = process.platform == 'win32' ? '.bat' : '';
@@ -212,6 +230,7 @@ export const DmTarget = new Juke.Target({
   ],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
+    BehaviorTreeCompilerTarget,
   ],
   inputs: [
     '_maps/map_files/generic/**',

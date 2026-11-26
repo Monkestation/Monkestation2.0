@@ -1,0 +1,11 @@
+/mob/living/simple_animal/bot/secbot/honkbot : /mob/living/basic/bot/secbot/honkbot{@OLD}
+/mob/living/simple_animal/bot/firebot/@SUBTYPES : /mob/living/basic/bot/firebot/@SUBTYPES{@OLD}
+/mob/living/simple_animal/bot/vibebot/@SUBTYPES : /mob/living/basic/bot/vibebot/@SUBTYPES{@OLD}
+/mob/living/simple_animal/bot/floorbot : /mob/living/basic/bot/repairbot{@OLD}
+/obj/item/bot_assembly/floorbot : /obj/item/bot_assembly/repairbot{@OLD}
+/mob/living/simple_animal/bot/secbot/ed209 : /mob/living/basic/bot/secbot/ed209{@OLD}
+/mob/living/simple_animal/bot/secbot/grievous/@SUBTYPES : /mob/living/basic/bot/secbot/grievous/@SUBTYPES{@OLD}
+/mob/living/simple_animal/bot/secbot/beepsky/big : /mob/living/basic/bot/secbot/beepsky/big{@OLD}
+/mob/living/simple_animal/bot/secbot/@SUBTYPES : /mob/living/basic/bot/secbot/@SUBTYPES{@OLD}
+/mob/living/simple_animal/bot/mulebot/@SUBTYPES : /mob/living/basic/bot/mulebot/@SUBTYPES{@OLD;home_destination=@SKIP;suffix=@SKIP}
+/mob/living/simple_animal/bot/buttbot : /mob/living/basic/bot/buttbot{@OLD}

@@ -32,14 +32,16 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "bV" = (
+/obj/structure/platform,
 /obj/item/boombox{
 	pixel_y = 7
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "cQ" = (
+/obj/structure/platform,
 /obj/structure/railing/corner/end/flip,
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "da" = (
 /obj/structure/lattice,
@@ -75,6 +77,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ea" = (
+/obj/structure/steps/directional/south,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -119,8 +122,9 @@
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/pirate/siren)
 "fq" = (
+/obj/structure/platform,
 /obj/structure/railing/corner/end,
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "fr" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
@@ -163,10 +167,11 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/siren)
 "ho" = (
+/obj/structure/platform,
 /obj/structure/railing/corner/end{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "if" = (
 /obj/machinery/door/airlock/external/glass/ruin,
@@ -226,11 +231,12 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/siren)
 "lb" = (
+/obj/structure/platform,
 /obj/item/music_tape/rock{
 	pixel_y = 12;
 	pixel_x = -5
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "lo" = (
 /obj/structure/lattice,
@@ -369,6 +375,7 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/siren)
 "rJ" = (
+/obj/structure/steps/directional/north,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -765,11 +772,12 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "AE" = (
+/obj/structure/platform,
 /obj/machinery/camera/preset/siren_pirates{
 	dir = 1
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Bc" = (
 /obj/effect/turf_decal/siding/dark/inner_corner{
@@ -787,6 +795,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Bn" = (
+/obj/structure/steps/directional/north,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -956,11 +965,12 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "HG" = (
+/obj/structure/platform,
 /obj/item/music_tape/hiphop{
 	pixel_y = -7;
 	pixel_x = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "HJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -985,7 +995,11 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "IG" = (
-/turf/open/floor/wood,
+/obj/structure/platform,
+/obj/effect/overlay/spotlight{
+	alpha = 155
+	},
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "IO" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -1100,10 +1114,11 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Ol" = (
+/obj/structure/platform,
 /obj/structure/railing/corner/end/flip{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "OP" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
@@ -1150,11 +1165,12 @@
 /turf/open/floor/circuit/red,
 /area/shuttle/pirate/siren)
 "Pz" = (
+/obj/structure/platform,
 /obj/machinery/camera/preset/siren_pirates{
 	dir = 5
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "PI" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -1347,7 +1363,8 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate/siren)
 "Tx" = (
-/turf/open/floor/wood,
+/obj/structure/platform,
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "TD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
@@ -1486,6 +1503,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "XV" = (
+/obj/structure/steps/directional/south,
 /obj/structure/railing{
 	dir = 4
 	},

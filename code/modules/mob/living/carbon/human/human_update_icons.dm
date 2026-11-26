@@ -445,6 +445,8 @@ There are several things that need to be remembered:
 		apply_height(head_overlay, UPPER_BODY)
 		overlays_standing[HEAD_LAYER] = head_overlay
 
+	update_worn_neck()
+
 	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/human/update_worn_belt()

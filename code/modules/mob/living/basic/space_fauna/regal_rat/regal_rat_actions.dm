@@ -53,7 +53,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/protect_owner,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/mouse
+		/datum/pet_command/attack/mouse
 	)
 	/// Rat names already given out this round, so every rat gets a different one
 	var/static/list/used_rat_names = list()
@@ -63,7 +63,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/protect_owner/glockroach,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/glockroach
+		/datum/pet_command/attack/glockroach
 	)
 
 /datum/action/cooldown/mob_cooldown/riot/Activate(atom/target)
@@ -76,7 +76,6 @@
  * * Convert nearby mice into aggressive rats.
  * * Convert nearby roaches into aggressive roaches.
  * * Convert nearby frogs into aggressive frogs.
- * * Spawn a single mouse if below the mouse cap.
  */
 /datum/action/cooldown/mob_cooldown/riot/proc/riot()
 	var/uplifted_mice = FALSE
@@ -171,7 +170,7 @@
 		nearby_roach.melee_damage_lower += 2
 		nearby_roach.melee_damage_upper += 4
 		nearby_roach.obj_damage += 5
-		nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
+		nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/aggro(nearby_roach)
 		nearby_roach.melee_attack_cooldown = 0.8 SECONDS
 
 	nearby_roach.icon_state += "_sewer"
@@ -204,20 +203,19 @@
 	return TRUE
 
 // Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targeting/attack/mouse
+/datum/pet_command/attack/mouse
 	speech_commands = list("attack", "sic", "kill", "cheese em")
 	command_feedback = "squeak!" // Frogs and roaches can squeak too it's fine
 	pointed_reaction = "and squeaks aggressively"
 	refuse_reaction = "quivers"
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
-// Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targeting/attack/glockroach
+// Command you can give to a glockroach to make it shoot someone
+/datum/pet_command/attack/glockroach
 	speech_commands = list("attack", "sic", "kill", "cheese em")
 	command_feedback = "squeak!"
 	pointed_reaction = "and cocks its gun"
 	refuse_reaction = "quivers"
-	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/glockroach
+	attack_subtree = /datum/bt_node/subtree/pet_command/attack/ranged/glockroach
 
 /**
  *Spittle; harmless reagent that is added by rat king, and makes you disgusted.
@@ -259,4 +257,4 @@
 	return ..()
 
 /datum/pet_command/protect_owner/glockroach
-	protect_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach
+	protect_owner_subtree = /datum/bt_node/subtree/pet_command/protect_owner/ranged/glockroach

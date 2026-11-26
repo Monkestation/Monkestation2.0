@@ -209,8 +209,10 @@
 	tick_interval = initial(tick_interval)
 
 #define HEALING_SLEEP_DEFAULT 0.2
+/// The sleep multipler for fitness xp conversion
+#define SLEEP_QUALITY_WORKOUT_MULTIPLER 10
 
-/datum/status_effect/incapacitating/sleeping/tick()
+/datum/status_effect/incapacitating/sleeping/tick(seconds_between_ticks)
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = HEALING_SLEEP_DEFAULT
@@ -256,6 +258,16 @@
 		if(locate(/obj/item/pillow) in owner.loc)
 			healing += 0.1
 
+		if(healing > 0 && iscarbon(owner))
+			var/mob/living/carbon/carbon_owner = owner
+			var/datum/status_effect/exercised/exercised = carbon_owner.has_status_effect(/datum/status_effect/exercised)
+			if(exercised && carbon_owner.mind)
+				// the better you sleep, the more xp you gain
+				carbon_owner.mind.adjust_experience(/datum/skill/athletics, seconds_between_ticks * healing * SLEEP_QUALITY_WORKOUT_MULTIPLER)
+				carbon_owner.adjust_timed_status_effect(-1 * seconds_between_ticks * healing * SLEEP_QUALITY_WORKOUT_MULTIPLER, /datum/status_effect/exercised)
+				if(prob(2))
+					to_chat(carbon_owner, span_notice("You feel your fitness improving!"))
+
 		if(healing > 0 && health_ratio > 0.8)
 			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
 			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
@@ -272,6 +284,7 @@
 		owner.emote("snore")
 
 #undef HEALING_SLEEP_DEFAULT
+#undef SLEEP_QUALITY_WORKOUT_MULTIPLER
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -486,7 +499,7 @@
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
 	if(!set_curse)
-		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
+		set_curse = pick(CURSE_BLINDING, CURSE_WASTING, CURSE_GRASPING)
 	if(QDELETED(C))
 		apply_status_effect(/datum/status_effect/necropolis_curse, set_curse)
 	else
@@ -541,16 +554,6 @@
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
-		if(curse_flags & CURSE_SPAWNING)
-			var/turf/spawn_turf
-			var/sanity = 10
-			while(!spawn_turf && sanity)
-				spawn_turf = locate(owner.x + pick(rand(10, 15), rand(-10, -15)), owner.y + pick(rand(10, 15), rand(-10, -15)), owner.z)
-				sanity--
-			if(spawn_turf)
-				var/mob/living/simple_animal/hostile/asteroid/curseblob/C = new (spawn_turf)
-				C.set_target = owner
-				C.GiveTarget()
 		if(curse_flags & CURSE_GRASPING)
 			var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
 			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)

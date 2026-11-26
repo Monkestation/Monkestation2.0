@@ -83,6 +83,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon_state = "asclepius_dormant"
+	icon_angle = -45
 	inhand_icon_state = "asclepius_dormant"
 	var/activated = FALSE
 
@@ -650,6 +651,10 @@
 	fire = 100
 	acid = 30
 
+/obj/item/clothing/gloves/gauntlets/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/boxing/hunter)
+
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_GLOVES)
@@ -990,6 +995,7 @@
 	Even with the weapon destroyed, all the pieces containing the creature have coagulated back together to find a new host."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cursed_katana"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 15
