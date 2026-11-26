@@ -210,8 +210,10 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	. += GLOB.prglass_recipes
 
 GLOBAL_LIST_INIT(titaniumglass_recipes, list(
+	new/datum/stack_recipe("directional shuttle window",/obj/structure/window/reinforced/titanium/unanchored, time = 0.5 SECONDS, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
 	new/datum/stack_recipe("shuttle window", /obj/structure/window/reinforced/shuttle/unanchored, 2, time = 0, on_solid_ground = TRUE, check_direction = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("titanium glass shard", /obj/item/shard/titanium, time = 40, on_solid_ground = TRUE, category = CAT_MISC) \
+	new/datum/stack_recipe("titanium glass shard", /obj/item/shard/titanium, time = 40, on_solid_ground = TRUE, category = CAT_MISC), \
+	new/datum/stack_recipe("titanium glass tile", /obj/item/stack/tile/glass/titanium, 1, 4, 20, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/titaniumglass
@@ -239,8 +241,12 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	. += GLOB.titaniumglass_recipes
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
+	new/datum/stack_recipe("directional plastitanium window", /obj/structure/window/reinforced/survival_pod/unanchored, time = 0.5 SECONDS, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
 	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("plastitanium glass shard", /obj/item/shard/plastitanium, time = 60, on_solid_ground = TRUE, category = CAT_MISC) \
+	new/datum/stack_recipe("pod window", /obj/structure/window/reinforced/shuttle/survival_pod/unanchored, 2, time = 2 SECONDS, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("plastitanium window filler", /obj/item/stack/wall_filling/plastitaniumglass/basic, 2, 1, 10, check_density = FALSE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("plastitanium glass shard", /obj/item/shard/plastitanium, time = 60, on_solid_ground = TRUE, category = CAT_MISC), \
+	new/datum/stack_recipe("plastitanium glass tile", /obj/item/stack/tile/glass/plastitanium, 1, 4, 20, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/plastitaniumglass

@@ -70,6 +70,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	), \
 
 	new /datum/stack_recipe("runed stone platform", /obj/structure/platform/cult, 2, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("directional runed window", /obj/structure/window/cult/unanchored, time = 0, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile runed window", /obj/structure/window/cult/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
 ))
 
 /obj/item/stack/sheet/runed_metal
