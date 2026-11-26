@@ -243,6 +243,8 @@
 /obj/effect/turf_decal/siding
 	icon_state = "siding_plain"
 
+SIDING_SUBTYPE_HELPER(/obj/effect/turf_decal/siding)
+
 /obj/effect/turf_decal/siding/white
 	color = "#BCBCBC"
 

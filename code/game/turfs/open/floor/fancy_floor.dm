@@ -206,6 +206,22 @@
 /turf/open/floor/grass/fairy/dark/on_light_eater(obj/machinery/light/source, datum/light_eater)
 	return
 
+/turf/open/floor/hay
+	name = "hay"
+	desc = "HOW hungry?"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "hay"
+	base_icon_state = "hay"
+	floor_tile = /obj/item/stack/tile/hay
+	flags_1 = NONE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
+
 /turf/open/floor/fake_snow
 	gender = PLURAL
 	name = "snow"

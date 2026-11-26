@@ -358,6 +358,21 @@
 /turf/open/floor/iron/tgmcemblem/center
 	icon_state = "tgmc_center"
 
+/turf/open/floor/asphalt
+	name = "asphalt"
+	desc = "Melted down oil can, in some cases, be used to pave road surfaces."
+	icon_state = "asphalt"
+
+/turf/open/floor/asphalt/outdoors
+	planetary_atmos = TRUE
+
+/turf/open/floor/asphalt/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	baseturfs = /turf/open/misc/asteroid/basalt
+
+/turf/open/floor/asphalt/lavaland/outdoors
+	planetary_atmos = TRUE
+
 
 /obj/item/stack/tile/sandy_dirt
 	name = "sandy dirt tiles"
