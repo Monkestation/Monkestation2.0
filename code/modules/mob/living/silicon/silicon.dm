@@ -75,7 +75,7 @@
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
 		TRAIT_NOFIRE_SPREAD,
-		//TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
+		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
 		TRAIT_FENCE_CLIMBER,
 		TRAIT_SILICON_ACCESS,
 		TRAIT_REAGENT_SCANNER,
@@ -265,7 +265,7 @@
 
 	if (lawcache_zeroth)
 		if (force || (lawcache_zeroth in lawcache_lawcheck))
-			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
+			say("[radiomod] 0. [html_decode(lawcache_zeroth)]", forced = forced_log_message)
 			sleep(1 SECONDS)
 
 	CHECK_DEAD
@@ -276,7 +276,7 @@
 			continue
 		CHECK_DEAD
 		if (force || (law in lawcache_hackedcheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			say("[radiomod] [num]. [html_decode(law)]", forced = forced_log_message)
 			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_ion))
@@ -286,7 +286,7 @@
 			return
 		CHECK_DEAD
 		if (force || (law in lawcache_ioncheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			say("[radiomod] [num]. [html_decode(law)]", forced = forced_log_message)
 			sleep(1 SECONDS)
 
 	var/number = 1
@@ -296,7 +296,7 @@
 			continue
 		CHECK_DEAD
 		if (force || (law in lawcache_lawcheck))
-			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			say("[radiomod] [number]. [html_decode(law)]", forced = forced_log_message)
 			number++
 			sleep(1 SECONDS)
 
@@ -307,7 +307,7 @@
 			continue
 		CHECK_DEAD
 		if (force || (law in lawcache_lawcheck))
-			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			say("[radiomod] [number]. [html_decode(law)]", forced = forced_log_message)
 			number++
 			sleep(1 SECONDS)
 

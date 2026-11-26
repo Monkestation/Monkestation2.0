@@ -8,6 +8,7 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bone_blade"
+	icon_angle = -45
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'

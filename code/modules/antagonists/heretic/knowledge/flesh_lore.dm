@@ -95,10 +95,6 @@
 	if(target.stat != DEAD)
 		return
 
-	if(LAZYLEN(created_items) >= limit)
-		target.balloon_alert(source, "at ghoul limit!")
-		return COMPONENT_BLOCK_HAND_USE
-
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		target.balloon_alert(source, "husked!")
 		return COMPONENT_BLOCK_HAND_USE
@@ -121,10 +117,6 @@
 	//SIGNAL_HANDLER
 	if(!is_oozeling_core(core))
 		return NONE
-
-	if(LAZYLEN(created_items) >= limit)
-		core.balloon_alert(source, "at ghoul limit!")
-		return COMPONENT_BLOCK_HAND_USE
 
 	core.brainmob?.grab_ghost()
 	if(!core.mind || !core.brainmob?.client)
@@ -168,7 +160,7 @@
 	return NONE
 
 /// The max amount of health a ghoul has.
-#define GHOUL_MAX_HEALTH 25
+#define GHOUL_MAX_HEALTH 50
 
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
@@ -179,31 +171,20 @@
 		/datum/status_effect/ghoul,
 		GHOUL_MAX_HEALTH,
 		user.mind,
-		CALLBACK(src, PROC_REF(apply_to_ghoul)),
-		CALLBACK(src, PROC_REF(remove_from_ghoul)),
 	)
-
-/// Callback for the ghoul status effect - Tracking all of our ghouls
-/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/apply_to_ghoul(mob/living/ghoul)
-	LAZYADD(created_items, WEAKREF(ghoul))
-
-/// Callback for the ghoul status effect - Tracking all of our ghouls
-/datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/remove_from_ghoul(mob/living/ghoul)
-	LAZYREMOVE(created_items, WEAKREF(ghoul))
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
 	desc = "Enchant a corpse (or oozeling core) into a Voiceless Dead. \
 		The corpse does not need to have a soul.<br>\
-		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
-		You can only create two at a time."
+		Voiceless Dead are mute ghouls and only have 75 health, but can use Bloody Blades effectively."
 	transmute_text = "Transmute a corpse and a poppy."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	required_atoms = list(
 		list(/mob/living/carbon/human, /obj/item/organ/internal/brain/slime) = 1,
 		/obj/item/food/grown/poppy = 1,
 	)
-	limit = 2
+	limit = INFINITY
 	cost = 2
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
@@ -261,7 +242,7 @@
 	return TRUE
 
 /// The max amount of health a voiceless dead has.
-#define MUTE_MAX_HEALTH 50
+#define MUTE_MAX_HEALTH 75
 
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
@@ -332,20 +313,20 @@
 
 /datum/heretic_knowledge/blade_upgrade/flesh
 	name = "Bleeding Steel"
-	desc = "Your Bloody Blade now causes enemies to bleed heavily on attack."
+	desc = "Your Bloody Blade now tears deep gashes into whichever limb you strike, making enemies bleed heavily and leaving their limbs easy to sever."
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_flesh"
 	///What type of wound do we apply on hit
-	var/wound_type = /datum/wound/slash/flesh/severe
+	var/wound_type = /datum/wound/slash/flesh/critical
 
 /datum/heretic_knowledge/blade_upgrade/flesh/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!iscarbon(target) || source == target)
 		return
 
 	var/mob/living/carbon/carbon_target = target
-	var/obj/item/bodypart/bodypart = pick(carbon_target.get_bodyparts())
+	var/obj/item/bodypart/bodypart = carbon_target.get_bodypart(check_zone(source.zone_selected)) || pick(carbon_target.get_bodyparts())
 	var/datum/wound/crit_wound = new wound_type()
 	crit_wound.apply_wound(bodypart, attack_direction = get_dir(source, target))
 
@@ -377,8 +358,7 @@
 		and become the Lord of the Night, a supremely powerful creature. \
 		Just the act of transforming causes nearby heathens great fear and trauma.<br>\
 		While in the Lord of the Night form, you can consume arms to heal and regain segments.<br>\
-		Additionally, you can summon three times as many Ghouls and Voiceless Dead, \
-		and can create unlimited blades to arm them all."
+		Additionally, you can create unlimited blades to arm your servants."
 	transmute_text = "Transmute four corpses."
 	gain_text = "With the Marshal's knowledge, my power had peaked. The throne was open to claim. \
 		Men of this world, hear me, for the time has come! The Marshal guides my army! \
@@ -394,10 +374,6 @@
 	worm_spell.Grant(user)
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	var/datum/heretic_knowledge/limited_amount/starting/base_flesh/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_flesh)
-	grasp_ghoul.limit *= 3
-	var/datum/heretic_knowledge/limited_amount/flesh_ghoul/ritual_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_ghoul)
-	ritual_ghoul.limit *= 3
 	var/datum/heretic_knowledge/limited_amount/starting/base_flesh/blade_ritual = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_flesh)
 	blade_ritual.limit = 999
 

@@ -56,7 +56,7 @@
 /// Returns the items in your "active hand set", essentially your active hand and offhand
 /mob/proc/get_active_handset_items() as /list
 	RETURN_TYPE(/list/obj/item)
-	
+
 	var/list/ret = list(get_active_held_item(), get_inactive_held_item())
 	ret.RemoveAll(null)
 	return ret
@@ -242,6 +242,7 @@
 	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
 		held_items[hand_index] = null
 		return FALSE
+	SEND_SIGNAL(I, COMSIG_ITEM_ENTERED_HANDS, src, hand_index)
 	return hand_index
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.

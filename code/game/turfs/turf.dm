@@ -113,6 +113,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///The typepath we use for lazy fishing on turfs, to save on world init time.
 	var/fish_source
 
+	/// If TRUE, then this turf will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
+
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
@@ -546,7 +549,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		for(var/obj/on_top in contents) //this is for deleting things like wires contained in the turf
-			if(HAS_TRAIT(on_top, TRAIT_T_RAY_VISIBLE))
+			if(HAS_TRAIT(on_top, TRAIT_UNDERFLOOR))
 				on_top.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
@@ -743,19 +746,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/datum/reagent/R = reagent
 		. |= R.expose_turf(src, reagents[R])
 
-/**
- * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
- */
-/turf/wash(clean_types)
+// When our turf is washed, we may wash everything on top of the turf
+// By default we will only wash mopable things (like blood or vomit)
+// but you may optionally pass in all_contents = TRUE to wash everything
+/turf/wash(clean_types, all_contents = FALSE)
 	. = ..()
-
-	for(var/am in src)
-		if(am == src)
-			continue
-		var/atom/movable/movable_content = am
-		if(!ismopable(movable_content))
-			continue
-		movable_content.wash(clean_types)
+	for(var/atom/movable/to_clean as anything in src)
+		if(all_contents || HAS_TRAIT(to_clean, TRAIT_MOPABLE))
+			to_clean.wash(clean_types)
 
 /turf/set_density(new_value)
 	var/old_density = density
@@ -835,7 +833,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
-	return TRUE
+	return !HAS_TRAIT(src, TRAIT_AI_AVOID_TURF)
 
 /**Shake() and then explode a turf based on the passed vars
  * shake_duration: how long to shake the turf for before calling explosion()

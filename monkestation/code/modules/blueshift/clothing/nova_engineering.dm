@@ -60,6 +60,7 @@
 	acid = 50
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/nova/imperial
+	can_adjust = FALSE
 	desc = "A gray naval suit with a lead-lined vest and a rank badge denoting the Officer of the Internal Engineering Division. Doesn't come with a death machine building guide."
 	name = "chief engineer's naval jumpsuit"
 	icon_state = "impce"

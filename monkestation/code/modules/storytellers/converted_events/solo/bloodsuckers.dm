@@ -37,9 +37,9 @@
 		JOB_CHAPLAIN,
 		JOB_CURATOR,
 	)
-	required_enemies = 5
+	required_enemies = 3
 	min_players = 20
-	weight = 5
+	weight = 10
 	maximum_antags = 2
 	event_icon_state = "vampires"
 

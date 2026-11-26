@@ -45,7 +45,8 @@ SUBSYSTEM_DEF(liquids)
 	var/list/active_turf_group_queue = list()
 	///list of cached exposures we are working with
 	var/list/cached_exposures = list()
-
+	///list of cached turfs to react in
+	var/list/reactions_queue = list()
 
 /datum/controller/subsystem/liquids/PreInit()
 	. = ..()
@@ -252,8 +253,26 @@ SUBSYSTEM_DEF(liquids)
 					return
 				cached_edge_work_queue -= liquid_group
 
+		run_type = SSLIQUIDS_RUN_TYPE_REACTIONS
+
+	if(run_type == SSLIQUIDS_RUN_TYPE_REACTIONS)
+		if(!length(reactions_queue))
+			reactions_queue |= active_groups
+		list_clear_nulls(reactions_queue)
+		if(length(reactions_queue))
+			while(length(reactions_queue))
+				var/datum/liquid_group/liquid_group = reactions_queue[length(reactions_queue)]
+				reactions_queue.len--
+				if(QDELETED(liquid_group))
+					continue
+				if(GLOB.liquid_pool_react)
+					liquid_group.reagents.handle_reactions()
+				if(!QDELETED(liquid_group) && !length(liquid_group.splitting_array))
+					liquid_group.process_turf_disperse()
+				if(MC_TICK_CHECK)
+					return
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
-
-
 ADMIN_VERB(toggle_liquid_debug, R_DEBUG, FALSE, "Liquid Groups Color Debug", "SLiquid Groups Color Debug.", ADMIN_CATEGORY_DEBUG)
 	GLOB.liquid_debug_colors = !GLOB.liquid_debug_colors
+ADMIN_VERB(toggle_pool_reactions_debug, R_DEBUG, FALSE, "Liquid Pool Reactions Debug", "SLiquid Pool Reactions Debug.", ADMIN_CATEGORY_DEBUG)
+	GLOB.liquid_pool_react = !GLOB.liquid_pool_react

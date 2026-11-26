@@ -71,7 +71,6 @@
 				picked_airlock.bolt()
 		if(3) //emag a random atom from our list of valid types
 			var/list/valid_emag_targets = list(
-				/mob/living/simple_animal/bot,
 				/mob/living/basic/bot,
 				/obj/machinery/announcement_system,
 				/obj/machinery/barsign,
@@ -120,9 +119,6 @@
 			if(isbasicbot(selected_atom))
 				var/mob/living/basic/bot/basic_bot = selected_atom
 				basic_bot.bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN | ~BOT_MAINTS_PANEL_OPEN
-			else if(isbot(selected_atom))
-				var/mob/living/simple_animal/bot/simple_bot = selected_atom
-				simple_bot.bot_cover_flags &= BOT_COVER_MAINTS_OPEN | ~BOT_COVER_LOCKED
 			selected_atom.emag_act()
 
 /datum/controller/subsystem/processing/the_ark/proc/crystal_warp_space()
@@ -143,7 +139,7 @@
 /datum/controller/subsystem/processing/the_ark/proc/get_emag_target_type_instances(input_path)
 	if(ispath(input_path, /obj/machinery))
 		return SSmachines.get_machines_by_type(input_path)
-	if(ispath(input_path, /mob/living/simple_animal/bot) || ispath(input_path, /mob/living/basic/bot))
+	if(ispath(input_path, /mob/living/basic/bot))
 		return GLOB.bots_list.Copy()
 
 //OH YEAH I LOVE GOOD CODE
@@ -154,9 +150,6 @@
 	if(isbasicbot(checked_atom))
 		var/mob/living/basic/bot/checked_basic_bot = checked_atom
 		return checked_basic_bot.bot_access_flags & BOT_COVER_EMAGGED
-	if(istype(checked_atom, /mob/living/simple_animal/bot))
-		var/mob/living/simple_animal/bot/checked_bot = checked_atom
-		return checked_bot.bot_cover_flags & BOT_COVER_EMAGGED
 
 /datum/action/cooldown/spell/spacetime_dist/clock_ark
 	name = "Clockwork Spacetime Dist"

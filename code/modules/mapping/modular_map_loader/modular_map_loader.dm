@@ -13,12 +13,9 @@
 
 INITIALIZE_IMMEDIATE(/obj/modular_map_root)
 
-// Bake the static base map; runtime module loading invalidates the affected navmap turfs.
-#ifndef NAVMAP_BAKE_GENERATION
 /obj/modular_map_root/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(load_map))
-#endif
 
 /// Randonly selects a map file from the TOML config specified in config_file, loads it, then deletes itself.
 /obj/modular_map_root/proc/load_map()

@@ -35,7 +35,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/grub_spit,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/fetch,
 	)
 	/// Do we have emissives?
 	var/has_emissive = TRUE
@@ -98,7 +98,9 @@
 
 /mob/living/basic/mining/goldgrub/death(gibbed)
 	barf_contents(gibbed)
-	return ..()
+	. = ..()
+	if (!QDELETED(src) && has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 25, bonus_tame_chance = 5)

@@ -399,11 +399,13 @@
 	if(isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
+	var/spell_name = source.name // Spell action is deleted in cast_spell() if we're out of charges
+
 	if(!cast_spell(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 
 	user.do_attack_animation(interacting_with)
-	log_combat(user, interacting_with, "used a cult spell on", source.name, "")
+	log_combat(user, interacting_with, "used a cult spell on", spell_name, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	return ITEM_INTERACT_SUCCESS
 
@@ -513,7 +515,7 @@
 
 // If this is gonna be a snowflake touch spell despite not being an actual touch spell, then we get to have snowflake code to ensure it behaves like it should.
 /obj/item/melee/blood_magic/stun/proc/snowflake_martial_arts_handler(mob/living/target, mob/living/carbon/user)
-	var/datum/martial_art/martial_art = target?.mind?.martial_art
+	var/datum/martial_art/martial_art = target ? GET_ACTIVE_MARTIAL_ART(target) : null
 	if(!martial_art?.can_use())
 		return FALSE
 	var/counter = FALSE
@@ -566,7 +568,7 @@
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
 	for(var/obj/effect/rune/teleport/teleport_rune as anything in GLOB.teleport_runes)
-		potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
+		potential_runes[avoid_assoc_duplicate_keys(html_decode(teleport_rune.listkey), teleportnames)] = teleport_rune
 
 	if(!length(potential_runes))
 		to_chat(user, span_warning("There are no valid runes to teleport to!"))

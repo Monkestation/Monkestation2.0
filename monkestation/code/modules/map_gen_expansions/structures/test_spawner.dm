@@ -2,7 +2,7 @@
 	if(!istype(created))
 		return
 
-	created.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, parent)
+	created.ai_controller?.set_blackboard_key(BB_CURRENT_TARGET, parent)
 	created.ai_controller?.set_blackboard_key(BB_TEMPORARY_TARGET, TRUE)
 	created.AddElement(/datum/element/clear_target_key_and_retaliate)
 

@@ -193,6 +193,7 @@
 	desc = "Some say a barbers best tool is his electric razor, that is not the case. These are used to cut hair in a professional way!"
 	icon = 'monkestation/code/modules/blueshift/icons/items.dmi'
 	icon_state = "scissors"
+	icon_angle = -90
 	w_class = WEIGHT_CLASS_TINY
 	sharpness = SHARP_EDGED
 	// How long does it take to change someone's hairstyle?
@@ -578,6 +579,8 @@
 
 
 /obj/item/razor/attack(mob/attacked_mob, mob/living/user)
+	if(SEND_SIGNAL(attacked_mob, COMSIG_MOB_SHEARED, toolspeed, src, user))
+		return
 	if(!ishuman(attacked_mob))
 		return ..()
 

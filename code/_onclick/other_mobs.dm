@@ -42,7 +42,11 @@
 	//This signal is needed to prevent gloves of the north star + hulk.
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
-	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity_flag)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity_flag, params)
+	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(sigreturn & COMPONENT_SKIP_ATTACK)
+		return FALSE
 
 	if(!right_click_attack_chain(A) && !dna?.species?.spec_unarmedattack(src, A)) //Because species like monkeys dont use attack hand
 		//monkestation edit
@@ -191,7 +195,8 @@
 ///When a basic mob attacks something, either by AI or user.
 /atom/proc/attack_basic_mob(mob/user, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user) & COMSIG_BASIC_ATTACK_CANCEL_CHAIN)
+		return FALSE
 	return handle_basic_attack(user, modifiers) //return value of attack animal, this is how much damage was dealt to the attacked thing
 
 ///This exists so stuff can override the default call of attack_animal for attack_basic_mob

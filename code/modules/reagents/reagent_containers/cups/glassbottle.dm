@@ -4,23 +4,12 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
-/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
-/proc/init_alcohol_containers()
-	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
-	for(var/typepath in containers)
-		containers -= typepath
-		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
-		if(!length(instance.list_reagents))
-			qdel(instance)
-			continue
-		containers[typepath] = instance
-	return containers
-
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "glassbottle"
+	icon_angle = 90
 	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
 	custom_price = PAYCHECK_CREW * 1.1
@@ -239,8 +228,8 @@
 			intensity_state = "high"
 	///The froth fountain that we are sticking onto the bottle
 	var/mutable_appearance/froth = mutable_appearance(icon, "froth_bottle_[intensity_state]")
-	froth.pixel_x = offset_x
-	froth.pixel_y = offset_y
+	froth.pixel_w = offset_x
+	froth.pixel_z = offset_y
 	add_overlay(froth)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), froth), 2 SECONDS)
 

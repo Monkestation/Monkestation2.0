@@ -681,6 +681,56 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
+/datum/status_effect/moodlet_in_area
+	id = "moodlet_in_area"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	/// Moodlet to apply while in the area
+	VAR_PRIVATE/moodlet_type
+	/// Typecache of areas that will trigger the moodlet while in them
+	VAR_PRIVATE/list/allowed_areas
+	/// Optional callback to run when checking if the moodlet should be applied. Should return TRUE to apply, FALSE to not.
+	VAR_PRIVATE/datum/callback/special_check
+
+/datum/status_effect/moodlet_in_area/on_creation(mob/living/new_owner, moodlet_type, list/allowed_areas, datum/callback/special_check)
+	src.moodlet_type = moodlet_type
+	src.allowed_areas = typecacheof(allowed_areas)
+	src.special_check = special_check
+	return ..()
+
+/datum/status_effect/moodlet_in_area/before_remove(moodlet_type, ...)
+	return moodlet_type == src.moodlet_type
+
+/datum/status_effect/moodlet_in_area/on_apply()
+	if(!length(allowed_areas))
+		return FALSE
+
+	for(var/datum/status_effect/moodlet_in_area/other_effect in owner.status_effects)
+		if(other_effect.moodlet_type == moodlet_type)
+			return FALSE
+
+	owner.become_area_sensitive("[id]_[moodlet_type]")
+	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(check_area))
+	return TRUE
+
+/datum/status_effect/moodlet_in_area/on_remove()
+	UnregisterSignal(owner, COMSIG_ENTER_AREA)
+	owner.lose_area_sensitivity("[id]_[moodlet_type]")
+	owner.clear_mood_event("[id]_[moodlet_type]")
+
+/// Adds the moodlet when entering an allowed area and clears it otherwise.
+/datum/status_effect/moodlet_in_area/proc/check_area(datum/source, area/new_area)
+	SIGNAL_HANDLER
+
+	if(special_check && !special_check.Invoke(owner, new_area))
+		return
+
+	if(is_type_in_typecache(new_area, allowed_areas))
+		owner.add_mood_event("[id]_[moodlet_type]", moodlet_type)
+	else
+		owner.clear_mood_event("[id]_[moodlet_type]")
 /datum/status_effect/washing_regen
 	id = "shower_regen"
 	duration = -1
@@ -749,3 +799,46 @@
 	name = "Hotspring"
 	desc = "Waaater... FUCK THIS HOT WATER!!"
 	icon_state = "hotspring_regen_catgirl"
+
+#define BEAM_ALPHA 62
+
+///Makes the mob luminescent for the duration of the effect, and project a large spotlight overtop them.
+/datum/status_effect/spotlight_light
+	id = "spotlight_light"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = null
+	/// Dummy lighting object to simulate the spotlight highlighting the mob.
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+	/// First visual overlay, this one sits on the back of the mob.
+	var/obj/effect/overlay/spotlight/beam_from_above_a
+	/// Second visual overlay, this one sits on the front of the mob.
+	var/obj/effect/overlay/spotlight/beam_from_above_b
+
+/datum/status_effect/spotlight_light/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/spotlight_light/on_apply()
+	mob_light_obj = owner.mob_light(2, 1.5, "#e2e2ca")
+
+	beam_from_above_a = new /obj/effect/overlay/spotlight
+	beam_from_above_a.alpha = BEAM_ALPHA
+	owner.vis_contents += beam_from_above_a
+	beam_from_above_a.layer = BELOW_MOB_LAYER
+
+	beam_from_above_b = new /obj/effect/overlay/spotlight
+	beam_from_above_b.alpha = BEAM_ALPHA
+	beam_from_above_b.layer = ABOVE_MOB_LAYER
+	beam_from_above_b.pixel_y = -2 //Slight vertical offset for an illusion of volume
+	owner.vis_contents += beam_from_above_b
+
+	return TRUE
+
+/datum/status_effect/spotlight_light/on_remove()
+	if(beam_from_above_a || beam_from_above_b)
+		owner.vis_contents -= beam_from_above_a
+		owner.vis_contents -= beam_from_above_b
+	QDEL_NULL(mob_light_obj)
+
+#undef BEAM_ALPHA

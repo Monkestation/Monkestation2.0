@@ -143,8 +143,9 @@
 
 /obj/item/food/pancakes/proc/update_snack_overlays(obj/item/food/pancakes/pancake)
 	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.stack_name]_[rand(1, 3)]")
-	pancake_visual.pixel_x = rand(-1, 1)
-	pancake_visual.pixel_y = 3 * contents.len - 1
+	pancake_visual.pixel_w = rand(-1, 1)
+	pancake_visual.pixel_z = 3 * length(contents) - 1
+	pancake_visual.layer = layer + (length(contents) * 0.01)
 	add_overlay(pancake_visual)
 	update_appearance()
 

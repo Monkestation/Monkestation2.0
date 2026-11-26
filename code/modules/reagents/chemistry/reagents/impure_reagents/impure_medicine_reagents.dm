@@ -870,7 +870,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/bath_salts/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	if(jungle_arts)
-		jungle_arts.remove(affected_mob)
+		jungle_arts.unlearn(affected_mob)
 		QDEL_NULL(jungle_arts)
 	if(is_simian(affected_mob))
 		affected_mob.cure_trauma_type(/datum/brain_trauma/special/primal_instincts, resilience = TRAUMA_RESILIENCE_ABSOLUTE)

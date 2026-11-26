@@ -42,7 +42,7 @@
 
 /mob/living/basic/bear/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SWIMMER, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber, climbing_distance = 15)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -145,7 +145,7 @@
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free butter to the station!</b>")
 	var/default_name = "Terrygold"
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN, encode = FALSE)), cap_after_symbols = FALSE)
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name

@@ -119,3 +119,6 @@
 #define INCLUDE_ACCESSORIES (1<<1)
 #define INCLUDE_HELD (1<<2)
 
+
+/// Include prosthetic item limbs (which are not flavoured as being equipped items)
+#define INCLUDE_PROSTHETICS (1<<3)

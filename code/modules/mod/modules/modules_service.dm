@@ -112,7 +112,7 @@
 	incompatible_modules = list(/obj/item/mod/module/selfcleaner)
 	cooldown_time = 10 SECONDS
 
-/obj/item/mod/module/selfcleaner/on_use(mob/activator)
-	activator.wash(CLEAN_WASH)
+/obj/item/mod/module/selfcleaner/on_use()
+	mod.wearer.wash(CLEAN_WASH)
 	drain_power(use_energy_cost)
-	playsound(activator, 'sound/effects/spray.ogg', 50, FALSE)
+	playsound(mod.wearer, 'sound/effects/spray.ogg', 50, FALSE)

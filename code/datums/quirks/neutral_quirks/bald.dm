@@ -4,7 +4,7 @@
 	icon = FA_ICON_EGG
 	value = 0
 	mob_trait = TRAIT_BALD
-	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_OOZELING_SAVE
+	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_CHANGES_APPEARANCE | QUIRK_OOZELING_SAVE
 	gain_text = span_notice("Your head is as smooth as can be, it's terrible.")
 	lose_text = span_notice("Your head itches, could it be... growing hair?!")
 	medical_record_text = "Patient starkly refused to take off headwear during examination."
@@ -28,12 +28,13 @@
 
 	baldie_wig.update_appearance()
 
-	give_item_to_holder(baldie_wig, list(LOCATION_HEAD = ITEM_SLOT_HEAD, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(baldie_wig, list(LOCATION_HEAD = ITEM_SLOT_HEAD, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS), notify_player = FALSE)
 
 /datum/quirk/item_quirk/bald/remove()
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.set_hairstyle(old_hair, update = TRUE)
+	if(human_holder.hairstyle == "Bald" && old_hair != "Bald")
+		human_holder.set_hairstyle(old_hair, update = TRUE)
 	UnregisterSignal(human_holder, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
 	human_holder.clear_mood_event("bad_hair_day")
 

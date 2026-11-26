@@ -44,8 +44,6 @@
 	var/mask_state = "lava-lightmask"
 	/// The type for the preset fishing spot of this type of turf.
 	var/fish_source_type = /datum/fish_source/lavaland
-	/// The color we use for our immersion overlay
-	var/immerse_overlay_color = "#a15e1b"
 	/// Whether the immerse element has been added yet or not
 	var/immerse_added = FALSE
 
@@ -77,7 +75,7 @@
 	SIGNAL_HANDLER
 	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+	AddElement(/datum/element/immerse, "immerse", 215)
 	immerse_added = TRUE
 
 /turf/open/lava/update_overlays()
@@ -166,7 +164,7 @@
 /turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
-		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+		AddElement(/datum/element/immerse, "immerse", 215)
 		immerse_added = TRUE
 	if(burn_stuff(arrived))
 		START_PROCESSING(SSobj, src)
@@ -313,7 +311,7 @@
 		var/mob/living/carbon/burn_carbon = burn_living
 		var/obj/item/clothing/burn_suit = burn_carbon.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		var/obj/item/clothing/burn_helmet = burn_carbon.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(burn_suit?.clothing_flags & LAVAPROTECT && burn_helmet?.clothing_flags & LAVAPROTECT)
+		if(isclothing(burn_suit) && (burn_suit.clothing_flags & LAVAPROTECT) && isclothing(burn_helmet) && (burn_helmet.clothing_flags & LAVAPROTECT))
 			return LAVA_BE_PROCESSING
 
 	return LAVA_BE_BURNING
@@ -369,7 +367,6 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_LAVA
 	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA
 	underfloor_accessibility = 2 //This avoids strangeness when routing pipes / wires along catwalks over lava
-	immerse_overlay_color = "#F98511"
 
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -392,7 +389,6 @@
 	light_color = LIGHT_COLOR_PURPLE
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
-	immerse_overlay_color = "#CD4C9F"
 
 /turf/open/lava/plasma/examine(mob/user)
 	. = ..()

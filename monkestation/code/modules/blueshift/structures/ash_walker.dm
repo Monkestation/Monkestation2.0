@@ -169,7 +169,7 @@
 
 /obj/structure/spawner/lavaland/Destroy()
 	if(cursed)
-		for(var/mob/living/carbon/human/selected_human in range(7))
+		for(var/mob/living/carbon/human/selected_human in range(7, src))
 			if(is_species(selected_human, /datum/species/lizard/ashwalker))
 				continue
 			selected_human.AddComponent(/datum/component/ash_cursed)
@@ -371,13 +371,21 @@
 	vehicle_move_delay = 0.5
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/vehicle/rail_cart/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 13), TEXT_EAST = list(0, 13), TEXT_WEST = list(0, 13)))
-	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+/datum/component/riding/vehicle/rail_cart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 13),
+		TEXT_SOUTH = list(0, 13),
+		TEXT_EAST =  list(0, 13),
+		TEXT_WEST =  list(0, 13),
+	)
+
+/datum/component/riding/vehicle/rail_cart/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, OBJ_LAYER),
+		TEXT_SOUTH = list(0, 0, OBJ_LAYER),
+		TEXT_EAST =  list(0, 0, OBJ_LAYER),
+		TEXT_WEST =  list(0, 0, OBJ_LAYER),
+	)
 
 /datum/component/riding/vehicle/rail_cart/turf_check(turf/next, turf/current)
 	if(!(locate(/obj/structure/railroad) in next))
@@ -607,7 +615,7 @@
 	var/compiled_string = "The [src] has been destroyed at [loc_name(src.loc)], nearest mobs are "
 	var/found_anyone = FALSE
 
-	for(var/mob/living/carbon/carbons_nearby in range(7))
+	for(var/mob/living/carbon/carbons_nearby in range(7, src))
 		compiled_string += "[key_name(carbons_nearby)],"
 		found_anyone = TRUE
 

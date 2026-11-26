@@ -106,7 +106,7 @@
 
 // copy-pasted from blood cult code lol
 /datum/scripture/slab/kindle/proc/snowflake_martial_arts_handler(mob/living/target, mob/living/carbon/user)
-	var/datum/martial_art/martial_art = target?.mind?.martial_art
+	var/datum/martial_art/martial_art = target ? GET_ACTIVE_MARTIAL_ART(target) : null
 	if(!martial_art?.can_use())
 		return FALSE
 	var/counter = FALSE

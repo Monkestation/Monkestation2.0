@@ -35,6 +35,7 @@
 	name = "light tube"
 	desc = "A replacement light tube."
 	icon_state = "ltube"
+	icon_angle = -45
 	base_state = "ltube"
 	inhand_icon_state = "ltube"
 	bulb_outer_range = 6
@@ -57,6 +58,7 @@
 	name = "light bulb"
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
+	icon_angle = -90
 	base_state = "lbulb"
 	inhand_icon_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

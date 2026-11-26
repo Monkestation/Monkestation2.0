@@ -3,6 +3,7 @@
 	name = "knife"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	inhand_icon_state = "knife"
@@ -54,6 +55,7 @@
 	desc = "The unearthly energies that once powered this blade are now dormant."
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bone_blade"
+	icon_angle = -45
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -67,6 +69,7 @@
 	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood."
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bloodletter"
+	icon_angle = -45
 	worn_icon_state = "render"
 	w_class = WEIGHT_CLASS_NORMAL
 	/// Bleed stacks applied when an organic mob target is hit
@@ -87,6 +90,7 @@
 /obj/item/knife/butcher
 	name = "butcher's cleaver"
 	icon_state = "butch"
+	icon_angle = -45
 	inhand_icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
 	flags_1 = CONDUCT_1
@@ -104,6 +108,7 @@
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
 	inhand_icon_state = "huntingknife"
 	icon_state = "huntingknife"
+	icon_angle = 180
 	wound_bonus = 10
 
 /obj/item/knife/hunting/set_butchering()
@@ -116,6 +121,7 @@
 /obj/item/knife/combat
 	name = "combat knife"
 	icon_state = "buckknife"
+	icon_angle = -45
 	desc = "A military combat utility survival knife."
 	embed_type = /datum/embedding/combat_knife
 	force = 17 // MONKESTATION EDIT ORG: 20
@@ -167,6 +173,7 @@
 	name = "glass shiv"
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "shiv"
+	icon_angle = -65
 	inhand_icon_state = "shiv"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -247,6 +254,7 @@
 /obj/item/knife/shiv/carrot
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
+	icon_angle = -45
 	inhand_icon_state = "carrotshiv"
 	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."

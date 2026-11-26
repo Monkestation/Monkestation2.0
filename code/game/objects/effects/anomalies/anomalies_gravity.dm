@@ -28,14 +28,11 @@
 		if(!M.mob_negates_gravity())
 			step_towards(M,src)
 	for(var/obj/O in range(0,src))
-		if(!O.anchored)
-			if(isturf(O.loc))
-				var/turf/T = O.loc
-				if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-					continue
-			var/mob/living/target = locate() in view(4,src)
-			if(target && !target.stat && prob(object_launch_prob))
-				O.throw_at(target, 5, 10)
+		if(O.anchored || HAS_TRAIT(O, TRAIT_UNDERFLOOR))
+			continue
+		var/mob/living/target = locate() in view(4,src)
+		if(target && !target.stat && prob(object_launch_prob))
+			O.throw_at(target, 5, 10)
 
 /obj/effect/anomaly/grav/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

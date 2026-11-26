@@ -470,8 +470,6 @@
 	jaunt_in_time = 0 SECONDS
 	/// For how long we become immobilized when using this spell
 	jaunt_out_time = 0.33 SECONDS
-	//min distance for a decoy to keep away from the hidden jaunter
-	var/decoy_min_distance = 5
 	//effects for going in and out of jaunt
 	jaunt_in_type = /obj/effect/temp_visual/quantum_disruption
 	jaunt_out_type = /obj/effect/temp_visual/quantum_disruption/out
@@ -498,11 +496,9 @@
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/quantum_disruption/do_jaunt(mob/living/jaunter)
 	//createes distraction clone
-	var/mob/living/simple_animal/hostile/illusion/darkspawn/decoy = new(get_turf(jaunter))
-	decoy.copy_parent(jaunter, jaunt_duration, 100, 20) //closely follows regular player stats so it's not painfully obvious (still sorta is)
+	var/mob/living/basic/illusion/darkspawn/decoy = new(get_turf(jaunter))
+	decoy.full_setup(jaunter, faction_override = list(FACTION_DARKSPAWN), life = jaunt_duration, hp = 100, damage = 20) //closely follows regular player stats so it's not painfully obvious (still sorta is)
 	decoy.cached_multiplicative_slowdown = jaunter.cached_multiplicative_slowdown
-	decoy.GiveTarget(owner) //so it starts running right away
-	decoy.Goto(owner, decoy.move_to_delay, decoy_min_distance)
 	return ..()
 
 
@@ -614,7 +610,7 @@
 	icon_state = "consuming"
 	duration = 4 SECONDS //functions as the delay until the explosion, just make sure it's not shorter than 1.1 seconds or it fucks up the animation
 	plane = WALL_PLANE
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CLOSED_TURF_LAYER
 	alpha = 0
 
 /obj/effect/temp_visual/darkspawn/chasm/Initialize(mapload)
@@ -638,7 +634,7 @@
 /obj/effect/temp_visual/darkspawn/detonate //the explosion effect, applies damage when it disappears
 	icon_state = "detonate"
 	plane = WALL_PLANE
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CLOSED_TURF_LAYER
 	duration = 2
 
 /obj/effect/temp_visual/darkspawn/detonate/Destroy()

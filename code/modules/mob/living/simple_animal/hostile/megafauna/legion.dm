@@ -38,7 +38,7 @@
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC|MOB_UNDEAD|MOB_MINING
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL|MOB_UNDEAD|MOB_MINING
 	speed = 5
 	ranged = TRUE
 	del_on_death = TRUE
@@ -116,7 +116,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/small/update_overlays()
 	. = ..()
 	if (stat != DEAD) // Shouldn't really happen but just in case
-		. += emissive_appearance(icon, "[icon_state]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(client)

@@ -92,6 +92,7 @@
 	name = "skewered olives"
 	desc = "This would look good in a martini."
 	icon_state = "olives"
+	icon_angle = -135
 	garnish_state = "olives"
 	garnish_layer = GARNISH_LEFT
 	force = 3

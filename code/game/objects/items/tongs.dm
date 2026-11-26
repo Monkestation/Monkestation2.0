@@ -5,6 +5,7 @@
 	desc = "So you never have to touch anything with your dirty, unwashed hands."
 	reach = 2
 	icon_state = "tongs"
+	icon_angle = -45
 	base_icon_state = "tongs"
 	inhand_icon_state = "fork" // close enough
 	attack_verb_continuous = list("pinches", "tongs", "nips")
@@ -97,6 +98,6 @@
 	held_food.layer = layer
 	held_food.plane = plane
 	held_food.transform = held_food.transform.Scale(0.7, 0.7)
-	held_food.pixel_x = 6
-	held_food.pixel_y = 6
+	held_food.pixel_w = 6
+	held_food.pixel_z = 6
 	. += held_food

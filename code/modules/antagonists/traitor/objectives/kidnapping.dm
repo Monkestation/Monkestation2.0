@@ -292,6 +292,7 @@
 	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
+	sent_mob.dna.species.post_equip_species_outfit(sent_mob) // and ceruleans get a spare vaporizer
 	sent_mob.apply_status_effect(/datum/status_effect/contractor_healing)
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \

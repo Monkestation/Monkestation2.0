@@ -55,7 +55,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/fetch,
 	)
 	//monkestation edit
 
@@ -193,7 +193,7 @@
 /mob/living/basic/mining/goliath/update_overlays()
 	. = ..()
 	if (stat != DEAD)
-		. += emissive_appearance(icon, "[icon_living]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Version of the goliath that already starts saddled and doesn't require a lasso to be ridden.
 /mob/living/basic/mining/goliath/deathmatch

@@ -45,6 +45,10 @@
 	caliber = CALIBER_45L
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/cylinder/big_iron
+	ammo_type = /obj/item/ammo_casing/c45/ap
+	caliber = CALIBER_45
+	max_ammo = 6
 
 // Shotgun revolver's cylinder
 

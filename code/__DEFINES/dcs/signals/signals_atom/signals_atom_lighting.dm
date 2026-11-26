@@ -43,3 +43,8 @@
 #define COMSIG_ATOM_SET_LIGHT_CURVE "atom_set_light_curve"
 ///Called right after the atom changes the value of light_falloff_curve to a different one, from base of [/atom/proc/set_light_curve]: (old_curve)
 #define COMSIG_ATOM_UPDATE_LIGHT_CURVE "atom_update_light_curve"
+
+/// Called when a light fixture is broken, from base of [/obj/machinery/light/break_light_tube]: (was_ok)
+#define COMSIG_LIGHT_FIXTURE_BROKEN "light_fixture_broken"
+/// Called when a light fixture is toggled on or off, from base of [/obj/machinery/light/toggle_light]: (new_status)
+#define COMSIG_LIGHT_FIXTURE_TOGGLED "light_fixture_toggled"

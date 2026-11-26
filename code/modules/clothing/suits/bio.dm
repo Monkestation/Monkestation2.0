@@ -50,6 +50,8 @@
 	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 	/// Type of texture applied by this
 	var/texture_type = /datum/bodypart_texture/mesh/biosuit
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
+	cerulean_flipper_palette = "#eeeeee"
 
 /obj/item/clothing/suit/bio_suit/Initialize(mapload)
 	. = ..()
@@ -142,6 +144,7 @@
 	strip_delay = 40
 	equip_delay_other = 20
 	texture_type = /datum/bodypart_texture/mesh/black
+	supports_variations_flags = NONE
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()
