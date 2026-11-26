@@ -1,6 +1,6 @@
 /datum/supply_pack/medical
 	group = "Medical"
-	crate_type = /obj/structure/closet/crate/medical
+	crate_type = /obj/structure/closet/crate/medical/department
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
@@ -31,6 +31,7 @@
 					/obj/item/reagent_containers/medipen/ekit = 3,
 					/obj/item/reagent_containers/medipen/blood_loss = 3)
 	crate_name = "medipen crate"
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
@@ -61,6 +62,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/defibrillator/loaded = 2)
 	crate_name = "defibrillator crate"
+	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
@@ -68,6 +70,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
+	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
@@ -97,6 +100,7 @@
 					/obj/item/vending_refill/drugs,
 				)
 	crate_name = "medical supplies crate"
+	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 10)
@@ -115,6 +119,7 @@
 		/obj/item/emergency_bed,
 	)
 	crate_name = "surgical supplies crate"
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/salglucanister
 	name = "Heavy-Duty Saline Canister"
@@ -125,6 +130,7 @@
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_MEDICAL
 	contains = list(/obj/machinery/iv_drip/saline)
+	crate_type = /obj/structure/closet/crate/large
 
 /* Monkestation Removal: Old Virology
 /datum/supply_pack/medical/virus

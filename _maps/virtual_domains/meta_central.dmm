@@ -929,7 +929,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/closet/crate/syndicrate,
+/obj/structure/closet/crate/secure/syndicrate,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "hX" = (

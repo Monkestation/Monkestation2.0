@@ -1,0 +1,1 @@
+/obj/structure/closet/crate/syndicrate : /obj/structure/closet/crate/secure/syndicrate{@OLD}

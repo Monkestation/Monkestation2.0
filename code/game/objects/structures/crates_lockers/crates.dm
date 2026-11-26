@@ -6,7 +6,6 @@
 	base_icon_state = "crate"
 	req_access = null
 	can_weld_shut = TRUE
-	icon_welded = "welded_crate"
 	horizontal = TRUE
 	allow_objects = TRUE
 	allow_dense = TRUE
@@ -46,14 +45,20 @@
 	var/static/list/crate_paint_jobs
 	if(isnull(crate_paint_jobs))
 		crate_paint_jobs = list(
-		"Internals" = list("icon_state" = "o2crate"),
-		"Medical" = list("icon_state" = "medicalcrate"),
-		"Radiation" = list("icon_state" = "radiation"),
-		"Hydrophonics" = list("icon_state" = "hydrocrate"),
-		"Science" = list("icon_state" = "scicrate"),
-		"Solar" = list("icon_state" = "engi_e_crate"),
-		"Engineering" = list("icon_state" = "engi_crate")
-	)
+			"Internals" = list("icon_state" = "o2crate"),
+			"Medical" = list("icon_state" = "medical"),
+			"Medical Plus" = list("icon_state" = "medicalcrate"),
+			"Radiation" = list("icon_state" = "radiation"),
+			"Hydrophonics" = list("icon_state" = "hydrocrate"),
+			"Science" = list("icon_state" = "scicrate"),
+			"Robotics" = list("icon_state" = "robo"),
+			"Solar" = list("icon_state" = "engi_e_crate"),
+			"Engineering" = list("icon_state" = "engi_crate"),
+			"Atmospherics" = list("icon_state" = "atmos"),
+			"Cargo" = list("icon_state" = "cargo"),
+			"Mining" = list("icon_state" = "mining"),
+			"Command" = list("icon_state" = "centcom"),
+		)
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
 	if(icon_state == "[initial(icon_state)]open")
@@ -107,12 +112,13 @@
 		var/mutable_appearance/manifest_overlay = mutable_appearance(icon, "manifest")
 		manifest_overlay.color = manifest?.color
 		. += manifest_overlay
-	if(broken && !no_broken_overlay)
-		. += "securecrateemag"
-	else if(locked)
-		. += "securecrater"
-	else if(secure)
-		. += "securecrateg"
+	if(!opened)
+		if(broken && !no_broken_overlay)
+			. += "securecrateemag"
+		else if(locked)
+			. += "securecrater"
+		else if(secure)
+			. += "securecrateg"
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
 		lid.pixel_w = lid_w
@@ -394,6 +400,22 @@
 	icon_state = "medicalcrate"
 	base_icon_state = "medicalcrate"
 
+/obj/structure/closet/crate/medical/department
+	icon_state = "medical"
+	base_icon_state = "medical"
+
+/obj/structure/closet/crate/deforest
+	name = "\improper DeForest Medical crate"
+	desc = "A DeForest brand crate of medical supplies."
+	icon_state = "deforest"
+	base_icon_state = "deforest"
+
+/obj/structure/closet/crate/interdyne_normal
+	name = "\improper Interdyne Pharmaceutics crate"
+	desc = "An Interdyne Pharmaceutics brand crate. Probably contains helpful chemicals? Hopefully contains helpful chemicals."
+	icon_state = "interdynecrate"
+	base_icon_state = "interdynecrate"
+
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
 	name = "freezer"
@@ -452,6 +474,50 @@
 	new /obj/item/bodypart/leg/right/robot/surplus(src)
 	new /obj/item/bodypart/leg/right/robot/surplus(src)
 
+/obj/structure/closet/crate/freezer/food
+	name = "food icebox"
+	icon_state = "food"
+	base_icon_state = "food"
+
+/obj/structure/closet/crate/freezer/donk
+	name = "\improper Donk Co. fridge"
+	desc = "A Donk Co. brand fridge, keeps your donkpockets and foam ammunition fresh!"
+	icon_state = "donkcocrate"
+	base_icon_state = "donkcocrate"
+
+/obj/structure/closet/crate/self
+	name = "\improper S.E.L.F. crate"
+	desc = "A robust-looking crate with a seemingly decorative holographic display. The front of the crate proudly declares its allegiance to the notorious terrorist group 'S.E.L.F'."
+	icon_state = "selfcrate"
+	base_icon_state = "selfcrate"
+
+/obj/structure/closet/crate/robust
+	name = "robust industries crate"
+	desc = "Robust Industries LLC. crate. Feels oddly nostalgic."
+	icon_state = "robust"
+	base_icon_state = "robust"
+
+/obj/structure/closet/crate/nakamura
+	name = "nakamura engineering crate"
+	desc = "Crate from Nakamura Engineering, most likely containing engineering supplies or MODcores."
+	icon_state = "nakamura"
+	base_icon_state = "nakamura"
+
+/obj/structure/closet/crate/centcom
+	name = "centcom crate"
+	icon_state = "centcom"
+	base_icon_state = "centcom"
+
+/obj/structure/closet/crate/cargo
+	name = "cargo crate"
+	icon_state = "cargo"
+	base_icon_state = "cargo"
+
+/obj/structure/closet/crate/cargo/mining
+	name = "mining crate"
+	icon_state = "mining"
+	base_icon_state = "mining"
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
@@ -468,6 +534,11 @@
 	name = "engineering crate"
 	icon_state = "engi_crate"
 	base_icon_state = "engi_crate"
+
+/obj/structure/closet/crate/engineering/atmos
+	name = "atmospherics crate"
+	icon_state = "atmos"
+	base_icon_state = "atmos"
 
 /obj/structure/closet/crate/engineering/fundedsatellites
 	name = "budgeted meteor satellites"
@@ -520,10 +591,15 @@
 	icon_state = "scicrate"
 	base_icon_state = "scicrate"
 
+/obj/structure/closet/crate/science/robo
+	name = "robotics crate"
+	icon_state = "robo"
+	base_icon_state = "robo"
+
 /obj/structure/closet/crate/mod
 	name = "MOD crate"
-	icon_state = "scicrate"
-	base_icon_state = "scicrate"
+	icon_state = "robo"
+	base_icon_state = "robo"
 
 /obj/structure/closet/crate/mod/PopulateContents()
 	..()
@@ -547,6 +623,8 @@
 
 /obj/structure/closet/crate/goldcrate
 	name = "gold crate"
+	icon_state = "gold"
+	base_icon_state = "gold"
 
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
@@ -560,6 +638,8 @@
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"
+	icon_state = "silver"
+	base_icon_state = "silver"
 
 /obj/structure/closet/crate/silvercrate/PopulateContents()
 	..()

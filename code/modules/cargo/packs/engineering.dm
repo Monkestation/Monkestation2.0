@@ -38,6 +38,7 @@
 					/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
 				)
 	crate_name= "\improper APLU MK-I kit"
+	crate_type = /obj/structure/closet/crate/science/robo
 
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
@@ -79,7 +80,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/inducer/orderable = 2)
 	crate_name = "inducer crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/closet/crate/nakamura
 
 /datum/supply_pack/engineering/pacman
 	name = "P.A.C.M.A.N Generator Crate"
@@ -88,7 +89,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "\improper PACMAN generator crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/closet/crate/nakamura
 
 /datum/supply_pack/engineering/power
 	name = "Power Cell Crate"
@@ -126,6 +127,7 @@
 	cost = CARGO_CRATE_VALUE * 4.5
 	contains = list(/obj/machinery/portable_atmospherics/pump = 2)
 	crate_name = "portable air pump crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/engineering/portascrubber
 	name = "Portable Scrubber Crate"
@@ -133,6 +135,7 @@
 	cost = CARGO_CRATE_VALUE * 4.5
 	contains = list(/obj/machinery/portable_atmospherics/scrubber = 2)
 	crate_name = "portable scrubber crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/engineering/hugescrubber
 	name = "Huge Portable Scrubber Crate"
@@ -149,7 +152,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/machinery/space_heater)
 	crate_name = "space heater crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"
@@ -269,7 +272,7 @@
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/supermatter_crystal/shard)
 	crate_name = "supermatter shard crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/closet/crate/secure/radiation
 	dangerous = TRUE
 
 /datum/supply_pack/engine/tesla_coils
@@ -294,7 +297,7 @@
 					/obj/item/hfr_box/core,
 				)
 	crate_name = "HFR crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 	dangerous = TRUE
 
 /datum/supply_pack/engine/collector

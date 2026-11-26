@@ -10402,7 +10402,7 @@
 /area/centcom/central_command_areas/hall)
 "aBJ" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/syndicrate{
+/obj/structure/closet/crate/secure/syndicrate{
 	max_integrity = 1
 	},
 /obj/machinery/light/directional/north,
