@@ -125,6 +125,8 @@
 	if(moving)
 		var/direction = get_dir(old_loc, moving.loc)
 		SEND_SIGNAL(moving, COMSIG_MOVABLE_MOVED_FROM_LOOP, src, old_dir, direction)
+		if(result)
+			EVLOG_PATH(moving, EVLOG_CATEGORY_MOVELOOPS, "Moved using [src]", list(old_loc, moving.loc)) //You might think, this runs a lot; but if not logging, it only does a lookup on the event logger.
 	owner?.processing_move_loop_flags = NONE
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
@@ -374,6 +376,11 @@
 		return
 	var/atom/old_loc = moving.loc
 	var/turf/next = get_step_to(moving, target)
+	// byond pathing refuses dense atoms even when CanPass lets us through (flying over sills)
+	if(isnull(next))
+		var/turf/direct = get_step_towards(moving, target)
+		if(direct && !direct.is_blocked_turf(source_atom = moving))
+			next = direct
 	moving.Move(next, get_dir(moving, next), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 

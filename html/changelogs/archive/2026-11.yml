@@ -1335,3 +1335,45 @@
   SirNightKnight:
   - rscadd: added a changeling blood test inspired by John Carpenter's The Thing.
   - sound: added a unique scream sound for changeling blood boiling.
+2026-11-25:
+  AitorLogedo:
+  - balance: Midround antag cap now scales with population at lowpop.
+  - balance: Declining or ignoring a midround antag prompt puts you on a 20 minute
+      cooldown for further prompts.
+  Cruix, grungussuss, SmArtKar, Charlotte-Sugar, ArcaneMusic, Jacquerel, SyncIt21, Kryson:
+  - rscadd: Some hats now squish down tall hairstyles instead of hiding them, and
+      some hairstyles have parts that stick out over headwear.
+  - rscadd: You can loosen the straps of a sec helmet to show your hair.
+  - rscadd: Added several new hairstyles.
+  - rscadd: Added platforms, steps and wooden stages. You can walk freely between
+      tables, platforms and nearby crates.
+  - rscadd: Added deep water that drains your stamina and can drown you. Ceruleans
+      and other aquatic critters swim through it just fine.
+  - rscadd: The siren pirate shuttle has its stage back.
+  - rscadd: Added the GMM spotlight station trait, which shines a spotlight on the
+      richest crewmate every paycheck.
+2026-11-26:
+  ? CabinetOnFire, Iamgoofball, SmArtKar, Ben10Omintrix, san7890, JohnFulpWillard,
+    LT3, AnturK, Jacquerel, Maia-J, vinylspiders, MrMelbert, Roxy, Iajret, Waterpig,
+    Bloop, FlufflesTheDog, FalloutFalcon
+  : - refactor: Replaced our mob AI with behavior trees. Every mob that thinks for
+        itself was moved over, so report anything acting weird
+    - refactor: Cats, gondolas, hamsters, all bots, polar bears, geese, vatbeasts,
+        dark wizards, leapers, illusions, arena fish, crawling shadows, darkspawn
+        progenitors and blood-drunk miners are basic mobs now
+    - rscadd: Floorbots were replaced by repairbots, which fix floors, walls and windows
+    - rscadd: Cats can live in cat houses, and pets converted by the cult draw revive
+        runes for it
+    - admin: New "View Behavior Tree" debug verb to see what a mob is thinking live
+    - balance: Picking up a small mob now needs an aggressive grab
+    - rscdel: Removed the curse blob, which never spawned
+    - qol: Monkeys avoid stepping on glass tables
+  SirNightKnight:
+  - bugfix: stun batons properly apply cooldown on harmbaton stun
+  - bugfix: neck items update properly when head sprites are updated
+  - bugfix: fixed a bug where you cannot deactivate/activate body cams on suit items
+      with storage using an ID.
+  - bugfix: fixed a bug where trying to remove a bodycam off a suit item with storage
+      would place the screwdriver in the suit's storage aswell.
+  Tractor-Maam:
+  - rscadd: AIs now have a UI element warning them how close to download they are.

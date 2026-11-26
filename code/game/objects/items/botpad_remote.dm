@@ -56,7 +56,7 @@
 		user?.balloon_alert(user, "close the panel!")
 		return
 /* MONKESTATION REMOVAL START
-	if(!(locate(/mob/living/simple_animal/bot) in get_turf(connected_botpad)))
+	if(!(locate(/mob/living/basic/bot) in get_turf(connected_botpad)))
 		user?.balloon_alert(user, "no bots detected on the pad!")
 		return
 	MONKESTATION REMOVAL END */

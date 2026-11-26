@@ -452,19 +452,19 @@ effective or pretty fucking useless.
 
 	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc))
-	set_faction(turret, user)
+	set_turret_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
 	return ITEM_INTERACT_SUCCESS
 
 
-/obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
+/obj/item/storage/toolbox/emergency/turret/proc/set_turret_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")
 
 /obj/item/storage/toolbox/emergency/turret/nukie
 	turret_type = /obj/machinery/porta_turret/syndicate/toolbox/nukie
 
-/obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
+/obj/item/storage/toolbox/emergency/turret/nukie/set_turret_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list(ROLE_SYNDICATE)
 
 /obj/item/storage/toolbox/emergency/turret/nukie/explosives/PopulateContents()

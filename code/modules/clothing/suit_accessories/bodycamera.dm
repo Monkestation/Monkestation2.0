@@ -55,7 +55,7 @@
 	installing_into.add_overlay(equipped_overlay)
 	forceMove(installing_into)
 	playsound(installing_into, 'sound/items/tools/drill_use.ogg', 20, TRUE, -1)
-	RegisterSignal(installing_into, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(installing_into, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	RegisterSignal(installing_into, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 	RegisterSignal(installing_into, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
 	RegisterSignal(installing_into, COMSIG_ITEM_GET_WORN_OVERLAYS, PROC_REF(on_checked_overlays))
@@ -68,7 +68,7 @@
 ///Uninstalls the bodycamera from a piece of clothing.
 /obj/item/bodycam_upgrade/proc/uninstall_camera(obj/item/taking_from, mob/user)
 	UnregisterSignal(taking_from, list(
-		COMSIG_ATOM_ATTACKBY,
+		COMSIG_ATOM_ITEM_INTERACTION,
 		COMSIG_ATOM_EXAMINE_MORE,
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ITEM_GET_WORN_OVERLAYS,
@@ -115,6 +115,7 @@
 		return
 	builtin_bodycamera.camera_enabled = FALSE
 	SScameras.remove_camera_from_chunk(builtin_bodycamera)
+	return
 
 /**
  * on_emp_act
@@ -150,6 +151,7 @@
 
 	playsound(source, 'sound/items/tools/drill_use.ogg', tool.get_clamped_volume(), TRUE, -1)
 	INVOKE_ASYNC(src, PROC_REF(uninstall_camera), source, user)
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * On Attackby
@@ -157,16 +159,18 @@
  * Called when the piece of clothing the bodycamera is installed into is attacked by an item.
  * If the item is an ID card, it will turn the camera on/off.
  */
-/obj/item/bodycam_upgrade/proc/on_attackby(datum/source, obj/item/item, mob/living/user)
+/obj/item/bodycam_upgrade/proc/on_item_interaction(datum/source, mob/user, obj/item/tool, modifiers)
 	SIGNAL_HANDLER
 
-	var/obj/item/card/id/card = item.GetID()
+	var/obj/item/card/id/card = tool.GetID()
 	if(!card)
 		return
 
 	if(builtin_bodycamera?.camera_enabled)
-		return turn_off(user)
-	return turn_on(user, card)
+		turn_off(user)
+		return ITEM_INTERACT_BLOCKING
+	turn_on(user, card)
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * On checked overlays

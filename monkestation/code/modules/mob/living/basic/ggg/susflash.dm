@@ -13,7 +13,6 @@
 	mob_size = MOB_SIZE_TINY
 	held_w_class = WEIGHT_CLASS_TINY
 	gold_core_spawnable = NO_SPAWN
-	can_be_held = FALSE //Will be changed when I make a sprite
 	// attacked_sound = ""
 	// death_sound = ""
 

@@ -13,10 +13,17 @@
 	melee_damage_lower = 2
 	obj_damage = 10
 
-	targeted_ability_planning_tree = /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/rev
 	targeted_ability = /datum/action/cooldown/mob_cooldown/chicken/rev_convert
 
 	book_desc = "This is what happens when we let the raptors learn from the stations crew."
+
+/// Spreads the revolution to the chickens around us
+/mob/living/basic/chicken/rev_raptor/pick_ability_target(datum/ai_controller/controller)
+	var/list/viable_conversions = list()
+	for(var/mob/living/basic/chicken/found_chicken in view(4, loc))
+		if(!istype(found_chicken, /mob/living/basic/chicken/rev_raptor) && !istype(found_chicken, /mob/living/basic/chicken/raptor))
+			viable_conversions |= found_chicken
+	return length(viable_conversions) ? pick(viable_conversions) : null
 
 /obj/item/food/egg/rev_raptor
 	name = "Revolutionary Egg"
@@ -37,7 +44,7 @@
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
+	ai_range = 1
 
 /datum/action/cooldown/mob_cooldown/chicken/rev_convert/PreActivate(atom/target)
 	if(target == owner || !istype(target, /mob/living/basic/chicken))

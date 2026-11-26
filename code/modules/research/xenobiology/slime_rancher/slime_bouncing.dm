@@ -51,6 +51,40 @@
 	animate(pixel_x = start_x, pixel_y = start_y, pixel_z = start_z + SLIME_BOUNCE_HEIGHT, transform = base, time = 0.15 SECONDS, easing = EASE_OUT)
 	animate(pixel_z = start_z, time = 0.15 SECONDS, easing = EASE_IN)
 
+/datum/targeting_strategy/slime_bounce_buddy
+
+/datum/targeting_strategy/slime_bounce_buddy/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/person = target
+	if(!isliving(person) || isslime(person) || !person.client || IS_UNCONSCIOUS_OR_CRIT(person) || person.body_position != STANDING_UP)
+		return FALSE
+	if(person in controller?.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+		return FALSE
+	var/mob/living/basic/slime/slime_pawn = living_mob
+	if(slime_pawn.cleaner_slime && isnull(slime_pawn.pen) && get_dist(slime_pawn, person) > 1)
+		return FALSE
+	return can_see(living_mob, person, vision_range)
+
+/datum/bt_node/decorator/slime_wants_to_bounce
+
+/datum/bt_node/decorator/slime_wants_to_bounce/check_condition(datum/ai_controller/controller)
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	return istype(slime_pawn) && slime_pawn.wants_to_bounce()
+
+/datum/bt_node/ai_behavior/bounce_off_person
+
+/datum/bt_node/ai_behavior/bounce_off_person/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	var/mob/living/person = controller.blackboard[BB_SLIME_BOUNCE_TARGET]
+	controller.clear_blackboard_key(BB_SLIME_BOUNCE_TARGET)
+	if(!istype(slime_pawn) || QDELETED(person) || !slime_pawn.Adjacent(person))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+
+	slime_pawn.bounce_off(person)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+
 #undef SLIME_BOUNCE_HEIGHT
 #undef SLIME_BOUNCE_REACH
 #undef SLIME_BOUNCE_COOLDOWN_MAX

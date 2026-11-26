@@ -820,8 +820,8 @@ GLOBAL_LIST(bluespace_slime_pylons)
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/basic/pet/dog/bullterrier,
 		/mob/living/basic/pet/fox,
-		/mob/living/simple_animal/pet/cat/kitten,
-		/mob/living/simple_animal/pet/cat/space,
+		/mob/living/basic/pet/cat/kitten,
+		/mob/living/basic/pet/cat/space,
 		/mob/living/basic/pet/penguin/emperor,
 	)
 	var/pet_type = pick(pet_types)
