@@ -11,7 +11,6 @@ fi
 
 mkdir -p \
     $1/_maps \
-    $1/build/navmaps \
     $1/data/cassette_storage \
     $1/code/datums/greyscale/json_configs \
     $1/data/spritesheets \
@@ -29,7 +28,6 @@ fi
 
 cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/
-cp -r build/navmaps/* $1/build/navmaps/
 cp -r data/cassette_storage/* $1/data/cassette_storage/
 cp -r code/datums/greyscale/json_configs/* $1/code/datums/greyscale/json_configs/
 cp -r icons/* $1/icons/
