@@ -60,6 +60,8 @@
 	// for fireman carries, check if the ridden is stunned/restrained
 	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
 		. = FALSE
+	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.faction.Find(REF(rider))))
+		. = FALSE
 
 	if(. || !consequences)
 		return
@@ -502,6 +504,43 @@
 		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
+/datum/component/riding/creature/leaper
+	can_use_abilities = TRUE
+	ride_check_flags = JUST_FRIEND_RIDERS
+
+/datum/component/riding/creature/leaper/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 46),
+		TEXT_SOUTH = list(0, 51),
+		TEXT_EAST =  list(-6, 46),
+		TEXT_WEST =  list( 6, 46),
+	)
+
+/datum/component/riding/creature/leaper/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+	)
+
+/datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+	. = ..()
+	RegisterSignal(riding_mob, COMSIG_MOVABLE_POINTED, PROC_REF(attack_pointed))
+
+/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed, obj/effect/temp_visual/point/point)
+	SIGNAL_HANDLER
+	if(!isclosedturf(pointed))
+		return
+	var/mob/living/basic/basic_parent = parent
+	if(!pointed.IsReachableBy(basic_parent))
+		return
+	basic_parent.melee_attack(pointed)
+
+/datum/component/riding/creature/leaper/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
+	UnregisterSignal(rider, COMSIG_MOVABLE_POINTED)
+	return ..()
+
 /datum/component/riding/creature/goliath
 	vehicle_move_delay = 4
 
@@ -594,3 +633,37 @@
 		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
+
+/datum/component/riding/creature/ed_bot
+	can_use_abilities = TRUE
+
+/datum/component/riding/creature/ed_bot/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 7),
+		TEXT_SOUTH = list(0, 7),
+		TEXT_EAST =  list(-10, 7),
+		TEXT_WEST =  list(10, 7),
+	)
+
+/datum/component/riding/creature/ed_bot/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+	)
+
+/datum/component/riding/creature/ed_bot/ride_check(mob/living/rider, consequences = TRUE)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/basic/bot/secbot/my_bot = parent
+	if(!(my_bot.bot_mode_flags & BOT_MODE_ON))
+		return FALSE
+	return (my_bot.bot_access_flags & BOT_COVER_EMAGGED)
+
+/datum/component/riding/creature/ed_bot/nukie
+
+/datum/component/riding/creature/ed_bot/nukie/ride_check(mob/living/rider, consequences = TRUE)
+	var/mob/living/basic/bot/secbot/my_bot = parent
+	return my_bot.faction_check_atom(rider)

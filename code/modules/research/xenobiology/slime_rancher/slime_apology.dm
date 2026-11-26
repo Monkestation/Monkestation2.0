@@ -15,6 +15,6 @@
 	var/datum/ai_controller/basic_controller/slime/controller = ai_controller
 	controller.ignore_target(spared, 2 MINUTES)
 	controller.forget(BB_BASIC_MOB_RETALIATE_LIST, spared)
-	for(var/target_key in list(BB_SLIME_EAT_TARGET, BB_BASIC_MOB_CURRENT_TARGET))
+	for(var/target_key in list(BB_SLIME_EAT_TARGET, BB_CURRENT_TARGET))
 		if(controller.blackboard[target_key] == spared)
 			controller.clear_blackboard_key(target_key)

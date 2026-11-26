@@ -239,3 +239,38 @@
 		return
 	link_target = null
 	handle_move_attempt_failure()
+
+/datum/move_manager/proc/navmap_frustrations_move(moving, chasing, delay, timeout, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, subsystem, priority, flags, datum/extra_info, initial_path, alist/nav_cost_modifiers)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/navmap_astar/frustrations, priority, flags, extra_info, delay, timeout, chasing, repath_delay, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, initial_path, null, FALSE, 0, TRUE, nav_cost_modifiers)
+
+/// Navmap loop that sticks to its first path, only repathing after it gets blocked maximum_frustrations times
+/datum/move_loop/has_target/navmap_astar/frustrations
+	var/maximum_frustrations = 10
+	var/current_frustrations = 0
+	var/frustration_delay = 2 SECONDS
+	var/initial_path_drawn = FALSE
+	COOLDOWN_DECLARE(frustration_cooldown)
+
+/datum/move_loop/has_target/navmap_astar/frustrations/recalculate_path(turf/avoid_turf)
+	if(initial_path_drawn && current_frustrations < maximum_frustrations)
+		return
+	return ..()
+
+/datum/move_loop/has_target/navmap_astar/frustrations/on_finish_pathing(list/path, list/actions)
+	. = ..(path, actions)
+	if(length(movement_path))
+		initial_path_drawn = TRUE
+
+/datum/move_loop/has_target/navmap_astar/frustrations/handle_move_attempt_failure(turf/avoid_turf)
+	if(!initial_path_drawn)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE
+	if(!COOLDOWN_FINISHED(src, frustration_cooldown))
+		return NONE
+	COOLDOWN_START(src, frustration_cooldown, frustration_delay)
+	current_frustrations++
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_NAVMAP_FRUSTRATION_INCREMENTED, current_frustrations)
+	if(current_frustrations >= maximum_frustrations)
+		current_frustrations = 0
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE

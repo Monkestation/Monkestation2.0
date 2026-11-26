@@ -243,12 +243,6 @@
 
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
-	for(var/mob/living/simple_animal/bot/bot in victim)
-		if(!(bot.bot_cover_flags & BOT_COVER_EMAGGED))
-			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
-			bot.bot_cover_flags |= BOT_COVER_MAINTS_OPEN
-			bot.emag_act(caster)
 	for(var/mob/living/basic/bot/bot in victim)
 		if(!(bot.bot_access_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)
@@ -284,7 +278,6 @@
 		// you know we really need a flag to indicate if something supports emag interactions or not
 		// but i am not in a state to open that can of worms right now. ~Lucy
 		target_typecache = zebra_typecacheof(list(
-			/mob/living/simple_animal/bot = TRUE,
 			/mob/living/basic/bot = TRUE,
 			/mob/living/carbon/human = TRUE,
 			/mob/living/silicon/robot = TRUE,

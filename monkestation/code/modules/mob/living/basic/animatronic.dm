@@ -49,7 +49,7 @@
 	lighting_cutoff_green = 10
 	lighting_cutoff_blue = 25
 
-	ai_controller = /datum/ai_controller/basic_controller/animatronic
+	ai_controller = /datum/ai_controller/basic_controller/statue/animatronic
 
 	///list of players we have killed/bitten
 	var/list/killed_list = list()
@@ -159,33 +159,18 @@
 
 	phrase_list += PHRASES_TO_ADD_ON_HUNGER
 	sound_list += SOUNDS_TO_ADD_ON_HUNGER
+	ai_controller?.set_blackboard_key(BB_HUNT_TARGET_LIST, typecacheof(list(/obj/machinery/light)))
+	ai_controller?.update_able_to_run()
 
-/datum/ai_controller/basic_controller/animatronic
-	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_LOW_PRIORITY_HUNTING_TARGET = null,
-	)
-
+/// Statue AI that only wakes up once the animatronic gets blood hungry
+/datum/ai_controller/basic_controller/statue/animatronic
 	ai_movement = /datum/ai_movement/basic_avoidance
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target/animatronic,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/animatronic,
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
-	)
 
-//gonna need review on this, I have no idea how to do AIs
-/datum/ai_planning_subtree/simple_find_target/animatronic/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(istype(controller.pawn, /mob/living/basic/monkey_animatronic))
-		var/mob/living/basic/monkey_animatronic/animatronic_pawn = controller.pawn
-		if(!animatronic_pawn.blood_hunger) //if they are not blood hungry then dont do anything(hopefully), only way I can think of doing this
-			return SUBTREE_RETURN_FINISH_PLANNING //no idea if this is the correct thing to use
-	. = ..()
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/animatronic
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/animatronic
-
-/datum/ai_behavior/basic_melee_attack/animatronic
-	action_cooldown = 1 SECONDS
+/datum/ai_controller/basic_controller/statue/animatronic/get_able_to_run()
+	var/mob/living/basic/monkey_animatronic/animatronic = pawn
+	if(!animatronic.blood_hunger)
+		return AI_UNABLE_TO_RUN
+	return ..()
 
 #undef KILLS_FOR_BLOOD_HUNGER
 #undef EXECUTE_TIME

@@ -251,7 +251,7 @@
 //Buttbot Production
 /obj/item/organ/internal/butt/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/bodypart/arm/left/robot) || istype(attacking_item, /obj/item/bodypart/arm/right/robot))
-		var/mob/living/simple_animal/bot/buttbot/new_butt = new(get_turf(src))
+		var/mob/living/basic/bot/buttbot/new_butt = new(get_turf(src))
 		qdel(attacking_item)
 		switch(src.type) //A BUTTBOT FOR EVERYONE!
 			if(/obj/item/organ/internal/butt/atomic)
@@ -292,7 +292,7 @@
 		qdel(src)
 
 
-/mob/living/simple_animal/bot/buttbot
+/mob/living/basic/bot/buttbot
 	name = "\improper buttbot"
 	desc = "butts"
 	icon = 'icons/obj/butts.dmi'
@@ -307,21 +307,23 @@
 	var/listen_probability = 30
 	COOLDOWN_DECLARE(repeat_cooldown)
 
-/mob/living/simple_animal/bot/buttbot/Initialize(mapload)
+/mob/living/basic/bot/buttbot/Initialize(mapload)
 	. = ..()
 	REMOVE_TRAIT(src, TRAIT_SILICON_ACCESS, INNATE_TRAIT)
 
-/mob/living/simple_animal/bot/buttbot/emag_act(mob/user)
-	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
+/mob/living/basic/bot/buttbot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		visible_message(span_warning("[user] swipes a card through \the [src]'s crack!"), span_notice("You swipe a card through \the [src]'s crack."))
 		listen_probability = 75
 		butt_probability = 30
-		bot_cover_flags |= BOT_COVER_EMAGGED
+		bot_access_flags |= BOT_COVER_EMAGGED
 		var/turf/butt = get_turf(src)
 		butt.atmos_spawn_air("miasma=5;TEMP=310.15")
 		playsound(src, pick('sound/misc/fart1.ogg', 'sound/effects/fart2.ogg', 'sound/effects/fart3.ogg', 'sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
+		return TRUE
+	return FALSE
 
-/mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
+/mob/living/basic/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(COOLDOWN_FINISHED(src, repeat_cooldown) && prob(listen_probability))
 		COOLDOWN_START(src, repeat_cooldown, 2 SECONDS)
@@ -329,7 +331,7 @@
 		for (var/i in 1 to length(split_message))
 			if(prob(butt_probability))
 				split_message[i] = pick("butt", "butts")
-		if((bot_cover_flags & BOT_COVER_EMAGGED))
+		if((bot_access_flags & BOT_COVER_EMAGGED))
 			var/turf/butt = get_turf(src)
 			butt.atmos_spawn_air("miasma=5;TEMP=310.15")
 		var/joined_text = jointext(split_message, " ")

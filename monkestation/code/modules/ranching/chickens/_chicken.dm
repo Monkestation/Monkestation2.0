@@ -34,7 +34,6 @@
 	speed = 1.1
 	butcher_results = list(/obj/item/food/meat/slab/chicken = 2)
 	worn_slot_flags = ITEM_SLOT_HEAD
-	can_be_held = TRUE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	chat_color = "#FFDC9B"
@@ -44,6 +43,7 @@
 
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	head_icon = 'icons/mob/pets_held_large.dmi'
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
@@ -82,7 +82,7 @@
 		else
 			name = real_name = "[breed_name] Hen"
 
-	build_initial_planning_tree()
+	setup_chicken_abilities()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -285,42 +285,34 @@
 /mob/living/basic/chicken/proc/old_age_death()
 	death()
 
-/mob/living/basic/chicken/proc/build_initial_planning_tree()
-	var/list/new_planning_subtree = list()
-
-	new_planning_subtree |= /datum/ai_planning_subtree/pet_planning
-
+/// Hands out the chicken's abilities and tells the AI about them
+/mob/living/basic/chicken/proc/setup_chicken_abilities()
 	var/datum/action/cooldown/mob_cooldown/chicken/feed/feed_ability = new(src)
 	feed_ability.Grant(src)
-	ai_controller.blackboard[BB_CHICKEN_FEED] = feed_ability
-	new_planning_subtree |= /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/feed
+	ai_controller.set_blackboard_key(BB_CHICKEN_FEED, feed_ability)
 
 	if(gender == FEMALE)
 		var/datum/action/cooldown/mob_cooldown/chicken/lay_egg/new_ability = new(src)
 		new_ability.Grant(src)
-		ai_controller.blackboard[BB_CHICKEN_LAY_EGG] = new_ability
-		new_planning_subtree |= /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/lay_egg
+		ai_controller.set_blackboard_key(BB_CHICKEN_LAY_EGG, new_ability)
 
 	if(targeted_ability)
 		var/datum/action/cooldown/mob_cooldown/created_ability = new targeted_ability(src)
 		created_ability.Grant(src)
-		ai_controller.blackboard[BB_CHICKEN_TARGETED_ABILITY] = created_ability
-		new_planning_subtree |= targeted_ability_planning_tree
+		ai_controller.set_blackboard_key(BB_CHICKEN_TARGETED_ABILITY, created_ability)
 
 	if(self_ability)
 		var/datum/action/cooldown/mob_cooldown/created_ability = new self_ability(src)
 		created_ability.Grant(src)
-		ai_controller.blackboard[BB_CHICKEN_SELF_ABILITY] = created_ability
-		new_planning_subtree |= ability_planning_tree
+		ai_controller.set_blackboard_key(BB_CHICKEN_SELF_ABILITY, created_ability)
 
 	if(projectile_type)
 		AddComponent(/datum/component/ranged_attacks, projectile_sound = 'sound/items/weapons/barragespellhit.ogg', projectile_type = src.projectile_type, cooldown_time = ranged_cooldown)
-		new_planning_subtree |= /datum/ai_planning_subtree/basic_ranged_attack_subtree/chicken
+		ai_controller.set_blackboard_key(BB_CHICKEN_RANGED, TRUE)
 
-	for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
-		new_planning_subtree |= listed_tree.type
-
-	ai_controller.replace_planning_subtrees(new_planning_subtree)
+/// Who the AI uses our targeted ability on. By default whoever we're fighting.
+/mob/living/basic/chicken/proc/pick_ability_target(datum/ai_controller/controller)
+	return controller.blackboard[BB_CURRENT_TARGET]
 
 /mob/living/basic/chicken/proc/unhappy_death()
 	death()

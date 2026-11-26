@@ -8,7 +8,6 @@
  */
 
 import fs from 'node:fs';
-import path from 'node:path';
 import Bun from 'bun';
 import Juke from './juke/index.js';
 import { bun, bunRoot } from './lib/bun';
@@ -82,124 +81,21 @@ export const DmMapsIncludeTarget = new Juke.Target({
   },
 });
 
-export const NavmapBakeTarget = new Juke.Target({
-  executes: async () => {
-    const suffix = process.platform == 'win32' ? '.bat' : '';
-    await Juke.exec(`tools/bootstrap/python${suffix}`, [
-      'tools/build_navmaps.py',
-    ]);
-  },
-});
-
-export const NavmapBakeCheckTarget = new Juke.Target({
-  executes: async () => {
-    const suffix = process.platform == 'win32' ? '.bat' : '';
-    await Juke.exec(`tools/bootstrap/python${suffix}`, [
-      'tools/build_navmaps.py',
-      '--check',
-    ]);
-  },
-});
-
-export const NavmapBakeCompileTarget = new Juke.Target({
-  parameters: [DmVersionParameter, WarningParameter, NoWarningParameter],
+export const BehaviorTreeCompilerTarget = new Juke.Target({
   inputs: [
-    'tools/build/build.ts',
-    '_maps/map_files/generic/**',
-    'maps/**/*.dm',
-    'code/**',
-    'html/**',
-    'icons/**',
-    'interface/**',
-    'sound/**',
-    'monkestation/code/**',
-    'tgui/public/tgui.html',
-    `${DME_NAME}.dme`,
-    NamedVersionFile,
+    'code/**/*.bt.json',
+    'monkestation/code/**/*.bt.json',
+    'code/__DEFINES/**/*.dm',
+    'tools/build_bt.py',
   ],
-  outputs: [`${DME_NAME}.navmap.dmb`, `${DME_NAME}.navmap.rsc`],
-  executes: async ({ get }) => {
-    const navmapDme = `${DME_NAME}.navmap.dme`;
-    fs.copyFileSync(`${DME_NAME}.dme`, navmapDme);
-    try {
-      await DreamMaker(navmapDme, {
-        defines: ['CBT', 'NAVMAP_BAKE_GENERATION', 'NAVMAP_BAKE_RAW_OUTPUT'],
-        warningsAsErrors: get(WarningParameter).includes('error'),
-        ignoreWarningCodes: get(NoWarningParameter),
-        namedDmVersion: get(DmVersionParameter),
-      });
-    } finally {
-      fs.rmSync(navmapDme, { force: true });
-    }
+  outputs: () => {
+    return Juke.glob('code/**/*.bt.json').map((file) => {
+      const rel = file.replace(/\.bt\.json$/, '');
+      return `build/behavior_trees/${rel}.bt.compiled.json`;
+    });
   },
-});
-
-const NavmapMapConfigParameter = new Juke.Parameter({
-  type: 'string',
-  name: 'map-config',
-});
-
-export const NavmapBakeRunTarget = new Juke.Target({
-  dependsOn: [NavmapBakeCompileTarget],
-  parameters: [NavmapMapConfigParameter, DmVersionParameter],
-  executes: async ({ get }) => {
-    const mapConfig = get(NavmapMapConfigParameter);
-    if (!mapConfig) {
-      throw new Juke.ExitCode(1);
-    }
-    const outputPath = `build/navmaps/${path.basename(mapConfig, '.json')}.raw.json`;
-    const params = [
-      `navmap-bake-map-config=${mapConfig}`,
-      `navmap-bake-source-config=${mapConfig}`,
-      'log-directory=tmp/navmap-bake-logs',
-    ].join('&');
-    // text2file appends, so clear the previous output and success marker.
-    fs.mkdirSync('build/navmaps', { recursive: true });
-    fs.rmSync(outputPath, { force: true });
-    const cleanRunPath = 'data/logs/tmp/navmap-bake-logs/clean_run.lk';
-    fs.rmSync(cleanRunPath, { force: true });
-    const startedAt = Date.now();
-    try {
-      await DreamDaemon(
-        {
-          dmbFile: `${DME_NAME}.navmap.dmb`,
-          namedDmVersion: get(DmVersionParameter),
-        },
-        '-close',
-        '-trusted',
-        '-verbose',
-        '-params',
-        params,
-      );
-    } catch (error) {
-      if (!(error instanceof Juke.ExitCode)) {
-        throw error;
-      }
-
-      try {
-        const outputStats = fs.statSync(outputPath);
-        const cleanRunStats = fs.statSync(cleanRunPath);
-        const generated = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-        const cleanRun = fs.readFileSync(cleanRunPath, 'utf8').trimEnd();
-        if (
-          outputStats.mtimeMs < startedAt ||
-          cleanRunStats.mtimeMs < startedAt ||
-          !cleanRun.endsWith('Success!') ||
-          generated.format_version !== 1 ||
-          generated.map_config !== mapConfig ||
-          !Array.isArray(generated.layers) ||
-          generated.layers.length === 0
-        ) {
-          throw error;
-        }
-      } catch {
-        throw error;
-      }
-
-      Juke.logger.info(
-        `DreamDaemon exited with code ${error.code} after writing a valid bake and clean-run marker; accepting the output.`,
-      );
-    }
+  executes: async () => {
+    await Juke.exec('python', ['tools/build_bt.py']);
   },
 });
 
@@ -212,6 +108,7 @@ export const DmTarget = new Juke.Target({
   ],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
+    BehaviorTreeCompilerTarget,
   ],
   inputs: [
     '_maps/map_files/generic/**',
