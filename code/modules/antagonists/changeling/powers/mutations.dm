@@ -637,7 +637,7 @@
 	helptext = "We may reabsorb the mass in the same way it was formed. It is too heavy to be used in our lesser form."
 	button_icon_state = "flesh_maul"
 	chemical_cost = 20
-	dna_cost = 2
+	dna_cost = 3
 	req_human = TRUE
 	weapon_type = /obj/item/melee/flesh_maul
 	weapon_name_simple = "maul"
@@ -652,7 +652,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	force = 36					//SHATTER BONE
+	force = 30					//SHATTER BONE
 	tool_behaviour = TOOL_MINING
 	attack_speed = CLICK_CD_LARGE_WEAPON
 	throwforce = 0 				//Just to be on the safe side
@@ -678,11 +678,9 @@
 		)
 
 /obj/item/melee/flesh_maul/afterattack(atom/target, mob/user, click_parameters)
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		carbon_target.add_movespeed_modifier(/datum/movespeed_modifier/flesh_maul)						//Slows the target because big whack
-		addtimer(CALLBACK(carbon_target, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/flesh_maul), 2 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
-		to_chat(target, span_danger("You are staggered from the blow!"))
+	user.add_movespeed_modifier(/datum/movespeed_modifier/flesh_maul)						//Slows the target because big whack
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/flesh_maul), 1.6 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	to_chat(user, span_danger("You are staggered from the blow!"))
 
 	if(iscyborg(target))
 		var/mob/living/silicon/robot/borgie = target
