@@ -24,6 +24,7 @@
 
 	mutantbrain = /obj/item/organ/internal/brain/shadow
 	mutanteyes = /obj/item/organ/internal/eyes/shadow
+	mutanttongue = /obj/item/organ/internal/tongue/shadow
 	mutantheart = null
 	mutantlungs = null
 
@@ -277,6 +278,7 @@
 		TRAIT_NEVER_WOUNDED,
 		)
 	mutanteyes = /obj/item/organ/internal/eyes/darkspawn
+	mutanttongue = /obj/item/organ/internal/tongue
 	mutantears = /obj/item/organ/internal/ears/darkspawn
 
 	bodypart_overrides = list(
