@@ -1,7 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "stun batons properly apply cooldown on harmbaton stun"
-  - bugfix: "neck items update properly when head sprites are updated"
-  - bugfix: "fixed a bug where you cannot deactivate/activate body cams on suit items with storage using an ID."
-  - bugfix: "fixed a bug where trying to remove a bodycam off a suit item with storage would place the screwdriver in the suit's storage aswell."
