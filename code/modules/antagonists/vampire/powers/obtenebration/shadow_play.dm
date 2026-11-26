@@ -69,11 +69,16 @@
 
 /// Carries Shadow Play's darkness around inside the vampire.
 /// Has to be a complex light: a negative overlay light only ever takes a flat 0.5 off a tile, which barely dents a hallway.
+/// It gets a negative overlay light on top anyway, since that's the only thing that can eat flashlights and other overlay lights.
 /obj/effect/dummy/lasombra_darkness
 	name = "darkness"
 	light_system = COMPLEX_LIGHT
 	light_power = -3
 	// the color is what gets taken away, so leaving a bit of red in makes the dark faintly bloody
 	light_color = "#e8ffff"
+
+/obj/effect/dummy/lasombra_darkness/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/overlay_lighting, force = TRUE)
 
 #undef SHADOW_PLAY_OUTLINE
