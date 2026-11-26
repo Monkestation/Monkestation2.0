@@ -203,6 +203,7 @@
 	body_parts_covered = CHEST|ARMS
 	species_exception = list(/datum/species/golem)
 	has_coat_pockets = TRUE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"

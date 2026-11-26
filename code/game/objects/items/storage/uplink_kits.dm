@@ -967,6 +967,11 @@
 	new /obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse(src)
 	new /obj/item/food/grown/apple(src)
 
+/obj/item/storage/box/syndicate/sleeping_carp/PopulateContents()
+	new /obj/item/book/granter/martial/carp(src)
+	new /obj/item/clothing/under/costume/gi(src)
+	new /obj/item/clothing/shoes/sandal(src)
+
 #define KIT_ITEM_CATEGORY_SUPPORT "support"
 #define KIT_ITEM_CATEGORY_WEAPONS "weapons"
 #define KIT_ITEM_CATEGORY_MISC "misc"

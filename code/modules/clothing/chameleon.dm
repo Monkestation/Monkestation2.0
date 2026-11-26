@@ -387,6 +387,7 @@
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	can_adjust = FALSE
 	armor_type = /datum/armor/under_chameleon
 
@@ -451,6 +452,7 @@
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/suit_chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 	action_slots = ALL
@@ -521,6 +523,7 @@
 	icon_state = "meson"
 	inhand_icon_state = "meson"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/glasses_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -651,6 +654,7 @@
 	greyscale_colors = null
 
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/gloves_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -708,6 +712,7 @@
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "greysoft"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/head_chameleon
 	action_slots = ALL
 
@@ -817,7 +822,7 @@
 	inhand_icon_state = "gas_alt"
 	resistance_flags = NONE
 	armor_type = /datum/armor/mask_chameleon
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | CARP_STYLE_FACTOR
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	w_class = WEIGHT_CLASS_SMALL
@@ -912,6 +917,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	greyscale_colors = "#545454#ffffff"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/shoes_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action

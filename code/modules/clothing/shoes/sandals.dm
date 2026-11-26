@@ -10,6 +10,7 @@
 	armor_type = /datum/armor/shoes_sandal
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /datum/armor/shoes_sandal
 	bio = 10
