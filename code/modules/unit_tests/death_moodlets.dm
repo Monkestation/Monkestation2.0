@@ -123,3 +123,15 @@
 
 	desensitized_dummy.remove_status_effect(/datum/status_effect/desensitized, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT_EQUAL(desensitized_dummy.mind.desensitized_level, 1.0, "Desensitized level not reset to normal on removal of desensitized status effect.")
+
+/datum/unit_test/death_moodlets/human/naive_mind
+	desired_moodlet = /datum/mood_event/conditional/see_death/naive
+
+/datum/unit_test/death_moodlets/human/naive_mind/prepare_dummy(mob/living/carbon/human/consistent/dummy)
+	ADD_TRAIT(dummy.mind, TRAIT_NAIVE, TRAIT_SOURCE_UNIT_TESTS)
+
+/datum/unit_test/death_moodlets/teratoma
+	desired_moodlet = /datum/mood_event/conditional/see_death/teratoma
+
+/datum/unit_test/death_moodlets/teratoma/get_dying_mob()
+	return allocate(/mob/living/carbon/human/species/teratoma)
