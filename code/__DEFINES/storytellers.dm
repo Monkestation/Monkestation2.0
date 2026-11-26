@@ -78,8 +78,9 @@
 #define EVENT_PANEL_TRACKS list(EVENT_TRACK_MUNDANE, EVENT_TRACK_MODERATE, EVENT_TRACK_MAJOR, EVENT_TRACK_ROLESET, EVENT_TRACK_OBJECTIVES, EVENT_TRACK_LATEJOIN, UNCATEGORIZED_EVENTS, ALL_EVENTS)
 
 /// Defines for the antag cap to prevent midround injections.
-#define ANTAG_CAP_FLAT 30
-#define ANTAG_CAP_DENOMINATOR 30
+#define ANTAG_CAP_OFFSET 5
+#define ANTAG_CAP_LOWPOP_MULT 0.85
+#define ANTAG_DECLINE_COOLDOWN (20 MINUTES)
 
 ///Below are defines for roundstart point pool. The GAIN ones are multiplied by ready population
 

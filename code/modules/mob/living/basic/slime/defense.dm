@@ -108,13 +108,13 @@
 		var/datum/ai_controller/basic_controller/slime/controller = ai_controller
 		if(controller)
 			controller.ignore_target(victim, SLIME_LATCH_COOLDOWN)
-			for(var/target_key in list(BB_SLIME_EAT_TARGET, BB_BASIC_MOB_CURRENT_TARGET))
+			for(var/target_key in list(BB_SLIME_EAT_TARGET, BB_CURRENT_TARGET))
 				if(controller.blackboard[target_key] == victim)
 					controller.clear_blackboard_key(target_key)
 	stop_feeding(silent = TRUE)
 	if(life_stage == SLIME_LIFE_STAGE_BABY && prob(80))
-		ai_controller?.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
-		ai_controller?.clear_blackboard_key(BB_SLIME_EAT_TARGET)
+		ai_controller?.clear_blackboard_key(BB_CURRENT_TARGET)
+		ai_controller?.clear_blackboard_key(BB_CURRENT_HUNTING_TARGET)
 
 	if(prob(10))
 		ai_controller?.set_blackboard_key(BB_SLIME_RABID, FALSE)

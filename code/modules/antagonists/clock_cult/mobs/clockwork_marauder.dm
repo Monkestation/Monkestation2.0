@@ -26,7 +26,7 @@
 	obj_damage = 80
 	faction = list(FACTION_CLOCK)
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	ai_controller = /datum/ai_controller/basic_controller/clockwork_marauder
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile
 	initial_language_holder = /datum/language_holder/clockmob
 
 	/// Items to be dropped on death
@@ -106,23 +106,6 @@
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/ratvar = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/ratvar = list(LANGUAGE_ATOM))
-
-/datum/ai_controller/basic_controller/clockwork_marauder
-	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/clockwork_marauder,
-	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/clockwork_marauder
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/clockwork_marauder
-
-/datum/ai_behavior/basic_melee_attack/clockwork_marauder
-	action_cooldown = 1.2 SECONDS
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()

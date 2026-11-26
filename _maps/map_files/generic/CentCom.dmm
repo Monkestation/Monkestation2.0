@@ -6110,6 +6110,10 @@
 /obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
+"aqk" = (
+/obj/machinery/minimap_table,
+/turf/open/floor/circuit/red/no_power,
+/area/centcom/syndicate_mothership/control)
 "aql" = (
 /obj/structure/flora/grass/both/style_random,
 /obj/structure/flora/rock/pile/style_random,
@@ -15625,6 +15629,9 @@
 /obj/structure/railing/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
+"aPU" = (
+/turf/open/floor/circuit/red/no_power,
+/area/centcom/syndicate_mothership/control)
 "aPV" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -21946,10 +21953,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"fbd" = (
-/mob/living/simple_animal/pet/gondola,
-/turf/open/floor/eighties/red,
-/area/centcom/central_command_areas/admin)
 "fbx" = (
 /obj/structure/sign{
 	name = "wall";
@@ -22028,13 +22031,6 @@
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
-"fgN" = (
-/mob/living/simple_animal/pet/cat/kitten{
-	name = "Kbity :3";
-	desc = "D'aaawwww. Fortune's best friend"
-	},
-/turf/open/floor/iron/dark/small,
-/area/centcom)
 "fgR" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -23735,6 +23731,10 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
+"hEq" = (
+/mob/living/basic/pet/gondola,
+/turf/open/floor/eighties/red,
+/area/centcom/central_command_areas/admin)
 "hFg" = (
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/iron/dark/textured_large,
@@ -26355,6 +26355,10 @@
 "lSF" = (
 /turf/closed/indestructible/riveted,
 /area/centcom)
+"lUQ" = (
+/mob/living/basic/pet/gondola/funky,
+/turf/open/floor/eighties/red,
+/area/centcom/central_command_areas/admin)
 "lVZ" = (
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /obj/structure/closet/secure_closet/brig/genpop,
@@ -26691,6 +26695,15 @@
 /obj/item/chair/wood,
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/carpet/grimey,
+/area/centcom/central_command_areas/adminroom)
+"mHS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
 "mIn" = (
 /obj/machinery/light/floor/has_bulb,
@@ -28939,6 +28952,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/firebase_trident/hangar)
+"qvm" = (
+/obj/item/flashlight/flare/candle/amber,
+/turf/open/floor/carpet/red,
+/area/centcom/central_command_areas/adminroom)
 "qvS" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8;
@@ -29255,6 +29272,13 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"qON" = (
+/mob/living/basic/pet/cat/kitten{
+	name = "Kbity :3";
+	desc = "D'aaawwww. Fortune's best friend"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom)
 "qQr" = (
 /obj/structure/decorative/shelf/alcohol,
 /turf/open/floor/carpet/red,
@@ -29302,9 +29326,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
-"qUy" = (
-/turf/open/floor/circuit/red/no_power,
-/area/centcom/syndicate_mothership/control)
 "qUI" = (
 /obj/machinery/computer/camera_advanced/syndie{
 	dir = 4
@@ -30057,10 +30078,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/centcom/central_command_areas/prison/cells)
-"shW" = (
-/mob/living/simple_animal/pet/gondola/funky,
-/turf/open/floor/eighties/red,
-/area/centcom/central_command_areas/admin)
 "shZ" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/red,
@@ -31049,10 +31066,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
-"tSg" = (
-/obj/item/flashlight/flare/candle/amber,
-/turf/open/floor/carpet/red,
-/area/centcom/central_command_areas/adminroom)
 "tSS" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/cassette_deck,
@@ -32150,15 +32163,6 @@
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
-"vNC" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/wood,
-/area/centcom/central_command_areas/adminroom)
 "vNP" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4;
@@ -33049,10 +33053,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
-"xiU" = (
-/obj/machinery/minimap_table,
-/turf/open/floor/circuit/red/no_power,
-/area/centcom/syndicate_mothership/control)
 "xjq" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -48282,7 +48282,7 @@ aPQ
 aVK
 aKn
 aai
-xiU
+aqk
 anY
 aGE
 aiL
@@ -48539,7 +48539,7 @@ aVK
 aVK
 aKn
 aCw
-qUy
+aPU
 aOc
 aGE
 aiL
@@ -64143,7 +64143,7 @@ aMc
 aMc
 lSF
 fAH
-fgN
+qON
 eBX
 lSF
 jsr
@@ -67940,7 +67940,7 @@ exa
 exa
 exa
 qja
-vNC
+mHS
 qag
 hkq
 jCt
@@ -69226,7 +69226,7 @@ exa
 exa
 qja
 dtm
-tSg
+qvm
 qja
 hkq
 fGN
@@ -74117,7 +74117,7 @@ aOn
 dld
 jSt
 aZf
-fbd
+hEq
 aSV
 ahB
 aOn
@@ -74632,7 +74632,7 @@ dld
 jSt
 aZf
 aSV
-shW
+lUQ
 aSV
 aOn
 aaa

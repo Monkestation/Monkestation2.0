@@ -2455,7 +2455,7 @@
 "jd" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/bed/dogbed,
-/mob/living/simple_animal/pet/cat/kitten,
+/mob/living/basic/pet/cat/kitten,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 6
 	},
@@ -11503,7 +11503,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/engineering)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/bot/secbot/grievous/toy,
+/mob/living/basic/bot/secbot/grievous/toy,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,

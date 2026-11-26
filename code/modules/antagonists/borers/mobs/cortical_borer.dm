@@ -131,7 +131,6 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	// Because they are small, why can't they be held?
-	can_be_held = TRUE
 	/// How much time we need to get the next point, what one it is depends on "should_get_evolution"
 	var/maturation_speed = 30 SECONDS
 	/// How old the borer is, starting from zero. Goes up only when inside a host and resets when a point is gained.
@@ -204,6 +203,7 @@
 
 /mob/living/basic/cortical_borer/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT) // They need to be able to move around
 
 	var/matrix/borer_matrix = matrix(transform)

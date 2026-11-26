@@ -104,62 +104,53 @@
 	animate(pixel_z = floor_z, time = 0.12 SECONDS, easing = EASE_IN)
 
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/misc/moist_impact.ogg', 30, TRUE), fall_time)
-	ai_controller?.PauseAi(fall_time + 1.5 SECONDS) // sits there dazed for a bit
+	// sits there dazed for a bit
+	pause_ai(SLIME_TUMBLE_TRAIT)
+	addtimer(CALLBACK(src, PROC_REF(unpause_ai), SLIME_TUMBLE_TRAIT), fall_time + 1.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	set_temporary_mood(SLIME_MOOD_POUT)
 
-/datum/ai_planning_subtree/slime_target/stack
-	target_key = BB_SLIME_STACK_TARGET
-	finding_behavior = /datum/ai_behavior/slime_find_target/stack
-	acting_behavior = /datum/ai_behavior/slime_chase/stack
+/// Looks for a slime to hop on top of
 
-/datum/ai_planning_subtree/slime_target/stack/should_scan(datum/ai_controller/controller)
-	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	var/datum/ai_behavior/slime_find_target/mess_finder = GET_AI_BEHAVIOR(/datum/ai_behavior/slime_find_target/mess)
-	if(slime_pawn.cleaner_slime && mess_finder.has_candidates(controller))
-		controller.clear_blackboard_key(target_key)
+/datum/targeting_strategy/slime_stack_seat
+
+/datum/targeting_strategy/slime_stack_seat/is_valid_target(mob/living/basic/slime/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
 		return FALSE
-	if(isslime(slime_pawn.buckled) || slime_pawn.wants_to_stack())
-		return TRUE
-	controller.clear_blackboard_key(target_key)
-	return FALSE
+	return living_mob.can_stack_onto(target)
 
-/datum/ai_behavior/slime_find_target/stack
-	must_be_reachable = TRUE
+/datum/bt_node/decorator/slime_wants_to_stack
 
-/datum/ai_behavior/slime_find_target/stack/get_candidates(datum/ai_controller/controller)
-	. = list()
-	for(var/mob/living/basic/slime/seat in oview(scan_range, controller.pawn))
-		. += seat
-
-/datum/ai_behavior/slime_find_target/stack/is_valid_target(datum/ai_controller/controller, atom/target)
+/datum/bt_node/decorator/slime_wants_to_stack/check_condition(datum/ai_controller/controller)
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	return slime_pawn.can_stack_onto(target)
+	if(!istype(slime_pawn) || (slime_pawn.cleaner_slime && slime_pawn.sees_mess_to_clean()))
+		return FALSE
+	return isslime(slime_pawn.buckled) || slime_pawn.wants_to_stack()
 
-/// Walks over, hops on, and then just sits there. This staying in the plan is what keeps us on the tower,
-/// so anything higher up winning a plan drops it, and finish_action() gets us off.
-/datum/ai_behavior/slime_chase/stack
+/// Hops on, and then just sits there. This staying running is what keeps us on the tower,
+/// so anything higher up the tree butting in drops it, and finish_action() gets us off.
+/datum/bt_node/ai_behavior/sit_on_slime
+	time_between_perform = 1 SECONDS
 
-/datum/ai_behavior/slime_chase/stack/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/bt_node/ai_behavior/sit_on_slime/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/basic/slime/slime_pawn = controller.pawn
+	var/mob/living/basic/slime/seat = controller.blackboard[BB_SLIME_STACK_TARGET]
+	if(!istype(slime_pawn) || QDELETED(seat) || !slime_pawn.can_stack_onto(seat))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(slime_pawn.buckled == seat)
+		// one roll per perform, and we perform once a second
+		if(prob(SLIME_STACK_HOP_OFF_CHANCE))
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		return AI_BEHAVIOR_DELAY
+	if(!slime_pawn.Adjacent(seat) || !slime_pawn.stack_onto(seat))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	return AI_BEHAVIOR_DELAY
+
+/datum/bt_node/ai_behavior/sit_on_slime/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	var/mob/living/basic/slime/seat = controller.blackboard[target_key]
-	if(QDELETED(seat))
-		controller.clear_blackboard_key(target_key)
-		finish_action(controller, FALSE, target_key)
-		return
-	if(slime_pawn.buckled == seat)
-		if(SPT_PROB(SLIME_STACK_HOP_OFF_CHANCE, seconds_per_tick))
-			controller.clear_blackboard_key(target_key)
-			finish_action(controller, TRUE, target_key)
-		return
-	if(!slime_pawn.Adjacent(seat) || !slime_pawn.can_stack_onto(seat) || !slime_pawn.stack_onto(seat))
-		controller.clear_blackboard_key(target_key)
-		finish_action(controller, FALSE, target_key)
-
-/datum/ai_behavior/slime_chase/stack/finish_action(datum/ai_controller/controller, succeeded, target_key)
-	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	slime_pawn.hop_off_stack()
-	return ..()
+	slime_pawn?.hop_off_stack()
+	controller.clear_blackboard_key(BB_SLIME_STACK_TARGET)
 
 #undef SLIME_STACK_OFFSET
 #undef SLIME_STACK_HOP_OFF_CHANCE

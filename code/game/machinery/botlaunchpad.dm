@@ -58,12 +58,8 @@
 		user.balloon_alert(user, "no bot to send back to the pad!")
 		return
 	user.balloon_alert(user, "bot sent back to pad")
-	if(isbasicbot(our_bot))
-		var/mob/living/basic/bot/basic_bot = our_bot
-		basic_bot.summon_bot(user, get_turf(src))
-	else
-		var/mob/living/simple_animal/bot/simple_bot = our_bot
-		simple_bot.call_bot(user, get_turf(src))
+	var/mob/living/basic/bot/basic_bot = our_bot
+	basic_bot.summon_bot(user, get_turf(src))
 
 /obj/structure/closet/supplypod/botpod
 	style = STYLE_SEETHROUGH
