@@ -76,9 +76,17 @@
  */
 /datum/element/light_eater/proc/table_buffet(atom/commisary, datum/devourer)
 	. = list()
-	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., devourer)
-	for(var/datum/light_source/morsel as anything in commisary.light_sources)
-		.[morsel.source_atom] = TRUE
+	var/list/courses = list(commisary)
+	if(ismovable(commisary))
+		var/atom/movable/movable_commisary = commisary
+		if(LAZYLEN(movable_commisary.buckled_mobs))
+			courses += movable_commisary.buckled_mobs
+		if(movable_commisary.pulling && !isliving(movable_commisary.pulling))
+			courses += movable_commisary.pulling
+	for(var/atom/course as anything in courses)
+		SEND_SIGNAL(course, COMSIG_LIGHT_EATER_QUEUE, ., devourer)
+		for(var/datum/light_source/morsel as anything in course.light_sources)
+			.[morsel.source_atom] = TRUE
 
 /**
  * Consumes the light on the target, permanently rendering it incapable of producing light
