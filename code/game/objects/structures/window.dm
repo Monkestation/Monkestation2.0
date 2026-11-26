@@ -928,6 +928,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	fire = 80
 	acid = 100
 
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible
+	name = "hardened shuttle window"
+	desc = "A durable looking window made of an alloy of plasma and titanium."
+	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
+
 /obj/structure/window/reinforced/plasma/plastitanium/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME

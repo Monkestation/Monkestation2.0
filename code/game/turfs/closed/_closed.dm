@@ -153,6 +153,17 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
 
+/turf/closed/indestructible/reinforced/titanium
+	name = "reinforced titanium imitation wall"
+	desc = "A huge chunk of reinforced metal used to separate rooms. Naturally, to cut down on costs, this is just a really good paint job to resemble titanium. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/shuttle_wall.dmi'
+	icon_state = "shuttle_wall-0"
+	base_icon_state = "shuttle_wall"
+
+/turf/closed/indestructible/reinforced/titanium/nodiagonal
+	icon_state = "shuttle_wall-15"
+	smoothing_flags = SMOOTH_BITMASK
+
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
@@ -208,6 +219,10 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
+
+/turf/closed/indestructible/alien/nodiagonal
+	icon_state = "abductor_wall-15"
+	smoothing_flags = SMOOTH_BITMASK
 
 
 /turf/closed/indestructible/cult
@@ -302,6 +317,12 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	pixel_x = -4
 	pixel_y = -4
+
+/turf/closed/indestructible/ice
+	name = "permafrost"
+	desc = "Extremely densely-packed, never-melting sheets of ice, somehow impervious to most mining tools."
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "permafrost"
 
 /turf/closed/indestructible/paper
 	name = "thick paper wall"
