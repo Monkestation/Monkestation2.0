@@ -1,0 +1,13 @@
+author: "V2LenKagamine"
+delete-after: True
+changes:
+  - map: "Box station is now luminous"
+  - map: "Helio station has gained lights"
+  - map: "Ice Box station is now glowing"
+  - map: "Meta station is brighter"
+  - map: "Meta Station Asteroid Magnet now lives by Art Sci"
+  - map: "Tram station has gained the sun."
+  - map: "Tram station artifice slightly larger"
+  - map: "blue shift more visibly blue"
+  - map: "pubby public visibility improved"
+  - map: "void raptor has less void"
