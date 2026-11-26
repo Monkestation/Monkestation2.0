@@ -10402,7 +10402,7 @@
 /area/centcom/central_command_areas/hall)
 "aBJ" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/syndicrate{
+/obj/structure/closet/crate/secure/syndicrate{
 	max_integrity = 1
 	},
 /obj/machinery/light/directional/north,
@@ -21506,7 +21506,7 @@
 /area/centcom/central_command_areas/medical)
 "eka" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/prison/cells)
 "ekW" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -25003,7 +25003,7 @@
 /obj/structure/toilet/greyscale{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/prison/cells)
 "jFm" = (
 /obj/structure/table,
@@ -28823,7 +28823,7 @@
 /area/centcom/central_command_areas/admin)
 "qgW" = (
 /obj/effect/landmark/prisonwarp,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/prison/cells)
 "qia" = (
 /obj/structure/meateor_fluff/eyeball,
@@ -30074,7 +30074,7 @@
 /obj/structure/bed/pod{
 	pixel_y = 7
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/central_command_areas/prison/cells)
 "shW" = (
 /mob/living/basic/pet/gondola/funky,
@@ -32318,7 +32318,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/ash,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
 "vZN" = (

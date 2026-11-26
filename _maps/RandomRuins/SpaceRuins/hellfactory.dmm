@@ -883,7 +883,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "pT" = (
-/obj/machinery/light/built/directional/south,
+/obj/machinery/light/empty/directional/south,
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)

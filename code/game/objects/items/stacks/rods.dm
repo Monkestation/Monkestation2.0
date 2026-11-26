@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throw_speed = 3
 	throw_range = 7
 	demolition_mod = 1.25
+	usable_for_construction = TRUE
 	mats_per_unit = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	max_amount = 50
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")

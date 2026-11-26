@@ -297,7 +297,7 @@
 "agC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "agI" = (
@@ -18522,7 +18522,7 @@
 /turf/open/floor/plating,
 /area/mine/eva/lower)
 "fDl" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "fDn" = (
@@ -35755,7 +35755,7 @@
 /area/station/maintenance/fore)
 "kUJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/structure/mirror/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,

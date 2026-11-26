@@ -70,6 +70,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	/// Used for air alarm helper called tlv_cold_room to adjust alarm thresholds for cold room.
 	var/tlv_cold_room = FALSE
+	/// Used for air alarm helper called tlv_kitchen to adjust temperature thresholds for kitchen.
+	var/tlv_kitchen = FALSE
 	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
@@ -687,6 +689,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	ac_temp_min = COLD_ROOM_TEMP - 5
 	ac_temp_max = COLD_ROOM_TEMP + 5
 	//monkestation addition end
+
+///Used for air alarm kitchen tlv helper, which ensures that kitchen air alarm doesn't trigger from cold room air
+/obj/machinery/airalarm/proc/set_tlv_kitchen()
+	tlv_collection["temperature"] = new /datum/tlv/kitchen_temperature
 
 ///Used for air alarm no tlv helper, which removes alarm thresholds
 /obj/machinery/airalarm/proc/set_tlv_no_checks()

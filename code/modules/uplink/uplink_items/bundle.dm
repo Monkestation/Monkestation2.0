@@ -151,14 +151,14 @@
 			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 150 TC. \
 			The Syndicate will only provide one surplus item per agent."
 	cost = 25
-	item = /obj/structure/closet/crate/syndicrate
+	item = /obj/structure/closet/crate/secure/syndicrate
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	crate_tc_value = 200 // teamwork makes the dream work?
-	crate_type = /obj/structure/closet/crate/syndicrate
+	crate_type = /obj/structure/closet/crate/secure/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
-/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/syndicrate/surplus_crate, list/possible_items)
+/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/secure/syndicrate/surplus_crate, list/possible_items)
 	if(!istype(surplus_crate))
 		return
 	var/tc_budget = crate_tc_value

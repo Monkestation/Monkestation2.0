@@ -240,7 +240,7 @@
 		return TRUE
 
 //window placing begin
-	else if(is_glass_sheet(attacking_item) || istype(attacking_item, /obj/item/stack/sheet/bronze))
+	else if(is_glass_sheet(attacking_item) || istype(attacking_item, /obj/item/stack/sheet/bronze) || istype(attacking_item, /obj/item/stack/sheet/runed_metal) || istype(attacking_item, /obj/item/stack/wall_filling/plastitaniumglass))
 		if (!broken)
 			var/obj/item/stack/ST = attacking_item
 			if (ST.get_amount() < 2)
@@ -272,16 +272,25 @@
 					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
 				else if(istype(attacking_item, /obj/item/stack/sheet/titaniumglass))
 					WD = new/obj/structure/window/reinforced/shuttle(drop_location())
+				else if(istype(attacking_item, /obj/item/stack/wall_filling/plastitaniumglass/basic))
+					WD = new/obj/structure/window/reinforced/plasma/plastitanium/windowfill(drop_location())
+				else if(istype(attacking_item, /obj/item/stack/wall_filling/plastitaniumglass/pod))
+					WD = new/obj/structure/window/reinforced/shuttle/survival_pod(drop_location())
 				else if(istype(attacking_item, /obj/item/stack/sheet/plastitaniumglass))
 					WD = new/obj/structure/window/reinforced/plasma/plastitanium(drop_location())
 				else if(istype(attacking_item, /obj/item/stack/sheet/bronze))
 					WD = new/obj/structure/window/bronze/fulltile(drop_location())
+				else if(istype(attacking_item, /obj/item/stack/sheet/runed_metal))
+					WD = new/obj/structure/window/cult/fulltile(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)
 				WD.set_anchored(FALSE)
 				WD.state = 0
-				ST.use(2)
+				if((istype(attacking_item, /obj/item/stack/wall_filling)))
+					ST.use(1)
+				else
+					ST.use(2)
 				to_chat(user, span_notice("You place [WD] on [src]."))
 			return
 //window placing end

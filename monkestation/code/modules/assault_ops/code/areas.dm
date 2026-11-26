@@ -48,7 +48,7 @@
 	color = COLOR_BLUE
 	ambientsounds = AMBIENCE_CREEPY
 
-/turf/closed/wall/r_wall/syndicate/cruiser
+/turf/closed/wall/r_wall/plastitanium/syndicate/cruiser
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
 
 /obj/effect/landmark/start/assaultop

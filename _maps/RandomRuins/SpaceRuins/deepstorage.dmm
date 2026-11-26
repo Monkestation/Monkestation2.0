@@ -916,7 +916,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "ds" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage)
 "dt" = (
 /obj/machinery/light/directional/north,
@@ -1113,7 +1113,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "ee" = (
 /obj/structure/cable,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/armory)
 "eg" = (
 /obj/effect/turf_decal/delivery,
@@ -1331,7 +1331,7 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -1571,7 +1571,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
 	dir = 4
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/armory)
 "fq" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
@@ -2133,10 +2133,10 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "hn" = (
 /obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "ho" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "hq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
@@ -2149,14 +2149,14 @@
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 4
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/armory)
 "hH" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "hL" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/armory)
 "hO" = (
 /obj/item/storage/toolbox/drone,
@@ -2591,7 +2591,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "oI" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "oJ" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -2706,7 +2706,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "qt" = (
 /obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/armory)
 "qB" = (
 /obj/effect/turf_decal/stripes/red/line{
@@ -2729,7 +2729,7 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "qQ" = (
 /obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "qR" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -2827,7 +2827,7 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "sj" = (
 /obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "so" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
@@ -3017,7 +3017,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "uU" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "vj" = (
 /obj/structure/guncase{
@@ -3337,7 +3337,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "zI" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/storage)
 "Ag" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -3422,7 +3422,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "AZ" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "Bb" = (
 /obj/structure/filingcabinet,
@@ -3898,7 +3898,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "JG" = (
 /obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/power)
 "JR" = (
 /obj/structure/sign/warning/electric_shock/directional/north,
@@ -4081,7 +4081,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Ob" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "Oc" = (
 /obj/structure/closet/secure_closet/wall/directional/north,
@@ -4102,7 +4102,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/aux_storage)
 "Of" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/aux_storage)
 "Og" = (
 /obj/structure/table/reinforced,
@@ -4155,10 +4155,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "OR" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "OX" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "OY" = (
 /obj/machinery/suit_storage_unit/syndicate,
@@ -4231,7 +4231,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "Qm" = (
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space)
 "Qr" = (
 /obj/effect/turf_decal/stripes/line,
@@ -4267,7 +4267,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "QI" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/power)
 "QM" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -4314,7 +4314,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
 	dir = 6
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/armory)
 "Rs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4480,7 +4480,7 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Uy" = (
 /obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "UH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4622,7 +4622,7 @@
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/armory)
 "Ya" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "Yo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

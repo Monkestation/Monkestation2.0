@@ -16165,9 +16165,7 @@
 "dOA" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/trash_pile,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "dOE" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -23460,7 +23458,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/pathology/isolation)
 "fyt" = (
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fyv" = (
@@ -25872,7 +25870,7 @@
 "gcF" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "gcI" = (
@@ -41018,9 +41016,7 @@
 /area/station/hallway/primary/central/aft)
 "jDc" = (
 /obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "jDd" = (
 /turf/closed/wall/r_wall,
@@ -56804,9 +56800,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "noK" = (
 /obj/structure/table/reinforced,
@@ -60565,7 +60559,7 @@
 "okj" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "okk" = (
@@ -63861,9 +63855,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/red/directional/east,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "pbq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -65583,9 +65575,7 @@
 "pvx" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "pvF" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
@@ -80122,9 +80112,7 @@
 "sPB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "sPO" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -101636,7 +101624,7 @@
 "xXt" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "xXw" = (

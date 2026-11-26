@@ -180,7 +180,7 @@
 	},
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "oW" = (
 /obj/machinery/light/small/directional/west,
@@ -326,7 +326,7 @@
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Jv" = (
 /turf/template_noop,
@@ -370,7 +370,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Mc" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
@@ -382,7 +382,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Oe" = (
 /obj/effect/turf_decal/stripes/line{
@@ -480,7 +480,7 @@
 "Vh" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Vp" = (
 /obj/machinery/firealarm/directional/west,
@@ -498,7 +498,7 @@
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 
 (1,1,1) = {"

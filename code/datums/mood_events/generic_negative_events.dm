@@ -632,3 +632,8 @@
 	description = "Ugh, what a night."
 	mood_change = 0
 	timeout = 10 MINUTES
+
+/datum/mood_event/cement
+	description = span_warning("I was forced to eat cement...")
+	mood_change = -6
+	timeout = 4 MINUTES

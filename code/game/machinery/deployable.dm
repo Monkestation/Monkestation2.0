@@ -70,22 +70,7 @@
 	var/static/list/tool_behaviors = list(TOOL_CROWBAR = list(SCREENTIP_CONTEXT_LMB = "Deconstruct"))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	register_context()
-
-/obj/structure/barricade/wooden/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item,/obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/W = attacking_item
-		if(W.amount < 5)
-			to_chat(user, span_warning("You need at least five wooden planks to make a wall!"))
-			return
-		else
-			to_chat(user, span_notice("You start adding [attacking_item] to [src]..."))
-			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 5 SECONDS, target=src) && W.use(5))
-				var/turf/T = get_turf(src)
-				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
-				qdel(src)
-				return
-	return ..()
+	AddElement(/datum/element/uses_girder_wall_recipes)
 
 /obj/structure/barricade/wooden/CanAllowThrough(atom/movable/mover, border_dir)
 	if(HAS_TRAIT(mover, TRAIT_GOES_THROUGH_WOODEN_BARRICADES))

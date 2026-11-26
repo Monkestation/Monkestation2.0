@@ -14,7 +14,7 @@
 	on = 0;
 	shot_delay = 10
 	},
-/turf/closed/wall/r_wall/syndicate/hull/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull/nodiagonal,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ad" = (
 /obj/machinery/computer/operating,
@@ -63,7 +63,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "an" = (
 /obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ao" = (
 /turf/open/floor/carpet/royalblack,
@@ -73,7 +73,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aq" = (
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ar" = (
 /obj/machinery/camera/xray{
@@ -290,7 +290,7 @@
 /turf/closed/mineral/random,
 /area/ruin/space)
 "bb" = (
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bc" = (
 /obj/machinery/light/directional/south,
@@ -310,7 +310,7 @@
 	},
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "be" = (
 /obj/structure/cable,
@@ -343,7 +343,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bh" = (
 /obj/structure/cable,
@@ -486,7 +486,7 @@
 	},
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 /obj/item/clothing/suit/space/syndicate/black/engie,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bC" = (
 /obj/structure/closet/crate/medical,
@@ -583,7 +583,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bR" = (
 /obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bS" = (
 /obj/machinery/button/crematorium{
@@ -617,7 +617,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bX" = (
 /obj/structure/sign/poster/contraband/c20r,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bY" = (
 /obj/structure/closet/syndicate{
@@ -634,7 +634,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bZ" = (
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ca" = (
 /obj/machinery/computer/crew/syndie{
@@ -706,7 +706,7 @@
 	on = 0;
 	shot_delay = 10
 	},
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cj" = (
 /obj/machinery/stasis,
@@ -714,7 +714,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ck" = (
 /obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "cl" = (
 /obj/machinery/light/directional/north,
@@ -822,7 +822,7 @@
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 15
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "cA" = (
 /obj/structure/table/reinforced,
@@ -1063,10 +1063,10 @@
 	req_access = list("syndicate")
 	},
 /obj/item/language_manual/codespeak_manual/unlimited,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "de" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "df" = (
 /obj/structure/closet/syndicate{
@@ -1116,7 +1116,7 @@
 	req_access = list("syndicate")
 	},
 /obj/item/disk/surgery/forgottenship,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dj" = (
 /turf/closed/mineral/random/high_chance,
@@ -1131,7 +1131,7 @@
 	name = "Syndicate Vault Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dm" = (
 /obj/structure/closet/crate/secure/gear{
@@ -1160,7 +1160,7 @@
 	amount = 30
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dp" = (
 /obj/structure/closet/crate/secure/gear{
@@ -1182,7 +1182,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "eg" = (
 /mob/living/basic/trooper/nanotrasen/ranged/elite,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "gU" = (
 /mob/living/basic/trooper/nanotrasen/ranged/elite,
@@ -1217,7 +1217,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "qG" = (
 /mob/living/basic/trooper/nanotrasen/ranged/elite,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "vz" = (
 /mob/living/basic/trooper/nanotrasen/ranged/elite,
@@ -1237,7 +1237,7 @@
 	},
 /obj/item/melee/energy/sword/saber/red,
 /obj/machinery/light/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "St" = (
 /mob/living/basic/trooper/nanotrasen/ranged/elite,

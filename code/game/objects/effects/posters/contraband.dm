@@ -626,3 +626,247 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/blood_geometer
 	icon_state = "wantedmurderer"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/wantedmurderer, 32)
+
+/obj/structure/sign/poster/contraband/singletank_bomb
+	name = "Single Tank Bomb Guide"
+	desc = "This informational poster teaches the viewer how to make a single tank bomb of high quality."
+	icon_state = "singletank_bomb"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/singletank_bomb, 32)
+
+/obj/structure/sign/poster/contraband/roroco
+	name = "Roroco Gloves"
+	desc = "Roro says: Wear RoroCo insulated gloves, the safest brand on the market."
+	icon_state = "roroco"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/roroco, 32)
+
+/obj/structure/sign/poster/contraband/fake_bombable
+	name = "fake bombable poster"
+	desc = "We do a little trolling."
+	icon_state = "fake_bombable"
+	never_random = TRUE
+
+/obj/structure/sign/poster/contraband/fake_bombable/Initialize(mapload)
+	. = ..()
+	var/turf/our_wall = get_turf_pixel(src)
+	name = our_wall.name
+
+/obj/structure/sign/poster/contraband/fake_bombable/examine(mob/user)
+	var/turf/our_wall = get_turf_pixel(src)
+	. = our_wall.examine(user)
+	. += span_notice("It seems to be slightly cracked...")
+
+/obj/structure/sign/poster/contraband/fake_bombable/ex_act(severity, target)
+	addtimer(CALLBACK(src, PROC_REF(fall_off_wall)), 2.5 SECONDS)
+	return FALSE
+
+/obj/structure/sign/poster/contraband/fake_bombable/proc/fall_off_wall()
+	if(QDELETED(src) || !isturf(loc))
+		return
+	var/turf/our_wall = get_turf_pixel(src)
+	our_wall.balloon_alert_to_viewers("it was a ruse!")
+	roll_and_drop(loc)
+	playsound(loc, 'sound/items/handling/paper_drop.ogg', 50, TRUE)
+
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/fake_bombable, 32)
+
+/obj/structure/sign/poster/contraband/dream
+	name = "Dream"
+	desc = "You feel inspired to follow your dreams."
+	icon_state = "dream"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/dream, 32)
+
+/obj/structure/sign/poster/contraband/beekind
+	name = "Bee Kind"
+	desc = "Always bee kind to others!"
+	icon_state = "beekind"
+
+/obj/item/poster/contraband/beekind
+	name = "Bee Kind"
+	poster_type = /obj/structure/sign/poster/contraband/beekind
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/beekind, 32)
+
+/obj/structure/sign/poster/contraband/heart
+	name = "Heart"
+	desc = "What a heartwarming poster."
+	icon_state = "heart"
+
+/obj/item/poster/contraband/heart
+	name = "Heart"
+	poster_type = /obj/structure/sign/poster/contraband/heart
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/heart, 32)
+
+/obj/structure/sign/poster/contraband/dolphin
+	name = "Dolphin"
+	desc = "A poster of a beautiful dolphin."
+	icon_state = "dolphin"
+
+/obj/item/poster/contraband/dolphin
+	name = "Dolphin"
+	poster_type = /obj/structure/sign/poster/contraband/dolphin
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/dolphin, 32)
+
+/obj/structure/sign/poster/contraband/principles
+	name = "Our Principles"
+	desc = "The makers of this poster purport to live by four principles. Someone has scrawled a fifth one at the bottom."
+	icon_state = "principles"
+
+/obj/item/poster/contraband/principles
+	name = "Our Principles"
+	poster_type = /obj/structure/sign/poster/contraband/principles
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/principles, 32)
+
+/obj/structure/sign/poster/contraband/trigger
+	name = "Trigger"
+	desc = "Happy trails to you, until we meet again! 1/8."
+	icon_state = "trigger"
+
+/obj/item/poster/contraband/trigger
+	name = "Trigger"
+	poster_type = /obj/structure/sign/poster/contraband/trigger
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/trigger, 32)
+
+/obj/structure/sign/poster/contraband/barbaro
+	name = "Barbaro"
+	desc = "A majestic horse with the heart of a winner. 2/8."
+	icon_state = "barbaro"
+
+/obj/item/poster/contraband/barbaro
+	name = "Barbaro"
+	poster_type = /obj/structure/sign/poster/contraband/barbaro
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/barbaro, 32)
+
+/obj/structure/sign/poster/contraband/seabiscuit
+	name = "Seabiscuit"
+	desc = "The little horse that could. 3/8."
+	icon_state = "seabiscuit"
+
+/obj/item/poster/contraband/seabiscuit
+	name = "Seabiscuit"
+	poster_type = /obj/structure/sign/poster/contraband/seabiscuit
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/seabiscuit, 32)
+
+/obj/structure/sign/poster/contraband/pharlap
+	name = "Phar Lap"
+	desc = "A wonder from down under. 4/8."
+	icon_state = "pharlap"
+
+/obj/item/poster/contraband/pharlap
+	name = "Phar Lap"
+	poster_type = /obj/structure/sign/poster/contraband/pharlap
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/pharlap, 32)
+
+/obj/structure/sign/poster/contraband/waradmiral
+	name = "War Admiral"
+	desc = "Some say he was second best, but he still comes first in your heart. 5/8."
+	icon_state = "waradmiral"
+
+/obj/item/poster/contraband/waradmiral
+	name = "War Admiral"
+	poster_type = /obj/structure/sign/poster/contraband/waradmiral
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/waradmiral, 32)
+
+/obj/structure/sign/poster/contraband/silver
+	name = "Silver"
+	desc = "If he wants to go, he should be free. 6/8."
+	icon_state = "silver"
+
+/obj/item/poster/contraband/silver
+	name = "Silver"
+	poster_type = /obj/structure/sign/poster/contraband/silver
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/silver, 32)
+
+/obj/structure/sign/poster/contraband/jovial
+	name = "Jovial"
+	desc = "All hail the orange horse! 7/8."
+	icon_state = "jovial"
+
+/obj/item/poster/contraband/jovial
+	name = "Jovial"
+	poster_type = /obj/structure/sign/poster/contraband/jovial
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/jovial, 32)
+
+/obj/structure/sign/poster/contraband/bojack
+	name = "Bojack"
+	desc = "It doesn't matter. Nothing matters. 8/8."
+	icon_state = "bojack"
+
+/obj/item/poster/contraband/bojack
+	poster_type = /obj/structure/sign/poster/contraband/bojack
+	icon_state = "rolled_poster"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/bojack, 32)
+
+/obj/structure/sign/poster/contraband/double_rainbow
+	name = "Double Rainbow"
+	desc = "It's so bright and vivid! What does this mean?"
+	icon_state = "double_rainbow"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/double_rainbow, 32)
+
+/obj/structure/sign/poster/contraband/rabbit_hole
+	name = "Down the Rabbit Hole"
+	desc = "I'm late! I'm late! For a very important date..."
+	icon_state = "rabbit_hole"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/rabbit_hole, 32)
+
+/obj/structure/sign/poster/contraband/rabbit_swole
+	name = "Damn that Rabbit Swole"
+	desc = "Someone's been hitting that 'Eat me' cake..."
+	icon_state = "rabbit_swole"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/rabbit_swole, 32)
+
+/obj/structure/sign/poster/contraband/double_gunshow
+	name = "Double Gunshow"
+	desc = "All the whey all across this guy..."
+	icon_state = "double_gunshow"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/double_gunshow, 32)
+
+/obj/structure/sign/poster/contraband/bridge_bunny
+	name = "Bridge Bunny"
+	desc = "Ideas are like rabbits. You... uh... What were you thinking about again?"
+	icon_state = "nt-bunny"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/bridge_bunny, 32)
+
+/obj/structure/sign/poster/contraband/vodka
+	name = "Vodka"
+	desc = "The text is written entirely in Russian. You can barely read anything except the word 'BODKA'."
+	icon_state = "vodka"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vodka, 32)
+
+/obj/structure/sign/poster/contraband/ninja
+	name = "Ninja"
+	desc = "Greetings from the Spider Clan."
+	icon_state = "ninja"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ninja, 32)

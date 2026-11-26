@@ -19,38 +19,6 @@
 		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 		. = TRUE
 
-/datum/reagents/proc/convert_reagent(
-	datum/reagent/source_reagent_typepath,
-	datum/reagent/target_reagent_typepath,
-	multiplier = 1,
-	include_source_subtypes = FALSE
-)
-	if(!ispath(source_reagent_typepath))
-		stack_trace("invalid reagent path passed to convert reagent [source_reagent_typepath]")
-		return FALSE
-
-	var/reagent_amount
-	var/reagent_purity
-	var/reagent_ph
-	if(include_source_subtypes)
-		reagent_ph = ph
-		var/weighted_purity
-		var/list/reagent_type_list = typecacheof(source_reagent_typepath)
-		for(var/datum/reagent/reagent as anything in reagent_list)
-			if(reagent.type in reagent_type_list)
-				weighted_purity += reagent.volume * reagent.purity
-				reagent_amount += reagent.volume
-				remove_reagent(reagent.type, reagent.volume * multiplier)
-		reagent_purity = weighted_purity / reagent_amount
-	else
-		var/datum/reagent/source_reagent = has_reagent(source_reagent_typepath)
-		reagent_amount = source_reagent.volume
-		reagent_purity = source_reagent.purity
-		reagent_ph = source_reagent.ph
-		remove_reagent(source_reagent_typepath, reagent_amount)
-	add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
-
-
 /obj/item/stack/sheet/mineral/stone
 	name = "stone"
 	desc = "Stone brick."

@@ -47,6 +47,8 @@
 	var/matter_amount = 0
 	/// Does this stack require a unique girder in order to make a wall?
 	var/has_unique_girder = FALSE
+	/// Can this stack be used for contruction of girders?
+	var/usable_for_construction = FALSE
 	/// What typepath table we create from this stack
 	var/obj/structure/table/tableVariant
 	/// What typepath stairs do we create from this stack

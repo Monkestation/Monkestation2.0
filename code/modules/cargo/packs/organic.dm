@@ -147,7 +147,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/watertank)
 	crate_name = "hydroponics backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/hydroponics
 
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"

@@ -717,7 +717,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 /*
  * Bronze
  */
-
 GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	new /datum/stack_recipe("clockwork platform", /obj/structure/platform/bronze, 2, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
@@ -848,6 +847,9 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	. = ..()
 	. += GLOB.plastic_recipes
 
+/*
+ * Paper Frames
+ */
 GLOBAL_LIST_INIT(paperframe_recipes, list(
 new /datum/stack_recipe("paper frame separator", /obj/structure/window/paperframe, 2, one_per_turf = TRUE, on_solid_ground = TRUE, is_fulltile = TRUE, time = 1 SECONDS), \
 new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperframe, 3, one_per_turf = TRUE, on_solid_ground = TRUE, time = 1 SECONDS ), \
@@ -876,6 +878,9 @@ new /datum/stack_recipe("paper frame platform", /obj/structure/platform/paper, 2
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
 
+/*
+ * Meat
+ */
 /obj/item/stack/sheet/meat
 	name = "meat sheets"
 	desc = "Something's bloody meat compressed into a nice solid sheet."
@@ -936,6 +941,17 @@ GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 /obj/item/stack/sheet/sandblock/five
 	amount = 5
 
+
+/*
+ * Hauntium
+ */
+GLOBAL_LIST_INIT(hauntium_recipes, list(
+	new /datum/stack_recipe("hauntium tile", /obj/item/stack/tile/hauntium, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
+))
+
+/obj/item/stack/sheet/hauntium/get_main_recipes()
+	. = ..()
+	. += GLOB.hauntium_recipes
 
 /obj/item/stack/sheet/hauntium
 	name = "haunted sheets"

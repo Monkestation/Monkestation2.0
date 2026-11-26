@@ -167,3 +167,23 @@
 		/obj/item/gun/energy/modular_laser_rifle/carbine,
 		/obj/item/gun/energy/modular_laser_rifle/carbine,
 	)
+
+/obj/effect/spawner/random/armory/buckshot
+	name = "buckshot spawner"
+	icon_state = "buckshot"
+	loot = list(/obj/item/storage/box/lethalshot)
+
+/obj/effect/spawner/random/armory/laser_carbine
+	name = "laser_carbine spawner"
+	icon_state = "laser_gun"
+	loot = list(/obj/item/gun/energy/laser/carbine)
+
+/obj/effect/spawner/random/armory/dragnet
+	name = "DRAGnet spawner"
+	icon_state = "dragnet"
+	loot = list(/obj/item/gun/energy/e_gun/dragnet)
+	spawn_loot_count = 2
+
+/obj/effect/spawner/random/armory/dragnet/spawn_loot(lootcount_override)
+	. = ..()
+	new /obj/item/dragnet_beacon(get_turf(src)) //And give them a beacon too!

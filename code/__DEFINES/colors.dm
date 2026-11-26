@@ -246,6 +246,8 @@
 #define LIGHT_COLOR_DEFAULT "#f3fffac4"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
+/// Bright, pale "nuclear" green. rgb(120, 255, 120)
+#define LIGHT_COLOR_NUCLEAR "#78FF78"
 /// Vivid, slightly blue green. rgb(60, 240, 70)
 #define LIGHT_COLOR_VIVID_GREEN "#3CF046"
 /// Electric green. rgb(0, 255, 0)
@@ -459,3 +461,8 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define EYE_COLOR_WEED_PRIORITY 20
 #define EYE_COLOR_DEMONEYE_PRIORITY 25
 #define EYE_COLOR_CULT_PRIORITY 30
+
+//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+#define LUMA_R 0.213
+#define LUMA_G 0.715
+#define LUMA_B 0.072

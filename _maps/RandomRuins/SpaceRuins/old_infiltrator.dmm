@@ -108,7 +108,7 @@
 /turf/open/floor/circuit/red/airless,
 /area/ruin/space/has_grav/old_infiltrator)
 "ie" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/old_infiltrator)
 "iI" = (
 /obj/effect/turf_decal/syndicateemblem/top/left,
@@ -605,7 +605,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/has_grav/old_infiltrator)
 "Pq" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/ruin/space/has_grav/old_infiltrator)
 "PC" = (
 /obj/item/stock_parts/capacitor/adv{

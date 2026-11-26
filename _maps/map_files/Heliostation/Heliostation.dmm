@@ -21729,7 +21729,7 @@
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/iron/textured_large,
 /area/station/maintenance/department/science/central)
 "csu" = (
@@ -30385,7 +30385,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
@@ -39292,7 +39292,7 @@
 /area/station/medical/psychology)
 "ihs" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/station/hallway/secondary/entry)
 "ihx" = (
 /obj/machinery/electroplater,
@@ -45154,7 +45154,7 @@
 /area/station/commons/lounge)
 "knq" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/station/hallway/secondary/entry)
 "knt" = (
 /obj/effect/turf_decal/tile/neutral/half,
@@ -60783,7 +60783,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "qet" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/station/hallway/secondary/entry)
 "qey" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{

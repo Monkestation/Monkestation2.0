@@ -266,3 +266,37 @@
 		/obj/item/food/breadslice/moldy/bacteria,
 		/obj/item/food/pizzaslice/moldy/bacteria,
 	)
+
+/obj/effect/spawner/random/trash/crushed_can
+	name = "crushed can spawner"
+	icon_state = "crushed_can"
+	loot = list(/obj/item/trash/can)
+	/// Whether the can will spawn with this spawner's icon_state instead of a random one (used for mapedits)
+	var/soda_icons = list(
+		"energy_drink", "monkey_energy", "thirteen_loko", "space_mountain_wind", "dr_gibb", "starkist",
+		"sodawater", "tonic", "cola", "purple_can", "ice_tea_can",
+		"sol_dry", "wellcheers", "space_beer", "ebisu", "shimauma", "moonlabor",
+		"space-up", "lemon-lime", "shamblers", "shamblerseldritch", "air", "laughter",
+		"volt_energy", "melon_soda",
+	)
+
+/obj/effect/spawner/random/trash/crushed_can/make_item(spawn_loc, type_path_to_make)
+	var/obj/item/trash/can/crushed_can = .. ()
+	if(istype(crushed_can))
+		crushed_can.icon_state = pick(soda_icons)
+	return crushed_can
+
+/obj/effect/spawner/random/trash/ghetto_containers
+	name = "ghetto container spawner"
+	loot = list(
+		/obj/item/reagent_containers/cup/bucket = 5,
+		/obj/item/reagent_containers/cup/glass/bottle = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/small = 5,
+		/obj/item/reagent_containers/cup/glass/mug = 5,
+		/obj/item/reagent_containers/cup/glass/shaker = 5,
+		/obj/item/reagent_containers/cup/watering_can/wood = 5,
+		/obj/item/reagent_containers/cup/mortar = 2,
+		/obj/item/reagent_containers/cup/soup_pot = 2,
+		/obj/item/reagent_containers/cup/blastoff_ampoule = 1,
+		/obj/item/reagent_containers/cup/maunamug = 1,
+	)

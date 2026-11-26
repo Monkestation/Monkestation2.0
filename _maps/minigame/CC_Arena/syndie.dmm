@@ -19,7 +19,7 @@
 /obj/effect/turf_decal/trimline/dark/arrow_cw{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "cj" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -116,7 +116,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "mI" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -131,7 +131,7 @@
 "nt" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark/arrow_ccw,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "of" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line,
@@ -196,7 +196,7 @@
 /obj/effect/turf_decal/trimline/dark/arrow_cw{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "Cb" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -264,11 +264,11 @@
 /area/centcom/tdome/arena/actual)
 "Lu" = (
 /obj/effect/turf_decal/trimline/dark/arrow_cw,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "Lw" = (
 /obj/effect/turf_decal/trimline/dark/arrow_ccw,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "LN" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -291,7 +291,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "MZ" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/arrow_cw{
@@ -327,7 +327,7 @@
 /obj/effect/turf_decal/trimline/dark/arrow_ccw{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "QQ" = (
 /obj/effect/turf_decal/trimline/dark_red/filled,
@@ -351,7 +351,7 @@
 "UD" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark/arrow_cw,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "VD" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
@@ -375,7 +375,7 @@
 /obj/effect/turf_decal/trimline/dark/arrow_ccw{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/centcom/tdome/arena/actual)
 "YF" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw,

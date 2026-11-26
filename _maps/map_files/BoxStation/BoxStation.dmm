@@ -3045,7 +3045,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/secondary/exit/departure_lounge)
 "baP" = (
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
@@ -3419,7 +3419,7 @@
 /turf/open/floor/plating,
 /area/station/service/hydroponics/chicken)
 "bgm" = (
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
@@ -5879,7 +5879,7 @@
 /turf/closed/wall,
 /area/station/service/library/artgallery)
 "bRk" = (
-/obj/machinery/light/built/directional/south,
+/obj/machinery/light/empty/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
@@ -15652,7 +15652,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "fdz" = (
-/obj/machinery/light/built/directional/south,
+/obj/machinery/light/empty/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
@@ -20793,7 +20793,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/aft)
 "gJI" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/structure/reagent_dispensers/plumbed{
 	dir = 4
 	},
@@ -27053,7 +27053,7 @@
 "iKZ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/shower/directional/east,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/abandoned_gambling_den)
 "iLe" = (
@@ -31446,7 +31446,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "kgS" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
 /obj/structure/frame/machine,
@@ -32162,7 +32162,7 @@
 	},
 /area/station/cargo/miningoffice)
 "krA" = (
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /obj/structure/table/wood,
 /obj/item/storage/dice,
 /turf/open/floor/wood,
@@ -38778,7 +38778,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "myz" = (
-/obj/machinery/light/built/directional/north,
+/obj/machinery/light/empty/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
@@ -38927,7 +38927,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/starboard)
 "mAB" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Commons - Vacant Commissary";
 	name = "commons camera"
@@ -51975,7 +51975,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "qOp" = (
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /obj/machinery/duct,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
@@ -54728,7 +54728,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "rGt" = (
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/dark,
@@ -56396,7 +56396,7 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "siB" = (
-/obj/machinery/light/built/directional/north,
+/obj/machinery/light/empty/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
@@ -63139,7 +63139,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "uqh" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
@@ -63775,7 +63775,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/machinery/light/built/directional/south,
+/obj/machinery/light/empty/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "uAv" = (
@@ -64692,7 +64692,7 @@
 /area/station/maintenance/department/engine/atmos)
 "uPg" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/effect/spawner/random/engineering/tank,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
@@ -65021,7 +65021,7 @@
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
 "uUY" = (
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,

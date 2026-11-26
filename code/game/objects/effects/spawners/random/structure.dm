@@ -249,3 +249,16 @@
 		/obj/structure/musician/piano,
 		/obj/structure/musician/piano/minimoog,
 	)
+
+/obj/effect/spawner/random/structure/twelve_percent_spirit_board
+	name = "12% spirit board"
+	icon_state = "spirit_board"
+	loot = list(
+		/obj/structure/spirit_board = 3,
+		/obj/item/kirbyplants/random = 22,
+	)
+
+/obj/effect/spawner/random/structure/barricade/crude
+	name = "crude barricade spawner"
+	icon_state = "barricade_crude"
+	loot = list(/obj/structure/barricade/wooden/crude)

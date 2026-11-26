@@ -163,7 +163,7 @@
 /area/shuttle/abandoned/cargo)
 "aw" = (
 /obj/structure/sign/directions/supply,
-/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/turf/closed/wall/mineral/plastitanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "ax" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north{
@@ -213,7 +213,7 @@
 /area/shuttle/abandoned/cargo)
 "aG" = (
 /obj/effect/turf_decal/mining,
-/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/turf/closed/wall/mineral/plastitanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "aH" = (
 /obj/effect/turf_decal/bot_red,
@@ -223,7 +223,7 @@
 "aI" = (
 /obj/effect/turf_decal/caution/white,
 /obj/effect/spawner/random/trash/grime,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "aJ" = (
 /obj/item/stack/sheet/mineral/titanium,
@@ -276,11 +276,11 @@
 /area/shuttle/abandoned/cargo)
 "aS" = (
 /obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "aT" = (
 /obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/turf/closed/wall/mineral/plastitanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "aU" = (
 /obj/machinery/porta_turret/centcom_shuttle/weak{
@@ -298,7 +298,7 @@
 "aW" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/mob_spawn/corpse/human/assistant,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "aX" = (
 /obj/machinery/power/shuttle_engine/propulsion{
@@ -311,7 +311,7 @@
 /area/shuttle/abandoned/engine)
 "aY" = (
 /obj/structure/sign/warning/chem_diamond,
-/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/turf/closed/wall/mineral/plastitanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "aZ" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -337,7 +337,7 @@
 	opacity = 1
 	},
 /obj/effect/turf_decal/delivery/red,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "bd" = (
 /obj/machinery/atmospherics/components/tank/air{
@@ -360,7 +360,7 @@
 	opacity = 1
 	},
 /obj/effect/turf_decal/delivery/red,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "bh" = (
 /obj/item/stack/cable_coil/five,
@@ -383,7 +383,7 @@
 /obj/effect/turf_decal/caution/white{
 	dir = 4
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "bl" = (
 /obj/effect/turf_decal/bot_red,
@@ -395,7 +395,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "bo" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east{
@@ -469,7 +469,7 @@
 /obj/structure/sign/directions/supply{
 	dir = 1
 	},
-/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/turf/closed/wall/mineral/plastitanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "bA" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south{
@@ -738,7 +738,7 @@
 	},
 /area/shuttle/abandoned/cargo)
 "cA" = (
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "cB" = (
 /obj/structure/chair/comfy/shuttle{
@@ -774,7 +774,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/exotic/ripley,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "cH" = (
 /obj/effect/turf_decal/bot_red,
@@ -1200,7 +1200,7 @@
 /area/shuttle/abandoned/engine)
 "ua" = (
 /obj/effect/spawner/random/trash/botanical_waste,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/shuttle/abandoned/cargo)
 "ue" = (
 /obj/effect/decal/cleanable/blood/tracks{

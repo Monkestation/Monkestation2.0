@@ -91,7 +91,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/bmpship/aft)
 "eC" = (
 /obj/effect/turf_decal/stripes/line{
@@ -138,7 +138,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/bmpship/aft)
 "gC" = (
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
@@ -175,7 +175,7 @@
 	},
 /obj/effect/spawner/random/maintenance/two,
 /obj/machinery/light/small/broken/directional/south,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/bmpship/aft)
 "ip" = (
 /obj/machinery/light/broken/directional/north,
@@ -424,7 +424,7 @@
 	},
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/structure/closet/firecloset,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/bmpship/aft)
 "qI" = (
 /obj/item/stack/ore/silver,
@@ -541,9 +541,7 @@
 	pixel_x = -13;
 	pixel_y = 9
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/awaymission/bmpship/fore)
 "vX" = (
 /obj/effect/spawner/random/structure/girder,
@@ -710,9 +708,7 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/awaymission/bmpship/fore)
 "BM" = (
 /obj/effect/turf_decal/siding/white/corner{
@@ -830,7 +826,7 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Emergency Supplies"
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/bmpship/aft)
 "Ff" = (
 /obj/effect/turf_decal/siding/white{
@@ -860,7 +856,7 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/machinery/atmospherics/components/unary/portables_connector/layer4,
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/bmpship/aft)
 "FP" = (
 /obj/effect/spawner/random/maintenance,
@@ -1108,9 +1104,7 @@
 /obj/machinery/computer{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/awaymission/bmpship/fore)
 "NF" = (
 /obj/effect/turf_decal/stripes/end,
@@ -1152,7 +1146,7 @@
 	},
 /obj/structure/table,
 /obj/item/door_seal,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/bmpship/aft)
 "Ph" = (
 /obj/effect/turf_decal/delivery/white{
@@ -1220,7 +1214,7 @@
 	},
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/spawner/random/structure/tank_holder,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/bmpship/aft)
 "Uc" = (
 /obj/effect/turf_decal/trimline/yellow/filled/end{
@@ -1235,7 +1229,7 @@
 	},
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/awaymission/bmpship/aft)
 "Uz" = (
 /turf/closed/mineral/gibtonite,
@@ -1339,7 +1333,7 @@
 "Yw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/awaymission/bmpship/aft)
 "YU" = (
 /obj/item/stack/rods,

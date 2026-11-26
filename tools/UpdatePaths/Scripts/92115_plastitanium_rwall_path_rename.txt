@@ -1,0 +1,3 @@
+#comment This repaths syndicate reinforced walls, as they have been made a subtype of a constructible plastitanium reinforced wall
+
+/turf/closed/wall/r_wall/syndicate/@SUBTYPES : /turf/closed/wall/r_wall/plastitanium/syndicate/@SUBTYPES{@OLD}

@@ -17,6 +17,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/gun/ballistic/shotgun/toy = 8)
 	crate_name = "foam force crate"
+	crate_type = /obj/structure/closet/crate/freezer/donk
 
 /datum/supply_pack/imports/foamforce/bonus
 	name = "Foam Force Pistols Crate"
@@ -29,6 +30,7 @@
 		/obj/item/ammo_box/magazine/toy/pistol = 2,
 	)
 	crate_name = "foam force crate"
+	crate_type = /obj/structure/closet/crate/freezer/donk
 
 /datum/supply_pack/imports/meatmeatmeatmeat // MEAT MEAT MEAT MEAT
 	name = "MEAT MEAT MEAT MEAT MEAT"
@@ -168,6 +170,7 @@
 		/obj/item/grenade/gluon = 2,
 		/obj/item/grenade/frag = 2,
 	)
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
@@ -181,6 +184,7 @@
 		/obj/item/card/id/advanced/chameleon,
 		/obj/item/knife/combat/survival,
 	)
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/floortilecamo
 	name = "Floor-tile Camouflage Uniform"

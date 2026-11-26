@@ -14,6 +14,7 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
 	material_flags = MATERIAL_EFFECTS
+	usable_for_construction = TRUE
 	///this is used for girders in the creation of walls/false walls
 	var/sheettype = null
 	///turn-in value for the gulag stacker - loosely relative to its rarity.

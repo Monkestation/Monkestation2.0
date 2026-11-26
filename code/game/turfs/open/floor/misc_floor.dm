@@ -141,20 +141,6 @@
 /turf/open/floor/circuit/red/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
-/turf/open/floor/pod
-	name = "pod floor"
-	icon_state = "podfloor"
-	floor_tile = /obj/item/stack/tile/pod
-
-/turf/open/floor/pod/light
-	icon_state = "podfloor_light"
-	floor_tile = /obj/item/stack/tile/pod/light
-
-/turf/open/floor/pod/dark
-	icon_state = "podfloor_dark"
-	floor_tile = /obj/item/stack/tile/pod/dark
-
-
 /turf/open/floor/noslip
 	name = "high-traction floor"
 	icon_state = "noslip"
@@ -240,6 +226,30 @@
 /turf/open/floor/plastic/broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 
+/turf/open/floor/plastic/puzzle
+	name = "plastic puzzle floor"
+	icon_state = "plastic_puzzle"
+	floor_tile = /obj/item/stack/tile/plastic/puzzle
+
+/turf/open/floor/hauntium
+	name = "hauntium floor"
+	icon_state = "hauntium"
+	desc = "Now this is one spooky tile."
+	custom_materials = list(/datum/material/hauntium=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/hauntium
+
+/turf/open/floor/hauntium/tiled
+	name = "tiled hauntium floor"
+	icon_state = "hauntium_tiled"
+	floor_tile = /obj/item/stack/tile/hauntium/tiled
+
+/turf/open/floor/sandstone
+	name = "sandstone brick floor"
+	desc = "Sandstone tile. Makes you feel quite like a pharoah."
+	icon_state = "sandstone_floor"
+	custom_materials = list(/datum/material/sandstone=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/mineral/sandstone
+
 /turf/open/floor/eighties
 	name = "retro floor"
 	desc = "This one takes you back."
@@ -287,7 +297,10 @@
 		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
-	floor_tile = /obj/item/stack/tile/stone // MONKESTATION EDIT: Add a floor tile so xenobio doesn't get screwed by crowbars.
+	floor_tile = /obj/item/stack/tile/stone
+
+/turf/open/floor/stone/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/vault
 	name = "strange floor"
@@ -344,6 +357,21 @@
 
 /turf/open/floor/iron/tgmcemblem/center
 	icon_state = "tgmc_center"
+
+/turf/open/floor/asphalt
+	name = "asphalt"
+	desc = "Melted down oil can, in some cases, be used to pave road surfaces."
+	icon_state = "asphalt"
+
+/turf/open/floor/asphalt/outdoors
+	planetary_atmos = TRUE
+
+/turf/open/floor/asphalt/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	baseturfs = /turf/open/misc/asteroid/basalt
+
+/turf/open/floor/asphalt/lavaland/outdoors
+	planetary_atmos = TRUE
 
 
 /obj/item/stack/tile/sandy_dirt

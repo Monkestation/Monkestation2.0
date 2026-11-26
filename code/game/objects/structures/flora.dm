@@ -1107,3 +1107,12 @@
 	icon_state = "lavarocks[rand(1, 3)]"
 	update_appearance()
 
+/obj/structure/flora/tree/pine/xmas/presentless
+	icon_state = "pinepresents"
+	desc = "A wondrous decorated Christmas tree. It has presents, though none of them seem to have your name on them."
+
+/obj/structure/flora/coconuts
+	gender = PLURAL
+	name = "coconuts"
+	icon = 'icons/obj/fluff/beach.dmi'
+	icon_state = "coconuts"
