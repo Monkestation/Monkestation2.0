@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "Cleaner slimes no longer lag the server trying to reach messes they can't get to."
