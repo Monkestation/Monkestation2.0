@@ -24,6 +24,7 @@ Mineral Sheets
  */
 
 GLOBAL_LIST_INIT(sandstone_recipes, list ( \
+	new/datum/stack_recipe("sandstone tile", /obj/item/stack/tile/mineral/sandstone, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/growing/soil, 3, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("sandstone platform", /obj/structure/platform/sandstone, 2, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
@@ -442,6 +443,7 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 
 
 GLOBAL_LIST_INIT(adamantine_recipes, list(
+	new /datum/stack_recipe("adamantine tile", /obj/item/stack/tile/mineral/adamantine, 1, 4, 20, category = CAT_TILES), \
 	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1, category = CAT_ROBOT),
 	))
 
@@ -457,6 +459,10 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	. = ..()
 	. += GLOB.adamantine_recipes
 
+GLOBAL_LIST_INIT(runite_recipes, list(
+	new /datum/stack_recipe("runite tile", /obj/item/stack/tile/mineral/runite, 1, 4, 20, category = CAT_TILES), \
+	))
+
 /*
  * Runite
  */
@@ -471,6 +477,14 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	merge_type = /obj/item/stack/sheet/mineral/runite
 	material_type = /datum/material/runite
 
+/obj/item/stack/sheet/mineral/runite/get_main_recipes()
+	. = ..()
+	. += GLOB.runite_recipes
+
+GLOBAL_LIST_INIT(mythril_recipes, list(
+	new /datum/stack_recipe("mythril tile", /obj/item/stack/tile/mineral/mythril, 1, 4, 20, category = CAT_TILES), \
+	))
+
 
 /*
  * Mythril
@@ -483,6 +497,10 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	novariants = TRUE
 	mats_per_unit = list(/datum/material/mythril=SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/mythril
+
+/obj/item/stack/sheet/mineral/mythril/get_main_recipes()
+	. = ..()
+	. += GLOB.mythril_recipes
 	material_type = /datum/material/mythril
 
 /*
@@ -549,6 +567,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 //Metal Hydrogen
 GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
+	new /datum/stack_recipe("metallic hydrogen tile", /obj/item/stack/tile/mineral/metal_hydrogen, 1, 4, 20, category = CAT_TILES), \
 	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=20, res_amount=1, check_density = FALSE, category = CAT_ROBOT),
 	new /datum/stack_recipe("ancient armor", /obj/item/clothing/suit/armor/elder_atmosian, req_amount = 5, res_amount = 1, check_density = FALSE, category = CAT_CLOTHING),
 	new /datum/stack_recipe("ancient helmet", /obj/item/clothing/head/helmet/elder_atmosian, req_amount = 3, res_amount = 1, check_density = FALSE, category = CAT_CLOTHING),

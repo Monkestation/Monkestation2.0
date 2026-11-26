@@ -28,3 +28,11 @@
 
 /obj/item/stack/telecrystal/twenty
 	amount = 20
+
+GLOBAL_LIST_INIT(telecrystal_recipes, list ( \
+	new/datum/stack_recipe("telecrystal tile", /obj/item/stack/tile/mineral/telecrystal, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
+))
+
+/obj/item/stack/telecrystal/get_main_recipes()
+	. = ..()
+	. += GLOB.telecrystal_recipes

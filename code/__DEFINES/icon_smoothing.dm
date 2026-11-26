@@ -157,6 +157,13 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(26) ///obj/structure/tram
 
+#define SMOOTH_GROUP_BONE_WALLS S_OBJ(27) ///turf/closed/wall/mineral/bone, /obj/structure/falsewall/bone
+#define SMOOTH_GROUP_ADAMANTINE_WALLS S_OBJ(28) ///turf/closed/wall/mineral/admantine, /obj/structure/falsewall/admantine
+#define SMOOTH_GROUP_METALHYDROGEN_WALLS S_OBJ(29) ///turf/closed/wall/mineral/metalhydrogen, /obj/structure/falsewall/metalhydrogen
+#define SMOOTH_GROUP_HAUNTIUM_WALLS S_OBJ(30) ///turf/closed/wall/mineral/hauntium, /obj/structure/falsewall/hauntium
+#define SMOOTH_GROUP_RUNITE_WALLS S_OBJ(33) ///turf/closed/wall/mineral/runite, /obj/structure/falsewall/runite
+#define SMOOTH_GROUP_MYTHRIL_WALLS S_OBJ(34) ///turf/closed/wall/mineral/mythril, /obj/structure/falsewall/mythril
+
 #define SMOOTH_GROUP_LATTICE S_OBJ(31) ///obj/structure/lattice
 #define SMOOTH_GROUP_CATWALK S_OBJ(32) ///obj/structure/lattice/catwalk
 

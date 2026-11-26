@@ -282,6 +282,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
  * Plasteel
  */
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
+	new/datum/stack_recipe("plasteel tile", /obj/item/stack/tile/plasteel, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 5 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY),
 	new/datum/stack_recipe("Large Gas Tank", /obj/structure/tank_frame, 4, time=1 SECONDS, one_per_turf=TRUE, check_density = FALSE, category = CAT_ATMOSPHERIC),
 	null,
@@ -813,6 +814,14 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/bone
 	material_type = /datum/material/bone
 
+GLOBAL_LIST_INIT(bone_recipes, list(
+	new /datum/stack_recipe("bone tile", /obj/item/stack/tile/bone, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
+))
+
+/obj/item/stack/sheet/bone/get_main_recipes()
+	. = ..()
+	. += GLOB.bone_recipes
+
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
 	new /datum/stack_recipe("light tram tile", /obj/item/stack/thermoplastic/light, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
@@ -894,6 +903,15 @@ new /datum/stack_recipe("paper frame platform", /obj/structure/platform/paper, 2
 /obj/item/stack/sheet/meat/five
 	amount = 5
 
+GLOBAL_LIST_INIT(meat_recipes, list(
+	new /datum/stack_recipe("meat tile", /obj/item/stack/tile/meat, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
+))
+
+/obj/item/stack/sheet/meat/get_main_recipes()
+	. = ..()
+	. += GLOB.meat_recipes
+
+
 GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 	new/datum/stack_recipe("huge pizza", /obj/structure/platform/pizza, 2, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 ))
@@ -955,3 +973,11 @@ GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 	amount = 20
 /obj/item/stack/sheet/hauntium/five
 	amount = 5
+
+GLOBAL_LIST_INIT(hauntium_recipes, list(
+	new /datum/stack_recipe("hauntium tile", /obj/item/stack/tile/hauntium, 1, 4, 20, time = 2 SECONDS, check_density = FALSE, category = CAT_TILES), \
+))
+
+/obj/item/stack/sheet/hauntium/get_main_recipes()
+	. = ..()
+	. += GLOB.hauntium_recipes
