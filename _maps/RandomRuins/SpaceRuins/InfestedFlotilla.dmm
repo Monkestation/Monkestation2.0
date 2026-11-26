@@ -6303,7 +6303,7 @@
 /turf/open/space/basic,
 /area/ruin/space/has_grav/infested_flotilla)
 "Kk" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/has_grav/infested_flotilla)
 "Kl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -7745,7 +7745,7 @@
 /turf/open/space/basic,
 /area/template_noop)
 "Td" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/ruin/space/has_grav/infested_flotilla)
 "Tf" = (
 /obj/structure/broken_flooring/pile/directional/east,

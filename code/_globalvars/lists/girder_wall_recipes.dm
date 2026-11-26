@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(material_girder_wall_recipes, init_material_girder_wall_recipes
 			/turf/closed/wall,
 			/turf/closed/wall/metal_foam_base,
 			/turf/closed/wall/r_wall,
-			/turf/closed/wall/r_wall/syndicate,
+			/turf/closed/wall/r_wall/plastitanium,
 			/turf/closed/wall/mineral/gold,
 			/turf/closed/wall/mineral/silver,
 			/turf/closed/wall/mineral/diamond,

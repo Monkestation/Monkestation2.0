@@ -73,7 +73,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "cj" = (
 /obj/structure/transit_tube/crossing,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "ct" = (
 /obj/structure/closet/syndicate{
@@ -149,7 +149,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "dd" = (
 /obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "di" = (
 /obj/machinery/power/terminal{
@@ -237,7 +237,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "hA" = (
 /obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "hD" = (
 /obj/structure/table/reinforced,
@@ -253,7 +253,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "iL" = (
 /obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "iU" = (
 /obj/structure/closet/crate/secure/gear{
@@ -413,7 +413,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "nU" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "oM" = (
 /obj/structure/cable,
@@ -472,7 +472,7 @@
 /area/space)
 "qU" = (
 /obj/structure/sign/poster/contraband/c20r,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "qY" = (
 /obj/machinery/light/small/directional/south,
@@ -486,7 +486,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ru" = (
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rH" = (
 /obj/machinery/airalarm/directional/north,
@@ -880,7 +880,7 @@
 	on = 0;
 	shot_delay = 10
 	},
-/turf/closed/wall/r_wall/syndicate/hull/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull/nodiagonal,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Im" = (
 /obj/structure/table/reinforced,
@@ -1097,7 +1097,7 @@
 /turf/closed/mineral/random,
 /area/space)
 "QU" = (
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "QX" = (
 /mob/living/basic/trooper/syndicate/ranged/space/stormtrooper,
@@ -1166,7 +1166,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "UQ" = (
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Vk" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -1175,7 +1175,7 @@
 	on = 0;
 	shot_delay = 10
 	},
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Vq" = (
 /obj/structure/transit_tube/station/dispenser/reverse{
@@ -1185,7 +1185,7 @@
 /area/virtual_domain/safehouse)
 "Wd" = (
 /obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/r_wall/syndicate/hull,
+/turf/closed/wall/r_wall/plastitanium/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Wy" = (
 /obj/structure/closet/crate/secure/gear{
