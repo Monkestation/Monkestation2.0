@@ -336,3 +336,15 @@
 	contains = list(/obj/machinery/power/portagrav = 1)
 	crate_name = "portable gravity unit crate"
 	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/concrete_mix
+	name = "Concrete Mix"
+	desc = "Feeling lazy? Need a structure and quick? Use near-instant concrete mix! Just add water."
+	cost = CARGO_CRATE_VALUE * 5
+	access_view = ACCESS_ENGINEERING
+	contains = list(
+		/obj/item/reagent_containers/cup/jerrycan/concrete_mix = 2,
+		/obj/item/reagent_containers/cup/bucket = 1,
+	)
+	crate_name = "concrete mix crate"
+	crate_type = /obj/structure/closet/crate/engineering

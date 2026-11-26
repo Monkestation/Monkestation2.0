@@ -46,6 +46,8 @@
 	var/girder_state = GIRDER_NORMAL
 	/// How long this wall takes to make by using its sheet type on a girder.
 	var/make_delay = 4 SECONDS
+	/// Sound played when wall is dismantled
+	var/break_sound = 'sound/items/tools/welder.ogg'
 
 	var/list/dent_decals
 
@@ -228,7 +230,7 @@
 	if(devastated)
 		devastate_wall()
 	else
-		playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+		playsound(src, break_sound, 100, TRUE)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
