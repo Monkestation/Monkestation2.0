@@ -68,9 +68,7 @@
 /obj/effect/spawner/random/entertainment/money_small,
 /obj/effect/spawner/random/entertainment/money_small,
 /obj/effect/spawner/random/entertainment/money_small,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/airless/variant_10,
 /area/template_noop)
 "aC" = (
 /obj/effect/turf_decal/syndicateemblem/top/right,
@@ -354,9 +352,7 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/infested_flotilla)
 "cm" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/airless/variant_10,
 /area/template_noop)
 "cn" = (
 /obj/machinery/shower/directional/west,
@@ -377,9 +373,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "cx" = (
 /obj/structure/alien/weeds/node,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/ruin/space/has_grav/infested_flotilla)
 "cy" = (
 /obj/structure/chair/office/light{
@@ -415,9 +409,7 @@
 "cK" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/spawner/random/maintenance,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/airless/variant_10,
 /area/ruin/space/has_grav/infested_flotilla)
 "cM" = (
 /obj/structure/alien/weeds,
@@ -784,9 +776,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/infested_flotilla)
 "eD" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid2"
-	},
+/turf/open/misc/asteroid/airless/variant_2,
 /area/template_noop)
 "eE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1136,9 +1126,7 @@
 "gz" = (
 /obj/structure/alien/weeds,
 /obj/effect/spawner/random/maintenance,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/ruin/space/has_grav/infested_flotilla)
 "gB" = (
 /obj/effect/decal/cleanable/blood/splatter/xeno,
@@ -1498,9 +1486,7 @@
 "iR" = (
 /obj/structure/alien/weeds,
 /obj/effect/spawner/random/trash,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/airless/variant_10,
 /area/ruin/space/has_grav/infested_flotilla)
 "iT" = (
 /obj/structure/alien/weeds,
@@ -1831,9 +1817,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "kx" = (
 /obj/effect/turf_decal/syndicateemblem/middle/right,
@@ -1971,9 +1955,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "ll" = (
 /obj/effect/spawner/random/trash,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/airless/variant_8,
 /area/template_noop)
 "lp" = (
 /obj/structure/sink/kitchen/directional/north,
@@ -2476,9 +2458,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 1
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "nR" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -2564,9 +2544,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "oH" = (
 /obj/structure/lattice,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/template_noop)
 "oL" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -2633,9 +2611,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "oU" = (
 /obj/structure/alien/weeds,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/ruin/space/has_grav/infested_flotilla)
 "oW" = (
 /obj/effect/decal/cleanable/garbage,
@@ -2689,9 +2665,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "pf" = (
 /obj/structure/alien/weeds,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/airless/variant_8,
 /area/ruin/space/has_grav/infested_flotilla)
 "ph" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2716,9 +2690,7 @@
 /obj/effect/spawner/random/trash,
 /obj/effect/spawner/random/trash,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/ruin/space/has_grav/infested_flotilla)
 "pl" = (
 /obj/structure/cable,
@@ -2861,9 +2833,7 @@
 /turf/open/floor/wood/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "pH" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/airless/variant_8,
 /area/template_noop)
 "pM" = (
 /obj/structure/alien/weeds,
@@ -3117,9 +3087,7 @@
 "rp" = (
 /obj/structure/broken_flooring/pile/directional/east,
 /obj/structure/alien/weeds,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/airless/variant_8,
 /area/ruin/space/has_grav/infested_flotilla)
 "rq" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno/core,
@@ -3395,9 +3363,7 @@
 "tp" = (
 /obj/structure/alien/weeds,
 /obj/structure/broken_flooring/singular/directional/east,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/ruin/space/has_grav/infested_flotilla)
 "tu" = (
 /obj/machinery/airalarm/directional/east,
@@ -3650,9 +3616,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "uG" = (
 /obj/structure/alien/weeds,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/ruin/space/has_grav/infested_flotilla)
 "uR" = (
 /obj/structure/mirror/directional/east,
@@ -3755,9 +3719,7 @@
 "vw" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/airless/variant_8,
 /area/ruin/space/has_grav/infested_flotilla)
 "vz" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -3792,9 +3754,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "vJ" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/ruin/space/has_grav/infested_flotilla)
 "vK" = (
 /obj/structure/bed{
@@ -3868,9 +3828,7 @@
 /turf/open/floor/carpet/green/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "wz" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/template_noop)
 "wB" = (
 /obj/structure/cable,
@@ -3885,9 +3843,7 @@
 "wE" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/ruin/space/has_grav/infested_flotilla)
 "wH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3935,9 +3891,7 @@
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/ruin/space/has_grav/infested_flotilla)
 "wP" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/ruin/space/has_grav/infested_flotilla)
 "wQ" = (
 /obj/effect/spawner/random/trash,
@@ -4399,9 +4353,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_flotilla)
 "zF" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/template_noop)
 "zH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -4594,9 +4546,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "AO" = (
 /obj/effect/spawner/random/trash,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid2"
-	},
+/turf/open/misc/asteroid/airless/variant_2,
 /area/template_noop)
 "AP" = (
 /obj/structure/alien/weeds,
@@ -5808,9 +5758,7 @@
 "He" = (
 /obj/structure/alien/weeds,
 /obj/effect/spawner/random/trash,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/ruin/space/has_grav/infested_flotilla)
 "Hg" = (
 /obj/effect/decal/cleanable/blood{
@@ -5930,9 +5878,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "Ic" = (
 /obj/structure/alien/weeds,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/airless/variant_10,
 /area/ruin/space/has_grav/infested_flotilla)
 "Ig" = (
 /turf/open/floor/iron/small,
@@ -6135,9 +6081,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "IT" = (
 /obj/effect/spawner/random/trash,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/template_noop)
 "IW" = (
 /obj/effect/spawner/random/trash,
@@ -6179,9 +6123,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "Jd" = (
 /obj/structure/broken_flooring/pile/directional/north,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/template_noop)
 "Jg" = (
 /obj/effect/decal/cleanable/blood/gibs/xeno/body,
@@ -6602,9 +6544,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "LK" = (
 /obj/structure/alien/resin/wall,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/airless/variant_10,
 /area/ruin/space/has_grav/infested_flotilla)
 "LL" = (
 /obj/machinery/door/airlock/hatch,
@@ -6686,9 +6626,7 @@
 "Mu" = (
 /obj/effect/spawner/random/trash,
 /obj/structure/alien/weeds,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/ruin/space/has_grav/infested_flotilla)
 "Mv" = (
 /obj/structure/cable,
@@ -7145,9 +7083,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "Pe" = (
 /obj/structure/broken_flooring/singular/directional/north,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/template_noop)
 "Ph" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -7571,9 +7507,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/garbage,
 /obj/effect/spawner/random/maintenance,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/airless/variant_10,
 /area/ruin/space/has_grav/infested_flotilla)
 "RM" = (
 /obj/structure/cable,
@@ -7693,9 +7627,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/ruin/space/has_grav/infested_flotilla)
 "Sv" = (
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
@@ -8109,9 +8041,7 @@
 /area/ruin/space/has_grav/infested_flotilla)
 "Va" = (
 /obj/effect/spawner/random/trash,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/template_noop)
 "Vc" = (
 /obj/structure/sink/kitchen/directional/north,
@@ -8607,9 +8537,7 @@
 "Yd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid2"
-	},
+/turf/open/misc/asteroid/airless/variant_2,
 /area/ruin/space/has_grav/infested_flotilla)
 "Ye" = (
 /obj/structure/cable,
@@ -8840,9 +8768,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/ruin/space/has_grav/infested_flotilla)
 "Zv" = (
 /obj/structure/table,

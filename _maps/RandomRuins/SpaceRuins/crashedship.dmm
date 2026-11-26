@@ -541,9 +541,7 @@
 	pixel_x = -13;
 	pixel_y = 9
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/awaymission/bmpship/fore)
 "vX" = (
 /obj/effect/spawner/random/structure/girder,
@@ -710,9 +708,7 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/awaymission/bmpship/fore)
 "BM" = (
 /obj/effect/turf_decal/siding/white/corner{
@@ -1108,9 +1104,7 @@
 /obj/machinery/computer{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "podfloor_dark"
-	},
+/turf/open/floor/iron/pod_dark/airless,
 /area/awaymission/bmpship/fore)
 "NF" = (
 /obj/effect/turf_decal/stripes/end,

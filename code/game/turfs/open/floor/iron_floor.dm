@@ -3,6 +3,26 @@
 	floor_tile = /obj/item/stack/tile/iron/base
 	floor_tile = /obj/item/stack/tile/iron/base
 
+/turf/open/floor/iron/asteroid_5
+	icon_state = "asteroid5"
+	base_icon_state = "asteroid5"
+
+/turf/open/floor/iron/asteroid_8
+	icon_state = "asteroid8"
+	base_icon_state = "asteroid8"
+
+/turf/open/floor/iron/pod_dark
+	icon_state = "podfloor_dark"
+	base_icon_state = "podfloor_dark"
+
+/turf/open/floor/iron/pod_dark/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/iron/sand
+	icon = 'icons/obj/fluff/beach.dmi'
+	icon_state = "sand"
+	base_icon_state = "sand"
+
 /turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
@@ -100,6 +120,13 @@
 	icon_state = "darkfull"
 	base_icon_state = "darkfull"
 	floor_tile = /obj/item/stack/tile/iron/dark
+
+/turf/open/floor/iron/dark/bus
+	icon_state = "bus"
+	base_icon_state = "bus"
+
+/turf/open/floor/iron/dark/bus/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/dark/smooth_edge
 	icon_state = "dark_edge"
@@ -339,6 +366,9 @@
 	icon_state = "recharge_floor_asteroid"
 	base_icon_state = "recharge_floor_asteroid"
 
+/turf/open/floor/iron/recharge_floor/asteroid/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/smooth
 	icon_state = "smooth"
 	base_icon_state = "smooth"
@@ -490,21 +520,36 @@
 	base_icon_state = "stairs"
 	tiled_dirt = FALSE
 
+/turf/open/floor/iron/stairs/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/stairs/left
 	icon_state = "stairs-l"
 	base_icon_state = "stairs-l"
+
+/turf/open/floor/iron/stairs/left/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/stairs/medium
 	icon_state = "stairs-m"
 	base_icon_state = "stairs-m"
 
+/turf/open/floor/iron/stairs/medium/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/stairs/right
 	icon_state = "stairs-r"
 	base_icon_state = "stairs-r"
 
+/turf/open/floor/iron/stairs/right/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/stairs/old
 	icon_state = "stairs-old"
 	base_icon_state = "stairs-old"
+
+/turf/open/floor/iron/stairs/old/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/bluespace
 	icon_state = "bluespace"

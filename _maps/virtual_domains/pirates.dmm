@@ -97,9 +97,7 @@
 /area/virtual_domain/powered)
 "gw" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "ht" = (
 /obj/structure/bookcase/random/fiction,
@@ -182,9 +180,7 @@
 /area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "jz" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "jB" = (
 /obj/effect/turf_decal/weather/sand{
@@ -192,9 +188,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/jukebox,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "jC" = (
 /obj/structure/table/wood,
@@ -341,9 +335,7 @@
 	pixel_y = 11
 	},
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "sn" = (
 /obj/structure/table/wood,
@@ -377,9 +369,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 4
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "uM" = (
 /obj/structure/flora/bush/stalky{
@@ -455,9 +445,7 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /mob/living/basic/trooper/pirate/ranged,
 /obj/structure/chair/wood,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "yA" = (
 /obj/item/bedsheet/rainbow/double,
@@ -517,9 +505,7 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "DJ" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -552,9 +538,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 9
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "FG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -567,9 +551,7 @@
 /obj/item/gun/energy/laser{
 	pixel_y = -3
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "FT" = (
 /turf/closed/mineral/random/jungle,
@@ -588,9 +570,7 @@
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "Hp" = (
 /obj/effect/turf_decal/siding/wood,
@@ -622,9 +602,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 10
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "Jo" = (
 /obj/effect/landmark/bitrunning/cache_spawn,
@@ -795,9 +773,7 @@
 /area/virtual_domain/powered)
 "RR" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "Sm" = (
 /obj/structure/flora/tree/jungle,
@@ -862,9 +838,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 10
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "Vg" = (
 /obj/effect/mob_spawn/corpse/human/pirate/melee,
@@ -873,9 +847,7 @@
 "Vk" = (
 /obj/structure/barricade/sandbags,
 /obj/effect/turf_decal/weather/sand,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/powered)
 "VC" = (
 /obj/effect/mob_spawn/corpse/human/damaged,

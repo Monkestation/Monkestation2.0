@@ -208,6 +208,9 @@
 /turf/open/floor/mineral/plastitanium/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/mineral/plastitanium/red/dark
+	icon_state = "darkfull"
+
 //Used in SnowCabin.dm
 /turf/open/floor/mineral/plastitanium/pod
 	name = "pod floor"

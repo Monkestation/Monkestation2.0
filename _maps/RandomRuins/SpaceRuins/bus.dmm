@@ -12,18 +12,14 @@
 "am" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "an" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/item/toy/plush/pkplush{
 	pixel_z = 17
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "ao" = (
 /obj/machinery/telecomms/server{
@@ -41,9 +37,7 @@
 /obj/item/toy/plush/lizard_plushie/green{
 	pixel_z = 17
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aq" = (
 /obj/structure/fluff/bus/passable/seat,
@@ -51,9 +45,7 @@
 /obj/item/clothing/head/helmet/knight{
 	pixel_z = 16
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "ar" = (
 /obj/structure/fluff/bus/passable/seat,
@@ -66,9 +58,7 @@
 	offset_at_init = 0;
 	pixel_z = 17
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "as" = (
 /obj/structure/fluff/bus/passable/seat/driver,
@@ -85,22 +75,16 @@
 /obj/item/toy/talking/ai{
 	pixel_z = 16
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "ax" = (
 /obj/structure/fluff/bus/passable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "az" = (
 /obj/structure/fluff/bus/passable,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aA" = (
 /obj/structure/fluff/bus/passable,
@@ -108,40 +92,30 @@
 /obj/item/food/meatball,
 /obj/item/food/meatball,
 /obj/item/food/meatball,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aB" = (
 /obj/structure/fluff/bus/passable,
 /obj/effect/mine/sound/bwoink,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aC" = (
 /obj/structure/fluff/bus/passable,
 /obj/item/reagent_containers/condiment/saltshaker,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aD" = (
 /obj/structure/fluff/bus/passable,
 /obj/item/food/meatball,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aE" = (
 /obj/structure/fluff/bus/passable{
 	icon_state = "topdoor"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aU" = (
 /obj/structure/fluff/bus/passable/seat,
@@ -154,16 +128,12 @@
 /obj/item/food/meat/slab/penguin{
 	pixel_z = 13
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aV" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/remains/human,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aW" = (
 /obj/structure/fluff/bus/passable/seat/driver,
@@ -171,16 +141,12 @@
 /obj/item/banhammer{
 	pixel_z = 22
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "aZ" = (
 /obj/structure/fluff/bus/passable,
 /obj/structure/sacrificealtar,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "ba" = (
 /obj/structure/fluff/bus/passable/seat,
@@ -199,9 +165,7 @@
 	pixel_z = 8;
 	pixel_x = 9
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "iE" = (
 /obj/structure/table,
@@ -299,9 +263,7 @@
 	name = "tgsv3";
 	desc = "It's, uh... pending an upgrade."
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "Gf" = (
 /obj/effect/decal/remains/human,
@@ -374,9 +336,7 @@
 "Xl" = (
 /obj/structure/fluff/bus/passable,
 /obj/item/storage/medkit/regular,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "XA" = (
 /obj/structure/fluff/bus/passable/seat,
@@ -390,9 +350,7 @@
 	offset_at_init = 0;
 	pixel_z = 15
 	},
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
-	},
+/turf/open/floor/iron/dark/bus/airless,
 /area/ruin/space)
 "Za" = (
 /obj/structure/reagent_dispensers/fueltank,

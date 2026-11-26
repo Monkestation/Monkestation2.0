@@ -49,9 +49,7 @@
 "bx" = (
 /obj/structure/frame/computer,
 /obj/item/shard,
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-12"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain/powered)
 "bA" = (
 /obj/structure/chair/plastic,
@@ -524,11 +522,6 @@
 "rO" = (
 /turf/closed/mineral,
 /area/space)
-"sn" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-38"
-	},
-/area/virtual_domain/powered)
 "sB" = (
 /obj/machinery/light/broken{
 	dir = 8
@@ -568,9 +561,7 @@
 /area/virtual_domain/powered)
 "ud" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-110"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain/powered)
 "uk" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -595,11 +586,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/virtual_domain/powered)
-"uP" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-55"
-	},
 /area/virtual_domain/powered)
 "vb" = (
 /obj/effect/turf_decal/trimline/yellow/line,
@@ -646,9 +632,7 @@
 /area/virtual_domain/powered)
 "wh" = (
 /obj/structure/table/wood,
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-207"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain/powered)
 "wl" = (
 /obj/item/shard,
@@ -667,9 +651,7 @@
 	name = "Cargo Bay Lockdown";
 	id = "factorylockdown"
 	},
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-63"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain/powered)
 "ws" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -887,9 +869,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-157"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain/powered)
 "CQ" = (
 /obj/effect/spawner/random/trash/botanical_waste,
@@ -927,9 +907,7 @@
 /area/virtual_domain/powered)
 "Ex" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-137"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain/powered)
 "Ez" = (
 /obj/structure/flora/rock/style_random,
@@ -984,20 +962,13 @@
 /turf/open/misc/asteroid/airless,
 /area/virtual_domain/powered)
 "FP" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-110"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain/powered)
 "Gb" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
-"Ge" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-21"
-	},
 /area/virtual_domain/powered)
 "Gh" = (
 /obj/machinery/door/airlock/maintenance,
@@ -1210,11 +1181,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/virtual_domain/powered)
-"MI" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-74"
-	},
 /area/virtual_domain/powered)
 "MN" = (
 /obj/effect/turf_decal/tile/dark,
@@ -1701,20 +1667,10 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
-"Zg" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-157"
-	},
-/area/virtual_domain/powered)
 "Zy" = (
 /obj/structure/table,
 /obj/item/flashlight/lantern,
 /turf/open/floor/plating,
-/area/virtual_domain/powered)
-"ZI" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-203"
-	},
 /area/virtual_domain/powered)
 "ZP" = (
 /obj/structure/railing,
@@ -2944,9 +2900,9 @@ hi
 dx
 tr
 UV
-sn
-uP
-Ge
+FP
+FP
+FP
 vb
 eg
 RJ
@@ -2996,7 +2952,7 @@ SU
 CX
 FP
 wh
-Zg
+FP
 Nu
 eg
 RJ
@@ -3096,7 +3052,7 @@ uk
 CX
 FP
 wq
-Zg
+FP
 Nu
 eg
 RJ
@@ -3144,8 +3100,8 @@ jH
 Nu
 tr
 Xw
-MI
-ZI
+FP
+FP
 Ex
 xE
 eg
