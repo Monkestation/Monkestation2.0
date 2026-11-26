@@ -13,6 +13,8 @@
 	sheet_type = /obj/item/stack/sheet/plasteel
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
+	girder_state = GIRDER_REINF
+	make_delay = 5 SECONDS
 	explosive_resistance = 2
 	max_integrity = 900
 	damage_deflection = 75 // can't be damaged with most conventional weapons or tools

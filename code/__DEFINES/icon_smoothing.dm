@@ -199,6 +199,8 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_SILK_WALLS S_OBJ(77)
 
+#define SMOOTH_GROUP_GIRDER S_OBJ(78)
+
 #define SMOOTH_GROUP_PLATFORMS S_OBJ(80) ///obj/structure/platform & rusty
 #define SMOOTH_GROUP_PLATFORMS_SHUTTLE S_OBJ(81) ///obj/structure/platform/titanium & plastitanium
 #define SMOOTH_GROUP_PLATFORMS_MATERIAL S_OBJ(82) ///obj/structure/platform/material & iron & silver & gold & uranium & bronze
