@@ -7,6 +7,8 @@
 		qdel(mimic_component)
 
 #define INTEGRITY_PER_WCLASS 10
+#define MOVE_DELAY_PER_WCLASS (0.2 SECONDS)
+#define BASE_MOVE_DELAY (0.2 SECONDS)
 #define MIMIC_SPOOF_RESIST_MASK ( \
 	LAVA_PROOF | \
 	FIRE_PROOF | \
@@ -26,6 +28,11 @@
 	var/obj/mimicked_object
 	var/datum/action/cooldown/mimic_object/mimic_ability
 	var/spoofed_flags = 0
+
+	//whether or not mimic is shifting. Shamelessly taken from pixel shift datum.
+	var/shifting = FALSE
+	//the maximum amount the disguise can be shifted.
+	var/maximum_pixel_shift = 16
 
 	// Actions currently being blocked while disguised.
 	var/list/datum/action/blocked_actions
@@ -137,6 +144,7 @@
 	else
 		mimic_ability = null
 	stop_mimicry()
+	COOLDOWN_RESET(src, move_cooldown)
 	return ..()
 
 /datum/component/perfect_mimicry/RegisterWithParent()
@@ -289,9 +297,40 @@
 	SIGNAL_HANDLER
 	return spoofed_flags | EXAMINE_RESISTANCE_OVERRIDE
 
-/// Mimic can move their disguise slowly.
+/datum/component/perfect_mimicry/proc/item_pixel_shift_down()
+	SIGNAL_HANDLER
+
+	shifting = TRUE
+	return COMSIG_KB_ACTIVATED
+
+/datum/component/perfect_mimicry/proc/item_pixel_shift_up()
+	SIGNAL_HANDLER
+
+	shifting = FALSE
+
+/// Handles mimic moving while disguised or pixel shifting the disguise.
 /datum/component/perfect_mimicry/proc/on_user_move(obj/moved_source, mob/user_moving, direction)
 	SIGNAL_HANDLER
+
+	if(!isturf(moved_source.loc))
+		return COMSIG_BLOCK_RELAYMOVE
+	if(shifting)
+		if(QDELETED(src))
+			return COMSIG_BLOCK_RELAYMOVE
+		switch(direction)
+			if(NORTH)
+				if(moved_source.pixel_y < maximum_pixel_shift + moved_source.base_pixel_y)
+					moved_source.pixel_y++
+			if(EAST)
+				if(moved_source.pixel_x < maximum_pixel_shift + moved_source.base_pixel_x)
+					moved_source.pixel_x++
+			if(SOUTH)
+				if(moved_source.pixel_y > -maximum_pixel_shift + moved_source.base_pixel_y)
+					moved_source.pixel_y--
+			if(WEST)
+				if(moved_source.pixel_x > -maximum_pixel_shift + moved_source.base_pixel_x)
+					moved_source.pixel_x--
+		return COMSIG_BLOCK_RELAYMOVE
 
 	if(!COOLDOWN_FINISHED(src, move_cooldown))
 		return COMSIG_BLOCK_RELAYMOVE
@@ -299,12 +338,14 @@
 	var/turf/current = get_turf(moved_source)
 	if(!istype(next) || !istype(current))
 		return COMSIG_BLOCK_RELAYMOVE
-	if(!isturf(moved_source.loc))
-		return COMSIG_BLOCK_RELAYMOVE
 
 	step(moved_source, direction)
 	var/last_move_diagonal = ((direction & (direction - 1)) && (moved_source.loc == next))
-	COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 1 : 0.5)) SECONDS)
+	if(isitem(moved_source))
+		var/obj/item/disguise = moved_source
+		COOLDOWN_START(src, move_cooldown, (BASE_MOVE_DELAY + (disguise.w_class * MOVE_DELAY_PER_WCLASS)) *  (last_move_diagonal ? 2 : 1))
+	else
+		COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 1 : 0.5)) SECONDS)
 
 	if(QDELETED(src))
 		return COMSIG_BLOCK_RELAYMOVE
@@ -533,6 +574,8 @@
 	mimic.flags_2 |= IGNORE_STORAGE_INVENTORY_2
 	RegisterSignal(mimic, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(mimic, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(mimic, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN, PROC_REF(item_pixel_shift_down))
+	RegisterSignal(mimic, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP, PROC_REF(item_pixel_shift_up))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_disguise_integrity_changed))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_RELAYMOVE, PROC_REF(on_user_move))
 	return TRUE
@@ -556,7 +599,13 @@
 	mimic.forceMove(mimicked_object.drop_location())
 	mimicked_object.transfer_observers_to(mimic)
 	mimic.flags_2 &= ~IGNORE_STORAGE_INVENTORY_2
-	UnregisterSignal(mimic, list(COMSIG_MOB_SAY, COMSIG_MOB_STATCHANGE))
+	UnregisterSignal(mimic, list(
+		COMSIG_MOB_SAY,
+		COMSIG_MOB_STATCHANGE,
+		COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN,
+		COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP
+		))
+	shifting = FALSE
 	if(length(applied_mob_traits))
 		mimic.remove_traits(applied_mob_traits, REF(src))
 	if(mimicked_object.atom_storage)
@@ -574,6 +623,8 @@
 	return TRUE
 
 #undef INTEGRITY_PER_WCLASS
+#undef MOVE_DELAY_PER_WCLASS
+#undef BASE_MOVE_DELAY
 #undef MIMIC_SPOOF_RESIST_MASK
 
 /*
