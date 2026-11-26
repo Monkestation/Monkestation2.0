@@ -2338,18 +2338,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
-"afG" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/light/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/bed/dogbed/runtime,
-mob/living/basic/pet/cat/runtime,
-/obj/machinery/firealarm/directional/south,
-/obj/machinery/light_switch/directional/south{
-	pixel_x = -8
-	},
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/cmo)
 "afH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4910,6 +4898,18 @@ mob/living/basic/pet/cat/runtime,
 "aly" = (
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"alz" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/light/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/bed/dogbed/runtime,
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -8
+	},
+/mob/living/basic/pet/cat/runtime,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/cmo)
 "alA" = (
 /obj/machinery/light/small,
 /obj/machinery/duct,
@@ -115384,7 +115384,7 @@ wnt
 ubB
 rlG
 nAt
-afG
+alz
 wnt
 aeN
 lVt
