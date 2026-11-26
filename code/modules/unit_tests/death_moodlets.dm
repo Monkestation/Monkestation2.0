@@ -82,13 +82,6 @@
 /datum/unit_test/death_moodlets/pet/animal_moodlet
 	desired_moodlet = /datum/mood_event/conditional/see_death/pet
 
-/// Same as above but for a simple animal pet, most of our pets still are
-/datum/unit_test/death_moodlets/pet/simple_animal_moodlet
-	desired_moodlet = /datum/mood_event/conditional/see_death/pet
-
-/datum/unit_test/death_moodlets/pet/simple_animal_moodlet/get_dying_mob()
-	return allocate(/mob/living/simple_animal/pet/cat/_proc)
-
 /// Tests desensitized moodlet when a pet dies
 /datum/unit_test/death_moodlets/pet/desensitized_to_pet
 	desired_moodlet = /datum/mood_event/conditional/see_death/pet

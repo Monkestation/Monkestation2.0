@@ -833,7 +833,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
-	return TRUE
+	return !HAS_TRAIT(src, TRAIT_AI_AVOID_TURF)
 
 /**Shake() and then explode a turf based on the passed vars
  * shake_duration: how long to shake the turf for before calling explosion()

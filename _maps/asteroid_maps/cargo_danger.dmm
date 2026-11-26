@@ -41,7 +41,7 @@
 /turf/open/space/basic,
 /area/template_noop)
 "Z" = (
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter,
+/mob/living/basic/boss/blood_drunk_miner/hunter,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/airless,
 /area/template_noop)

@@ -12,10 +12,12 @@
 	/// Terrain cost multipliers for every path this plans, see NAV_COST_* in code/__DEFINES/navmap.dm
 	var/alist/nav_cost_modifiers
 
-/datum/ai_movement/navmap_astar/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+/datum/ai_movement/navmap_astar/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	. = ..()
+	if(!.)
+		return FALSE
 	var/atom/movable/moving = controller.pawn
-	var/delay = controller.movement_delay
+	var/delay = delay_override || controller.movement_delay
 
 	var/datum/move_loop/loop = setup_moveloop(controller, current_movement_target, moving, delay, min_distance)
 
@@ -39,7 +41,7 @@
 		repath_delay = 0.5 SECONDS,
 		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
 		max_path_length = maximum_length,
-		minimum_distance = controller.get_minimum_distance(),
+		minimum_distance = min_distance,
 		access = controller.get_access(),
 		subsystem = SSai_movement,
 		skip_first = TRUE,
@@ -52,6 +54,12 @@
 		nav_cost_modifiers = nav_cost_modifiers,
 	)
 	return loop
+
+/datum/ai_movement/navmap_astar/update_movement_target(datum/ai_controller/controller, atom/new_target)
+	. = ..()
+	var/datum/move_loop/has_target/navmap_astar/loop = GLOB.move_manager.processing_on(controller.pawn, SSai_movement)
+	if(loop)
+		INVOKE_ASYNC(loop, TYPE_PROC_REF(/datum/move_loop/has_target/navmap_astar, recalculate_path))
 
 /datum/ai_movement/navmap_astar/pre_move(datum/move_loop/has_target/navmap_astar/source)
 	. = ..()
@@ -73,7 +81,7 @@
 	var/datum/ai_controller/controller = source.extra_info
 
 	source.access = controller.get_access()
-	source.minimum_distance = controller.get_minimum_distance()
+	// minimum_distance was set at loop creation; no need to update it on repath
 
 /datum/ai_movement/navmap_astar/bot
 	max_pathing_attempts = 8
@@ -81,7 +89,10 @@
 	diagonal_flags = DIAGONAL_REMOVE_ALL
 	allow_multiz = TRUE
 
-/datum/ai_movement/navmap_astar/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+/datum/ai_movement/navmap_astar/monkey
+	allow_multiz = TRUE
+
+/datum/ai_movement/navmap_astar/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
 	var/datum/move_loop/loop = ..()
 	var/atom/our_pawn = controller.pawn
 	if(isnull(our_pawn))
@@ -89,5 +100,34 @@
 	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_NAVMAP_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
 	return loop
 
+/datum/ai_movement/navmap_astar/bot/summon
+	maximum_length = AI_BOT_PATH_LENGTH
+
 /datum/ai_movement/navmap_astar/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
+	max_pathing_attempts = 10
+
+/datum/ai_movement/navmap_astar/bot/mulebot
+	max_pathing_attempts = 10
+	maximum_length = AI_MULEBOT_PATH_LENGTH
+
+/datum/ai_movement/navmap_astar/bot/mulebot/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay, min_distance)
+	var/datum/move_loop/has_target/navmap_astar/frustrations/loop = GLOB.move_manager.navmap_frustrations_move(moving,
+		current_movement_target,
+		delay,
+		repath_delay = 0.5 SECONDS,
+		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
+		max_path_length = maximum_length,
+		minimum_distance = min_distance,
+		access = controller.get_access(),
+		subsystem = SSai_movement,
+		skip_first = TRUE,
+		diagonal_handling = diagonal_flags,
+		extra_info = controller,
+	)
+	return loop
+
+/datum/ai_movement/navmap_astar/bot/mulebot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance, delay_override)
+	var/datum/move_loop/loop = ..()
+	var/atom/our_pawn = controller.pawn
+	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_NAVMAP_FRUSTRATION_INCREMENTED, TYPE_PROC_REF(/mob/living/basic/bot/mulebot, handle_buzzing))

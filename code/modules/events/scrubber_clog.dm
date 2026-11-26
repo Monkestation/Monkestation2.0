@@ -223,8 +223,8 @@
 		/mob/living/basic/lightgeist,
 		///mob/living/basic/bear,  monkestation removal
 		/mob/living/basic/mushroom,
-		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
-		/mob/living/simple_animal/pet/gondola,
+		/mob/living/basic/goose, //Janitors HATE geese.
+		/mob/living/basic/pet/gondola,
 		/mob/living/basic/slugcat, //Monkestation edit. Let the slugs come out of the pipes!
 		/mob/living/basic/beetmin
 	)
