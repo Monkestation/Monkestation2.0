@@ -34,6 +34,7 @@ SUBSYSTEM_DEF(achievements)
 		awards[score] = instance
 
 	update_metadata()
+	load_high_scores()
 
 	/**
 	 * Count how many (unlocked) achievements are in the achievements database
@@ -42,8 +43,8 @@ SUBSYSTEM_DEF(achievements)
 	 * Thanks to Jordie for the query.
 	 */
 	var/datum/db_query/query = SSdbcore.NewQuery(
-		"SELECT a.achievement_key, COUNT(a.achievement_key) AS count FROM achievements a \
-		JOIN achievement_metadata m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'achievement' \
+		"SELECT a.achievement_key, COUNT(a.achievement_key) AS count FROM [format_table_name("achievements")] a \
+		JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'achievement' \
 		GROUP BY a.achievement_key ORDER BY count DESC"
 	)
 	if(query.Execute(async = TRUE))
@@ -78,6 +79,39 @@ SUBSYSTEM_DEF(achievements)
 		return
 	SSdbcore.MassInsert(format_table_name("achievements"), cheevos_to_save, duplicate_key = TRUE)
 	SEND_SIGNAL(src, COMSIG_ACHIEVEMENTS_SAVED_TO_DB)
+
+/// Fills the leaderboards of every score with one query instead of one per score.
+/datum/controller/subsystem/achievements/proc/load_high_scores()
+	var/list/scores_by_db_id = list()
+	var/list/query_args = list()
+	var/list/query_arg_keys = list()
+	for(var/score_type in scores)
+		var/datum/award/score/score = scores[score_type]
+		if(!score.track_high_scores || istype(score, /datum/award/score/achievements_score))
+			continue
+		scores_by_db_id[score.database_id] = score
+		query_args["key[length(query_arg_keys)]"] = score.database_id
+		query_arg_keys += ":key[length(query_arg_keys)]"
+
+	if(length(query_arg_keys))
+		var/datum/db_query/query = SSdbcore.NewQuery({"
+			SELECT achievement_key, ckey, value FROM (
+				SELECT achievement_key, ckey, value,
+					ROW_NUMBER() OVER (PARTITION BY achievement_key ORDER BY value DESC) AS rank_in_key
+				FROM [format_table_name("achievements")]
+				WHERE achievement_key IN ([query_arg_keys.Join(",")])
+			) ranked
+			WHERE rank_in_key <= 50
+			ORDER BY achievement_key, rank_in_key
+		"}, query_args)
+		if(query.Execute(async = TRUE))
+			while(query.NextRow())
+				var/datum/award/score/score = scores_by_db_id[query.item[1]]
+				score?.high_scores += list(list("ckey" = query.item[2], "value" = text2num(query.item[3])))
+		qdel(query)
+
+	var/datum/award/score/achievements_score/achievements_score = scores[/datum/award/score/achievements_score]
+	achievements_score?.LoadHighScores()
 
 //Update the metadata if any are behind
 /datum/controller/subsystem/achievements/proc/update_metadata()

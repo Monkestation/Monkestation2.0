@@ -79,12 +79,12 @@
 	if(!real_bans_only && !C && extreme_popcap)
 		var/popcap_value = GLOB.clients.len
 		if(popcap_value >= extreme_popcap && !GLOB.joined_player_list.Find(ckey))
-			var/supporter = get_patreon_rank(ckey) > 0
+			var/supporter = !admin && !mentor && get_patreon_rank(ckey) > 0
 			if (admin || mentor || supporter)
 				var/msg = "Popcap Login: [ckey] - Is a(n) [admin ? "admin" : mentor ? "mentor" : supporter ? "patreon supporter" : "???"], therefore allowed passed the popcap of [extreme_popcap] - [popcap_value] clients connected"
 				log_access(msg)
 				message_admins(msg)
-			if(!CONFIG_GET(flag/byond_member_bypass_popcap) || !world.IsSubscribed(ckey, "BYOND"))
+			else if(!CONFIG_GET(flag/byond_member_bypass_popcap) || !world.IsSubscribed(ckey, "BYOND"))
 				var/msg = "Failed Login: [ckey] - Population cap reached"
 				log_access(msg)
 				message_admins(msg)
