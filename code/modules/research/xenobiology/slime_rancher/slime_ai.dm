@@ -33,6 +33,10 @@
 	set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, expires_at)
 	addtimer(CALLBACK(src, PROC_REF(expire_chase_exclusion), target, expires_at), duration)
 
+/datum/ai_controller/basic_controller/slime/note_unreachable_target(atom/target)
+	// without this every search paths to the same mess behind a window again
+	ignore_target(target, 30 SECONDS)
+
 /// Drops a chase exclusion we set, unless something longer-lived (a friend peeling us off) overwrote it since.
 /datum/ai_controller/basic_controller/slime/proc/expire_chase_exclusion(atom/target, expires_at)
 	if(LAZYACCESS(blackboard[BB_TEMPORARY_IGNORE_LIST], target) != expires_at)
