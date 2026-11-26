@@ -10007,16 +10007,6 @@
 "dHc" = (
 /turf/closed/wall,
 /area/station/hallway/primary/port)
-"dHe" = (
-/obj/machinery/light/small/directional/west,
-/obj/machinery/airalarm/directional/west,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/mob/living/simple_animal/bot/floorbot,
-/obj/structure/sign/departments/telecomms/directional/south,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "dHG" = (
 /obj/machinery/atmospherics/components/binary/crystallizer{
 	dir = 4
@@ -11263,14 +11253,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
-"ecD" = (
-/obj/item/bot_assembly/floorbot{
-	created_name = "FloorDiffBot";
-	desc = "Why won't it work?";
-	name = "FloorDiffBot"
-	},
-/turf/open/floor/wood,
-/area/station/maintenance/port/aft)
 "ecI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -13594,6 +13576,12 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"eVv" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/mob/living/basic/bot/secbot/beepsky/armsky,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "eVz" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -13672,6 +13660,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
+"eWU" = (
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable/layer3,
+/mob/living/basic/bot/secbot/pingsky,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "eWW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -14202,10 +14201,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"fgn" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-/turf/open/floor/wood,
-/area/station/maintenance/port/aft)
 "fgu" = (
 /obj/machinery/light/directional/south,
 /obj/effect/spawner/random/vending/colavend,
@@ -26048,15 +26043,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"jgs" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 4
-	},
-/obj/structure/bed/dogbed/runtime,
-/obj/item/toy/cattoy,
-/mob/living/simple_animal/pet/cat/runtime,
-/turf/open/floor/iron/white,
-/area/station/command/heads_quarters/cmo)
 "jgy" = (
 /obj/item/phone{
 	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
@@ -26988,17 +26974,6 @@
 	dir = 1
 	},
 /area/station/service/chapel)
-"jvO" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable/layer3,
-/mob/living/simple_animal/bot/secbot/pingsky,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "jvQ" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Petting Zoo"
@@ -27879,12 +27854,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"jLG" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "jLJ" = (
 /obj/structure/sign/poster/official/get_your_legs/directional/north,
 /obj/structure/chair/sofa/right/brown,
@@ -28840,6 +28809,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"kaP" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "kaU" = (
 /obj/structure/closet{
 	name = "evidence closet 3"
@@ -29036,6 +29012,14 @@
 /obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"kfv" = (
+/obj/item/bot_assembly/repairbot{
+	created_name = "FloorDiffBot";
+	desc = "Why won't it work?";
+	name = "FloorDiffBot"
+	},
+/turf/open/floor/wood,
+/area/station/maintenance/port/aft)
 "kfA" = (
 /obj/effect/landmark/start/head_of_personnel,
 /obj/structure/chair/office{
@@ -29103,13 +29087,6 @@
 /obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
-"khm" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
-/mob/living/simple_animal/bot/secbot/beepsky/officer,
-/turf/open/floor/iron,
-/area/station/security/brig)
 "kho" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -31935,6 +31912,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"lfK" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/structure/bed/dogbed/runtime,
+/obj/item/toy/cattoy,
+/mob/living/basic/pet/cat/runtime,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
 "lfY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -38718,6 +38704,16 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"nqe" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/mob/living/basic/bot/repairbot,
+/obj/structure/sign/departments/telecomms/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "nqk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43943,13 +43939,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"pdU" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "pdX" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -48517,12 +48506,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/cargo/quartermaster)
-"qIL" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/ballpit,
-/area/station/security/bitden)
 "qIP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -49074,6 +49057,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/command)
+"qRJ" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "qRL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -49951,12 +49940,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"riY" = (
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "riZ" = (
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/wood,
@@ -52089,17 +52072,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/service/chapel)
-"rSa" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil/slippery,
-/obj/effect/decal/cleanable/blood/gibs/down,
-/mob/living/simple_animal/bot/mulebot{
-	name = "Leaping Rabbit"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "rSb" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/machinery/suit_storage_unit/ce,
@@ -57814,6 +57786,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
+"tUh" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/mob/living/basic/bot/secbot/beepsky/officer,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "tUn" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
@@ -65372,6 +65351,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"wAH" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/ballpit,
+/area/station/security/bitden)
 "wAV" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Xenobiology Lab - Pen #1";
@@ -67108,6 +67093,17 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"xec" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/mob/living/basic/bot/mulebot{
+	name = "Leaping Rabbit"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "xej" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -69425,6 +69421,10 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
+"xVs" = (
+/mob/living/basic/goose/vomit,
+/turf/open/floor/wood,
+/area/station/maintenance/port/aft)
 "xVD" = (
 /obj/effect/turf_decal/trimline/purple/corner,
 /obj/structure/cable,
@@ -83847,7 +83847,7 @@ bkZ
 cXW
 uxS
 uxS
-fgn
+xVs
 ehv
 ehn
 bIO
@@ -85392,7 +85392,7 @@ wGz
 uxS
 uxS
 pHS
-ecD
+kfv
 jUb
 jUb
 jUb
@@ -88895,7 +88895,7 @@ cTa
 irc
 ixX
 ngv
-qIL
+wAH
 msI
 ibx
 qkM
@@ -88925,7 +88925,7 @@ sxn
 aiW
 vpU
 aYf
-rSa
+xec
 jXu
 jXu
 spm
@@ -94644,7 +94644,7 @@ gQG
 tFr
 tar
 cOR
-jgs
+lfK
 uyw
 pcM
 cNk
@@ -97400,7 +97400,7 @@ tJE
 kVU
 tJE
 kVU
-riY
+eVv
 fzi
 wTp
 jxV
@@ -98434,7 +98434,7 @@ ahj
 jxV
 ayV
 gFR
-khm
+tUh
 uok
 bzV
 ezg
@@ -120078,8 +120078,8 @@ uso
 mHT
 odp
 anS
-jLG
-pdU
+qRJ
+kaP
 lMJ
 rrt
 rrt
@@ -124679,7 +124679,7 @@ bjQ
 hac
 pQv
 tSP
-dHe
+nqe
 giA
 xZY
 xsN
@@ -125192,7 +125192,7 @@ nFe
 bhc
 mgj
 piw
-jvO
+eWU
 wNm
 oKA
 art

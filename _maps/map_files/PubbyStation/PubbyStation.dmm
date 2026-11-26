@@ -2005,12 +2005,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/supply/general,
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
-"afP" = (
-/obj/machinery/holopad/secure,
-/mob/living/simple_animal/bot/secbot/pingsky,
-/obj/structure/cable/layer1,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "afQ" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -7565,12 +7559,6 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/brig)
-"azZ" = (
-/mob/living/simple_animal/bot/secbot/beepsky{
-	name = "Officer Beepsky"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/security/brig)
 "aAa" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -13092,15 +13080,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
-"aXx" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "QM #1"
-	},
-/obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "aXy" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance,
@@ -13566,15 +13545,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
-"aZq" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "QM #3"
-	},
-/obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "aZr" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -29518,17 +29488,6 @@
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/station/cargo/storage)
-"cSJ" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
-/turf/open/floor/iron/white,
-/area/station/command/heads_quarters/cmo)
 "cSK" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/east{
@@ -31105,6 +31064,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"ehR" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "QM #3"
+	},
+/obj/effect/turf_decal/bot,
+/mob/living/basic/bot/mulebot,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "eie" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -33853,6 +33821,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/range)
+"gsr" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "QM #1"
+	},
+/obj/effect/turf_decal/bot,
+/mob/living/basic/bot/mulebot,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "gsB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -36207,6 +36184,12 @@
 	},
 /turf/closed/wall,
 /area/station/command/heads_quarters/rd)
+"itS" = (
+/obj/machinery/holopad/secure,
+/mob/living/basic/bot/secbot/pingsky,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "iuM" = (
 /obj/machinery/door/window/left/directional/west{
 	name = "Test Chamber";
@@ -37994,6 +37977,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai_sat_ext_ap)
+"kbW" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/ballpit,
+/area/station/security/bitden)
 "kdf" = (
 /obj/structure/trash_pile,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -38519,6 +38508,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"kwn" = (
+/mob/living/basic/goose/vomit,
+/turf/open/floor/wood,
+/area/station/service/abandoned_gambling_den)
 "kww" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -39405,6 +39398,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"ljk" = (
+/obj/effect/landmark/event_spawn,
+/mob/living/basic/bot/secbot/beepsky/armsky,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "ljs" = (
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43892,6 +43890,17 @@
 /obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"oSk" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/bed/dogbed/runtime,
+/mob/living/basic/pet/cat/runtime,
+/turf/open/floor/iron/white,
+/area/station/command/heads_quarters/cmo)
 "oSq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
@@ -46438,6 +46447,12 @@
 "qRW" = (
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
+"qSo" = (
+/mob/living/basic/bot/secbot/beepsky{
+	name = "Officer Beepsky"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/security/brig)
 "qUe" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -50409,10 +50424,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"tSN" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-/turf/open/floor/wood,
-/area/station/service/abandoned_gambling_den)
 "tSR" = (
 /obj/structure/chair,
 /obj/machinery/status_display/evac/directional/north,
@@ -50934,11 +50945,6 @@
 /obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
-"ulV" = (
-/obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "umd" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
@@ -55937,12 +55943,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"xOV" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/ballpit,
-/area/station/security/bitden)
 "xPI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -72700,7 +72700,7 @@ nPA
 uQl
 rMJ
 aiu
-azZ
+qSo
 aiu
 ayA
 cRA
@@ -75485,7 +75485,7 @@ ibf
 hma
 iIO
 jQb
-xOV
+kbW
 aem
 arl
 vXF
@@ -79369,7 +79369,7 @@ pQC
 wEc
 ajh
 vIm
-ulV
+ljk
 rPZ
 amh
 anI
@@ -84058,7 +84058,7 @@ tZX
 uFc
 buc
 tix
-cSJ
+oSk
 lsr
 hHJ
 bDw
@@ -89380,7 +89380,7 @@ hQd
 aeO
 aff
 afy
-afP
+itS
 agf
 agR
 agD
@@ -93500,7 +93500,7 @@ cBk
 jhD
 cBo
 alQ
-tSN
+kwn
 cBw
 qRW
 aiS
@@ -96113,9 +96113,9 @@ wDZ
 aUv
 aVy
 bbG
-aXx
+gsr
 aYx
-aZq
+ehR
 baA
 bbI
 bcB

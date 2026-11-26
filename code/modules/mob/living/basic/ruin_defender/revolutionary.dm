@@ -124,23 +124,8 @@
 
 
 /datum/ai_controller/basic_controller/revolutionary
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/revolutionary.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/blackboard/revolutionary,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-
-/datum/ai_planning_subtree/random_speech/blackboard/revolutionary
-
-
-/datum/ai_planning_subtree/random_speech/blackboard/revolutionary/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
-		return
-
-	return ..()

@@ -37,7 +37,7 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 
-	ai_controller = /datum/ai_controller/basic_controller/red_rabbit
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
 	basic_mob_flags = DEL_ON_DEATH
 
 	var/list/actions_to_give = list(

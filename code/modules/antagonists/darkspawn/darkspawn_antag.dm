@@ -513,7 +513,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		class_color = class.class_color //this line actually kinda hurts me
 
 	// Spawn the progenitor
-	var/mob/living/simple_animal/hostile/darkspawn_progenitor/progenitor = new(get_turf(user), user.real_name, class_color)
+	var/mob/living/basic/darkspawn_progenitor/progenitor = new(get_turf(user), user.real_name, class_color)
 	user.mind.transfer_to(progenitor)
 
 	psi = 9999

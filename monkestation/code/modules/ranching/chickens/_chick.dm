@@ -29,7 +29,6 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	held_state = "chick"
 	head_icon = 'icons/mob/pets_held.dmi'
@@ -47,6 +46,7 @@
 
 /mob/living/basic/chick/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	pixel_x = base_pixel_x + rand(-6, 6)
 	pixel_y = base_pixel_y + rand(0, 10)
 

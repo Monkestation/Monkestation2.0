@@ -122,7 +122,7 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
 "D" = (
-/mob/living/simple_animal/bot/secbot/honkbot,
+/mob/living/basic/bot/secbot/honkbot,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/ert/powered)
 "E" = (

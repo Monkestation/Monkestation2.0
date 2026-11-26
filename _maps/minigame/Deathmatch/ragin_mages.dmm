@@ -23,6 +23,14 @@
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/engine/cult,
 /area/deathmatch)
+"bs" = (
+/obj/structure/flora/bush/grassy/style_random,
+/mob/living/basic/pet/gondola{
+	name = "Jommy";
+	faction = list("gondola", "Wizard")
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
 "bv" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
@@ -34,14 +42,6 @@
 	pixel_x = 7
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
-"ct" = (
-/obj/structure/flora/bush/grassy/style_random,
-/mob/living/simple_animal/pet/gondola{
-	name = "Jommy";
-	faction = list("gondola", "Wizard")
-	},
-/turf/open/floor/grass,
 /area/deathmatch)
 "cU" = (
 /obj/structure/chair/wood/wings{
@@ -1350,7 +1350,7 @@ ds
 ph
 Jm
 SK
-ct
+bs
 Jm
 Jm
 ph

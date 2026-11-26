@@ -531,53 +531,6 @@ Diagnostic HUDs!
 		return
 	holder.icon_state = "hudcamera"
 
-/*~~~~~~~~~
-	Bots!
-~~~~~~~~~~*/
-/mob/living/simple_animal/bot/proc/diag_hud_set_bothealth()
-	var/image/holder = hud_list[DIAG_HUD]
-	holder.pixel_z = get_cached_height() - world.icon_size
-	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
-
-/mob/living/simple_animal/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
-	var/image/holder = hud_list[DIAG_STAT_HUD]
-	holder.pixel_z = get_cached_height() - world.icon_size
-	if(bot_mode_flags & BOT_MODE_ON)
-		holder.icon_state = "hudstat"
-	else if(stat) //Generally EMP causes this
-		holder.icon_state = "hudoffline"
-	else //Bot is off
-		holder.icon_state = "huddead2"
-
-/mob/living/simple_animal/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
-	var/image/holder = hud_list[DIAG_BOT_HUD]
-	holder.pixel_z = get_cached_height() - world.icon_size
-	if(client) //If the bot is player controlled, it will not be following mode logic!
-		holder.icon_state = "hudsentient"
-		return
-
-	switch(mode)
-		if(BOT_SUMMON, BOT_RESPONDING) //Responding to PDA or AI summons
-			holder.icon_state = "hudcalled"
-		if(BOT_CLEANING, BOT_REPAIRING, BOT_HEALING) //Cleanbot cleaning, Floorbot fixing, or Medibot Healing
-			holder.icon_state = "hudworking"
-		if(BOT_PATROL, BOT_START_PATROL) //Patrol mode
-			holder.icon_state = "hudpatrol"
-		if(BOT_PREP_ARREST, BOT_ARREST, BOT_HUNT) //STOP RIGHT THERE, CRIMINAL SCUM!
-			holder.icon_state = "hudalert"
-		if(BOT_MOVING, BOT_DELIVER, BOT_GO_HOME, BOT_NAV) //Moving to target for normal bots, moving to deliver or go home for MULES.
-			holder.icon_state = "hudmove"
-		else
-			holder.icon_state = ""
-
-/mob/living/simple_animal/bot/mulebot/proc/diag_hud_set_mulebotcell()
-	var/image/holder = hud_list[DIAG_BATT_HUD]
-	holder.pixel_z = get_cached_height() - world.icon_size
-	if(cell)
-		var/chargelvl = (cell.charge/cell.maxcharge)
-		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
-	else
-		holder.icon_state = "hudnobatt"
 /*~~~~~~~~~~~~
 	Airlocks!
 ~~~~~~~~~~~~~*/
