@@ -1353,6 +1353,9 @@
   - rscadd: Added the GMM spotlight station trait, which shines a spotlight on the
       richest crewmate every paycheck.
 2026-11-26:
+  AitorLogedo:
+  - bugfix: Cleaner slimes no longer lag the server trying to reach messes they can't
+      get to.
   ? CabinetOnFire, Iamgoofball, SmArtKar, Ben10Omintrix, san7890, JohnFulpWillard,
     LT3, AnturK, Jacquerel, Maia-J, vinylspiders, MrMelbert, Roxy, Iajret, Waterpig,
     Bloop, FlufflesTheDog, FalloutFalcon

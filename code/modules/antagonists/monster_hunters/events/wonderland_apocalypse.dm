@@ -112,7 +112,7 @@ GLOBAL_DATUM(wonderland_apocalypse, /datum/wonderland_apocalypse)
 	for(var/i in 1 to min(length(white_rabbits), 8))
 		addtimer(CALLBACK(white_rabbits[i], TYPE_PROC_REF(/mob/living/basic/wonderland_rabbit, turn_killer)), rand(10 SECONDS, 60 SECONDS))
 	addtimer(CALLBACK(src, PROC_REF(open_rabbit_holes)), 1 MINUTES, TIMER_LOOP)
-	dock_timer = addtimer(CALLBACK(src, PROC_REF(check_shuttle_docked)), 10 SECONDS, TIMER_LOOP | TIMER_STOPPABLE)
+	dock_timer = addtimer(CALLBACK(src, PROC_REF(check_shuttle_docked)), 10 SECONDS, TIMER_LOOP | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	seal_endings()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WONDERLAND_APOCALYPSE)
 
@@ -202,6 +202,7 @@ GLOBAL_DATUM(wonderland_apocalypse, /datum/wonderland_apocalypse)
 		return
 	if(open_gate())
 		deltimer(dock_timer)
+		dock_timer = null
 
 /datum/wonderland_apocalypse/proc/open_gate()
 	var/turf/gate_turf = pick_open_turf(RANGE_TURFS(12, SSshuttle.emergency)) || pick(pick_noise_station_turfs(1, 4))
