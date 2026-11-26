@@ -1,19 +1,20 @@
 //////////Darkspawn specific illusions//////////////
-/mob/living/simple_animal/hostile/illusion/darkspawn //simulacrum version
+/mob/living/basic/illusion/darkspawn //simulacrum version
 	desc = "They have a weird shimmering to them."
 	maxHealth = 100
 	health = 100
 	pressure_resistance = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
-	maxbodytemp = INFINITY
+	habitable_atmos = null
+	unsuitable_atmos_damage = 0
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = INFINITY
 
 	speed = -1
 	pass_flags_self = PASSTABLE | PASSMOB | PASSDOORS | PASSMACHINE | PASSGRILLE | PASSGLASS
 
 	attack_sound = 'sound/effects/magic/voidblink.ogg'
 	death_sound = 'sound/effects/magic/darkspawn/devour_will_victim.ogg'
-	attack_verb_simple = "gores"
+	attack_verb_simple = "gore"
 	bubble_icon = "darkspawn"
 
 	lighting_cutoff_red = 12
@@ -23,26 +24,22 @@
 	faction = list(FACTION_DARKSPAWN)
 	initial_language_holder = /datum/language_holder/darkspawn
 
-/mob/living/simple_animal/hostile/illusion/darkspawn/Initialize(mapload)
+/mob/living/basic/illusion/darkspawn/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/light_eater)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/simple_animal/hostile/illusion/darkspawn/Life(seconds_per_tick, times_fired)
+/mob/living/basic/illusion/darkspawn/Life(seconds_per_tick, times_fired)
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(istype(T))
 		var/light_amount = GET_SIMPLE_LUMCOUNT(T)
 		if(light_amount < SHADOW_SPECIES_DIM_LIGHT)
-			adjustHealth(-2)
+			heal_overall_damage(2)
 
-/mob/living/simple_animal/hostile/illusion/darkspawn/psyche //sentient version
+/mob/living/basic/illusion/darkspawn/psyche //sentient version
 
-/mob/living/simple_animal/hostile/illusion/darkspawn/psyche/copy_parent(mob/living/original, life, hp, damage, replicate)
-	. = ..()
-	life_span = INFINITY //doesn't actually despawn
-
-/mob/living/simple_animal/hostile/illusion/darkspawn/psyche/mind_initialize()
+/mob/living/basic/illusion/darkspawn/psyche/mind_initialize()
 	. = ..()
 	if(!IS_PSYCHE(src))
 		mind.add_antag_datum(/datum/antagonist/psyche)

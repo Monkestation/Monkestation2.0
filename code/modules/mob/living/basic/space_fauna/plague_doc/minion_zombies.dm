@@ -21,7 +21,7 @@
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	minimum_survivable_temperature = 0
 	status_flags = CANPUSH
-	ai_controller = /datum/ai_controller/basic_controller/minion_zombies
+	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile
 	icon_gib = "syndicate_gib"
 	death_message = "starts falling apart as blood spews from every orifice."
 	var/outfit
@@ -33,18 +33,6 @@
 	var/static/list/death_loot = list(/obj/effect/decal/remains/human)
 	AddElement(/datum/element/death_drops, death_loot)
 	apply_dynamic_human_appearance(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
-
-/datum/ai_controller/basic_controller/minion_zombies
-	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /mob/living/basic/space_fauna/plague_doc/minion_zombies/bullet_act(obj/projectile/projectile)
 	if(prob(projectile_deflect_chance))

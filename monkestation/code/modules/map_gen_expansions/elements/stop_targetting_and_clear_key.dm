@@ -23,4 +23,4 @@
 		return
 
 	victim.ai_controller?.set_blackboard_key(BB_TEMPORARY_TARGET, FALSE)
-	victim.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, null)
+	victim.ai_controller?.set_blackboard_key(BB_CURRENT_TARGET, null)

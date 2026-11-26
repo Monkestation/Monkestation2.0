@@ -1,5 +1,4 @@
 /mob/living/basic/parrot
-	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	held_state = "parrot"
 	head_icon = 'icons/mob/pets_held.dmi'

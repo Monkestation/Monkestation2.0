@@ -167,7 +167,7 @@
 	name = "kitty bed"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/feral,
+/mob/living/basic/pet/cat/feral,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aF" = (
@@ -246,7 +246,7 @@
 /obj/structure/bed/dogbed{
 	name = "kitty bed"
 	},
-/mob/living/simple_animal/pet/cat/space,
+/mob/living/basic/pet/cat/space,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "aS" = (
@@ -488,7 +488,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/feraltabby,
+/mob/living/basic/pet/cat/feral/tabby,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bE" = (
