@@ -144,3 +144,16 @@
 		/obj/item/circuitboard/computer/apc_control,
 		/obj/item/circuitboard/computer/robotics,
 	)
+
+/obj/effect/spawner/random/techstorage/custom_shuttle
+	name = "custom shuttle circuit board spawner"
+	loot = list(
+		/obj/item/circuitboard/computer/shuttle/docker,
+		/obj/item/circuitboard/computer/shuttle/flight_control,
+		/obj/item/circuitboard/machine/engine/propulsion,
+		/obj/item/circuitboard/machine/engine/propulsion,
+		/obj/item/circuitboard/machine/engine/propulsion,
+		/obj/item/circuitboard/machine/engine/propulsion,
+		/obj/item/shuttle_blueprints,
+		/obj/item/stack/rods/shuttle/fifty,
+	)

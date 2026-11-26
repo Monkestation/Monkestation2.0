@@ -90,3 +90,15 @@
 		/obj/structure/mecha_wreckage/ripley = 3,
 		/obj/vehicle/sealed/mecha/ripley/mining = 1,
 	)
+
+/obj/effect/spawner/random/exotic/grave
+	name = "grave spawner"
+	icon_state = "loot"
+	spawn_loot_chance = 50
+	loot = list(
+		/obj/effect/mob_spawn/corpse/human/skeleton = 27,
+		/obj/effect/mob_spawn/corpse/human/skeleton/cerulean = 3,
+		/obj/item/instrument/trumpet/spectral/one_doot = 1,
+		/obj/item/instrument/saxophone/spectral/one_doot = 1,
+		/obj/item/instrument/trombone/spectral/one_doot = 1,
+	)
