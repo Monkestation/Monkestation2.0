@@ -257,6 +257,7 @@
 		"swab",
 		"syringe",
 		"xlarge_beaker",
+		"jerrycan",
 		"tube",
 		"synth_tongue",
 		"synth_liver",
