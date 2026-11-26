@@ -206,6 +206,11 @@
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT "bloodcult"
 
+/// - - - MISC - - -
+	// These don't really fit anywhere else
+/// For things that aren't ever supposed to be accessed
+#define ACCESS_INACCESSIBLE "inaccessible"
+
 /// - - - END ACCESS IDS - - -
 
 /// A list of access levels that, when added to an ID card, will warn admins.
