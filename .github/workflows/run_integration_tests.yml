@@ -39,7 +39,6 @@ jobs:
             _maps
             .github
             build/behavior_trees
-            build/navmaps
             code/datums/greyscale/json_configs
             data/cassette_storage
             goon/icons
