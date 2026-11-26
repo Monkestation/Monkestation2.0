@@ -154,7 +154,7 @@
 	if (isnull(client))
 		return
 
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", generate_random_name(), MAX_NAME_LEN)))
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", generate_random_name(), MAX_NAME_LEN, encode = FALSE)))
 	if (!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning("Invalid name, please try again."))
 		return guardian_rename()

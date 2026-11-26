@@ -97,8 +97,8 @@
 		if(condiment_overlay && istype (interacting_with, /obj/item/food))
 			var/list/params_list = params2list(modifiers)
 			var/image/I = image('monkestation/code/modules/brewin_and_chewin/icons/condiment_overlays.dmi', interacting_with, condiment_overlay)
-			I.pixel_x = clamp(text2num(params_list["icon-x"]) - world.icon_size/2 - pixel_x,-world.icon_size/2,world.icon_size/2)
-			I.pixel_y = clamp(text2num(params_list["icon-y"]) - world.icon_size/2 - pixel_y,-world.icon_size/2,world.icon_size/2)
+			I.pixel_w = clamp(text2num(params_list["icon-x"]) - world.icon_size/2 - pixel_x,-world.icon_size/2,world.icon_size/2)
+			I.pixel_z = clamp(text2num(params_list["icon-y"]) - world.icon_size/2 - pixel_y,-world.icon_size/2,world.icon_size/2)
 			if (overlay_colored)
 				I.color = mix_color_from_reagents(reagents.reagent_list)
 			interacting_with.overlays += I
@@ -476,8 +476,8 @@
 			if(condiment_overlay && istype (interacting_with, /obj/item/food))
 				var/list/params_list = params2list(modifiers)
 				var/image/I = image('monkestation/code/modules/brewin_and_chewin/icons/condiment_overlays.dmi', interacting_with, condiment_overlay)
-				I.pixel_x = clamp(text2num(params_list["icon-x"]) - world.icon_size/2 - pixel_x,-world.icon_size/2,world.icon_size/2)
-				I.pixel_y = clamp(text2num(params_list["icon-y"]) - world.icon_size/2 - pixel_y,-world.icon_size/2,world.icon_size/2)
+				I.pixel_w = clamp(text2num(params_list["icon-x"]) - world.icon_size/2 - pixel_x,-world.icon_size/2,world.icon_size/2)
+				I.pixel_z = clamp(text2num(params_list["icon-y"]) - world.icon_size/2 - pixel_y,-world.icon_size/2,world.icon_size/2)
 				if (overlay_colored)
 					I.color = mix_color_from_reagents(reagents.reagent_list)
 				interacting_with.overlays += I

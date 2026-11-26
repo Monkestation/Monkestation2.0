@@ -3,6 +3,7 @@
 	desc = "A tool for cutting boxes, or throats."
 	icon = 'icons/obj/boxcutter.dmi'
 	icon_state = "boxcutter"
+	icon_angle = -90
 	inhand_icon_state = "boxcutter"
 	base_icon_state = "boxcutter"
 	lefthand_file = 'icons/mob/inhands/equipment/boxcutter_lefthand.dmi'

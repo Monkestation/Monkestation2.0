@@ -5,6 +5,7 @@
 	desc = "Mid or feed."
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
+	icon_angle = 45
 	inhand_icon_state = "hook"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -48,7 +49,7 @@
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = chain_iconstate, emissive = FALSE) //monkestation edit: replaced "chain" with chain_iconstate
+		chain = firer.Beam(src, icon_state = chain_iconstate, emissive = NONE) //monkestation edit: replaced "chain" with chain_iconstate
 	..()
 	//TODO: root the firer until the chain returns
 
@@ -99,6 +100,7 @@
 	desc = "A hardlight hook used to non-lethally pull targets much closer to the user."
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "contractor_hook"
+	icon_angle = 0
 	inhand_icon_state = "" //nah
 	ammo_type = /obj/item/ammo_casing/magic/hook/contractor
 

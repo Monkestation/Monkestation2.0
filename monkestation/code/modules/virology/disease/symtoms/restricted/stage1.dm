@@ -108,12 +108,12 @@
 /datum/symptom/transformation/gondola
 	name = "Gondola Transformation"
 	max_chance = 10
-	new_form = /mob/living/simple_animal/pet/gondola
+	new_form = /mob/living/basic/pet/gondola
 	desc = "Restructures the subject cells into a gondola. Cure: Condensed Capsaicin"
 
 /datum/symptom/transformation/gondola/digital
 	max_chance = 50
-	new_form = /mob/living/simple_animal/pet/gondola/virtual_domain
+	new_form = /mob/living/basic/pet/gondola/virtual_domain
 
 /datum/symptom/anxiety
 	name = "Severe Anxiety"

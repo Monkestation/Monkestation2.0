@@ -15,6 +15,7 @@
 	COOLDOWN_DECLARE(next_extinguish)
 	var/extinguish_cooldown = 10 SECONDS
 	var/extinguishes_left = 10
+	bodyshapes_with_variations = NONE
 	fishing_modifier = 0
 
 /datum/armor/eva_plasmaman

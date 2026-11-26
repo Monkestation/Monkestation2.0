@@ -1,4 +1,3 @@
-#define CALL_BOT_COOLDOWN 900
 #define MAX_SPRINT 50
 
 //Not sure why this is necessary...
@@ -79,7 +78,6 @@
 	var/can_shunt = TRUE
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/call_bot_cooldown = 0 //time of next call bot command
 	var/obj/machinery/power/apc/apc_override //Ref of the AI's APC, used when the AI has no power in order to access their APC.
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
@@ -131,11 +129,6 @@
 
 	var/jobtitles = TRUE
 
-	///This action opens menu to modify the settings.
-	var/datum/action/innate/internal_nanite_menu/nanite_menu
-	///This action actually uses the remote.
-	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
-
 	/* ROBOT CONTROL */
 	/// UI for robot controls
 	VAR_FINAL/datum/robot_control/robot_control
@@ -157,6 +150,12 @@
 
 	///How much ai's client view_range should be adjusted by with view_size.setTo(). 0 Is default view size.
 	var/view_range_boost = 0
+
+	///A list of all AI control consoles that are downloading this AI, for use in the UI warning.
+	var/list/download_sources = list()
+
+	///AI pen, if it somehow gets into range of one.
+	var/obj/item/pen/silicon/ai_pen
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, shunted)
 	. = ..()
@@ -220,15 +219,11 @@
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
+	ai_pen = new/obj/item/pen/silicon(src)
 
 	deploy_action.Grant(src)
 
 	dashboard = new(src)
-
-	nanite_remote = new
-	nanite_menu = new(nanite_remote)
-	nanite_menu.Grant(src)
-	nanite_remote.Grant(src)
 
 	if(isvalidAIloc(loc))
 		ASSIGN_GAME_VERB(src, /mob/living/silicon/ai, ai_network_change)
@@ -297,8 +292,7 @@
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
 	QDEL_NULL(dashboard)
-	QDEL_NULL(nanite_menu)
-	QDEL_NULL(nanite_remote)
+	QDEL_NULL(ai_pen)
 	malfhack = null
 	current = null
 	bot_ref = null
@@ -669,15 +663,8 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wi
 	var/mob/living/bot = bot_ref?.resolve()
 	if(!bot)
 		return
-	var/summon_success
-	if(isbasicbot(bot))
-		var/mob/living/basic/bot/basic_bot = bot
-		summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
-	else
-		var/mob/living/simple_animal/bot/simple_bot = bot
-		call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
-		summon_success = simple_bot.call_bot(src, waypoint)
-		call_bot_cooldown = 0
+	var/mob/living/basic/bot/basic_bot = bot
+	var/summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
 
 	var/chat_message = summon_success ? "Sending command to bot..." : "Interface error. Unit is already in use."
 	to_chat(src, span_notice("[chat_message]"))
@@ -1304,7 +1291,6 @@ GAME_VERB(/mob/living/silicon/ai, jobtitles, "Toggle Jobtitle Display", "AI Comm
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual)
 	return TRUE
 
-#undef CALL_BOT_COOLDOWN
 #undef MAX_SPRINT
 
 /mob/living/silicon/ai/proc/partytime()

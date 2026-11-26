@@ -94,6 +94,9 @@
 /// log game events
 /datum/config_entry/flag/log_game
 
+/// log minimap drawing events
+/datum/config_entry/flag/log_minimap_drawing
+
 /// log mech data
 /datum/config_entry/flag/log_mecha
 
@@ -650,6 +653,7 @@
 
 /// URL for admins to be redirected to for 2FA
 /datum/config_entry/string/admin_2fa_url
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/hard_deletes_overrun_threshold
 	integer = FALSE
@@ -675,8 +679,10 @@
 	default = "There are no admins currently on. Do not press the button below if your ahelp is a joke, a request or a question. Use it only for cases of obvious grief."
 
 /datum/config_entry/string/urgent_adminhelp_webhook_url
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/string/regular_adminhelp_webhook_url
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/string/adminhelp_webhook_pfp
 
@@ -794,7 +800,7 @@
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/string/twitch_key
-	default = "changethisplease"
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/flag/generate_assets_in_init
 	default = FALSE

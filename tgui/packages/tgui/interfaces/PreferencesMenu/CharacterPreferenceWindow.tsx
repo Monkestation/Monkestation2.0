@@ -6,7 +6,7 @@ import { JobsPage, JobsPageType } from './JobsPage';
 import { LoadoutManager } from './LoadoutPage';
 import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
-import { QuirksPage } from './QuirksPage';
+import { QuirkPersonalityPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
 
 enum Page {
@@ -83,7 +83,7 @@ export const CharacterPreferenceWindow = (props) => {
 
       break;
     case Page.Quirks:
-      pageContents = <QuirksPage />;
+      pageContents = <QuirkPersonalityPage />;
       break;
     default:
       exhaustiveCheck(currentPage);
@@ -149,7 +149,7 @@ export const CharacterPreferenceWindow = (props) => {
               page={Page.Quirks}
               setPage={setCurrentPage}
             >
-              Quirks
+              Quirks and Personality
             </PageButton>
           </Stack.Item>
         </Stack>

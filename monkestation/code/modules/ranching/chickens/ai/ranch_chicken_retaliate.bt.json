@@ -1,0 +1,275 @@
+{
+	"dm_type": "/datum/ai_controller/chicken/retaliate",
+	"type": "selector",
+	"children": [
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CURRENT_TARGET"
+			},
+			"child": {
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/pawn_health_below",
+				"vars": {
+					"health_threshold": "CHICKEN_FLEE_HEALTH",
+					"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+				},
+				"child": {
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/run_away_from_target"
+				}
+			}
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+					"children": [
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"key": "BB_CHICKEN_FEED_TARGET",
+										"observer_abort": "BT_ABORT_BOTH"
+									},
+									"child": {
+										"type": "sequence",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target/chicken_ability",
+												"vars": {
+													"target_key": "BB_CHICKEN_FEED_TARGET",
+													"ability_key": "BB_CHICKEN_FEED",
+													"finish_on_arrival": true
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target",
+												"vars": {
+													"ability_key": "BB_CHICKEN_FEED",
+													"target_key": "BB_CHICKEN_FEED_TARGET"
+												}
+											}
+										]
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"key": "BB_CHICKEN_NESTING_BOX",
+										"observer_abort": "BT_ABORT_BOTH"
+									},
+									"child": {
+										"type": "sequence",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target/chicken_ability",
+												"vars": {
+													"target_key": "BB_CHICKEN_NESTING_BOX",
+													"ability_key": "BB_CHICKEN_LAY_EGG",
+													"finish_on_arrival": true
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target",
+												"vars": {
+													"ability_key": "BB_CHICKEN_LAY_EGG",
+													"target_key": "BB_CHICKEN_NESTING_BOX"
+												}
+											}
+										]
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"key": "BB_CHICKEN_ABILITY_TARGET",
+										"observer_abort": "BT_ABORT_BOTH"
+									},
+									"child": {
+										"type": "sequence",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target/chicken_ability",
+												"vars": {
+													"target_key": "BB_CHICKEN_ABILITY_TARGET",
+													"ability_key": "BB_CHICKEN_TARGETED_ABILITY",
+													"finish_on_arrival": true
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target",
+												"vars": {
+													"ability_key": "BB_CHICKEN_TARGETED_ABILITY",
+													"target_key": "BB_CHICKEN_ABILITY_TARGET"
+												}
+											}
+										]
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/ability_available",
+									"vars": {
+										"ability_key": "BB_CHICKEN_SELF_ABILITY",
+										"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+									},
+									"child": {
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+										"vars": {
+											"ability_key": "BB_CHICKEN_SELF_ABILITY"
+										}
+									}
+								},
+								{
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/bb_key_set",
+									"vars": {
+										"key": "BB_CURRENT_TARGET",
+										"observer_abort": "BT_ABORT_BOTH"
+									},
+									"child": {
+										"type": "decorator",
+										"decorator": "/datum/bt_node/decorator/bb_key_true",
+										"vars": {
+											"key": "BB_CHICKEN_RANGED"
+										},
+										"child": {
+											"type": "parallel",
+											"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+											"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+											"repeat_secondary": true,
+											"finish_on_primary": true,
+											"children": [
+												{
+													"type": "subplan",
+													"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+													"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+													"children": [
+														{
+															"type": "leaf",
+															"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
+															"vars": {
+																"target_key": "BB_CURRENT_TARGET",
+																"targeting_strategy": "BB_TARGETING_STRATEGY",
+																"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+															}
+														}
+													]
+												},
+												{
+													"type": "leaf",
+													"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+													"vars": {
+														"target_key": "BB_CURRENT_TARGET",
+														"required_dist": 5,
+														"finish_on_arrival": false
+													}
+												}
+											]
+										}
+									}
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/random_walk"
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/ability_available",
+					"vars": {
+						"ability_key": "BB_CHICKEN_FEED"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_CHICKEN_FEED_TARGET",
+							"target_source": "/datum/target_source/oview_single_type/chicken_feed",
+							"targeting_strategy": "/datum/targeting_strategy/anything"
+						}
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/ability_available",
+					"vars": {
+						"ability_key": "BB_CHICKEN_LAY_EGG"
+					},
+					"child": {
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/chicken_has_eggs",
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_CHICKEN_NESTING_BOX",
+								"target_source": "/datum/target_source/oview_single_type/nestbox",
+								"targeting_strategy": "/datum/targeting_strategy/anything"
+							}
+						}
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/ability_available",
+					"vars": {
+						"ability_key": "BB_CHICKEN_TARGETED_ABILITY"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/chicken_pick_ability_target"
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list",
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
+				}
+			]
+		}
+	]
+}

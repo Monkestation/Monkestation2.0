@@ -7,7 +7,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = TRUE
-	cooldown_time = 5 SECONDS
+	cooldown_time = 3 SECONDS
 	melee_cooldown_time = 0
 	/// How far does our beam go?
 	var/beam_range = 10
@@ -29,7 +29,7 @@
 	owner.move_resist = MOVE_FORCE_VERY_STRONG
 	owner.balloon_alert_to_viewers("charging...")
 	var/mutable_appearance/direction_overlay = mutable_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
-	var/mutable_appearance/direction_emissive = emissive_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir", owner, alpha = 150/*, effect_type = EMISSIVE_NO_BLOOM*/)
+	var/mutable_appearance/direction_emissive = emissive_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir", owner, alpha = 150, effect_type = EMISSIVE_NO_BLOOM)
 	owner.add_overlay(direction_overlay)
 	owner.add_overlay(direction_emissive)
 

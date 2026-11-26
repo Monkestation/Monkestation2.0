@@ -31,7 +31,7 @@
 	SIGNAL_HANDLER
 
 	var/lying_offset = (owner.body_position == LYING_DOWN && owner.rotate_on_lying) ? PIXEL_Y_OFFSET_LYING : 0
-	animate(our_slime, pixel_y = initial(our_slime.pixel_y) + lying_offset, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT), flags = ANIMATION_PARALLEL)
+	our_slime.add_offsets(type, y_add = lying_offset)
 
 ///If the buckling ends
 /datum/status_effect/slime_leech/proc/on_buckle_end(datum/source, new_buckled)
@@ -54,7 +54,7 @@
 /datum/status_effect/slime_leech/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_POST_UPDATE_TRANSFORM)
 	if(!QDELETED(our_slime))
-		animate(our_slime, pixel_y = initial(our_slime.pixel_y), time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT), flags = ANIMATION_PARALLEL)
+		our_slime.remove_offsets(type)
 	our_slime = null
 
 /datum/status_effect/slime_leech/tick(seconds_between_ticks)
@@ -76,7 +76,8 @@
 		if(prob(60) && ishuman(meal) && meal.client && !our_slime.ai_controller?.blackboard[BB_SLIME_RABID])
 			our_slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE) //we might go rabid after finishing to feed on a human with a client.
 
-		our_slime.stop_feeding()
+		if(our_slime)
+			our_slime.stop_feeding()
 		return
 
 	// measured off health, since monke's damage procs don't agree on what sign they return (carbons give it back positive)

@@ -28,6 +28,7 @@
 /obj/item/melee/viking/godly_tenja
 	name = "Leviathan Axe"
 	icon_state = "hand_axe_frost"
+	icon_angle = -45
 	worn_icon_state = "hand_axe_frost_worn"
 	desc = "An axe with no equal to its power."
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
@@ -81,6 +82,7 @@
 /obj/item/melee/viking/skeggox
 	name = "grappling axe"
 	icon_state = "hooking_axe_item"
+	icon_angle = -45
 	lefthand_file = "hooking_axe_inhand_L"
 	righthand_file = "hooking_axe_inhand_R"
 	worn_icon_state = "hooking_axe_worn"

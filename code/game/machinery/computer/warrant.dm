@@ -33,9 +33,9 @@
 
 			var/list/entry = list(list(
 				author = warrant.author,
-				details = warrant.details,
+				details = html_decode(warrant.details),
 				fine = warrant.fine,
-				fine_name = warrant.name,
+				fine_name = html_decode(warrant.name),
 				fine_ref = REF(warrant),
 				paid = warrant.paid,
 				time = warrant.time,
@@ -105,7 +105,7 @@
 		return FALSE
 
 	var/amount = params["amount"]
-	if(!amount || !isnum(amount) || amount > warrant.fine || !account.adjust_money(-amount, "Paid fine for [target.name]"))
+	if(!isnum(amount) || amount <= 0 || amount > warrant.fine || !account.adjust_money(-amount, "Paid fine for [target.name]"))
 		to_chat(user, span_warning("ACCESS DENIED: Invalid amount."))
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE

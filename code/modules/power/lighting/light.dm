@@ -5,7 +5,6 @@
 	icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = WALL_OBJ_LAYER
-	//plane = GAME_PLANE_UPPER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
@@ -362,7 +361,11 @@
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
 /obj/machinery/light/proc/set_on(turn_on)
+	var/was_on = on
 	on = (turn_on && status == LIGHT_OK)
+	if(on == was_on)
+		return
+	SEND_SIGNAL(src, COMSIG_LIGHT_FIXTURE_TOGGLED, on)
 	update()
 
 /obj/machinery/light/get_cell()
@@ -567,6 +570,8 @@
 	)
 	cut_overlays()
 	stoplag(0.7 SECONDS)
+	if(QDELETED(src))
+		return
 	if(prob(30))
 		do_sparks(number = 2, cardinal_only = TRUE, source = src)
 
@@ -576,6 +581,8 @@
 		flickering = !flickering
 		update(FALSE)
 		stoplag(pick(list(2 SECONDS, 4 SECONDS, 6 SECONDS)))
+		if(QDELETED(src))
+			return
 
 	if(has_power())
 		on = (status == LIGHT_OK)
@@ -712,12 +719,15 @@
 	if(status == LIGHT_EMPTY || status == LIGHT_BROKEN)
 		return
 
+	var/was_ok = (status == LIGHT_OK || status == LIGHT_BURNED)
+	status = LIGHT_BROKEN
+
+	SEND_SIGNAL(src, COMSIG_LIGHT_FIXTURE_BROKEN, was_ok)
 	if(!skip_sound_and_sparks)
-		if(status == LIGHT_OK || status == LIGHT_BURNED)
+		if(was_ok)
 			playsound(loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(on)
 			do_sparks(3, TRUE, src)
-	status = LIGHT_BROKEN
 	update()
 
 /obj/machinery/light/proc/fix()
@@ -782,7 +792,7 @@
 	icon_state = "floor"
 	bulb_outer_range = 4
 	light_angle = 360
-	layer = LOW_OBJ_LAYER
+	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

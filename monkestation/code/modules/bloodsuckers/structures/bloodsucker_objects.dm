@@ -102,6 +102,7 @@
 	desc = "A simple wooden stake carved to a sharp point."
 	icon = 'icons/obj/antags/bloodsucker/stakes.dmi'
 	icon_state = "wood"
+	icon_angle = -45
 	inhand_icon_state = "wood"
 	lefthand_file = 'icons/mob/inhands/antag/bloodsucker_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/bloodsucker_righthand.dmi'

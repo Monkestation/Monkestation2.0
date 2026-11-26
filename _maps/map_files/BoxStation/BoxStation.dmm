@@ -10415,7 +10415,7 @@
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
 "dqx" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/workout)
 "dqH" = (
@@ -12789,7 +12789,7 @@
 /area/station/hallway/secondary/entry)
 "eeb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/bot_assembly/floorbot,
+/obj/item/bot_assembly/repairbot,
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -29580,7 +29580,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/mob/living/simple_animal/bot/secbot/beepsky/officer,
+/mob/living/basic/bot/secbot/beepsky/officer,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "jDf" = (
@@ -37357,7 +37357,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
+/mob/living/basic/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "mac" = (
@@ -46882,7 +46882,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar)
 "peS" = (
-/obj/structure/weightmachine/stacklifter,
+/obj/structure/weightmachine,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -51182,10 +51182,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "QM #1"
 	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #1";
-	suffix = "#1"
-	},
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -53821,7 +53818,7 @@
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/simple_animal/bot/secbot/pingsky,
+/mob/living/basic/bot/secbot/pingsky,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "ruC" = (
@@ -58341,10 +58338,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "QM #2"
 	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #2";
-	suffix = "#2"
-	},
+/mob/living/basic/bot/mulebot,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -68078,7 +68072,7 @@
 /area/station/engineering/atmos)
 "vOV" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/cmo)
 "vOX" = (

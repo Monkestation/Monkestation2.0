@@ -18,7 +18,7 @@
 	var/current_directive = ""
 
 /datum/action/cooldown/mob_cooldown/set_spider_directive/Activate(atom/target)
-	var/new_directive = tgui_input_text(owner, "Enter the new directive", "Create directive", "[current_directive]")
+	var/new_directive = tgui_input_text(owner, "Enter the new directive", "Create directive", html_decode(current_directive))
 	if(isnull(new_directive) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
 		return
 

@@ -59,7 +59,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/attack,
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -69,8 +69,10 @@
 	var/static/list/allowed_obstacle_targets = typecacheof(list(
 		/obj/structure/closet,
 		/obj/machinery/door,
+		/obj/machinery/fax,
 		/obj/structure/door_assembly,
 		/obj/structure/filingcabinet,
+		/obj/structure/flippedtable,
 		/obj/structure/frame,
 		/obj/structure/grille,
 		/obj/structure/plasticflaps,
@@ -141,8 +143,8 @@
 
 /// Gives the carp a list of weakrefs of destinations to try and travel between when it has nothing better to do
 /mob/living/basic/carp/proc/migrate_to(list/datum/weakref/migration_points)
-	ai_controller.can_idle = FALSE
-	ai_controller.set_ai_status(AI_STATUS_ON) // We need htem to actually walk to the station
+	ai_controller.ai_traits |= RUN_WHILE_UNWATCHED | ALWAYS_HIGH_PRIORITY
+	ai_controller.reset_ai_status() // We need them to actually keep walking to the station
 	var/list/actual_points = list()
 	for(var/datum/weakref/point_ref as anything in migration_points)
 		var/turf/point_resolved = point_ref.resolve()
@@ -232,6 +234,8 @@
 	var/datum/callback/got_disk = CALLBACK(src, PROC_REF(got_disk))
 	var/datum/callback/display_disk = CALLBACK(src, PROC_REF(display_disk))
 	AddComponent(/datum/component/nuclear_bomb_operator, got_disk, display_disk)
+	var/obj/item/implant/implanter = SSwardrobe.provide_type(/obj/item/implant/tacmap/nuclear/cayenne, src)
+	implanter.implant(src, null, TRUE)
 
 /mob/living/basic/carp/pet/cayenne/apply_colour()
 	if (prob(RARE_CAYENNE_CHANCE))

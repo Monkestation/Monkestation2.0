@@ -10,9 +10,13 @@
 	//HIDDEN CHECKS START
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
+	LAZYNULL(hair_masks)
 	if(human_head_owner)
 		hair_hidden = !!(human_head_owner.obscured_slots & HIDEHAIR)
 		facial_hair_hidden = !!(human_head_owner.obscured_slots & HIDEFACIALHAIR)
+		for(var/obj/item/worn_item as anything in human_head_owner.get_equipped_items())
+			if(worn_item.hair_mask)
+				LAZYSET(hair_masks, worn_item.hair_mask, TRUE)
 	if(is_husked)
 		hair_hidden = TRUE
 		facial_hair_hidden = TRUE
@@ -71,7 +75,7 @@
 		var/image/lip_overlay = image('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, image_dir)
 		lip_overlay.color = lip_color
 		//Emissive blocker
-		if(blocks_emissive)
+		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 			lip_overlay.overlays += emissive_blocker(lip_overlay.icon, lip_overlay.icon_state, location, alpha = facial_hair_alpha)
 		//Offsets
 		worn_face_offset?.apply_offset(lip_overlay)
@@ -85,7 +89,7 @@
 			facial_hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
 			facial_hair_overlay.alpha = facial_hair_alpha
 			//Emissive blocker
-			if(blocks_emissive)
+			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				facial_hair_overlay.overlays += emissive_blocker(facial_hair_overlay.icon, facial_hair_overlay.icon_state, location, alpha = facial_hair_alpha)
 			//Offsets
 			worn_face_offset?.apply_offset(facial_hair_overlay)
@@ -94,28 +98,42 @@
 			var/facial_hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_FACIAL_HAIR_KEY)
 			if(facial_hair_gradient_style)
 				var/facial_hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_FACIAL_HAIR_KEY)
-				var/image/facial_hair_gradient_overlay = get_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
+				var/image/facial_hair_gradient_overlay = get_gradient_overlay(icon(sprite_accessory.icon, sprite_accessory.icon_state), -HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
 				. += facial_hair_gradient_overlay
 
-	var/image/hair_overlay
+	var/list/all_hair_overlays = list()
 	if(!(show_debrained && (head_flags & HEAD_DEBRAIN)) && !hair_hidden && hairstyle && (head_flags & HEAD_HAIR))
-		sprite_accessory = GLOB.hairstyles_list[hairstyle]
-		if(sprite_accessory)
+		var/datum/sprite_accessory/hair/hair_sprite_accessory = GLOB.hairstyles_list[hairstyle]
+		if(hair_sprite_accessory)
+			//Hair masks
+			var/icon/base_icon = icon(hair_sprite_accessory.getCachedIcon(hair_masks))
 			//Overlay
-			hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
-			hair_overlay.alpha = hair_alpha
-			//Emissive blocker
-			if(blocks_emissive)
-				hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
-			//Offsets
-			worn_face_offset?.apply_offset(hair_overlay)
-			. += hair_overlay
-			//Gradients
-			var/hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_HAIR_KEY)
-			if(hair_gradient_style)
-				var/hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_HAIR_KEY)
-				var/image/hair_gradient_overlay = get_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, GLOB.hair_gradients_list[hair_gradient_style], hair_gradient_color)
-				. += hair_gradient_overlay
+			all_hair_overlays += image(base_icon, layer=-HAIR_LAYER, dir=image_dir)
+			//If we have any hair appendages (ponytails, etc.) sticking out on a particular side, we need to add an additional hair layer to go above hats/helmets for the sides they stick out on
+			if(LAZYLEN(hair_sprite_accessory.hair_appendages_outer))
+				var/strictly_masked_zones = NONE
+				for(var/datum/hair_mask/mask as anything in hair_masks)
+					strictly_masked_zones |= mask.strict_coverage_zones
+				for(var/appendage_icon_state in hair_sprite_accessory.hair_appendages_outer)
+					var/appendage_zone = hair_sprite_accessory.hair_appendages_outer[appendage_icon_state]
+					if(!(appendage_zone & strictly_masked_zones)) // if there are no strict masks in this zone
+						all_hair_overlays += image(hair_sprite_accessory.icon, icon_state=appendage_icon_state, layer=-OUTER_HAIR_LAYER, dir=image_dir)
+			for(var/image/hair_overlay as anything in all_hair_overlays)
+				hair_overlay.alpha = hair_alpha
+				hair_overlay.pixel_z = hair_sprite_accessory.y_offset
+				//Emissive blocker
+				if(blocks_emissive != EMISSIVE_BLOCK_NONE)
+					hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
+				//Offsets
+				worn_face_offset?.apply_offset(hair_overlay)
+				. += hair_overlay
+				//Gradients
+				var/hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_HAIR_KEY)
+				if(hair_gradient_style)
+					var/hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_HAIR_KEY)
+					var/image/hair_gradient_overlay = get_gradient_overlay(base_icon, hair_overlay.layer, GLOB.hair_gradients_list[hair_gradient_style], hair_gradient_color)
+					hair_gradient_overlay.pixel_z = hair_sprite_accessory.y_offset
+					. += hair_gradient_overlay
 
 	if(show_debrained && (head_flags & HEAD_DEBRAIN))
 		. += get_debrain_overlay(can_rotate = !dropped)
@@ -126,13 +144,16 @@
 	//HAIR COLOR START
 	if(override_hair_color)
 		SET_OVERLAY_VALUE(facial_hair_overlay, color, override_hair_color)
-		SET_OVERLAY_VALUE(hair_overlay, color, override_hair_color)
+		for(var/image/hair_overlay as anything in all_hair_overlays)
+			SET_OVERLAY_VALUE(hair_overlay, color, override_hair_color)
 	else if(fixed_hair_color)
 		SET_OVERLAY_VALUE(facial_hair_overlay, color, fixed_hair_color)
-		SET_OVERLAY_VALUE(hair_overlay, color, fixed_hair_color)
+		for(var/image/hair_overlay as anything in all_hair_overlays)
+			SET_OVERLAY_VALUE(hair_overlay, color, fixed_hair_color)
 	else
 		SET_OVERLAY_VALUE(facial_hair_overlay, color, facial_hair_color)
-		SET_OVERLAY_VALUE(hair_overlay, color, hair_color)
+		for(var/image/hair_overlay as anything in all_hair_overlays)
+			SET_OVERLAY_VALUE(hair_overlay, color, hair_color)
 	//HAIR COLOR END
 
 	return .
@@ -174,12 +195,12 @@
 	return eyeless_overlay
 
 /// Returns an appropriate hair/facial hair gradient overlay
-/obj/item/bodypart/head/proc/get_gradient_overlay(file, icon, layer, datum/sprite_accessory/gradient, grad_color)
+/obj/item/bodypart/head/proc/get_gradient_overlay(icon/base_icon, layer, datum/sprite_accessory/gradient, grad_color)
 	RETURN_TYPE(/mutable_appearance)
 
 	var/mutable_appearance/gradient_overlay = mutable_appearance(layer = layer)
 	var/icon/temp = icon(gradient.icon, gradient.icon_state)
-	var/icon/temp_hair = icon(file, icon)
+	var/icon/temp_hair = icon(base_icon)
 	temp.Blend(temp_hair, ICON_ADD)
 	gradient_overlay.icon = temp
 	gradient_overlay.color = grad_color

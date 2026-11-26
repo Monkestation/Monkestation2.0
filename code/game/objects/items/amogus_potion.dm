@@ -21,6 +21,6 @@
 		to_chat(impostor, span_userdanger("You feel strange..."))
 
 	impostor.AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
-	impostor.can_be_held = TRUE
+	impostor.AddElement(/datum/element/can_be_held)
 	to_chat(impostor, span_notice("You can now be picked up by other people."))
 	qdel(src)

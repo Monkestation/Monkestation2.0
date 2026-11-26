@@ -156,8 +156,9 @@
 
 /obj/structure/ore_vent/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
-	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		produce_boulder(TRUE)
+		return TRUE
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
@@ -387,11 +388,14 @@
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		if(QDELETED(src))
 			return
-		for(var/turf/closed/mineral/rock in oview(i))
+		for(var/turf/rock in oview(i, src))
 			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
 				new /obj/effect/decal/cleanable/rubble(rock)
+			if(!ismineralturf(rock))
+				continue
 			if(prob(100 - (i * 15)))
-				rock.gets_drilled(user, FALSE)
+				var/turf/closed/mineral/drillable = rock
+				drillable.gets_drilled(user, FALSE)
 				if(prob(50))
 					new /obj/effect/decal/cleanable/rubble(rock)
 		sleep(0.6 SECONDS)
@@ -535,7 +539,7 @@
 	defending_mobs = list(
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
-		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/polarbear,
 		/mob/living/basic/mining/wolf,
 	)
 	ore_vent_options = list(
@@ -548,7 +552,7 @@
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
 		/mob/living/basic/mining/ice_demon,
-		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/basic/mining/polarbear,
 		/mob/living/basic/mining/wolf,
 	)
 	ore_vent_options = list(

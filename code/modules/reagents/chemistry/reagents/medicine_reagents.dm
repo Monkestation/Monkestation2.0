@@ -81,23 +81,23 @@
 	taste_description = "science"
 	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS|HEAL_REFRESH_ORGANS)
 
-///Datum used in /obj/item/reagent_containers/medipen/lone_wanderer
+///Datum used in /obj/item/reagent_containers/medipen/ancient
 /datum/reagent/medicine/lonehope
 	name = "Lone Hope"
-	description = "Who knows what this is...Heals great though."
+	description = "Who knows what this is...seems able to heal anyone..."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
-	metabolization_rate = 1 * REAGENTS_METABOLISM
-	var/healing = 2.5
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	var/healing = 1.25
 	ph = 1
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE|REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_DONOTSPLIT
 
 /datum/reagent/medicine/lonehope/proc/dohealing(mob/living/carbon/affected_mob,seconds_per_tick)
 	var/healed = healing * REM * seconds_per_tick
-	affected_mob.adjustToxLoss(-healed, FALSE, TRUE, affected_biotype)
-	affected_mob.adjustOxyLoss(-2*healed, FALSE, TRUE, affected_biotype, required_respiration_type = affected_respiration_type)
-	affected_mob.adjustBruteLoss(-healed, FALSE, TRUE, affected_bodytype)
-	affected_mob.adjustFireLoss(-healed, FALSE, TRUE, affected_bodytype)
+	affected_mob.adjustToxLoss(-healed, FALSE, TRUE, ALL)
+	affected_mob.adjustOxyLoss(-2*healed, FALSE, TRUE, ALL, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustBruteLoss(-healed, FALSE, TRUE, ALL)
+	affected_mob.adjustFireLoss(-healed, FALSE, TRUE, ALL)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healed)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -healed)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_EARS, -healed)
@@ -1584,7 +1584,7 @@ MONKESTATION REMOVAL END
 	affected_mob.adjust_confusion(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.disgust = max(affected_mob.disgust - (6 * REM * seconds_per_tick), 0)
 	if(affected_mob.mob_mood != null && affected_mob.mob_mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
-		affected_mob.mob_mood.set_sanity(min(affected_mob.mob_mood.sanity + (5 * REM * seconds_per_tick), SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
+		affected_mob.mob_mood.adjust_sanity(5 * REM * seconds_per_tick, maximum = SANITY_NEUTRAL) // set minimum to prevent unwanted spiking over neutral
 	..()
 	. = TRUE
 

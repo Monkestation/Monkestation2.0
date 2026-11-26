@@ -5,6 +5,12 @@
 	var/datum/bodypart_overlay/simple/emote/blush_overlay
 
 /datum/mood_event/drunk/add_effects(param)
+	// monkestation edit: our drunk moodlet doesn't scale with drunkness, so personalities just change the flat value
+	if(HAS_PERSONALITY(owner, /datum/personality/teetotal))
+		mood_change *= -1.5
+		description = "I don't like drinking... It makes me feel horrible."
+	if(HAS_PERSONALITY(owner, /datum/personality/bibulous))
+		mood_change *= 1.5
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
@@ -12,6 +18,11 @@
 
 /datum/mood_event/drunk/remove_effects()
 	QDEL_NULL(blush_overlay)
+
+/datum/mood_event/drunk_after
+	mood_change = 2
+	description = "The buzz might be gone, but I still feel good."
+	timeout = 5 MINUTES
 
 /datum/mood_event/wrong_brandy
 	description = "I hate that type of drink."

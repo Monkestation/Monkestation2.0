@@ -120,6 +120,10 @@
 		if(.)
 			. += ", "
 		. += "No Required"
+	if(roundstart && occurrences)
+		if(.)
+			. += ", "
+		. += "Already Ran"
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates() //we should optimize this
 	if(length(candidates) < antag_amt)
@@ -137,9 +141,14 @@
 		return
 	if(!check_required_roles())
 		return FALSE
+	// raw occurrences, the shared count would block bloodcult's clockcult pairing
+	if(roundstart && occurrences)
+		return FALSE
 
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates(candidate_pool)
+	if(prompted_picking)
+		candidates = SSgamemode.remove_recent_decliners(candidates)
 	if(length(candidates) < antag_amt)
 		return FALSE
 

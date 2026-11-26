@@ -27,6 +27,8 @@
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
+	tacmap_color = TACMAP_DOOR
+
 	/// Do we need to keep track of a filler panel with the airlock
 	var/multi_tile
 	/// A filler object used to fill the space of multi-tile airlocks
@@ -290,7 +292,7 @@
 
 	if(isliving(user) && isnull(user.mind))
 		var/mob/living/living_user = user
-		if(living_user.mob_size < MOB_SIZE_HUMAN)
+		if(living_user.mob_size < MOB_SIZE_HUMAN && !isbot(living_user))
 			return
 
 	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)

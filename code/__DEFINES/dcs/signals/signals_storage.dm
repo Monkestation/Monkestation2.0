@@ -1,3 +1,8 @@
+/// Sent to the parent before even attempting to dump items, from base of /datum/storage/dump_content_at(): (datum/storage/storage, atom/over, mob/user)
+#define COMSIG_STORAGE_DUMP_PRE_TRANSFER "storage_dump_pre_transfer"
+	/// Return to stop the dump before it even has a chance of starting
+	#define CANCEL_STORAGE_DUMP (1<<0)
+
 /// Sent when /datum/storage/dump_content_at(): (obj/item/storage_source, mob/user)
 #define COMSIG_STORAGE_DUMP_CONTENT "storage_dump_contents"
 	/// Return to stop the standard dump behavior.

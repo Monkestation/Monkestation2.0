@@ -1,6 +1,8 @@
 
 /// list of weakrefs to mobs OR minds that have been sacrificed
 GLOBAL_LIST(sacrificed)
+/// how many sacrifices have been spent on revives, starts negative so the cult gets one free revive
+GLOBAL_VAR_INIT(sacrifices_used, -SOULS_TO_REVIVE)
 /// List of all teleport runes
 GLOBAL_LIST(teleport_runes)
 /// Assoc list of every rune that can be drawn by ritual daggers. [rune_name] = [typepath]
@@ -36,7 +38,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	icon = 'icons/obj/antags/cult/rune.dmi'
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	color = RUNE_COLOR_RED
 
 	/// The name of the rune to cultists
@@ -82,6 +85,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/image/I = image(icon = 'icons/effects/blood.dmi', icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_runes", I)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /obj/effect/rune/examine(mob/user)
 	. = ..()
@@ -100,7 +104,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	if(.)
 		return
 //	if(!IS_CULTIST(user)) // monkestation change, original code
-	if(!IS_CULTIST(user) && !cult_override) // monkestation change, cult override added
+	if(!IS_CULTIST_OR_CULTIST_MOB(user) && !cult_override) // monkestation change, cult override added
 		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
 		return
 	var/list/invokers = can_invoke(user)
@@ -481,7 +485,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/teleportnames = list()
 	for(var/obj/effect/rune/teleport/teleport_rune as anything in GLOB.teleport_runes)
 		if(teleport_rune != src && !is_away_level(teleport_rune.z))
-			potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
+			potential_runes[avoid_assoc_duplicate_keys(html_decode(teleport_rune.listkey), teleportnames)] = teleport_rune
 
 	if(!length(potential_runes))
 		to_chat(user, span_warning("There are no valid runes to teleport to!"))
@@ -590,7 +594,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
-	pixel_y = -32
+	pixel_y = 16
+	pixel_z = -48
 	scribe_delay = 50 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
@@ -622,6 +627,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/invoker in invokers)
 			to_chat(invoker, span_warning("Nar'Sie is already on this plane!"))
 		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - already summoned.")
+		return
+	if(GLOB.wonderland_apocalypse)
+		for(var/invoker in invokers)
+			to_chat(invoker, span_hearts_decree("A god? I did not send for a god. Send it back! Fine it! Mop it up! ...And who has been drawing on my floor?"))
+		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - Wonderland has sealed it.")
 		return
 //monkestation edit start
 	used = TRUE
@@ -671,12 +681,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
-	var/static/sacrifices_used = -SOULS_TO_REVIVE // Cultists get one "free" revive
 
 /obj/effect/rune/raise_dead/examine(mob/user)
 	. = ..()
 	if(IS_CULTIST(user) || user.stat == DEAD)
-		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - sacrifices_used]"
+		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - GLOB.sacrifices_used]"
 
 /obj/effect/rune/raise_dead/invoke(list/invokers)
 	if(rune_in_use)
@@ -722,12 +731,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		mob_to_revive = revive_target
 
 	if(istype(core_to_revive) || mob_to_revive.stat == DEAD)
-		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - sacrifices_used
+		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used
 		if(diff < 0)
 			to_chat(user, span_warning("Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!"))
 			fail_invoke()
 			return
-		sacrifices_used += SOULS_TO_REVIVE
+		GLOB.sacrifices_used += SOULS_TO_REVIVE
 		if(istype(core_to_revive))
 			mob_to_revive = core_to_revive.rebuild_body(user, FALSE, POLICY_ANTAGONISTIC_REVIVAL)
 		else
@@ -1072,7 +1081,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "apoc"
 	pixel_x = -32
-	pixel_y = -32
+	pixel_y = 16
+	pixel_z = -48
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100

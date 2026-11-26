@@ -53,7 +53,7 @@ Difficulty: Hard
 	armour_penetration = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	mob_biotypes = MOB_ROBOTIC|MOB_EPIC|MOB_MINING
+	mob_biotypes = MOB_ROBOTIC|MOB_SPECIAL|MOB_MINING
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
@@ -456,7 +456,7 @@ Difficulty: Hard
 		var/list/stored_nearby = list()
 		for(var/mob/living/L in view(7,src))
 			stored_nearby += L // store the people to grant the achievements to once we die
-		INVOKE_ASYNC(src, PROC_REF(hierophant_burst), null, get_turf(src), 10)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(hierophant_burst), null, get_turf(src), 10)
 		set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid
 		..(force_grant = stored_nearby)
 
@@ -803,8 +803,7 @@ Difficulty: Hard
 /obj/effect/hierophant_rays_holder
 	icon = null
 	pixel_y = 16
-	layer = BELOW_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
+	layer = SPACEVINE_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/hierophant_rays_holder/Initialize(mapload)

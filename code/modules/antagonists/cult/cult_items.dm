@@ -12,6 +12,7 @@
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
+	icon_angle = -45
 	inhand_icon_state = "cultdagger"
 	worn_icon_state = "render"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -58,6 +59,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "cultblade"
+	icon_angle = -45
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -1077,6 +1079,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "A halberd with a volatile axehead made from crystallized blood. It seems linked to its creator. And, admittedly, more of a poleaxe than a halberd."
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "occultpoleaxe0"
+	icon_angle = -45
 	base_icon_state = "occultpoleaxe"
 	inhand_icon_state = "occultpoleaxe0"
 	w_class = WEIGHT_CLASS_HUGE
@@ -1398,23 +1401,18 @@ Striking a noncultist, however, will tear their flesh."}
 				illusions--
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 450)
 				if(prob(60))
-					var/mob/living/simple_animal/hostile/illusion/clone = new(get_turf(owner))
-					clone.faction = list(FACTION_CULT)
-					clone.copy_parent(owner, 70, 10, 5)
-					clone.move_to_delay = owner.cached_multiplicative_slowdown
+					var/mob/living/basic/illusion/clone = new(get_turf(owner))
+					clone.full_setup(owner, faction_override = list(FACTION_CULT), life = 7 SECONDS, hp = 10, damage = 5)
+					clone.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
 				else
-					var/mob/living/simple_animal/hostile/illusion/escape/clone = new(get_turf(owner))
-					clone.copy_parent(owner, 70, 10)
-					clone.GiveTarget(owner)
-					clone.Goto(owner, owner.cached_multiplicative_slowdown, clone.minimum_distance)
+					var/mob/living/basic/illusion/escape/clone = new(get_turf(owner))
+					clone.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 7 SECONDS, hp = 10)
 			return TRUE
 	else
 		if(prob(50))
-			var/mob/living/simple_animal/hostile/illusion/clone = new(owner.loc)
-			clone.copy_parent(owner, 100, 20, 5)
-			clone.faction = list(FACTION_CULT)
-			clone.GiveTarget(owner)
-			clone.move_to_delay = owner.cached_multiplicative_slowdown
+			var/mob/living/basic/illusion/clone = new(owner.loc)
+			clone.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 10 SECONDS, hp = 20, damage = 5)
+			clone.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
 			to_chat(owner, span_danger("<b>[src] betrays you!</b>"))
 		return FALSE
 

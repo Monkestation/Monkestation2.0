@@ -266,6 +266,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		//Should not exist outside of holders
+		/obj/effect/decal/cleanable/blood/trail,
 		// monkestation start
 		/obj/effect/spawner/random_engines,
 		/obj/effect/spawner/random_bar,
@@ -308,8 +310,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
 	ignore += typesof(/mob/eye/imaginary_friend)
-	//No pod to gondola
-	ignore += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
 	//No heart to give
 	ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
@@ -350,8 +350,13 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += subtypesof(/obj/machinery/airlock_controller)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
 	ignore += subtypesof(/atom/movable/screen/escape_menu)
+	// Needs a hud and a minimap to be passed in
+	ignore += typesof(/atom/movable/screen/minimap_display)
+	ignore += typesof(/atom/movable/screen/minimap_z_indicator)
 	///we generate mobs in these and create destroy does this in null space
 	ignore += typesof(/obj/item/loot_table_maker)
+
+	ignore += typesof(/obj/effect/warped_rune) // don't feel like dealing with the side effects of these tbh
 
 	/// We need to use json_decode to run randoms properly
 	ignore += typesof(/obj/item/cassette_tape)

@@ -485,19 +485,49 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Object")
 
 // But he made one fatal slip, when he tried to match the ranger with the big iron on his hip.
 
-/obj/item/gun/ballistic/revolver/lone_wanderer
-	name = "\improper Big Iron"
+/obj/item/gun/ballistic/revolver/big_iron
+	name = "\proper Big Iron"
 	desc = "No rest for the wicked."
-	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/handcannon
-	can_suppress = TRUE
-	fire_delay = 0.25
-	recoil = 0.2
+	desc_controls = "Left click fire, right click to fan the hammer for 3 quick shots, 6 while wielded, activate in hand to reload from... somewhere."
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/big_iron
+	can_suppress = FALSE
+	fire_delay = 1 SECONDS
+	recoil = 0.4
 	wield_recoil = 0
+	COOLDOWN_DECLARE(fan_cd)
 
-/obj/item/gun/ballistic/revolver/lone_wanderer/attack_self(mob/living/user)
-	unload_ammo(user)
-	magazine.top_off()
-	spin()
-	user.balloon_alert(user,"reloaded!")
+/obj/item/gun/ballistic/revolver/big_iron/attack_self(mob/living/user)
+	var/reload_delay = 2.75 SECONDS
+	if(HAS_TRAIT(src,TRAIT_WIELDED))
+		reload_delay = 1.75 SECONDS
+	if(do_after(user,reload_delay,user,timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE)))
+		unload_ammo(user)
+		magazine.top_off()
+		spin()
+		user.balloon_alert(user,"reloaded!")
 	return
+
+/obj/item/gun/ballistic/revolver/big_iron/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ITEM_INTERACT_SUCCESS
+	if(!COOLDOWN_FINISHED(src,fan_cd))
+		return
+	var/params = list2params(modifiers)
+	fire_delay = 0
+	try_fire_gun(interacting_with,user,params)
+	addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),1.2)
+	addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),2.4)
+	var/semidelay = 2.3
+	if(HAS_TRAIT(src,TRAIT_WIELDED))
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),3.6)
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),4.8)
+		addtimer(CALLBACK(src,PROC_REF(try_fan_hammer),interacting_with,user,params),6)
+		semidelay = 5.9
+	COOLDOWN_START(src,fan_cd,semidelay)
+
+/obj/item/gun/ballistic/revolver/big_iron/proc/try_fan_hammer(atom/at,mob/living/user,params)
+	if(user.is_holding(src))
+		try_fire_gun(at,user,params)
+	if(COOLDOWN_FINISHED(src,fan_cd))
+		fire_delay = initial(fire_delay)
+

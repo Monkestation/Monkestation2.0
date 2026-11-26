@@ -4,6 +4,7 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "classic_baton"
+	icon_angle = -45
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -148,11 +149,6 @@
 	if(!active || (user.istate & ISTATE_SECONDARY))
 		return BATON_DO_NORMAL_ATTACK
 
-	if(cooldown_check > world.time || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
-		var/wait_desc = get_wait_description()
-		if (wait_desc)
-			to_chat(user, wait_desc)
-		return BATON_ATTACK_DONE
 
 	if(check_parried(target, user))
 		return BATON_ATTACK_DONE
@@ -172,7 +168,7 @@
 	else
 		desc = get_stun_description(target, user)
 
-	if(desc)
+	if(desc && cooldown_check <= world.time )
 		target.visible_message(desc["visible"], desc["local"])
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
@@ -183,6 +179,12 @@
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain)
+		return BATON_ATTACK_DONE
+
+	if(cooldown_check > world.time || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
+		var/wait_desc = get_wait_description()
+		if(wait_desc && active)
+			to_chat(user, wait_desc)
 		return BATON_ATTACK_DONE
 
 	cooldown_check = world.time + cooldown
@@ -211,10 +213,8 @@
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 
 			if(ishuman(target))
-				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
-				target.Disorient(SHOVE_SLOWDOWN_LENGTH)
+				target.set_staggered_if_lower(STAGGERED_SLOWDOWN_LENGTH)
+				target.Disorient(STAGGERED_SLOWDOWN_LENGTH)
 		else
 			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)
@@ -315,6 +315,7 @@
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "telebaton"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	inhand_icon_state = null
@@ -413,6 +414,7 @@
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
+	icon_angle = -45
 	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -565,6 +567,7 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
+	icon_angle = -45
 	base_icon_state = "stunbaton"
 	inhand_icon_state = "stunbaton"
 	worn_icon_state = "baton"
@@ -815,10 +818,9 @@
 		return
 	if((user.istate & ISTATE_SECONDARY))
 		if(active && cooldown_check <= world.time && !check_parried(target, user))
-			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
+			if(finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE))
+				do_sparks(rand(1,3), FALSE, src)
 			if(active)
-				if(prob(75))
-					do_sparks(rand(1,3), FALSE, src)
 				if(target.ignite_mob())
 					do_sparks(rand(3,5), FALSE, src)
 					message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(target)] on fire with [src] at [AREACOORD(user)]")
@@ -861,7 +863,7 @@
 	. = list()
 
 	.["visible"] = span_danger("[user] tries to stun [target] with [src], and predictably fails!")
-	.["local"] = span_userdanger("[target] tries to... stun you with [src]?")
+	.["local"] = span_userdanger("[user] tries to... stun you with [src]?")
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -898,6 +900,7 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
+	icon_angle = -45
 	base_icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	base_inhand_state = "prod"

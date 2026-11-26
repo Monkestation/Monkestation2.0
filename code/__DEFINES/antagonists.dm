@@ -238,7 +238,6 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Corporate Climber",
 	"Cybersun Industries",
 	"Donk Corporation",
-	"Gorlex Marauders",
 	"Internal Affairs Agent",
 	"Legal Trouble",
 	"MI13",
@@ -286,7 +285,7 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define GET_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
 /// Checks if the mob is a sentient or non-sentient cultist
-#define IS_CULTIST_OR_CULTIST_MOB(mob) ((IS_CULTIST(mob)) || (mob.faction.Find(FACTION_CULT)))
+#define IS_CULTIST_OR_CULTIST_MOB(mob) ((IS_CULTIST(mob)) || (mob.has_faction(FACTION_CULT)))
 
 /**
  * Heretic checks
@@ -493,6 +492,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 // Monster Hunter stuff
 #define UPGRADED_VAL(x,y) ( CEILING((x * (1.07 ** y)), 1) )
 #define CALIBER_BLOODSILVER "bloodsilver"
+#define MONSTER_THREAT_LOW 2
+#define MONSTER_THREAT_MEDIUM 3
+#define MONSTER_THREAT_HIGH 4
+#define MONSTER_HUNTER_THREAT_REQUIRED 6
+#define MONSTER_HUNTER_PREY_REQUIRED 2
 
 ///Whether a mob is a Monster Hunter
 #define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter))

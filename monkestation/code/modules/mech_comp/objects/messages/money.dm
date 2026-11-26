@@ -41,7 +41,7 @@
 /obj/item/mcobject/messaging/payment/proc/set_code(mob/user, obj/item/tool)
 	if(!code_check(user))
 		return
-	var/new_code = tgui_input_text(user, "Please enter a new code", "Payment Component")
+	var/new_code = tgui_input_text(user, "Please enter a new code", "Payment Component", encode = FALSE)
 	if(!new_code)
 		return
 	code = new_code
@@ -50,7 +50,7 @@
 
 /obj/item/mcobject/messaging/payment/proc/code_check(mob/user)
 	if(code)
-		var/code_check = tgui_input_text(user, "Please enter current code", "Payment Component")
+		var/code_check = tgui_input_text(user, "Please enter current code", "Payment Component", encode = FALSE)
 		if(!code_check || code_check != code)
 			say("ERROR:Incorrect code given.")
 			return
@@ -69,7 +69,7 @@
 /obj/item/mcobject/messaging/payment/proc/set_string(mob/user, obj/item/tool)
 	if(!code_check(user))
 		return
-	var/new_string = tgui_input_text(user, "Set a thank you string", "Payment Component", output_string)
+	var/new_string = tgui_input_text(user, "Set a thank you string", "Payment Component", output_string, encode = FALSE)
 	if(!new_string)
 		return
 	output_string = new_string

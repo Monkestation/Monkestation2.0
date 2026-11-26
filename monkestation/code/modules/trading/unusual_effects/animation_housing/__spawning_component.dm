@@ -1,7 +1,7 @@
 
 /obj/effect/abstract/particle
 	name = ""
-	plane = GAME_PLANE_FOV_HIDDEN
+	layer = LOW_MOB_LAYER
 	appearance_flags = RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'monkestation/code/modules/trading/icons/particles.dmi'

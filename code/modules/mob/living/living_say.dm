@@ -116,11 +116,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
 
-		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/cmd_admin_say, message)
+		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/cmd_admin_say, html_decode(message))
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/dsay, message)
+		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/dsay, html_decode(message))
 		return
 
 	// dead is the only state you can never emote

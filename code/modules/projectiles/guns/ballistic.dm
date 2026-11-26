@@ -140,6 +140,7 @@
 	var/box_reload_penalty = TRUE
 	/// reload penalty inflicted by using an ammo box instead of an individual cartridge, if not outright exchanging the magazine
 	var/box_reload_delay = CLICK_CD_MELEE
+	var/select = 1 ///fire selector position. 1 = semi, 2 = burst. anything past that can vary between guns.
 
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
@@ -235,9 +236,9 @@
 	if(suppressed)
 		var/mutable_appearance/MA = mutable_appearance(icon, "[icon_state]_suppressor")
 		if(suppressor_x_offset)
-			MA.pixel_x = suppressor_x_offset
+			MA.pixel_w = suppressor_x_offset
 		if(suppressor_y_offset)
-			MA.pixel_y = suppressor_y_offset
+			MA.pixel_z = suppressor_y_offset
 		. += MA
 
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
@@ -290,7 +291,27 @@
 				inhand_icon_state = "[initial(icon_state)]"
 				worn_icon_state = "[initial(icon_state)]"
 
+/obj/item/gun/ballistic/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+		burst_select()
+	else
+		..()
 
+/obj/item/gun/ballistic/proc/burst_select()
+	var/mob/living/carbon/human/user = usr
+	select = !select
+	if(!select)
+		burst_size = 1
+		fire_delay = 0
+		balloon_alert(user, "switched to semi-automatic")
+	else
+		burst_size = initial(burst_size)
+		fire_delay = initial(fire_delay)
+		balloon_alert(user, "switched to [burst_size]-round burst")
+
+	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	update_appearance()
+	update_item_action_buttons()
 
 /obj/item/gun/ballistic/handle_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)

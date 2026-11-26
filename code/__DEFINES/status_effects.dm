@@ -30,12 +30,10 @@
 //several flags for the Necropolis curse status effect
 ///makes the edges of the target's screen obscured
 #define CURSE_BLINDING (1<<0)
-///spawns creatures that attack the target only
-#define CURSE_SPAWNING (1<<1)
 ///causes gradual damage
-#define CURSE_WASTING (1<<2)
+#define CURSE_WASTING (1<<1)
 ///hands reach out from the sides of the screen, doing damage and stunning if they hit the target
-#define CURSE_GRASPING (1<<3)
+#define CURSE_GRASPING (1<<2)
 
 //Incapacitated status effect flags
 /// If the incapacitated status effect will ignore a mob in restraints (handcuffs)
@@ -118,6 +116,11 @@
 // - Will only set the duration of that effect IF any existing duration is lower than what was passed.
 // - Ex: set_stutter_if_lower(10 SECONDS) will set stuttering to ten seconds if no stuttering or less than ten seconds of stuttering exists
 // - Ex: set_jitter_if_lower(20 SECONDS) will do nothing if more than twenty seconds of jittering already exists
+
+#define adjust_staggered(duration) adjust_timed_status_effect(duration, /datum/status_effect/staggered)
+#define adjust_staggered_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/staggered, up_to)
+#define set_staggered(duration) set_timed_status_effect(duration, /datum/status_effect/staggered)
+#define set_staggered_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/staggered, TRUE)
 
 #define adjust_stutter(duration) adjust_timed_status_effect(duration, /datum/status_effect/speech/stutter)
 #define adjust_stutter_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/speech/stutter, up_to)
