@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "AIs now have a UI element warning them how close to download they are."
