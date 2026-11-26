@@ -744,7 +744,7 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "tp" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/spawner/random/trash/mopbucket,
 /obj/effect/decal/cleanable/dirt,
@@ -1084,7 +1084,7 @@
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "AL" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/effect/spawner/random/environmentally_safe_anomaly,
 /obj/item/reagent_containers/cup/bottle/wittel,
 /obj/effect/spawner/random/trash/grime,

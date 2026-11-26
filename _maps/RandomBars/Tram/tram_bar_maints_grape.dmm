@@ -993,7 +993,7 @@
 /area/station/commons/lounge)
 "wO" = (
 /obj/structure/chair/stool/directional/north,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/carpet/grimey,
 /area/station/commons/lounge)
 "xa" = (

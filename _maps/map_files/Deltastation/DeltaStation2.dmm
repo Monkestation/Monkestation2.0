@@ -23458,7 +23458,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/pathology/isolation)
 "fyt" = (
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fyv" = (
@@ -25870,7 +25870,7 @@
 "gcF" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "gcI" = (
@@ -60559,7 +60559,7 @@
 "okj" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "okk" = (
@@ -101624,7 +101624,7 @@
 "xXt" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "xXw" = (

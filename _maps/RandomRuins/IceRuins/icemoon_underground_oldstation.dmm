@@ -1366,7 +1366,7 @@
 "hc" = (
 /obj/effect/decal/cleanable/glass,
 /obj/item/light/tube/broken,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},

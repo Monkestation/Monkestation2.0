@@ -32318,7 +32318,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/ash,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
 "vZN" = (

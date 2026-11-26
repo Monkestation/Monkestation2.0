@@ -695,7 +695,7 @@
 /obj/item/storage/medkit/regular{
 	pixel_y = 9
 	},
-/obj/machinery/light/built/directional/north,
+/obj/machinery/light/empty/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/czmedbay)
@@ -2198,7 +2198,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/czbrig)
 "ij" = (
@@ -7601,7 +7601,7 @@
 "Cp" = (
 /obj/structure/sign/poster/contraband/smoke/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /obj/effect/decal/cleanable/glass/plastitanium/screws,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
@@ -10939,7 +10939,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedscpsite/office2)
 "Pj" = (
