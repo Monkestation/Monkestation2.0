@@ -151,6 +151,9 @@
 	///How much ai's client view_range should be adjusted by with view_size.setTo(). 0 Is default view size.
 	var/view_range_boost = 0
 
+	///A list of all AI control consoles that are downloading this AI, for use in the UI warning.
+	var/list/download_sources = list()
+
 	///AI pen, if it somehow gets into range of one.
 	var/obj/item/pen/silicon/ai_pen
 
