@@ -41,6 +41,17 @@
 			"[SOUTH]" = list("railing_end", WEST),
 		),
 	)
+	/// The state and dir of the post drawn on the empty tile where two arms meet at a corner, keyed like end_caps. Only the north and south arms draw it, so a corner gets one post.
+	var/static/list/corner_posts = list(
+		"[NORTH]" = list(
+			"[WEST]" = list("railing_corner", EAST),
+			"[EAST]" = list("railing_corner", NORTH),
+		),
+		"[SOUTH]" = list(
+			"[WEST]" = list("railing_corner", SOUTH),
+			"[EAST]" = list("railing_corner", WEST),
+		),
+	)
 
 /datum/armor/structure_railing
 	melee = 35
@@ -272,7 +283,7 @@
 		if(joins_with(other) && (other.dir in GLOB.cardinals) && !(other.dir & (dir | REVERSE_DIR(dir))))
 			. += other.dir
 
-/// Whether a joined railing continues or meets the end of our arm on this side.
+/// Whether a joined railing continues the end of our arm on this side.
 /obj/structure/railing/proc/is_end_joined(arm, side)
 	var/side_reverse = REVERSE_DIR(side)
 	for(var/obj/structure/railing/other in loc)
@@ -281,6 +292,11 @@
 	for(var/obj/structure/railing/other in get_step(src, side))
 		if(joins_with(other) && (other.dir & (arm | side_reverse)))
 			return TRUE
+	return FALSE
+
+/// Whether a joined railing on the diagonal tile turns the end of our arm into a corner around the empty tile on this side.
+/obj/structure/railing/proc/is_corner_joined(arm, side)
+	var/side_reverse = REVERSE_DIR(side)
 	for(var/obj/structure/railing/other in get_step(src, side | arm))
 		if(joins_with(other) && (other.dir & side_reverse))
 			return TRUE
@@ -305,11 +321,17 @@
 		for(var/side in list(turn(arm, 90), turn(arm, -90)))
 			if((dir & side) || is_end_joined(arm, side))
 				continue
-			var/list/cap_info = end_caps["[arm]"]["[side]"]
-			var/image/end_cap = image(icon, null, cap_info[1], dir = cap_info[2])
-			end_cap.pixel_w = ((side & EAST) ? ICON_SIZE_X : 0) - ((side & WEST) ? ICON_SIZE_X : 0)
-			end_cap.pixel_z = ((side & NORTH) ? ICON_SIZE_Y : 0) - ((side & SOUTH) ? ICON_SIZE_Y : 0)
-			. += end_cap
+			var/list/piece_info
+			if(!is_corner_joined(arm, side))
+				piece_info = end_caps["[arm]"]["[side]"]
+			else if(arm & (NORTH | SOUTH))
+				piece_info = corner_posts["[arm]"]["[side]"]
+			if(!piece_info)
+				continue
+			var/image/piece = image(icon, null, piece_info[1], dir = piece_info[2])
+			piece.pixel_w = ((side & EAST) ? ICON_SIZE_X : 0) - ((side & WEST) ? ICON_SIZE_X : 0)
+			piece.pixel_z = ((side & NORTH) ? ICON_SIZE_Y : 0) - ((side & SOUTH) ? ICON_SIZE_Y : 0)
+			. += piece
 
 /obj/structure/railing/wooden_fence
 	name = "wooden fence"
