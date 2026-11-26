@@ -91,7 +91,11 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/quirks = list()
+	/// Lazylist of all quirks the mob has. These are not singletons
+	var/list/quirks
+	/// Lazylist of all typepaths of personalities the mob has.
+	var/list/personalities
+
 	///a list of surgery datums. generally empty, they're added when the player wants them.
 	var/list/surgeries = list()
 	///Mob specific surgery speed modifier
@@ -176,8 +180,6 @@
 	///used for database logging
 	var/last_words
 
-	///whether this can be picked up and held.
-	var/can_be_held = FALSE
 	/// The w_class of the holder when held.
 	var/held_w_class = WEIGHT_CLASS_NORMAL
 	///if it can be held, can it be equipped to any slots? (think pAI's on head)

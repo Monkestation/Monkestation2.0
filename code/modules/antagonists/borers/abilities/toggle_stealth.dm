@@ -6,23 +6,23 @@
 	Whilst on, you will hide under most objects, like tables.\n\
 	If you are a diveworm, you will bore into hosts twice as fast whilst not hidden\n\
 	"
-	/// Are we currently hiding?
-	var/hidden = FALSE
+	/// The layer we are on while hiding
+	var/hide_layer = ABOVE_NORMAL_TURF_LAYER
 
 /datum/action/cooldown/borer/toggle_hiding/Activate(mob/living/basic/cortical_borer/user)
-	if(hidden == FALSE)
-		user.upgrade_flags |= BORER_HIDING
-		owner.balloon_alert(owner, "started hiding")
-		owner.plane -= 2 // Its to make the borer move into or out of the WALL_PLANE and its original plane irrespective of level offset
-		ADD_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
-		if((user.upgrade_flags & BORER_ENERGIC))
-			user.remove_movespeed_modifier(/datum/movespeed_modifier/borer_speed_bonus)
-	else
+	if(user.layer == hide_layer)
+		user.layer = initial(user.layer)
+		user.balloon_alert(user, "stopped hiding")
+		REMOVE_TRAIT(user, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
 		user.upgrade_flags &= ~BORER_HIDING
-		owner.balloon_alert(owner, "stopped hiding")
-		owner.plane += 2
-		REMOVE_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
 		if((user.upgrade_flags & BORER_ENERGIC))
 			user.add_movespeed_modifier(/datum/movespeed_modifier/borer_speed_bonus)
-	hidden = !hidden
+	else
+		user.layer = hide_layer
+		user.balloon_alert(user, "started hiding")
+		ADD_TRAIT(user, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
+		user.upgrade_flags |= BORER_HIDING
+		if((user.upgrade_flags & BORER_ENERGIC))
+			user.remove_movespeed_modifier(/datum/movespeed_modifier/borer_speed_bonus)
+
 	return ..()

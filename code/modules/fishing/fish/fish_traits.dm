@@ -650,6 +650,10 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	. = ..()
 	fish.required_fluid_type = initial(fish.required_fluid_type)
 
+/datum/fish_trait/amphibious/apply_to_mob(mob/living/basic/mob)
+	. = ..()
+	ADD_TRAIT(mob, TRAIT_NODROWN, FISH_TRAIT_DATUM)
+
 /datum/fish_trait/mixotroph
 	name = "Mixotroph"
 	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."

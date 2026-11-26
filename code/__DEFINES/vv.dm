@@ -139,6 +139,7 @@
 #define VV_HK_GIVE_HALLUCINATION "give_hallucination"
 #define VV_HK_GIVE_DELUSION_HALLUCINATION "give_hallucination_delusion"
 #define VV_HK_GIVE_GUARDIAN_SPIRIT "give_guardian_spirit"
+#define VV_HK_ADJUST_HANDS "hand_count"
 
 // /mob/living/basic/slime
 #define VV_HK_SLIME_SET_TYPE "slime_set_type"
@@ -183,3 +184,9 @@
 
 /// ALWAYS render a reduced list, useful for fuckoff big datums that need to be condensed for the sake of client load
 #define VV_ALWAYS_CONTRACT_LIST (1<<0)
+
+#define VV_HK_GIVE_AI "give_ai"
+
+#define VV_HK_GIVE_MOB_ACTION "give_mob_action"
+
+#define VV_HK_REMOVE_MOB_ACTION "remove_mob_action"

@@ -27,6 +27,8 @@
 #define BB_FIND_MOM_TYPES "BB_find_mom_types"
 ///list of types of mobs we must ignore
 #define BB_IGNORE_MOM_TYPES "BB_ignore_mom_types"
+///cooldown between emoting at our parent
+#define BB_PARENT_EMOTE_COOLDOWN "BB_parent_emote_cooldown"
 
 /// The current string that this parrot will repeat back to someone
 #define BB_PARROT_REPEAT_STRING "BB_parrot_repeat_string"
@@ -50,4 +52,22 @@
 #define BB_HOARD_LOCATION_RANGE "hoard_location_range"
 /// key that holds items we arent interested in hoarding
 #define BB_IGNORE_ITEMS "ignore_items"
+/// cooldown key throttling how often a parrot repeats a phrase
+#define BB_PARROT_SPEECH_COOLDOWN "BB_parrot_speech_cooldown"
 
+
+///Timeout for finding partners when theres too many of us in 1 location
+#define BB_PARTNER_SEARCH_TIMEOUT "BB_partner_search_timeout"
+///our ability to summon runes
+#define BB_RUNE_ABILITY "rune_ability"
+///the cult team we serve
+#define BB_CULT_TEAM "cult_team"
+///our dead cultist we revive
+#define BB_DEAD_CULTIST "dead_cultist"
+///nearby runes
+#define BB_NEARBY_RUNE "nearby_rune"
+///occupied runes
+#define BB_OCCUPIED_RUNE "occupied_rune"
+
+///friendly cultists we befriend
+#define BB_FRIENDLY_CULTIST "friendly_cultist"

@@ -147,14 +147,14 @@
 			if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, user, FRIENDSHIP_BESTFRIEND))
 				var/barter_choice = show_radial_menu(user, src, hideout.stored_items, autopick_single_option = FALSE)
 				if(barter_choice)
-					ai_controller.blackboard[BB_GARY_BARTERING] = TRUE
-					ai_controller.blackboard[BB_GARY_BARTER_TARGET] = WEAKREF(user)
-					ai_controller.blackboard[BB_GARY_BARTER_ITEM] = barter_choice
-					ai_controller.blackboard[BB_GARY_BARTER_STEP] = 1
+					ai_controller.set_blackboard_key(BB_GARY_BARTER_TARGET, user)
+					ai_controller.set_blackboard_key(BB_GARY_BARTER_ITEM, barter_choice)
+					ai_controller.set_blackboard_key(BB_GARY_BARTER_STEP, 1)
+					ai_controller.set_blackboard_key(BB_GARY_BARTERING, TRUE)
 
 			held_item = attacking_item
-			ai_controller.blackboard[BB_GARY_COME_HOME] = TRUE
-			ai_controller.blackboard[BB_GARY_HAS_SHINY] = TRUE
+			ai_controller.set_blackboard_key(BB_GARY_HAS_SHINY, TRUE)
+			ai_controller.set_blackboard_key(BB_GARY_COME_HOME, TRUE)
 			SEND_SIGNAL(src, COMSIG_MOB_ADJUST_HUNGER, 200) //gary hungers for trinkets and baubles.
 			return TRUE
 	else

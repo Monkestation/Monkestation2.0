@@ -131,7 +131,6 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	// Because they are small, why can't they be held?
-	can_be_held = TRUE
 	/// How much time we need to get the next point, what one it is depends on "should_get_evolution"
 	var/maturation_speed = 30 SECONDS
 	/// How old the borer is, starting from zero. Goes up only when inside a host and resets when a point is gained.
@@ -204,6 +203,7 @@
 
 /mob/living/basic/cortical_borer/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/can_be_held)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT) // They need to be able to move around
 
 	var/matrix/borer_matrix = matrix(transform)
@@ -218,7 +218,7 @@
 	var/datum/atom_hud/borer_hud = GLOB.huds[DATA_HUD_BORER]
 	borer_hud.show_to(src)
 
-/mob/living/basic/cortical_borer/Destroy()
+/mob/living/basic/cortical_borer/Destroy(force)
 	QDEL_NULL(reagent_holder)
 	body_focuses = null
 	if(human_host)
@@ -380,6 +380,8 @@
 
 	REMOVE_TRAIT(src, TRAIT_WEATHER_IMMUNE, "borer_in_host")
 	set_survivable_temperatures(initial(minimum_survivable_temperature), initial(maximum_survivable_temperature)) //reset body tempature
+	if(has_status_effect(/datum/status_effect/borer_sugar))
+		remove_status_effect(/datum/status_effect/borer_sugar)
 	human_host = null
 	SEND_SIGNAL(src, COMSIG_HOST_CHANGED)
 

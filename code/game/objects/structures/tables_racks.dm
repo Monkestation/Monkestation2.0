@@ -47,6 +47,7 @@
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	if(climbable)
+		AddComponent(/datum/component/climb_walkable)
 		AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
@@ -62,6 +63,7 @@
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
+	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
@@ -445,6 +447,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_AI_AVOID_TURF)))
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

@@ -3156,7 +3156,7 @@
 /turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/hotel/bar)
 "Fz" = (
-/mob/living/simple_animal/bot/secbot/beepsky/armsky{
+/mob/living/basic/bot/secbot/beepsky/armsky{
 	name = "Hotelsky";
 	desc = "It's Hotelsky! He's a disgruntled servant of the hotel that would probably shoot you if he had hands.";
 	req_one_access = list("away_sec");

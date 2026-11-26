@@ -131,6 +131,13 @@
 	playsound(src, 'sound/items/equip/toolbelt_equip.ogg', 10, TRUE, -3)
 	balloon_alert(user, "[helmet_strap_buckled ? "chin strap buckled" : "chin strap unbuckled"]")
 	update_appearance()
+	if(hair_mask)
+		if(helmet_strap_buckled)
+			flags_inv |= HIDEHAIR
+		else
+			flags_inv &= ~HIDEHAIR
+		if(wearer.head == src)
+			wearer.refresh_obscured()
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/sec
@@ -144,6 +151,7 @@
 	has_helmet_strap = TRUE
 	hud_attachable = TRUE
 	var/flipped_visor = FALSE
+	hair_mask = /datum/hair_mask/standard_hat_low
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()

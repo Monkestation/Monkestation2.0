@@ -27,6 +27,8 @@
 #define CYBORG_ITEM_TRAIT "cyborg-item"
 /// Any traits granted by quirks.
 #define QUIRK_TRAIT "quirk_trait"
+/// Trait source for personality traits
+#define PERSONALITY_TRAIT "personality_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
 #define DEVIL_TRAIT "devil"
@@ -370,6 +372,9 @@
 #define SLIME_WINDUP_TRAIT "slime_windup"
 /// Pauses a slime's AI while it sits in a vacuum pack
 #define VACUUM_STORED_TRAIT "vacuum_stored"
+/// Pauses a slime's AI while it lies dazed after falling off a slime stack
+#define SLIME_TUMBLE_TRAIT "slime_tumble"
+
 /// Trait from an engraving
 #define ENGRAVED_TRAIT "engraved"
 

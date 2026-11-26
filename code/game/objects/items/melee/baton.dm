@@ -149,11 +149,6 @@
 	if(!active || (user.istate & ISTATE_SECONDARY))
 		return BATON_DO_NORMAL_ATTACK
 
-	if(cooldown_check > world.time || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
-		var/wait_desc = get_wait_description()
-		if (wait_desc)
-			to_chat(user, wait_desc)
-		return BATON_ATTACK_DONE
 
 	if(check_parried(target, user))
 		return BATON_ATTACK_DONE
@@ -173,7 +168,7 @@
 	else
 		desc = get_stun_description(target, user)
 
-	if(desc)
+	if(desc && cooldown_check <= world.time )
 		target.visible_message(desc["visible"], desc["local"])
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
@@ -184,6 +179,12 @@
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain)
+		return BATON_ATTACK_DONE
+
+	if(cooldown_check > world.time || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
+		var/wait_desc = get_wait_description()
+		if(wait_desc && active)
+			to_chat(user, wait_desc)
 		return BATON_ATTACK_DONE
 
 	cooldown_check = world.time + cooldown
@@ -817,10 +818,9 @@
 		return
 	if((user.istate & ISTATE_SECONDARY))
 		if(active && cooldown_check <= world.time && !check_parried(target, user))
-			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
+			if(finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE))
+				do_sparks(rand(1,3), FALSE, src)
 			if(active)
-				if(prob(75))
-					do_sparks(rand(1,3), FALSE, src)
 				if(target.ignite_mob())
 					do_sparks(rand(3,5), FALSE, src)
 					message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(target)] on fire with [src] at [AREACOORD(user)]")

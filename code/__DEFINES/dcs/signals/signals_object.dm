@@ -107,6 +107,8 @@
 	/// Return to stop the door opening on bump.
 	#define STOP_BUMP (1<<0)
 
+///from base of mob/put_in_hand(), after forceMove  item is now in the mob's hand: (mob/holder, hand_index)
+#define COMSIG_ITEM_ENTERED_HANDS "item_entered_hands"
 ///Closets
 ///From base of [/obj/structure/closet/proc/insert]: (atom/movable/inserted)
 #define COMSIG_CLOSET_INSERT "closet_insert"
@@ -270,3 +272,13 @@
 
 /// From /obj/item/multitool/remove_buffer(): (buffer)
 #define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"
+
+/// From /obj/machinery/vending/vend(): (mob/user, obj/machinery/vending_machine, obj/item/vended_item)
+#define COMSIG_MOB_VENDING_PURCHASE "mob_vending_purchase"
+	/// Stops the mob from picking up whatevr they just purchased (it just goes to the floor)
+	#define VENDING_NO_PICKUP (1<<0)
+
+/// Sent from /obj/machinery/door/airlock/close, to a movable blocking it from closing: (obj/machinery/door/being_blocked, force_close, force_crush)
+#define COMSIG_MOVABLE_BLOCKING_AIRLOCK "movable_blocking_airlock"
+	/// Forces the airlock to crush whatever's blocking it even if it normally wouldn't
+	#define AIRLOCK_BLOCK_FORCE_CRUSH (1<<0)

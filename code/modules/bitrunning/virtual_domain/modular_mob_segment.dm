@@ -77,7 +77,7 @@
 
 /datum/modular_mob_segment/gondolas
 	mobs = list(
-		/mob/living/simple_animal/pet/gondola,
+		/mob/living/basic/pet/gondola,
 	)
 
 
