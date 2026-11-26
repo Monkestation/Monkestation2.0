@@ -686,8 +686,12 @@
 	if(disguised)
 		click_to_activate = FALSE
 		button_icon_state = "unmimic"
+		name = "End Mimicry"
+		desc = "You are currently mimicking. You can end it immediately. You are capable of pixel shifting yourself in this form."
 	else
 		click_to_activate = TRUE
 		button_icon_state = "mimic"
+		name = initial(name)
+		desc = initial(desc)
 
-	build_all_button_icons(UPDATE_BUTTON_ICON | UPDATE_BUTTON_STATUS)
+	build_all_button_icons(UPDATE_BUTTON_ICON | UPDATE_BUTTON_STATUS | UPDATE_BUTTON_NAME)
