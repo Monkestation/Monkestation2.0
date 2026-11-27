@@ -170,6 +170,15 @@
 	if(attacking_blob && attacking_blob.loc == loc)
 		qdel(src)
 
+/obj/structure/light_construct/proc/mount_or_fall()
+	if(QDELETED(src) || find_and_mount_on_atom())
+		return
+	visible_message(span_warning("\The [src] falls apart!"), vision_distance = 5)
+	if(cell)
+		cell.forceMove(drop_location())
+		cell = null
+	deconstruct(FALSE)
+
 /obj/structure/light_construct/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron(loc, sheets_refunded)

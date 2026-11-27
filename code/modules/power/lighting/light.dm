@@ -472,7 +472,11 @@
 			new_light = new /obj/structure/light_construct/small(loc)
 			new_light.icon_state = "bulb-construct-stage[current_stage]"
 	new_light.setDir(dir)
-	new_light.find_and_mount_on_atom()
+	if(disassembled)
+		new_light.find_and_mount_on_atom()
+	else
+		// we may be falling off a wall that is still changing, so check once it's gone
+		addtimer(CALLBACK(new_light, TYPE_PROC_REF(/obj/structure/light_construct, mount_or_fall)), 0)
 	new_light.stage = current_stage
 	if(!disassembled)
 		new_light.take_damage(new_light.max_integrity * 0.5, sound_effect=FALSE)
