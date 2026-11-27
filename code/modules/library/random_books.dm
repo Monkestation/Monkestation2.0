@@ -50,8 +50,14 @@
 	var/datum/db_query/query_get_random_books = SSdbcore.NewQuery({"
 		SELECT title, author, content
 		FROM [format_table_name("library")]
-		WHERE isnull(deleted) AND (:category IS NULL OR category = :category)
-		ORDER BY rand() LIMIT :limit
+		WHERE id IN (
+			SELECT id FROM (
+				SELECT id
+				FROM [format_table_name("library")]
+				WHERE isnull(deleted) AND (:category IS NULL OR category = :category)
+				ORDER BY rand() LIMIT :limit
+			) picked
+		)
 	"}, list("category" = category, "limit" = amount))
 	if(query_get_random_books.Execute())
 		while(query_get_random_books.NextRow())

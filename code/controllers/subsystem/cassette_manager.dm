@@ -6,6 +6,10 @@ SUBSYSTEM_DEF(cassettes)
 	)
 	/// An associative list of IDs to cassette data.
 	var/list/datum/cassette/cassettes = list()
+	/// The top cassettes list from the database by limit, cleared when a new purchase is recorded.
+	var/list/top_cassettes_cache = list()
+	/// Every purchase recorded in data/cassette_purchases.json, null until first needed.
+	var/list/json_purchases
 
 /datum/controller/subsystem/cassettes/Initialize()
 	. = SS_INIT_FAILURE

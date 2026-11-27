@@ -42,28 +42,21 @@
 	if(!SSdbcore.IsConnected())
 		to_chat(buyer, fail_message)
 		return FALSE
-	if(!buyer?.prefs)
+	var/datum/preferences/buyers_preferences = buyer?.prefs
+	if(!buyers_preferences)
 		return FALSE
-	if(!buyer.prefs.inventory[item_path])
-		buyer.prefs.inventory += item_path
-		var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
-			INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
-			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = 1))
-		if(!query_add_gear_purchase.Execute())
-			to_chat(buyer, fail_message)
-			qdel(query_add_gear_purchase)
-			return FALSE
+	// before the query so a second click during the wait sees it as owned
+	buyers_preferences.inventory |= item_path
+	var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
+		INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, 1)
+		ON DUPLICATE KEY UPDATE amount = 1"},
+		list("ckey" = buyer.ckey, "item_id" = item_path))
+	if(!query_add_gear_purchase.Execute())
+		buyers_preferences.inventory -= item_path
+		to_chat(buyer, fail_message)
 		qdel(query_add_gear_purchase)
-	else
-		buyer.prefs.inventory += item_path
-		var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
-			UPDATE [format_table_name("metacoin_item_purchases")] SET amount = :amount WHERE ckey = :ckey AND item_id = :item_id"},
-			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = 1))
-		if(!query_add_gear_purchase.Execute())
-			to_chat(buyer, fail_message)
-			qdel(query_add_gear_purchase)
-			return FALSE
-		qdel(query_add_gear_purchase)
+		return FALSE
+	qdel(query_add_gear_purchase)
 
 	return TRUE
 

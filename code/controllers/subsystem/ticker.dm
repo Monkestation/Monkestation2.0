@@ -1829,9 +1829,6 @@ SUBSYSTEM_DEF(ticker)
 		sql_mentors += list(list("ckey" = A.target, "rank" = A.rank_names()))
 
 	SSdbcore.MassInsert(format_table_name("mentor"), sql_mentors, duplicate_key = TRUE)
-	var/datum/db_query/query_mentor_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("mentor")] a ON p.ckey = a.ckey SET p.lastmentorrank = a.rank")
-	query_mentor_rank_update.Execute()
-	qdel(query_mentor_rank_update)
 
 	//json format backup file generation stored per server
 	var/json_file = file("data/mentors_backup.json")
@@ -1924,25 +1921,25 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/distribute_rewards(list/coin_rewards)
 	var/minutes = round((world.time - SSticker.round_start_time) / (1 MINUTES))
 	var/added_xp = round(25 + (minutes ** 0.85))
+	var/list/totals = list()
 	for(var/ckey in coin_rewards)
-		distribute_rewards_to_client(ckey, added_xp, coin_rewards[ckey])
+		totals[ckey] = distribute_rewards_to_client(ckey, added_xp, coin_rewards[ckey])
+	mass_adjust_metacoins(totals, "roundend rewards", announces = FALSE)
 	save_all_jobxp() // monkestation edit: nothing else saves the job xp
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards_to_client(ckey, added_xp, list/rewards)
 	var/client/client = GLOB.directory[ckey]
 	if(!client)
-		return
+		return 0
 	var/total_amount = 0
 	for(var/reward in rewards)
 		var/amount = reward[1]
 		var/reason = reward[2]
 		total_amount += amount
 		to_chat(client, span_rose(span_bold("[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]")))
-	// don't do separate SQL queries for each reward, just add all the coins at once lol
-	if(total_amount)
-		client?.prefs?.adjust_metacoins(ckey, total_amount, reason = "roundend rewards", announces = FALSE)
 	if(client?.mob?.mind?.assigned_role)
 		add_jobxp(client, added_xp, client?.mob?.mind?.assigned_role?.title)
+	return total_amount
 
 /datum/controller/subsystem/ticker/proc/calculate_rewards_for_client(client/client, list/queue)
 	if(!istype(client) || QDELING(client) || isnewplayer(client?.mob))
