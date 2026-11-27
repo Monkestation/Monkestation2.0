@@ -36,6 +36,9 @@
 	hitscan_light_intensity = 1
 	hitscan_light_outer_range = 0.25
 
+/obj/projectile/beam/laser/hitscan/weak
+	damage = 15
+
 /obj/projectile/beam/laser/lasrifle
 	damage = 25
 	range = 30
@@ -122,7 +125,7 @@
 	wound_bonus = 10
 
 /obj/projectile/beam/weak
-	damage = 10
+	damage = 15
 
 /obj/projectile/beam/weak/penetrator
 	armour_penetration = 80

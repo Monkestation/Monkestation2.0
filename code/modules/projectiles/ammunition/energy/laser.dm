@@ -143,7 +143,7 @@
 
 /obj/item/ammo_casing/energy/laser/minigun
 	select_name = "kill"
-	projectile_type = /obj/projectile/beam/weak
+	projectile_type = /obj/projectile/beam/laser/hitscan/weak
 
 /obj/item/ammo_casing/energy/disabler/minigun
 	select_name = "disable"
