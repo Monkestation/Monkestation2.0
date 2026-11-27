@@ -362,8 +362,7 @@ const VampireGuide = () => {
                 • You lose the Blush of Life
                 <br />• You look deathly pale to anyone close, unless every inch
                 of you is covered
-                <br />• Monster hunters and chaplains may treat you as fair
-                game
+                <br />• Monster hunters and chaplains may treat you as fair game
                 <br />• At 2 or less you look deathly pale from across the room
                 and burn in the chapel
               </Box>
@@ -409,7 +408,6 @@ const VampireGuide = () => {
               significant benefits:
               <Box fontSize="13px" ml={1}>
                 • Increased physical strength
-                <br />• Greater health pool
                 <br />• Faster feeding rate
                 <br />• Higher blood capacity
                 <br />• Additional discipline points to unlock new powers
@@ -625,8 +623,8 @@ const VampireGuide = () => {
               <br />
               <Box mt={1} className="vamp-tip">
                 <b>Warning:</b> Maintenance is the first place people look. If
-                someone finds your haven, they find everything: your coffin, your
-                structures, your vassals, and you.
+                someone finds your haven, they find everything: your coffin,
+                your structures, your vassals, and you.
               </Box>
             </Box>
           )}
@@ -835,7 +833,7 @@ const PowerSection = () => {
                     )}
                   </Box>
                   <Box
-                    style={{ whiteSpace: 'pre-wrap', lineHeight: '1' }}
+                    style={{ whiteSpace: 'pre-wrap' }}
                     dangerouslySetInnerHTML={{
                       __html: sanitizeText(
                         power.explanation.replace(/\n/g, '\n\n'),

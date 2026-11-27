@@ -20,10 +20,16 @@
 	if(currently_active)
 		deactivate_power()
 		return FALSE
-	if(owner.click_intercept)
-		owner.balloon_alert(owner, "already using a targeted power!")
-		return FALSE
 	if(!can_pay_cost(owner) || !can_use())
+		return FALSE
+	var/datum/action/cooldown/armed_ability = owner.click_intercept
+	if(istype(armed_ability, /datum/action/cooldown/vampire/targeted))
+		var/datum/action/cooldown/vampire/targeted/armed_power = armed_ability
+		armed_power.deactivate_power()
+	else if(istype(armed_ability))
+		armed_ability.unset_click_ability(owner, refund_cooldown = TRUE)
+	else if(owner.click_intercept)
+		owner.balloon_alert(owner, "already using a targeted power!")
 		return FALSE
 
 	if(prefire_message)

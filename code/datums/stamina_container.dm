@@ -8,6 +8,8 @@
 	var/current = 0
 	///The amount of stamina gained per second
 	var/regen_rate = STAMINA_REGEN
+	///How long a stamina stun lasts
+	var/stun_time = STAMINA_STUN_TIME
 	///The difference between current and maximum stamina
 	var/loss = 0
 	var/loss_as_percent = 0

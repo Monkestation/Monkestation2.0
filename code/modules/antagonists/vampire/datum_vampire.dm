@@ -226,6 +226,11 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	if(ishuman(current_mob))
 		var/mob/living/carbon/human/current_human = current_mob
 		current_human.physiology?.stamina_mod *= VAMPIRE_INHERENT_STAMINA_RESIST
+	if(current_mob.stamina)
+		var/old_stamina_max = current_mob.stamina.maximum
+		current_mob.stamina.set_maximum(150)
+		current_mob.stamina.adjust(150 - old_stamina_max, forced = TRUE)
+		current_mob.stamina.stun_time = 5 SECONDS
 
 	current_mob.has_dna()?.remove_all_mutations()
 	current_mob.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
@@ -275,6 +280,9 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	if(ishuman(current_mob))
 		var/mob/living/carbon/human/current_human = current_mob
 		current_human.physiology?.stamina_mod /= VAMPIRE_INHERENT_STAMINA_RESIST
+	if(current_mob.stamina)
+		current_mob.stamina.set_maximum(STAMINA_MAX)
+		current_mob.stamina.stun_time = STAMINA_STUN_TIME
 
 	if(!QDELETED(current_mob))
 		my_clan?.remove_effects(current_mob)
@@ -565,11 +573,6 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	// Powers
 	for(var/datum/action/cooldown/vampire/all_powers as anything in powers)
 		remove_power(all_powers)
-
-	/// Stats
-	if(ishuman(owner.current))
-		var/mob/living/carbon/human/human_user = user
-		human_user.physiology.stamina_mod /= VAMPIRE_INHERENT_STAMINA_RESIST
 
 	// Remove all vampire traits
 	user.remove_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)

@@ -5,8 +5,8 @@
 	active_background_icon_state = "tremere_power_gold_on"
 	base_background_icon_state = "tremere_power_gold_off"
 	power_explanation = "Activating Thaumaturgy will temporarily give you a Blood Shield.\n\
-		The blood shield has very good block power, but costs 15 Blood per hit to maintain.\n\
-		However, it is slightly less effective at blocking lasers or lethal energy projectiles."
+		The blood shield blocks about half of all attacks, but every blocked hit costs 15 Blood.\n\
+		It is much worse at blocking lasers and lethal energy projectiles."
 
 	vampire_power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
 	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
@@ -36,7 +36,6 @@
 
 /datum/action/cooldown/vampire/bloodshield/deactivate_power()
 	. = ..()
-	to_chat(owner, span_notice("Blood shield couldn't be activated as your off hand is full."))
 	if(blood_shield)
 		QDEL_NULL(blood_shield)
 
@@ -52,7 +51,7 @@
 	icon_state = "blood_shield"
 	lefthand_file = 'icons/mob/inhands/antag/vampire_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/vampire_righthand.dmi'
-	block_chance = 100
+	block_chance = 50
 
 /obj/item/shield/vampire/Initialize(mapload)
 	. = ..()
@@ -70,6 +69,15 @@
 	else if(istype(hitby, /obj/item/melee/trick_weapon))
 		final_block_chance -= 50
 	. = ..()
-	if(. && damage > 0)
+	if(!.)
+		return
+	var/stamina_damage = 0
+	if(isprojectile(hitby))
+		var/obj/projectile/projectile = hitby
+		stamina_damage = projectile.stamina
+	else if(istype(hitby, /obj/item/melee/baton))
+		var/obj/item/melee/baton/baton = hitby
+		stamina_damage = baton.stamina_damage
+	if(damage > 0 || stamina_damage > 0)
 		var/datum/antagonist/vampire/vampire = IS_VAMPIRE(owner)
 		vampire?.adjust_blood_volume(-15)
