@@ -24,6 +24,11 @@
 	var/cache_g = LIGHTING_SOFT_THRESHOLD
 	var/cache_b = LIGHTING_SOFT_THRESHOLD
 
+	var/add_r = 0
+	var/add_g = 0
+	var/add_b = 0
+	var/applying_bloom = FALSE
+
 	///the maximum of lum_r, lum_g, and lum_b. if this is > 1 then the three cached color values are divided by this
 	var/largest_color_luminosity = 0
 
@@ -116,6 +121,10 @@
 	var/old_g = cache_g
 	var/old_b = cache_b
 
+	var/old_add_r = add_r
+	var/old_add_g = add_g
+	var/old_add_b = add_b
+
 	if (largest_color_luminosity > 1)
 		. = 1 / largest_color_luminosity
 
@@ -132,16 +141,21 @@
 	cache_b = round(lum_b * ., LIGHTING_ROUND_VALUE)
 	#endif
 
+	add_r = round(clamp((lum_r - LIGHTING_BLOOM_THRESHOLD) * LIGHTING_BLOOM_SLOPE, 0, LIGHTING_BLOOM_CAP), LIGHTING_ROUND_VALUE)
+	add_g = round(clamp((lum_g - LIGHTING_BLOOM_THRESHOLD) * LIGHTING_BLOOM_SLOPE, 0, LIGHTING_BLOOM_CAP), LIGHTING_ROUND_VALUE)
+	add_b = round(clamp((lum_b - LIGHTING_BLOOM_THRESHOLD) * LIGHTING_BLOOM_SLOPE, 0, LIGHTING_BLOOM_CAP), LIGHTING_ROUND_VALUE)
+	applying_bloom = max(add_r, add_g, add_b) > 0.03
+
 	src.largest_color_luminosity = round(largest_color_luminosity, LIGHTING_ROUND_VALUE)
 #ifdef VISUALIZE_LIGHT_UPDATES
-	if(!SSlighting.allow_duped_corners && old_r == cache_r && old_g == cache_g && old_b == cache_b)
+	if(!SSlighting.allow_duped_corners && old_r == cache_r && old_g == cache_g && old_b == cache_b && old_add_r == add_r && old_add_g == add_g && old_add_b == add_b)
 		return
 #else
-	if(old_r == cache_r && old_g == cache_g && old_b == cache_b)
+	if(old_r == cache_r && old_g == cache_g && old_b == cache_b && old_add_r == add_r && old_add_g == add_g && old_add_b == add_b)
 		return
 #endif
 
-	var/datum/lighting_object/lighting_object = master_NE?.lighting_object
+	var/atom/movable/lighting_object/lighting_object = master_NE?.lighting_object
 	if (lighting_object && !lighting_object.needs_update)
 		lighting_object.needs_update = TRUE
 		SSlighting.objects_queue += lighting_object

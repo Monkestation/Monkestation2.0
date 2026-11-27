@@ -38,7 +38,8 @@
 				atoms += new /obj/effect/appearance_clone(newT, T.loc)
 			if(T.lighting_object)
 				var/obj/effect/appearance_clone/lighting_overlay = new(newT)
-				lighting_overlay.appearance = T.lighting_object.current_underlay
+				lighting_overlay.appearance = T.lighting_object.appearance
+				lighting_overlay.overlays.Cut()
 				lighting_overlay.underlays += backdrop
 				lighting_overlay.blend_mode = BLEND_MULTIPLY
 				lighting += lighting_overlay
@@ -56,7 +57,8 @@
 			atoms += T
 			if(T.lighting_object)
 				var/obj/effect/appearance_clone/lighting_overlay = new(T)
-				lighting_overlay.appearance = T.lighting_object.current_underlay
+				lighting_overlay.appearance = T.lighting_object.appearance
+				lighting_overlay.overlays.Cut()
 				lighting_overlay.underlays += backdrop
 				lighting_overlay.blend_mode = BLEND_MULTIPLY
 				lighting += lighting_overlay

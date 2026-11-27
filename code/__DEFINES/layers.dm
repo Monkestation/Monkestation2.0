@@ -84,10 +84,12 @@
 /// So we need to render it directly to RENDER_PLANE_GAME above RENDER_PLANE_LIGHTING
 #define RENDER_PLANE_SPECULAR 24
 
-/// Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 25
+#define LIGHTING_BLOOM_PLANE 25
 
-#define WEATHER_GLOW_PLANE 26
+/// Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 26
+
+#define WEATHER_GLOW_PLANE 27
 
 ///---------------- MISC -----------------------
 

@@ -1093,9 +1093,9 @@ ADMIN_VERB(load_away_mission, R_FUN, FALSE, "Load Away Mission", "Load a specifi
 	return current_map.planetary
 
 /proc/generate_lighting_appearance_by_z(z_level)
-	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
-		GLOB.default_lighting_underlays_by_z.len = z_level
-	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level * 0.01, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
+	if(length(GLOB.default_lighting_bloom_overlays_by_z) < z_level)
+		GLOB.default_lighting_bloom_overlays_by_z.len = z_level
+	GLOB.default_lighting_bloom_overlays_by_z[z_level] =mutable_appearance(LIGHTING_ICON, "light", z_level * 0.01, null, LIGHTING_BLOOM_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
 
 ///Returns the map name, with an openlink action tied to it (if one exists) for the map.
 /datum/map_config/proc/return_map_name(webmap_included)

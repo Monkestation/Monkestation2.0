@@ -23,7 +23,7 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 		/datum/gas_mixture,
 		/datum/greyscale_layer,
 		/datum/instrument_key,
-		/datum/lighting_object, // only contains turf and MA refs
+		/atom/movable/lighting_object, // only contains turf and MA refs
 		/datum/media_track,
 		/datum/movespeed_modifier,
 		/datum/painting,

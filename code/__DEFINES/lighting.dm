@@ -124,6 +124,10 @@ GLOBAL_LIST_INIT(em_mask_matrix, EM_MASK_MATRIX)
 /// Default value for emissive bloom
 #define DEFAULT_EMISSIVE_BLOOM_SIZE 2
 
+#define LIGHTING_BLOOM_THRESHOLD 1
+#define LIGHTING_BLOOM_SLOPE 0.3
+#define LIGHTING_BLOOM_CAP 0.22
+
 /// Parse the hexadecimal color into lumcounts of each perspective.
 #define PARSE_LIGHT_COLOR(source) \
 do { \
