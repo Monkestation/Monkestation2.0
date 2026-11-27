@@ -230,14 +230,12 @@
 
 /datum/element/blood_reagent/proc/on_temp_change(datum/reagent/source, new_holder_temperature, old_holder_temperature)
 	SIGNAL_HANDLER
-	if(!source.holder)
+	if(!source?.holder?.my_atom)
 		return
 	var/datum/mind/potential_ling_mind = source.data["mind"]
-	if(!potential_ling_mind?.has_antag_datum(/datum/antagonist/changeling))
+	if(!potential_ling_mind?.has_antag_datum(/datum/antagonist/changeling) || ismob(source?.holder?.my_atom))
 		return
 	if(new_holder_temperature < CHANGELING_BLOOD_BOIL_TEMP)
-		return
-	if(!source.holder.my_atom)
 		return
 	var/atom/screamer = source.holder.my_atom
 	screamer.audible_message(span_warning("\The [screamer] hisses and boils over violently!"))
