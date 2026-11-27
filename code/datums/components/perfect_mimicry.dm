@@ -1,0 +1,741 @@
+/mob/living/proc/grant_mimicry()
+	if(!src.GetComponent(/datum/component/perfect_mimicry))
+		src.AddComponent(/datum/component/perfect_mimicry)
+/mob/living/proc/remove_mimicry()
+	var/datum/component/perfect_mimicry/mimic_component = GetComponent(/datum/component/perfect_mimicry)
+	if(mimic_component)
+		qdel(mimic_component)
+
+#define INTEGRITY_PER_WCLASS 10
+#define MOVE_DELAY_PER_WCLASS (0.2 SECONDS)
+#define BASE_MOVE_DELAY (0.2 SECONDS)
+#define MIMIC_SPOOF_RESIST_MASK ( \
+	LAVA_PROOF | \
+	FIRE_PROOF | \
+	FREEZE_PROOF | \
+	SHUTTLE_CRUSH_PROOF | \
+	FLAMMABLE | \
+	UNACIDABLE | \
+	ACID_PROOF | \
+	INDESTRUCTIBLE \
+) // Filter for specific item flags so disguises cannot be invincible while still maintaining the appearence that they are.
+
+/datum/component/perfect_mimicry
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+
+	COOLDOWN_DECLARE(move_cooldown)
+	var/atom/movable/screen/healthdoll/living/disguise/disguise_healthdoll
+	var/obj/mimicked_object
+	var/spoofed_flags = 0
+
+	// Whether or not mimic is pixel shifting. Shamelessly taken from pixel shift datum.
+	var/shifting = FALSE
+	// The maximum amount the disguise can be shifted.
+	var/maximum_pixel_shift = 16
+
+	// Actions given by perfect mimicry
+	var/list/mimic_action_types = list(
+		/datum/action/cooldown/mimic/mimic_object,
+	)
+	// Actions managed by this component
+	var/list/managed_actions = list()
+	// Actions currently being blocked while disguised.
+	var/list/datum/action/blocked_actions
+	// What is allowed to be mimicked. Allowing everything is extremely dangerous.
+	var/static/list/allowed_objects = typecacheof(list(
+		//obj/item/storage/backpack,
+		/obj/item/trash,
+		/obj/item/disk/nuclear,
+		/obj/item/pen,
+		/obj/item/dice,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/glass,
+		/obj/item/bikehorn,
+		/obj/item/soap,
+		/obj/item/toy/crayon,
+		/obj/item/storage/toolbox,
+		/obj/item/storage/backpack,
+		/obj/item/storage/medkit,
+		/obj/item/storage/box,
+		/obj/item/storage/briefcase,
+		/obj/item/storage/pill_bottle,
+		/obj/item/storage/belt/utility,
+		/obj/item/storage/belt/medical,
+		/obj/item/storage/belt/holster,
+		/obj/item/storage/wallet,
+		/obj/item/storage/basket,
+		/obj/item/storage/bag/garment,
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/wirecutters,
+		/obj/item/multitool,
+		/obj/item/analyzer,
+		/obj/item/t_scanner,
+		/obj/item/boxcutter,
+		/obj/item/clothing/shoes/sneakers,
+		/obj/item/clothing/shoes/laceup,
+		/obj/item/clothing/shoes/sandal,
+		/obj/item/clothing/shoes/colorable_sandals,
+		/obj/item/clothing/neck/tie,
+		/obj/item/clothing/neck/bowtie,
+		/obj/item/clothing/neck/scarf,
+		/obj/item/clothing/neck/large_scarf,
+		/obj/item/clothing/mask/bandana,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/flashlight,
+		/obj/item/pushbroom,
+		/obj/item/mop,
+		/obj/item/binoculars,
+		/obj/item/megaphone,
+		/obj/item/geiger_counter,
+		/obj/item/gps,
+	))
+	// What is blocked. Used when using the whitelist blocks a problematic subtype.
+	var/static/list/blocked_objects = typecacheof(list(
+		/obj/item/trash/bee,
+		/obj/item/pen/edagger,
+		/obj/item/pen/destroyer,
+		/obj/item/pen/survival,
+		/obj/item/pen/screwdriver,
+		/obj/item/pen/red/security,
+		/obj/item/pen/fountain/captain,
+		/obj/item/dice/d20/fate,
+		/obj/item/soap/omega,
+		/obj/item/toy/crayon/spraycan,
+		/obj/item/toy/crayon/mime,
+		/obj/item/toy/crayon/rainbow,
+		/obj/item/reagent_containers/cup/glass/bottle,
+		/obj/item/storage/toolbox/guncase,
+		/obj/item/storage/backpack/holding,
+		/obj/item/storage/backpack/santabag,
+		/obj/item/storage/backpack/meat,
+		/obj/item/storage/backpack/duffelbag/cursed,
+		/obj/item/storage/backpack/satchel/flat,
+		/obj/item/storage/box/papersack,
+		/obj/item/analyzer/ranged,
+		/obj/item/clothing/shoes/sneakers/orange,
+		/obj/item/flashlight/flare,
+		/obj/item/flashlight/spotlight,
+		/obj/item/flashlight/eyelight,
+		/obj/item/flashlight/emp,
+		/obj/item/flashlight/lamp/space_bubble,
+		/obj/item/mop/advanced,
+		/obj/item/gps/security,
+		/obj/item/gps/visible_debug,
+		/obj/item/gps/pai,
+	))
+	// Traits applied to mob during disguise.
+	var/list/applied_mob_traits = list(
+		TRAIT_HANDS_BLOCKED,
+		TRAIT_UI_BLOCKED,
+		TRAIT_PULL_BLOCKED,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NO_TELEPORT
+		)
+
+/datum/component/perfect_mimicry/Initialize()
+	. = ..()
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+
+/datum/component/perfect_mimicry/Destroy(force)
+	for(var/action_type in managed_actions)
+		var/datum/action/existing_action = managed_actions[action_type]
+		if(QDELETED(existing_action))
+			continue
+		UnregisterSignal(existing_action, COMSIG_QDELETING)
+		qdel(existing_action)
+	managed_actions.Cut()
+	stop_mimicry()
+	COOLDOWN_RESET(src, move_cooldown)
+	return ..()
+
+/datum/component/perfect_mimicry/RegisterWithParent()
+	for(var/action_type in mimic_action_types)
+		var/datum/action/existing_action = managed_actions[action_type]
+		if(QDELETED(existing_action))
+			create_mimic_action(action_type)
+		else
+			existing_action.Grant(parent)
+
+/datum/component/perfect_mimicry/proc/create_mimic_action(action_type)
+	if(!(action_type in mimic_action_types))
+		return null
+	var/datum/action/existing_action = managed_actions[action_type]
+	if(!QDELETED(existing_action))
+		return existing_action
+	var/datum/action/new_action = new action_type(src)
+	if(QDELETED(new_action))
+		return null
+
+	managed_actions[action_type] = new_action
+	RegisterSignal(new_action, COMSIG_QDELETING, PROC_REF(on_mimic_action_deleted))
+	new_action.Grant(parent)
+
+	if(istype(new_action, /datum/action/cooldown/mimic)) // Update mimic status based on disguise status
+		var/datum/action/cooldown/mimic/mimic_action = new_action
+		mimic_action.update_disguise_state(mimicked_object)
+	return new_action
+
+/datum/component/perfect_mimicry/proc/on_mimic_action_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	if(QDELETED(src))
+		return
+
+	var/datum/action/old_action = source
+	if(managed_actions[old_action.type] != old_action)
+		return
+
+	var/remaining_cooldown = 0
+	if(mimicked_object && istype(old_action, /datum/action/cooldown/mimic/mimic_object))
+		var/datum/action/cooldown/mimic/mimic_object/mimic_action = old_action
+		remaining_cooldown = mimic_action.cooldown_after_use
+	else if(istype(old_action, /datum/action/cooldown))
+		var/datum/action/cooldown/cooldown_action = old_action
+		remaining_cooldown = max(0, cooldown_action.next_use_time - world.time)
+
+	UnregisterSignal(source, COMSIG_QDELETING)
+	managed_actions -= old_action.type
+	addtimer(CALLBACK(src, PROC_REF(restore_mimic_action), old_action.type, remaining_cooldown), 1)
+
+/datum/component/perfect_mimicry/proc/restore_mimic_action(action_type, remaining_cooldown = 0)
+	if(QDELETED(src) || QDELETED(parent))
+		return
+	var/datum/action/existing_action = managed_actions[action_type]
+	if(!QDELETED(existing_action))
+		return
+
+	var/datum/action/new_action = create_mimic_action(action_type)
+	if(remaining_cooldown > 0 && istype(new_action, /datum/action/cooldown))
+		var/datum/action/cooldown/cooldown_action = new_action
+		cooldown_action.StartCooldown(remaining_cooldown)
+
+/// Register action restrictions when entering disguise.
+/datum/component/perfect_mimicry/proc/block_actions()
+	var/mob/living/mimic = parent
+
+	// Cancel any previously selected ability, except our own Mimic action.
+	var/datum/action/cooldown/selected_action = mimic.click_intercept
+	if(selected_action && managed_actions[selected_action.type] != selected_action)
+		selected_action.unset_click_ability(mimic, refund_cooldown = FALSE)
+
+	RegisterSignal(mimic, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_action_granted))
+	RegisterSignal(mimic, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_action_removed))
+
+	for(var/datum/action/action as anything in mimic.actions)
+		on_action_granted(mimic, action)
+
+/// Remove action restrictions when leaving disguise.
+/datum/component/perfect_mimicry/proc/unblock_actions()
+	var/mob/living/mimic = parent
+
+	UnregisterSignal(mimic, list(
+		COMSIG_MOB_GRANTED_ACTION,
+		COMSIG_MOB_REMOVED_ACTION
+	))
+
+	for(var/datum/action/action as anything in blocked_actions)
+		UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
+
+	LAZYNULL(blocked_actions)
+
+/// Register a newly granted action for blocking.
+/datum/component/perfect_mimicry/proc/on_action_granted(datum/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	if(!mimicked_object || QDELETED(action))
+		return
+	if(action.owner != parent)
+		return
+
+	// Never block actions maintained by this component.
+	if(managed_actions[action.type] == action)
+		return
+
+	if(action in blocked_actions)
+		return
+
+	RegisterSignal(action, COMSIG_ACTION_TRIGGER, PROC_REF(on_action_triggered))
+	LAZYADD(blocked_actions, action)
+
+/// Stop tracking actions that are removed from the mob.
+/datum/component/perfect_mimicry/proc/on_action_removed(datum/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	if(!(action in blocked_actions))
+		return
+
+	UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
+	LAZYREMOVE(blocked_actions, action)
+
+/// Prevent other actions from activating while disguised.
+/datum/component/perfect_mimicry/proc/on_action_triggered(datum/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	if(!mimicked_object)
+		return
+
+	var/mob/living/mimic = parent
+	mimic.balloon_alert(mimic, "can't use abilities while disguised!")
+	return COMPONENT_ACTION_BLOCK_TRIGGER
+
+/// Notify managed mimic type actions of a disguise state change.
+/datum/component/perfect_mimicry/proc/update_mimic_actions()
+	for(var/action_type in managed_actions)
+		var/datum/action/cooldown/mimic/mimic_action = managed_actions[action_type]
+		if(QDELETED(mimic_action) || !istype(mimic_action))
+			continue
+
+		mimic_action.update_disguise_state(mimicked_object)
+
+/// Called when the current disguise is deleted externally.
+/datum/component/perfect_mimicry/proc/on_object_qdel(datum/source, force)
+	SIGNAL_HANDLER
+	if(source != mimicked_object)
+		return
+	if(!stop_mimicry())
+		return
+	var/datum/action/cooldown/mimic/mimic_object/mimic_ability = managed_actions[/datum/action/cooldown/mimic/mimic_object]
+	if(QDELETED(mimic_ability))
+		return
+	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
+
+/datum/component/perfect_mimicry/proc/on_dropped(obj/item/source, mob/dropper)
+	SIGNAL_HANDLER
+	if(source != mimicked_object)
+		return
+
+	var/mob/living/mimic = parent
+	mimic.reset_perspective(get_turf(mimicked_object))
+	addtimer(CALLBACK(src, PROC_REF(restore_mimic_perspective)), 1)
+
+/// Fix for keeping camera on the mimic disguise for clients < 516.1684
+/datum/component/perfect_mimicry/proc/restore_mimic_perspective()
+	if(QDELETED(src) || QDELETED(mimicked_object))
+		return
+
+	var/mob/living/mimic = parent
+	if(QDELETED(mimic) || !mimic.client || mimic.loc != mimicked_object)
+		return
+
+	mimic.reset_perspective()
+
+/datum/component/perfect_mimicry/proc/override_examine_flags(datum/source, mob/user)
+	SIGNAL_HANDLER
+	return spoofed_flags | EXAMINE_RESISTANCE_OVERRIDE
+
+/datum/component/perfect_mimicry/proc/item_pixel_shift_down()
+	SIGNAL_HANDLER
+
+	shifting = TRUE
+	return COMSIG_KB_ACTIVATED
+
+/datum/component/perfect_mimicry/proc/item_pixel_shift_up()
+	SIGNAL_HANDLER
+
+	shifting = FALSE
+
+/// Handles mimic moving while disguised or pixel shifting the disguise.
+/datum/component/perfect_mimicry/proc/on_user_move(obj/moved_source, mob/user_moving, direction)
+	SIGNAL_HANDLER
+
+	if(!isturf(moved_source.loc))
+		return COMSIG_BLOCK_RELAYMOVE
+	if(shifting)
+		if(QDELETED(src))
+			return COMSIG_BLOCK_RELAYMOVE
+		switch(direction)
+			if(NORTH)
+				if(moved_source.pixel_y < maximum_pixel_shift + moved_source.base_pixel_y)
+					moved_source.pixel_y++
+			if(EAST)
+				if(moved_source.pixel_x < maximum_pixel_shift + moved_source.base_pixel_x)
+					moved_source.pixel_x++
+			if(SOUTH)
+				if(moved_source.pixel_y > -maximum_pixel_shift + moved_source.base_pixel_y)
+					moved_source.pixel_y--
+			if(WEST)
+				if(moved_source.pixel_x > -maximum_pixel_shift + moved_source.base_pixel_x)
+					moved_source.pixel_x--
+		return COMSIG_BLOCK_RELAYMOVE
+
+	if(!COOLDOWN_FINISHED(src, move_cooldown))
+		return COMSIG_BLOCK_RELAYMOVE
+	var/turf/next = get_step(moved_source, direction)
+	var/turf/current = get_turf(moved_source)
+	if(!istype(next) || !istype(current))
+		return COMSIG_BLOCK_RELAYMOVE
+
+	step(moved_source, direction)
+	var/last_move_diagonal = ((direction & (direction - 1)) && (moved_source.loc == next))
+	if(isitem(moved_source))
+		var/obj/item/disguise = moved_source
+		COOLDOWN_START(src, move_cooldown, (BASE_MOVE_DELAY + (disguise.w_class * MOVE_DELAY_PER_WCLASS)) *  (last_move_diagonal ? 2 : 1))
+	else
+		COOLDOWN_START(src, move_cooldown, ((last_move_diagonal ? 1 : 0.5)) SECONDS)
+
+	if(QDELETED(src))
+		return COMSIG_BLOCK_RELAYMOVE
+	return TRUE
+
+/// Can attack mimic disguises when in harm state
+/datum/component/perfect_mimicry/proc/on_item_interaction(obj/attacked_source, mob/living/user, obj/item/tool, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(user?.istate & (ISTATE_HARM))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	return NONE
+
+/datum/component/perfect_mimicry/proc/transder_damage(datum/source, damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	SIGNAL_HANDLER
+	if(!damage_amount)
+		return
+	if(isliving(parent))
+		var/mob/living/living_owner = parent
+		living_owner.apply_damage(damage_amount, damage_type, null, 0, FALSE, TRUE, 0, 0, NONE, attack_dir)
+
+/// Prey reference and maybe stun effect later. Or special revealing alternatives.
+/datum/component/perfect_mimicry/proc/on_hit_projectile(obj/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
+	if(source != mimicked_object)
+		return
+	if(!istype(projectile, /obj/projectile/bullet/foam_dart))
+		return
+
+	var/obj/projectile/bullet/foam_dart/dart = projectile
+	if(!istype(dart.fired_from, /obj/item/gun/ballistic/shotgun/toy/crossbow))
+		return
+
+	var/obj/item/gun/ballistic/shotgun/toy/crossbow/crossbow = dart.fired_from
+	if(crossbow.name == initial(crossbow.name))
+		crossbow.name = "huntress boltcaster"
+		crossbow.desc = "An ordinary toy crossbow that fires harmless foam darts. Yet somehow, they have a peculiar way of revealing the truth."
+
+	addtimer(CALLBACK(src, PROC_REF(on_object_qdel), source), 1)
+
+/datum/component/perfect_mimicry/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	if(QDELETED(mimicked_object)) // Return early and prevent speech. Object cleanup should be happening.
+		speech_args[SPEECH_MESSAGE] = ""
+		return
+
+	mimicked_object.say(speech_args[SPEECH_MESSAGE], speech_args[SPEECH_BUBBLE_TYPE], \
+	speech_args[SPEECH_SPANS], speech_args[SPEECH_SANITIZE], speech_args[SPEECH_LANGUAGE], \
+	speech_args[SPEECH_IGNORE_SPAM], speech_args[SPEECH_FORCED], speech_args[SPEECH_FILTERPROOF], \
+	speech_args[SPEECH_RANGE], speech_args[SPEECH_SAYMODE])
+
+	speech_args[SPEECH_MESSAGE] = ""
+
+/datum/component/perfect_mimicry/proc/on_stat_change(mob/living/victim, new_stat)
+	SIGNAL_HANDLER
+
+	if(victim != parent)
+		return
+	if(new_stat < SOFT_CRIT)
+		return
+	if(!stop_mimicry())
+		return
+	var/datum/action/cooldown/mimic/mimic_object/mimic_ability = managed_actions[/datum/action/cooldown/mimic/mimic_object]
+	if(QDELETED(mimic_ability))
+		return
+	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
+
+/datum/component/perfect_mimicry/proc/on_disguise_integrity_changed(obj/source, old_value, new_value)
+	SIGNAL_HANDLER
+
+	if(!disguise_healthdoll || source != mimicked_object)
+		return
+
+	disguise_healthdoll.update_disguise_integrity(source.get_integrity_percentage())
+
+/datum/component/perfect_mimicry/proc/show_disguise_healthdoll()
+	var/mob/living/mimic = parent
+	var/datum/hud/mimic_hud = mimic.hud_used
+	if(!mimic_hud?.healthdoll || disguise_healthdoll)
+		return
+
+	disguise_healthdoll = new(null, mimic_hud)
+	disguise_healthdoll.set_disguise_icon(mimicked_object)
+	disguise_healthdoll.update_disguise_integrity(mimicked_object.get_integrity_percentage())
+	if(ishuman(mimic))
+		disguise_healthdoll.screen_loc = "EAST-2:28,CENTER-2:17"
+	else
+		disguise_healthdoll.screen_loc = "EAST-2:28,CENTER-1:15"
+	mimic_hud.infodisplay += disguise_healthdoll
+
+	if(mimic_hud.hud_version != HUD_STYLE_NOHUD && mimic.client)
+		mimic.client.screen += disguise_healthdoll
+
+/datum/component/perfect_mimicry/proc/hide_disguise_healthdoll()
+	if(!disguise_healthdoll)
+		return
+
+	var/mob/living/mimic = parent
+	if(mimic.hud_used)
+		mimic.hud_used.infodisplay -= disguise_healthdoll
+	if(mimic.client)
+		mimic.client.screen -= disguise_healthdoll
+
+	QDEL_NULL(disguise_healthdoll)
+
+/datum/component/perfect_mimicry/proc/is_allowed_object(atom/mimic_target)
+	if(!isitem(mimic_target))
+		return FALSE
+	if(!mimic_target.uses_integrity)
+		return FALSE
+	if(mimic_target.flags_1 & HOLOGRAM_1)
+		return FALSE
+	var/obj/item/item_to_mimic = mimic_target
+	if(item_to_mimic.item_flags & ABSTRACT)
+		return FALSE
+	if(is_type_in_typecache(item_to_mimic, blocked_objects))
+		return FALSE
+	if(!is_type_in_typecache(item_to_mimic, allowed_objects))
+		return FALSE
+	return TRUE
+
+/datum/component/perfect_mimicry/proc/can_start_mimicry(atom/mimic_target)
+	var/mob/living/mimic = parent
+
+	if(!istype(mimic) || QDELETED(mimic))
+		return FALSE
+	if(mimic_target == mimic)
+		to_chat(mimic, span_notice("You cannot mimic yourself."))
+		return FALSE
+	if(!isobj(mimic_target) || QDELETED(mimic_target))
+		return FALSE
+	if(get_dist(mimic, mimic_target) > 3)
+		to_chat(mimic, span_notice("[mimic_target.name] is too far away."))
+		return FALSE
+	if(!is_allowed_object(mimic_target))
+		to_chat(mimic, span_notice("[mimic_target.name] is too complex to mimic."))
+		return FALSE
+	if(mimic.movement_type & VENTCRAWLING)
+		to_chat(mimic, span_notice("You cannot mimic objects while ventcrawling."))
+		return FALSE
+	return TRUE
+
+/// Proc to duplicate setup and handle edge cases for the mimic's disguise.
+/datum/component/perfect_mimicry/proc/handle_mimic_target(obj/mimic_target)
+	RETURN_TYPE(/obj)
+
+	var/mob/living/mimic = parent
+	var/obj/new_object
+
+	if(istype(mimic_target, /obj/item/disk/nuclear)) // Can mimic disk, but it is fake and can be destroyed.
+		var/obj/item/disk/nuclear/fake/nuclear = new(mimic.drop_location())
+		var/datum/component/stationloving/stationcomp = nuclear.GetComponent(/datum/component/stationloving)
+		if(stationcomp)
+			stationcomp.allow_item_destruction = TRUE
+		new_object = nuclear
+	else
+		new_object = duplicate_object(mimic_target, mimic.drop_location())
+
+	if(QDELETED(new_object))
+		return null
+
+	if(isitem(new_object)) // Handles specific flags and integrity for the new item
+		var/obj/item/new_item = new_object
+		new_object.remove_filter(HOVER_OUTLINE_FILTER)
+		new_item.item_flags &= ~(IN_INVENTORY | IN_STORAGE) // Remove inherited inventory flags. Prevents selection borders from mimicking inventory items.
+		new_item.item_flags |= NO_MAT_REDEMPTION
+
+		// Set item plane to undo possible inventory fullbrightness in the world plane.
+		new_item.layer = initial(new_item.layer)
+		SET_PLANE_EXPLICIT(new_item, initial(new_item.plane), new_item.loc)
+		new_item.appearance_flags &= ~NO_CLIENT_COLOR
+
+		// Give the disguise a small random offset from its normal position.
+		if(!(new_item.item_flags & NO_PIXEL_RANDOM_DROP))
+			new_item.pixel_x = new_item.base_pixel_x + rand(-5, 5)
+			new_item.pixel_y = new_item.base_pixel_y + rand(-5, 5)
+
+		new_item.grind_results = null
+		new_item.juice_results = null
+		if(istype(new_item, /obj/item/reagent_containers/cup/glass))
+			var/obj/item/reagent_containers/cup/glass/glass_item = new_item
+			glass_item.isGlass = FALSE
+		if(istype(new_item, /obj/item/storage)) // For storage specific items like clearing out preloading iventories.
+			var/obj/item/storage/box_item = new_item
+			if(box_item.atom_storage)
+				var/list/contents = box_item.atom_storage.return_inv()
+				box_item.atom_storage.remove_all(update_storage = FALSE)
+				for(var/obj/item/contained_item in contents)
+					qdel(contained_item, TRUE)
+		if(new_item.uses_integrity) // Mimicked items can break easier.
+			var/weight_multiplier = max(1, new_item.w_class)
+			var/adjusted_integrity = 5 + (weight_multiplier * INTEGRITY_PER_WCLASS)
+			new_item.modify_max_integrity(clamp(adjusted_integrity, 10, 60))
+		var/atom/made_item = new_item
+		if(made_item.reagents)
+			made_item.reagents.clear_reagents()
+
+	// Store the original resistance flags before adjusting the disguise.
+	spoofed_flags = new_object.resistance_flags
+	new_object.resistance_flags &= ~MIMIC_SPOOF_RESIST_MASK
+	new_object.obj_flags |= CAN_BE_HIT | NO_CRAFTING_USE
+	RegisterSignal(new_object, COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS, PROC_REF(override_examine_flags))
+	RegisterSignal(new_object, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(transder_damage))
+	RegisterSignal(new_object, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_hit_projectile))
+	RegisterSignal(new_object, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
+	RegisterSignal(new_object, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
+
+	return new_object
+
+/datum/component/perfect_mimicry/proc/start_mimicry(obj/mimic_target)
+	if(!QDELETED(mimicked_object))
+		return FALSE
+	var/obj/new_object = handle_mimic_target(mimic_target)
+	if(QDELETED(new_object))
+		return FALSE
+	mimicked_object = new_object
+	RegisterSignal(mimicked_object, COMSIG_QDELETING, PROC_REF(on_object_qdel))
+	var/mob/living/mimic = parent
+	mimic.forceMove(mimicked_object)
+	if(length(applied_mob_traits))
+		mimic.add_traits(applied_mob_traits, REF(src))
+	block_actions()
+	show_disguise_healthdoll()
+	mimic.flags_2 |= IGNORE_STORAGE_INVENTORY_2
+	RegisterSignal(mimic, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(mimic, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(mimic, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN, PROC_REF(item_pixel_shift_down))
+	RegisterSignal(mimic, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP, PROC_REF(item_pixel_shift_up))
+	RegisterSignal(mimicked_object, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_disguise_integrity_changed))
+	RegisterSignal(mimicked_object, COMSIG_ATOM_RELAYMOVE, PROC_REF(on_user_move))
+	update_mimic_actions()
+	return TRUE
+
+/datum/component/perfect_mimicry/proc/stop_mimicry()
+	if(!mimicked_object)
+		return FALSE
+	unblock_actions()
+	hide_disguise_healthdoll()
+	UnregisterSignal(mimicked_object, list(
+		COMSIG_QDELETING,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ATOM_EXAMINE_RESISTANCE_FLAGS,
+		COMSIG_ATOM_RELAYMOVE,
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_TAKE_DAMAGE,
+		COMSIG_PROJECTILE_PREHIT,
+		COMSIG_ATOM_INTEGRITY_CHANGED
+		))
+	var/mob/living/mimic = parent
+	mimic.forceMove(mimicked_object.drop_location())
+	mimicked_object.transfer_observers_to(mimic)
+	mimic.flags_2 &= ~IGNORE_STORAGE_INVENTORY_2
+	UnregisterSignal(mimic, list(
+		COMSIG_MOB_SAY,
+		COMSIG_MOB_STATCHANGE,
+		COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN,
+		COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP
+		))
+	shifting = FALSE
+	if(length(applied_mob_traits))
+		mimic.remove_traits(applied_mob_traits, REF(src))
+	if(mimicked_object.atom_storage)
+		mimicked_object.atom_storage.remove_all(mimicked_object.drop_location())
+	var/atom/reagent_holder = mimicked_object
+	if(reagent_holder?.reagents?.total_volume > 0)
+		var/turf/splash_zone = get_turf(reagent_holder)
+		if(splash_zone)
+			splash_zone.add_liquid_from_reagents(reagent_holder.reagents, chem_temp = reagent_holder.reagents.chem_temp)
+	if(QDELETED(mimicked_object))
+		mimicked_object = null
+	else
+		QDEL_NULL(mimicked_object)
+	spoofed_flags = 0
+	update_mimic_actions()
+	return TRUE
+
+#undef INTEGRITY_PER_WCLASS
+#undef MOVE_DELAY_PER_WCLASS
+#undef BASE_MOVE_DELAY
+#undef MIMIC_SPOOF_RESIST_MASK
+
+/*
+ * Mimicry actions
+ */
+/datum/action/cooldown/mimic
+	abstract_type = /datum/action/cooldown/mimic
+	name = "Mimic Abilities"
+	desc = "You shouldn't see this, call the coders."
+	button_icon = 'icons/hud/mimicry.dmi'
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
+
+/datum/action/cooldown/mimic/New(Target, original)
+	. = ..()
+	if(!istype(target, /datum/component/perfect_mimicry))
+		qdel(src)
+		return
+
+/datum/action/cooldown/mimic/proc/update_disguise_state(disguised)
+	if(owner?.click_intercept == src && !IsAvailable())
+		unset_click_ability(owner, refund_cooldown = FALSE)
+
+	build_all_button_icons(UPDATE_BUTTON_ICON | UPDATE_BUTTON_STATUS | UPDATE_BUTTON_NAME)
+
+/datum/action/cooldown/mimic/mimic_object
+	name = "Mimic Object"
+	desc = "Take on the appearance and behavior of a nearby object."
+	button_icon_state = "mimic"
+
+	click_to_activate = TRUE
+	cooldown_time = 1 SECONDS
+	var/cooldown_after_use = 3 SECONDS
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+
+/datum/action/cooldown/mimic/mimic_object/Destroy(force)
+	if(istype(target, /datum/component/perfect_mimicry) && !QDELETED(target))
+		var/datum/component/perfect_mimicry/mimic_component = target
+		mimic_component.stop_mimicry()
+	return ..()
+
+/datum/action/cooldown/mimic/mimic_object/PreActivate(atom/mimic_target)
+	var/datum/component/perfect_mimicry/mimic_component = target
+
+	if(!istype(mimic_component) || QDELETED(mimic_component))
+		return FALSE
+	if(mimic_component.mimicked_object)
+		return ..()
+	if(!mimic_component.can_start_mimicry(mimic_target))
+		return FALSE
+
+	return ..()
+
+/datum/action/cooldown/mimic/mimic_object/Activate(atom/mimic_target)
+	var/datum/component/perfect_mimicry/mimic_component = target
+
+	if(!istype(mimic_component) || QDELETED(mimic_component))
+		return FALSE
+	if(mimic_component.mimicked_object)
+		if(!mimic_component.stop_mimicry())
+			return FALSE
+	else
+		if(!mimic_component.start_mimicry(mimic_target))
+			return FALSE
+
+	StartCooldown(mimic_component.mimicked_object ? cooldown_time : cooldown_after_use)
+	return TRUE
+
+/datum/action/cooldown/mimic/mimic_object/update_disguise_state(disguised)
+	if(disguised)
+		click_to_activate = FALSE
+		button_icon_state = "unmimic"
+		name = "End Mimicry"
+		desc = "You are currently mimicking. You can end it immediately. You are capable of pixel shifting yourself in this form."
+	else
+		click_to_activate = TRUE
+		button_icon_state = "mimic"
+		name = initial(name)
+		desc = initial(desc)
+
+	return ..()
