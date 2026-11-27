@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - image: "New railing sprites."
-  - bugfix: "Hopefully less invisible railings."
