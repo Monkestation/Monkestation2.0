@@ -11,6 +11,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
+	slowdown = 1
 
 	var/obj/item/gun/energy/minigun/gun
 	var/obj/item/stock_parts/power_store/cell/minigun/battery
