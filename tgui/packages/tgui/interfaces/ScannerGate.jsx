@@ -114,6 +114,10 @@ const SCANNER_GATE_ROUTES = {
     title: 'Scanner Mode: Nanites',
     component: () => ScannerGateNanites,
   },
+  Borer: {
+    title: 'Scanner Mode: Cortical Borer',
+    component: () => ScannerGateBorer,
+  },
 };
 
 const ScannerGateControl = (props) => {
@@ -172,6 +176,10 @@ const ScannerGateOff = (props) => {
         <Button
           content="Nanites"
           onClick={() => act('set_mode', { new_mode: 'Nanites' })}
+        />
+        <Button
+          content="Cortical Borer"
+          onClick={() => act('set_mode', { new_mode: 'Borer' })}
         />
       </Box>
     </>
@@ -338,6 +346,20 @@ const ScannerGateNanites = (props) => {
             />
           </LabeledList.Item>
         </LabeledList>
+      </Box>
+      <ScannerGateMode />
+    </>
+  );
+};
+
+const ScannerGateBorer = (props) => {
+  const { data } = useBackend();
+  const { reverse } = data;
+  return (
+    <>
+      <Box mb={2}>
+        Trigger if the person scanned {reverse ? 'does not have' : 'has'} any
+        cortical borers or their offspring in their possession.
       </Box>
       <ScannerGateMode />
     </>
