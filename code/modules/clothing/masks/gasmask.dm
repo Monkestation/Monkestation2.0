@@ -447,7 +447,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = null
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
-	clothing_flags = MASKINTERNALS | CARP_STYLE_FACTOR
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 	fishing_modifier = -4
 
 /obj/item/clothing/mask/gas/tiki_mask

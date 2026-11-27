@@ -7,6 +7,8 @@
 #define CARP_PRONE_PENALTY 30
 #define CARP_MAX_MELEE_DODGE 75
 #define CARP_HELD_ITEM_WEIGHT_MALUS 10
+#define CARP_MELEE_DODGE_CHANCE(style) clamp(style, 0, CARP_MAX_MELEE_DODGE)
+#define CARP_DEFLECT_CHANCE(style) clamp(100 + (style), 0, 100)
 
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
@@ -285,7 +287,7 @@
 	if(!can_deflect(carp_user))
 		return NONE
 
-	var/determine_avoidance = clamp(100 + carp_style_check(carp_user), 0, 100)
+	var/determine_avoidance = CARP_DEFLECT_CHANCE(carp_style_check(carp_user))
 	if(!prob(determine_avoidance))
 		return NONE
 
@@ -337,7 +339,7 @@
 	if(attack_type == PROJECTILE_ATTACK || attack_type == THROWN_PROJECTILE_ATTACK)
 		return NONE
 
-	var/determine_avoidance = clamp(carp_style_check(carp_user), 0, CARP_MAX_MELEE_DODGE)
+	var/determine_avoidance = CARP_MELEE_DODGE_CHANCE(carp_style_check(carp_user))
 	if(!prob(determine_avoidance))
 		return NONE
 
@@ -424,7 +426,7 @@
 /// Verb added to humans who learn the art of the sleeping carp.
 GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Remember the martial techniques of the Sleeping Carp clan.", "Sleeping Carp")
 
-	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
+	to_chat(src, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
 	[span_notice("Gnashing Teeth")]: Punch Grab. Violently twists your opponent's arm, dislocating or even shattering bone and forcing them to drop their held items.\n\
 	[span_notice("Crashing Wave Kick")]: Punch Shove. Launch your opponent away from you with incredible force!\n\
 	[span_notice("Keelhaul")]: Shove Shove. Nonlethally kick an opponent to the floor, knocking them down, discombobulating them and dealing substantial stamina damage. If they're already prone, disarm them as well.\n\
@@ -442,7 +444,7 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 	if(!istype(carp_art))
 		return
 	var/style = carp_art.carp_style_check(src)
-	to_chat(usr, span_notice("Your current style lets you dodge [clamp(style, 0, CARP_MAX_MELEE_DODGE)]% of melee attacks and deflect [clamp(100 + style, 0, 100)]% of projectiles."))
+	to_chat(src, span_notice("Your current style lets you dodge [CARP_MELEE_DODGE_CHANCE(style)]% of melee attacks and deflect [CARP_DEFLECT_CHANCE(style)]% of projectiles."))
 
 /obj/item/staff/bostaff
 	name = "bo staff"
@@ -549,3 +551,5 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 #undef CARP_PRONE_PENALTY
 #undef CARP_MAX_MELEE_DODGE
 #undef CARP_HELD_ITEM_WEIGHT_MALUS
+#undef CARP_MELEE_DODGE_CHANCE
+#undef CARP_DEFLECT_CHANCE
