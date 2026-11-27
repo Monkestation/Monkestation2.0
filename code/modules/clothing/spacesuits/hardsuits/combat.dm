@@ -5,7 +5,7 @@
 	name = "security hardsuit"
 	desc = "A special suit designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "hardsuit-sec"
-	armor_type = /datum/armor/hardsuit/sec/prototype
+	armor_type = /datum/armor/hardsuit/sec
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/sec
 	allowed = list(
 		/obj/item/flashlight,
@@ -42,7 +42,7 @@
 	desc = "A prototype security suit that protects against hazardous, low pressure environments. Fitted with extensive plating for handling explosives and dangerous operations. It's loaded with expensive electronics inside."
 	icon_state = "hardsuit-prototype"
 	armor_type = /datum/armor/hardsuit/sec_prototype
-	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/sec_prototype
+	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/sec/prototype
 	slowdown = 3
 	hardsuit_emp_burn = 20
 	hardsuit_emp_knockdown = 15 SECONDS
