@@ -17,6 +17,7 @@
 	icon_state = "darkholme"
 	inhand_icon_state = null
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/owl
 	name = "owl uniform"

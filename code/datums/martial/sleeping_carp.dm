@@ -3,6 +3,11 @@
 #define DROP_KICK_COMBO "DD"
 #define KNEE_STOMACH_COMBO "GH"
 
+#define CARP_STYLE_BONUS 20
+#define CARP_PRONE_PENALTY 30
+#define CARP_MAX_MELEE_DODGE 75
+#define CARP_HELD_ITEM_WEIGHT_MALUS 10
+
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
@@ -12,7 +17,7 @@
 	COOLDOWN_DECLARE(block_cooldown)
 	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER, TRAIT_THROW_GUNS, TRAIT_PERFECT_ATTACKER)
 	/// List of objects exempt from reducing dodge probabilities
-	var/list/exempt_objects = list(
+	var/static/list/exempt_objects = list(
 		/obj/item/staff/bostaff,
 		/obj/item/cane,
 		/obj/item/nullrod/claymore/bostaff,
@@ -25,6 +30,10 @@
 		/obj/item/pushbroom,
 		/obj/item/melee/baseball_bat,
 		/obj/item/toy/plush/carpplushie,
+	)
+	/// List of worn clothing whose armor doesn't reduce dodge probabilities
+	var/static/list/exempt_armor = list(
+		/obj/item/clothing/suit/chameleon/syndie_armor,
 	)
 	var/deflect_cooldown = 3 SECONDS //monke edit start
 	var/deflect_stamcost = 5 //how much stamina it costs per bullet deflected
@@ -160,11 +169,12 @@
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	defender.visible_message(
 		span_warning("[attacker] violently slams [attacker.p_their()] knee into [defender]!"),
-		span_userdanger("You slam your knee straight into [defender]!"),
+		span_userdanger("[attacker] violently slams [attacker.p_their()] knee into your stomach!"),
 		span_hear("You hear a sickening sound of flesh hitting flesh!"),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
+	to_chat(attacker, span_danger("You slam your knee straight into [defender]!"))
 	defender.apply_damage(20, STAMINA)
 	defender.Paralyze(1 SECONDS)
 	defender.adjust_silence_up_to(5 SECONDS, 5 SECONDS)
@@ -274,14 +284,13 @@
 /datum/martial_art/the_sleeping_carp/proc/hit_by_projectile(mob/living/carp_user, obj/projectile/hitting_projectile, def_zone)
 	SIGNAL_HANDLER
 
-	var/determine_avoidance = clamp(100 + carp_style_check(carp_user), 0, 100)
-
 	if(istype(hitting_projectile, /obj/projectile/bullet/harpoon)) // WHITE WHALE HOLY GRAIL
 		return NONE
 
 	if(!can_deflect(carp_user))
 		return NONE
 
+	var/determine_avoidance = clamp(100 + carp_style_check(carp_user), 0, 100)
 	if(!prob(determine_avoidance))
 		return NONE
 
@@ -329,32 +338,32 @@
 
 /// If our user has committed to being as nautically radical as they can be, they may be able to avoid incoming attacks.
 /datum/martial_art/the_sleeping_carp/check_block(mob/living/carp_user, atom/movable/hitby, damage, attack_text, attack_type, ...)
-	var/determine_avoidance = clamp(carp_style_check(carp_user), 0, 75)
-
 	if(!can_deflect(carp_user))
-		return
+		return NONE
 
 	if(attack_type == PROJECTILE_ATTACK || attack_type == THROWN_PROJECTILE_ATTACK)
 		return NONE
 
+	var/determine_avoidance = clamp(carp_style_check(carp_user), 0, CARP_MAX_MELEE_DODGE)
 	if(!prob(determine_avoidance))
 		return NONE
 
 	carp_user.visible_message(
 		span_danger("[carp_user] cleanly avoids [attack_text] with incredible speed!"),
-		span_userdanger("You dodge [attack_text]"),
+		span_userdanger("You dodge [attack_text]!"),
 	)
 	playsound(carp_user.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	return SUCCESSFUL_BLOCK
 
-/* Determines how 'carp-y' or how 'martial arts-y' we are, granting us the ability to avoid attacks.
-* At a baseline, we will always avoid projectile attacks, but we may not necessarily avoid other attacks.
-* If we wear carp based clothing, or martial arts based clothing, we improve our style factor.
-* If we are a carp mutant, we improve our style factor.
-* If we literally are a carp, we just assume we're very carpy and return our max value.
-* If we wear a lot of armor, we reduce our style factor. Some martial arts or carp items may result in a net netural bonus.
-* If there is anything in our hands, we're also less likely to avoid attacks.
-*/
+/**
+ * Determines how 'carp-y' or how 'martial arts-y' we are, granting us the ability to avoid attacks.
+ * At a baseline, we will always avoid projectile attacks, but we may not necessarily avoid other attacks.
+ * If we wear carp based clothing, or martial arts based clothing, we improve our style factor.
+ * If we are a carp mutant, we improve our style factor.
+ * If we literally are a carp, we just assume we're very carpy and return our max value.
+ * If we wear a lot of armor, we reduce our style factor. Some martial arts or carp items may result in a net neutral bonus.
+ * If there is anything in our hands, we're also less likely to avoid attacks.
+ */
 /datum/martial_art/the_sleeping_carp/proc/carp_style_check(mob/living/carp_user)
 	// An evaluation of how 'carp' we are.
 	var/style_factor_points = 0
@@ -378,23 +387,25 @@
 	if(potential_head)
 		for(var/obj/item/clothing/possible_headbands in human_carp_user.get_clothing_on_part(potential_head))
 			if(possible_headbands.clothing_flags & CARP_STYLE_FACTOR)
-				style_factor_points += 20 // Basically, you only need one chest level item to contribute
-		style_factor_malus += human_carp_user.run_armor_check(potential_head, MELEE)
+				style_factor_points += CARP_STYLE_BONUS // Basically, you only need one chest level item to contribute
+			if(!is_type_in_list(possible_headbands, exempt_armor))
+				style_factor_malus += possible_headbands.get_armor_rating(MELEE)
 
 	// Then let's look for any chest clothing that is either armored or on theme
 	if(potential_chest)
 		for(var/obj/item/clothing/possible_gi in human_carp_user.get_clothing_on_part(potential_chest))
 			if(possible_gi.clothing_flags & CARP_STYLE_FACTOR)
-				style_factor_points += 20 // Only need one head level item to contribute
-		style_factor_malus += human_carp_user.run_armor_check(potential_chest, MELEE)
+				style_factor_points += CARP_STYLE_BONUS // Only need one head level item to contribute
+			if(!is_type_in_list(possible_gi, exempt_armor))
+				style_factor_malus += possible_gi.get_armor_rating(MELEE)
 
 	// We also consider whether our footwear is appropriate
 	if(istype(is_it_the_shoes) && is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
-		style_factor_points += 20
+		style_factor_points += CARP_STYLE_BONUS
 
 	// Achieved a carp state of mind.
 	if(human_carp_user.has_status_effect(/datum/status_effect/organ_set_bonus/carp))
-		style_factor_points += 20
+		style_factor_points += CARP_STYLE_BONUS
 
 	// We check for wielded objects. If they're not abstract items or exempt items, we add their weight as a penalty. And their block chance.
 	for(var/obj/item/possibly_a_held_object as anything in human_carp_user.get_held_items())
@@ -408,10 +419,10 @@
 			continue
 
 		style_factor_malus += possibly_a_held_object.block_chance
-		style_factor_malus += possibly_a_held_object.w_class * 10 * (HAS_TRAIT(possibly_a_held_object, TRAIT_WIELDED) ? 2 : 1)
+		style_factor_malus += possibly_a_held_object.w_class * CARP_HELD_ITEM_WEIGHT_MALUS * (HAS_TRAIT(possibly_a_held_object, TRAIT_WIELDED) ? 2 : 1)
 
 	if(human_carp_user.body_position != STANDING_UP) // this ain't monkey style
-		style_factor_points -= 30
+		style_factor_points -= CARP_PRONE_PENALTY
 
 	style_factor_points -= style_factor_malus
 
@@ -425,11 +436,11 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 	[span_notice("Crashing Wave Kick")]: Punch Shove. Launch your opponent away from you with incredible force!\n\
 	[span_notice("Keelhaul")]: Shove Shove. Nonlethally kick an opponent to the floor, knocking them down, discombobulating them and dealing substantial stamina damage. If they're already prone, disarm them as well.\n\
 	[span_notice("Kraken Wrack")]: Grab Punch. Deliver a knee jab into the opponent, dealing high stamina damage, as well as briefly stunning them, winding them and making it difficult for them to speak.\n\
-	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damage, and your grabs harder to break. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
-	<span class='notice'>While in combat mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \n\
-	However, your ability to avoid projectiles is negatively affected when your are burdened by armor, or whenever you are carrying normal-sized or heavier objects in your hands. \n\
-	But if you commmit fully to the martial arts lifestyle by wearing martial arts or carp-related regalia, you will feel empowered enough to potentially avoid attacks even from melee weapons or other unarmed combatants. \n\
-	Some melee weapons, such as bo starves, spears, short blades, knives, toolboxes, baseball bats and non-blocking small objects are safe to carry without affecting your ability to defend yourself. Exploit this for a tactical advantage. \n\
+	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damage, and your grabs are harder to break. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
+	<span class='notice'>While in combat mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them flying in random directions! \n\
+	However, your ability to avoid projectiles is negatively affected when you are burdened by armor, or whenever you are carrying normal-sized or heavier objects in your hands. \n\
+	But if you commit fully to the martial arts lifestyle by wearing martial arts or carp-related regalia, you will feel empowered enough to potentially avoid attacks even from melee weapons or other unarmed combatants. \n\
+	Some melee weapons, such as bo staves, spears, short blades, knives, toolboxes, baseball bats and non-blocking small objects are safe to carry without affecting your ability to defend yourself. Exploit this for a tactical advantage. \n\
 	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons. \n\
 	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \n\
 	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
@@ -534,3 +545,8 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 #undef LAUNCH_KICK_COMBO
 #undef DROP_KICK_COMBO
 #undef KNEE_STOMACH_COMBO
+
+#undef CARP_STYLE_BONUS
+#undef CARP_PRONE_PENALTY
+#undef CARP_MAX_MELEE_DODGE
+#undef CARP_HELD_ITEM_WEIGHT_MALUS

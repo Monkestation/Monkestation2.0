@@ -969,6 +969,7 @@
 
 /obj/item/storage/box/syndicate/sleeping_carp/PopulateContents()
 	new /obj/item/book/granter/martial/carp(src)
+	new /obj/item/clothing/head/costume/snakeeater(src)
 	new /obj/item/clothing/under/costume/gi(src)
 	new /obj/item/clothing/shoes/sandal(src)
 

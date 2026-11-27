@@ -523,7 +523,6 @@
 	icon_state = "meson"
 	inhand_icon_state = "meson"
 	resistance_flags = NONE
-	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/glasses_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -654,7 +653,6 @@
 	greyscale_colors = null
 
 	resistance_flags = NONE
-	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/gloves_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action

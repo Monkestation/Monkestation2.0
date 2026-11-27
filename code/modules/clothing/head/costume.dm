@@ -241,6 +241,14 @@
 	inhand_icon_state = "hairpin_fancy"
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
+/obj/item/clothing/head/costume/snakeeater
+	name = "strange bandana"
+	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
+	icon_state = "snake_eater"
+	inhand_icon_state = null
+	clothing_traits = list(TRAIT_FISH_EATER)
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+
 /obj/item/clothing/head/costume/dio
 	name = "flamboyant headband"
 	desc = "A green metal headband in the shape of a heart."
