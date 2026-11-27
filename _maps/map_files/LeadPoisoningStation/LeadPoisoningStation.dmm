@@ -13895,6 +13895,25 @@
 /obj/effect/turf_decal/trimline/blue/arrow_ccw,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/lobby)
+"gNe" = (
+/obj/machinery/flasher/directional/south{
+	id = "AI";
+	pixel_x = 26
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/obj/item/radio/intercom/directional/east{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = 25;
+	pixel_x = 26
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/ai_monitored/turret_protected/ai)
 "gNi" = (
 /mob/living/basic/pet/potty,
 /obj/effect/turf_decal/tile/blue{
@@ -15668,6 +15687,35 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
 /area/station/hallway/floor2/fore)
+"hEx" = (
+/obj/machinery/ai/data_core/primary,
+/obj/machinery/button/door/directional/south{
+	id = "aicoredoor";
+	name = "AI Chamber Access Control";
+	pixel_x = -24;
+	req_access = list("ai_upload")
+	},
+/obj/machinery/button/door/directional/south{
+	id = "aicorewindow";
+	name = "AI Core Shutters";
+	pixel_x = -24;
+	req_access = list("ai_upload");
+	pixel_y = 24
+	},
+/obj/item/radio/intercom/directional/south{
+	freerange = 1;
+	frequency = 1447;
+	listening = 0;
+	name = "Private Channel"
+	},
+/obj/item/radio/intercom/directional/west{
+	freerange = 1;
+	listening = 0;
+	name = "Common Channel";
+	pixel_y = -8
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/ai_monitored/turret_protected/ai)
 "hEG" = (
 /obj/structure/table/bronze,
 /obj/item/toy/mecha/clarke,
@@ -18300,18 +18348,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/diagonal,
 /area/station/commons/lounge)
-"iPP" = (
-/obj/machinery/flasher/directional/south{
-	id = "AI";
-	pixel_x = 26
-	},
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
-/turf/open/floor/iron/dark/telecomms,
-/area/station/ai_monitored/turret_protected/ai)
 "iPX" = (
 /turf/closed/wall,
 /area/station/maintenance/department/crew_quarters/bar)
@@ -18418,42 +18454,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"iSk" = (
-/obj/machinery/ai/data_core/primary,
-/obj/machinery/button/door/directional/south{
-	id = "aicoredoor";
-	name = "AI Chamber Access Control";
-	pixel_x = -24;
-	req_access = list("ai_upload")
-	},
-/obj/machinery/button/door/directional/south{
-	id = "aicorewindow";
-	name = "AI Core Shutters";
-	pixel_x = -24;
-	req_access = list("ai_upload");
-	pixel_y = 24
-	},
-/obj/item/radio/intercom/directional/south{
-	freerange = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Private Channel"
-	},
-/obj/item/radio/intercom/directional/east{
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_y = 25;
-	pixel_x = 58
-	},
-/obj/item/radio/intercom/directional/west{
-	freerange = 1;
-	listening = 0;
-	name = "Common Channel";
-	pixel_y = -8
-	},
-/turf/open/floor/iron/dark/telecomms,
-/area/station/ai_monitored/turret_protected/ai)
 "iSz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38157,6 +38157,11 @@
 	},
 /turf/open/floor/carpet/black,
 /area/station/commons/dorms)
+"smU" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
 "sna" = (
 /obj/structure/railing{
 	dir = 8;
@@ -47391,6 +47396,19 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
+"wHP" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "wHW" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
 	dir = 4
@@ -65452,7 +65470,7 @@ dyZ
 sbq
 wEE
 dyZ
-fEX
+smU
 mnz
 iHY
 kUx
@@ -141265,8 +141283,8 @@ eLo
 nHO
 gNi
 cnq
+wHP
 cnq
-nHO
 yaP
 nTP
 eFj
@@ -150503,7 +150521,7 @@ rkH
 qhl
 tuV
 euG
-iSk
+hEx
 euG
 neY
 kvY
@@ -150760,7 +150778,7 @@ rkH
 qhl
 tuV
 ueW
-iPP
+gNe
 rfg
 loR
 kvY

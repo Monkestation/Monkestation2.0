@@ -227,10 +227,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
-"aaE" = (
-/obj/machinery/light/directional/east,
-/turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
 "aaF" = (
 /obj/machinery/computer/exodrone_control_console,
 /turf/open/floor/iron,
@@ -10677,24 +10673,6 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
-"aNc" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/effect/landmark/start/assistant,
-/obj/machinery/newscaster/directional/south,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet/auxiliary)
-"aNd" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet/auxiliary)
 "aNe" = (
 /obj/item/soap/nanotrasen,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -36512,13 +36490,6 @@
 	},
 /turf/open/floor/grass,
 /area/station/security/bitden)
-"iIS" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Morgue"
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "iIT" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/freezerchamber)
@@ -37749,6 +37720,16 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
+"jSv" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant,
+/obj/machinery/newscaster/directional/south,
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/freezer,
+/area/station/commons/toilet/auxiliary)
 "jSA" = (
 /obj/structure/sign/departments/science,
 /turf/closed/wall,
@@ -41564,11 +41545,6 @@
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
-"mYX" = (
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
-/turf/open/floor/iron/dark,
-/area/station/maintenance/disposal/incinerator)
 "mZi" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43455,6 +43431,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"ozY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/station/commons/toilet/auxiliary)
 "oAw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -44984,6 +44968,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"pMw" = (
+/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/station/science/xenobiology)
 "pMG" = (
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -45995,6 +45987,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
+"qzr" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/disposal/incinerator)
 "qzW" = (
 /obj/structure/table/wood,
 /obj/item/inspector{
@@ -50466,6 +50463,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
+"tVF" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Morgue"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "tWc" = (
 /obj/structure/sign/directions/science{
 	dir = 4;
@@ -55604,13 +55609,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library)
-"xCF" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "xDl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -79940,8 +79938,8 @@ jzF
 tbS
 uhi
 tqH
-xCF
-iIS
+tqH
+tVF
 vgk
 bqV
 kgz
@@ -83512,7 +83510,7 @@ ilz
 aJM
 aKQ
 aLE
-aNc
+jSv
 aKT
 aLL
 aQL
@@ -83769,7 +83767,7 @@ krA
 qqz
 aKR
 aLF
-aNd
+ozY
 wBg
 mUt
 aQM
@@ -96174,7 +96172,7 @@ usl
 usl
 usl
 jKs
-yjt
+qzr
 bYw
 bYw
 bYw
@@ -96431,7 +96429,7 @@ usl
 usl
 usl
 oib
-mYX
+yjt
 mHK
 usl
 xXi
@@ -102041,7 +102039,7 @@ dTR
 pvc
 iSi
 bkF
-aaE
+bkF
 bkF
 bkF
 aaD
@@ -102298,7 +102296,7 @@ isg
 uSW
 iSi
 abk
-abj
+pMw
 abj
 abh
 abd

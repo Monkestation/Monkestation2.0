@@ -3654,6 +3654,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
+"auJ" = (
+/obj/structure/table,
+/obj/item/rcl/pre_loaded,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/machinery/light/small/directional/south,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "auN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
@@ -14014,17 +14024,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"bpc" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
-"bpd" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
 "bpe" = (
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
@@ -16594,16 +16593,6 @@
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"bzD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/obj/structure/chair{
-	name = "Bailiff"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
 "bzE" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -40645,6 +40634,22 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
+"iED" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/stack/cable_coil,
+/obj/item/t_scanner{
+	pixel_x = 7
+	},
+/obj/item/multitool{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/structure/sign/warning/electric_shock/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine/telecomms,
+/area/station/ai_monitored/turret_protected/ai)
 "iEF" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/landmark/start/hangover,
@@ -58289,22 +58294,6 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/iron,
 /area/station/maintenance/aft/lesser)
-"pgr" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/bot,
-/obj/structure/rack,
-/obj/item/stack/cable_coil,
-/obj/item/t_scanner{
-	pixel_x = 7
-	},
-/obj/item/multitool{
-	pixel_x = -5;
-	pixel_y = -2
-	},
-/obj/structure/sign/warning/electric_shock/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine/telecomms,
-/area/station/ai_monitored/turret_protected/ai)
 "pgy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -62799,6 +62788,13 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/service/cafeteria)
+"qQo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "qQv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -76241,6 +76237,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"vXR" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "vYa" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -78286,16 +78289,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/rd)
-"wOk" = (
-/obj/structure/table,
-/obj/item/rcl/pre_loaded,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/machinery/light/small/directional/east,
-/obj/structure/window/spawner/directional/east,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "wOr" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/spawner/random/maintenance/three,
@@ -93760,7 +93753,7 @@ aaa
 cSN
 bmn
 bqp
-bpc
+hxF
 ihs
 brQ
 bQS
@@ -93770,7 +93763,7 @@ bBk
 bQS
 bie
 ihs
-bzD
+vIK
 bqp
 hxF
 cSN
@@ -94017,7 +94010,7 @@ aaa
 yeW
 bzX
 bqp
-bpd
+vXR
 yeW
 brQ
 bQS
@@ -94027,7 +94020,7 @@ bBk
 bQS
 bie
 yeW
-bmn
+qQo
 bqp
 bpa
 yeW
@@ -112517,7 +112510,7 @@ bbX
 bfW
 bik
 bik
-wOk
+auJ
 knd
 bik
 bik
@@ -127793,7 +127786,7 @@ puH
 jQA
 exc
 sGJ
-pgr
+iED
 jQA
 jQA
 jQA
