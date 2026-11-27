@@ -24,6 +24,8 @@
 	id = "slime_washing"
 	alert_type = null
 	status_type = STATUS_EFFECT_UNIQUE
+	var/liquid_absorption_amount = 2
+	COOLDOWN_DECLARE(standing_wash)
 
 /datum/status_effect/slime_washing/on_apply()
 	if(!ishuman(owner))
@@ -34,10 +36,12 @@
 		span_purple("Your outer membrane develops a roiling film on the outside, absorbing grime off yourself and your clothes; as well as the floor beneath you.")
 	)
 	owner.balloon_alert_to_viewers("begins absorbing grime")
+	COOLDOWN_START(src, standing_wash, 0.5 SECONDS)
 	return TRUE
 
 /datum/status_effect/slime_washing/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	COOLDOWN_RESET(src, standing_wash)
 	owner.visible_message(
 		span_notice("[owner]'s outer membrane returns to normal, no longer cleaning [owner.p_their()] surroundings."),
 		span_notice("Your outer membrane returns to normal, filth no longer being cleansed.")
@@ -54,14 +58,29 @@
 /datum/status_effect/slime_washing/proc/clean_floor()
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/slime = owner
-	if(slime.body_position != LYING_DOWN && ((slime.wear_suit?.body_parts_covered | slime.w_uniform?.body_parts_covered | slime.shoes?.body_parts_covered) & FEET))
+	if(slime.body_position != LYING_DOWN && (((slime.wear_suit?.body_parts_covered | slime.w_uniform?.body_parts_covered | slime.shoes?.body_parts_covered) & FEET) || !COOLDOWN_FINISHED(src, standing_wash)))
 		return
 	var/turf/open/open_turf = get_turf(slime)
 	if(!istype(open_turf))
 		return
 	if(open_turf.wash(CLEAN_WASH) && slime.nutrition <= NUTRITION_LEVEL_FED)
 		slime.adjust_nutrition(rand(5, 25))
+	absorb_liquids(open_turf, slime)
+	COOLDOWN_START(src, standing_wash, 1.2 SECONDS)
 	return TRUE
 
 /datum/status_effect/slime_washing/get_examine_text()
 	return span_purple("[owner.p_Their()] outer layer is pulling in grime, filth sinking inside of their body and vanishing.")
+
+/datum/status_effect/slime_washing/proc/absorb_liquids(turf/open/open_turf, mob/living/carbon/human/slime)
+	var/obj/effect/abstract/liquid_turf/liquid = open_turf.liquids
+	if(QDELETED(liquid) || !slime.reagents)
+		return
+	var/datum/liquid_group/group = liquid.liquid_group
+	if(QDELETED(group) || !group.reagents?.total_volume)
+		return
+	var/available_volume = max(0, slime.reagents.maximum_volume - slime.reagents.total_volume)
+	var/transfer_amount = min(liquid_absorption_amount, group.reagents_per_turf, available_volume)
+	if(transfer_amount <= 0)
+		return
+	group.transfer_to_atom(liquid, transfer_amount, slime, INJECT)
