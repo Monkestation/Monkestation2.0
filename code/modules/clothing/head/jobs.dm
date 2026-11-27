@@ -347,6 +347,11 @@
 	greyscale_colors = "#39393f#f0cc8f"
 	hair_mask = /datum/hair_mask/standard_hat_middle
 
+/obj/item/clothing/head/hats/hos/beret/red //gloat version
+	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection. It looks rather worn, it must have been through a lot."
+	SETUP_MAP_ICONS("beret_badge", "/obj/item/clothing/head/hats/hos/beret/red")
+	greyscale_colors = "#a52f29#f0cc8f"
+
 /obj/item/clothing/head/hats/hos/beret/navyhos
 	name = "head of security's formal beret"
 	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."

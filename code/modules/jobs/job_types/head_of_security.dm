@@ -1,3 +1,5 @@
+#define HOS_VETERAN_PLAYTIME 6000 // 100 hours
+
 /datum/job/head_of_security
 	title = JOB_HEAD_OF_SECURITY
 	description = "Coordinate security personnel, ensure they are not corrupt, \
@@ -76,6 +78,20 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
+/datum/outfit/job/hos/pre_equip(mob/living/carbon/human/equipped, visualsOnly)
+	. = ..()
+	if(visualsOnly || !CONFIG_GET(flag/use_exp_tracking))
+		return
+
+	var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
+	if(isnull(equipped_client))
+		return
+
+	var/player_playtime = text2num(equipped_client.prefs.exp[JOB_HEAD_OF_SECURITY])
+
+	if(player_playtime >= HOS_VETERAN_PLAYTIME)
+		head = /obj/item/clothing/head/hats/hos/beret/red
+
 /datum/outfit/job/hos/mod
 	name = "Head of Security (MODsuit)"
 
@@ -85,3 +101,5 @@
 	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+#undef HOS_VETERAN_PLAYTIME

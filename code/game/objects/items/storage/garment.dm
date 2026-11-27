@@ -60,6 +60,7 @@
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga(src)
 	new /obj/item/clothing/head/hats/hos/cap(src)
+	new /obj/item/clothing/head/hats/hos/beret(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/clothing/neck/cloak/hos(src)
 	new /obj/item/clothing/head/helmet/sec(src)
