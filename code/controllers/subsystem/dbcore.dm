@@ -665,7 +665,6 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	if(!async)
 		start_time = REALTIMEOFDAY
 	Close()
-	inner = null
 	status = DB_QUERY_STARTED
 	// aneri can't block on a transaction's statements, and the standby queue would reorder them
 	if(async || transaction)
@@ -698,8 +697,6 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 /// Sleeps until execution of the query has finished.
 /datum/db_query/proc/sync()
 	while(!isnull(status) && status < DB_QUERY_FINISHED)
-		if(inner && process())
-			return
 		stoplag()
 
 /datum/db_query/process(seconds_per_tick)
