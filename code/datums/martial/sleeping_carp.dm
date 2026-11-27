@@ -445,6 +445,12 @@ GAME_VERB_PROC_DESC(/mob/living, sleeping_carp_help, "Recall Teachings", "Rememb
 	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \n\
 	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
 
+	var/datum/martial_art/the_sleeping_carp/carp_art = GET_ACTIVE_MARTIAL_ART(src)
+	if(!istype(carp_art))
+		return
+	var/style = carp_art.carp_style_check(src)
+	to_chat(usr, span_notice("Your current style lets you dodge [clamp(style, 0, CARP_MAX_MELEE_DODGE)]% of melee attacks and deflect [clamp(100 + style, 0, 100)]% of projectiles."))
+
 /obj/item/staff/bostaff
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
