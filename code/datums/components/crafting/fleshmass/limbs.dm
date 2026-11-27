@@ -14,19 +14,24 @@
 		/obj/item/stack/sheet/cloth = 4,
 		/obj/item/stack/sheet/fleshmass = 15,
 	)
+	always_available = TRUE
 
 /datum/crafting_recipe/limb/human_left_leg
 	name = "Human Left Leg"
 	result = /obj/item/bodypart/leg/left
+	always_available = TRUE
 
 /datum/crafting_recipe/limb/human_right_leg
 	name = "Human Right Leg"
 	result = /obj/item/bodypart/leg/right
+	always_available = TRUE
 
 /datum/crafting_recipe/limb/human_left_arm
 	name = "Human Left Arm"
 	result = /obj/item/bodypart/arm/left
+	always_available = TRUE
 
 /datum/crafting_recipe/limb/human_right_arm
 	name = "Human Right Arm"
 	result = /obj/item/bodypart/arm/right
+	always_available = TRUE
