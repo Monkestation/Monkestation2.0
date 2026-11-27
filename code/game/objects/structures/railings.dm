@@ -1,26 +1,57 @@
 /obj/structure/railing
 	name = "railing"
 	desc = "Basic railing meant to protect idiots like you from falling."
-	icon = 'icons/obj/railing_basic.dmi'
-	icon_state = "railing0-1"
+	icon = 'icons/obj/railings.dmi'
+	icon_state = "railing"
 	flags_1 = ON_BORDER_1
-	obj_flags = IGNORE_DENSITY | CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
+	layer = ABOVE_TREE_LAYER
+	plane = ABOVE_GAME_PLANE
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-
 	var/climbable = TRUE
-	///Initial direction of the railing.
-	var/ini_dir
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
-	var/neighbor_status = list() ///list of smoothing we need doing
-	var/standard_smoothing = TRUE
+	/// Whether we draw joins and end caps against the railings around us.
+	var/auto_join = TRUE
+	/// Whether our layer drops to MOB_LAYER while we face north, so mobs standing behind us draw over us.
+	var/layer_by_dir = FALSE
+	/// The state and dir of the cap drawn past each end of an arm, keyed by the arm, then by the side the end is on.
+	var/static/list/end_caps = list(
+		"[NORTH]" = list(
+			"[WEST]" = list("railing_end_flip", EAST),
+			"[EAST]" = list("railing_end", WEST),
+		),
+		"[SOUTH]" = list(
+			"[WEST]" = list("railing_end", EAST),
+			"[EAST]" = list("railing_end_flip", WEST),
+		),
+		"[EAST]" = list(
+			"[NORTH]" = list("railing_end", EAST),
+			"[SOUTH]" = list("railing_end_flip", EAST),
+		),
+		"[WEST]" = list(
+			"[NORTH]" = list("railing_end_flip", WEST),
+			"[SOUTH]" = list("railing_end", WEST),
+		),
+	)
+	/// The state and dir of the post drawn on the empty tile where two arms meet at a corner, keyed like end_caps. Only the north and south arms draw it, so a corner gets one post.
+	var/static/list/corner_posts = list(
+		"[NORTH]" = list(
+			"[WEST]" = list("railing_corner", EAST),
+			"[EAST]" = list("railing_corner", NORTH),
+		),
+		"[SOUTH]" = list(
+			"[WEST]" = list("railing_corner", SOUTH),
+			"[EAST]" = list("railing_corner", WEST),
+		),
+	)
 
 /datum/armor/structure_railing
 	melee = 35
@@ -29,17 +60,36 @@
 	energy = 100
 	bomb = 10
 
-/obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
-	density = FALSE
-	climbable = FALSE
+/obj/structure/railing/unbreakable
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/wood
-	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+
+/obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
+	icon_state = "railing_corner"
+	density = FALSE
+	climbable = FALSE
+	auto_join = FALSE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+
+/obj/structure/railing/corner/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/railing/corner/end //end of a segment of railing without making a loop
+	icon_state = "railing_end"
+
+/obj/structure/railing/corner/end/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/railing/corner/end/flip //same as above but flipped around
+	icon_state = "railing_end_flip"
+
+/obj/structure/railing/corner/end/flip/unbreakable
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
-	ini_dir = dir
-	update_dir_layer()
 	if(climbable)
 		AddElement(/datum/element/climbable)
 
@@ -64,65 +114,90 @@
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
-	if(!standard_smoothing)
-		material_flags = NONE
+	if(layer_by_dir)
+		adjust_dir_layer(dir)
+
+	if(!mapload)
+		update_neighbors()
 
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/railing/LateInitialize(mapload_arg)
 	. = ..()
-	if(anchored)
-		update_icon()
+	if(auto_join)
+		update_appearance(UPDATE_ICON)
 
 /obj/structure/railing/Destroy()
 	// grab these before ..() shoves us into nullspace, or range() finds nothing
-	var/list/neighbors = list()
-	for(var/obj/structure/railing/R in range(1, src))
-		if(R != src)
-			neighbors += R
+	var/list/neighbors = get_neighbors()
 	. = ..()
-	for(var/obj/structure/railing/R as anything in neighbors)
-		if(!QDELETED(R))
-			R.update_icon(FALSE)
+	for(var/obj/structure/railing/neighbor as anything in neighbors)
+		if(!QDELETED(neighbor))
+			neighbor.update_appearance(UPDATE_ICON)
 
 /obj/structure/railing/setDir(newdir)
 	. = ..()
-	update_dir_layer()
-	if(anchored)
-		update_icon()
+	if(layer_by_dir)
+		adjust_dir_layer(dir)
+	update_appearance(UPDATE_ICON)
+	update_neighbors()
 
-// side map draws lower rows on top, so layer only sorts us against stuff in our own tile
-/obj/structure/railing/proc/update_dir_layer()
-	switch(dir)
-		if(NORTH)
-			layer = initial(layer)
-		if(SOUTH)
-			layer = ABOVE_ALL_MOB_LAYER
-		else
-			layer = LOW_MOB_LAYER
+/obj/structure/railing/proc/adjust_dir_layer(direction)
+	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
 
 /obj/structure/railing/set_anchored(anchorvalue)
 	. = ..()
 	if(isnull(.))
 		return
-	update_icon()
+	update_appearance(UPDATE_ICON)
+	update_neighbors()
 
-/obj/structure/railing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	..()
+/obj/structure/railing/examine(mob/user)
+	. = ..()
+	if(anchored == TRUE)
+		. += span_notice("The railing is <b>bolted</b> to the floor.")
+	else
+		. += span_notice("The railing is <i>unbolted</i> from the floor and can be deconstructed with <b>wirecutters</b>.")
+
+/obj/structure/railing/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
+	return ..()
 
-	if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM))
-		if(atom_integrity < max_integrity)
-			if(!attacking_item.tool_start_check(user, amount=0))
-				return
+/obj/structure/railing/welder_act(mob/living/user, obj/item/tool)
+	if(user.istate & ISTATE_HARM)
+		return NONE
 
-			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(attacking_item.use_tool(src, user, 40, volume=50))
-				atom_integrity = max_integrity
-				to_chat(user, span_notice("You repair [src]."))
-		else
-			to_chat(user, span_warning("[src] is already in good condition!"))
-		return
+	add_fingerprint(user)
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_warning("[src] is already in good condition!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.tool_start_check(user, amount=1))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You begin repairing [src]..."))
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+
+/obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
+	if(flags_1 & NODECONSTRUCT_1)
+		return NONE
+	if(resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, span_warning("You try to cut apart the railing, but it's too hard!"))
+		I.play_tool_sound(src, 100)
+		return ITEM_INTERACT_BLOCKING
+	if(anchored)
+		balloon_alert(user, "unbolt it first!")
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_warning("You cut apart the railing."))
+	I.play_tool_sound(src, 100)
+	deconstruct()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/railing/deconstruct(disassembled)
 	if((flags_1 & NODECONSTRUCT_1))
@@ -146,7 +221,7 @@
 /obj/structure/railing/CanPass(atom/movable/mover, border_dir)
 	. = ..()
 	if(border_dir & dir)
-		return . || mover.throwing || mover.movement_type & (FLYING | FLOATING)
+		return . || mover.throwing || (mover.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 	return TRUE
 
 /obj/structure/railing/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
@@ -169,7 +244,7 @@
 	if (leaving.throwing)
 		return
 
-	if (leaving.movement_type & (PHASING | FLYING | FLOATING))
+	if (leaving.movement_type & (PHASING|MOVETYPES_NOT_TOUCHING_GROUND))
 		return
 
 	if (leaving.move_force >= MOVE_FORCE_EXTREMELY_STRONG)
@@ -182,96 +257,81 @@
 	if(anchored == checked_anchored)
 		return TRUE
 
-/obj/structure/railing/update_icon(update_neighbors = TRUE)
-	. = ..()
-	if(standard_smoothing)
-		check_neighbors(update_neighbors)
-		overlays.Cut()
+/// Whether we draw joins against this railing. Unbolted railings never join, they stand loose.
+/obj/structure/railing/proc/joins_with(obj/structure/railing/other)
+	return other != src && other.auto_join && other.anchored && !QDELETED(other)
 
-		if(!neighbor_status || !anchored)
-			icon_state = "railing0-[density]"
-		else
-			icon_state = "railing1-[density]"
+/// The railings within one tile of us whose joins depend on us.
+/obj/structure/railing/proc/get_neighbors()
+	. = list()
+	if(!auto_join)
+		return
+	for(var/obj/structure/railing/neighbor in range(1, src))
+		if(neighbor != src && neighbor.auto_join)
+			. += neighbor
 
-			var/turf/right_turf = get_step(src, turn(src.dir, -90))
-			var/turf/left_turf = get_step(src, turn(src.dir, 90))
+/obj/structure/railing/proc/update_neighbors()
+	for(var/obj/structure/railing/neighbor as anything in get_neighbors())
+		neighbor.update_appearance(UPDATE_ICON)
 
-			if(!has_joining_railing(right_turf))
-				if(!("mcorneroverlay_l" in neighbor_status))
-					overlays += image(icon, "frontend_r[density]")
-				else
-					overlays += image(icon, "frontoverlay_r[density]")
+/// The dirs of the joined railings on our tile that run across us. Only a railing facing one way pairs up.
+/obj/structure/railing/proc/get_perpendicular_dirs()
+	. = list()
+	if(!auto_join || !anchored || !(dir in GLOB.cardinals))
+		return
+	for(var/obj/structure/railing/other in loc)
+		if(joins_with(other) && (other.dir in GLOB.cardinals) && !(other.dir & (dir | REVERSE_DIR(dir))))
+			. += other.dir
 
-
-			if(!has_joining_railing(left_turf))
-				if(!("mcorneroverlay_l" in neighbor_status))
-					overlays += image(icon, "frontend_l[density]")
-				else
-					overlays += image(icon, "frontoverlay_l[density]")
-
-
-			if("corneroverlay_l" in neighbor_status)
-				overlays += image(icon, "corneroverlay_l[density]")
-			if("corneroverlay_r" in neighbor_status)
-				overlays += image(icon, "corneroverlay_r[density]")
-			if("frontoverlay_l" in neighbor_status)
-				overlays += image(icon, "frontoverlay_l[density]")
-			if("frontoverlay_r" in neighbor_status)
-				overlays += image(icon, "frontoverlay_r[density]")
-			if("mcorneroverlay_l" in neighbor_status)
-				var/pix_offset_x = 0
-				var/pix_offset_y = 0
-				switch(dir)
-					if(NORTH)
-						pix_offset_x = 32
-					if(SOUTH)
-						pix_offset_x = -32
-					if(EAST)
-						pix_offset_y = -32
-					if(WEST)
-						pix_offset_y = 32
-				var/image/outer_corner = image(icon, "mcorneroverlay_l[density]")
-				outer_corner.pixel_w = pix_offset_x
-				outer_corner.pixel_z = pix_offset_y
-				overlays += outer_corner
-
-/obj/structure/railing/proc/has_joining_railing(turf/target)
-	for(var/obj/structure/railing/R in target)
-		if(R.anchored && R.dir == dir)
+/// Whether a joined railing continues the end of our arm on this side.
+/obj/structure/railing/proc/is_end_joined(arm, side)
+	var/side_reverse = REVERSE_DIR(side)
+	for(var/obj/structure/railing/other in loc)
+		if(joins_with(other) && (other.dir & side))
+			return TRUE
+	for(var/obj/structure/railing/other in get_step(src, side))
+		if(joins_with(other) && (other.dir & (arm | side_reverse)))
 			return TRUE
 	return FALSE
 
-/obj/structure/railing/proc/check_neighbors(updates = TRUE)
-	neighbor_status = list()
-	var/Rturn = turn(src.dir, -90)
-	var/Lturn = turn(src.dir, 90)
+/// Whether a joined railing on the diagonal tile turns the end of our arm into a corner around the empty tile on this side.
+/obj/structure/railing/proc/is_corner_joined(arm, side)
+	var/side_reverse = REVERSE_DIR(side)
+	for(var/obj/structure/railing/other in get_step(src, side | arm))
+		if(joins_with(other) && (other.dir & side_reverse))
+			return TRUE
+	return FALSE
 
-	for(var/obj/structure/railing/R in get_turf(src))
-		if((R.dir == Lturn) && R.anchored)
-			neighbor_status |= "corneroverlay_l"
-		if((R.dir == Rturn) && R.anchored)
-			neighbor_status |= "corneroverlay_r"
-	for(var/obj/structure/railing/R in get_step(src, Lturn))
-		if((R.dir == src.dir) && R.anchored)
-			neighbor_status |= "frontoverlay_l"
-	for(var/obj/structure/railing/R in get_step(src, Rturn))
-		if((R.dir == src.dir) && R.anchored)
-			neighbor_status |= "frontoverlay_r"
-	for(var/obj/structure/railing/R in get_step(src, (Lturn + src.dir)))
-		if((R.dir == Rturn) && R.anchored)
-			neighbor_status |= "frontoverlay_l"
-	for(var/obj/structure/railing/R in get_step(src, (Rturn + src.dir)))
-		if((R.dir == Lturn) && R.anchored)
-			neighbor_status |= "mcorneroverlay_l"
+/obj/structure/railing/update_icon_state()
+	. = ..()
+	if(!auto_join)
+		return
+	// no such state. the pair overlays draw both rails as one, so the base has to draw nothing
+	icon_state = length(get_perpendicular_dirs()) ? "railing_paired" : initial(icon_state)
 
-	// everything nearby, not just what matches now, so a rail we just turned away from drops its old join
-	if(updates)
-		for(var/obj/structure/railing/R in range(1, src))
-			if(R != src)
-				R.update_icon(FALSE)
-
-	///corner hell
-	///we are basically checking if 2 or more cardinal directions exist here so we can set our dir
+/obj/structure/railing/update_overlays()
+	. = ..()
+	if(!auto_join || !anchored)
+		return
+	for(var/partner_dir in get_perpendicular_dirs())
+		. += image(icon, null, "railing", dir = dir | partner_dir)
+	for(var/arm in GLOB.cardinals)
+		if(!(dir & arm))
+			continue
+		for(var/side in list(turn(arm, 90), turn(arm, -90)))
+			if((dir & side) || is_end_joined(arm, side))
+				continue
+			var/list/piece_info
+			if(!is_corner_joined(arm, side))
+				piece_info = end_caps["[arm]"]["[side]"]
+			else if(arm & (NORTH | SOUTH))
+				piece_info = corner_posts["[arm]"]["[side]"]
+			if(!piece_info)
+				continue
+			var/image/piece = image(icon, null, piece_info[1], dir = piece_info[2])
+			piece.pixel_w = ((side & EAST) ? ICON_SIZE_X : 0) - ((side & WEST) ? ICON_SIZE_X : 0)
+			piece.pixel_z = ((side & NORTH) ? ICON_SIZE_Y : 0) - ((side & SOUTH) ? ICON_SIZE_Y : 0)
+			. += piece
 
 /obj/structure/railing/wooden_fence
 	name = "wooden fence"
@@ -279,7 +339,12 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
-	standard_smoothing = FALSE
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
+	material_flags = NONE
+	auto_join = FALSE
+	layer_by_dir = TRUE
 
 /obj/structure/railing/corner/end/wooden_fence
 	icon = 'icons/obj/structures.dmi'
