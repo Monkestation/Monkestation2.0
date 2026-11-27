@@ -1,0 +1,3 @@
+/obj/structure/railing/corner/end : @DELETE
+/obj/structure/railing/corner/end/flip : @DELETE
+/obj/structure/railing{layer=@ANY} : /obj/structure/railing{@OLD;layer=@SKIP}

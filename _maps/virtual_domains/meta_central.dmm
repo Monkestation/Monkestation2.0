@@ -1751,13 +1751,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"oS" = (
-/obj/structure/barricade/sandbags,
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "pb" = (
 /obj/item/radio/intercom/directional/north{
 	pixel_y = 34
@@ -1882,9 +1875,6 @@
 "pT" = (
 /obj/structure/barricade/sandbags,
 /obj/machinery/deployable_turret/hmg,
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "pV" = (
@@ -4108,9 +4098,6 @@
 	dir = 8
 	},
 /obj/structure/barricade/sandbags,
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "IM" = (
@@ -5828,9 +5815,6 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "XL" = (
 /obj/structure/barricade/sandbags,
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
 /obj/structure/marker_beacon/bronze,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -6365,7 +6349,7 @@ Hd
 fj
 dD
 Hd
-oS
+Ou
 hw
 IL
 Pq
@@ -8202,7 +8186,7 @@ Hd
 kI
 XL
 KT
-oS
+Ou
 mR
 XL
 GQ

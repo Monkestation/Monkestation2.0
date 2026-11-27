@@ -4,8 +4,7 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/tdome/arena/actual)
@@ -22,8 +21,7 @@
 /area/centcom/tdome/arena/actual)
 "fy" = (
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/tdome/arena/actual)
@@ -119,8 +117,7 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /turf/open/floor/carpet/blue,
 /area/centcom/tdome/arena/actual)
@@ -148,8 +145,7 @@
 	dir = 5
 	},
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /obj/structure/railing{
 	dir = 4
@@ -308,8 +304,7 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/centcom/tdome/arena/actual)
@@ -338,8 +333,7 @@
 /area/centcom/tdome/arena/actual)
 "Ek" = (
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /turf/open/floor/carpet/blue,
 /area/centcom/tdome/arena/actual)
@@ -409,8 +403,7 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/centcom/tdome/arena/actual)
@@ -439,8 +432,7 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /turf/open/floor/fakespace{
 	density = 1
@@ -525,8 +517,7 @@
 	dir = 9
 	},
 /obj/structure/railing{
-	dir = 1;
-	layer = 3.1
+	dir = 1
 	},
 /obj/structure/railing{
 	dir = 8
