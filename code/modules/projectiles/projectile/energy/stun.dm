@@ -94,7 +94,7 @@
 	mob/living/new_owner,
 	datum/fired_from,
 	atom/movable/firer,
-	tase_stamina = 45,
+	tase_stamina = 35,
 	energy_drain = STANDARD_CELL_CHARGE * 0.05,
 	electrode_name = "the electrodes",
 	tase_range = 5,
