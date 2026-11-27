@@ -45,6 +45,15 @@
 				else if(!beaker.reagents && !QDELETED(beaker))
 					beaker.create_reagents(beaker.volume)
 				beaker.reagents.add_reagent(input_reagent, amount, added_purity = (purity/100))
+		if("search")
+			if(!beaker)
+				return
+			var/chosen_name = tgui_input_list(usr, "Choose a reagent", "Search Reagent", GLOB.name2reagent)
+			if(isnull(chosen_name) || QDELETED(beaker))
+				return
+			if(!beaker.reagents)
+				beaker.create_reagents(beaker.volume)
+			beaker.reagents.add_reagent(GLOB.name2reagent[chosen_name], amount, added_purity = (purity/100))
 		if("makecup")
 			if(beaker)
 				return

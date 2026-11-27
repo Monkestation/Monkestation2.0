@@ -61,7 +61,7 @@ export const ChemDebugSynthesizer = (props: BeakerProps) => {
   const beakerContents = replace_contents || beaker?.contents || [];
 
   return (
-    <Window width={390} height={330}>
+    <Window width={520} height={330}>
       <Window.Content scrollable>
         <Section
           title="Recipient"
@@ -90,6 +90,11 @@ export const ChemDebugSynthesizer = (props: BeakerProps) => {
                   icon="plus"
                   content="Input"
                   onClick={() => act('input')}
+                />
+                <Button
+                  icon="search"
+                  content="Search Reagent"
+                  onClick={() => act('search')}
                 />
               </>
             ) : (
