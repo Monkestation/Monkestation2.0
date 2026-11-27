@@ -94,7 +94,7 @@
 	mob/living/new_owner,
 	datum/fired_from,
 	atom/movable/firer,
-	tase_stamina = 35,
+	tase_stamina = 45,
 	energy_drain = STANDARD_CELL_CHARGE * 0.05,
 	electrode_name = "the electrodes",
 	tase_range = 5,
@@ -288,7 +288,7 @@
 
 	playsound(firer, 'sound/effects/taser_charge.ogg', 45, TRUE, 1)
 
-	addtimer(CALLBACK(src, PROC_REF(start_tase)), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_tase)), 1 SECONDS)
 
 /datum/status_effect/tased/proc/start_tase()
 	if(!QDELETED(tase_line))
