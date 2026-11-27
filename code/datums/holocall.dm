@@ -296,18 +296,30 @@
 	var/outfit_type
 	var/species_type = /datum/species/human
 
+/// Hook for human preset images which need appearance customization beyond species/outfit selection.
+/// Called after the species is set and before the configured outfit is equipped.
+/datum/preset_holoimage/proc/customize_human(mob/living/carbon/human/mannequin)
+	return
+
 /datum/preset_holoimage/proc/build_image()
 	if(nonhuman_mobtype)
 		var/mob/living/L = nonhuman_mobtype
-		. = image(initial(L.icon),initial(L.icon_state))
+		. = image(initial(L.icon), initial(L.icon_state))
 	else
 		var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy("HOLODISK_PRESET")
+
 		if(species_type)
 			mannequin.set_species(species_type)
+
+		customize_human(mannequin)
+
 		if(outfit_type)
-			mannequin.equipOutfit(outfit_type,TRUE)
+			mannequin.equipOutfit(outfit_type, TRUE)
+
 		mannequin.setDir(SOUTH)
+
 		. = image(mannequin)
+
 		unset_busy_human_dummy("HOLODISK_PRESET")
 
 /datum/preset_holoimage/clown
