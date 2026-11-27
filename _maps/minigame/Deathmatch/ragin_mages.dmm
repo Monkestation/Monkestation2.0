@@ -1,14 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ay" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/obj/machinery/door/airlock/wood,
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/turf/open/floor/engine/cult,
-/area/deathmatch)
 "aT" = (
 /obj/item/cardboard_cutout/adaptive{
 	pixel_y = 14;
@@ -33,6 +23,14 @@
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/engine/cult,
 /area/deathmatch)
+"bs" = (
+/obj/structure/flora/bush/grassy/style_random,
+/mob/living/basic/pet/gondola{
+	name = "Jommy";
+	faction = list("gondola", "Wizard")
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
 "bv" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
@@ -44,14 +42,6 @@
 	pixel_x = 7
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
-"ct" = (
-/obj/structure/flora/bush/grassy/style_random,
-/mob/living/simple_animal/pet/gondola{
-	name = "Jommy";
-	faction = list("gondola", "Wizard")
-	},
-/turf/open/floor/grass,
 /area/deathmatch)
 "cU" = (
 /obj/structure/chair/wood/wings{
@@ -94,16 +84,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/chair/wood,
 /turf/open/floor/iron,
-/area/deathmatch)
-"hg" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/obj/machinery/door/airlock/wood,
-/obj/structure/railing/corner/end{
-	dir = 8
-	},
-/turf/open/floor/engine/cult,
 /area/deathmatch)
 "hk" = (
 /obj/item/kirbyplants/organic/plant10{
@@ -154,12 +134,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron,
-/area/deathmatch)
-"jb" = (
-/obj/machinery/door/airlock/wood,
-/obj/structure/railing/corner/end/flip,
-/obj/structure/railing/corner/end,
-/turf/open/floor/engine/cult,
 /area/deathmatch)
 "jg" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -779,10 +753,6 @@
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/deathmatch)
-"ZS" = (
-/obj/structure/railing/corner/end/flip,
-/turf/open/floor/iron,
-/area/deathmatch)
 
 (1,1,1) = {"
 Hs
@@ -1077,7 +1047,7 @@ FL
 FL
 Jm
 Fx
-ZS
+uz
 mu
 NW
 Wl
@@ -1184,7 +1154,7 @@ vR
 Jm
 Jm
 Jm
-ay
+dj
 Jm
 Hs
 Hs
@@ -1318,7 +1288,7 @@ Jm
 nx
 iL
 Cq
-jb
+dj
 DK
 CM
 rD
@@ -1380,7 +1350,7 @@ ds
 ph
 Jm
 SK
-ct
+bs
 Jm
 Jm
 ph
@@ -1456,7 +1426,7 @@ vR
 Jm
 Jm
 Jm
-hg
+dj
 Jm
 Hs
 Hs

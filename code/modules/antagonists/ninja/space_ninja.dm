@@ -13,18 +13,11 @@
 	ui_name = "AntagInfoNinja"
 	default_custom_objective = "Destroy vital station infrastructure, without being seen."
 	antag_count_points = 18
+	desensitized_modifier = DESENSITIZED_THRESHOLD
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
 	///Whether or not this ninja receives the standard equipment
 	var/give_equipment = TRUE
-
-/datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
-	var/mob/ninja = mob_override || owner.current
-	ADD_TRAIT(ninja, TRAIT_DESENSITIZED, REF(src))
-
-/datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
-	var/mob/ninja = mob_override || owner.current
-	REMOVE_TRAIT(ninja, TRAIT_DESENSITIZED, REF(src))
 
 /**
  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.

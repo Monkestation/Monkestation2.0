@@ -14,8 +14,10 @@
 	var/drop_mod
 	/// If true, will immediately spawn the item instead of putting it in butcher loot.
 	var/drop_immediately
+	/// Crusher damage percentage at which the drop is guaranteed, if any
+	var/guaranteed_drop
 
-/datum/element/crusher_loot/Attach(datum/target, trophy_type, drop_mod = 25, drop_immediately = FALSE)
+/datum/element/crusher_loot/Attach(datum/target, trophy_type, drop_mod = 25, drop_immediately = FALSE, guaranteed_drop = null)
 	. = ..()
 
 	if(!isliving(target))
@@ -26,6 +28,7 @@
 	src.trophy_type = trophy_type
 	src.drop_mod = drop_mod
 	src.drop_immediately = drop_immediately
+	src.guaranteed_drop = guaranteed_drop
 
 /datum/element/crusher_loot/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)
@@ -35,13 +38,21 @@
 	SIGNAL_HANDLER
 
 	var/datum/status_effect/crusher_damage/damage = target.has_status_effect(/datum/status_effect/crusher_damage)
-	if(damage && prob((damage.total_damage/target.maxHealth) * drop_mod)) //on average, you'll need to kill 4 creatures before getting the item. by default.
-		if(!islist(trophy_type))
-			make_path(target, trophy_type)
-			return
+	if(!damage)
+		return
 
-		for(var/trophypath in trophy_type)
-			make_path(target, trophypath)
+	if(guaranteed_drop)
+		if(damage.total_damage / target.maxHealth < guaranteed_drop)
+			return
+	else if(!prob((damage.total_damage / target.maxHealth) * drop_mod)) //on average, you'll need to kill 4 creatures before getting the item. by default.
+		return
+
+	if(!islist(trophy_type))
+		make_path(target, trophy_type)
+		return
+
+	for(var/trophypath in trophy_type)
+		make_path(target, trophypath)
 
 /datum/element/crusher_loot/proc/make_path(mob/living/target, path)
 	if(drop_immediately)

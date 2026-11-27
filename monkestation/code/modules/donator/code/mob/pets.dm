@@ -41,7 +41,7 @@
 	icon_dead = "blahaj_dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 
 	ckeywhitelist = list("ruby_flamewing")
 
@@ -55,7 +55,7 @@
 	icon_gib = null
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	basic_mob_flags = FLIP_ON_DEATH
 
 	ckeywhitelist = list("bidlink2")
@@ -76,10 +76,13 @@
 	icon_living = "germanshepherd"
 	icon_dead = "germanshepherd_dead"
 	icon_gib = null
-	can_be_held = FALSE // as funny as this would be, a german shepherd is way too big to carry with one hand
 	gold_core_spawnable = NO_SPAWN
 
 	ckeywhitelist = list("mjolnir2")
+
+/mob/living/basic/pet/dog/germanshepherd/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/can_be_held) // as funny as this would be, a german shepherd is way too big to carry with one hand
 
 /mob/living/basic/pet/slime/talkative
 	name = "Extroverted Slime"
@@ -91,7 +94,7 @@
 	gold_core_spawnable = NO_SPAWN
 	initial_language_holder = /datum/language_holder/slime
 	faction = list(FACTION_SLIME)
-	ai_controller = /datum/ai_controller/basic_controller
+	ai_controller = null
 	var/quips = list("Your fingers taste like Donk Pockets, get out more.",
 					"I've seen salad that dresses better than you.",
 					"I smell smoke, are you thinking too hard again?",
@@ -125,7 +128,7 @@
 	icon_living = "spider"
 	icon_dead = "spider_dead"
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 
 	ckeywhitelist = list("Random516")
 
@@ -213,7 +216,7 @@
 	icon_dead = "orangutan"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 
 	ckeywhitelist = list("Raziaar")
 
@@ -226,7 +229,7 @@
 	icon_dead = "Bluedragon66-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Bluedragon66")
 
 
@@ -239,7 +242,7 @@
 	icon_dead = "scug_dead_nightcat"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("CaptainShiba")
 
 /mob/living/basic/frog/hypnotoad
@@ -251,7 +254,7 @@
 	icon_dead = "hypnotoad-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Ophaq")
 
 /mob/living/basic/pet/ghastly_evil_demon
@@ -263,7 +266,7 @@
 	icon_dead = "ghastly_evil_demon-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("ThePooba")
 	movement_type = FLYING
 
@@ -276,7 +279,7 @@
 	icon_dead = "albino_ghost_ian-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Eacles13")
 
 /mob/living/basic/pet/fluffydonator
@@ -288,7 +291,7 @@
 	icon_dead = "fluffy-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Jason Farqiour")
 
 /mob/living/basic/pet/robottoything
@@ -300,7 +303,7 @@
 	icon_dead = "robottoything-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("TheSpecialSnowflake")
 
 /mob/living/basic/pet/babypukeko
@@ -312,7 +315,7 @@
 	icon_dead = "babypukeko-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Cobalt Velvet 235")
 
 /mob/living/basic/pet/babypukeko/tall
@@ -331,7 +334,7 @@
 	icon_dead = "romch-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Mycah")
 
 /mob/living/basic/pet/theclown_clownpet
@@ -343,7 +346,7 @@
 	icon_dead = "theclown_clownpet-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Mrsmall_theclown")
 
 /mob/living/basic/pet/cyber_husky
@@ -357,7 +360,7 @@
 	response_help_simple = "pet"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("AdamCoal")
 	///Ability
 	var/datum/action/cooldown/change_hud/change_hud_ability
@@ -451,7 +454,7 @@
 	icon_gib = null
 	basic_mob_flags = FLIP_ON_DEATH
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Milthy")
 
 /mob/living/basic/pet/cyber_mastiff
@@ -466,7 +469,7 @@
 	icon_gib = null
 	gender = MALE
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Flava-Floh")
 
 /mob/living/basic/pet/yato_neco_arc
@@ -478,7 +481,7 @@
 	icon_dead = "neco_arc-dead"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+	ai_controller = null
 	ckeywhitelist = list("Yatosamasensei")
 
 /mob/living/basic/pet/yato_neco_arc/death(gibbed)

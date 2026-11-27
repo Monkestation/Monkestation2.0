@@ -32,7 +32,7 @@
 	name = "Cat Crate"
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 10 //Cats are worth as much as corgis.
-	contains = list(/mob/living/simple_animal/pet/cat,
+	contains = list(/mob/living/basic/pet/cat,
 					/obj/item/clothing/neck/petcollar,
 					/obj/item/toy/cattoy,
 				)
@@ -41,9 +41,9 @@
 /datum/supply_pack/critter/cat/generate()
 	. = ..()
 	if(prob(50))
-		var/mob/living/simple_animal/pet/cat/C = locate() in .
+		var/mob/living/basic/pet/cat/C = locate() in .
 		qdel(C)
-		new /mob/living/simple_animal/pet/cat/_proc(.)
+		new /mob/living/basic/pet/cat/_proc(.)
 
 /datum/supply_pack/critter/chick
 	name = "Chicken Crate"

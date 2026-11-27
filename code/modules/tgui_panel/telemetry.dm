@@ -90,9 +90,12 @@
 
 		if (!isnull(GLOB.round_id))
 			query_data += list(list(
+				"ckey" = ckey,
 				"telemetry_ckey" = row["ckey"],
 				"address" = row["address"],
 				"computer_id" = row["computer_id"],
+				"first_round_id" = GLOB.round_id,
+				"latest_round_id" = GLOB.round_id,
 			))
 
 		if (row["ckey"] in our_known_alts)
@@ -112,32 +115,13 @@
 		log_suspicious_login(msg, access_log_mirror = FALSE)
 
 	// Only log them all at the end, since it's not as important as reporting an evader
-	for (var/list/one_query as anything in query_data)
-		var/datum/db_query/query = SSdbcore.NewQuery({"
-			INSERT INTO [format_table_name("telemetry_connections")] (
-				ckey,
-				telemetry_ckey,
-				address,
-				computer_id,
-				first_round_id,
-				latest_round_id
-			) VALUES(
-				:ckey,
-				:telemetry_ckey,
-				INET_ATON(:address),
-				:computer_id,
-				:round_id,
-				:round_id
-			) ON DUPLICATE KEY UPDATE latest_round_id = :round_id
-		"}, list(
-			"ckey" = ckey,
-			"telemetry_ckey" = one_query["telemetry_ckey"],
-			"address" = one_query["address"],
-			"computer_id" = one_query["computer_id"],
-			"round_id" = GLOB.round_id,
-		))
-		query.Execute()
-		qdel(query)
+	if(length(query_data))
+		SSdbcore.MassInsert(
+			format_table_name("telemetry_connections"),
+			query_data,
+			duplicate_key = " ON DUPLICATE KEY UPDATE latest_round_id = VALUES(latest_round_id)",
+			special_columns = list("address" = "INET_ATON(?)"),
+		)
 
 #undef TGUI_TELEMETRY_MAX_CONNECTIONS
 #undef TGUI_TELEMETRY_RESPONSE_WINDOW

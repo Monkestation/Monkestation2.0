@@ -94,7 +94,10 @@ CREATE TABLE `ban` (
   PRIMARY KEY (`id`),
   KEY `idx_ban_isbanned` (`ckey`,`role`,`unbanned_datetime`,`expiration_time`),
   KEY `idx_ban_isbanned_details` (`ckey`,`ip`,`computerid`,`role`,`unbanned_datetime`,`expiration_time`),
-  KEY `idx_ban_count` (`bantime`,`a_ckey`,`applies_to_admins`,`unbanned_datetime`,`expiration_time`)
+  KEY `idx_ban_count` (`bantime`,`a_ckey`,`applies_to_admins`,`unbanned_datetime`,`expiration_time`),
+  KEY `idx_ban_ip` (`ip`,`role`),
+  KEY `idx_ban_cid` (`computerid`,`role`),
+  KEY `idx_ban_admin` (`a_ckey`,`applies_to_admins`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -291,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `cassette_purchases` (
   `purchase_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `server_id` VARCHAR(50),
   PRIMARY KEY (`id`),
-  KEY `idx_cassette_id` (`cassette_id`),
+  UNIQUE KEY `idx_cassette_buyer` (`cassette_id`, `buyer_ckey`),
   KEY `idx_purchase_date` (`purchase_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -570,7 +573,8 @@ CREATE TABLE `achievements` (
 	`achievement_key` VARCHAR(32) NOT NULL,
 	`value` INT NULL,
 	`last_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	PRIMARY KEY (`ckey`,`achievement_key`)
+	PRIMARY KEY (`ckey`,`achievement_key`),
+	INDEX `idx_ach_key_value` (`achievement_key`,`value`)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `achievement_metadata`;
@@ -663,7 +667,10 @@ CREATE TABLE `discord_links` (
 	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`one_time_token` VARCHAR(100) NOT NULL,
   	`valid` BOOLEAN NOT NULL DEFAULT FALSE,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	KEY `idx_discord_ckey_time` (`ckey`,`timestamp`),
+	KEY `idx_discord_id_time` (`discord_id`,`timestamp`),
+	KEY `idx_discord_token` (`one_time_token`)
 ) ENGINE=InnoDB;
 
 --

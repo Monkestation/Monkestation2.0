@@ -58,8 +58,6 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 	var/datum/preferences/user_prefs = user?.client?.prefs
 	if(QDELETED(src) || QDELETED(user_prefs))
 		return
-	if(!user_prefs.metacoins)
-		user_prefs.load_metacoins(user.client.ckey)
 
 	.["selected_character"] = user_prefs.get_enabled_character_names()
 

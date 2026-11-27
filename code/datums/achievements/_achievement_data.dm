@@ -49,14 +49,14 @@
 		var/datum/award/award = SSachievements.awards[award_type]
 		if(!award || !award.name) //Skip abstract achievements types
 			continue
-		award.on_achievement_data_init(src, kv[award.database_id])
+		award.on_achievement_data_init(src, kv[award.database_id], kv)
 
 ///Updates local cache with db data for the given achievement type if it wasn't loaded yet.
 /datum/achievement_data/proc/get_data(achievement_type)
 	var/datum/award/award = SSachievements.awards[achievement_type]
 	if(!award.name)
 		return FALSE
-	if(!data[achievement_type])
+	if(isnull(data[achievement_type]))
 		award.load(src)
 
 ///Unlocks an achievement of a specific type. achievement type is a typepath to the award, user is the mob getting the award, and value is an optional value to be used for defining a score to add to the leaderboard

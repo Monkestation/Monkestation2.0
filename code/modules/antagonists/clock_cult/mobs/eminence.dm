@@ -139,7 +139,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 /mob/living/eminence/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	return FALSE
 
-/mob/living/eminence/dust(just_ash, drop_items, force)
+/mob/living/eminence/dust(just_ash, drop_items, give_moodlet, force)
 	if(!force)
 		return FALSE
 	return ..()

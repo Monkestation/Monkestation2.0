@@ -164,6 +164,7 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", "Object")
 	clothing_flags = SNUG_FIT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	dog_fashion = null
+	clothing_traits = list(TRAIT_SCARY_FISHERMAN) //Fish, carps, lobstrosities and frogs fear me.
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()

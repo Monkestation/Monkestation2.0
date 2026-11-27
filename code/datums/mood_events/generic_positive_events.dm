@@ -150,28 +150,28 @@
 
 	if(HAS_PERSONALITY(owner, /datum/personality/animal_disliker))
 		mood_change = -1
-		description = "Ewww, [animal.name] is so dirty! I don't want to touch it!"
+		description = "Ewww, [animal] is so dirty! I don't want to touch it!"
 		return
 
 	var/dog_fan = HAS_PERSONALITY(owner, /datum/personality/dog_fan)
 	var/isdog = istype(animal, /mob/living/basic/pet/dog)
 	var/cat_fan = HAS_PERSONALITY(owner, /datum/personality/cat_fan)
-	var/iscat = istype(animal, /mob/living/simple_animal/pet/cat)
+	var/iscat = istype(animal, /mob/living/basic/pet/cat)
 	if((dog_fan && isdog) || (cat_fan && iscat) || HAS_PERSONALITY(owner, /datum/personality/animal_friend))
 		mood_change = 3
-		description = "I love [animal.name] so much, [animal.p_theyre()] so adorable! I can't stop petting [animal.p_them()]!"
+		description = "I love [animal] so much, [animal.p_theyre()] so adorable! I can't stop petting [animal.p_them()]!"
 		return
 	if(dog_fan && iscat)
 		mood_change = -1
-		description = "I don't like [animal.name]! I prefer dogs!"
+		description = "I don't like [animal]! I prefer dogs!"
 		return
 	if(cat_fan && isdog)
 		mood_change = -1
-		description = "I don't like [animal.name]! I prefer cats!"
+		description = "I don't like [animal]! I prefer cats!"
 		return
 
 	mood_change = 1
-	description = "[animal.name] is adorable!"
+	description = "[animal] is adorable!"
 
 // Change the moodlet if we get refreshed (we may have pet another type of animal)
 /datum/mood_event/pet_animal/be_refreshed(datum/mood/home, mob/animal)
@@ -300,6 +300,10 @@
 	mood_change = 5
 	timeout = 3 MINUTES
 	event_flags = MOOD_EVENT_SPIRITUAL
+
+/datum/mood_event/sacrifice_good/add_effects(...)
+	if(owner.mind?.holy_role && GLOB.deity)
+		description = "[GLOB.deity] is pleased with this offering!"
 
 /datum/mood_event/artok
 	description = "It's nice to see people are making art around here."
@@ -669,7 +673,7 @@
 	mood_change = 1
 
 /datum/mood_event/slacking_off_lazy
-	description = "Boss makes a dollar, I make a dime. That's why I slack on job time."
+	description = "Boss makes a dollar, I make a dime. That's why I slack on company time."
 	mood_change = 1
 
 /datum/mood_event/working_diligent

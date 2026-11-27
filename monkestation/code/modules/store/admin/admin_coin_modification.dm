@@ -21,13 +21,15 @@ ADMIN_VERB(mass_add_metacoins, R_FUN, FALSE, "Mass Add Coins", "You give everyon
 	if(!adjustment_amount)
 		return
 
+	var/list/amounts = list()
 	for(var/mob/player in GLOB.player_list)
 		if(!player.client)
 			continue
 		if(!player.client.prefs)
 			continue
 
-		player.client.prefs.adjust_metacoins(player.client.ckey, adjustment_amount, "You have been gifted some coins from the staff", donator_multiplier = FALSE)
+		amounts[player.client.ckey] = adjustment_amount
+	mass_adjust_metacoins(amounts, "You have been gifted some coins from the staff", donator_multiplier = FALSE)
 	log_admin("[key_name(user)] has mass adjusted metaoins.")
 	message_admins("[key_name_admin(user)] has mass adjusted metaoins.")
 	BLACKBOX_LOG_ADMIN_VERB("Mass Add Coins")

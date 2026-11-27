@@ -11,7 +11,7 @@
 	var/access_rank = ACCESS_NO_RANK
 
 
-/datum/patreon_data/New(ckey, datum/persistent_client/owner)
+/datum/patreon_data/New(ckey, datum/persistent_client/owner, stored_key, stored_rank)
 	if(!owner)
 		return
 	src.ckey = ckey
@@ -20,18 +20,10 @@
 		owned_rank = NUKIE_RANK ///this is a testing variable
 		return
 
-	fetch_key_and_rank()
+	client_key = stored_key
+	if(stored_rank && stored_rank != "UNSUBBED2")
+		owned_rank = stored_rank
 	access_rank = patreon_rank_to_key(owned_rank)
-
-/datum/patreon_data/proc/fetch_key_and_rank()
-	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key, patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = ckey))
-	if(query_get_key.warn_execute())
-		if(query_get_key.NextRow())
-			client_key = query_get_key.item[1]
-			owned_rank = query_get_key.item[2]
-			if(owned_rank == "UNSUBBED2")
-				owned_rank = NO_RANK
-	qdel(query_get_key)
 
 /datum/patreon_data/proc/has_access(rank)
 	if(!access_rank)
