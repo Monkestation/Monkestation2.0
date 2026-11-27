@@ -96,7 +96,7 @@
  * Returns a [/datum/discord_link_record]
  */
 /datum/controller/subsystem/plexora/proc/find_discord_link_by_token(one_time_token)
-	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE one_time_token = :one_time_token GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, timestamp, one_time_token FROM [format_table_name("discord_links")] WHERE one_time_token = :one_time_token ORDER BY timestamp DESC LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
 		list("one_time_token" = one_time_token)
@@ -128,7 +128,7 @@
 	if(only_valid)
 		validsql = "AND valid = 1"
 
-	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE ckey = :ckey [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, timestamp, one_time_token FROM [format_table_name("discord_links")] WHERE ckey = :ckey [validsql] ORDER BY timestamp DESC LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
 		list("ckey" = ckey)
@@ -162,7 +162,7 @@
 	if(only_valid)
 		validsql = "AND valid = 1"
 
-	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE discord_id = :discord_id [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, timestamp, one_time_token FROM [format_table_name("discord_links")] WHERE discord_id = :discord_id [validsql] ORDER BY timestamp DESC LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
 		list("discord_id" = discord_id)

@@ -246,8 +246,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			parsed_favs += path
 	favorite_outfits = unique_list(parsed_favs)
 
-	load_metacoins(parent_ckey)
-	load_inventory(parent_ckey)
+	load_metacoins_and_inventory(parent_ckey)
 
 	load_preferences_monkestation() //MONKESTATION ADDITION - Monkestation-specific data
 

@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "Glowshrooms, glowcaps and shadowshrooms die off on their own again instead of slowly taking over the station."

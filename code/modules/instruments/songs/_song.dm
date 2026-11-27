@@ -222,7 +222,7 @@
 	current_chord = 1
 	music_player = user
 	if(ismob(music_player))
-		updateDialog(music_player)
+		INVOKE_ASYNC(src, PROC_REF(updateDialog), music_player)
 	START_PROCESSING(SSinstruments, src)
 
 /**

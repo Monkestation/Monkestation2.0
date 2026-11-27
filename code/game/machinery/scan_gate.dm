@@ -6,6 +6,7 @@
 #define SCANGATE_WANTED "Wanted"
 #define SCANGATE_SPECIES "Species"
 #define SCANGATE_NUTRITION "Nutrition"
+#define SCANGATE_BORER "Borer"
 
 #define SCANGATE_HUMAN "human"
 #define SCANGATE_LIZARD "lizard"
@@ -184,6 +185,16 @@
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
 
+		if(SCANGATE_BORER)
+			var/obj/item/organ/internal/borer_body/borer_organ = M.get_organ_slot(ORGAN_SLOT_BORER_ORGAN)
+			if(borer_organ)
+				if(!(borer_organ.borer.upgrade_flags & BORER_STEALTH_MODE))
+					beep = TRUE
+			for(var/potential_egg in M.get_contents()) // Has a borer egg in their possession
+				if(istype(potential_egg, /obj/item/food/egg/borer_egg))
+					beep = TRUE
+					break
+
 	if(reverse)
 		beep = !beep
 	if(beep)
@@ -285,6 +296,7 @@
 #undef SCANGATE_WANTED
 #undef SCANGATE_SPECIES
 #undef SCANGATE_NUTRITION
+#undef SCANGATE_BORER
 
 #undef SCANGATE_HUMAN
 #undef SCANGATE_LIZARD

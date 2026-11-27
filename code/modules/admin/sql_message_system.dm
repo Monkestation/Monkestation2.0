@@ -205,7 +205,7 @@
 		SELECT
 			type,
 			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey),
-			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), targetckey),
+			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey),
 			text
 		FROM [format_table_name("messages")]
 		WHERE id = :id AND deleted = 0
@@ -354,7 +354,7 @@
 		"}, list("severity" = new_severity, "lasteditor" = editor_ckey, "edit_text" = edit_text, "id" = message_id))
 		if(!query_edit_note_severity.warn_execute(async = TRUE))
 			qdel(query_edit_note_severity)
-			qdel(qdel(query_find_edit_note_severity))
+			qdel(query_find_edit_note_severity)
 			return
 		qdel(query_edit_note_severity)
 		log_admin_private("[kn] has edited the severity of a [type] for [target_key] made by [admin_key] from [old_severity] to [new_severity]")
@@ -377,7 +377,7 @@
 		SELECT
 			type,
 			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey),
-			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), targetckey),
+			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey),
 			secret
 		FROM [format_table_name("messages")]
 		WHERE id = :id AND deleted = 0

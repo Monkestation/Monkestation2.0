@@ -41,14 +41,15 @@
 	if(item_path in user.prefs.inventory)
 		return TRUE
 	var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
+		INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)
+		ON DUPLICATE KEY UPDATE amount = 1"},
 		list("ckey" = user.ckey, "item_id" = item_path, "amount" = 1))
 	if(!query_add_gear_purchase.Execute())
 		to_chat(user, span_warning("Failed to add level up reward to the database, contact coders. Use Reload Job Rewards to try again."))
 		qdel(query_add_gear_purchase)
 		return FALSE
 	qdel(query_add_gear_purchase)
-	user.prefs.inventory += item_path
+	user.prefs.inventory |= item_path
 	return TRUE
 
 /datum/preferences

@@ -395,7 +395,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(sacrificial && (signal_result & DUST_SACRIFICE)) // No soulstone when dusted
 		playsound(sacrificial, 'sound/effects/magic/teleport_diss.ogg', 100, TRUE)
 		sacrificial.investigate_log("has been sacrificially dusted by the cult.", INVESTIGATE_DEATHS)
-		sacrificial.dust(TRUE, FALSE, TRUE)
+		sacrificial.dust(just_ash = TRUE, drop_items = FALSE, force = TRUE)
 	else if (sacrificial)
 		var/obj/item/soulstone/stone = new(loc)
 		if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))

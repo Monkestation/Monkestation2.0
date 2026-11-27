@@ -2,20 +2,34 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 6.2; The query to update the schema revision table is:
+The latest database version is 6.3; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (6, 2);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (6, 3);
 ```
 
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (6, 2);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (6, 3);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
 
+---
+
+Version 6.3 26 November 2026, by Lucy
+Added an index on `achievements` so score leaderboards don't read the whole table.
+Added indexes on `ban` for the IP, computer ID and admin ban lookups, and on `discord_links` for the Plexora link lookups.
+`cassette_purchases` now has one row per buyer and cassette. This deletes the repeat rows first, then replaces `idx_cassette_id` with a unique key that also covers it.
+
+```sql
+DELETE p1 FROM `cassette_purchases` p1 JOIN `cassette_purchases` p2 ON p1.cassette_id = p2.cassette_id AND p1.buyer_ckey = p2.buyer_ckey AND p1.id > p2.id;
+ALTER TABLE `cassette_purchases` DROP INDEX `idx_cassette_id`, ADD UNIQUE KEY `idx_cassette_buyer` (`cassette_id`, `buyer_ckey`);
+ALTER TABLE `achievements` ADD INDEX `idx_ach_key_value` (`achievement_key`, `value`);
+ALTER TABLE `ban` ADD INDEX `idx_ban_ip` (`ip`, `role`), ADD INDEX `idx_ban_cid` (`computerid`, `role`), ADD INDEX `idx_ban_admin` (`a_ckey`, `applies_to_admins`);
+ALTER TABLE `discord_links` ADD INDEX `idx_discord_ckey_time` (`ckey`, `timestamp`), ADD INDEX `idx_discord_id_time` (`discord_id`, `timestamp`), ADD INDEX `idx_discord_token` (`one_time_token`);
+```
 ---
 
 Version 6.2 1 November 2026, by Ghommie

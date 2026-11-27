@@ -1380,3 +1380,23 @@
       would place the screwdriver in the suit's storage aswell.
   Tractor-Maam:
   - rscadd: AIs now have a UI element warning them how close to download they are.
+2026-11-27:
+  Absolucy:
+  - image: New railing sprites.
+  - bugfix: Hopefully less invisible railings.
+  - bugfix: Fixed the monster hunter apocalypse spamming announcements when the shuttle
+      docks.
+  Addust:
+  - qol: The Syndicate's unified logistics offices have received major budget increases,
+      and their various facilities are now somewhat better equipped.
+  V2LenKagamine:
+  - map: Box station is now luminous
+  - map: Helio station has gained lights
+  - map: Ice Box station is now glowing
+  - map: Meta station is brighter
+  - map: Meta Station Asteroid Magnet now lives by Art Sci
+  - map: Tram station has gained the sun.
+  - map: Tram station artifice slightly larger
+  - map: blue shift more visibly blue
+  - map: pubby public visibility improved
+  - map: void raptor has less void

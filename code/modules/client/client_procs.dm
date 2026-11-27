@@ -510,19 +510,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	add_verbs_from_config()
 
 	// This needs to be before the client age from db is updated as it'll be updated by then.
-	var/datum/db_query/query_last_connected = SSdbcore.NewQuery(
-		"SELECT lastseen FROM [format_table_name("player")] WHERE ckey = :ckey",
-		list("ckey" = ckey)
-	)
-	if(query_last_connected.warn_execute() && length(query_last_connected.rows))
-		query_last_connected.NextRow()
-		var/time_stamp = query_last_connected.item[1]
-		var/unread_notes = get_message_output("note", ckey, FALSE, time_stamp)
+	var/list/player_row = load_player_row()
+	if(length(player_row))
+		var/unread_notes = get_message_output("note", ckey, FALSE, player_row[1])
 		if(unread_notes)
 			to_chat(src, unread_notes, type = MESSAGE_TYPE_ADMINPM, confidential = TRUE)
-	qdel(query_last_connected)
 
-	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
+	var/cached_player_age = set_client_age_from_db(tdata, player_row) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if(!SSdbcore.Connect())
 			player_age = -1
@@ -559,7 +553,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].")
 	if(check_overwatch() && CONFIG_GET(flag/vpn_kick))
 		return
-	validate_key_in_db()
+	if(length(player_row))
+		validate_key_in_db(player_row[6])
 	// If we aren't already generating a ban cache, fire off a build request
 	// This way hopefully any users of request_ban_cache will never need to yield
 	if(!ban_cache_start && SSban_cache?.query_started)
@@ -681,45 +676,58 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
-/client/proc/set_client_age_from_db(connectiontopic)
+/**
+ * Reads the columns of this client's `player` row that login needs: lastseen, firstseen, days since firstseen,
+ * accountjoindate, days since accountjoindate, byond_key.
+ *
+ * Returns the row as a list, an empty list if the client has no row, or null if the query failed.
+ */
+/client/proc/load_player_row()
+	var/datum/db_query/query_player_row = SSdbcore.NewQuery(
+		"SELECT lastseen, firstseen, DATEDIFF(Now(), firstseen), accountjoindate, DATEDIFF(Now(), accountjoindate), byond_key FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
+	if(!query_player_row.warn_execute())
+		qdel(query_player_row)
+		return null
+	var/list/player_row = list()
+	if(query_player_row.NextRow())
+		player_row = query_player_row.item
+	qdel(query_player_row)
+	return player_row
+
+/client/proc/set_client_age_from_db(connectiontopic, list/player_row)
 	if (is_guest_key(src.key))
 		return
 	if(!SSdbcore.Connect())
+		return
+	if(isnull(player_row))
 		return
 	var/datum/db_query/query_get_related_ip = SSdbcore.NewQuery(
 		"SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON(:address) AND ckey != :ckey",
 		list("address" = address, "ckey" = ckey)
 	)
-	if(!query_get_related_ip.Execute())
-		qdel(query_get_related_ip)
-		return
-	related_accounts_ip = ""
-	while(query_get_related_ip.NextRow())
-		related_accounts_ip += "[query_get_related_ip.item[1]], "
-	qdel(query_get_related_ip)
 	var/datum/db_query/query_get_related_cid = SSdbcore.NewQuery(
 		"SELECT ckey FROM [format_table_name("player")] WHERE computerid = :computerid AND ckey != :ckey",
 		list("computerid" = computer_id, "ckey" = ckey)
 	)
-	if(!query_get_related_cid.Execute())
+	SSdbcore.QuerySelect(list(query_get_related_ip, query_get_related_cid))
+	if(query_get_related_ip.status != DB_QUERY_FINISHED || query_get_related_cid.status != DB_QUERY_FINISHED)
+		qdel(query_get_related_ip)
 		qdel(query_get_related_cid)
 		return
+	related_accounts_ip = ""
+	while(query_get_related_ip.NextRow())
+		related_accounts_ip += "[query_get_related_ip.item[1]], "
 	related_accounts_cid = ""
 	while (query_get_related_cid.NextRow())
 		related_accounts_cid += "[query_get_related_cid.item[1]], "
+	qdel(query_get_related_ip)
 	qdel(query_get_related_cid)
 
 	var/admin_rank = holder?.rank_names() || "Player"
 	var/new_player
-	var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
-		"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",
-		list("ckey" = ckey)
-	)
-	if(!query_client_in_db.Execute())
-		qdel(query_client_in_db)
-		return
-
-	var/client_is_in_db = query_client_in_db.NextRow()
+	var/client_is_in_db = length(player_row)
 	// If we aren't an admin, and the flag is set (the panic bunker is enabled).
 	if(CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 		// The amount of hours needed to bypass the panic bunker.
@@ -747,7 +755,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					to_chat_immediate(src, span_notice("Sending you to [panic_name ? panic_name : panic_addr]."))
 					winset(src, null, "command=.options")
 					src << link("[panic_addr]?redirect=1")
-				qdel(query_client_in_db)
 				qdel(src)
 				return
 
@@ -759,44 +766,35 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			VALUES (:ckey, :key, Now(), :round_id, Now(), :round_id, INET_ATON(:ip), :computerid, :adminrank, :account_join_date)
 		"}, list("ckey" = ckey, "key" = key, "round_id" = GLOB.round_id, "ip" = address, "computerid" = computer_id, "adminrank" = admin_rank, "account_join_date" = account_join_date || null))
 		if(!query_add_player.Execute())
-			qdel(query_client_in_db)
 			qdel(query_add_player)
 			return
 		qdel(query_add_player)
 		if(!account_join_date)
 			account_join_date = "Error"
 			account_age = -1
-	qdel(query_client_in_db)
-	var/datum/db_query/query_get_client_age = SSdbcore.NewQuery(
-		"SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = :ckey",
-		list("ckey" = ckey)
-	)
-	if(!query_get_client_age.Execute())
-		qdel(query_get_client_age)
-		return
-	if(query_get_client_age.NextRow())
-		player_join_date = query_get_client_age.item[1]
-		player_age = text2num(query_get_client_age.item[2])
-		if(!account_join_date)
-			account_join_date = query_get_client_age.item[3]
-			account_age = text2num(query_get_client_age.item[4])
-			if(!account_age)
-				account_join_date = findJoinDate()
-				if(!account_join_date)
-					account_age = -1
-				else
-					var/datum/db_query/query_datediff = SSdbcore.NewQuery(
-						"SELECT DATEDIFF(Now(), :account_join_date)",
-						list("account_join_date" = account_join_date)
-					)
-					if(!query_datediff.Execute())
-						qdel(query_datediff)
-						qdel(query_get_client_age)
-						return
-					if(query_datediff.NextRow())
-						account_age = text2num(query_datediff.item[1])
+		player_row = load_player_row()
+		if(!length(player_row))
+			return
+	player_join_date = player_row[2]
+	player_age = text2num(player_row[3])
+	if(!account_join_date)
+		account_join_date = player_row[4]
+		account_age = text2num(player_row[5])
+		if(!account_age)
+			account_join_date = findJoinDate()
+			if(!account_join_date)
+				account_age = -1
+			else
+				var/datum/db_query/query_datediff = SSdbcore.NewQuery(
+					"SELECT DATEDIFF(Now(), :account_join_date)",
+					list("account_join_date" = account_join_date)
+				)
+				if(!query_datediff.Execute())
 					qdel(query_datediff)
-	qdel(query_get_client_age)
+					return
+				if(query_datediff.NextRow())
+					account_age = text2num(query_datediff.item[1])
+				qdel(query_datediff)
 	if(!new_player)
 		SSdbcore.FireAndForget(
 			"UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = :round_id, ip = INET_ATON(:ip), computerid = :computerid, lastadminrank = :admin_rank, accountjoindate = :account_join_date WHERE ckey = :ckey",
@@ -842,18 +840,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		else
 			CRASH("Age check regex failed for [src.ckey]")
 
-/client/proc/validate_key_in_db()
-	var/sql_key
-	var/datum/db_query/query_check_byond_key = SSdbcore.NewQuery(
-		"SELECT byond_key FROM [format_table_name("player")] WHERE ckey = :ckey",
-		list("ckey" = ckey)
-	)
-	if(!query_check_byond_key.Execute())
-		qdel(query_check_byond_key)
-		return
-	if(query_check_byond_key.NextRow())
-		sql_key = query_check_byond_key.item[1]
-	qdel(query_check_byond_key)
+/client/proc/validate_key_in_db(sql_key)
 	if(key != sql_key)
 		var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
 		if(!http)
@@ -876,7 +863,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/add_system_note(system_ckey, message)
 	//check to see if we noted them in the last day.
 	var/datum/db_query/query_get_notes = SSdbcore.NewQuery(
-		"SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = :targetckey AND adminckey = :adminckey AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)",
+		"SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = :targetckey AND adminckey = :adminckey AND timestamp > NOW() - INTERVAL 1 DAY AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)",
 		list("targetckey" = ckey, "adminckey" = system_ckey)
 	)
 	if(!query_get_notes.Execute())

@@ -32,7 +32,7 @@
 /datum/award/proc/unlock(mob/user, datum/achievement_data/holder, value = 1)
 	return
 
-/datum/award/proc/on_achievement_data_init(datum/achievement_data/holder, database_value)
+/datum/award/proc/on_achievement_data_init(datum/achievement_data/holder, database_value, list/database_values)
 	holder.original_cached_data[type] = holder.data[type] = parse_value(database_value)
 
 ///This saves the changed data to the hub.
@@ -149,11 +149,6 @@
 	var/track_high_scores = TRUE
 	var/list/high_scores = list()
 
-/datum/award/score/New()
-	. = ..()
-	if(track_high_scores)
-		LoadHighScores()
-
 /datum/award/score/default_value()
 	return 0
 
@@ -168,21 +163,6 @@
 	. = ..()
 	.["score"] = TRUE
 
-/datum/award/score/proc/LoadHighScores()
-	var/datum/db_query/Q = SSdbcore.NewQuery(
-		"SELECT ckey,value FROM [format_table_name("achievements")] WHERE achievement_key = :achievement_key ORDER BY value DESC LIMIT 50",
-		list("achievement_key" = database_id)
-	)
-	if(!Q.Execute(async = TRUE))
-		qdel(Q)
-		return
-	else
-		while(Q.NextRow())
-			var/key = Q.item[1]
-			var/score = text2num(Q.item[2])
-			high_scores += list(list("ckey" = key, "value" = score))
-		qdel(Q)
-
 /datum/award/score/parse_value(raw_value)
 	return isnum(raw_value) ? raw_value : 0
 
@@ -193,22 +173,7 @@
 	icon_state = "elephant" //Obey the reference
 	database_id = ACHIEVEMENTS_SCORE
 
-/datum/award/score/achievements_score/get_ui_data(list/award_data, datum/achievement_data/holder)
-	. = ..()
-	var/datum/db_query/get_unlocked_count = SSdbcore.NewQuery(
-		"SELECT COUNT(m.achievement_key) FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' WHERE a.ckey = :ckey",
-		list("ckey" = holder.owner_ckey)
-	)
-	if(!get_unlocked_count.Execute(async = TRUE))
-		qdel(get_unlocked_count)
-		.["value"] = 0
-		return .
-	if(get_unlocked_count.NextRow())
-		.["value"] = text2num(get_unlocked_count.item[1])
-	qdel(get_unlocked_count)
-	return .
-
-/datum/award/score/achievements_score/LoadHighScores()
+/datum/award/score/achievements_score/proc/LoadHighScores()
 	var/datum/db_query/get_unlocked_highscore = SSdbcore.NewQuery(
 		"SELECT ckey, COUNT(ckey) AS c FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' GROUP BY ckey ORDER BY c DESC LIMIT 50",
 	)
@@ -222,18 +187,14 @@
 			high_scores += list(list("ckey" = key, "value" = score))
 		qdel(get_unlocked_highscore)
 
-/datum/award/score/achievements_score/on_achievement_data_init(datum/achievement_data/holder, database_value)
-	var/datum/db_query/get_unlocked_load = SSdbcore.NewQuery(
-		"SELECT COUNT(m.achievement_key) FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' WHERE a.ckey = :ckey",
-		list("ckey" = holder.owner_ckey)
-	)
-	if(!get_unlocked_load.Execute(async = TRUE))
-		qdel(get_unlocked_load)
-		return
-	if(get_unlocked_load.NextRow())
-		holder.data[type] = text2num(get_unlocked_load.item[1]) || 0
-		holder.original_cached_data[type] = 0
-	qdel(get_unlocked_load)
+/datum/award/score/achievements_score/on_achievement_data_init(datum/achievement_data/holder, database_value, list/database_values)
+	var/unlocked = 0
+	for(var/achievement_type in SSachievements.achievements)
+		var/datum/award/achievement/achievement = SSachievements.achievements[achievement_type]
+		if(database_values[achievement.database_id])
+			unlocked++
+	holder.data[type] = unlocked
+	holder.original_cached_data[type] = 0
 
 /**
  * A subtype of score linked to a schema table containing objects the player has caught, made, found or otherwise achieved.
@@ -284,7 +245,7 @@
 	var/list/results = ..()
 	return validate_loaded_data(holder, results)
 
-/datum/award/score/progress/on_achievement_data_init(datum/achievement_data/holder, database_value)
+/datum/award/score/progress/on_achievement_data_init(datum/achievement_data/holder, database_value, list/database_values)
 	var/list/results = parse_value(get_raw_value(holder.owner_ckey))
 	validate_loaded_data(holder, results)
 
