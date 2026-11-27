@@ -36407,10 +36407,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"ldl" = (
-/obj/machinery/light/directional/south,
-/turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/nt_rep)
 "ldq" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/cafeteria,
@@ -58762,13 +58758,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
-"rUY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow,
-/turf/open/floor/iron,
-/area/station/hallway/primary/aft)
 "rVd" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -67095,10 +67084,6 @@
 	dir = 4
 	},
 /area/station/engineering/lobby)
-"uxt" = (
-/obj/machinery/light/directional/west,
-/turf/closed/wall,
-/area/station/maintenance/department/medical/central)
 "uxx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
 	dir = 1
@@ -68385,6 +68370,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness)
+"uRp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "uRu" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 4
@@ -239794,7 +239787,7 @@ mJa
 gDV
 fxl
 vmk
-rUY
+uRp
 rWn
 rWn
 cLN
@@ -240051,7 +240044,7 @@ xVK
 xVK
 cvS
 vWh
-uxt
+cvS
 xXf
 xXf
 skn
@@ -241069,8 +241062,8 @@ olH
 rTd
 klD
 oKk
-ldl
-dnq
+olH
+gQZ
 iuv
 rTI
 xVK

@@ -28524,6 +28524,20 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"ecm" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/trimline/yellow/line,
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 4
+	},
+/obj/item/kirbyplants/random,
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "ecs" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/structure/disposalpipe/segment{
@@ -29188,10 +29202,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/circuits)
-"eqL" = (
-/obj/machinery/light/directional/north,
-/turf/closed/wall,
-/area/station/engineering/storage)
 "eqM" = (
 /obj/structure/sign/warning/chem_diamond,
 /turf/closed/wall/r_wall,
@@ -29950,19 +29960,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
-"eEr" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/effect/turf_decal/trimline/yellow/line,
-/obj/effect/turf_decal/trimline/yellow/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 4
-	},
-/obj/item/kirbyplants/random,
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/iron,
-/area/station/engineering/lobby)
 "eEH" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -110705,8 +110702,8 @@ rgr
 tsp
 wUu
 oFM
-eEr
-eqL
+ecm
+qvc
 qvc
 fJw
 sil

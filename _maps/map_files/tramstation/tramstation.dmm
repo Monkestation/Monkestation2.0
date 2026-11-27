@@ -27216,10 +27216,6 @@
 /obj/machinery/transport/destination_sign/indicator/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
-"hxG" = (
-/obj/machinery/light/directional/east,
-/turf/closed/wall/rock/porous,
-/area/station/asteroid/tram/cargo)
 "hxQ" = (
 /obj/machinery/light/floor/has_bulb/warm,
 /turf/open/floor/iron/chapel,
@@ -69854,6 +69850,10 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
+"utQ" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/grass,
+/area/station/asteroid/tram/cargo)
 "utU" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -185472,7 +185472,7 @@ bws
 hjx
 abW
 hjx
-hxG
+fqj
 rRN
 abS
 iDP
@@ -185729,7 +185729,7 @@ abW
 abW
 abS
 abW
-abW
+utQ
 abS
 abW
 iDP
