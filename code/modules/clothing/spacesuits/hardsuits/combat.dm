@@ -48,6 +48,7 @@
 	hardsuit_emp_knockdown = 15 SECONDS
 	actions_types = list(/datum/action/item_action/toggle_spacesuit/shield)
 	thermal_regulator_cost = (0.1 * STANDARD_CELL_CHARGE)
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCKS_SHOVE_KNOCKDOWN
 
 /obj/item/clothing/suit/space/hardsuit/sec/prototype/process(seconds_per_tick)
 	var/mob/living/carbon/human/user = loc

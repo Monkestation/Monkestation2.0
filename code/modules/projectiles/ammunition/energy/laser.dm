@@ -147,7 +147,7 @@
 
 /obj/item/ammo_casing/energy/disabler/minigun
 	select_name = "disable"
-	projectile_type = /obj/projectile/beam/disabler/weak
+	projectile_type = /obj/projectile/beam/disabler
 
 /obj/item/ammo_casing/energy/nanite
 	projectile_type = /obj/projectile/bullet/c10mm //henk
