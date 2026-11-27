@@ -693,13 +693,6 @@
 	},
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
-"TC" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/railing/corner/end,
-/turf/open/indestructible/dark/smooth_large,
-/area/deathmatch)
 "TQ" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/floor,
@@ -850,16 +843,6 @@
 	set_luminosity = 2
 	},
 /turf/open/chasm/true,
-/area/deathmatch)
-"ZO" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/railing/corner/end{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "ZR" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -1027,10 +1010,10 @@ qa
 XG
 zd
 vm
-TC
+XG
 dU
 JN
-ZO
+dN
 cw
 dN
 zd
