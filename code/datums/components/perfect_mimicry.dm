@@ -143,7 +143,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/perfect_mimicry/Destroy(force)
-	for(var/action_type as anything in managed_actions)
+	for(var/action_type in managed_actions)
 		var/datum/action/existing_action = managed_actions[action_type]
 		if(QDELETED(existing_action))
 			continue
@@ -155,7 +155,7 @@
 	return ..()
 
 /datum/component/perfect_mimicry/RegisterWithParent()
-	for(var/action_type as anything in mimic_action_types)
+	for(var/action_type in mimic_action_types)
 		var/datum/action/existing_action = managed_actions[action_type]
 		if(QDELETED(existing_action))
 			create_mimic_action(action_type)
@@ -286,7 +286,7 @@
 
 /// Notify managed mimic type actions of a disguise state change.
 /datum/component/perfect_mimicry/proc/update_mimic_actions()
-	for(var/action_type as anything in managed_actions)
+	for(var/action_type in managed_actions)
 		var/datum/action/cooldown/mimic/mimic_action = managed_actions[action_type]
 		if(QDELETED(mimic_action) || !istype(mimic_action))
 			continue
