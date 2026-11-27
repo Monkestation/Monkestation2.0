@@ -163,13 +163,13 @@
 	else
 		nukie.forceMove(locate(1,1,1))
 
-	antag_datum = new()
-	antag_datum.send_to_spawnpoint = FALSE
+	var/datum/antagonist/nukeop/new_op = new antag_datum()
+	new_op.send_to_spawnpoint = FALSE
 
-	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+	new_op.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
-	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	op_mind.add_antag_datum(new_op, creator_op ? creator_op.get_team() : null)
 	op_mind.special_role = special_role_name
 	nukie.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
