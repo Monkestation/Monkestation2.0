@@ -286,6 +286,23 @@
 	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
 
+/atom/movable/screen/plane_master/lighting_bloom
+	name = "Lighting bloom"
+	documentation = "Brightens tiles lit past full brightness. Added on top of the game plate after lighting, since lighting itself can only darken."
+	plane = LIGHTING_BLOOM_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	alpha = 165
+	blend_mode_override = BLEND_ADD
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(RENDER_PLANE_GAME)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/lighting_bloom/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+	set_alpha(initial(alpha) * (mymob?.canon_client?.prefs?.read_preference(/datum/preference/numeric/light_bloom) || 0) / 100)
+
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"
 	plane = ABOVE_LIGHTING_PLANE

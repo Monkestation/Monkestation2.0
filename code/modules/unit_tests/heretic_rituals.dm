@@ -111,6 +111,8 @@
 		for(var/atom/thing as anything in nearby_atoms)
 			if(!ismovable(thing) || istype(thing, /obj/effect/abstract))
 				continue
+			if(istype(thing, /atom/movable/lighting_object))
+				continue // todo: more generic solution for holder objects like this
 			if(isitem(thing))
 				var/obj/item/item = thing
 				if(item.item_flags & ABSTRACT) //bodyparts and stuff will get registered otherwise

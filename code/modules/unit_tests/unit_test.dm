@@ -268,6 +268,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/organ/external/wings,
 		//Should not exist outside of holders
 		/obj/effect/decal/cleanable/blood/trail,
+		// Abstract type, controlled by turfs
+		// Literally errors on creation/deletion
+		/atom/movable/lighting_object,
 		// monkestation start
 		/obj/effect/spawner/random_engines,
 		/obj/effect/spawner/random_bar,

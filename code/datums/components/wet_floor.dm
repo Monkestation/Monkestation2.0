@@ -35,6 +35,9 @@
 /datum/component/wet_floor/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_TURF_IS_WET, PROC_REF(is_wet))
 	RegisterSignal(parent, COMSIG_TURF_MAKE_DRY, PROC_REF(dry))
+	if(isnull(current_overlay) && LAZYLEN(time_left_list))
+		update_overlay()
+		update_flags()
 
 /datum/component/wet_floor/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_TURF_IS_WET, COMSIG_TURF_MAKE_DRY))
@@ -42,8 +45,8 @@
 /datum/component/wet_floor/Destroy()
 	STOP_PROCESSING(SSwet_floors, src)
 	var/turf/T = parent
-	qdel(T.GetComponent(/datum/component/slippery))
 	if(istype(T)) //If this is false there is so many things wrong with it.
+		qdel(T.GetComponent(/datum/component/slippery))
 		T.cut_overlay(current_overlay)
 	else
 		stack_trace("Warning: Wet floor component wasn't on a turf when being destroyed! This is really bad!")
@@ -154,14 +157,9 @@
 	qdel(O.GetComponent(/datum/component/slippery))
 
 /datum/component/wet_floor/PostTransfer(datum/new_parent)
-	if(!isopenturf(parent))
+	if(!isopenturf(new_parent))
 		return COMPONENT_INCOMPATIBLE
-	var/turf/T = parent
-	T.add_overlay(current_overlay)
-	//Make sure to add/update any slippery component on the new turf (update_flags calls LoadComponent)
-	update_flags()
-
-	//NB it's possible we get deleted after this, due to inherit
+	current_overlay = null
 
 /datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME, _permanent = FALSE)
 	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST, TURF_WET_SUPERLUBE)

@@ -102,6 +102,7 @@
 
 	SSair.hold_machinery_for_template(loaded_atmospherics)
 	SSatoms.InitializeAtoms(loaded_areas + loaded_atom_movables + loaded_turfs)
+	SSlighting.setup_static_lighting_if_needed(loaded_turfs)
 	SSmachines.setup_template_powernets(loaded_cables)
 	SSair.setup_template_machinery(loaded_atmospherics)
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)

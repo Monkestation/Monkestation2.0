@@ -44,7 +44,7 @@
 						return
 					if(ismob(AM) && !isliving(AM))
 						continue
-					if(iseffect(AM))
+					if(iseffect(AM) || AM.anchored)
 						continue
 					yeet(AM)
 					CHECK_TICK
