@@ -257,18 +257,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"aaL" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	dir = 6;
-	layer = 3.1
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/evacuation/ship)
 "aaM" = (
 /obj/structure/hedge,
 /obj/machinery/light/floor/has_bulb,
@@ -1634,21 +1622,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
-"aec" = (
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 10;
-	layer = 3.1
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/evacuation/ship)
 "aed" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
@@ -2382,20 +2355,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
-"agq" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/structure/railing,
-/obj/effect/turf_decal/siding/dark{
-	dir = 10
-	},
-/obj/effect/turf_decal/siding/dark/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/supply)
 "agr" = (
 /obj/structure/chair/sofa/right{
 	color = "#e6a7b9";
@@ -6716,20 +6675,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"arW" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 9
-	},
-/obj/effect/turf_decal/siding/dark/corner,
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/supply)
 "arX" = (
 /obj/structure/railing/wood{
 	dir = 4
@@ -6880,22 +6825,6 @@
 /obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"asw" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	dir = 10;
-	layer = 3.1
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/evacuation/ship)
 "asx" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -7125,23 +7054,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
-"atf" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "XCCQMLoad2";
-	pixel_x = 6
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 9
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/supply)
 "atg" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
 /obj/structure/chair/sofa/bench/left,
@@ -9736,24 +9648,6 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin_hangout)
-"azS" = (
-/obj/machinery/conveyor_switch/oneway{
-	dir = 8;
-	id = "XCCQMLoad";
-	pixel_x = 6
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/supply)
 "azT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/light/floor/has_bulb,
@@ -10201,19 +10095,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin_hangout)
-"aBg" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 10
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/supply)
 "aBh" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -10821,30 +10702,6 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom)
-"aCT" = (
-/obj/structure/table/reinforced,
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/obj/item/folder/red{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/item/folder/blue{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/gun/ballistic/automatic/pistol/m1911{
-	pixel_y = 7;
-	pixel_x = 2
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/evacuation/ship)
 "aCU" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv,
@@ -11461,19 +11318,6 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin_hangout)
-"aEE" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/supply)
 "aEF" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 1
@@ -12682,21 +12526,6 @@
 /obj/machinery/computer/security/telescreen,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
-"aHZ" = (
-/obj/structure/railing{
-	dir = 6;
-	layer = 3.1
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/dark{
-	dir = 6
-	},
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/evacuation/ship)
 "aIa" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -13807,15 +13636,6 @@
 	dir = 8
 	},
 /area/centcom/syndicate_mothership/control)
-"aKX" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/dark/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/supply)
 "aKY" = (
 /obj/structure/railing/wood,
 /obj/structure/railing/wood{
@@ -14020,21 +13840,6 @@
 /obj/structure/flora/bush/fullgrass,
 /turf/open/misc/grass,
 /area/centcom)
-"aLz" = (
-/obj/structure/railing{
-	dir = 10;
-	layer = 3.1
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/dark{
-	dir = 10
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/evacuation/ship)
 "aLA" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
@@ -14244,15 +14049,6 @@
 "aMc" = (
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
-"aMd" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/supply)
 "aMe" = (
 /obj/structure/mineral_door/wood/large_gate,
 /turf/open/floor/wood/large,
@@ -15867,29 +15663,6 @@
 	},
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/hall)
-"aQB" = (
-/obj/structure/table/reinforced,
-/obj/structure/railing{
-	dir = 4;
-	layer = 4.1
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/obj/item/paper_bin{
-	pixel_y = 3;
-	pixel_x = -6
-	},
-/obj/item/pen{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/clipboard{
-	pixel_x = 5
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/evacuation/ship)
 "aQC" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/tdome/observation)
@@ -19929,22 +19702,6 @@
 /obj/item/storage/toolbox/fishing,
 /turf/open/misc/dirt/jungle/dark/arena,
 /area/centcom/central_command_areas/admin)
-"bKh" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/rack,
-/obj/item/katana/cursed{
-	desc = "A gift from your benefactors.";
-	force = 20
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/syndicate_mothership/firebase_trident)
 "bKY" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -20734,19 +20491,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
-"cRK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/rack,
-/obj/item/gun/energy/ionrifle,
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/syndicate_mothership/firebase_trident)
 "cSL" = (
 /obj/structure/sign{
 	name = "wall";
@@ -21421,6 +21165,17 @@
 /obj/structure/canister_frame/machine/finished_canister_frame,
 /turf/open/misc/asteroid,
 /area/centcom/syndicate_mothership/firebase_trident)
+"ebJ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation/ship)
 "edh" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/kirbyplants/organic/plant8{
@@ -21953,6 +21708,10 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"fbd" = (
+/mob/living/basic/pet/gondola,
+/turf/open/floor/eighties/red,
+/area/centcom/central_command_areas/admin)
 "fbx" = (
 /obj/structure/sign{
 	name = "wall";
@@ -22031,6 +21790,13 @@
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
+"fgN" = (
+/mob/living/basic/pet/cat/kitten{
+	name = "Kbity :3";
+	desc = "D'aaawwww. Fortune's best friend"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom)
 "fgR" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -23371,6 +23137,18 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
+"hlk" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "hln" = (
 /obj/effect/turf_decal/siding/blue{
 	dir = 10
@@ -23731,10 +23509,6 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
-"hEq" = (
-/mob/living/basic/pet/gondola,
-/turf/open/floor/eighties/red,
-/area/centcom/central_command_areas/admin)
 "hFg" = (
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/iron/dark/textured_large,
@@ -23888,6 +23662,22 @@
 	dir = 8
 	},
 /area/centcom/syndicate_mothership/golden_eye)
+"hMK" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "XCCQMLoad2";
+	pixel_x = 6
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "hNa" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -23920,6 +23710,19 @@
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"hPI" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation/ship)
 "hQH" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L13"
@@ -24119,6 +23922,19 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
+"iiZ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "ijH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -25482,6 +25298,18 @@
 "ksD" = (
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"ksO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/gun/energy/ionrifle,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
 "kti" = (
 /turf/open/floor/sandy_dirt,
 /area/centcom/central_command_areas/adminroom)
@@ -25540,6 +25368,20 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
+"kxS" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation/ship)
 "kyh" = (
 /obj/machinery/vending/tool,
 /turf/open/floor/iron/dark/textured_large,
@@ -25654,6 +25496,29 @@
 /obj/structure/hedge,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/hall)
+"kFa" = (
+/obj/structure/table/reinforced,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/item/folder/red{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/folder/blue{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/gun/ballistic/automatic/pistol/m1911{
+	pixel_y = 7;
+	pixel_x = 2
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation/ship)
 "kFG" = (
 /obj/structure/sign{
 	name = "wall";
@@ -26104,6 +25969,19 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
+"lph" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation/ship)
 "lpN" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
@@ -26355,10 +26233,6 @@
 "lSF" = (
 /turf/closed/indestructible/riveted,
 /area/centcom)
-"lUQ" = (
-/mob/living/basic/pet/gondola/funky,
-/turf/open/floor/eighties/red,
-/area/centcom/central_command_areas/admin)
 "lVZ" = (
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /obj/structure/closet/secure_closet/brig/genpop,
@@ -26525,6 +26399,16 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"mjc" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "mkd" = (
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/floor/iron/dark,
@@ -26532,6 +26416,19 @@
 "mkj" = (
 /turf/open/indestructible/plating,
 /area/centcom/central_command_areas/admin)
+"mku" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation/ship)
 "mkw" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/mineral/plastitanium,
@@ -26695,15 +26592,6 @@
 /obj/item/chair/wood,
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/carpet/grimey,
-/area/centcom/central_command_areas/adminroom)
-"mHS" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
 "mIn" = (
 /obj/machinery/light/floor/has_bulb,
@@ -27400,6 +27288,13 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
+"nUG" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "nUK" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -27850,6 +27745,28 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/prison)
+"oCU" = (
+/obj/structure/table/reinforced,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/item/paper_bin{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/clipboard{
+	pixel_x = 5
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation/ship)
 "oCY" = (
 /obj/item/surgery_tray/deployed,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -28267,6 +28184,10 @@
 "ppq" = (
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/carpet/lone/star,
+/area/centcom/central_command_areas/adminroom)
+"pqI" = (
+/obj/item/flashlight/flare/candle/amber,
+/turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/adminroom)
 "pqX" = (
 /obj/structure/table/reinforced/plasmarglass,
@@ -28952,10 +28873,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/firebase_trident/hangar)
-"qvm" = (
-/obj/item/flashlight/flare/candle/amber,
-/turf/open/floor/carpet/red,
-/area/centcom/central_command_areas/adminroom)
 "qvS" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8;
@@ -29272,13 +29189,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"qON" = (
-/mob/living/basic/pet/cat/kitten{
-	name = "Kbity :3";
-	desc = "D'aaawwww. Fortune's best friend"
-	},
-/turf/open/floor/iron/dark/small,
-/area/centcom)
 "qQr" = (
 /obj/structure/decorative/shelf/alcohol,
 /turf/open/floor/carpet/red,
@@ -30078,6 +29988,10 @@
 	},
 /turf/open/floor/pod/dark,
 /area/centcom/central_command_areas/prison/cells)
+"shW" = (
+/mob/living/basic/pet/gondola/funky,
+/turf/open/floor/eighties/red,
+/area/centcom/central_command_areas/admin)
 "shZ" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/red,
@@ -30604,6 +30518,21 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/adminroom)
+"tiq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/katana/cursed{
+	desc = "A gift from your benefactors.";
+	force = 20
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
 "tiz" = (
 /obj/structure/sign{
 	name = "wall";
@@ -32461,6 +32390,15 @@
 "wjo" = (
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
+"wkP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/adminroom)
 "wkZ" = (
 /obj/machinery/light/neon_lining{
 	dir = 1;
@@ -33029,6 +32967,19 @@
 	},
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"xhn" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "xih" = (
 /obj/structure/railing/wood{
 	dir = 1
@@ -33284,6 +33235,13 @@
 /obj/machinery/coffeemaker/impressa,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
+"xAd" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "xAF" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -33495,6 +33453,23 @@
 /obj/item/bedsheet/black,
 /turf/open/floor/iron/checker,
 /area/centcom/central_command_areas/adminroom)
+"xUk" = (
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "XCCQMLoad";
+	pixel_x = 6
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "xUt" = (
 /obj/structure/sign{
 	name = "wall";
@@ -47547,7 +47522,7 @@ aLt
 aXp
 alg
 aKZ
-aaL
+ebJ
 aLt
 aLt
 aaa
@@ -47801,10 +47776,10 @@ aaa
 aaa
 aaa
 aLw
-aQB
-aec
+oCU
+lph
 aAe
-aHZ
+hPI
 aQD
 aLt
 aLt
@@ -48829,10 +48804,10 @@ aaa
 aaa
 aaa
 aLw
-aCT
-asw
+kFa
+kxS
 adv
-aLz
+mku
 aQD
 aLt
 aLt
@@ -60766,15 +60741,15 @@ aaa
 aiF
 aHk
 aHk
-atf
-aBg
+hMK
+mjc
 afQ
 avK
 aac
-arW
-azS
-aEE
-agq
+xhn
+xUk
+hlk
+iiZ
 abC
 abC
 aiX
@@ -61024,7 +60999,7 @@ aiF
 aDX
 aGC
 aJL
-aKX
+xAd
 aCj
 aGC
 aNi
@@ -61281,7 +61256,7 @@ aiF
 aac
 aBJ
 amy
-aMd
+nUG
 aYt
 aWh
 aYt
@@ -64143,7 +64118,7 @@ aMc
 aMc
 lSF
 fAH
-qON
+fgN
 eBX
 lSF
 jsr
@@ -67940,7 +67915,7 @@ exa
 exa
 exa
 qja
-mHS
+wkP
 qag
 hkq
 jCt
@@ -69226,7 +69201,7 @@ exa
 exa
 qja
 dtm
-qvm
+pqI
 qja
 hkq
 fGN
@@ -74117,7 +74092,7 @@ aOn
 dld
 jSt
 aZf
-hEq
+fbd
 aSV
 ahB
 aOn
@@ -74632,7 +74607,7 @@ dld
 jSt
 aZf
 aSV
-lUQ
+shW
 aSV
 aOn
 aaa
@@ -76889,8 +76864,8 @@ aaa
 (169,1,1) = {"
 vfT
 cHM
-bKh
-cRK
+tiq
+ksO
 cHM
 tdg
 gYr

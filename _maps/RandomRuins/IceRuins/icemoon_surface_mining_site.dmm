@@ -4,12 +4,6 @@
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"aT" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/nospawn)
 "bE" = (
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -29,13 +23,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "eu" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"eB" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/obj/structure/flora/rock/pile/icy/style_2,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "eE" = (
@@ -103,9 +90,6 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "lR" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
 /obj/structure/railing{
 	dir = 8
 	},
@@ -155,16 +139,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "yy" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"yA" = (
-/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -208,20 +183,6 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"HU" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"Ia" = (
-/obj/structure/railing/corner/end{
-	dir = 1
-	},
-/obj/structure/railing/corner/end/flip,
-/obj/structure/flora/rock/pile/icy,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "IA" = (
@@ -479,7 +440,7 @@ eu
 vJ
 vJ
 lH
-eB
+nt
 mP
 mP
 mP
@@ -535,7 +496,7 @@ Dd
 PT
 nT
 kd
-yA
+vJ
 uy
 Ot
 KT
@@ -565,7 +526,7 @@ mP
 mP
 mP
 gv
-Ia
+eu
 Fn
 mP
 mP
@@ -796,7 +757,7 @@ lH
 kd
 vJ
 lH
-HU
+lH
 mP
 mP
 mP
@@ -941,7 +902,7 @@ lH
 Aq
 Ff
 hM
-HU
+lH
 mP
 mP
 mP
@@ -998,7 +959,7 @@ fl
 Dd
 Dd
 Dd
-aT
+Dd
 mP
 mP
 mP

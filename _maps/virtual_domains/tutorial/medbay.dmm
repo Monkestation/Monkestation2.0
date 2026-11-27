@@ -50,9 +50,7 @@
 /turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered_lighting)
 "as" = (
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/structure/chair/sofa/corp/corner{
 	dir = 1
 	},
@@ -75,8 +73,7 @@
 /area/virtual_domain/powered_lighting)
 "aD" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4
+	dir = 8
 	},
 /obj/machinery/jukebox{
 	req_access = null
@@ -277,9 +274,7 @@
 /turf/open/floor/iron/white,
 /area/virtual_domain/powered_lighting)
 "cy" = (
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered_lighting)
 "cA" = (
@@ -1175,8 +1170,7 @@
 /area/virtual_domain/powered_lighting)
 "mn" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4
+	dir = 8
 	},
 /obj/structure/railing{
 	dir = 4
@@ -1515,9 +1509,7 @@
 "qc" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /turf/open/floor/iron,
 /area/virtual_domain/powered_lighting)
 "qg" = (
@@ -1562,9 +1554,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
 	},
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
@@ -1649,8 +1639,7 @@
 	dir = 6
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/virtual_domain/powered_lighting)
@@ -2120,9 +2109,7 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /turf/open/floor/iron,
 /area/virtual_domain/powered_lighting)
 "vY" = (
@@ -2453,8 +2440,7 @@
 /area/virtual_domain/powered_lighting)
 "yR" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4
+	dir = 4
 	},
 /obj/structure/chair/sofa/corp{
 	dir = 8
@@ -2774,9 +2760,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered_lighting)
 "BL" = (
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/structure/table,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain/powered_lighting)
@@ -3139,8 +3123,7 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4
+	dir = 4
 	},
 /obj/item/cigbutt/cigarbutt{
 	pixel_x = -15
@@ -3170,8 +3153,7 @@
 /area/virtual_domain/powered_lighting)
 "EQ" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4
+	dir = 4
 	},
 /obj/structure/chair/sofa/corp/left{
 	dir = 8
@@ -3238,9 +3220,7 @@
 /turf/open/floor/iron/white,
 /area/virtual_domain/powered_lighting)
 "Fx" = (
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/structure/chair/stool/bar/directional/east{
 	pixel_x = 14
 	},
@@ -3654,8 +3634,7 @@
 /area/virtual_domain/powered_lighting)
 "JL" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4
+	dir = 8
 	},
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/kitchen,
@@ -3902,8 +3881,7 @@
 /area/virtual_domain/powered_lighting)
 "Mn" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4
+	dir = 8
 	},
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/kitchen,
@@ -4087,9 +4065,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
 	},
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
@@ -4232,9 +4208,7 @@
 /turf/open/floor/iron/white,
 /area/virtual_domain/powered_lighting)
 "OR" = (
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain/powered_lighting)
 "OU" = (
@@ -4312,9 +4286,7 @@
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered_lighting)
 "Pp" = (

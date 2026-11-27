@@ -38,11 +38,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
-"cQ" = (
-/obj/structure/platform,
-/obj/structure/railing/corner/end/flip,
-/turf/open/floor/plating,
-/area/shuttle/pirate/siren)
 "da" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -121,11 +116,6 @@
 	},
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/pirate/siren)
-"fq" = (
-/obj/structure/platform,
-/obj/structure/railing/corner/end,
-/turf/open/floor/plating,
-/area/shuttle/pirate/siren)
 "fr" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -165,13 +155,6 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/shuttle/pirate/siren)
-"ho" = (
-/obj/structure/platform,
-/obj/structure/railing/corner/end{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "if" = (
 /obj/machinery/door/airlock/external/glass/ruin,
@@ -1113,13 +1096,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
-"Ol" = (
-/obj/structure/platform,
-/obj/structure/railing/corner/end/flip{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate/siren)
 "OP" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1712,11 +1688,11 @@ sm
 OW
 ZA
 XV
-ho
+Tx
 Tx
 HG
 Tx
-cQ
+Tx
 Bn
 vp
 QB
@@ -1762,11 +1738,11 @@ wJ
 En
 Tt
 ea
-Ol
+Tx
 Tx
 lb
 Tx
-fq
+Tx
 rJ
 wH
 QS
