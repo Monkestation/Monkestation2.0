@@ -57,7 +57,8 @@ SUBSYSTEM_DEF(glowshrooms)
 			if(QDELETED(glowshroom))
 				glowshrooms -= glowshroom
 			else
-				glowshroom.Decay(seconds_per_tick)
+				glowshroom.Decay(rand(glowshroom.idle_decay_min, glowshroom.idle_decay_max) * (world.time - glowshroom.last_decay) / (1 SECONDS))
+				glowshroom.last_decay = world.time
 			if(MC_TICK_CHECK)
 				return
 		run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD
