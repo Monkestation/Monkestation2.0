@@ -288,7 +288,7 @@
 
 	playsound(firer, 'sound/effects/taser_charge.ogg', 45, TRUE, 1)
 
-	addtimer(CALLBACK(src, PROC_REF(start_tase)), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_tase)), 1 SECONDS)
 
 /datum/status_effect/tased/proc/start_tase()
 	if(!QDELETED(tase_line))
