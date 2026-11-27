@@ -53,6 +53,7 @@
 					O.pixel_x = pixel_shift
 				if(WEST)
 					O.pixel_x = -pixel_shift
+		O.find_and_mount_on_atom()
 		after_attach(O)
 
 	qdel(src)

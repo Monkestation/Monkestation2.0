@@ -15,7 +15,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/extract_orders, 30)
 
 /obj/machinery/computer/extract_orders/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
 /obj/machinery/computer/extract_orders/Destroy()
 	drop_loaded()
@@ -202,11 +203,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/extract_orders, 30)
 	icon_state = "xenobio_order_off"
 	result_path = /obj/machinery/computer/extract_orders
 	pixel_shift = 30
-
-/obj/item/wallframe/extract_orders/after_attach(obj/attached_to)
-	. = ..()
-	qdel(attached_to.GetComponent(/datum/component/wall_mounted))
-	attached_to.find_and_hang_on_wall()
 
 /datum/design/extract_orders_console
 	name = "Extract Order Console Frame"

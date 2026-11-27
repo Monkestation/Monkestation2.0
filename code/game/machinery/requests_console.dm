@@ -110,6 +110,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 
 	// Init by checking our area, stolen from APC code
 	area = get_area(loc)

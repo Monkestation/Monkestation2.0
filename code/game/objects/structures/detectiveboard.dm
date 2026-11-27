@@ -28,6 +28,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 /obj/structure/detectiveboard/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 
 	if(mapload)
 		for(var/obj/item/item in loc)

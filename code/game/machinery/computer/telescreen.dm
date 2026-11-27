@@ -22,6 +22,11 @@
 	result_path = /obj/machinery/computer/security/telescreen
 	pixel_shift = 32
 
+/obj/machinery/computer/security/telescreen/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
+
 /obj/machinery/computer/security/telescreen/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new frame_type(loc)
@@ -85,7 +90,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall()
 	register_context()
 	RegisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, PROC_REF(on_network_broadcast_updated))
 	speakers = new(src)

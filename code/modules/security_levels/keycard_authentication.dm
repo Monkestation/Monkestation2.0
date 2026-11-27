@@ -28,6 +28,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	activated = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, PROC_REF(triggerEvent)))
 
 /obj/machinery/keycard_auth/Destroy()

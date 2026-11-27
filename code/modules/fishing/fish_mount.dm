@@ -40,7 +40,8 @@
 	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
 	if(floor_to_wall_dir)
 		setDir(floor_to_wall_dir)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 	if(!persistence_id)
 		return
 	if(SSfishing.initialized)

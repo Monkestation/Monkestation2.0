@@ -354,6 +354,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/wall/peppertank/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
 
@@ -406,6 +408,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	reagent_id = /datum/reagent/consumable/virus_food
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/virusfood/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/structure/reagent_dispensers/wall/mutagenvirusfood
 	name = "mutagenic agar dispenser"

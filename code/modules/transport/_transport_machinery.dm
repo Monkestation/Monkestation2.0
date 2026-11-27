@@ -194,6 +194,7 @@
 					cabinet.pixel_x = pixel_shift
 				if(WEST)
 					cabinet.pixel_x = -pixel_shift
+		cabinet.find_and_mount_on_atom()
 		after_attach(cabinet)
 
 	qdel(src)

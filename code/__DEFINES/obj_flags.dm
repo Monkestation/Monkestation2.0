@@ -14,6 +14,8 @@
 #define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
 #define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
 #define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
+/// Flag which tells an object to hang onto an support atom on late initialize. Usefull only during mapload and supported by some atoms only
+#define MOUNT_ON_LATE_INITIALIZE (1<<13)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

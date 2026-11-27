@@ -28,6 +28,8 @@
 
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
@@ -175,6 +177,10 @@
 	else
 		set_on(current_area.powered(AREA_USAGE_EQUIP)) // set "on" to the equipment power status of our area.
 	update_appearance()
+
+/obj/item/radio/intercom/deconstruct(disassembled = TRUE)
+	new/obj/item/wallframe/intercom(get_turf(src))
+	return ..()
 
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom

@@ -82,6 +82,8 @@
 
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/digital_clock/process(seconds_per_tick)

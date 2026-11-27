@@ -255,6 +255,9 @@
 	icon = 'monkestation/code/modules/blueshift/icons/g250.dmi' //LARGE icon
 	icon_state = "g250"
 
+/obj/structure/sign/shuttleg250/find_and_mount_on_atom(mark_for_late_init, late_init)
+	return FALSE
+
 /obj/structure/fans/tiny/forcefield
 	name = "forcefield"
 	desc = "A fluctuating forcefield for ships to cross."

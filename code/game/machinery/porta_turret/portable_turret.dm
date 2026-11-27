@@ -969,6 +969,8 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	if(built)
 		locked = FALSE
 	power_change() //Checks power and initial settings

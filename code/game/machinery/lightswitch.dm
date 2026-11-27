@@ -18,6 +18,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 

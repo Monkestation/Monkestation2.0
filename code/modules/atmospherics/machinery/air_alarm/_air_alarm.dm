@@ -108,6 +108,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	set_wires(new /datum/wires/airalarm(src))
 	if(ndir)
 		setDir(ndir)

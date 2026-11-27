@@ -229,6 +229,9 @@
  */
 /obj/machinery/proc/post_machine_initialize()
 	SHOULD_CALL_PARENT(TRUE)
+
+	find_and_mount_on_atom(late_init = TRUE)
+
 	power_change()
 	if(use_power == NO_POWER_USE)
 		return

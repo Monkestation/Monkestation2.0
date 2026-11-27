@@ -101,15 +101,15 @@
 	. = ..()
 
 	// Detect and scream about double stacked lights
-	if(PERFORM_ALL_TESTS(focus_only/stacked_lights))
+	if(PERFORM_ALL_TESTS(maptest_log_mapping))
 		var/turf/our_location = get_turf(src)
 		for(var/obj/machinery/light/on_turf in our_location)
 			if(on_turf == src)
 				continue
 			if(on_turf.dir != dir)
 				continue
-			stack_trace("Conflicting double stacked light [on_turf.type] found at [AREACOORD(on_turf)]")
-			qdel(on_turf)
+			log_mapping("Conflicting double stacked light [on_turf.type] found at [AREACOORD(src)]")
+			return INITIALIZE_HINT_QDEL
 
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/our_area = get_room_area()
@@ -127,7 +127,12 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(alert_level_updated))
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	if(mapload)
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/light/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
 
 /obj/machinery/light/LateInitialize(mapload_arg)
 	. = ..()
@@ -467,6 +472,7 @@
 			new_light = new /obj/structure/light_construct/small(loc)
 			new_light.icon_state = "bulb-construct-stage[current_stage]"
 	new_light.setDir(dir)
+	new_light.find_and_mount_on_atom()
 	new_light.stage = current_stage
 	if(!disassembled)
 		new_light.take_damage(new_light.max_integrity * 0.5, sound_effect=FALSE)
@@ -783,6 +789,20 @@
 		if(!istype(get_area(src), area_type))
 			continue
 		INVOKE_ASYNC(src, PROC_REF(flicker))
+
+/obj/machinery/light/floor/get_turfs_to_mount_on()
+	return list(get_turf(src))
+
+/obj/machinery/light/floor/is_mountable_turf(turf/target)
+	return !isgroundlessturf(target)
+
+/obj/machinery/light/floor/get_mountable_objects()
+	var/static/list/attachables = list(
+		/obj/structure/thermoplastic,
+		/obj/structure/lattice/catwalk,
+	)
+
+	return attachables
 
 /obj/machinery/light/floor
 	name = "floor light"

@@ -127,6 +127,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		var/datum/turf_reservation/roomReservation = SSmapping.request_turf_block_reservation(hotelRoomTemp.width, hotelRoomTemp.height, 1)
 		var/turf/room_turf = roomReservation.bottom_left_turfs[1]
 		hotelRoomTempEmpty.load(room_turf)
+		var/obj/item/abstracthotelstorage/storage_obj
+		for(var/obj/item/abstracthotelstorage/hotel_storage in storageTurf)
+			if((hotel_storage.roomNumber == roomNumber) && (hotel_storage.parentSphere == src))
+				storage_obj = hotel_storage
+				break
 		var/turfNumber = 1
 		for(var/x in 0 to hotelRoomTemp.width-1)
 			for(var/y in 0 to hotelRoomTemp.height-1)
@@ -137,6 +142,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 							room_turf.y + y,
 							room_turf.z,
 						))
+						if(storage_obj && (A in storage_obj.wallmounted_contents))
+							var/obj/stored_in = A
+							if(istype(stored_in))
+								stored_in.find_and_mount_on_atom()
 				turfNumber++
 		for(var/obj/item/abstracthotelstorage/S in storageTurf)
 			if((S.roomNumber == roomNumber) && (S.parentSphere == src))
@@ -460,6 +469,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 				if(ismob(A) && !isliving(A))
 					continue //Don't want to store ghosts
 				turfContents += A
+				if(HAS_TRAIT(A, TRAIT_WALLMOUNTED))
+					LAZYADD(storageObj.wallmounted_contents, A)
+					qdel(A.GetComponent(/datum/component/atom_mounted))
 				A.forceMove(storageObj)
 			storage[turfNumber] = turfContents
 			turfNumber++
@@ -482,6 +494,12 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	item_flags = ABSTRACT
 	var/roomNumber
 	var/obj/item/hilbertshotel/parentSphere
+	/// Movables that had their atom_mounted component stripped so they wouldn't deconstruct while stored - remounted when the room is restored.
+	var/list/wallmounted_contents
+
+/obj/item/abstracthotelstorage/Destroy(force)
+	LAZYNULL(wallmounted_contents)
+	return ..()
 
 /obj/item/abstracthotelstorage/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

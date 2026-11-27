@@ -30,6 +30,8 @@
 
 /obj/machinery/ticket_machine/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	update_appearance()
 
 /obj/machinery/ticket_machine/Destroy()

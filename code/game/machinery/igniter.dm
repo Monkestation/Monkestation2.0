@@ -160,6 +160,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
 /obj/machinery/sparker/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 	spark_system.attach(src)

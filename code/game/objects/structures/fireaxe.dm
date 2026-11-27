@@ -33,6 +33,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	if(populate_contents)
 		held_item = new item_path(src)
 	update_appearance()

@@ -34,6 +34,8 @@
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	update_choices()
 
 /obj/structure/mirror/Destroy()

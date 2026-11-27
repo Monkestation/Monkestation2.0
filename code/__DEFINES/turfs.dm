@@ -7,6 +7,7 @@
 #define CHANGETURF_TRAPDOOR_INDUCED (1<<6) // Caused by a trapdoor, for trapdoor to know that this changeturf was caused by itself
 #define CHANGETURF_DEFAULT_BASETURF (1<<7) /// Use the baseturfs of the provided type
 #define CHANGETURF_GENERATE_SHUTTLE_CEILING (1<<8) // Generate a shuttle ceiling on the above turf
+#define CHANGETURF_INHERIT_MOUNTS (1<<9) //All objects attached to the turf don't fall off after transform
 
 #define IS_OPAQUE_TURF(turf) (turf.directional_opacity == ALL_CARDINALS)
 
