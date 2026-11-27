@@ -19,6 +19,13 @@
 	var/overheat_max = 40
 	var/heat_diffusion = 0.5
 
+	/// The amount of time between instances of self recharge
+	var/charge_timer = 0
+	/// The amount of seconds_per_tick during process() before the battery charges itself
+	var/charge_delay = 8
+	/// The amount restored by to the battery per tick
+	var/self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE
+
 /obj/item/minigunpack/Initialize(mapload)
 	. = ..()
 	gun = new(src)
@@ -36,6 +43,12 @@
 
 /obj/item/minigunpack/process(seconds_per_tick)
 	overheat = max(0, overheat - heat_diffusion * seconds_per_tick)
+	if(battery && battery.percent() < 100)
+		charge_timer += seconds_per_tick
+		if(charge_timer < charge_delay)
+			return
+		charge_timer = 0
+		battery.give(self_charge_amount * seconds_per_tick)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/minigunpack/attack_hand(mob/living/carbon/user, list/modifiers)
@@ -74,6 +87,8 @@
 		gun = new(src)
 	gun.forceMove(src)
 	armed = FALSE
+	var/transferred = battery.use(gun.cell.maxcharge - gun.cell.charge, force = TRUE)
+	gun.cell.give(transferred)
 	if(user)
 		to_chat(user, span_notice("You attach the [gun.name] to the [name]."))
 	else
@@ -81,6 +96,31 @@
 	update_appearance()
 	user.update_worn_back()
 
+/obj/item/minigunpack/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	var/mob/living/carbon/human/user = get(loc, /mob/living)
+	if(!istype(user))
+		return
+	user.electrocute_act(shock_damage = 20, source = src, flags = SHOCK_NOGLOVES)
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	if(prob(70))
+		user.apply_damage(25, BURN, spread_damage=TRUE)
+		to_chat(user, span_warning("\The [src] overloads!"))
+	else
+		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 40, FALSE)
+		user.apply_damage(75, BURN, spread_damage=TRUE)
+		to_chat(user, span_warning("\The [src] overloads and fails catastrophically!"))
+		user.Paralyze(10 SECONDS)
+		sleep(1 SECONDS)
+		tesla_zap(src, 2, battery.charge, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
+		user.adjust_fire_stacks(2)
+		user.ignite_mob()
+	if(user.stat < UNCONSCIOUS)
+		user.emote("scream")
 
 /obj/item/gun/energy/minigun
 	name = "laser gatling gun"
@@ -93,11 +133,12 @@
 	w_class = WEIGHT_CLASS_HUGE
 	custom_materials = null
 	weapon_weight = WEAPON_HEAVY
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun, /obj/item/ammo_casing/energy/disabler/minigun)
 	cell_type = /obj/item/stock_parts/power_store/cell/crap
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
+	spread = 15
 
 /obj/item/gun/energy/minigun/Initialize(mapload)
 	if(!istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
@@ -112,9 +153,6 @@
 		qdel(ammo_pack)
 	ammo_pack = null
 	return ..()
-
-/obj/item/gun/energy/minigun/attack_self(mob/living/user)
-	return
 
 /obj/item/gun/energy/minigun/dropped(mob/user)
 	SHOULD_CALL_PARENT(FALSE)

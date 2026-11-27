@@ -1,6 +1,3 @@
-/// Charge per tick consumed by the thermal regulator
-#define THERMAL_REGULATOR_COST (0.018 * STANDARD_CELL_CHARGE)
-
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
 /obj/item/clothing/head/helmet/space
@@ -81,6 +78,8 @@
 	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 	var/show_hud = TRUE
 	cerulean_flipper_palette = FLIPPERS
+	/// Charge per tick consumed by the thermal regulator
+	var/thermal_regulator_cost = (0.018 * STANDARD_CELL_CHARGE)
 
 /datum/armor/suit_space
 	bio = 100
@@ -133,8 +132,8 @@
 		update_hud_icon(user)
 		return
 
-	// cell.use will return FALSE if charge is lower than THERMAL_REGULATOR_COST
-	if(!cell.use(THERMAL_REGULATOR_COST))
+	// cell.use will return FALSE if charge is lower than thermal_regulator_cost
+	if(!cell.use(thermal_regulator_cost))
 		toggle_spacesuit(user)
 		update_hud_icon(user)
 		to_chat(user, span_warning("The thermal regulator cuts off as [cell] runs out of charge."))
@@ -251,7 +250,7 @@
 	// If we're turning thermal protection on, check for valid cell and for enough
 	// charge that cell. If it's too low, we shouldn't bother with setting the
 	// thermal protection value and should just return out early.
-	if(!thermal_on && (!cell || cell.charge < THERMAL_REGULATOR_COST))
+	if(!thermal_on && (!cell || cell.charge < thermal_regulator_cost))
 		if(toggler)
 			to_chat(toggler, span_warning("The thermal regulator on [src] has no charge."))
 		return
@@ -294,7 +293,7 @@
 	// Check if there's enough charge to trigger a thermal regulator tick and
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
-	if(cell.charge >= THERMAL_REGULATOR_COST)
+	if(cell.charge >= thermal_regulator_cost)
 		if(cell_percent > 60)
 			human.update_spacesuit_hud_icon("high")
 			return
@@ -330,9 +329,6 @@
 	//var/datum/disease/advance/cold/pun = new //in the show, arnold survives his stunt, but catches a cold because of it
 	//humanafterall.ForceContractDisease(pun, FALSE, TRUE) //this'll show up on health analyzers and the like
 	return FIRELOSS
-
-#undef THERMAL_REGULATOR_COST
-
 
 /obj/item/clothing/head/helmet/space/Initialize(mapload)
 	. = ..()

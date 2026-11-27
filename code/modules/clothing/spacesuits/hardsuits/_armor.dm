@@ -85,3 +85,14 @@
 	bio = 100
 	fire = 75
 	acid = 75
+
+/datum/armor/hardsuit/sec_prototype
+	melee = 70
+	bullet = 70
+	laser = 50
+	energy = 50
+	bomb = 100
+	bio = 100
+	fire = 95
+	acid = 100
+	wound = 35

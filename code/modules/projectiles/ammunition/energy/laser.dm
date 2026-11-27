@@ -143,8 +143,11 @@
 
 /obj/item/ammo_casing/energy/laser/minigun
 	select_name = "kill"
-	projectile_type = /obj/projectile/beam/weak/penetrator
-	variance = 0.8
+	projectile_type = /obj/projectile/beam/weak
+
+/obj/item/ammo_casing/energy/disabler/minigun
+	select_name = "disable"
+	projectile_type = /obj/projectile/beam/disabler/weak
 
 /obj/item/ammo_casing/energy/nanite
 	projectile_type = /obj/projectile/bullet/c10mm //henk

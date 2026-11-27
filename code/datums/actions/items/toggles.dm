@@ -42,13 +42,20 @@
 	name = "Toggle Suit Thermal Regulator"
 	button_icon = 'icons/mob/actions/actions_spacesuit.dmi'
 	button_icon_state = "thermal_off"
+	var/icon_prefix = "thermal_"
 
 /datum/action/item_action/toggle_spacesuit/apply_button_icon(atom/movable/screen/movable/action_button/button, force)
 	var/obj/item/clothing/suit/space/suit = target
 	if(istype(suit))
-		button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
+		button_icon_state = "[icon_prefix][suit.thermal_on ? "on" : "off"]"
 
 	return ..()
+
+/datum/action/item_action/toggle_spacesuit/shield
+	name = "Toggle Electronics"
+	button_icon = 'icons/mob/actions/actions_spacesuit.dmi'
+	button_icon_state = "shield_off"
+	icon_prefix = "shield_"
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
