@@ -14,7 +14,6 @@
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
 	grab_state_modifier = 1
-	COOLDOWN_DECLARE(block_cooldown)
 	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER, TRAIT_THROW_GUNS, TRAIT_PERFECT_ATTACKER)
 	/// List of objects exempt from reducing dodge probabilities
 	var/static/list/exempt_objects = list(
@@ -35,9 +34,7 @@
 	var/static/list/exempt_armor = list(
 		/obj/item/clothing/suit/chameleon/syndie_armor,
 	)
-	var/deflect_cooldown = 3 SECONDS //monke edit start
-	var/deflect_stamcost = 5 //how much stamina it costs per bullet deflected
-	var/log_name = "Sleeping Carp"
+	var/log_name = "Sleeping Carp" //monke edit start
 	var/damage = 30
 	var/kick_speed = 0 //how fast you get punted into the stratosphere on launchkick
 	var/wounding = 0 //whether or not you get wounded by the attack
@@ -264,8 +261,6 @@
 	return MARTIAL_ATTACK_INVALID // normal disarm
 
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user, check_intent = TRUE)
-	if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
-		return FALSE
 	if(!can_use(carp_user))
 		return FALSE
 	if(check_intent && !(carp_user.istate & ISTATE_HARM)) // monke edit: istates/intents
@@ -298,9 +293,7 @@
 		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
 		span_userdanger("You deflect [hitting_projectile]!"),
 	)
-	COOLDOWN_START(src, block_cooldown, deflect_cooldown)// monke edit start
-	playsound(carp_user, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), vol = 75, vary = TRUE)
-	carp_user.stamina?.adjust(deflect_stamcost) //monke edit end
+	playsound(carp_user, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), vol = 75, vary = TRUE) // monke edit
 	hitting_projectile.firer = carp_user
 	hitting_projectile.set_angle(rand(0, 360))//SHING
 	return COMPONENT_BULLET_PIERCED
