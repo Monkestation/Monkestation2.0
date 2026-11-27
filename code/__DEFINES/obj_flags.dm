@@ -94,6 +94,8 @@
 #define HEADINTERNALS (1<<18)
 /// This clothing will never leave fibers.
 #define BLOCKS_FIBERS (1<<19)
+/// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
+#define CARP_STYLE_FACTOR (1<<20)
 ///Sterile material, for medical modsuits
 #define STERILE (1<<22)
 /// Integrity defines for clothing (not flags but close enough)

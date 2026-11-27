@@ -55,6 +55,7 @@
 	name = "maid headband"
 	desc = "Just like from one of those chinese cartoons!"
 	icon_state = "maid_headband"
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/chicken
 	name = "chicken suit head"
@@ -238,6 +239,15 @@
 	desc = "A delicate hairpin normally paired with traditional clothing"
 	icon_state = "hairpin_fancy"
 	inhand_icon_state = "hairpin_fancy"
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+
+/obj/item/clothing/head/costume/snakeeater
+	name = "strange bandana"
+	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
+	icon_state = "snake_eater"
+	inhand_icon_state = null
+	clothing_traits = list(TRAIT_FISH_EATER)
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/dio
 	name = "flamboyant headband"

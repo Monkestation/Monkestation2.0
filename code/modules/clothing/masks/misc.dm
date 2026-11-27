@@ -10,6 +10,7 @@
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	slot_flags = ITEM_SLOT_MASK
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/mask/kitsuneblack/attack_self(mob/user)
 	adjust_visor(user)
@@ -30,6 +31,7 @@
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	slot_flags = ITEM_SLOT_MASK
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/mask/kitsunewhite/attack_self(mob/user)
 	adjust_visor(user)

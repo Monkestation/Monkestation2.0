@@ -151,6 +151,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR //weebs are going to love this
 
 /obj/item/clothing/under/rank/civilian/lawyer
 	abstract_type = /obj/item/clothing/under/rank/civilian/lawyer

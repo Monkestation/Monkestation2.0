@@ -115,6 +115,7 @@ GLOBAL_LIST_INIT(balaclava_options, list(
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	alternate_worn_layer = LOW_FACEMASK_LAYER
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/mask/luchador/Initialize(mapload)
 	. = ..()

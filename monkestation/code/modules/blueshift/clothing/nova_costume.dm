@@ -48,6 +48,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	flags_1 = IS_PLAYER_COLORABLE_1
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/nova/qipao/customtrim
 	SETUP_MAP_ICONS("qipao", "/obj/item/clothing/under/costume/nova/qipao/customtrim")
