@@ -108,3 +108,44 @@ body {
 .tooltip_container:hover .tooltip_hover {
   visibility: visible;
 }
+
+.purchase_row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  vertical-align: middle;
+  margin: 2px 16px 2px 0;
+}
+
+.purchase_contents {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 12px;
+  font-size: 14px;
+}
+
+.purchase_items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.purchase_items::before {
+  content: "[";
+  font-size: 24px;
+  margin-right: 4px;
+}
+
+.purchase_items::after {
+  content: "]";
+  font-size: 24px;
+  margin-left: 4px;
+}
+
+.purchase_items .tooltip_container {
+  display: inline-block;
+  font-size: 14px;
+  margin: 0 4px;
+}
