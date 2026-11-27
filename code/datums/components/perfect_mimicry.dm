@@ -26,14 +26,19 @@
 	COOLDOWN_DECLARE(move_cooldown)
 	var/atom/movable/screen/healthdoll/living/disguise/disguise_healthdoll
 	var/obj/mimicked_object
-	var/datum/action/cooldown/mimic_object/mimic_ability
 	var/spoofed_flags = 0
 
-	//whether or not mimic is shifting. Shamelessly taken from pixel shift datum.
+	// Whether or not mimic is pixel shifting. Shamelessly taken from pixel shift datum.
 	var/shifting = FALSE
-	//the maximum amount the disguise can be shifted.
+	// The maximum amount the disguise can be shifted.
 	var/maximum_pixel_shift = 16
 
+	// Actions given by perfect mimicry
+	var/list/mimic_action_types = list(
+		/datum/action/cooldown/mimic/mimic_object,
+	)
+	// Actions managed by this component
+	var/list/managed_actions = list()
 	// Actions currently being blocked while disguised.
 	var/list/datum/action/blocked_actions
 	// What is allowed to be mimicked. Allowing everything is extremely dangerous.
@@ -138,28 +143,42 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/perfect_mimicry/Destroy(force)
-	if(!QDELETED(mimic_ability))
-		UnregisterSignal(mimic_ability, COMSIG_QDELETING)
-		QDEL_NULL(mimic_ability)
-	else
-		mimic_ability = null
+	for(var/action_type as anything in managed_actions)
+		var/datum/action/existing_action = managed_actions[action_type]
+		if(QDELETED(existing_action))
+			continue
+		UnregisterSignal(existing_action, COMSIG_QDELETING)
+		qdel(existing_action)
+	managed_actions.Cut()
 	stop_mimicry()
 	COOLDOWN_RESET(src, move_cooldown)
 	return ..()
 
 /datum/component/perfect_mimicry/RegisterWithParent()
-	if(QDELETED(mimic_ability))
-		mimic_ability = create_mimic_action(/datum/action/cooldown/mimic_object)
-	else
-		mimic_ability.Grant(parent)
+	for(var/action_type as anything in mimic_action_types)
+		var/datum/action/existing_action = managed_actions[action_type]
+		if(QDELETED(existing_action))
+			create_mimic_action(action_type)
+		else
+			existing_action.Grant(parent)
 
 /datum/component/perfect_mimicry/proc/create_mimic_action(action_type)
-	var/datum/action/cooldown/new_action = new action_type(src)
+	if(!(action_type in mimic_action_types))
+		return null
+	var/datum/action/existing_action = managed_actions[action_type]
+	if(!QDELETED(existing_action))
+		return existing_action
+	var/datum/action/new_action = new action_type(src)
 	if(QDELETED(new_action))
 		return null
 
+	managed_actions[action_type] = new_action
 	RegisterSignal(new_action, COMSIG_QDELETING, PROC_REF(on_mimic_action_deleted))
 	new_action.Grant(parent)
+
+	if(istype(new_action, /datum/action/cooldown/mimic)) // Update mimic status based on disguise status
+		var/datum/action/cooldown/mimic/mimic_action = new_action
+		mimic_action.update_disguise_state(mimicked_object)
 	return new_action
 
 /datum/component/perfect_mimicry/proc/on_mimic_action_deleted(datum/source)
@@ -168,29 +187,33 @@
 	if(QDELETED(src))
 		return
 
-	if(source == mimic_ability)
-		var/datum/action/cooldown/mimic_object/old_action = source
-		var/remaining_cooldown = max(0, old_action.next_use_time - world.time)
+	var/datum/action/old_action = source
+	if(managed_actions[old_action.type] != old_action)
+		return
 
-		if(mimicked_object)
-			remaining_cooldown = max(remaining_cooldown, old_action.cooldown_after_use)
+	var/remaining_cooldown = 0
+	if(mimicked_object && istype(old_action, /datum/action/cooldown/mimic/mimic_object))
+		var/datum/action/cooldown/mimic/mimic_object/mimic_action = old_action
+		remaining_cooldown = mimic_action.cooldown_after_use
+	else if(istype(old_action, /datum/action/cooldown))
+		var/datum/action/cooldown/cooldown_action = old_action
+		remaining_cooldown = max(0, cooldown_action.next_use_time - world.time)
 
-		UnregisterSignal(source, COMSIG_QDELETING)
-		mimic_ability = null
-
-		if(!QDELETED(src))
-			addtimer(CALLBACK(src, PROC_REF(restore_mimic_action), old_action.type, remaining_cooldown), 1)
+	UnregisterSignal(source, COMSIG_QDELETING)
+	managed_actions -= old_action.type
+	addtimer(CALLBACK(src, PROC_REF(restore_mimic_action), old_action.type, remaining_cooldown), 1)
 
 /datum/component/perfect_mimicry/proc/restore_mimic_action(action_type, remaining_cooldown = 0)
 	if(QDELETED(src) || QDELETED(parent))
 		return
+	var/datum/action/existing_action = managed_actions[action_type]
+	if(!QDELETED(existing_action))
+		return
 
-	if(action_type == /datum/action/cooldown/mimic_object)
-		if(mimic_ability)
-			return
-		mimic_ability = create_mimic_action(action_type)
-		if(mimic_ability && remaining_cooldown > 0)
-			mimic_ability.StartCooldown(remaining_cooldown)
+	var/datum/action/new_action = create_mimic_action(action_type)
+	if(remaining_cooldown > 0 && istype(new_action, /datum/action/cooldown))
+		var/datum/action/cooldown/cooldown_action = new_action
+		cooldown_action.StartCooldown(remaining_cooldown)
 
 /// Register action restrictions when entering disguise.
 /datum/component/perfect_mimicry/proc/block_actions()
@@ -198,7 +221,7 @@
 
 	// Cancel any previously selected ability, except our own Mimic action.
 	var/datum/action/cooldown/selected_action = mimic.click_intercept
-	if(selected_action && selected_action != mimic_ability)
+	if(selected_action && managed_actions[selected_action.type] != selected_action)
 		selected_action.unset_click_ability(mimic, refund_cooldown = FALSE)
 
 	RegisterSignal(mimic, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_action_granted))
@@ -230,8 +253,8 @@
 	if(action.owner != parent)
 		return
 
-	// Never block our own Reveal action.
-	if(action == mimic_ability || (istype(action, /datum/action/cooldown/mimic_object) && action.target == src))
+	// Never block actions maintained by this component.
+	if(managed_actions[action.type] == action)
 		return
 
 	if(action in blocked_actions)
@@ -261,6 +284,15 @@
 	mimic.balloon_alert(mimic, "can't use abilities while disguised!")
 	return COMPONENT_ACTION_BLOCK_TRIGGER
 
+/// Notify managed mimic type actions of a disguise state change.
+/datum/component/perfect_mimicry/proc/update_mimic_actions()
+	for(var/action_type as anything in managed_actions)
+		var/datum/action/cooldown/mimic/mimic_action = managed_actions[action_type]
+		if(QDELETED(mimic_action) || !istype(mimic_action))
+			continue
+
+		mimic_action.update_disguise_state(mimicked_object)
+
 /// Called when the current disguise is deleted externally.
 /datum/component/perfect_mimicry/proc/on_object_qdel(datum/source, force)
 	SIGNAL_HANDLER
@@ -268,9 +300,9 @@
 		return
 	if(!stop_mimicry())
 		return
+	var/datum/action/cooldown/mimic/mimic_object/mimic_ability = managed_actions[/datum/action/cooldown/mimic/mimic_object]
 	if(QDELETED(mimic_ability))
 		return
-	mimic_ability.update_mimic_mode(FALSE)
 	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
 
 /datum/component/perfect_mimicry/proc/on_dropped(obj/item/source, mob/dropper)
@@ -410,9 +442,9 @@
 		return
 	if(!stop_mimicry())
 		return
+	var/datum/action/cooldown/mimic/mimic_object/mimic_ability = managed_actions[/datum/action/cooldown/mimic/mimic_object]
 	if(QDELETED(mimic_ability))
 		return
-	mimic_ability.update_mimic_mode(FALSE)
 	mimic_ability.StartCooldown(mimic_ability.cooldown_after_use)
 
 /datum/component/perfect_mimicry/proc/on_disguise_integrity_changed(obj/source, old_value, new_value)
@@ -578,6 +610,7 @@
 	RegisterSignal(mimic, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP, PROC_REF(item_pixel_shift_up))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_disguise_integrity_changed))
 	RegisterSignal(mimicked_object, COMSIG_ATOM_RELAYMOVE, PROC_REF(on_user_move))
+	update_mimic_actions()
 	return TRUE
 
 /datum/component/perfect_mimicry/proc/stop_mimicry()
@@ -620,6 +653,7 @@
 	else
 		QDEL_NULL(mimicked_object)
 	spoofed_flags = 0
+	update_mimic_actions()
 	return TRUE
 
 #undef INTEGRITY_PER_WCLASS
@@ -630,31 +664,42 @@
 /*
  * Mimicry actions
  */
-/datum/action/cooldown/mimic_object
+/datum/action/cooldown/mimic
+	abstract_type = /datum/action/cooldown/mimic
+	name = "Mimic Abilities"
+	desc = "You shouldn't see this, call the coders."
+	button_icon = 'icons/hud/mimicry.dmi'
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
+
+/datum/action/cooldown/mimic/New(Target, original)
+	. = ..()
+	if(!istype(target, /datum/component/perfect_mimicry))
+		qdel(src)
+		return
+
+/datum/action/cooldown/mimic/proc/update_disguise_state(disguised)
+	if(owner?.click_intercept == src && !IsAvailable())
+		unset_click_ability(owner, refund_cooldown = FALSE)
+
+	build_all_button_icons(UPDATE_BUTTON_ICON | UPDATE_BUTTON_STATUS | UPDATE_BUTTON_NAME)
+
+/datum/action/cooldown/mimic/mimic_object
 	name = "Mimic Object"
 	desc = "Take on the appearance and behavior of a nearby object."
-	button_icon = 'icons/hud/mimicry.dmi'
 	button_icon_state = "mimic"
 
 	click_to_activate = TRUE
 	cooldown_time = 1 SECONDS
 	var/cooldown_after_use = 3 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 
-/datum/action/cooldown/mimic_object/New(Target, original)
-	. = ..()
-	if(!istype(target, /datum/component/perfect_mimicry))
-		qdel(src)
-		return
-
-/datum/action/cooldown/mimic_object/Destroy(force)
+/datum/action/cooldown/mimic/mimic_object/Destroy(force)
 	if(istype(target, /datum/component/perfect_mimicry) && !QDELETED(target))
 		var/datum/component/perfect_mimicry/mimic_component = target
 		mimic_component.stop_mimicry()
 	return ..()
 
-/datum/action/cooldown/mimic_object/PreActivate(atom/mimic_target)
+/datum/action/cooldown/mimic/mimic_object/PreActivate(atom/mimic_target)
 	var/datum/component/perfect_mimicry/mimic_component = target
 
 	if(!istype(mimic_component) || QDELETED(mimic_component))
@@ -666,7 +711,7 @@
 
 	return ..()
 
-/datum/action/cooldown/mimic_object/Activate(atom/mimic_target)
+/datum/action/cooldown/mimic/mimic_object/Activate(atom/mimic_target)
 	var/datum/component/perfect_mimicry/mimic_component = target
 
 	if(!istype(mimic_component) || QDELETED(mimic_component))
@@ -678,11 +723,10 @@
 		if(!mimic_component.start_mimicry(mimic_target))
 			return FALSE
 
-	update_mimic_mode(mimic_component.mimicked_object)
 	StartCooldown(mimic_component.mimicked_object ? cooldown_time : cooldown_after_use)
 	return TRUE
 
-/datum/action/cooldown/mimic_object/proc/update_mimic_mode(disguised)
+/datum/action/cooldown/mimic/mimic_object/update_disguise_state(disguised)
 	if(disguised)
 		click_to_activate = FALSE
 		button_icon_state = "unmimic"
@@ -694,4 +738,4 @@
 		name = initial(name)
 		desc = initial(desc)
 
-	build_all_button_icons(UPDATE_BUTTON_ICON | UPDATE_BUTTON_STATUS | UPDATE_BUTTON_NAME)
+	return ..()
