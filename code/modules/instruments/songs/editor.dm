@@ -31,6 +31,8 @@
 	. += "</div>"
 
 /datum/song/ui_interact(mob/user)
+	if(!user.client)
+		return
 	var/list/dat = list()
 
 	dat += instrument_status_ui()
