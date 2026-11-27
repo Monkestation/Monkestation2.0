@@ -122,7 +122,7 @@
 	wound_bonus = 10
 
 /obj/projectile/beam/weak
-	damage = 15
+	damage = 10
 
 /obj/projectile/beam/weak/penetrator
 	armour_penetration = 80

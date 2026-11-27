@@ -17,8 +17,8 @@
 	var/obj/item/stock_parts/power_store/cell/minigun/battery
 	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
 	var/overheat = 0
-	var/overheat_max = 40
-	var/heat_diffusion = 0.5
+	var/overheat_max = 50
+	var/heat_diffusion = 1
 
 	/// The amount of time between instances of self recharge
 	var/charge_timer = 0
@@ -139,7 +139,7 @@
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
-	spread = 10
+	spread = 15
 
 /obj/item/gun/energy/minigun/Initialize(mapload)
 	if(!istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
