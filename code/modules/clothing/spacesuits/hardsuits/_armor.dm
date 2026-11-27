@@ -86,8 +86,8 @@
 	fire = 75
 	acid = 75
 
-/datum/armor/hardsuit/sec_prototype
-	melee = 70
+/datum/armor/hardsuit/sec/prototype
+	melee = 80
 	bullet = 70
 	laser = 50
 	energy = 50

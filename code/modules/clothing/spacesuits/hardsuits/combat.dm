@@ -41,7 +41,7 @@
 	name = "prototype security hardsuit"
 	desc = "A prototype security suit that protects against hazardous, low pressure environments. Fitted with extensive plating for handling explosives and dangerous operations. It's loaded with expensive electronics inside."
 	icon_state = "hardsuit-prototype"
-	armor_type = /datum/armor/hardsuit/sec_prototype
+	armor_type = /datum/armor/hardsuit/sec/prototype
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/sec/prototype
 	slowdown = 3
 	hardsuit_emp_burn = 20
@@ -103,6 +103,6 @@
 	name = "prototype security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has an additional heavy layer of armor. Security data flashes across the visor."
 	icon_state = "hardsuit0-prototype"
-	armor_type = /datum/armor/hardsuit/sec_prototype
+	armor_type = /datum/armor/hardsuit/sec/prototype
 	hardsuit_type = "prototype"
 	slowdown = 1
