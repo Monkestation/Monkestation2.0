@@ -108,10 +108,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	AddComponent(/datum/component/lockable_storage, stored_lock_code)
 	if(mapload)
 		PopulateContents()
-		find_and_hang_on_wall()
+		find_and_mount_on_atom()
 	RegisterSignal(src, COMSIG_LOCKABLE_STORAGE_SET_CODE, PROC_REF(update_lock_code))
 
-/obj/structure/secure_safe/find_and_hang_on_wall(mark_for_late_init, late_init)
+/obj/structure/secure_safe/find_and_mount_on_atom(mark_for_late_init, late_init)
 	if(!density)
 		return ..()
 

@@ -70,6 +70,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	GLOB.allCasters += src
 	GLOB.allbountyboards += src
 	update_appearance()

@@ -13,6 +13,8 @@
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
 ///signal sent out by an atom upon onZImpact : (turf/impacted_turf, levels)
 #define COMSIG_ATOM_ON_Z_IMPACT "movable_on_z_impact"
+/// From base of /atom/movable/beforeShuttleMove (turf/newT, direction, move_mode, /obj/docking_port/mobile/moving_dock)
+#define COMSIG_ATOM_BEFORE_SHUTTLE_MOVE "movable_before_shuttle_move"
 ///Signal sent after an atom movable moves on shuttle.
 #define COMSIG_ATOM_AFTER_SHUTTLE_MOVE "movable_after_shuttle_move"
 ///called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)

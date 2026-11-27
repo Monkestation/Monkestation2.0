@@ -378,6 +378,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
 /obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	// register for radio system
 	SSradio.add_object(src, frequency)
 	// Circuit USB
@@ -506,6 +508,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	var/emotion = AI_DISPLAY_DONT_GLOW
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
+
+/obj/machinery/status_display/ai/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/status_display/ai/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))

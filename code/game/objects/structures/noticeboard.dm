@@ -15,6 +15,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 
 	if(!mapload)
 		return

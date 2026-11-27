@@ -293,7 +293,7 @@
 	add_fingerprint(user)
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user))
+	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user) || try_build_support(attacking_item, user))
 		return
 
 	return ..() || (uses_integrity && attacking_item.attack_atom(src, user))
@@ -328,6 +328,24 @@
 			return TRUE
 		return TRUE
 
+	return FALSE
+
+///Helper for building wall_support on top of desired wall
+/turf/closed/wall/proc/try_build_support(obj/item/I, mob/user)
+	if(!isstack(I) || !istype(I, /obj/structure/wall_support::rods_type))
+		return FALSE
+	var/obj/item/stack/rods = I
+	var/amount_needed = /obj/structure/wall_support::rods_amount
+	if(rods.get_amount() < amount_needed)
+		to_chat(user, span_warning("You need at least [amount_needed] rods for that!"))
+		return FALSE
+	to_chat(user, span_notice("You start constructing wall support..."))
+	if(do_after(user, 2 SECONDS, target = src))
+		var/obj/structure/wall_support/WS = new(src)
+		rods.use(amount_needed)
+		rods.transfer_fingerprints_to(WS)
+		to_chat(user, span_notice("You place [WS] on [src]."))
+		return TRUE
 	return FALSE
 
 /turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)

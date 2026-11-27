@@ -153,6 +153,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 			update_appearance()
 
 	alarm_manager = new(src)
+	if(mapload)
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
+
+/obj/machinery/camera/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
 
 /obj/machinery/camera/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()

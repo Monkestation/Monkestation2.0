@@ -53,6 +53,8 @@
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	id_tag = assign_random_name()
 	if(building)
 		buildstage = ALARM_NO_CIRCUIT

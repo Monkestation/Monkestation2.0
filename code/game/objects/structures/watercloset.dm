@@ -168,6 +168,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	hidden_item = new /obj/item/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
@@ -324,6 +326,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
 	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
+
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/sink/LateInitialize(mapload_arg)
+	find_and_mount_on_atom(late_init = TRUE)
+
+/obj/structure/sink/is_mountable_turf(turf/target)
+	return !isgroundlessturf(target)
+
+/obj/structure/sink/get_turfs_to_mount_on()
+	return list(get_turf(src))
+
+/obj/structure/sink/get_mountable_objects()
+	return list()
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()

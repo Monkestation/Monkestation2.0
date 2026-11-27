@@ -37,6 +37,8 @@
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
 	if(built)
 		setDir(ndir)
 		set_panel_open(TRUE)
@@ -430,6 +432,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 				if(WEST)
 					O.pixel_x = -pixel_shift
 
+		O.find_and_mount_on_atom()
 		after_attach(O)
 	qdel(src)
 

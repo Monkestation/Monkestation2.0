@@ -14,6 +14,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	if(building)
 		opened = TRUE
 	else

@@ -172,6 +172,7 @@
 				L.setDir(get_dir(winner, interacting_with))
 				L.color = color_choice
 				L.set_light_color(color_choice)
+				L.find_and_mount_on_atom()
 				return ITEM_INTERACT_SUCCESS
 
 			if(isfloorturf(interacting_with))
@@ -184,6 +185,7 @@
 				var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(target)
 				FL.color = color_choice
 				FL.set_light_color(color_choice)
+				FL.find_and_mount_on_atom()
 				return ITEM_INTERACT_SUCCESS
 
 		if(GLOW_MODE)

@@ -32,6 +32,14 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/light_construct/LateInitialize(mapload_arg)
+	find_and_mount_on_atom(late_init = TRUE)
+
+/obj/structure/light_construct/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
@@ -148,6 +156,7 @@
 					if("bulb")
 						new_light = new /obj/machinery/light/small/built(loc)
 				new_light.setDir(dir)
+				new_light.find_and_mount_on_atom()
 				transfer_fingerprints_to(new_light)
 				if(!QDELETED(cell))
 					new_light.cell = cell
@@ -160,6 +169,15 @@
 /obj/structure/light_construct/blob_act(obj/structure/blob/attacking_blob)
 	if(attacking_blob && attacking_blob.loc == loc)
 		qdel(src)
+
+/obj/structure/light_construct/proc/mount_or_fall()
+	if(QDELETED(src) || find_and_mount_on_atom())
+		return
+	visible_message(span_warning("\The [src] falls apart!"), vision_distance = 5)
+	if(cell)
+		cell.forceMove(drop_location())
+		cell = null
+	deconstruct(FALSE)
 
 /obj/structure/light_construct/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

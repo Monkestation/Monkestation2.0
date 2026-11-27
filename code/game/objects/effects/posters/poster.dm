@@ -36,6 +36,7 @@
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 	if(new_poster_structure && (new_poster_structure.loc != src))
+		qdel(new_poster_structure.GetComponent(/datum/component/atom_mounted))
 		new_poster_structure.forceMove(src) //The poster structure *must* be in the item's contents for the exited() proc to properly clean up when placing the poster
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
@@ -205,6 +206,12 @@
 		return FALSE
 	return !user.gloves || !(user.gloves.body_parts_covered & HANDS) || HAS_TRAIT(user, TRAIT_FINGERPRINT_PASSTHROUGH) || HAS_TRAIT(user.gloves, TRAIT_FINGERPRINT_PASSTHROUGH)
 
+// Rolled posters keep their structure inside them
+/obj/structure/sign/poster/find_and_mount_on_atom(mark_for_late_init, late_init)
+	if(!isturf(loc))
+		return FALSE
+	return ..()
+
 /obj/structure/sign/poster/proc/roll_and_drop(atom/location, mob/user)
 	pixel_x = 0
 	pixel_y = 0
@@ -248,6 +255,7 @@
 		placed_poster.roll_and_drop(user_drop_location, user)
 		return
 
+	placed_poster.find_and_mount_on_atom()
 	placed_poster.on_placed_poster(user)
 	return TRUE
 

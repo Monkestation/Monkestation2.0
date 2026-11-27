@@ -27507,6 +27507,12 @@
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"iQG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate,
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "iQR" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -48714,12 +48720,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
-"pHn" = (
-/obj/structure/sign/poster/random/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/gary,
-/turf/open/floor/plating,
-/area/station/maintenance/department/engine)
 "pHr" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/holopad,
@@ -97203,8 +97203,8 @@ kgS
 xUa
 bsX
 vHk
-pHn
-vCq
+tsp
+iQG
 lOO
 cHh
 cHh

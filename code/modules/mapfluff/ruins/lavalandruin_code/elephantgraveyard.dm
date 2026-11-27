@@ -86,6 +86,10 @@
 	dispensedreagent = /datum/reagent/fuel/oil
 	pixel_shift = 0
 
+/obj/structure/sink/oil_well/find_and_mount_on_atom(mark_for_late_init, late_init)
+	///Oil wells exist indepent of any wall structure
+	return FALSE
+
 /obj/structure/sink/oil_well/Initialize(mapload)
 	.=..()
 	create_reagents(20)

@@ -8912,6 +8912,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
+"dgO" = (
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/upper)
 "dgQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -9219,6 +9228,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
+"dof" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/solars/starboard/fore)
 "dop" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -13220,6 +13233,13 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/station/service/library)
+"eSl" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/cardboard,
+/obj/item/radio/off,
+/obj/structure/light_construct/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
 "eSq" = (
 /turf/closed/wall/r_wall,
 /area/station/science/genetics)
@@ -24761,6 +24781,16 @@
 /obj/machinery/igniter/incinerator_ordmix,
 /turf/open/floor/wood/tile,
 /area/station/commons/lounge)
+"juO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
+/area/station/commons/lounge)
 "jvq" = (
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -27385,13 +27415,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"kBq" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/cardboard,
-/obj/item/radio/off,
-/obj/structure/light_construct/directional/north,
-/turf/open/floor/plating,
-/area/station/maintenance/port/central)
 "kBs" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
@@ -39590,17 +39613,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/graveyard/bunker/command)
-"pmb" = (
-/obj/structure/table,
-/obj/item/stack/cable_coil{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stack/cable_coil,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/dark,
-/area/station/engineering/storage/tech)
 "pme" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -41046,6 +41058,17 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
+"pOu" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/stack/cable_coil,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/engineering/storage/tech)
 "pOw" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 4
@@ -45501,16 +45524,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
-"rGZ" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood,
-/area/station/commons/lounge)
 "rHf" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/east{
@@ -47657,14 +47670,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"sBX" = (
-/obj/effect/turf_decal/tile/dark_red/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/camera/autoname/directional/west,
-/turf/open/floor/iron,
-/area/station/hallway/primary/upper)
 "sCa" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -150818,7 +150823,7 @@ nDR
 cIU
 exl
 exl
-kBq
+eSl
 kpw
 mXu
 lqr
@@ -153131,7 +153136,7 @@ usb
 qHC
 qCx
 cXQ
-pmb
+pOu
 xEZ
 hea
 qHC
@@ -172723,7 +172728,7 @@ quT
 quT
 bfc
 bfc
-rGZ
+juO
 mBf
 jTL
 lIs
@@ -174190,8 +174195,8 @@ cCz
 aQN
 gdj
 qwh
-uMG
-sBX
+qwh
+dgO
 qwh
 dNM
 qwh
@@ -179320,7 +179325,7 @@ iGu
 iGu
 mJP
 soM
-uNv
+dof
 eKr
 kKN
 bdl

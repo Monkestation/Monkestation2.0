@@ -48607,6 +48607,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/workout)
+"lqZ" = (
+/obj/machinery/mass_driver/trash{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
 "lra" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -54692,6 +54703,17 @@
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"mLx" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/camera/directional/north{
+	c_tag = "Library - Back Printing Room";
+	dir = 9;
+	name = "library camera"
+	},
+/obj/machinery/vending/wardrobe/curator_wardrobe,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark,
+/area/station/service/library/printer)
 "mLA" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -54913,12 +54935,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/grimey,
 /area/station/command/heads_quarters/hop)
-"mOy" = (
-/obj/machinery/light/small/directional/north,
-/obj/structure/destructible/cult/item_dispenser/archives/library,
-/obj/item/book/codex_gigas,
-/turf/open/floor/iron/dark,
-/area/station/service/library/printer)
 "mOA" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -65346,21 +65362,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
-"pru" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/camera/directional/north{
-	c_tag = "Library - Back Printing Room";
-	dir = 9;
-	name = "library camera"
-	},
-/obj/machinery/vending/wardrobe/curator_wardrobe,
-/obj/effect/turf_decal/bot_white,
-/obj/structure/sign/painting/large/library_private{
-	dir = 1;
-	pixel_x = -29
-	},
-/turf/open/floor/iron/dark,
-/area/station/service/library/printer)
 "prB" = (
 /obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron/dark/textured,
@@ -75221,6 +75222,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"rJl" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
+/obj/item/book/codex_gigas,
+/obj/structure/sign/painting/large/library_private{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/library/printer)
 "rJt" = (
 /turf/closed/wall/r_wall,
 /area/station/security/processing)
@@ -93833,17 +93843,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"wfV" = (
-/obj/machinery/mass_driver/trash{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "wgb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -149835,7 +149834,7 @@ aaa
 aad
 aad
 xCY
-wfV
+lqZ
 qye
 hMn
 ocO
@@ -150687,7 +150686,7 @@ mWE
 peW
 qaV
 dfZ
-mOy
+rJl
 mEh
 qEj
 dfZ
@@ -150944,7 +150943,7 @@ tTM
 xri
 mlo
 dfZ
-pru
+mLx
 qaE
 wAZ
 dfZ

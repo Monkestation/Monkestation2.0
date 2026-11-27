@@ -94,6 +94,20 @@
 	///the built string for use in icon updates
 	var/built_lining_string = "pink2_1"
 
+/obj/machinery/light/neon_lining/get_turfs_to_mount_on()
+	return list(get_turf(src))
+
+/obj/machinery/light/neon_lining/is_mountable_turf(turf/target)
+	return !isgroundlessturf(target)
+
+/obj/machinery/light/neon_lining/get_mountable_objects()
+	var/static/list/attachables = list(
+		/obj/structure/thermoplastic,
+		/obj/structure/lattice/catwalk,
+	)
+
+	return attachables
+
 /obj/machinery/light/neon_lining/update_appearance(updates)
 	. = ..()
 	switch(lining_color)
