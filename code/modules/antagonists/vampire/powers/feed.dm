@@ -555,6 +555,10 @@
 	if(HAS_TRAIT(living_owner, TRAIT_FRENZY))
 		blood_to_take /= 2
 
+	if(!living_owner.has_status_effect(/datum/status_effect/silver_bullet))
+		var/feed_heal = blood_to_take * 0.1
+		living_owner.heal_overall_damage(brute = feed_heal, burn = feed_heal)
+
 	// Give vampire the blood^
 	var/vitae_absorbed = blood_to_take * 4
 
