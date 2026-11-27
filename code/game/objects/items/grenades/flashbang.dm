@@ -44,7 +44,8 @@
 			hit_the_deck_and_faceplanted = TRUE
 //Flash
 	if(!living_mob.has_status_effect(/datum/status_effect/currently_flashed) && !hit_the_deck_and_faceplanted)
-		if(living_mob.flash_act(affect_silicon = 1))
+		var/attempt_flash = living_mob.flash_act(affect_silicon = 1)
+		if(attempt_flash && attempt_flash != FLASH_COMPLETED)
 			living_mob.Paralyze(max(20/max(1, distance), 5))
 			living_mob.Knockdown(max(200/max(1, distance), 60))
 
@@ -114,7 +115,8 @@
 	living_mob.show_message(span_warning("POP"), MSG_AUDIBLE)
 	var/distance = max(0, get_dist(get_turf(src), turf))
 //Flash
-	if(living_mob.flash_act(affect_silicon = 1))
+	var/attempt_flash = living_mob.flash_act(affect_silicon = 1)
+	if(attempt_flash && attempt_flash != FLASH_COMPLETED)
 		living_mob.Paralyze(max(10/max(1, distance), 5))
 		living_mob.Knockdown(max(100/max(1, distance), 60))
 
