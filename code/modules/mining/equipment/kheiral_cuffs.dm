@@ -114,5 +114,5 @@
 		to_chat(victim, span_danger("You age [(victim.age - before_age)] years!"))
 
 	to_chat(victim, span_danger("At the ripe age of [victim.age], your cells fail their cycle of mitosis, allowing the sands of time to wash over you."))
-	victim.dust(TRUE, TRUE, TRUE)
+	victim.dust(just_ash = TRUE, drop_items = TRUE, force = TRUE)
 	return MANUAL_SUICIDE

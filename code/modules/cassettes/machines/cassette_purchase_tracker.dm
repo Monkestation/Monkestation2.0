@@ -22,31 +22,10 @@
 	if(!SSdbcore.Connect())
 		return FALSE
 
-	// check if this buyer already purchased this cassette
-	var/datum/db_query/query_check = SSdbcore.NewQuery({"
-		SELECT id FROM [format_table_name("cassette_purchases")]
-		WHERE cassette_id = :cassette_id AND buyer_ckey = :buyer_ckey
-		LIMIT 1
-	"}, list(
-		"cassette_id" = cassette_id,
-		"buyer_ckey" = buyer_ckey
-	))
-
-	if(!query_check.Execute())
-		qdel(query_check)
-		return FALSE
-
 	// the Space Board of Music is much grateful for your patronage.
 	// however, you've already bought this shit before and you will NOT mess with our honest ranking system
-	if(query_check.NextRow())
-		qdel(query_check)
-		return FALSE
-
-	qdel(query_check)
-
-	// insert new purchase record
 	var/datum/db_query/query_insert = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("cassette_purchases")]
+		INSERT IGNORE INTO [format_table_name("cassette_purchases")]
 			(cassette_id, cassette_name, buyer_ckey, server_id)
 		VALUES
 			(:cassette_id, :cassette_name, :buyer_ckey, :server_id)
@@ -61,22 +40,30 @@
 		qdel(query_insert)
 		return FALSE
 
+	var/inserted = query_insert.affected
 	qdel(query_insert)
+	if(!inserted)
+		return FALSE
+	SScassettes.top_cassettes_cache.Cut()
 	return TRUE
+
+/// gets every purchase in the JSON file, reading the file only the first time
+/proc/get_json_purchases()
+	if(!isnull(SScassettes.json_purchases))
+		return SScassettes.json_purchases
+	SScassettes.json_purchases = list()
+	if(fexists(CASSETTE_PURCHASES_JSON_FILE))
+		try
+			var/list/loaded = json_decode(aneri_file_read(CASSETTE_PURCHASES_JSON_FILE))
+			if(islist(loaded))
+				SScassettes.json_purchases = loaded
+		catch
+			log_music("Failed to load cassette purchases JSON, creating new file")
+	return SScassettes.json_purchases
 
 /// records a cassette purchase to JSON file
 /proc/record_cassette_purchase_json(cassette_id, cassette_name, buyer_ckey)
-	var/list/purchases = list()
-
-	// load existing purchases
-	if(fexists(CASSETTE_PURCHASES_JSON_FILE))
-		try
-			purchases = json_decode(aneri_file_read(CASSETTE_PURCHASES_JSON_FILE))
-			if(!islist(purchases))
-				purchases = list()
-		catch
-			log_music("Failed to load cassette purchases JSON, creating new file")
-			purchases = list()
+	var/list/purchases = get_json_purchases()
 
 	// check if this buyer has already purchased this cassette
 	if(buyer_ckey)
@@ -109,53 +96,50 @@
 
 /// gets top cassettes from database
 /proc/get_top_cassettes_db(limit = 20)
-	if(!SSdbcore.Connect())
-		return get_top_cassettes_json(limit) // Fallback to JSON
+	var/list/results = SScassettes.top_cassettes_cache["[limit]"]
+	if(isnull(results))
+		if(!SSdbcore.Connect())
+			return get_top_cassettes_json(limit) // Fallback to JSON
 
-	var/datum/db_query/query_top = SSdbcore.NewQuery({"
-		SELECT cassette_id, cassette_name, COUNT(DISTINCT buyer_ckey) as purchase_count
-		FROM [format_table_name("cassette_purchases")]
-		WHERE buyer_ckey IS NOT NULL
-		GROUP BY cassette_id, cassette_name
-		ORDER BY purchase_count DESC
-		LIMIT :limit
-	"}, list("limit" = limit))
+		var/datum/db_query/query_top = SSdbcore.NewQuery({"
+			SELECT cassette_id, cassette_name, COUNT(DISTINCT buyer_ckey) as purchase_count
+			FROM [format_table_name("cassette_purchases")]
+			WHERE buyer_ckey IS NOT NULL
+			GROUP BY cassette_id, cassette_name
+			ORDER BY purchase_count DESC
+			LIMIT :limit
+		"}, list("limit" = limit))
 
-	if(!query_top.Execute())
+		if(!query_top.Execute())
+			qdel(query_top)
+			return get_top_cassettes_json(limit) // fallback to JSON if no SQL
+
+		results = list()
+		while(query_top.NextRow())
+			var/cassette_id = query_top.item[1]
+			var/cassette_name = query_top.item[2]
+			var/purchase_count = text2num(query_top.item[3])
+
+			results += list(list(
+				"cassette_id" = cassette_id,
+				"cassette_name" = html_decode(cassette_name),
+				"purchase_count" = purchase_count
+			))
+
 		qdel(query_top)
-		return get_top_cassettes_json(limit) // fallback to JSON if no SQL
+		SScassettes.top_cassettes_cache["[limit]"] = results
 
-	var/list/results = list()
-	while(query_top.NextRow())
-		var/cassette_id = query_top.item[1]
-		var/cassette_name = query_top.item[2]
-		var/purchase_count = text2num(query_top.item[3])
-
-		results += list(list(
-			"cassette_id" = cassette_id,
-			"cassette_name" = html_decode(cassette_name),
-			"purchase_count" = purchase_count
-		))
-
-	qdel(query_top)
-
-	for(var/entry in results)
+	var/list/enriched = list()
+	for(var/list/row as anything in results)
+		var/list/entry = row.Copy()
 		enrich_cassette_entry(entry)
+		enriched += list(entry)
 
-	return results
+	return enriched
 
 /// gets top cassettes from JSON file
 /proc/get_top_cassettes_json(limit = 20)
-	if(!fexists(CASSETTE_PURCHASES_JSON_FILE))
-		return list()
-
-	var/list/purchases
-	try
-		purchases = json_decode(aneri_file_read(CASSETTE_PURCHASES_JSON_FILE))
-		if(!islist(purchases))
-			return list()
-	catch
-		return list()
+	var/list/purchases = get_json_purchases()
 
 	// count unique buyers per cassette_id
 	var/list/cassette_counts = list()

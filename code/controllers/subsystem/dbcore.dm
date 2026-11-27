@@ -119,11 +119,13 @@ SUBSYSTEM_DEF(dbcore)
 			queries_active -= query
 
 	// Now lets pull in standby queries if we have room.
-	if (length(queries_standby) > 0 && length(queries_active) < max_concurrent_queries)
-		var/list/queries_to_activate = queries_standby.Copy(1, min(length(queries_standby), max_concurrent_queries) + 1)
+	var/open_slots = max_concurrent_queries - length(queries_active)
+	if (length(queries_standby) > 0 && open_slots > 0)
+		var/activate_count = min(length(queries_standby), open_slots)
+		var/list/queries_to_activate = queries_standby.Copy(1, activate_count + 1)
+		queries_standby.Cut(1, activate_count + 1)
 
 		for (var/datum/db_query/query in queries_to_activate)
-			queries_standby.Remove(query)
 			create_active_query(query)
 
 	// And finally, let check queries for undeleted queries, check ticking if there is a lot of work to do.
@@ -663,6 +665,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	if(!async)
 		start_time = REALTIMEOFDAY
 	Close()
+	inner = null
 	status = DB_QUERY_STARTED
 	// aneri can't block on a transaction's statements, and the standby queue would reorder them
 	if(async || transaction)
@@ -694,7 +697,9 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 
 /// Sleeps until execution of the query has finished.
 /datum/db_query/proc/sync()
-	while(status < DB_QUERY_FINISHED)
+	while(!isnull(status) && status < DB_QUERY_FINISHED)
+		if(inner && process())
+			return
 		stoplag()
 
 /datum/db_query/process(seconds_per_tick)

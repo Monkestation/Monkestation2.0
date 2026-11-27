@@ -144,6 +144,9 @@
 	/// If TRUE, then this job will latejoin "normally" on Oshan, instead of via pod.
 	var/oshan_normal_latejoin = FALSE
 
+	/// How desensitized this job is to seeing death as a base - applied with the job
+	var/desensitized_base = 1.0
+
 /datum/job/New()
 	. = ..()
 	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
@@ -159,6 +162,8 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 	if(length(mind_traits))
 		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
+
+	spawned.mind.desensitized_level = clamp(desensitized_base, DESENSITIZED_MINIMUM, spawned.mind.desensitized_level)
 
 	if(faction == FACTION_STATION)
 		ADD_TRAIT(spawned.mind, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)

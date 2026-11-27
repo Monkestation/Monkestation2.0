@@ -4,7 +4,11 @@
 	icon = 'monkestation/code/modules/blueshift/icons/wrestling.dmi'
 	icon_state = "ropes"
 	climbable = FALSE
-	standard_smoothing = FALSE
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
+	material_flags = NONE
+	auto_join = FALSE
+	layer_by_dir = TRUE
 
 /obj/structure/railing/wrestling/CanPass(atom/movable/mover, border_dir)
 	..()

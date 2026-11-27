@@ -236,6 +236,7 @@ GLOBAL_PROTECT(poll_options)
 	var/datum/db_query/query_irv_get_votes = SSdbcore.NewQuery({"
 		SELECT optionid FROM [format_table_name("poll_vote")]
 		WHERE pollid = :pollid AND ckey = :ckey AND deleted = 0
+		ORDER BY id
 	"}, list("pollid" = poll.poll_id, "ckey" = ckey))
 	if(!query_irv_get_votes.warn_execute())
 		qdel(query_irv_get_votes)

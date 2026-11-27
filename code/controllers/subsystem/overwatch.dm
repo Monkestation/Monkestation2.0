@@ -91,12 +91,33 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CheckDBCon())
 		return
 
-	C.ip_info.is_whitelisted = CheckWhitelist(C.ckey)
+	var/datum/db_query/query_whitelist = SSdbcore.NewQuery(
+		"SELECT ckey FROM [format_table_name("overwatch_whitelist")] WHERE ckey = :ckey",
+		list("ckey" = C.ckey)
+	)
+	var/needs_ip_lookup = !(C.ip_info.is_loaded && C.ip_info.ip == _ip_addr) && _ip_addr && _ip_addr != "127.0.0.1"
+	var/datum/db_query/query_cache
+	if(needs_ip_lookup)
+		query_cache = SSdbcore.NewQuery("SELECT response FROM [format_table_name("overwatch_ip_cache")] WHERE ip = :ip", list("ip" = _ip_addr))
+	SSdbcore.QuerySelect(query_cache ? list(query_whitelist, query_cache) : query_whitelist)
 
-	if(!_ip_addr || _ip_addr == "127.0.0.1")
+	if(QDELETED(C))
+		qdel(query_whitelist)
+		qdel(query_cache)
 		return
 
-	var/list/response = GetAPIresponse(_ip_addr, C)
+	C.ip_info.is_whitelisted = query_whitelist.NextRow()
+	qdel(query_whitelist)
+
+	var/list/cached_response
+	if(query_cache?.NextRow())
+		cached_response = json_decode(query_cache.item[1])
+	qdel(query_cache)
+
+	if(!needs_ip_lookup)
+		return
+
+	var/list/response = GetAPIresponse(_ip_addr, cached_response, C)
 
 	if(!response || !C)
 		return
@@ -109,9 +130,7 @@ SUBSYSTEM_DEF(overwatch)
 
 	C.ip_info.is_loaded = TRUE
 
-/datum/controller/subsystem/overwatch/proc/GetAPIresponse(ip, client/C = null)
-	var/list/response = LoadCachedData(ip)
-
+/datum/controller/subsystem/overwatch/proc/GetAPIresponse(ip, list/response, client/C = null)
 	if(response && C)
 		log_access("Overwatch data for [C] ([ip]) is loaded from cache!")
 
@@ -190,7 +209,7 @@ SUBSYSTEM_DEF(overwatch)
 		return
 
 	var/datum/db_query/query = SSdbcore.NewQuery(
-		"SELECT ckey FROM overwatch_whitelist WHERE ckey = :ckey",
+		"SELECT ckey FROM [format_table_name("overwatch_whitelist")] WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)
 	query.Execute()
@@ -214,7 +233,10 @@ SUBSYSTEM_DEF(overwatch)
 	if(C.ip_info.is_whitelisted)
 		return
 
-	var/datum/db_query/query = SSdbcore.NewQuery("SELECT `asn` FROM overwatch_asn_ban WHERE asn = :asn", list("asn" = C.ip_info.ip_as))
+	if(isnull(C.ip_info.ip_as))
+		return
+
+	var/datum/db_query/query = SSdbcore.NewQuery("SELECT `asn` FROM [format_table_name("overwatch_asn_ban")] WHERE asn = :asn", list("asn" = C.ip_info.ip_as))
 	query.Execute()
 
 	if(query.NextRow())
@@ -228,7 +250,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CheckDBCon())
 		return FALSE
 
-	var/datum/db_query/_Cache_select_query = SSdbcore.NewQuery("SELECT response FROM overwatch_ip_cache WHERE ip = :ip", list("ip" = ip))
+	var/datum/db_query/_Cache_select_query = SSdbcore.NewQuery("SELECT response FROM [format_table_name("overwatch_ip_cache")] WHERE ip = :ip", list("ip" = ip))
 	_Cache_select_query.Execute()
 
 	if(!_Cache_select_query.NextRow())
@@ -247,7 +269,7 @@ SUBSYSTEM_DEF(overwatch)
 		return FALSE
 
 	var/datum/db_query/_Cache_insert_query = SSdbcore.NewQuery({"
-		INSERT INTO overwatch_ip_cache (ip, response)
+		INSERT INTO [format_table_name("overwatch_ip_cache")] (ip, response)
 		VALUES (:ip, :raw_response)
 		ON DUPLICATE KEY UPDATE
 		response = :raw_response"},
@@ -267,7 +289,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(!ckey)
 		return
 
-	var/datum/db_query/_Whitelist_Query = SSdbcore.NewQuery("INSERT INTO overwatch_whitelist (`ckey`, `a_ckey`, `timestamp`) VALUES (:ckey, :admin_ckey, Now())", list("ckey" = ckey, "admin_ckey" = Admin.ckey))
+	var/datum/db_query/_Whitelist_Query = SSdbcore.NewQuery("INSERT INTO [format_table_name("overwatch_whitelist")] (`ckey`, `a_ckey`, `timestamp`) VALUES (:ckey, :admin_ckey, Now())", list("ckey" = ckey, "admin_ckey" = Admin.ckey))
 	_Whitelist_Query.Execute()
 	qdel(_Whitelist_Query)
 
@@ -283,7 +305,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CheckWhitelist(ckey))
 		return
 
-	var/datum/db_query/_Whitelist_Query = SSdbcore.NewQuery("DELETE FROM overwatch_whitelist WHERE `ckey` = :ckey", list("ckey" = ckey))
+	var/datum/db_query/_Whitelist_Query = SSdbcore.NewQuery("DELETE FROM [format_table_name("overwatch_whitelist")] WHERE `ckey` = :ckey", list("ckey" = ckey))
 	_Whitelist_Query.Execute()
 	qdel(_Whitelist_Query)
 
@@ -293,7 +315,7 @@ SUBSYSTEM_DEF(overwatch)
 	return TRUE
 
 /datum/controller/subsystem/overwatch/proc/GetWhitelistDatabase()
-	var/datum/db_query/_Whitelist_DB_Select_Query = SSdbcore.NewQuery("SELECT `ckey`, `a_ckey`, `timestamp` from overwatch_whitelist")
+	var/datum/db_query/_Whitelist_DB_Select_Query = SSdbcore.NewQuery("SELECT `ckey`, `a_ckey`, `timestamp` from [format_table_name("overwatch_whitelist")]")
 	_Whitelist_DB_Select_Query.Execute()
 
 	var/list/result = list()
@@ -322,12 +344,12 @@ SUBSYSTEM_DEF(overwatch)
 	if(length(ip) > 16)
 		return
 
-	var/list/response = GetAPIresponse(ip)
+	var/list/response = GetAPIresponse(ip, LoadCachedData(ip))
 
 	var/ip_as = response["as"]
 
 	var/datum/db_query/_ASban_Insert_Query = SSdbcore.NewQuery(
-		"INSERT INTO overwatch_asn_ban (`ip`, `asn`, `a_ckey`, `timestamp`) VALUES (:ip, :ip_as, :admin_ckey, Now())",
+		"INSERT INTO [format_table_name("overwatch_asn_ban")] (`ip`, `asn`, `a_ckey`, `timestamp`) VALUES (:ip, :ip_as, :admin_ckey, Now())",
 		list(
 			"ip" = ip,
 			"ip_as" = ip_as,
@@ -349,7 +371,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(!check_rights(R_SERVER, TRUE))
 		return
 
-	var/datum/db_query/_ASban_Delete_Query = SSdbcore.NewQuery("DELETE FROM overwatch_asn_ban WHERE `asn` = :asn", list("asn" = ip_as))
+	var/datum/db_query/_ASban_Delete_Query = SSdbcore.NewQuery("DELETE FROM [format_table_name("overwatch_asn_ban")] WHERE `asn` = :asn", list("asn" = ip_as))
 	_ASban_Delete_Query.Execute()
 	qdel(_ASban_Delete_Query)
 
@@ -359,7 +381,7 @@ SUBSYSTEM_DEF(overwatch)
 	return TRUE
 
 /datum/controller/subsystem/overwatch/proc/GetAsnBanlistDatabase()
-	var/datum/db_query/_ASN_Banlist_Select_Query = SSdbcore.NewQuery("SELECT `asn`, `timestamp`, `a_ckey` from overwatch_asn_ban")
+	var/datum/db_query/_ASN_Banlist_Select_Query = SSdbcore.NewQuery("SELECT `asn`, `timestamp`, `a_ckey` from [format_table_name("overwatch_asn_ban")]")
 	_ASN_Banlist_Select_Query.Execute()
 
 	var/list/result = list()
@@ -394,21 +416,35 @@ SUBSYSTEM_DEF(overwatch)
 		qdel(C)
 		return
 
-/datum/controller/subsystem/overwatch/proc/FetchPlayerAge(client/C, connection_data)
-	var/cached_player_age = C.set_client_age_from_db(connection_data) //we have to cache this because other shit may change it and we need it's current value now down below.
-	if (isnum(cached_player_age) && cached_player_age == -1)
-		C.account_join_date = C.findJoinDate()
-		if(C.account_join_date)
-			var/datum/db_query/query_datediff = SSdbcore.NewQuery(
-				"SELECT DATEDIFF(Now(), :account_join_date)",
-				list("account_join_date" = C.account_join_date)
-			)
-			if(!query_datediff.Execute())
-				qdel(query_datediff)
-				return
-			if(query_datediff.NextRow())
-				cached_player_age = text2num(query_datediff.item[1])
+/datum/controller/subsystem/overwatch/proc/FetchPlayerAge(client/C)
+	if(is_guest_key(C.key))
+		return
+	var/datum/db_query/query_player_age = SSdbcore.NewQuery(
+		"SELECT DATEDIFF(Now(), firstseen) FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = C.ckey)
+	)
+	if(!query_player_age.Execute())
+		qdel(query_player_age)
+		return
+	if(query_player_age.NextRow())
+		var/player_age = text2num(query_player_age.item[1])
+		qdel(query_player_age)
+		return player_age
+	qdel(query_player_age)
+
+	var/cached_player_age = -1
+	C.account_join_date = C.findJoinDate()
+	if(C.account_join_date)
+		var/datum/db_query/query_datediff = SSdbcore.NewQuery(
+			"SELECT DATEDIFF(Now(), :account_join_date)",
+			list("account_join_date" = C.account_join_date)
+		)
+		if(!query_datediff.Execute())
 			qdel(query_datediff)
+			return
+		if(query_datediff.NextRow())
+			cached_player_age = text2num(query_datediff.item[1])
+		qdel(query_datediff)
 	return cached_player_age
 
 /datum/controller/subsystem/overwatch/proc/CheckActiveBans(client/C)

@@ -13,6 +13,7 @@
 	hijack_speed = 0.5 //10 seconds per hijack stage by default
 	ui_name = "AntagInfoTraitor"
 	suicide_cry = "FOR THE SYNDICATE!!"
+	desensitized_modifier = DESENSITIZED_THRESHOLD * 0.5
 	preview_outfit = /datum/outfit/traitor
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."

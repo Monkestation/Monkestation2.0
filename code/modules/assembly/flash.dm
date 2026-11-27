@@ -186,7 +186,11 @@
 		ADD_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC)
 
 	if(targeted)
-		if(!flashed.has_status_effect(/datum/status_effect/currently_flashed) && flashed.flash_act(1, 1))
+		var/flash_result = !flashed.has_status_effect(/datum/status_effect/currently_flashed) && flashed.flash_act(1, 1)
+		if(flash_result == FLASH_COMPLETED)
+			return //Behavior was overwritten, so we just skip the flashy stunny part and go with the override behavior instead
+
+		if(flash_result)
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			visible_message(span_danger("[user] blinds [flashed] with the [name]!"), span_userdanger("[user] blinds you with the flash!"))
 			if (deviation == DEVIATION_PARTIAL)

@@ -6,9 +6,9 @@
 	can_elimination_hijack = ELIMINATION_ENABLED
 	suicide_cry = "FOR SCOTLAND!!" // If they manage to lose their no-drop stuff somehow
 	count_against_dynamic_roll_chance = FALSE
+	desensitized_modifier = DESENSITIZED_THRESHOLD * 0.2
 	/// Traits we apply/remove to our target on-demand.
 	var/static/list/applicable_traits = list(
-		TRAIT_DESENSITIZED,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,

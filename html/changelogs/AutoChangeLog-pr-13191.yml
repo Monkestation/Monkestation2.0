@@ -1,0 +1,14 @@
+author: "MrMelbert, SmArtKar, san7890, vinylspiders, Ryll-Ryll, AitorLogedo"
+delete-after: True
+changes:
+  - rscadd: "Desensitization to death is no longer binary, some antagonists are more used to it than others."
+  - rscadd: "Witnessing the death of a fellow humanoid (or dying yourself) will slightly desensitize you to future deaths."
+  - rscadd: "Adds an achievement for managing to max out desensitization across a round."
+  - rscadd: "Desensitized crewmembers care less when splattered with blood."
+  - rscadd: "Holodeck mobs have a reduced death mood impact."
+  - balance: "Traitors start out desensitized to death, so killing your target no longer tanks your mood."
+  - rscadd: "Seeing a xenomorph die cheers you up, unless you're carrying an embryo."
+  - rscadd: "Ashwalkers don't care about non ashwalker deaths and enjoy seeing people get gibbed."
+  - rscadd: "Seeing a teratoma die cheers you up."
+  - bugfix: "Clowns get their naive death moodlet again, and desensitized jobs actually get the reduced death moodlet."
+  - spellcheck: "Pet moodlets no longer capitalize the pet's name weirdly, and the chaplain's moodlets mention their deity instead of \"god\"."

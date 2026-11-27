@@ -304,6 +304,7 @@
 	shoes = /obj/item/clothing/shoes/combat
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_hand = /obj/item/gun/ballistic/rifle/sniper_rifle
+	box = /obj/item/storage/box/survival/syndie/ghostrole
 
 	implants = list(/obj/item/implant/weapons_auth)
 

@@ -637,6 +637,15 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		return FOOD_LIKED
 	return ..()
 
+/obj/item/organ/internal/tongue/shadow
+	name = "shadow tongue"
+	color = COLOR_ALMOST_BLACK
+	languages_native = list(/datum/language/shadowtongue)
+	say_mod = "wails"
+
+/obj/item/organ/internal/tongue/shadow/get_scream_sound()
+	return 'sound/mobs/humanoids/shadow/shadow_wail.ogg'
+
 /obj/item/organ/internal/tongue/monkey
 	name = "primitive tongue"
 	desc = "For aggressively chimpering. And consuming bananas."

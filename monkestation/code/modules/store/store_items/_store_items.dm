@@ -46,31 +46,25 @@
 		return FALSE
 	var/datum/preferences/prefs = buyer.prefs
 	var/ckey = buyer.ckey
-	if(!prefs.inventory[item_path])
-		SSdbcore.FireAndForget({"
-			INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
-			list("ckey" = ckey, "item_id" = item_path, "amount" = 1), transaction = transaction)
-	else
-		SSdbcore.FireAndForget({"
-			UPDATE [format_table_name("metacoin_item_purchases")] SET amount = :amount WHERE ckey = :ckey AND item_id = :item_id"},
-			list("ckey" = ckey, "item_id" = item_path, "amount" = 1), transaction = transaction)
+	SSdbcore.FireAndForget({"
+		INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, 1)
+		ON DUPLICATE KEY UPDATE amount = 1"},
+		list("ckey" = ckey, "item_id" = item_path), transaction = transaction)
 	if(cost)
 		SSdbcore.FireAndForget(
 			"UPDATE [format_table_name("player")] SET metacoins = metacoins - :cost WHERE ckey = :ckey",
 			list("cost" = cost, "ckey" = ckey), transaction = transaction)
-	var/reason = "[buyer] bought a [name] for [cost]"
-	// added before the commit sleeps so a second click can't buy it twice
-	prefs.inventory += item_path
-	if(!SSdbcore.CommitTransaction(transaction))
-		prefs.inventory -= item_path
-		to_chat(buyer, fail_message)
-		return FALSE
-	if(!cost)
-		return TRUE
+	// changed before the commit sleeps so a second click can't buy it twice or spend the same coins
+	prefs.inventory |= item_path
 	var/previous_coins = prefs.metacoins
 	prefs.metacoins -= cost
-	logger.Log(LOG_CATEGORY_META, "[ckey]'s monkecoins were changed by [-cost] Reason: [reason]", list("currency_left" = prefs.metacoins, "reason" = reason, "previous_coins" = previous_coins))
-	to_chat(buyer, "<span class='rose bold'>[cost] Monkecoins have been withdrawn from your account! Reason: [reason]</span>")
+	if(!SSdbcore.CommitTransaction(transaction))
+		prefs.inventory -= item_path
+		prefs.metacoins += cost
+		to_chat(buyer, fail_message)
+		return FALSE
+	if(cost)
+		prefs.log_metacoin_change(-cost, previous_coins, "[buyer] bought a [name] for [cost]", announces = TRUE)
 	return TRUE
 
 /datum/store_item/proc/attempt_spawn(client/buyer)

@@ -1,0 +1,6 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscadd: "Borer eggs are now actual eggs, and can be used for egg purposes"
+  - rscadd: "Added Borer inhand sprites"
+  - rscadd: "Scangates can now search for borers infestation or borer eggs on a person belongings"

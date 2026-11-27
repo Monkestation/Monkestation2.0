@@ -104,6 +104,7 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	shoes = /obj/item/clothing/shoes/combat
+	box = /obj/item/storage/box/survival/syndie/ghostrole
 
 	implants = list(/obj/item/implant/weapons_auth)
 
