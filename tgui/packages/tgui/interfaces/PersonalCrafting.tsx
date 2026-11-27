@@ -145,6 +145,8 @@ type Data = {
   forced_mode: BooleanLike;
   display_compact: BooleanLike;
   display_craftable_only: BooleanLike;
+  autocraft: BooleanLike;
+  autocrafting: BooleanLike;
   craftability: Record<string, BooleanLike>;
   // Static
   diet: Diet;
@@ -189,6 +191,8 @@ export const PersonalCrafting = (props) => {
     forced_mode,
     display_compact,
     display_craftable_only,
+    autocraft,
+    autocrafting,
     craftability,
     diet,
   } = data;
@@ -477,6 +481,28 @@ export const PersonalCrafting = (props) => {
                   >
                     Compact list
                   </Button.Checkbox>
+                  <Button.Checkbox
+                    fluid
+                    color="transparent"
+                    checked={autocraft}
+                    tooltip="Keep making the item until you run out of ingredients"
+                    onClick={() => act('toggle_autocraft')}
+                    mt="0.2em"
+                  >
+                    Autocraft
+                  </Button.Checkbox>
+                  {!!autocrafting && (
+                    <Button
+                      fluid
+                      color="bad"
+                      icon="stop"
+                      textAlign="center"
+                      mt="0.4em"
+                      onClick={() => act('stop_autocraft')}
+                    >
+                      Stop autocrafting
+                    </Button>
+                  )}
                 </Stack.Item>
                 {!forced_mode && (
                   <Stack.Item>
@@ -812,7 +838,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                       })
                     }
                   >
-                    Make
+                    {data.autocraft ? 'Make All' : 'Make'}
                   </Button>
                 </Box>
               ) : (
@@ -837,7 +863,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
 };
 
 const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
-  const { act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
 
   const specialSteps = [
     'Optional Steps',
@@ -1071,7 +1097,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                     })
                   }
                 >
-                  Make
+                  {data.autocraft ? 'Make All' : 'Make'}
                 </Button>
               )}
               {item.nutriments > 0 && (

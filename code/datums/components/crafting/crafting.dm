@@ -21,6 +21,10 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = FALSE
 	var/forced_mode = FALSE //MONKESTATION ADDITION
+	/// Is the "Autocraft" box checked? If so, the make button repeats the recipe until it can't anymore
+	var/autocraft = FALSE
+	/// Are we in the middle of repeating a recipe? Set this to FALSE to stop after the current craft
+	var/autocrafting = FALSE
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -388,6 +392,8 @@
 	data["mode"] = mode
 	data["display_craftable_only"] = display_craftable_only
 	data["display_compact"] = display_compact
+	data["autocraft"] = autocraft
+	data["autocrafting"] = autocrafting
 
 	var/list/surroundings = get_surroundings(user)
 	var/list/craftability = list()
@@ -465,29 +471,57 @@
 	return TRUE
 
 
+/// Repeats a recipe until a craft fails, we run out of what it needs, or the user stops it
+/datum/component/personal_crafting/proc/autocraft_action(datum/crafting_recipe/recipe, mob/user)
+	autocrafting = TRUE
+	SStgui.update_uis(src)
+	var/amount_crafted = 0
+	while(make_action(recipe, user))
+		amount_crafted++
+		// a recipe which uses nothing up would never run out
+		if(!length(recipe.reqs))
+			break
+		// instant recipes never sleep on their own, so yield here to let the user stop us
+		stoplag()
+		if(QDELETED(src) || QDELETED(user) || !autocrafting || !SStgui.get_open_ui(user, src))
+			break
+		SStgui.update_uis(src)
+		// check ahead of time, so that simply running out doesn't count as a failed craft
+		var/list/surroundings = get_surroundings(user, recipe.blacklist)
+		if(!check_contents(user, recipe, surroundings) || !check_tools(recipe, surroundings))
+			break
+	autocrafting = FALSE
+	if(amount_crafted && !QDELETED(user))
+		to_chat(user, span_notice("Autocraft finished: [amount_crafted]x [recipe.name] crafted."))
+
 /datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("make")
+			if(busy)
+				return
 			var/mob/user = usr
 			var/datum/crafting_recipe/crafting_recipe = locate(params["recipe"]) in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes)
+			if(!crafting_recipe)
+				return
 			busy = TRUE
 			ui_interact(user)
-			var/atom/movable/result = construct_item(user, crafting_recipe)
-			if(!istext(result)) //We made an item and didn't get a fail message
-				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
-					user.put_in_hands(result)
-				else if(!istype(result, /obj/effect/spawner))
-					result.forceMove(user.drop_location())
-				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
-				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
-				result.add_fingerprint(user, FALSE)
-				crafting_recipe.on_craft_completion(user, result)
+			if(autocraft)
+				autocraft_action(crafting_recipe, user)
 			else
-				to_chat(user, span_warning("Construction failed[result]"))
+				make_action(crafting_recipe, user)
 			busy = FALSE
+			. = TRUE
+		if("toggle_autocraft")
+			autocraft = !autocraft
+			if(!autocraft)
+				autocrafting = FALSE
+			. = TRUE
+		if("stop_autocraft")
+			autocrafting = FALSE
+			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
 			. = TRUE
