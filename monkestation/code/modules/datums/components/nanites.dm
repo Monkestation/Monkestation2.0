@@ -265,8 +265,11 @@
 	nanite_percent = clamp(CEILING(nanite_percent, 10), 10, 100)
 	holder.icon_state = "nanites[nanite_percent]"
 
-/datum/component/nanites/proc/on_emp(datum/source, severity)
+/datum/component/nanites/proc/on_emp(datum/source, severity, protection)
 	SIGNAL_HANDLER
+
+	if(protection & EMP_PROTECT_CONTENTS)
+		return
 
 	nanite_volume *= (rand(60, 90) * 0.01) //Lose 10-40% of nanites
 	adjust_nanites(null, -(rand(5, 50))) //Lose 5-50 flat nanite volume
