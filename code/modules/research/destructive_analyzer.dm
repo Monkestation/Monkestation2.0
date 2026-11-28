@@ -46,12 +46,18 @@
 /obj/machinery/rnd/destructive_analyzer/attackby(obj/item/weapon, mob/living/user, params)
 	if(user.istate & ISTATE_HARM)
 		return ..()
-	if(!is_insertion_ready(user))
+	if(!try_load_item(weapon, user))
 		return ..()
+	return TRUE
+
+///Tries to load an item. Returns TRUE if it was handled (loaded, or stuck to the user's hand), FALSE if not.
+/obj/machinery/rnd/destructive_analyzer/proc/try_load_item(obj/item/weapon, mob/living/user)
+	if(!is_insertion_ready(user))
+		return FALSE
 	if(!can_deconstruct(weapon))
 		to_chat(user, span_warning("The [name] rejects \the [weapon]!"))
 		balloon_alert(user, "cannot insert that!")
-		return ..()
+		return FALSE
 	if(!user.transferItemToLoc(weapon, src))
 		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in the [name]!"))
 		return TRUE
@@ -125,11 +131,18 @@
 				say("Destructive analysis failed!")
 			return TRUE
 
-//Let emags in on a right click
+//Some items (radio jammers, doorjacks) use the click themselves and never reach attackby, so non-tool items are loaded here instead. otherwise they would never be inserted. "You cant doorjack the destructive analyzer" despite me wanting to insert it into the analyzer.
 /obj/machinery/rnd/destructive_analyzer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	//Let emags in on a right click
 	if(is_right_clicking && istype(tool, /obj/item/card/emag))
 		return NONE
-	return ..()
+	. = ..()
+	if(. != NONE)
+		return .
+	// Don't load anything with the panel open (stock parts, circuit boards), on right click or harm intent, or for the RPED, which has its own handling.
+	if(panel_open || is_right_clicking || (user.istate & ISTATE_HARM) || tool.tool_behaviour || istype(tool, /obj/item/storage/part_replacer))
+		return NONE
+	return try_load_item(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 //This allows people to put syndicate screwdrivers in the machine. Secondary act still passes.
 /obj/machinery/rnd/destructive_analyzer/screwdriver_act(mob/living/user, obj/item/tool)
