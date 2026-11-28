@@ -81,7 +81,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore)
 	shaded_charge = 1
 	charge_sections = 1
-	spread = 10 //monke edit: changed spread to 10 instead of 22.5
+	projectile_damage_multiplier = 1.5
+	projectile_speed_multiplier = 2
 
 /obj/item/gun/energy/disabler/smoothbore/Initialize(mapload)
 	. = ..()
@@ -109,7 +110,7 @@
 	icon_state = "smoothbore_prime"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore/prime)
 	charge_sections = 2
-	spread = 0 //could be like 5, but having just very tiny spread kinda feels like bullshit
+	projectile_damage_multiplier = 2
 
 
 /obj/item/gun/energy/laser/plasmacore //NTrep gun
