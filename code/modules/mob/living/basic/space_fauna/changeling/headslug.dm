@@ -44,6 +44,15 @@
 	else
 		. += span_warning("It's moving around intelligently!")
 
+	if(user == src || !user.mind?.has_antag_datum(/datum/antagonist/changeling) || !mind?.has_antag_datum(/datum/antagonist/changeling))
+		return
+	if(stat != DEAD)
+		. += span_changeling("One of our kind hides within this vessel. Should it perish before planting its egg, we could absorb what remains.")
+	else if(egg_lain)
+		. += span_changeling("Its essence has already passed into a new host. Nothing remains for us to take.")
+	else
+		. += span_changeling("Its essence still lingers within. It is small enough that we need only take hold of it to absorb it.")
+
 /// Signal Handler proc that runs on every attack and checks to see if this is a valid target for implantation. If so, it implants the egg and starts the countdown to death.
 /mob/living/basic/headslug/proc/check_and_implant(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER

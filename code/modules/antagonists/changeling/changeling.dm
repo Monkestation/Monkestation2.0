@@ -521,6 +521,23 @@
 
 	return TRUE
 
+/// Wether we can absorb a headslug containing a changeling, so no denying the bonus from absorbing another changeling by popping last resort and then dying.
+/datum/antagonist/changeling/proc/can_absorb_headslug(mob/living/basic/headslug/slug, verbose = TRUE)
+	var/mob/living/user = owner.current
+	if(slug.stat != DEAD)
+		if(verbose)
+			user.balloon_alert(user, "it's still alive!")
+		return FALSE
+	if(slug.egg_lain)
+		if(verbose)
+			to_chat(user, span_warning("[slug] has already planted its egg. Its essence lives on elsewhere."))
+		return FALSE
+	if(!slug.mind?.has_antag_datum(/datum/antagonist/changeling))
+		if(verbose)
+			to_chat(user, span_warning("There is nothing left in [slug] for us to absorb."))
+		return FALSE
+	return TRUE
+
 /*
  * Create a new changeling profile datum based off of [target].
  *

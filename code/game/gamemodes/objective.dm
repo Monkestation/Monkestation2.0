@@ -815,7 +815,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/absorb_changeling
 	name = "absorb changeling"
-	explanation_text = "Absorb another Changeling."
+	explanation_text = "Absorb another Changeling, or what remains of their headslug."
 
 /datum/objective/absorb_changeling/check_completion()
 	var/list/datum/mind/owners = get_owners()
