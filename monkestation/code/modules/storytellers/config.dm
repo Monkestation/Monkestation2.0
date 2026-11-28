@@ -62,6 +62,11 @@
 	integer = TRUE
 	min_val = 0
 
+/// How hard antag rolls favor players who are owed one. 0 is a flat roll, higher punishes recent antags harder.
+/datum/config_entry/number/antag_debt_strength
+	default = 4
+	min_val = 0
+
 /datum/config_entry/flag/allow_storyteller_pop_scaling // Allows storyteller to scale down the event frequency by population
 
 // Pop scalling thresholds

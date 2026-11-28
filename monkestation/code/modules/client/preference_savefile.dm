@@ -85,7 +85,7 @@
 	savefile.set_entry("saved_tokens", saved_tokens)
 	savefile.set_entry("extra_stat_inventory", extra_stat_inventory)
 	savefile.set_entry("lootboxes_owned", lootboxes_owned)
-	savefile.set_entry("antag_rep", antag_rep)
+	savefile.set_entry("antag_debt", antag_debt)
 	savefile.set_entry("modular_version", MODULAR_SAVEFILE_VERSION_MAX)
 
 /datum/preferences/proc/load_preferences_monkestation()
@@ -100,5 +100,5 @@
 	extra_stat_inventory = SANITIZE_LIST(extra_stat_inventory)
 
 	lootboxes_owned = savefile.get_entry("lootboxes_owned", lootboxes_owned)
-	antag_rep = savefile.get_entry("antag_rep", antag_rep)
+	antag_debt = savefile.get_entry("antag_debt", antag_debt)
 

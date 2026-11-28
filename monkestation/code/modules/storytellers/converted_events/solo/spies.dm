@@ -39,6 +39,7 @@
 		JOB_WARDEN,
 	)
 	weight = 10
+	antag_debt_cost = 1.2
 
 /datum/round_event_control/antagonist/spy/roundstart
 	name = "Spies"

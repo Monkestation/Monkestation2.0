@@ -36,3 +36,6 @@ MUNDANE_POP_SCALE_PENALTY 30
 MODERATE_POP_SCALE_PENALTY 30
 MAJOR_POP_SCALE_PENALTY 30
 ROLESET_POP_SCALE_PENALTY 30
+
+## How hard antag rolls favor players who are owed one. 0 is a flat roll, higher punishes recent antags harder.
+ANTAG_DEBT_STRENGTH 4

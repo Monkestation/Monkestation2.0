@@ -35,13 +35,6 @@
 	prompted_picking = cast_control.prompted_picking
 	var/list/candidates = cast_control.get_candidates()
 
-	var/list/cliented_list = list()
-	for(var/mob/living/mob as anything in candidates)
-		cliented_list += mob.client
-	if(length(cliented_list))
-		mass_adjust_antag_rep(cliented_list, 1)
-
-
 	if(prompted_picking)
 		candidates = SSpolling.poll_ghost_candidates(
 			"Would you like to be a paradox clone?",
@@ -52,15 +45,7 @@
 			chat_text_border_icon = /datum/antagonist/paradox_clone,
 		)
 
-	var/list/weighted_candidates = return_antag_rep_weight(candidates)
-	var/selected_count = 0
-	while(length(weighted_candidates) && selected_count < antag_count)
-		var/client/candidate_ckey = pick_n_take_weighted(weighted_candidates)
-		var/client/candidate_client = GLOB.directory[candidate_ckey]
-		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
-			continue
-		var/mob/candidate = candidate_client.mob
-		candidate_client.prefs?.reset_antag_rep()
+	for(var/mob/candidate as anything in pick_ghost_antags(candidates, antag_count))
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
@@ -68,11 +53,10 @@
 		new_human = duplicate_object(clone_victim, warp_turf)
 		if(new_human.loc != warp_turf)
 			new_human.forceMove(warp_turf)
-		new_human.PossessByPlayer(candidate_ckey)
+		new_human.PossessByPlayer(candidate.ckey)
 		new_human.mind.special_role = antag_flag
 		new_human.mind.restricted_roles = restricted_roles
 		setup_minds += new_human.mind
-		selected_count++
 	setup = TRUE
 
 

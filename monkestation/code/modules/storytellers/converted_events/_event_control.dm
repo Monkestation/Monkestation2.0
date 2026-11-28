@@ -101,6 +101,10 @@
 	var/always_spawn_full_amount = FALSE
 	/// The candidate pool passed to run_event(), held just long enough for the new event to take it in New().
 	var/list/next_candidate_pool
+	/// How much antag debt one pick from this event costs, the roll's credit shrinks by the same amount. Smaller antags should cost less than a full antag round. Ghost rolls ignore it, they're outside antag debt.
+	var/antag_debt_cost = 1
+	/// Set when the last run asked players and none of them said yes, so refunding the points would just make the storyteller ask the same people again.
+	var/last_run_no_takers = FALSE
 
 /datum/round_event_control/antagonist/New()
 	. = ..()
@@ -124,7 +128,7 @@
 		if(.)
 			. += ", "
 		. += "Already Ran"
-	var/antag_amt = get_antag_amount()
+	var/antag_amt = SSticker.HasRoundStarted() ? get_antag_amount() : base_antags
 	var/list/candidates = get_candidates() //we should optimize this
 	if(length(candidates) < antag_amt)
 		if(.)
@@ -145,7 +149,8 @@
 	if(roundstart && occurrences)
 		return FALSE
 
-	var/antag_amt = get_antag_amount()
+	// before the round starts the ready count can still shrink, so only the minimum has to be there
+	var/antag_amt = SSticker.HasRoundStarted() ? get_antag_amount() : base_antags
 	var/list/candidates = get_candidates(candidate_pool)
 	if(prompted_picking)
 		candidates = SSgamemode.remove_recent_decliners(candidates)
@@ -155,10 +160,12 @@
 /datum/round_event_control/antagonist/run_event(random = FALSE, announce_chance_override = null, admin_forced = FALSE, event_cause, list/candidate_pool)
 	// New() is the only thing between here and the event's setup() that we can hand anything to
 	next_candidate_pool = candidate_pool
+	last_run_no_takers = FALSE
 	var/datum/round_event/antagonist/round_event = ..()
 	next_candidate_pool = null
 	if(!istype(round_event) || length(round_event.setup_minds))
 		return round_event
+	last_run_no_takers = round_event.prompted_picking
 	// refund occurence (duh)
 	subtract_occurrence()
 	round_event.processing = FALSE
@@ -247,6 +254,10 @@
 	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, FALSE, new_players_arg, living_players_arg, midround_antag_pref = midround_antag_pref_arg, \
 													restricted_roles = restricted_roles, required_roles = required_roles, candidate_pool = candidate_pool)
 	candidates = trim_candidates(candidates)
+	if(prompted_picking)
+		for(var/mob/candidate as anything in candidates)
+			if(antag_flag in SSgamemode.unanswered_antag_prompts[candidate.ckey])
+				candidates -= candidate
 	return candidates
 
 /datum/round_event_control/antagonist/from_ghosts

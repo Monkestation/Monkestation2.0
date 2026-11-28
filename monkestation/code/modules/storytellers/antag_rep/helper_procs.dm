@@ -1,47 +1,13 @@
-GLOBAL_LIST_INIT(blessed_ckeys, list(
-	"taocat" = list(3, 25),
-)) //this is a lmao moment should be a json but its being left here because lol it goes ckey = list(multiplier, base)
-
-///adjusts antag rep by {VALUE} keeping the value above 0
-/datum/preferences/proc/adjust_antag_rep(value, multiplier = TRUE)
-	if(multiplier)
-		value *= return_rep_multiplier()
-	log_antag_rep("[parent]'s antag rep was adjusted by [value]")
-	antag_rep += value
-	if(antag_rep < 1)
-		log_antag_rep("[parent]'s antag rep was adjusted below 1 resetting to 1")
-		antag_rep = 1
+/// Adds to a player's antag debt (higher means they are owed an antag roll more). Being picked costs 1.
+/datum/preferences/proc/adjust_antag_debt(amount)
+	antag_debt += amount
+	log_antag_rep("[parent_ckey]'s antag debt was adjusted by [amount] (now [antag_debt])")
 	save_preferences()
 
-/datum/preferences/proc/reset_antag_rep()
-	var/default = return_default_antag_rep()
-	log_antag_rep("[parent]'s antag rep was reset to default ([default])")
-	antag_rep = default
-	save_preferences()
-
-/datum/preferences/proc/return_default_antag_rep()
-	if(!parent)
-		return 10
-	if(!(parent_ckey in GLOB.blessed_ckeys))
-		return 10
-	return GLOB.blessed_ckeys[parent_ckey][2]
-
-/datum/preferences/proc/return_rep_multiplier()
-	if(!parent)
-		return 1
-	if(!(parent_ckey in GLOB.blessed_ckeys))
-		return 1
-	return GLOB.blessed_ckeys[parent_ckey][1]
-
-///give it a list of clients and the value aswell if it should be affected by multipliers and let er rip
-/proc/mass_adjust_antag_rep(list/clients, value, mulitplier = TRUE)
-	for(var/client/listed_client as anything in clients)
-		if(!IS_CLIENT_OR_MOCK(listed_client))
-			continue
-		listed_client?.prefs?.adjust_antag_rep(value, mulitplier)
-
-/proc/return_antag_rep_weight(list/candidates)
-	. = list()
+/// Turns candidates (mobs, clients or mock clients) into a ckey -> weight list. The most owed player (highest debt) gets weight 1, everyone else shrinks exponentially with how much less they are owed.
+/proc/get_antag_roll_weights(list/candidates)
+	var/list/debts = list()
+	var/highest_debt
 	for(var/anything in candidates)
 		var/client/client_source
 		if(ismob(anything))
@@ -51,6 +17,32 @@ GLOBAL_LIST_INIT(blessed_ckeys, list(
 			client_source = anything
 		if(QDELETED(client_source) || !client_source.ckey)
 			continue
-		.[client_source.ckey] = client_source.prefs?.antag_rep || 10
+		var/debt = client_source.prefs?.antag_debt || 0
+		debts[client_source.ckey] = debt
+		if(isnull(highest_debt) || debt > highest_debt)
+			highest_debt = debt
 
-	//log_antag_rep("Returned Weighted List of [length(.)]", list("before_weight" = candidates, "after_weight" = .))
+	var/strength = CONFIG_GET(number/antag_debt_strength)
+	. = list()
+	for(var/ckey in debts)
+		// floored so the smallest weight stays about 1/22000 of the biggest instead of rounding to 0 in pick_weight's 32-bit float total
+		.[ckey] = NUM_E ** max(strength * (debts[ckey] - highest_debt), -10)
+
+/// Every ckey in the pool gains total / pool size debt (owed more), where total is what the picks cost. A roll that picked nobody credits nothing.
+/proc/credit_antag_roll(list/pool_ckeys, total)
+	if(!total || !length(pool_ckeys))
+		return
+	var/share = total / length(pool_ckeys)
+	for(var/ckey in pool_ckeys)
+		var/datum/preferences/prefs = GLOB.preferences_datums[ckey]
+		prefs?.adjust_antag_debt(share)
+
+/// Plain random draw of up to amount ghost candidates that still have a client. Ghost roles are freebies, so they never read or touch antag debt.
+/proc/pick_ghost_antags(list/candidates, amount = 1)
+	. = list()
+	for(var/mob/candidate as anything in shuffle(candidates))
+		if(length(.) >= amount)
+			break
+		if(QDELETED(candidate) || !candidate.client)
+			continue
+		. += candidate
