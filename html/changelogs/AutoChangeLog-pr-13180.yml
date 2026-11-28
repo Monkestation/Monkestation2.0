@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Space, solars and the ordnance bomb site no longer have gravity from the station's generator. Bring magboots for EVA."
