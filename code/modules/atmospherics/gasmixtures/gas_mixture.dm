@@ -473,11 +473,14 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/cached_moles = (cmp_archive) ? moles_archive : moles
 	var/list/sample_cached_moles = (cmp_archive) ? sample.moles_archive : sample.moles  //accessing datum vars is slower than proc vars
 
-	for(var/gas_id in cached_moles | sample_cached_moles) // compare gases from either mixture
-		var/gas_moles = cached_moles[gas_id] // it can be null, but everything coerce to 0 after, so we save JMP and Tst
+	// Compare our gases first, then gases found only in the sample, without building a union list.
+	for(var/gas_id, gas_moles in cached_moles)
 		var/sample_moles = sample_cached_moles[gas_id]
 		var/abs_delta = abs(gas_moles - sample_moles)
 		if((abs_delta > MINIMUM_MOLES_DELTA_TO_MOVE) && (abs_delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE))
+			return gas_id
+	for(var/gas_id, sample_moles in sample_cached_moles)
+		if(!(gas_id in cached_moles) && abs(sample_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 			return gas_id
 
 	if(values_sum(cached_moles) > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
