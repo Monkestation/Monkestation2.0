@@ -1400,3 +1400,61 @@
   - map: blue shift more visibly blue
   - map: pubby public visibility improved
   - map: void raptor has less void
+2026-11-28:
+  Absolucy:
+  - image: Added a worn sprite for wearing slimes on your head, by spookysprites
+  - qol: Optimized a lot of database-related stuff.
+  - server: Updated the DB schema to 6.3
+  AitorLogedo:
+  - bugfix: Unlocked bots let you use their control panel again without needing their
+      access.
+  - bugfix: Glowshrooms, glowcaps and shadowshrooms die off on their own again instead
+      of slowly taking over the station.
+  - bugfix: Showers wash people and items again, and rehydrate monkey cubes.
+  HoggyHart:
+  - bugfix: fixed notification for nanite defibbing to tell the host to get back in
+      their body
+  - qol: nanite users will now actually be made aware that nanites are trying to revive
+      them
+  IndieanaJones, Higgin, Rhials, IHateGeese, ERRORNAME, Jacquerel, SmArtKar, ArchBTW:
+  - balance: Nightmare's Light Eater gets a critical strike after 7 seconds in jaunt
+      that briefly stuns the target.
+  - balance: Nightmares and shadowpeople are no longer stunned by flashes and flashbangs,
+      instead they get burned and confused.
+  - balance: Shadow eyes are now sensitive to light.
+  - balance: Nightmares can no longer receive wounds.
+  - balance: Nightmares are Light Drinkers too.
+  - image: New sprites for shadowpeople, nightmares, the light eater and the heart
+      of darkness.
+  - sound: Shadowpeople and nightmares wail when they scream.
+  - bugfix: Fixed the nightmare blade hard deleting.
+  - bugfix: The light eater now snuffs out dragged lights and lights on people being
+      carried.
+  MrMelbert, SmArtKar, san7890, vinylspiders, Ryll-Ryll, AitorLogedo:
+  - rscadd: Desensitization to death is no longer binary, some antagonists are more
+      used to it than others.
+  - rscadd: Witnessing the death of a fellow humanoid (or dying yourself) will slightly
+      desensitize you to future deaths.
+  - rscadd: Adds an achievement for managing to max out desensitization across a round.
+  - rscadd: Desensitized crewmembers care less when splattered with blood.
+  - rscadd: Holodeck mobs have a reduced death mood impact.
+  - balance: Traitors start out desensitized to death, so killing your target no longer
+      tanks your mood.
+  - rscadd: Seeing a xenomorph die cheers you up, unless you're carrying an embryo.
+  - rscadd: Ashwalkers don't care about non ashwalker deaths and enjoy seeing people
+      get gibbed.
+  - rscadd: Seeing a teratoma die cheers you up.
+  - bugfix: Clowns get their naive death moodlet again, and desensitized jobs actually
+      get the reduced death moodlet.
+  - spellcheck: Pet moodlets no longer capitalize the pet's name weirdly, and the
+      chaplain's moodlets mention their deity instead of "god".
+  SirNightKnight:
+  - code_imp: cleaned up changeing blood test code.
+  - image: adjusted the sprites of the alt. SWAT masks.
+  V2LenKagamine:
+  - admin: Real Fake Bread [Smite]
+  notghosti:
+  - rscadd: Borer eggs are now actual eggs, and can be used for egg purposes
+  - rscadd: Added Borer inhand sprites
+  - rscadd: Scangates can now search for borers infestation or borer eggs on a person
+      belongings

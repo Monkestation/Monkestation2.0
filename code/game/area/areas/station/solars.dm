@@ -5,7 +5,8 @@
 /area/station/solars
 	icon_state = "panels"
 	requires_power = FALSE
-	area_flags = AREA_USES_STARLIGHT
+	area_flags = AREA_USES_STARLIGHT|NO_GRAVITY
+	default_gravity = ZERO_GRAVITY
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -45,9 +46,19 @@
 	name = "\improper Starboard Bow Solar Array"
 	icon_state = "panelsFS"
 
+/area/station/solars/starboard/fore/asteriod
+	name = "\improper Starboard Bow Asteriod Solar Array"
+	icon_state = "panelsFS"
+	area_flags = AREA_USES_STARLIGHT // solar areas directly on asteriod have gravity
+
 /area/station/solars/port
 	name = "\improper Port Solar Array"
 	icon_state = "panelsP"
+
+/area/station/solars/port/asteriod
+	name = "\improper Port Asteriod Solar Array"
+	icon_state = "panelsP"
+	area_flags = AREA_USES_STARLIGHT // solar areas directly on asteriod have gravity
 
 /area/station/solars/port/aft
 	name = "\improper Port Quarter Solar Array"
@@ -96,3 +107,13 @@
 /area/station/maintenance/solars/starboard/fore
 	name = "Starboard Bow Solar Maintenance"
 	icon_state = "SolarcontrolFS"
+
+// Solars on planetary maps keep the planet's gravity
+/area/station/solars/port/fore/planet
+	area_flags = /area/station/solars::area_flags & ~NO_GRAVITY
+
+/area/station/solars/starboard/fore/planet
+	area_flags = /area/station/solars::area_flags & ~NO_GRAVITY
+
+/area/station/solars/starboard/aft/planet
+	area_flags = /area/station/solars::area_flags & ~NO_GRAVITY

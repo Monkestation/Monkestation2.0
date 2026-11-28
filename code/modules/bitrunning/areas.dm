@@ -15,7 +15,7 @@
 	icon = 'icons/area/areas_station.dmi'
 	area_flags = NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
 	area_flags_mapping = UNIQUE_AREA | VIRTUAL_AREA
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 
 /area/virtual_domain/powered
 	name = "Virtual Domain Ruins"

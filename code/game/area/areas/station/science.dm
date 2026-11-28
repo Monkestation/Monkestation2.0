@@ -132,4 +132,7 @@
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
 	skip_minimap_rendering = TRUE
-	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED | NO_GRAVITY
+
+/area/station/science/ordnance/bomb/planet
+	area_flags = /area/station/science/ordnance/bomb::area_flags & ~NO_GRAVITY
