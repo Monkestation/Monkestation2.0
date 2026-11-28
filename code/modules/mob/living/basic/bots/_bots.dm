@@ -360,6 +360,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return
 	to_chat(user, span_warning("[src]'s interface is not responding!"))
 
+/mob/living/basic/bot/allowed(mob/living/user)
+	if(bot_access_flags & BOT_CONTROL_PANEL_OPEN) // Unlocked.
+		return TRUE
+	return ..()
+
 /mob/living/basic/bot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

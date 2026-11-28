@@ -43,6 +43,7 @@
 	density = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	held_w_class = WEIGHT_CLASS_TINY
+	inhand_holder_type = /obj/item/clothing/head/mob_holder/destructible
 	environment_smash  = ENVIRONMENT_SMASH_NONE
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	ai_controller = /datum/ai_controller/basic_controller/bee
@@ -70,13 +71,12 @@
 /mob/living/basic/bee/mob_pickup(mob/living/picker)
 	if(flags_1 & HOLOGRAM_1)
 		return
-	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/clothing/head/mob_holder/destructible/holder = ..()
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
 		reee[beegent.type] = 5
 	holder.AddComponent(/datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
-	picker.visible_message(span_warning("[picker] scoops up [src]!"))
-	picker.put_in_hands(holder)
+	return holder
 
 /mob/living/basic/bee/will_escape_storage()
 	return TRUE

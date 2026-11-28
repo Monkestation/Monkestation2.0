@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	base_lighting_alpha = 0
 
 /area/ruin/ocean
-	has_gravity = TRUE
+	default_gravity = STANDARD_GRAVITY
 
 /area/ruin/ocean/listening_outpost
 	area_flags = NONE

@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Optimized a lot of database-related stuff."
-  - server: "Updated the DB schema to 6.3"
