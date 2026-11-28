@@ -1,5 +1,0 @@
-author: "HoggyHart"
-delete-after: True
-changes:
-  - bugfix: "fixed notification for nanite defibbing to tell the host to get back in their body"
-  - qol: "nanite users will now actually be made aware that nanites are trying to revive them"

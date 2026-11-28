@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "Unlocked bots let you use their control panel again without needing their access."
