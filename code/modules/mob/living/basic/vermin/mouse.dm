@@ -12,6 +12,7 @@
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_TINY
 	held_w_class = WEIGHT_CLASS_TINY
+	inhand_holder_type = /obj/item/clothing/head/mob_holder/mouse
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
 	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES)
@@ -208,14 +209,11 @@
 	try_consume_cheese(cheese)
 	ai_controller.cancel_current_plan() // Interrupt any current fleeing
 
-/// Replaces the default mob_holder with our version
 /mob/living/basic/mouse/mob_pickup(mob/living/user)
-	var/obj/item/clothing/head/mob_holder/mouse/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/clothing/head/mob_holder/mouse/holder = ..()
 	if(tame)
 		holder.toolspeed -= 0.3
-	user.visible_message(span_warning("[user] scoops up [src]!"))
-	user.put_in_hands(holder)
-	SEND_SIGNAL(src, COMSIG_MOB_PICKED_UP, user, holder)
+	return holder
 
 /// Attempts to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)

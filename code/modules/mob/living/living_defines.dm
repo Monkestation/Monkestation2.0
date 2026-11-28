@@ -205,6 +205,8 @@
 	var/icon/head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
+	/// Typepath of the holder created when we're picked up
+	var/inhand_holder_type = /obj/item/clothing/head/mob_holder
 
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
