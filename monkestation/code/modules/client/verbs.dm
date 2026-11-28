@@ -142,7 +142,7 @@ GAME_VERB_DESC(/client, trigger_token_event, "Trigger Token Event", "Opens a ui 
 		)),
 		MEDIUM_THREAT = init_antag_list(list(
 			/datum/antagonist/heretic,
-			/datum/antagonist/bloodsucker,
+			/datum/antagonist/vampire,
 			/datum/antagonist/changeling,
 			/datum/antagonist/cortical_borer/hivemind,
 		)),

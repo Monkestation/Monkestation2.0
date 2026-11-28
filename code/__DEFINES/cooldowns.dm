@@ -63,6 +63,7 @@
 #define MOB_SHARED_COOLDOWN_1 (1<<0)
 #define MOB_SHARED_COOLDOWN_2 (1<<1)
 #define MOB_SHARED_COOLDOWN_3 (1<<2)
+#define VAMPIRE_SHARED_COOLDOWN_MIND (1<<3)
 
 #define COOLDOWN_MECHA_JUDICIAL_MARK "mecha_judicial_mark"
 #define COOLDOWN_MECHA_STEAM_DISCHARGE "mecha_steam_discharge"

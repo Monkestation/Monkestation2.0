@@ -39,6 +39,10 @@
 	var/lid_w = 0
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
 	var/lid_z = 0
+	/// The vampire owner of this crate (or coffin)
+	var/datum/mind/resident
+	/// The time it takes to pry this open with a crowbar.
+	var/pry_lid_timer = 25 SECONDS
 
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
@@ -255,24 +259,6 @@
 /obj/structure/closet/crate/preopen
 	opened = TRUE
 	icon_state = "crateopen"
-
-/obj/structure/closet/crate/coffin
-	name = "coffin"
-	desc = "It's a burial receptacle for the dearly departed."
-	icon_state = "coffin"
-	base_icon_state = "coffin"
-	resistance_flags = FLAMMABLE
-	max_integrity = 70
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 5
-	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
-	open_sound_volume = 25
-	close_sound_volume = 50
-	can_install_electronics = FALSE
-	paint_jobs = null
-	no_broken_overlay = TRUE
-	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."

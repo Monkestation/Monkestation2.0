@@ -53,6 +53,13 @@
 ///From living/set_resting(): (new_resting, silent, instant)
 #define COMSIG_LIVING_RESTING "living_resting"
 
+/// From base of /mob/living/simple_animal/attack_hand() and /mob/living/basic/attack_hand() when petting (non-combat): (mob/living/pet)
+#define COMSIG_LIVING_PET_ANIMAL "living_pet_animal"
+/// From base of carbon_defense.dm when hugging: (mob/living/carbon/hugged)
+#define COMSIG_LIVING_HUG_CARBON "living_hug_carbon"
+/// From base of /datum/element/art when appraising art: (atom/art_piece)
+#define COMSIG_LIVING_APPRAISE_ART "living_appraise_art"
+
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
@@ -254,10 +261,10 @@
 /// (Flavor text should stay at the very very bottom though)
 #define COMSIG_LIVING_LATE_EXAMINE "late_examine"
 
-#define COMSIG_LIVING_BINGLE_EVOLVE "living_bingle_evolve"
-
 /// Sent when the [/datum/status_effect/silver_bullet] status effect is applied or refresh.
 #define COMSIG_LIVING_BLOODSILVER_HIT "living_bloodsilver_hit"
+
+#define COMSIG_LIVING_BINGLE_EVOLVE "living_bingle_evolve"
 
 ///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
 #define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"

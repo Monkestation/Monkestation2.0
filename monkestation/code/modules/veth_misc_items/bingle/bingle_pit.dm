@@ -519,7 +519,7 @@
 
 /area/misc/bingle_pit
 	name = "Bingle Pit"
-	area_flags = NOTELEPORT | EVENT_PROTECTED | ABDUCTOR_PROOF | ALWAYS_VALID_BLOODSUCKER_LAIR
+	area_flags = NOTELEPORT | EVENT_PROTECTED | ABDUCTOR_PROOF | ALWAYS_VALID_VAMPIRE_HAVEN
 	default_gravity = STANDARD_GRAVITY
 	requires_power = FALSE
 	static_lighting = TRUE

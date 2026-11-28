@@ -30,7 +30,7 @@
 	filters += FILTER_STAMINACRIT
 	SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_STUN)
 
-	addtimer(CALLBACK(src, PROC_REF(exit_stamina_stun)), STAMINA_STUN_TIME)
+	addtimer(CALLBACK(src, PROC_REF(exit_stamina_stun)), stamina.stun_time)
 	stamina.stop()
 
 /mob/living/carbon/exit_stamina_stun()

@@ -387,6 +387,8 @@
 		current_holder.underlays -= visible_mask
 	visible_mask.alpha = set_alpha
 	visible_mask.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
+	// subtracting only eats light that's already been drawn, and SIDE_MAP draws whatever's further south last, so darkness has to jump the queue
+	visible_mask.layer = new_power > 0 ? FLOAT_LAYER : EFFECTS_LAYER
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
 	if(!directional)
@@ -395,6 +397,7 @@
 		current_holder.underlays -= cone
 	cone.alpha = min(120, (abs(new_power) * 60) + 15)
 	cone.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
+	cone.layer = new_power > 0 ? FLOAT_LAYER : EFFECTS_LAYER
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += cone
 

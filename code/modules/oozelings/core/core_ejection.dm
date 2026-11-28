@@ -74,18 +74,11 @@
 		var/datum/antagonist/changeling/target_ling = brainmob?.mind?.has_antag_datum(/datum/antagonist/changeling)
 
 		// TODO: convert these to use a signal or some shit ~Lucy
-		if(target_ling && !HAS_TRAIT(brainmob.mind, TRAIT_NO_SPECIAL_REVIVAL))
+		if(target_ling && !IS_VAMPIRE(brainmob) && !HAS_TRAIT(brainmob.mind, TRAIT_NO_SPECIAL_REVIVAL))
 			if(target_ling.oozeling_revives > 0)
 				target_ling.oozeling_revives--
 				to_chat(brainmob, span_changeling("You begin gathering your energy. You will revive in 30 seconds."))
 				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE, POLICY_ANTAGONISTIC_REVIVAL), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
-
-		if(IS_BLOODSUCKER(brainmob) && !HAS_TRAIT(brainmob.mind, TRAIT_NO_SPECIAL_REVIVAL))
-			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-			if(target_bloodsucker.bloodsucker_blood_volume >= OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
-				to_chat(brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
-				addtimer(CALLBACK(target_bloodsucker, TYPE_PROC_REF(/datum/antagonist/bloodsucker, oozeling_revive), src), 180 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
-				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
 	if(stored_dna)
 		rebuilt = FALSE

@@ -31,7 +31,7 @@
 
 /area/shuttle/custom
 	requires_power = TRUE
-	area_flags = parent_type::area_flags | ALWAYS_VALID_BLOODSUCKER_LAIR
+	area_flags = parent_type::area_flags | ALWAYS_VALID_VAMPIRE_HAVEN
 
 ////////////////////////////Multi-area shuttles////////////////////////////
 

@@ -43,7 +43,7 @@
 	)
 	extra_spawned_events = list(
 		/datum/round_event_control/antagonist/traitor/roundstart = 9, //Traitors are always fun
-		VAMPIRE_ROUNDSTART_EVENT = 1, //Vampires can vassalize people making very big teams.
+		/datum/round_event_control/antagonist/vampire/roundstart = 1, //Vampires can vassalize people making very big teams.
 		/datum/round_event_control/antagonist/heretic/roundstart = 2, //Heretics cant convert crew to their side. So it gets a higher weight then Vampires
 	)
 

@@ -608,7 +608,7 @@
 	timeout = 4 MINUTES
 
 /datum/mood_event/splattered_with_blood/can_effect_mob(datum/mood/home, mob/living/who, ...)
-	if(isvampire(who))
+	if(islesservampire(who))
 		return FALSE
 
 	return ..()

@@ -64,14 +64,20 @@
 		return NONE
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(src, TRAIT_BEINGSTAKED))
+		balloon_alert(user, "already being staked!")
+		return ITEM_INTERACT_BLOCKING
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', vol = 50, vary = TRUE)
 	user.balloon_alert_to_viewers("staking core...")
+	ADD_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
+		REMOVE_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 		return ITEM_INTERACT_BLOCKING
+	REMOVE_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 	user.balloon_alert_to_viewers("staked core!")
-	var/datum/antagonist/bloodsucker/bloodsucker_datum = IS_BLOODSUCKER(src)
-	if(bloodsucker_datum)
-		playsound(get_turf(src), 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
+	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(src)
+	if(vampire_datum)
+		playsound(get_turf(src), 'sound/effects/vampires/burning_death.ogg', vol = 40, vary = TRUE)
 		user.visible_message(
 			span_danger("[user] drives \the [stake] into [src], causing it to rapidly dissolve. A hollow cry wails from the rapidly melting core."),
 			span_danger("You drive \the [stake] into [src], causing it to rapidly dissolve. A hollow cry wails from the rapidly melting core."),
@@ -79,7 +85,7 @@
 		)
 		to_chat(brainmob, span_userdanger("Your soul escapes your melting core as the abyss welcomes you to your Final Death."))
 		drop_items_to_ground(drop_location())
-		bloodsucker_datum.final_death(skip_destruction = TRUE)
+		vampire_datum.final_death(skip_destruction = TRUE)
 		qdel(src)
 	else
 		playsound(get_turf(src), 'sound/effects/wounds/crackandbleed.ogg', vol = 80, vary = TRUE)

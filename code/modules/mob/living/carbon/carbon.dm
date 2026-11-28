@@ -741,17 +741,17 @@
 	//MONKESTATION EDIT START
 	var/current_stamina = stamina.current
 
-	if(current_stamina <= (0.20 * STAMINA_MAX))
+	if(current_stamina <= (0.20 * stamina.maximum))
 		hud_used.stamina.icon_state = "stamina_crit"
-	else if(current_stamina <= (0.40 * STAMINA_MAX))
+	else if(current_stamina <= (0.40 * stamina.maximum))
 		hud_used.stamina.icon_state = "stamina_5"
-	else if(current_stamina <= (0.60 * STAMINA_MAX))
+	else if(current_stamina <= (0.60 * stamina.maximum))
 		hud_used.stamina.icon_state = "stamina_4"
-	else if(current_stamina <= (0.70 * STAMINA_MAX))
+	else if(current_stamina <= (0.70 * stamina.maximum))
 		hud_used.stamina.icon_state = "stamina_3"
-	else if(current_stamina <= (0.80 * STAMINA_MAX))
+	else if(current_stamina <= (0.80 * stamina.maximum))
 		hud_used.stamina.icon_state = "stamina_2"
-	else if(current_stamina <= (0.90 * STAMINA_MAX))
+	else if(current_stamina <= (0.90 * stamina.maximum))
 		hud_used.stamina.icon_state = "stamina_1"
 	else
 		hud_used.stamina.icon_state = "stamina_full"

@@ -38,9 +38,9 @@
 		if(HAS_TRAIT(organ_owner, TRAIT_GODMODE) || organ_owner.blood_volume <= 0)
 			return
 
-		var/datum/antagonist/bloodsucker/bloodsucker = IS_BLOODSUCKER(organ_owner)
-		if(bloodsucker)
-			bloodsucker.AddBloodVolume(-3 * seconds_per_tick)
+		var/datum/antagonist/vampire/vampire = IS_VAMPIRE(organ_owner)
+		if(vampire)
+			vampire.adjust_blood_volume(-3 * seconds_per_tick)
 		else
 			organ_owner.blood_volume = max(organ_owner.blood_volume - (3 * seconds_per_tick), 0)
 

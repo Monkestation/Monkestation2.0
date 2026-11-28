@@ -758,6 +758,9 @@ GAME_VERB_DESC(/mob/dead/observer, toggle_gas_scan, "Toggle Gas Scan", "Toggles 
 
 GAME_VERB_DESC(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Character", "Sets your deadchat name and ghost appearance to your roundstart character.", "Ghost")
 
+	if(HAS_TRAIT(src, TRAIT_NO_OBSERVE))
+		return
+
 	set_ghost_appearance()
 	if(client?.prefs)
 		var/real_name = client.prefs.read_preference(/datum/preference/name/real_name)

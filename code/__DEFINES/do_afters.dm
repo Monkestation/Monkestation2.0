@@ -12,6 +12,7 @@
 #define DOAFTER_SOURCE_LAVA_STAFF "doafter_lava_staff"
 #define DOAFTER_SOURCE_ROASTING_STICK "doafter_roasting_stick"
 #define DOAFTER_SOURCE_AI_SHUNTING "doafter_ai_shunting"
+#define DOAFTER_SOURCE_ARCHIVE_OF_THE_KINDRED "doafter_archive_of_the_kindred"
 #define DOAFTER_SOURCE_PERSUASION_RACK "doafter_persuasion_rack"
 #define DOAFTER_SOURCE_CLIMBING "doafter_climbing"
 #define DOAFTER_SOURCE_TRASH_PILE "doafter_trash_pile"

@@ -774,7 +774,7 @@
 			// Everyone else still takes damage but less real damage
 			// Average DPS is 5|15 or 10|10 if unholy (burn|stam)
 			// Should be incredibly difficult to metacheck with this due to RNG and fast processing
-			if(IS_CULTIST(L) || IS_CLOCK(L) || IS_WIZARD(L) || isvampire(L) || IS_BLOODSUCKER(L) || IS_VASSAL(L) || IS_HERETIC_OR_MONSTER(L))
+			if(IS_CULTIST(L) || IS_CLOCK(L) || IS_WIZARD(L) || islesservampire(L) || IS_VAMPIRE(L) || IS_VASSAL(L) || IS_HERETIC_OR_MONSTER(L))
 				L.adjustFireLoss(rand(3,5) * 0.5) // 1.5-2.5 AVG 2.0
 			else
 				L.adjustFireLoss(rand(1,3) * 0.5) // 0.5-1.5 AVG 1.0
