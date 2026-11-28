@@ -469,7 +469,7 @@ SUBSYSTEM_DEF(dbcore)
 /*
 Takes a list of rows (each row being an associated list of column => value) and inserts them via a single mass query.
 Rows missing columns present in other rows will resolve to SQL NULL
-You are expected to do your own escaping of the data, and expected to provide your own quotes for strings.
+Values are bound as placeholders, so don't escape or quote them yourself.
 The duplicate_key arg can be true to automatically generate this part of the query
 	or set to a string that is appended to the end of the query
 Ignore_errors instructes mysql to continue inserting rows if some of them have errors.
@@ -479,59 +479,18 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	if (!table || !rows || !istype(rows))
 		return
 
-	// Prepare column list
-	var/list/columns = list()
-	var/list/has_question_mark = list()
-	for (var/list/row in rows)
-		for (var/column in row)
-			columns[column] = "?"
-			has_question_mark[column] = TRUE
-	for (var/column in special_columns)
-		columns[column] = special_columns[column]
-		has_question_mark[column] = findtext(special_columns[column], "?")
-
-	// Prepare SQL query full of placeholders
-	var/list/query_parts = list("INSERT")
-	if (ignore_errors)
-		query_parts += " IGNORE"
-	query_parts += " INTO "
-	query_parts += table
-	query_parts += "\n([columns.Join(", ")])\nVALUES"
-
-	var/list/arguments = list()
-	var/has_row = FALSE
-	for (var/list/row in rows)
-		if (has_row)
-			query_parts += ","
-		query_parts += "\n  ("
-		var/has_col = FALSE
-		for (var/column in columns)
-			if (has_col)
-				query_parts += ", "
-			if (has_question_mark[column])
-				var/name = "p[arguments.len]"
-				query_parts += replacetext(columns[column], "?", ":[name]")
-				arguments[name] = row[column]
-			else
-				query_parts += columns[column]
-			has_col = TRUE
-		query_parts += ")"
-		has_row = TRUE
-
-	if (duplicate_key == TRUE)
-		var/list/column_list = list()
-		for (var/column in columns)
-			column_list += "[column] = VALUES([column])"
-		query_parts += "\nON DUPLICATE KEY UPDATE [column_list.Join(", ")]"
-	else if (duplicate_key != FALSE)
-		query_parts += duplicate_key
-
-	var/datum/db_query/Query = NewQuery(query_parts.Join(), arguments, transaction = transaction)
+	var/datum/db_query/query = NewQuery("INSERT INTO [table]", transaction = transaction)
+	if (!query)
+		return FALSE
+	var/list/coerced_rows = list()
+	for (var/list/row as anything in rows)
+		coerced_rows += list(query.coerce_arguments(row))
+	query.mass_insert = list("table" = table, "rows" = coerced_rows, "duplicate_key" = duplicate_key, "ignore_errors" = ignore_errors, "special_columns" = special_columns)
 	if (warn)
-		. = Query.warn_execute(async)
+		. = query.warn_execute(async)
 	else
-		. = Query.Execute(async)
-	qdel(Query)
+		. = query.Execute(async)
+	qdel(query)
 
 /datum/controller/subsystem/dbcore/proc/start_db_daemon()
 	set waitfor = FALSE
@@ -581,6 +540,8 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	var/arguments
 	/// When set, the statement runs once per list in here as one aneri batch, and `arguments` is ignored.
 	var/list/argument_sets
+	/// When set, this runs aneri's mass_insert() with these named args instead of `sql`, which is then only a label for logs.
+	var/list/mass_insert
 	var/datum/sql_transaction/transaction
 	/// Logs its own failure and deletes itself once it finishes.
 	var/fire_and_forget = FALSE
@@ -687,7 +648,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	if(!. && log_error)
 		logger.Log(LOG_CATEGORY_DEBUG_SQL, "sql query failed", list(
 			"query" = sql,
-			"arguments" = json_encode(argument_sets || arguments),
+			"arguments" = json_encode(argument_sets || arguments || mass_insert),
 			"error" = last_error,
 		))
 
@@ -724,14 +685,16 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	if(status == DB_QUERY_BROKEN)
 		logger.Log(LOG_CATEGORY_DEBUG_SQL, "sql query failed", list(
 			"query" = sql,
-			"arguments" = json_encode(argument_sets || arguments),
+			"arguments" = json_encode(argument_sets || arguments || mass_insert),
 			"error" = last_error,
 		))
 	qdel(src)
 
 /// Makes a fresh aneri query for this run and returns it, unstarted.
 /datum/db_query/proc/start_inner() as /datum/sql_query
-	if(argument_sets)
+	if(mass_insert)
+		inner = transaction ? transaction.mass_insert(arglist(mass_insert)) : pool.mass_insert(arglist(mass_insert))
+	else if(argument_sets)
 		var/list/coerced_sets = list()
 		for(var/list/argument_set as anything in argument_sets)
 			coerced_sets += list(coerce_arguments(argument_set))
