@@ -56,3 +56,10 @@ export const tgui_say_light_mode: FeatureToggle = {
   description: 'Sets TGUI Say to use a light mode.',
   component: CheckboxInput,
 };
+
+export const see_headshots: FeatureToggle = {
+  name: 'See character headshots/artwork',
+  category: 'UI',
+  description: 'If you want to see other players\' headshots.',
+  component: CheckboxInput,
+};

@@ -77,6 +77,8 @@
 	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
+	if(M.dna?.features)
+		M.dna.features -= "headshot"
 	M.PossessByPlayer(C.key)
 	var/datum/mind/app_mind = M.mind
 
@@ -156,6 +158,8 @@
 	var/mob/living/carbon/human/nukie = new()
 	var/obj/structure/closet/supplypod/pod = setup_pod()
 	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
+	if(nukie.dna?.features)
+		nukie.dna.features -= "headshot"
 	nukie.PossessByPlayer(our_client.key)
 	var/datum/mind/op_mind = nukie.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
@@ -356,6 +360,10 @@
 	var/mob/living/spawned_mob = new spawn_type()
 	var/obj/structure/closet/supplypod/pod = setup_pod()
 	our_client.prefs.safe_transfer_prefs_to(spawned_mob, is_antag = TRUE)
+	if(ishuman(spawned_mob))
+		var/mob/living/carbon/human/human_mob = spawned_mob
+		if(human_mob.dna?.features)
+			human_mob.dna.features -= "headshot"
 	spawned_mob.ckey = our_client.key
 	var/datum/mind/op_mind = spawned_mob.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the spawned_mob) is in nullspace, so just move the spawned_mob somewhere safe
@@ -395,6 +403,8 @@
 
 	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(GLOB.syndicate_monkey_names))
 	monkey_man.dna.features["fur"] = COLOR_MONKEY_BROWN
+	if(monkey_man.dna?.features)
+		monkey_man.dna.features -= "headshot"
 
 	monkey_man.mind.enslave_mind_to_creator(user)
 
