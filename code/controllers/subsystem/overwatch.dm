@@ -135,18 +135,19 @@ SUBSYSTEM_DEF(overwatch)
 		log_access("Overwatch data for [C] ([ip]) is loaded from cache!")
 
 	while(!response && is_active && error_counter < max_error_count)
-		var/list/http = world.Export("http://ip-api.com/json/[ip]?fields=17025024")
+		var/datum/http_request/request = new("http://ip-api.com/json/[ip]?fields=17025024")
+		var/datum/http_response/http = request.send().wait()
 
-		if(!http)
+		if(http.error)
 			if(C)
 				log_access("Overwatch: API connection failed, could not check [C], retrying.")
 			else
 				log_access("Overwatch: API connection failed, could not check [ip], retrying.")
 			error_counter += 1
-			sleep(2)
+			sleep(0.2 SECONDS)
 			continue
 
-		var/raw_response = file2text(http["CONTENT"])
+		var/raw_response = http.body
 
 		try
 			response = json_decode(raw_response)
@@ -456,13 +457,10 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CONFIG_GET(string/centcom_ban_db))
 		return
 
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)]/[C.ckey]", "", "")
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
+	var/datum/http_request/request = new("[CONFIG_GET(string/centcom_ban_db)]/[C.ckey]")
+	var/datum/http_response/response = request.send().wait()
 	var/list/bans
-	if(response.errored)
+	if(response.error)
 		return
 	if(response.status_code != 200)
 		return

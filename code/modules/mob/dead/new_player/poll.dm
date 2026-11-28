@@ -503,6 +503,7 @@ GLOBAL_PROTECT(poll_options)
 		href_list.Cut(1,3) //first two values aren't options
 	else
 		to_chat(src, span_danger("No options were selected."))
+		return
 
 	var/special_columns = list(
 		"datetime" = "NOW()",
@@ -526,15 +527,14 @@ GLOBAL_PROTECT(poll_options)
 		))
 	/*with revoting and poll editing possible there can be an edge case where a poll is changed to allow less multiple choice options than a user has already voted on
 	rather than trying to calculate which options should be updated and which deleted, we just delete all of a user's votes and re-insert as needed*/
-	var/datum/db_query/query_delete_multi_votes = SSdbcore.NewQuery({"
-		UPDATE [format_table_name("poll_vote")] SET deleted = 1 WHERE pollid = :pollid AND ckey = :ckey
-	"}, list("pollid" = sql_poll_id, "ckey" = ckey))
-	if(!query_delete_multi_votes.warn_execute())
-		qdel(query_delete_multi_votes)
+	var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+	if(!transaction)
 		return
-	qdel(query_delete_multi_votes)
-	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes, special_columns = special_columns)
-	return TRUE
+	SSdbcore.FireAndForget({"
+		UPDATE [format_table_name("poll_vote")] SET deleted = 1 WHERE pollid = :pollid AND ckey = :ckey
+	"}, list("pollid" = sql_poll_id, "ckey" = ckey), transaction = transaction)
+	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes, special_columns = special_columns, transaction = transaction)
+	return SSdbcore.CommitTransaction(transaction, warn = TRUE)
 
 /**
  * Processes vote form data and saves results to the database for an IRV type poll.
@@ -549,6 +549,7 @@ GLOBAL_PROTECT(poll_options)
 	var/list/votelist = splittext(href_list["IRVdata"], ",")
 	if(!length(votelist))
 		to_chat(src, span_danger("No ordering data found. Please try again or contact an administrator."))
+		return
 
 	var/list/special_columns = list(
 		"datetime" = "NOW()",
@@ -561,6 +562,7 @@ GLOBAL_PROTECT(poll_options)
 		var/datum/poll_option/option = locate(o) in option_copy
 		if (!option)
 			to_chat(src, span_warning("invalid votes were trimmed from your ballot, please revote ."))
+			continue
 		sql_votes += list(list(
 			"pollid" = sql_poll_id,
 			"optionid" = option.option_id,
@@ -568,13 +570,14 @@ GLOBAL_PROTECT(poll_options)
 			"ip" = client.address,
 			"adminrank" = admin_rank
 		))
-	//IRV results are calculated based on id order, we delete all of a user's votes to avoid potential errors caused by revoting and option editing
-	var/datum/db_query/query_delete_irv_votes = SSdbcore.NewQuery({"
-		UPDATE [format_table_name("poll_vote")] SET deleted = 1 WHERE pollid = :pollid AND ckey = :ckey
-	"}, list("pollid" = sql_poll_id, "ckey" = ckey))
-	if(!query_delete_irv_votes.warn_execute())
-		qdel(query_delete_irv_votes)
+	if(!length(sql_votes))
 		return
-	qdel(query_delete_irv_votes)
-	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes, special_columns = special_columns)
-	return TRUE
+	//IRV results are calculated based on id order, we delete all of a user's votes to avoid potential errors caused by revoting and option editing
+	var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+	if(!transaction)
+		return
+	SSdbcore.FireAndForget({"
+		UPDATE [format_table_name("poll_vote")] SET deleted = 1 WHERE pollid = :pollid AND ckey = :ckey
+	"}, list("pollid" = sql_poll_id, "ckey" = ckey), transaction = transaction)
+	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes, special_columns = special_columns, transaction = transaction)
+	return SSdbcore.CommitTransaction(transaction, warn = TRUE)

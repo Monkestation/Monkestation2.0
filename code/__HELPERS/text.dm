@@ -1280,12 +1280,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(length(split) != 3)
 		return null
 	var/payload_base64 = split[2]
-	// rust-g fucking segfaults if you pass base64 without padding ;)
+	// jwts leave off the base64 padding, aneri wants it
 	var/padding_needed = length(payload_base64) % 4
 	if(padding_needed != 0)
 		for(var/i = 1 to (4 - padding_needed))
 			payload_base64 += "="
-	return json_decode(rustg_decode_base64(payload_base64))
+	return json_decode(aneri_base64url_decode(payload_base64))
 
 /// Ensures sentences end in appropriate punctuation (a period if none exist) and that all whitespace-bounded 'i' characters are capitalized.
 /// If the sentence ends in chat-flavored markdown for bolds, italics or underscores and does not have a preceding period, exclamation mark or other flavored sentence terminator, add a period.

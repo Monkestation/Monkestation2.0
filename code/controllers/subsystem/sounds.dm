@@ -205,16 +205,17 @@ SUBSYSTEM_DEF(sounds)
 		if(!isnull(sfx.key))
 			sfx_datum_by_key[sfx.key] = new sfx()
 
-/// Caches the lengths of every sound in sounds_to_precache in one rust_g call.
+/// Caches the lengths of every sound in sounds_to_precache in one aneri call.
 /datum/controller/subsystem/sounds/proc/precache_sounds()
 	if(!length(sounds_to_precache))
 		return
 
-	var/list/lengths = rustg_sound_length_list(sounds_to_precache)
-	precache_errors = lengths[RUSTG_SOUNDLEN_ERRORS]
-	sound_lengths = lengths[RUSTG_SOUNDLEN_SUCCESSES]
-	for(var/sound_path in sound_lengths)
-		sound_lengths[sound_path] = text2num(sound_lengths[sound_path])
+	var/list/paths = list()
+	for(var/sound_file in sounds_to_precache)
+		paths += "[sound_file]"
+	var/list/lengths = aneri_audio_length_list(paths)
+	precache_errors = lengths[ANERI_AUDIO_ERRORS]
+	sound_lengths = lengths[ANERI_AUDIO_SUCCESSES]
 
 	sounds_to_precache = null
 
@@ -226,35 +227,36 @@ SUBSYSTEM_DEF(sounds)
 	for(var/i in 1 to length(paths))
 		reconstructed[i] = "[paths[i]]"
 
-	var/list/out = rustg_sound_length_list(paths)
-	var/list/successes = out[RUSTG_SOUNDLEN_SUCCESSES]
+	var/list/out = aneri_audio_length_list(reconstructed)
+	var/list/successes = out[ANERI_AUDIO_SUCCESSES]
 	for(var/sound_path in successes)
-		sound_lengths[sound_path] = text2num(successes[sound_path])
+		sound_lengths[sound_path] = successes[sound_path]
 
 /// Cache and return a single sound.
 /datum/controller/subsystem/sounds/proc/get_sound_length(file_path)
 	. = 0
 	if(!istext(file_path))
 		if(!isfile(file_path))
-			CRASH("rustg_sound_length error: Passed non-text object")
+			CRASH("get_sound_length error: Passed non-text object")
 
 		if(length("[file_path]")) // Runtime generated RSC references stringify into 0-length strings.
 			file_path = "[file_path]"
 		else
-			CRASH("rustg_sound_length does not support non-static file refs.")
+			CRASH("get_sound_length does not support non-static file refs.")
 
 	var/cached_length = sound_lengths[file_path]
 	if(!isnull(cached_length))
 		return cached_length
 
-	var/ret = RUSTG_CALL(RUST_G, "sound_len")(file_path)
-	var/as_num = text2num(ret)
-	if(isnull(ret))
-		. = 0
-		CRASH("rustg_sound_length error: [ret]")
+// tools/deploy.sh only copies sound/runtime, so ci has nothing on disk to measure
+#ifndef UNIT_TESTS
+	var/length = aneri_audio_length(file_path)
+	if(isnull(length))
+		CRASH("get_sound_length error: [file_path] has no length in its header")
 
-	sound_lengths[file_path] = as_num
-	return as_num
+	sound_lengths[file_path] = length
+	return length
+#endif
 
 ///Call to free all channels reserved by a datum.
 /datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/channel_owner)

@@ -61,6 +61,6 @@ SUBSYSTEM_DEF(profiler)
 	var/sendmaps_file = "[GLOB.log_directory]/profiler/sendmaps-[timestamp].json"
 
 	timer = TICK_USAGE_REAL
-	rustg_file_write(current_profile_data, prof_file)
-	rustg_file_write(current_sendmaps_data, sendmaps_file)
+	aneri_file_write(prof_file, current_profile_data)
+	aneri_file_write(sendmaps_file, current_sendmaps_data)
 	write_cost = MC_AVERAGE(write_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))

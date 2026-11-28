@@ -571,14 +571,14 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 	recent_storyteller_events.Insert(1, list(triggered_round_events))
 	if(length(recent_storyteller_events) > max_history)
 		recent_storyteller_events.Cut(max_history + 1)
-	rustg_file_write(json_encode(recent_storyteller_events, JSON_PRETTY_PRINT), "data/recent_storyteller_events.json") // pretty-print just to make manually looking at it easier
+	aneri_file_write("data/recent_storyteller_events.json", json_encode(recent_storyteller_events, JSON_PRETTY_PRINT)) // pretty-print just to make manually looking at it easier
 
 /datum/controller/subsystem/gamemode/proc/load_roundstart_data()
 	if(!fexists("data/recent_storyteller_events.json"))
 		return
-	var/recent_json = rustg_file_read("data/recent_storyteller_events.json")
-	if(!recent_json || !rustg_json_is_valid(recent_json))
-		rustg_file_write("\[\]", "data/recent_storyteller_events.json")
+	var/recent_json = aneri_file_read("data/recent_storyteller_events.json")
+	if(!recent_json || !aneri_json_is_valid(recent_json))
+		aneri_file_write("data/recent_storyteller_events.json", "\[\]")
 		CRASH("recent_storyteller_events.json was invalid: [recent_json]")
 	var/list/recent = json_decode(recent_json)
 	recent_storyteller_events.Cut()

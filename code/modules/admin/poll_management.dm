@@ -316,10 +316,7 @@
 				qdel(poll)
 		return
 	if(submit_ready)
-		var/db = poll.edit_ready //if the poll is new it will need its options inserted for the first time
 		poll.save_poll_data(clear_votes)
-		if(!db)
-			poll.save_all_options()
 	poll_management_panel(poll)
 
 /datum/poll_question/New(id, polltype, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, dontshow, allow_revoting, vote_count, creator, future, dbload = FALSE)
@@ -375,6 +372,7 @@
  *
  * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
  * The start and end datetimes and poll id for new polls is then retrieved for the poll datum.
+ * A new poll's options get saved in the same transaction.
  * Arguments:
  * * clear_votes - When true will call clear_poll_votes() to delete all votes matching this poll id.
  *
@@ -399,6 +397,11 @@
 
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
+	var/datum/sql_transaction/transaction
+	if(new_poll)
+		transaction = SSdbcore.BeginTransaction()
+		if(!transaction)
+			return
 	var/datum/db_query/query_save_poll = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("poll_question")] (id, polltype, created_datetime, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow, allow_revoting)
 		VALUES (:poll_id, :poll_type, NOW(), COALESCE(:start_datetime, NOW()), [end_datetime_sql], :question, :subtitle, :admin_only, :options_allowed, :admin_ckey, INET_ATON(:admin_ip), :dont_show, :allow_revoting)
@@ -407,25 +410,39 @@
 		"poll_id" = poll_id, "poll_type" = poll_type, "start_datetime" = start_datetime, "duration" = duration,
 		"question" = question, "subtitle" = subtitle, "admin_only" = admin_only, "options_allowed" = options_allowed,
 		"admin_ckey" = admin_ckey, "admin_ip" = admin_ip, "dont_show" = dont_show, "allow_revoting" = allow_revoting
-	))
+	), transaction = transaction)
 	if(!query_save_poll.warn_execute())
 		qdel(query_save_poll)
+		qdel(transaction)
 		return
 	if (!poll_id)
 		poll_id = query_save_poll.last_insert_id
 	qdel(query_save_poll)
+	// has to be in the transaction, the new row isn't committed yet
 	var/datum/db_query/query_get_poll_id_start_endtime = SSdbcore.NewQuery(
 		"SELECT starttime, endtime, IF(starttime > NOW(), 1, 0) FROM [format_table_name("poll_question")] WHERE id = :poll_id",
-		list("poll_id" = poll_id)
+		list("poll_id" = poll_id), transaction = transaction
 	)
 	if(!query_get_poll_id_start_endtime.warn_execute())
 		qdel(query_get_poll_id_start_endtime)
+		if(new_poll)
+			poll_id = null
+			qdel(transaction)
 		return
-	if(query_get_poll_id_start_endtime.NextRow())
-		start_datetime = query_get_poll_id_start_endtime.item[1]
-		end_datetime = query_get_poll_id_start_endtime.item[2]
-		future_poll = text2num(query_get_poll_id_start_endtime.item[3])
+	var/list/saved_times = query_get_poll_id_start_endtime.NextRow() ? query_get_poll_id_start_endtime.item : null
 	qdel(query_get_poll_id_start_endtime)
+	if(new_poll)
+		for(var/datum/poll_option/option as anything in options)
+			option.save_option(transaction)
+		if(!SSdbcore.CommitTransaction(transaction, warn = TRUE))
+			poll_id = null
+			for(var/datum/poll_option/option as anything in options)
+				option.option_id = null
+			return
+	if(saved_times)
+		start_datetime = saved_times[1]
+		end_datetime = saved_times[2]
+		future_poll = text2num(saved_times[3])
 	if(clear_votes)
 		clear_poll_votes()
 	edit_ready = TRUE
@@ -435,22 +452,6 @@
 	else
 		log_admin("[kn] [msg]")
 	message_admins("[kna] [msg]")
-
-/**
- * Saves all options of a poll to the database.
- *
- * Saves all the created options for a poll when it's submitted to the DB for the first time and associated an id with the options.
- * Insertion and id querying for each option is done separately to ensure data integrity; this is less performant, but not significantly.
- * Using MassInsert() would mean having to query a list of rows by poll_id or matching by fields afterwards, which doesn't guarantee accuracy.
- *
- */
-/datum/poll_question/proc/save_all_options()
-	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
-		return
-	for(var/o in options)
-		var/datum/poll_option/option = o
-		option.save_option()
 
 /**
  * Deletes all votes or text replies for this poll, depending on its type.
@@ -635,9 +636,9 @@
  *
  * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
  * The list of columns and values is built dynamically to avoid excess data being sent when not a rating type poll.
- *
+ * Each option is inserted on its own rather than with MassInsert(), so its id can be read back from last_insert_id.
  */
-/datum/poll_option/proc/save_option()
+/datum/poll_option/proc/save_option(datum/sql_transaction/transaction)
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
@@ -658,7 +659,7 @@
 
 	var/datum/db_query/query_update_poll_option = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("poll_option")] ([jointext(values, ",")]) VALUES (:[jointext(values, ",:")]) ON DUPLICATE KEY UPDATE [jointext(update_data, ", ")]",
-		values
+		values, transaction = transaction
 	)
 	if(!query_update_poll_option.warn_execute())
 		qdel(query_update_poll_option)

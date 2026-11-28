@@ -9,9 +9,11 @@
 		return
 
 	server_restart_sent = TRUE
-	http_fireandforget("serverupdates", list(
+	if(!enabled)
+		return
+	var/datum/http_request/request = new("[base_url]/serverupdates", "POST", json_encode(list(
 		"type" = "servershutdown",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"map" = SSmapping.current_map?.map_name,
@@ -19,12 +21,15 @@
 		"restart_type" = isnull(restart_type_override) ? restart_type : restart_type_override,
 		"requestedby" = usr?.ckey,
 		"requestedby_stealthed" = usr?.client?.holder?.fakekey,
-	))
+	)), default_headers)
+	// blocking on purpose: world/Del runs aneri_cleanup() right after this, which drops any request still in flight
+	request.timeout = 5
+	request.send_blocking()
 
 /datum/controller/subsystem/plexora/proc/serverstarted()
 	http_fireandforget("serverupdates", list(
 		"type" = "serverstart",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"map" = SSmapping.current_map?.map_name,
 		"playercount" = length(GLOB.clients),
@@ -33,7 +38,7 @@
 /datum/controller/subsystem/plexora/proc/serverinitdone(time)
 	http_fireandforget("serverupdates", list(
 		"type" = "serverinitdone",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"map" = SSmapping.current_map?.map_name,
 		"playercount" = length(GLOB.clients),
@@ -43,7 +48,7 @@
 /datum/controller/subsystem/plexora/proc/roundstarted()
 	http_fireandforget("serverupdates", list(
 		"type" = "roundstart",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"map" = SSmapping.current_map?.map_name,
 		"playercount" = length(GLOB.clients),
@@ -52,7 +57,7 @@
 /datum/controller/subsystem/plexora/proc/roundended()
 	http_fireandforget("serverupdates", list(
 		"type" = "roundend",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"map" = SSmapping.current_map?.map_name,
@@ -83,16 +88,18 @@
 		"port" = port,
 	)
 
-	var/datum/http_request/request = new(RUSTG_HTTP_METHOD_POST, "[base_url]/byondserver_alive", json_encode(body), default_headers)
-	request.begin_async()
-	UNTIL_OR_TIMEOUT(request.is_complete(), 5 SECONDS)
-	var/datum/http_response/response = request.into_response()
-	if (response.errored)
-		stack_trace("check_byondserver_status failed, likely an bad id passed ([id]) aka id of a server that doesnt exist")
-		return FALSE
-	else
-		var/list/json_body = json_decode(response.body)
-		return json_body["alive_likely"]
+	var/datum/http_request/request = new("[base_url]/byondserver_alive", "POST", json_encode(body), default_headers)
+	request.timeout = 5
+	request.send_queued(CALLBACK(src, PROC_REF(on_server_status), id))
+
+/datum/controller/subsystem/plexora/proc/on_server_status(id, datum/http_response/response)
+	if (!response.ok)
+		if (up_servers[id] != FALSE)
+			stack_trace("check_byondserver_status failed, likely an bad id passed ([id]) aka id of a server that doesnt exist")
+		up_servers[id] = FALSE
+		return
+	var/list/json_body = json_decode(response.body)
+	up_servers[id] = json_body["alive_likely"]
 
 
 /datum/controller/subsystem/plexora/proc/relay_mentor_say(client/user, message, prefix)
@@ -115,7 +122,7 @@
 /datum/controller/subsystem/plexora/proc/mc_alert(alert, level = 5)
 	http_fireandforget("serverupdates", list(
 		"type" = "mcalert",
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"map" = SSmapping.current_map?.map_name,
@@ -150,7 +157,7 @@
 		"is_bwoink" = is_bwoink,
 		"urgent" = urgent,
 		"msg_raw" = msg_raw,
-		"opened_at" = rustg_unix_timestamp(),
+		"opened_at" = aneri_unix_timestamp(),
 //		"icon_b64" = icon2base64(getFlatIcon(ticket.initiator.mob, SOUTH, no_anim = TRUE)),
 		"admin_ckey" = admin_ckey,
 	))
@@ -166,7 +173,7 @@
 		// Make sure the defines in __DEFINES/admin.dm match up with Plexora's code
 		"close_reason" = close_reason,
 		"close_type" = close_type,
-		"time_closed" = rustg_unix_timestamp(),
+		"time_closed" = aneri_unix_timestamp(),
 	))
 
 /datum/controller/subsystem/plexora/proc/aticket_reopened(datum/admin_help/ticket, reopened_by)
@@ -176,7 +183,7 @@
 	http_fireandforget("atickets/reopen", list(
 		"id" = ticket.id,
 		"roundid" = GLOB.round_id,
-		"time_reopened" = rustg_unix_timestamp(),
+		"time_reopened" = aneri_unix_timestamp(),
 		"reopened_by" = reopened_by, // ckey
 	))
 
@@ -210,7 +217,7 @@
 		"id" = ticket.id,
 		"roundid" = GLOB.round_id,
 		"is_disconnect" = is_disconnect,
-		"time_of_connection" = rustg_unix_timestamp(),
+		"time_of_connection" = aneri_unix_timestamp(),
 	))
 
 // Begin Mentor tickets
@@ -224,7 +231,7 @@
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"world_time" = world.time,
-		"opened_at" = rustg_unix_timestamp(),
+		"opened_at" = aneri_unix_timestamp(),
 //		"icon_b64" = icon2base64(getFlatIcon(ticket.owner.mob, SOUTH, no_anim = TRUE)),
 		"message" = html_decode(ticket.message),
 	))
@@ -238,7 +245,7 @@
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"world_time" = world.time,
-		"timestamp" = rustg_unix_timestamp(),
+		"timestamp" = aneri_unix_timestamp(),
 //		"icon_b64" = icon2base64(getFlatIcon(frommob, SOUTH, no_anim = TRUE)),
 		"message" = msg,
 	))

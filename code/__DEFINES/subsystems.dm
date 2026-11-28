@@ -296,9 +296,6 @@
 /// Same as DELTA_WORLD_TIME but we ignore time spent hibernating
 #define DELTA_WORLD_TIME_WITHOUT_HIBERNATION(ss) ss.hibernation_state ? ss.wait : DELTA_WORLD_TIME(ss)
 
-/// The timer key used to know how long subsystem initialization takes
-#define SS_INIT_TIMER_KEY "ss_init"
-
 // Vote subsystem counting methods
 /// First past the post. One selection per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_SINGLE 1

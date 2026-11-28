@@ -1596,7 +1596,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		CRASH("Attempted to upscale icon to non-number width/height")
 	if(!fcopy(icon, TMP_UPSCALE_PATH))
 		CRASH("Failed to create temporary png file to upscale")
-	UNLINT(rustg_dmi_resize_png(TMP_UPSCALE_PATH, "[width]", "[height]", resize_type)) // technically impure but in practice its not
+	UNLINT(aneri_dmi_resize_png(TMP_UPSCALE_PATH, width, height, resize_type)) // technically impure but in practice its not
 	. = icon(fcopy_rsc(TMP_UPSCALE_PATH))
 	fdel(TMP_UPSCALE_PATH)
 
@@ -1608,8 +1608,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(!fexists("icon_exists_cache.json"))
 		log_world("icon_exists_cache.json doesn't exist, not loading cache")
 		return
-	var/cache_file = rustg_file_read("icon_exists_cache.json")
-	if(!rustg_json_is_valid(cache_file))
+	var/cache_file = aneri_file_read("icon_exists_cache.json")
+	if(!aneri_json_is_valid(cache_file))
 		log_world("did not load icon_exists cache: file exists but wasn't valid json")
 		CRASH("did not load icon_exists cache: file exists but wasn't valid json")
 	var/list/cache_data = json_decode(cache_file)
@@ -1622,7 +1622,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		CRASH("did not load icon_exists cache: 'icons' key was not a list")
 	var/cache_revision = cache_data["revision"]
 	if(!isnull(cache_revision))
-		var/revision = rustg_git_revparse("HEAD")
+		var/revision = aneri_git_revparse("HEAD")
 		if(cache_revision != revision)
 			log_world("did not load icon_exists cache: revision ([cache_revision]) mismatched current server revision ([revision])")
 			return

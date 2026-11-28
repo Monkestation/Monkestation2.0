@@ -54,7 +54,7 @@
 	SScassettes.json_purchases = list()
 	if(fexists(CASSETTE_PURCHASES_JSON_FILE))
 		try
-			var/list/loaded = json_decode(rustg_file_read(CASSETTE_PURCHASES_JSON_FILE))
+			var/list/loaded = json_decode(aneri_file_read(CASSETTE_PURCHASES_JSON_FILE))
 			if(islist(loaded))
 				SScassettes.json_purchases = loaded
 		catch
@@ -80,7 +80,7 @@
 		"server_id" = CONFIG_GET(string/serversqlname)
 	))
 
-	rustg_file_write(json_encode(purchases), CASSETTE_PURCHASES_JSON_FILE)
+	aneri_file_write(CASSETTE_PURCHASES_JSON_FILE, json_encode(purchases))
 	return TRUE
 
 /// gets the top cassettes by purchase count

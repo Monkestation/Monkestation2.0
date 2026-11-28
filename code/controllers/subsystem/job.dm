@@ -677,7 +677,7 @@ SUBSYSTEM_DEF(job)
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
 
 	if(!legacy_mode) // this flag is set during the setup of SSconfig, and all warnings were handled there.
-		var/job_config = rustg_read_toml_file(toml_file)
+		var/job_config = aneri_toml_decode_file(toml_file)
 
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_title = occupation.title
@@ -787,7 +787,7 @@ SUBSYSTEM_DEF(job)
 		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
 		return FALSE
 
-	var/job_config = rustg_read_toml_file(toml_file)
+	var/job_config = aneri_toml_decode_file(toml_file)
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
@@ -856,7 +856,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/export_toml(mob/user, data)
 	var/file_location = "data/jobconfig.toml" // store it in the data folder server-side so we can FTP it to the client.
 	var/payload = "[config_documentation]\n[rustg_toml_encode(data)]"
-	rustg_file_write(payload, file_location)
+	aneri_file_write(file_location, payload)
 	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
 

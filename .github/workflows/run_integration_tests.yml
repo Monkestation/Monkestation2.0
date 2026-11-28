@@ -50,6 +50,7 @@ jobs:
             dependencies.sh
             SQL/tgstation_schema.sql
             SQL/tgstation_schema_prefixed.sql
+            tools/ci/install_aneri.sh
             tools/ci/install_byond.sh
             tools/ci/install_dreamluau.sh
             tools/ci/install_navmap_pathfinder.sh
@@ -69,6 +70,7 @@ jobs:
         with:
           path: |
             ~/.byond/bin/librust_g.so
+            ~/.byond/bin/libaneri.so
             ~/.byond/bin/libdreamluau.so
             ~/.byond/bin/libnavmap_pathfinder.so
           key: ${{ runner.os }}-native-libraries-${{ hashFiles('dependencies.sh') }}
@@ -81,6 +83,11 @@ jobs:
           if: ${{ steps.native_libraries_cache.outputs.cache-hit != 'true' }}
           run: |
             bash tools/ci/install_rust_g.sh
+
+        - name: Install aneri
+          if: ${{ steps.native_libraries_cache.outputs.cache-hit != 'true' }}
+          run: |
+            bash tools/ci/install_aneri.sh
 
         - name: Install dreamluau
           if: ${{ steps.native_libraries_cache.outputs.cache-hit != 'true' }}

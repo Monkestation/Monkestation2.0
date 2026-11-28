@@ -27,37 +27,44 @@
 
 
 	if(!one_time_buy)
-		if(finalize_purchase(buyer))
-			buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, "[buyer] bought a [name] for [item_cost]", donator_multiplier = FALSE)
+		finalize_purchase(buyer, item_cost)
 		return
 	else
 		buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, "[buyer] bought a [name] for [item_cost]", donator_multiplier = FALSE)
 	attempt_spawn(buyer)
 
-
-/datum/store_item/proc/finalize_purchase(client/buyer)
+/// Takes `cost` coins in the same transaction as saving the item.
+/datum/store_item/proc/finalize_purchase(client/buyer, cost = 0)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/fail_message = span_warning("Failed to add purchase to database. You have not been charged.")
-	if(!SSdbcore.IsConnected())
+	if(!buyer?.prefs)
+		return FALSE
+	var/datum/sql_transaction/transaction = SSdbcore.BeginTransaction()
+	if(!transaction)
 		to_chat(buyer, fail_message)
 		return FALSE
-	var/datum/preferences/buyers_preferences = buyer?.prefs
-	if(!buyers_preferences)
-		return FALSE
-	// before the query so a second click during the wait sees it as owned
-	buyers_preferences.inventory |= item_path
-	var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
+	var/datum/preferences/prefs = buyer.prefs
+	var/ckey = buyer.ckey
+	SSdbcore.FireAndForget({"
 		INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, 1)
 		ON DUPLICATE KEY UPDATE amount = 1"},
-		list("ckey" = buyer.ckey, "item_id" = item_path))
-	if(!query_add_gear_purchase.Execute())
-		buyers_preferences.inventory -= item_path
+		list("ckey" = ckey, "item_id" = item_path), transaction = transaction)
+	if(cost)
+		SSdbcore.FireAndForget(
+			"UPDATE [format_table_name("player")] SET metacoins = metacoins - :cost WHERE ckey = :ckey",
+			list("cost" = cost, "ckey" = ckey), transaction = transaction)
+	// changed before the commit sleeps so a second click can't buy it twice or spend the same coins
+	prefs.inventory |= item_path
+	var/previous_coins = prefs.metacoins
+	prefs.metacoins -= cost
+	if(!SSdbcore.CommitTransaction(transaction))
+		prefs.inventory -= item_path
+		prefs.metacoins += cost
 		to_chat(buyer, fail_message)
-		qdel(query_add_gear_purchase)
 		return FALSE
-	qdel(query_add_gear_purchase)
-
+	if(cost)
+		prefs.log_metacoin_change(-cost, previous_coins, "[buyer] bought a [name] for [cost]", announces = TRUE)
 	return TRUE
 
 /datum/store_item/proc/attempt_spawn(client/buyer)

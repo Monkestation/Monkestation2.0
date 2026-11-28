@@ -110,9 +110,9 @@
 	save_queued = FALSE
 
 	if (fexists(filepath))
-		rustg_file_write(file2text(filepath), backup_filepath)
+		aneri_file_write(backup_filepath, file2text(filepath))
 
-	rustg_file_write(json_encode(cached_data, JSON_PRETTY_PRINT), filepath)
+	aneri_file_write(filepath, json_encode(cached_data, JSON_PRETTY_PRINT))
 
 	ASSERT(!isnull(safe_json_decode(file2text(filepath))), "JSON written to [filepath] was not valid. Backup will be preserved.")
 
@@ -131,7 +131,7 @@
 	else
 		stack_trace("[scenario]. Backup existed and was used instead. The JSON file has been updated.")
 		cached_data = backed_up_data
-		rustg_file_write(cached_contents, filepath)
+		aneri_file_write(filepath, cached_contents)
 
 /datum/json_database/vv_edit_var(var_name, var_value)
 	switch (var_name)

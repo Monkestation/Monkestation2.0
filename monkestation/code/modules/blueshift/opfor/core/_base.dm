@@ -1017,7 +1017,7 @@
 	add_log(exporter.ckey, "Exported a json OPFOR.")
 
 	var/to_write_file = "data/opfor_temp/[REF(src)].json"
-	rustg_file_write(json_encode(exported_data), to_write_file)
+	aneri_file_write(to_write_file, json_encode(exported_data))
 
 	try
 		usr << ftp(file(to_write_file), "exported_OPFOR.json")
