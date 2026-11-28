@@ -142,7 +142,7 @@
 		if(prob(SLIME_STACK_HOP_OFF_CHANCE))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 		return AI_BEHAVIOR_DELAY
-	if(!slime_pawn.Adjacent(seat) || !slime_pawn.stack_onto(seat))
+	if(!slime_pawn.wants_to_stack() || !slime_pawn.Adjacent(seat) || !slime_pawn.stack_onto(seat))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	return AI_BEHAVIOR_DELAY
 
