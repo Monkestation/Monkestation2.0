@@ -1,4 +1,6 @@
 #define SHUTDOWN_QUERY_TIMELIMIT (1 MINUTES)
+#define DB_POLL_WAIT_US 500
+#define DB_POLL_WAIT_US_UNSTARTED (world.tick_lag * 100000)
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_TICKER | SS_HIBERNATE
@@ -166,7 +168,7 @@ SUBSYSTEM_DEF(dbcore)
 	if(IsAdminAdvancedProcCall())
 		return
 	run_query(query)
-	UNTIL(query.process())
+	UNTIL(query.inner.poll(MC_RUNNING(init_stage) ? DB_POLL_WAIT_US : DB_POLL_WAIT_US_UNSTARTED))
 	return query
 
 /datum/controller/subsystem/dbcore/proc/run_query(datum/db_query/query)
@@ -209,7 +211,7 @@ SUBSYSTEM_DEF(dbcore)
 
 		//wait for them all to finish
 		for(var/datum/db_query/query in queries_to_check)
-			UNTIL(query.process() || REALTIMEOFDAY > endtime)
+			UNTIL(query.inner.poll(DB_POLL_WAIT_US_UNSTARTED) || REALTIMEOFDAY > endtime)
 
 		//log shutdown to the db
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
@@ -376,7 +378,7 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/ReportError(error)
 	last_error = error
 
-/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, arguments, allow_during_shutdown=FALSE, datum/sql_transaction/transaction)
+/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, arguments, allow_during_shutdown=FALSE, datum/sql_transaction/transaction, list/argument_sets)
 	//If the subsystem is shutting down, disallow new queries
 	if(!allow_during_shutdown && shutting_down)
 		CRASH("Attempting to create a new db query during the world shutdown")
@@ -385,7 +387,7 @@ SUBSYSTEM_DEF(dbcore)
 		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
 		return FALSE
-	return new /datum/db_query(pool, sql_query, arguments, transaction)
+	return new /datum/db_query(pool, sql_query, arguments, transaction, argument_sets)
 
 /**
  * Creates and executes a query without waiting for or tracking the results.
@@ -420,7 +422,7 @@ SUBSYSTEM_DEF(dbcore)
 
 /// Sleeps until the commit is done, then deletes the transaction. aneri fails the commit if any statement in it failed, so this is the only check a caller needs.
 /datum/controller/subsystem/dbcore/proc/CommitTransaction(datum/sql_transaction/transaction, warn = FALSE)
-	var/datum/sql_query/commit = transaction.commit().wait()
+	var/datum/sql_query/commit = transaction.commit().wait(DB_POLL_WAIT_US)
 	var/error = commit.last_error
 	qdel(transaction)
 	if(!error)
@@ -577,6 +579,8 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	var/datum/sql_pool/pool
 	var/sql
 	var/arguments
+	/// When set, the statement runs once per list in here as one aneri batch, and `arguments` is ignored.
+	var/list/argument_sets
 	var/datum/sql_transaction/transaction
 	/// Logs its own failure and deletes itself once it finishes.
 	var/fire_and_forget = FALSE
@@ -601,7 +605,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 
 	var/list/item  //list of data values populated by NextRow()
 
-/datum/db_query/New(pool, sql, arguments, transaction)
+/datum/db_query/New(pool, sql, arguments, transaction, argument_sets)
 	if(IsAdminAdvancedProcCall())
 		CRASH("Advanced admin proc call tried to create a db query directly: [sql]")
 	SSdbcore.all_queries += src
@@ -613,6 +617,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	src.sql = sql
 	src.arguments = arguments
 	src.transaction = transaction
+	src.argument_sets = argument_sets
 
 /datum/db_query/Destroy()
 	inner?.cancel()
@@ -682,7 +687,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	if(!. && log_error)
 		logger.Log(LOG_CATEGORY_DEBUG_SQL, "sql query failed", list(
 			"query" = sql,
-			"arguments" = json_encode(arguments),
+			"arguments" = json_encode(argument_sets || arguments),
 			"error" = last_error,
 		))
 
@@ -697,6 +702,8 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 /// Sleeps until execution of the query has finished.
 /datum/db_query/proc/sync()
 	while(!isnull(status) && status < DB_QUERY_FINISHED)
+		if(inner?.id && inner.poll(DB_POLL_WAIT_US))
+			return
 		stoplag()
 
 /datum/db_query/process(seconds_per_tick)
@@ -717,15 +724,21 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	if(status == DB_QUERY_BROKEN)
 		logger.Log(LOG_CATEGORY_DEBUG_SQL, "sql query failed", list(
 			"query" = sql,
-			"arguments" = json_encode(arguments),
+			"arguments" = json_encode(argument_sets || arguments),
 			"error" = last_error,
 		))
 	qdel(src)
 
 /// Makes a fresh aneri query for this run and returns it, unstarted.
 /datum/db_query/proc/start_inner() as /datum/sql_query
-	var/list/coerced = coerce_arguments(arguments)
-	inner = transaction ? transaction.query(sql, coerced) : pool.query(sql, coerced)
+	if(argument_sets)
+		var/list/coerced_sets = list()
+		for(var/list/argument_set as anything in argument_sets)
+			coerced_sets += list(coerce_arguments(argument_set))
+		inner = transaction ? transaction.batch(sql, coerced_sets) : pool.batch(sql, coerced_sets)
+	else
+		var/list/coerced = coerce_arguments(arguments)
+		inner = transaction ? transaction.query(sql, coerced) : pool.query(sql, coerced)
 	inner.timeout = max(CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
 	return inner
 
@@ -776,3 +789,5 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	rows = null
 	item = null
 #undef SHUTDOWN_QUERY_TIMELIMIT
+#undef DB_POLL_WAIT_US
+#undef DB_POLL_WAIT_US_UNSTARTED

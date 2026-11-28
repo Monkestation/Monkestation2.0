@@ -17,7 +17,7 @@ export RUST_G_VERSION=7.0.0
 export ANERI_REPO="Absolucy/aneri"
 
 #aneri git tag
-export ANERI_VERSION=v0.1.0
+export ANERI_VERSION=v0.1.1
 
 # node version
 export NODE_VERSION_LTS=24.12.0

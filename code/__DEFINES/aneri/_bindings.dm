@@ -600,6 +600,23 @@
 #define aneri_raw_set_panic_output_folder(path) __ANERI_EXT(__aneri_set_panic_output_folder, "byond:set_panic_output_folder")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_set_panic_output_folder
 
+/// Runs one statement once for each argument set.
+/// Takes the same modes as `aneri_raw_sql_execute`.
+/// Either every set is applied or none is: on a pool it runs in its own transaction.
+/// Only INSERT, UPDATE, DELETE and REPLACE work, and no rows come back.
+///
+/// Arguments:
+/// * mode - Same as `aneri_raw_sql_execute`.
+/// * pool
+/// * transaction - Used instead of `pool` when set.
+/// * sql
+/// * argument_sets - A list of argument lists, each like `aneri_raw_sql_execute`'s `arguments`.
+/// * timeout - (optional) Seconds for getting a connection plus running every set. Null waits forever.
+///
+/// Rust: `fn sql_batch(mode: u8, pool: Option<ByondSlotKey>, transaction: Option<ByondSlotKey>, sql: String, argument_sets: ByondValue, timeout: Option<f32>) -> ByondResult<ByondValue>`
+#define aneri_raw_sql_batch(mode, pool, transaction, sql, argument_sets, timeout...) __ANERI_EXT(__aneri_sql_batch, "byond:sql_batch")(mode, pool, transaction, sql, argument_sets, timeout)
+/* This comment bypasses grep checks */ var/static/__aneri_sql_batch
+
 /// Cancels a background query that is not part of a transaction.
 /// Its finish proc will not be called.
 ///
@@ -672,6 +689,19 @@
 #define aneri_raw_sql_pool_new(src, host, port, user, password, database, min_connections, max_connections, tls, tls_ca_file, tls_insecure) __ANERI_EXT(__aneri_sql_pool_new, "byond:sql_pool_new")(src, host, port, user, password, database, min_connections, max_connections, tls, tls_ca_file, tls_insecure)
 /* This comment bypasses grep checks */ var/static/__aneri_sql_pool_new
 
+/// Takes the result of a background query, if it has finished.
+/// Returns null if it has not.
+/// Otherwise returns `list(columns, rows, affected, last_insert_id, error, error_code)`,
+/// and `/proc/__aneri_sql_finish` is not called for that id.
+///
+/// Arguments:
+/// * id
+/// * block_us - (optional) Microseconds to freeze the server waiting for the result. Null or 0 returns at once.
+///
+/// Rust: `fn sql_take(id: String, block_us: Option<f32>) -> ByondResult<ByondValue>`
+#define aneri_raw_sql_take(id, block_us...) __ANERI_EXT(__aneri_sql_take, "byond:sql_take")(id, block_us)
+/* This comment bypasses grep checks */ var/static/__aneri_sql_take
+
 /// Lets go of a transaction.
 /// Statements already started still run,
 /// then it rolls back unless it was committed.
@@ -717,6 +747,34 @@
 /// Rust: `fn toml_file_is_valid(path: PathBuf) -> bool`
 #define aneri_raw_toml_file_is_valid(path) __ANERI_EXT(__aneri_toml_file_is_valid, "byond:toml_file_is_valid")(path)
 /* This comment bypasses grep checks */ var/static/__aneri_toml_file_is_valid
+
+/// Closes a websocket. Messages already sent still go out first.
+/// No more events arrive for it.
+/// Returns false if it was already closed.
+///
+/// Rust: `fn websocket_close(id: String) -> bool`
+#define aneri_raw_websocket_close(id) __ANERI_EXT(__aneri_websocket_close, "byond:websocket_close")(id)
+/* This comment bypasses grep checks */ var/static/__aneri_websocket_close
+
+/// Opens a websocket in the background and returns its id.
+/// Events are passed to `/proc/__aneri_websocket_event`.
+///
+/// Arguments:
+/// * url - A `ws://` or `wss://` URL.
+/// * headers - (optional) Assoc list of header name to value, sent with the handshake. Values must be text.
+/// * reconnect - (optional) Reconnect with backoff when the connection drops, until closed.
+/// * binary_folder - (optional) Folder to save binary messages to. Without one, a binary message closes the connection.
+///
+/// Rust: `fn websocket_connect(url: String, headers: Option<Vec<(String, String)>>, reconnect: Option<bool>, binary_folder: Option<PathBuf>) -> String`
+#define aneri_raw_websocket_connect(url, headers...) __ANERI_EXT(__aneri_websocket_connect, "byond:websocket_connect")(url, headers)
+/* This comment bypasses grep checks */ var/static/__aneri_websocket_connect
+
+/// Sends a text message on an open websocket.
+/// Returns false if the id is unknown or the socket is closed.
+///
+/// Rust: `fn websocket_send(id: String, text: String) -> bool`
+#define aneri_raw_websocket_send(id, text) __ANERI_EXT(__aneri_websocket_send, "byond:websocket_send")(id, text)
+/* This comment bypasses grep checks */ var/static/__aneri_websocket_send
 
 /// How long a sound file is, in deciseconds.
 /// Reads the length from the file header without decoding the audio.

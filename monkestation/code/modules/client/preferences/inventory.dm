@@ -83,9 +83,7 @@
 		return FALSE
 
 	var/list/amounts = list()
-	var/list/cases = list()
-	var/list/placeholders = list()
-	var/list/arguments = list()
+	var/list/argument_sets = list()
 	for(var/ckey, amount in amounts_by_ckey)
 		var/client/target = GLOB.directory[ckey]
 		var/datum/preferences/target_prefs = target?.prefs
@@ -97,18 +95,14 @@
 		final_amount = round(final_amount, 1)
 		if(!final_amount)
 			continue
-		var/index = length(amounts)
 		amounts[ckey] = final_amount
-		cases += "WHEN :ckey[index] THEN :amount[index]"
-		placeholders += ":ckey[index]"
-		arguments["ckey[index]"] = ckey
-		arguments["amount[index]"] = final_amount
+		argument_sets += list(list("amount" = final_amount, "ckey" = ckey))
 	if(!length(amounts))
 		return TRUE
 
 	var/datum/db_query/query_inc_metacoins = SSdbcore.NewQuery(
-		"UPDATE [format_table_name("player")] SET metacoins = metacoins + CASE ckey [cases.Join(" ")] END WHERE ckey IN ([placeholders.Join(", ")])",
-		arguments
+		"UPDATE [format_table_name("player")] SET metacoins = metacoins + :amount WHERE ckey = :ckey",
+		argument_sets = argument_sets
 	)
 	if(!query_inc_metacoins.warn_execute())
 		qdel(query_inc_metacoins)

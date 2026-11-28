@@ -34,6 +34,12 @@
 /datum/sql_pool/proc/mass_insert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, list/special_columns) as /datum/sql_query/insert
 	return new /datum/sql_query/insert(src, null, table, rows, duplicate_key, ignore_errors, special_columns)
 
+/// Returns a query that runs `sql` once for each list in `argument_sets`. Each set works like `arguments` in query().
+/// Either every set is applied or none is. `affected` is the total over all sets.
+/// Only INSERT, UPDATE, DELETE and REPLACE work, and no rows come back.
+/datum/sql_pool/proc/batch(sql, list/argument_sets) as /datum/sql_query/batch
+	return new /datum/sql_query/batch(src, null, sql, argument_sets)
+
 /// Starts a transaction. It holds one connection until it is committed, rolled back, deleted, or idle for `idle_timeout` seconds.
 /datum/sql_pool/proc/begin(timeout = 10, idle_timeout = 30) as /datum/sql_transaction
 	return new /datum/sql_transaction(src, timeout, idle_timeout)
@@ -97,10 +103,24 @@
 	return src
 
 /// Sleeps until the query finishes, then returns src.
-/datum/sql_query/proc/wait() as /datum/sql_query
+/// `block_us` first freezes the server for up to that many microseconds, in case the result is about to arrive.
+/datum/sql_query/proc/wait(block_us = 0) as /datum/sql_query
+	poll(block_us)
 	while(id)
 		sleep(world.tick_lag)
 	return src
+
+/// Checks if the query has finished, without sleeping. Returns TRUE if it has, or if it was never running.
+/// When it has, the result vars are set and the callback runs right here. It will not run again later.
+/// `block_us` freezes the server for up to that many microseconds to wait for the result. 0 only checks.
+/datum/sql_query/proc/poll(block_us = 0)
+	if(!id)
+		return TRUE
+	var/list/result = ANERI_CALL(sql_take, id, block_us)
+	if(!result)
+		return FALSE
+	__aneri_sql_finish(id, result[1], result[2], result[3], result[4], result[5], result[6])
+	return TRUE
 
 /// Runs the query and returns src. The whole server freezes until it is done. Not allowed in a transaction.
 /datum/sql_query/proc/execute_blocking() as /datum/sql_query
@@ -173,6 +193,20 @@
 /datum/sql_query/insert/start(mode)
 	return ANERI_CALL(sql_insert, mode, pool, transaction, table, insert_rows, duplicate_key, ignore_errors, special_columns, timeout)
 
+/// One statement run for many argument sets, made by batch() on a pool or transaction.
+/datum/sql_query/batch
+	/// A list of argument lists.
+	var/list/argument_sets
+
+/datum/sql_query/batch/New(datum/sql_pool/pool, datum/sql_transaction/transaction, sql, list/argument_sets)
+	src.pool = pool
+	src.transaction = transaction
+	src.sql = sql
+	src.argument_sets = argument_sets
+
+/datum/sql_query/batch/start(mode)
+	return ANERI_CALL(sql_batch, mode, pool, transaction, sql, argument_sets, timeout)
+
 /// A transaction, made by begin() on a pool. Statements run in the order execute() was called on them.
 /// The first one that fails rolls the whole transaction back, and every later statement and the commit report that error.
 /datum/sql_transaction
@@ -194,6 +228,10 @@
 /// Returns a mass insert in this transaction. Arguments work like `/datum/sql_pool/proc/mass_insert`.
 /datum/sql_transaction/proc/mass_insert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, list/special_columns) as /datum/sql_query/insert
 	return new /datum/sql_query/insert(pool, src, table, rows, duplicate_key, ignore_errors, special_columns)
+
+/// Returns a batch in this transaction. Arguments work like `/datum/sql_pool/proc/batch`.
+/datum/sql_transaction/proc/batch(sql, list/argument_sets) as /datum/sql_query/batch
+	return new /datum/sql_query/batch(pool, src, sql, argument_sets)
 
 /// Commits after every statement started so far. Returns a query whose `last_error` says if it worked.
 /datum/sql_transaction/proc/commit(target, callback) as /datum/sql_query
@@ -217,6 +255,7 @@
 	return length(__aneri_sql_queries) + ANERI_CALL(sql_forgotten_in_flight)
 
 /proc/__aneri_sql_finish(id, list/columns, list/rows, affected, last_insert_id, error, error_code)
+	set waitfor = FALSE
 	var/datum/sql_query/query = __aneri_sql_queries[id]
 	if(!query)
 		return
