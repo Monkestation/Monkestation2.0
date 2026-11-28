@@ -638,6 +638,8 @@
 									"Your appendages begin morphing." = MUT_MSG_EXTENDED,
 									"You feel as though you're about to change at any moment!" = MUT_MSG_ABOUT2TURN)
 	var/cycles_to_turn = 20 //the current_cycle threshold / iterations needed before one can transform
+	/// Shown after the transformation, if set
+	var/transformation_flavor_text
 
 /datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = TRUE
@@ -666,6 +668,8 @@
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
 		to_chat(affected_mob, span_warning("You've become \a [LOWER_TEXT(initial(species_type.name))]!"))
+		if(transformation_flavor_text)
+			to_chat(affected_mob, span_danger(transformation_flavor_text))
 		return
 	..()
 
@@ -682,6 +686,15 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/lizard
 	taste_description = "dragon's breath but not as cool"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/mutationtoxin/vox
+	name = "Vox Mutation Toxin"
+	description = "A shrieking toxin."
+	color = "#5EFF3B"
+	race = /datum/species/vox
+	taste_description = "dust and quills"
+	transformation_flavor_text = "The pain subsides. You feel... beaked."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/fly

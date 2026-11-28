@@ -110,6 +110,7 @@
 		"revolution",
 		"star",
 		"uboa",
+		"voxpox",
 	)
 	/// List of selectable symbol options
 	var/static/list/symbols = list(

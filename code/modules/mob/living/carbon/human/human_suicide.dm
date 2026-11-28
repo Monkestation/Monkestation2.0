@@ -68,12 +68,17 @@
 			crossing [p_their()] arms and leaning back a little while bending [p_their()] knees at an angle! It looks like [p_theyre()] trying to commit suicide."
 
 		if(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
-			suicide_message = pick(list(
+			var/list/combat_messages = list(
 				"[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.",
 				"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.",
 				"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.",
 				"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.",
-			))
+			)
+			for(var/species_message in dna?.species.suicide_messages)
+				species_message = replacetext(species_message, "%SUICIDER%", "[src]")
+				species_message = replacetext(species_message, "%THEIR%", p_their())
+				combat_messages += "[species_message] It looks like [p_theyre()] trying to commit suicide."
+			suicide_message = pick(combat_messages)
 
 		if(HUMAN_DEFAULT_MODE_SUICIDE_MESSAGE)
 			suicide_message = pick(list(

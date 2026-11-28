@@ -212,6 +212,28 @@
 		to_chat(user, span_warning("You stop, look down at what you're currently holding and ponder to yourself, \"This is probably to be used on their hair or their facial hair.\""))
 		return
 
+	// Heads that can't grow hair get their hair-like features (vox quills) sculpted instead
+	var/obj/item/bodypart/head/noggin = target_human.get_bodypart(BODY_ZONE_HEAD)
+	var/list/hairlike_features = list()
+	if(location == BODY_ZONE_HEAD && noggin && !(noggin.head_flags & HEAD_HAIR))
+		for(var/obj/item/organ/external/feature as anything in noggin.get_hairlike_features(EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR))
+			hairlike_features[capitalize(feature.name)] = feature
+	if(length(hairlike_features))
+		if(!get_location_accessible(target_human, BODY_ZONE_HEAD))
+			balloon_alert(user, "the headgear is in the way!")
+			return
+		var/obj/item/organ/external/feature = hairlike_features[hairlike_features[1]]
+		if(length(hairlike_features) > 1)
+			var/selected_part = tgui_alert(user, "Please select which part of [target_human] you would like to sculpt!", "It's sculpting time!", assoc_to_keys(hairlike_features) + "Cancel")
+			if(!selected_part || selected_part == "Cancel")
+				return
+			feature = hairlike_features[selected_part]
+		var/is_facial = feature.restyle_flags & EXTERNAL_RESTYLE_FACIAL_HAIR
+		playsound(target_human, 'monkestation/code/modules/blueshift/sounds/haircut.ogg', 100)
+		if(feature.attempt_feature_restyle(src, user, target_human, BODY_ZONE_HEAD, feature.restyle_flags, is_facial ? facial_haircut_duration : haircut_duration))
+			new /obj/effect/decal/cleanable/hair(get_turf(src))
+		return
+
 	if(target_human.hairstyle == "Bald" && target_human.facial_hairstyle == "Shaved")
 		balloon_alert(user, "what hair? They have none!")
 		return
@@ -572,8 +594,10 @@
 /obj/item/razor/proc/shave(mob/living/carbon/human/target_human, location = BODY_ZONE_PRECISE_MOUTH)
 	if(location == BODY_ZONE_PRECISE_MOUTH)
 		target_human.set_facial_hairstyle("Shaved", update = TRUE)
+		target_human.shave_hairlike_features(EXTERNAL_RESTYLE_FACIAL_HAIR)
 	else
 		target_human.set_hairstyle("Bald", update = TRUE)
+		target_human.shave_hairlike_features(EXTERNAL_RESTYLE_HAIR)
 
 	playsound(loc, 'sound/items/unsheath.ogg', 20, TRUE)
 
@@ -602,7 +626,8 @@
 			to_chat(user, span_warning("The mask is in the way!"))
 			return
 
-		if(!(noggin.head_flags & HEAD_FACIAL_HAIR))
+		var/hairlike_facial = length(noggin.get_hairlike_features(EXTERNAL_RESTYLE_FACIAL_HAIR))
+		if(!(noggin.head_flags & HEAD_FACIAL_HAIR) && !hairlike_facial)
 			to_chat(user, span_warning("There is no facial hair to style!"))
 			return
 
@@ -610,7 +635,7 @@
 			to_chat(user, span_warning("[target_human] is just way too shaved. Like, really really shaved."))
 			return
 
-		if(target_human.facial_hairstyle == "Shaved")
+		if(hairlike_facial ? !length(noggin.get_hairlike_features(EXTERNAL_RESTYLE_FACIAL_HAIR, styled_only = TRUE)) : target_human.facial_hairstyle == "Shaved")
 			to_chat(user, span_warning("Already clean-shaven!"))
 			return
 
@@ -630,11 +655,12 @@
 			to_chat(user, span_warning("The headgear is in the way!"))
 			return
 
-		if(!(noggin.head_flags & HEAD_HAIR))
+		var/hairlike_hair = length(noggin.get_hairlike_features(EXTERNAL_RESTYLE_HAIR))
+		if(!(noggin.head_flags & HEAD_HAIR) && !hairlike_hair)
 			to_chat(user, span_warning("There is no hair to shave!"))
 			return
 
-		if(target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead")
+		if(hairlike_hair ? !length(noggin.get_hairlike_features(EXTERNAL_RESTYLE_HAIR, styled_only = TRUE)) : (target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead"))
 			to_chat(user, span_warning("There is not enough hair left to shave!"))
 			return
 

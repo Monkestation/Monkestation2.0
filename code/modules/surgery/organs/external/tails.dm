@@ -198,3 +198,103 @@
 
 /datum/bodypart_overlay/mutant/tail/shadekin/get_global_feature_list()
 	return GLOB.tails_list_shadekin
+
+/obj/item/organ/external/tail/vox
+	name = "vox tail"
+	desc = "A severed vox tail. Somewhere, no doubt, a vox hater is very pleased with themselves."
+	icon = 'icons/mob/human/species/vox/tails.dmi'
+	icon_state = "m_tail_vox_lime_BEHIND"
+	preference = "feature_vox_tail_markings"
+	dna_block = DNA_VOX_TAIL_MARKINGS_BLOCK
+	wag_flags = WAG_ABLE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/vox
+
+/obj/item/organ/external/tail/vox/Initialize(mapload, accessory_type)
+	. = ..()
+	if(accessory_type || !loc)
+		return
+	// Spawned on its own (loot, the limbgrower): plain and lime, until it's first worn
+	bodypart_overlay.set_appearance(/datum/sprite_accessory/vox_tail_markings/plain)
+	bodypart_overlay.draw_color = null
+	bodypart_overlay.imprint_on_next_insertion = TRUE
+	update_appearance()
+
+/obj/item/organ/external/tail/vox/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	. = ..()
+	if(!.)
+		return
+	var/datum/bodypart_overlay/mutant/tail/vox/vox_overlay = bodypart_overlay
+	vox_overlay.original_owner = original_owner
+
+/obj/item/organ/external/tail/vox/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	color = null // our draw color is the color of the markings, the tail sprite has its own colors
+	update_appearance()
+
+/// Someone else's tail keeps looking like theirs
+/obj/item/organ/external/tail/vox/mutate_feature(features, mob/living/carbon/human/human)
+	if(original_owner && !IS_WEAKREF_OF(human, original_owner))
+		return
+	return ..()
+
+/// A severed tail looks like the tail it was: skin tone and markings
+/obj/item/organ/external/tail/vox/update_icon_state()
+	var/datum/bodypart_overlay/mutant/tail/vox/vox_overlay = bodypart_overlay
+	icon_state = "m_tail_vox_[vox_overlay?.skin_tone || "lime"]_BEHIND"
+	return ..()
+
+/obj/item/organ/external/tail/vox/update_overlays()
+	. = ..()
+	var/datum/bodypart_overlay/mutant/tail/vox/vox_overlay = bodypart_overlay
+	if(isnull(vox_overlay?.sprite_datum) || vox_overlay.sprite_datum.icon_state == "plain")
+		return
+	var/mutable_appearance/markings = mutable_appearance(vox_overlay.sprite_datum.icon, "m_vox_tail_markings_[vox_overlay.sprite_datum.icon_state]_BEHIND")
+	markings.color = COLOR_MATRIX_ADD(vox_overlay.draw_color)
+	. += markings
+
+/// The tail is drawn in the skin tone of the body it grew on, with its markings (the sprite accessory) on top.
+/// The markings sprites are dark, the secondary mutant color gets added to them.
+/datum/bodypart_overlay/mutant/tail/vox
+	feature_key = "vox_tail_markings"
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR_SECONDARY
+	fallback_key = MUTANT_COLOR // like floran leaves, the markings take the mutant color if there's no secondary one
+	/// The skin tone of the body this tail grew on, which it keeps when transplanted or severed
+	var/skin_tone = "lime"
+	/// The mob this tail grew on, see /obj/item/organ/external/tail/var/original_owner
+	var/datum/weakref/original_owner
+
+/datum/bodypart_overlay/mutant/tail/vox/get_global_feature_list()
+	return GLOB.vox_tail_markings_list
+
+/// Whether the given limb is on the body this tail grew on, so the tail follows that body's looks
+/datum/bodypart_overlay/mutant/tail/vox/proc/on_original_body(obj/item/bodypart/limb)
+	return !limb?.owner || !original_owner || IS_WEAKREF_OF(limb.owner, original_owner)
+
+/datum/bodypart_overlay/mutant/tail/vox/inherit_color(obj/item/bodypart/ownerlimb, force)
+	if(draw_color && !on_original_body(ownerlimb))
+		return FALSE // someone else's tail keeps its markings color
+	return ..()
+
+/datum/bodypart_overlay/mutant/tail/vox/get_image(obj/item/bodypart/limb, layer_index, layer_real, layer_name)
+	if(limb && on_original_body(limb))
+		var/limb_style = limb.get_drawn_limb_style()
+		skin_tone = (limb_style in GLOB.vox_skin_tones) ? limb_style : "lime" // other limb styles, like tundra moth fur, have no tail
+	var/wagging_prefix = wagging ? "wagging_" : ""
+	var/mutable_appearance/tail = mutable_appearance('icons/mob/human/species/vox/tails.dmi', "m_tail_vox_[wagging_prefix][skin_tone]_[layer_index]", layer = layer_real)
+	if(sprite_datum.icon_state != "plain")
+		var/mutable_appearance/markings = mutable_appearance(sprite_datum.icon, "m_[wagging_prefix]vox_tail_markings_[sprite_datum.icon_state]_[layer_index]")
+		markings.color = COLOR_MATRIX_ADD(draw_color)
+		tail.overlays += markings
+	return tail
+
+/datum/bodypart_overlay/mutant/tail/vox/color_image(image/overlay, obj/item/bodypart/limb, layer_index, key_name)
+	return // the markings are colored in get_image(), the tail itself isn't
+
+/datum/bodypart_overlay/mutant/tail/vox/generate_icon_cache()
+	. = ..()
+	. += skin_tone
+
+/obj/item/organ/external/tail/vox/fake
+	name = "fabricated vox tail"
+	desc = "A fabricated severed vox tail. This one's made of synthflesh."

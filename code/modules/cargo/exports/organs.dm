@@ -42,6 +42,11 @@
 	export_types = list(/obj/item/organ/external/tail/lizard)
 
 
+/datum/export/organ/external/tail/vox
+	cost = CARGO_CRATE_VALUE * 1.25
+	unit_name = "vox tail"
+	export_types = list(/obj/item/organ/external/tail/vox)
+
 /datum/export/organ/external/tail/cat
 	cost = CARGO_CRATE_VALUE * 1.5
 	unit_name = "cat tail"

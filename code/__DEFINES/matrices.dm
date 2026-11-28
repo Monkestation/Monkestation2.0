@@ -20,6 +20,8 @@
  * 0 is identity, 1 makes everything white, -1 makes everything black
  */
 #define COLOR_MATRIX_LIGHTNESS(power) list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, power,power,power,0)
+/// Adds the given color, instead of multiplying by it like normal coloring. Dark sprites get brighter with the color, like vox quills and markings
+#define COLOR_MATRIX_ADD(color) list("#FF0000", "#00FF00", "#0000FF", sanitize_hexcolor(color))
 /**
  * Changes distance colors have from rgb(127,127,127) grey
  * 1 is identity. 0 makes everything grey >1 blows out colors and greys

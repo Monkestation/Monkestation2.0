@@ -1172,3 +1172,25 @@
 #undef BREATH_RELATIONSHIP_MULTIPLIER
 #undef SMOKER_ORGAN_HEALTH
 #undef SMOKER_LUNG_HEALING
+
+/obj/item/organ/internal/lungs/vox
+	name = "vox lungs"
+	desc = "They're filled with dust... wow."
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "lungs-vox"
+	decay_factor = 0
+	safe_oxygen_min = 0 // We breathe nitrogen,
+	safe_oxygen_max = 0.05 // and oxygen is toxic to us.
+	safe_nitro_min = 16
+	oxy_damage_type = TOX
+
+/obj/item/organ/internal/lungs/vox/Initialize(mapload)
+	. = ..()
+	// Carbon dioxide counts against the nitrogen we breathe
+	add_gas_relationship(/datum/gas/carbon_dioxide, /datum/gas/nitrogen, -0.7)
+
+/obj/item/organ/internal/lungs/vox/emp_act(severity)
+	. = ..()
+	if((. & EMP_PROTECT_SELF) || !owner)
+		return
+	owner.emote("gasp")

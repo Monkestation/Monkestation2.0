@@ -221,6 +221,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		return //colors are handled through a palette datum
 	CRASH("`apply_to_human()` was not implemented for [type]!")
 
+/// Returns the value of this preference the human currently has, the reverse of apply_to_human(), or null if it can't be told.
+/// Used to start choices from what the human already has, like in the magic mirror's race change.
+/datum/preference/proc/get_value_from_human(mob/living/carbon/human/target)
+	SHOULD_NOT_SLEEP(TRUE)
+	return null
+
 /// Returns which savefile to use for a given savefile identifier
 /datum/preferences/proc/get_save_data_for_savefile_identifier(savefile_identifier)
 	RETURN_TYPE(/list)

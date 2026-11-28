@@ -28,7 +28,7 @@
 
 	INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
-///Asks the external organs inside the limb if they can restyle
+///Asks the external organs inside the limb if they can restyle. Returns TRUE if a feature was restyled.
 /obj/item/bodypart/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	var/list/valid_features = list()
 	for(var/obj/item/organ/external/feature in contents)
@@ -49,12 +49,12 @@
 			if(picked_option)
 				target_organ = name_to_organ[picked_option]
 			else
-				return
+				return FALSE
 		else
 			to_chat(trimmer, span_warning("There are no restylable features there!"))
-			return
+			return FALSE
 
-	target_organ.attempt_feature_restyle(source, trimmer, original_target, body_zone, restyle_type, style_speed)
+	return target_organ.attempt_feature_restyle(source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
 ///Invoke async so we dont break signals
 /obj/item/organ/external/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
@@ -65,20 +65,34 @@
 	else
 		to_chat(trimmer, span_warning("This tool is incompatible with the [src.name]!"))
 
-///Restyles the external organ from a list of valid options
+///Returns the trait that stops us growing back once styled to nothing: baldness for hair-like features, a shave for facial hair-like ones. Null if nothing does.
+/obj/item/organ/external/proc/get_regrowth_blocker()
+	if(restyle_flags & EXTERNAL_RESTYLE_HAIR)
+		return TRAIT_BALD
+	if(restyle_flags & EXTERNAL_RESTYLE_FACIAL_HAIR)
+		return TRAIT_SHAVED
+	return null
+
+///Restyles the external organ from a list of valid options. Returns TRUE if it was restyled.
 /obj/item/organ/external/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	var/list/restyles = get_valid_restyles()
 	var/new_style = tgui_input_list(trimmer, "Select a new style", "Grooming", restyles)
+	if(isnull(new_style))
+		return FALSE
+	var/regrowth_blocker = get_regrowth_blocker()
+	if(regrowth_blocker && owner && new_style != SPRITE_ACCESSORY_NONE && HAS_TRAIT(owner, regrowth_blocker))
+		to_chat(trimmer, span_warning("[original_target == trimmer ? "Your" : "[original_target]'s"] [name] won't grow back!"))
+		return FALSE
 
 	trimmer.visible_message(
 		span_notice("[trimmer] tries to change [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),
 		span_notice("You try to change [original_target == trimmer ? "your" : original_target.name + "'s"] [name].")
 	)
-	if(new_style && do_after(trimmer, style_speed, target = original_target))
-		trimmer.visible_message(
-			span_notice("[trimmer] successfully changes [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),
-			span_notice("You successfully change [original_target == trimmer ? "your" : original_target.name + "'s"] [name].")
-		)
-
-
-		simple_change_sprite(restyles[new_style]) //turn name to type and pass it on
+	if(!do_after(trimmer, style_speed, target = original_target))
+		return FALSE
+	trimmer.visible_message(
+		span_notice("[trimmer] successfully changes [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),
+		span_notice("You successfully change [original_target == trimmer ? "your" : original_target.name + "'s"] [name].")
+	)
+	simple_change_sprite(restyles[new_style]) //turn name to type and pass it on
+	return TRUE

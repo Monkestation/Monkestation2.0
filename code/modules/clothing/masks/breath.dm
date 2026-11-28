@@ -38,6 +38,23 @@
 	if(adjustable)
 		. += span_notice("Alt-click [src] to adjust it.")
 
+/obj/item/clothing/mask/breath/vox
+	species_restricted = list(/datum/species/vox)
+	name = "vox breath mask"
+	desc = "A weirdly-shaped breath mask."
+	icon = 'icons/obj/species/vox/items.dmi'
+	worn_icon = 'icons/mob/clothing/species/vox/mask.dmi'
+	icon_state = "voxmask"
+	flags_cover = NONE
+	visor_flags_cover = NONE
+	actions_types = null
+	adjustable = FALSE
+
+/obj/item/clothing/mask/breath/vox/respirator
+	name = "vox respirator"
+	desc = "A weirdly-shaped breath mask, this one seems to be designed for a vox beak."
+	icon_state = "voxmask2"
+
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "medical mask"

@@ -175,6 +175,9 @@
 	var/supports_variations_flags = NONE
 	/// This is a bitfield that defines which bodyshapes this item is capable of rendering, used by build_worn_icon()
 	var/bodyshapes_with_variations = NONE
+	/// The species id whose fitted worn sprite (see /datum/species/var/custom_worn_icons) this item is currently drawn with, or null if it uses its normal one.
+	/// Lets overlays like blood match the shape.
+	var/species_fitted
 
 	///A weakref to the mob who threw the item
 	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
@@ -761,6 +764,8 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", "Object")
 /// Called when a mob drops an item.
 /obj/item/proc/dropped(mob/user, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+
+	species_fitted = null
 
 	// Remove any item actions we temporary gave out.
 	for(var/datum/action/action_item_has as anything in actions)

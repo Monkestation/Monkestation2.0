@@ -53,6 +53,7 @@
 #define BLOOD_TYPE_H2O "H2O"
 #define BLOOD_TYPE_SNAIL "S"
 #define BLOOD_TYPE_HEMOLYMPH "H"
+#define BLOOD_TYPE_VOX "VOX"
 
 // Blood exposure behavior flag defines
 /// Add our DNA to turfs/mobs/items, does not correlate with adding decals/overlays
@@ -214,6 +215,7 @@
 #define SPECIES_WEREWOLF "werewolf"
 #define SPECIES_ORNITHID "ornithid"
 #define SPECIES_SHADEKIN "shadekin"
+#define SPECIES_VOX "vox"
 
 
 // Like species IDs, but not specifically attached a species.
@@ -901,6 +903,10 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define EXTERNAL_RESTYLE_FLESH (1 << 2)
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
 #define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
+/// This organ is hair-like: it's restyled and shaved like hair, for heads that can't grow any. Like vox quills
+#define EXTERNAL_RESTYLE_HAIR (1 << 4)
+/// This organ is like facial hair: it's restyled and shaved like facial hair, for heads that can't grow any. Like vox facial quills
+#define EXTERNAL_RESTYLE_FACIAL_HAIR (1 << 5)
 
 
 /// If gravity must be present to perform action (can't use pens without gravity)

@@ -109,7 +109,7 @@
 	if(accessory_overlay)
 		. += accessory_overlay
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_fitted_blood_state("uniformblood"))
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 

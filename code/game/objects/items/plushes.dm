@@ -510,6 +510,14 @@
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		INVOKE_ASYNC(P, TYPE_PROC_REF(/obj/item/toy/plush/ratplush, clash_of_the_plushies), src)
 
+/obj/item/toy/plush/voxplushie
+	name = "vox plushie"
+	desc = "A stitched-together Vox, fresh from the skipjack. Press its belly to hear it skree!"
+	icon = 'icons/obj/species/vox/items.dmi'
+	icon_state = "plushie_vox"
+	inhand_icon_state = null
+	squeak_override = list('sound/voice/vox_species/shriek1.ogg' = 1)
+
 // Worn sprite taken from Space Station 14. Bee hat sprite drawn by Ubaser.
 /obj/item/toy/plush/lizard_plushie
 	name = "lizard plushie"

@@ -1205,3 +1205,19 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
+
+/obj/item/food/fried_vox
+	name = "Kentucky Fried Vox"
+	desc = "11 herbs and spices."
+	icon = 'icons/obj/species/vox/items.dmi'
+	icon_state = "fried_vox"
+	inhand_icon_state = "fried_vox"
+	lefthand_file = 'icons/obj/species/vox/items_lefthand.dmi'
+	righthand_file = 'icons/obj/species/vox/items_righthand.dmi'
+	trash_type = /obj/item/trash/fried_vox
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 5,
+	)
+	tastes = list("quills" = 1, "the Shoal" = 1)
+	foodtypes = MEAT | FRIED

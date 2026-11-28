@@ -26,6 +26,18 @@
 	name = "\improper 4no raisins"
 	icon_state= "4no_raisins"
 
+/obj/item/trash/fried_vox
+	name = "Kentucky Fried Vox"
+	icon = 'icons/obj/species/vox/items.dmi'
+	icon_state = "fried_vox_empty"
+	inhand_icon_state = "fried_vox_empty"
+	lefthand_file = 'icons/obj/species/vox/items_lefthand.dmi'
+	righthand_file = 'icons/obj/species/vox/items_righthand.dmi'
+	worn_icon = 'icons/obj/species/vox/items_worn.dmi'
+	worn_icon_state = "fried_vox_empty"
+	slot_flags = ITEM_SLOT_HEAD
+	dog_fashion = /datum/dog_fashion/head/fried_vox_empty
+
 /obj/item/trash/candy
 	name = "candy"
 	icon_state= "candy"

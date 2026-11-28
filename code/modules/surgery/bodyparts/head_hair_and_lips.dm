@@ -183,8 +183,9 @@
 /// Returns an appropriate missing eyes overlay
 /obj/item/bodypart/head/proc/get_eyeless_overlay(can_rotate = TRUE)
 	RETURN_TYPE(/image)
-	var/eyeless_icon = 'icons/mob/species/human/human_face.dmi'
 	var/eyeless_icon_state = "eyes_missing"
+	// Heads with eyes of their own can have their own empty sockets
+	var/eyeless_icon = (eyes_icon && icon_exists(eyes_icon, eyeless_icon_state)) ? eyes_icon : 'icons/mob/species/human/human_face.dmi'
 
 	var/image/eyeless_overlay
 	if(can_rotate)
@@ -293,6 +294,38 @@
 
 	if(update)
 		update_body_parts()
+
+/**
+ * Returns the hair-like features with these restyle flags (like vox quills) that we have instead of the hair or facial hair we can't grow.
+ * restyle_flags: EXTERNAL_RESTYLE_HAIR and/or EXTERNAL_RESTYLE_FACIAL_HAIR
+ * styled_only: only the ones that have a style, not shaved down to "None"
+ */
+/obj/item/bodypart/head/proc/get_hairlike_features(restyle_flags, styled_only = FALSE)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/obj/item/organ/external/feature in src)
+		if(!(feature.restyle_flags & restyle_flags))
+			continue
+		if(head_flags & ((feature.restyle_flags & EXTERNAL_RESTYLE_HAIR) ? HEAD_HAIR : HEAD_FACIAL_HAIR))
+			continue // we grow the real thing
+		if(styled_only && (!feature.bodypart_overlay.sprite_datum || feature.bodypart_overlay.sprite_datum.name == SPRITE_ACCESSORY_NONE))
+			continue
+		. += feature
+
+/**
+ * Shaves off the hair-like features of our head with these restyle flags (like vox quills), turning them to "None".
+ * Returns what was shaved, organ slot -> the sprite accessory type it had, so it can be grown back.
+ */
+/mob/living/carbon/human/proc/shave_hairlike_features(restyle_flags)
+	. = list()
+	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+	for(var/obj/item/organ/external/feature as anything in head?.get_hairlike_features(restyle_flags))
+		var/datum/sprite_accessory/shaved = feature.bodypart_overlay.get_global_feature_list()[SPRITE_ACCESSORY_NONE]
+		var/datum/sprite_accessory/old_style = feature.bodypart_overlay.sprite_datum
+		if(!shaved || !old_style || old_style == shaved)
+			continue
+		.[feature.slot] = old_style.type
+		feature.simple_change_sprite(shaved.type)
 
 /**
  * Set the hair gradient style of a human.

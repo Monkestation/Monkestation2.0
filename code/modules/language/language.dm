@@ -67,6 +67,12 @@
 
 	/// The language that an atom knows with the highest "default_priority" is selected by default.
 	var/default_priority = 0
+	/// Verb for statements in this language, like "shrieks". Null uses the speaker's own.
+	var/speech_verb
+	/// Verb for questions in this language. Null uses the speaker's own.
+	var/ask_verb
+	/// Verb for exclamations in this language. Null uses the speaker's own.
+	var/exclaim_verb
 	/// Icon displayed in the chat window when speaking this language.
 	/// if you are seeing someone speak popcorn language, then something is wrong.
 	var/icon = 'icons/ui/chat/language.dmi'

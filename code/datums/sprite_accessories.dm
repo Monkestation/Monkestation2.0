@@ -3904,3 +3904,177 @@ MONKESTATION EDIT
 /datum/sprite_accessory/moth_markings/witchwing
 	name = "Witch Wing"
 	icon_state = "witchwing"
+
+// Vox
+
+/datum/sprite_accessory/vox_body_markings
+	icon = 'icons/mob/human/species/vox/body_markings.dmi'
+
+/datum/sprite_accessory/vox_body_markings/none
+	name = SPRITE_ACCESSORY_NONE
+	icon_state = "none"
+
+/datum/sprite_accessory/vox_body_markings/heart
+	name = "Heart"
+	icon_state = "heart"
+	body_slots = list(BODY_ZONE_R_ARM)
+
+/datum/sprite_accessory/vox_body_markings/hive
+	name = "Hive"
+	icon_state = "hive"
+	body_slots = list(BODY_ZONE_CHEST)
+
+/datum/sprite_accessory/vox_body_markings/nightling
+	name = "Nightling"
+	icon_state = "nightling"
+	body_slots = list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+
+/datum/sprite_accessory/vox_body_markings/tiger
+	name = "Tiger-stripe"
+	icon_state = "tiger"
+	body_slots = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+
+/datum/sprite_accessory/vox_tail_markings
+	icon = 'icons/mob/human/species/vox/tail_markings.dmi'
+
+/datum/sprite_accessory/vox_tail_markings/plain
+	name = "Plain"
+	icon_state = "plain"
+
+/datum/sprite_accessory/vox_tail_markings/bands
+	name = "Bands"
+	icon_state = "bands"
+
+/datum/sprite_accessory/vox_tail_markings/tip
+	name = "Tip"
+	icon_state = "tip"
+
+/datum/sprite_accessory/vox_tail_markings/stripe
+	name = "Stripe"
+	icon_state = "stripe"
+
+/datum/sprite_accessory/vox_quills
+	icon = 'icons/mob/human/species/vox/quills.dmi'
+
+/datum/sprite_accessory/vox_quills/none
+	name = SPRITE_ACCESSORY_NONE
+	icon_state = "none"
+
+/datum/sprite_accessory/vox_quills/crested
+	name = "Crested"
+	icon_state = "crested"
+
+/datum/sprite_accessory/vox_quills/emperor
+	name = "Emperor"
+	icon_state = "emperor"
+
+/datum/sprite_accessory/vox_quills/keel
+	name = "Keel"
+	icon_state = "keel"
+
+/datum/sprite_accessory/vox_quills/keet
+	name = "Keet"
+	icon_state = "keet"
+
+/datum/sprite_accessory/vox_quills/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/vox_quills/tiel
+	name = "Tiel"
+	icon_state = "tiel"
+
+/datum/sprite_accessory/vox_quills/kingly
+	name = "Kingly"
+	icon_state = "kingly"
+
+/datum/sprite_accessory/vox_quills/afro
+	name = "Fluffy"
+	icon_state = "afro"
+
+/datum/sprite_accessory/vox_quills/yasuhiro
+	name = "Long"
+	icon_state = "yasuhiro"
+
+/datum/sprite_accessory/vox_quills/razor
+	name = "Razorback"
+	icon_state = "razor"
+
+/datum/sprite_accessory/vox_quills/razor_clipped
+	name = "Clipped Razorback"
+	icon_state = "razor_clipped"
+
+/datum/sprite_accessory/vox_quills/long_braid
+	name = "Long Braided"
+	icon_state = "long_braid"
+
+/datum/sprite_accessory/vox_quills/short_braid
+	name = "Short Braided"
+	icon_state = "short_braid"
+
+/datum/sprite_accessory/vox_quills/mohawk
+	name = "Mohawk"
+	icon_state = "mohawk"
+
+/datum/sprite_accessory/vox_quills/hawk
+	name = "Hawk"
+	icon_state = "hawk"
+
+/datum/sprite_accessory/vox_quills/horns
+	name = "Horns"
+	icon_state = "horns"
+
+/datum/sprite_accessory/vox_quills/mange
+	name = "Mange"
+	icon_state = "mange"
+
+/datum/sprite_accessory/vox_quills/ponytail
+	name = "Ponytail"
+	icon_state = "ponytail"
+
+/datum/sprite_accessory/vox_quills/rows
+	name = "Rows"
+	icon_state = "rows"
+
+/datum/sprite_accessory/vox_quills/surf
+	name = "Surf"
+	icon_state = "surf"
+
+/datum/sprite_accessory/vox_quills/flowing
+	name = "Flowing"
+	icon_state = "flowing"
+
+/datum/sprite_accessory/vox_quills/nights
+	name = "Nights"
+	icon_state = "nights"
+
+/datum/sprite_accessory/vox_quills/cropped
+	name = "Cropped"
+	icon_state = "cropped"
+
+/datum/sprite_accessory/vox_facial_quills
+	icon = 'icons/mob/human/species/vox/facial_quills.dmi'
+
+/datum/sprite_accessory/vox_facial_quills/none
+	name = SPRITE_ACCESSORY_NONE
+	icon_state = "none"
+
+/datum/sprite_accessory/vox_facial_quills/colonel
+	name = "Colonel"
+	icon_state = "colonel"
+
+/datum/sprite_accessory/vox_facial_quills/fu
+	name = "Fu"
+	icon_state = "fu"
+
+/datum/sprite_accessory/vox_facial_quills/neck
+	name = "Neck"
+	icon_state = "neck"
+
+/datum/sprite_accessory/vox_facial_quills/beard
+	name = "Beard"
+	icon_state = "beard"
+
+/datum/sprite_accessory/vox_facial_quills/ruff
+	name = "Ruff"
+	icon_state = "ruff"

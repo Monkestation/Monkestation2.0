@@ -246,6 +246,11 @@
 	dna_string = "Lizard DNA"
 	color = BLOOD_COLOR_LIZARD
 
+/datum/blood_type/vox
+	name = BLOOD_TYPE_VOX
+	dna_string = "Vox DNA"
+	color = BLOOD_COLOR_VOX
+
 /datum/blood_type/ethereal
 	name = BLOOD_TYPE_ETHEREAL
 	dna_string = "Ethereal DNA"

@@ -160,6 +160,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	language ||= message_mods[LANGUAGE_EXTENSION] || get_selected_language()
+	message_mods[LANGUAGE_EXTENSION] = language // so say_mod() can use the language's speech verbs
 
 	var/succumbed = FALSE
 

@@ -27,6 +27,23 @@ GLOBAL_LIST_EMPTY(frills_list)
 GLOBAL_LIST_EMPTY(spines_list)
 GLOBAL_LIST_EMPTY(legs_list)
 GLOBAL_LIST_EMPTY(animated_spines_list)
+	//Vox bits (all datum lists indexed by name)
+GLOBAL_LIST_EMPTY(vox_quills_list)
+GLOBAL_LIST_EMPTY(vox_facial_quills_list)
+GLOBAL_LIST_EMPTY(vox_tail_markings_list)
+GLOBAL_LIST_EMPTY(vox_body_markings_list)
+/// Vox skin tones, the limb styles vox limbs are drawn in (from the "vox_skin_tone" DNA feature): skin tone -> bodypart icon file
+GLOBAL_LIST_INIT(vox_skin_tones, list(
+	"azure" = 'icons/mob/human/species/vox/bodyparts_azure.dmi',
+	"brown" = 'icons/mob/human/species/vox/bodyparts_brown.dmi',
+	"crimson" = 'icons/mob/human/species/vox/bodyparts_crimson.dmi',
+	"emerald" = 'icons/mob/human/species/vox/bodyparts_emerald.dmi',
+	"grey" = 'icons/mob/human/species/vox/bodyparts_grey.dmi',
+	"lime" = 'icons/mob/human/species/vox/bodyparts_lime.dmi',
+	"mossy" = 'icons/mob/human/species/vox/bodyparts_mossy.dmi',
+	"nebula" = 'icons/mob/human/species/vox/bodyparts_nebula.dmi',
+	"plum" = 'icons/mob/human/species/vox/bodyparts_plum.dmi',
+))
 
 	//Mutant Human bits
 GLOBAL_LIST_EMPTY(tails_list)

@@ -95,3 +95,10 @@
 
 #undef APPENDICITIS_PROB
 #undef INFLAMATION_ADVANCEMENT_PROB
+
+/obj/item/organ/internal/appendix/vox
+	name = "vox appendix"
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "appendix-vox"
+	base_icon_state = "appendix-vox"
+	decay_factor = 0

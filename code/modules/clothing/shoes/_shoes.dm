@@ -55,7 +55,7 @@
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_fitted_blood_state("shoeblood"))
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 

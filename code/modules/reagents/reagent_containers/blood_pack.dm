@@ -54,6 +54,9 @@
 /obj/item/reagent_containers/blood/lizard
 	blood_type = BLOOD_TYPE_LIZARD
 
+/obj/item/reagent_containers/blood/vox
+	blood_type = BLOOD_TYPE_VOX
+
 /obj/item/reagent_containers/blood/ethereal
 	blood_type = BLOOD_TYPE_ETHEREAL
 

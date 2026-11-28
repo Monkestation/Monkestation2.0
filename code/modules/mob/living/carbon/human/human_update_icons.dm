@@ -126,6 +126,14 @@ There are several things that need to be remembered:
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
 			icon_file = DEFAULT_UNIFORM_FILE
 			handled_by_bodyshape = FALSE
+		if(bodyshape & BODYSHAPE_CUSTOM)
+			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_UNIFORM, uniform)
+			if(species_icon_file && (istype(species_icon_file, /icon) || icon_exists(species_icon_file, target_overlay)))
+				icon_file = species_icon_file
+				handled_by_bodyshape = TRUE
+				woman = FALSE
+			else
+				uniform.species_fitted = null // no fitted sprite for how it's worn (like rolled down), so its blood isn't fitted either
 
 		//END SPECIES HANDLING
 		uniform_overlay = uniform.build_worn_icon(
@@ -176,6 +184,61 @@ There are several things that need to be remembered:
 	apply_overlay(ID_LAYER)
 
 
+/**
+ * Returns the limb ids whose shape decides how clothing in the given slot fits, in order of priority,
+ * or null if the limbs don't decide that slot. Their species' fitted sprites (/datum/species/var/custom_worn_icons) are used.
+ * Uniforms and suits only fit legs of one shape, or else the chest.
+ */
+/mob/living/carbon/human/proc/get_fitting_limb_ids(item_slot)
+	. = list()
+	var/obj/item/bodypart/left_leg = get_bodypart(BODY_ZONE_L_LEG)
+	var/obj/item/bodypart/right_leg = get_bodypart(BODY_ZONE_R_LEG)
+	var/legs_id = (left_leg && left_leg.limb_id == right_leg?.limb_id) ? left_leg.limb_id : null
+	switch(item_slot)
+		if(LOADOUT_ITEM_UNIFORM, LOADOUT_ITEM_SUIT)
+			if(legs_id)
+				. += legs_id
+			var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+			if(chest)
+				. |= chest.limb_id
+		if(LOADOUT_ITEM_SHOES)
+			if(legs_id)
+				. += legs_id
+		if(LOADOUT_ITEM_GLOVES)
+			var/obj/item/bodypart/left_arm = get_bodypart(BODY_ZONE_L_ARM)
+			var/obj/item/bodypart/right_arm = get_bodypart(BODY_ZONE_R_ARM)
+			if(left_arm && left_arm.limb_id == right_arm?.limb_id)
+				. += left_arm.limb_id
+		if(LOADOUT_ITEM_HEAD, LOADOUT_ITEM_MASK, LOADOUT_ITEM_GLASSES, LOADOUT_ITEM_EARS)
+			var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+			if(head)
+				. += head.limb_id
+		if(LOADOUT_ITEM_MISC) // the back slot
+			var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+			if(chest)
+				. += chest.limb_id
+		else
+			return null
+
+/**
+ * Returns the icon file an underwear sprite accessory is drawn from: the fitted version for our limbs if there is one.
+ * underwear_slot is LOADOUT_ITEM_UNDERWEAR, LOADOUT_ITEM_UNDERSHIRT or LOADOUT_ITEM_SOCKS.
+ */
+/mob/living/carbon/human/proc/get_underwear_icon(datum/sprite_accessory/accessory, underwear_slot)
+	for(var/limb_id in get_fitting_limb_ids(underwear_slot == LOADOUT_ITEM_SOCKS ? LOADOUT_ITEM_SHOES : LOADOUT_ITEM_UNIFORM))
+		var/datum/species/limb_species = GLOB.species_prototypes[GLOB.species_list[limb_id]]
+		var/fitted_icon = limb_species?.custom_worn_icons[underwear_slot]
+		if(fitted_icon && icon_exists(fitted_icon, accessory.icon_state))
+			return fitted_icon
+	return accessory.icon
+
+/// Returns the blood.dmi icon state for a bloody bare hand. Arms of a different shape can have their own, like vox claws.
+/mob/living/carbon/human/proc/get_bloody_hand_state(arm_zone, side)
+	var/obj/item/bodypart/arm = get_bodypart(arm_zone)
+	if(arm && icon_exists('icons/effects/blood.dmi', "bloodyhands_[arm.limb_id]_[side]"))
+		return "bloodyhands_[arm.limb_id]_[side]"
+	return "bloodyhands_[side]"
+
 /mob/living/carbon/human/update_worn_gloves()
 	remove_overlay(GLOVES_LAYER)
 
@@ -190,11 +253,11 @@ There are several things that need to be remembered:
 		// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
 		var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
 		if(has_left_hand(check_disabled = FALSE))
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_bloody_hand_state(BODY_ZONE_L_ARM, "left"))
 			blood_overlay.color = get_blood_dna_color()
 			hands_combined.overlays += blood_overlay
 		if(has_right_hand(check_disabled = FALSE))
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', get_bloody_hand_state(BODY_ZONE_R_ARM, "right"))
 			blood_overlay.color = get_blood_dna_color()
 			hands_combined.overlays += blood_overlay
 
@@ -211,7 +274,14 @@ There are several things that need to be remembered:
 
 	var/icon_file = 'icons/mob/clothing/hands.dmi'
 
-	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+	var/mutant_override = FALSE
+	if(bodyshape & BODYSHAPE_CUSTOM)
+		var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_GLOVES, gloves)
+		if(species_icon_file)
+			icon_file = species_icon_file
+			mutant_override = TRUE
+
+	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null, bodyshape = bodyshape)
 
 	var/feature_y_offset = 0
 	//needs to be typed, hand_bodyparts can have nulls

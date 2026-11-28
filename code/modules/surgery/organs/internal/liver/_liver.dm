@@ -367,3 +367,9 @@
 #undef LIVER_DEFAULT_TOX_RESISTANCE
 #undef LIVER_FAILURE_STAGE_SECONDS
 #undef MAX_TOXIN_LIVER_DAMAGE
+
+/obj/item/organ/internal/liver/vox
+	name = "vox liver"
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "liver-vox"
+	decay_factor = 0

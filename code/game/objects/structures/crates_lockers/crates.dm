@@ -431,6 +431,7 @@
 	new /obj/item/reagent_containers/blood/o_minus(src)
 	new /obj/item/reagent_containers/blood/o_plus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/vox(src)
 	new /obj/item/reagent_containers/blood/ethereal(src)
 	new /obj/item/reagent_containers/blood/hemolymph(src)
 	for(var/i in 1 to 3)

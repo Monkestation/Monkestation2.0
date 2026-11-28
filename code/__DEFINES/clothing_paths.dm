@@ -14,6 +14,11 @@
 #define LOADOUT_ITEM_TOYS "toys"
 #define LOADOUT_ITEM_PLUSHIES "plushies"
 
+// Keys for the underwear sprites of /datum/species/var/custom_worn_icons
+#define LOADOUT_ITEM_UNDERWEAR "underwear"
+#define LOADOUT_ITEM_UNDERSHIRT "undershirt"
+#define LOADOUT_ITEM_SOCKS "socks"
+
 #define INFO_GREYSCALE "greyscale"
 #define INFO_NAMED "name"
 

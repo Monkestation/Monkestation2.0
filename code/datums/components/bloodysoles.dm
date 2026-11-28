@@ -316,9 +316,15 @@
 		wielder.update_worn_shoes()
 		return
 
-	bloody_feet.color = wielder.get_blood_dna_color()
-	wielder.apply_height(bloody_feet, ENTIRE_BODY)
-	wielder.overlays_standing[SHOES_LAYER] = bloody_feet
+	var/mutable_appearance/feet_overlay = bloody_feet
+	// Legs of a different shape can have bloody feet of their own, like vox claws
+	var/mob/living/carbon/human/human_wielder = wielder
+	var/legs_id = LAZYACCESS(human_wielder.get_fitting_limb_ids(LOADOUT_ITEM_SHOES), 1)
+	if(legs_id && icon_exists(bloody_feet.icon, "shoeblood_[legs_id]"))
+		feet_overlay = mutable_appearance(bloody_feet.icon, "shoeblood_[legs_id]", SHOES_LAYER)
+	feet_overlay.color = wielder.get_blood_dna_color()
+	wielder.apply_height(feet_overlay, ENTIRE_BODY)
+	wielder.overlays_standing[SHOES_LAYER] = feet_overlay
 	wielder.apply_overlay(SHOES_LAYER)
 
 /datum/component/bloodysoles/feet/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/footprint)

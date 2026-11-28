@@ -15,6 +15,7 @@
 					/obj/item/reagent_containers/blood/o_plus,
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/reagent_containers/blood/lizard,
+					/obj/item/reagent_containers/blood/vox,
 					/obj/item/reagent_containers/blood/ethereal,
 					/obj/item/reagent_containers/blood/slime,
 					/obj/item/reagent_containers/blood/hemolymph,

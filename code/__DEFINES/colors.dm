@@ -220,6 +220,7 @@
 #define BLOOD_COLOR_BLACK "#1F1A00"
 #define BLOOD_COLOR_DRIED "#370404" // Not to be used normally, only exists for mapper convinience
 #define BLOOD_COLOR_HEMOLYMPH "#04e1ed"
+#define BLOOD_COLOR_VOX "#2299FC"
 
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"

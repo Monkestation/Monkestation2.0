@@ -11,11 +11,14 @@
 	mail_goodies = list(/obj/item/clothing/head/wig/random)
 	/// The user's starting hairstyle
 	var/old_hair
+	/// The styles of the user's hair-like features (like vox quills) before going bald, organ slot -> sprite accessory type
+	var/list/old_hairlike_styles
 
 /datum/quirk/item_quirk/bald/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	old_hair = human_holder.hairstyle
 	human_holder.set_hairstyle("Bald", update = TRUE)
+	old_hairlike_styles = human_holder.shave_hairlike_features(EXTERNAL_RESTYLE_HAIR)
 	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, PROC_REF(equip_hat))
 	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, PROC_REF(unequip_hat))
 
@@ -35,6 +38,10 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(human_holder.hairstyle == "Bald" && old_hair != "Bald")
 		human_holder.set_hairstyle(old_hair, update = TRUE)
+	for(var/slot in old_hairlike_styles)
+		var/obj/item/organ/external/feature = human_holder.get_organ_slot(slot)
+		if(feature?.bodypart_overlay.sprite_datum?.name == SPRITE_ACCESSORY_NONE) // like the hair, only if still shaved
+			feature.simple_change_sprite(old_hairlike_styles[slot])
 	UnregisterSignal(human_holder, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
 	human_holder.clear_mood_event("bad_hair_day")
 

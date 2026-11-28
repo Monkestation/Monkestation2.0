@@ -86,6 +86,10 @@
 	message_mime = "acts out an exaggerated cough!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
+/datum/emote/living/cough/get_sound(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
+	return (ishuman(human_user) && human_user.dna.species.cough_sound) || ..()
+
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_SOOTHED_THROAT))
@@ -385,6 +389,9 @@ monkestation edit end */
 	. = ..()
 	if(!intentional && isanimal_or_basicmob(user))
 		return "makes a loud and pained whimper."
+	if(. == /datum/emote/living/scream::message && ishuman(user)) // not for other screams, like screeching
+		var/mob/living/carbon/human/human_user = user
+		return human_user.dna.species.scream_message || .
 
 /datum/emote/living/scowl
 	key = "scowl"
@@ -444,6 +451,10 @@ monkestation edit end */
 	message = "sneezes."
 	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/sneeze/get_sound(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
+	return (ishuman(human_user) && human_user.dna.species.sneeze_sound) || ..()
 
 /datum/emote/living/smug
 	key = "smug"

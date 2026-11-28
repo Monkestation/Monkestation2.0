@@ -22,6 +22,7 @@
 				/obj/item/toy/plush/moth = 1,
 				/obj/item/toy/plush/pkplush = 1,
 				/obj/item/toy/plush/beeplushie = 1,
+				/obj/item/toy/plush/voxplushie = 1,
 			),
 		),
 		list(

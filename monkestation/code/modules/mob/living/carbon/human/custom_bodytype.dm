@@ -54,13 +54,35 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
 	GLOB.species_clothing_fallback_cache[name]["[file_to_use]-[state_to_use]-[meta]"] = cached_value
 
 /**
- * Allow for custom clothing icon generation. Only called if the species is BODYSHAPE_CUSTOM
+ * Allow for custom clothing icon generation. Only called if the wearer is BODYSHAPE_CUSTOM
  * If null is returned, use default human icon.
+ * The limbs an item is worn on decide which species' sprites it uses (see /mob/living/carbon/human/proc/get_fitting_limb_ids()),
+ * so vox legs on a human still wear vox fitted uniforms.
  * Arguments:
  * * item_slot: The slot we're updating. One of LOADOUT_ITEM_HEAD, etc.
  * * item: The item being rendered.
  */
 /datum/species/proc/generate_custom_worn_icon(item_slot, obj/item/item)
+	item.species_fitted = null
+	var/mob/living/carbon/human/wearer = item.loc
+	var/list/limb_ids = ishuman(wearer) ? wearer.get_fitting_limb_ids(item_slot) : null
+	if(isnull(limb_ids)) // the limbs don't decide this slot
+		limb_ids = list(id)
+	for(var/limb_id in limb_ids)
+		var/datum/species/limb_species = (limb_id == id) ? src : GLOB.species_prototypes[GLOB.species_list[limb_id]]
+		var/fitted_icon = limb_species?.get_fitted_worn_icon(item_slot, item)
+		if(fitted_icon)
+			item.species_fitted = limb_id
+			return fitted_icon
+	return null
+
+/**
+ * Returns our fitted worn sprite for an item worn in the given slot, or null if we have none for it.
+ * Arguments:
+ * * item_slot: The slot we're updating. One of LOADOUT_ITEM_HEAD, etc.
+ * * item: The item being rendered.
+ */
+/datum/species/proc/get_fitted_worn_icon(item_slot, obj/item/item)
 	// If already set (possibly by us, or manually, use it.)
 	var/icon/final_icon = get_custom_worn_icon(item_slot, item)
 	if(final_icon && icon_exists(final_icon, item.worn_icon_state || item.icon_state))
@@ -81,7 +103,7 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
 	return species_worn_icon
 
 /**
- * Generate a fallback worn icon, if the species supports it. You must call it in an override of generate_custom_worn_icon()
+ * Generate a fallback worn icon, if the species supports it. You must call it in an override of get_fitted_worn_icon()
  */
 /datum/species/proc/generate_custom_worn_icon_fallback(item_slot, obj/item/item)
 	var/icon/human_icon = item.worn_icon || item.icon

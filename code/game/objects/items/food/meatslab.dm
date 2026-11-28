@@ -82,6 +82,14 @@
 	foodtypes = MEAT | RAW | GORE
 	venue_value = FOOD_MEAT_MUTANT
 
+/obj/item/food/meat/slab/human/mutant/vox
+	icon = 'icons/obj/species/vox/items.dmi'
+	icon_state = "voxmeat"
+	desc = "Surprisingly, it doesn't actually taste like chicken."
+	tastes = list("skrek" = 1)
+	foodtypes = MEAT | RAW | TOXIC
+	venue_value = FOOD_MEAT_MUTANT
+
 /obj/item/food/meat/slab/human/mutant/lizard/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human/lizard, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE, /datum/pollutant/food/fried_meat)
 

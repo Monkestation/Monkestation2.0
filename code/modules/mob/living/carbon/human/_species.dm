@@ -238,8 +238,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/maxhealthmod = 1
 	///Path to BODYSHAPE_CUSTOM species worn icons. An assoc list of ITEM_SLOT_X => /icon
 	var/list/custom_worn_icons = list()
-	///Override of the eyes icon file, used for Monkeys.
-	var/eyes_icon
+	/// Extra messages for bare-handed suicides in combat mode. %SUICIDER% is replaced with the human, %THEIR% with their possessive pronoun.
+	var/list/suicide_messages
+	/// Choiced and color preferences for features the magic mirror lets you pick after changing into this species, like vox markings. See /obj/structure/mirror/proc/choose_species_features()
+	var/list/mirror_race_change_features
+	/// Sound our coughs make instead of the normal one, if set
+	var/cough_sound
+	/// Sound our sneezes make instead of the normal one, if set
+	var/sneeze_sound
+	/// Message shown when we scream instead of the normal one, like "shrieks!", if set
+	var/scream_message
 	///our color palette
 	var/datum/color_palette/color_palette
 
@@ -714,10 +722,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
+				var/underwear_icon = species_human.get_underwear_icon(underwear, LOADOUT_ITEM_UNDERWEAR)
+				if(underwear_icon == underwear.icon && species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
 					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
-					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+					underwear_overlay = mutable_appearance(underwear_icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
 					underwear_overlay.color = species_human.underwear_color
 				standing += underwear_overlay
@@ -726,10 +735,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
 				var/mutable_appearance/working_shirt
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
+				var/undershirt_icon = species_human.get_underwear_icon(undershirt, LOADOUT_ITEM_UNDERSHIRT)
+				if(undershirt_icon == undershirt.icon && species_human.dna.species.sexes && species_human.physique == FEMALE)
 					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon, undershirt.icon), layer = -BODY_LAYER)
 				else
-					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
+					working_shirt = mutable_appearance(undershirt_icon, undershirt.icon_state, layer = -BODY_LAYER)
 				standing += working_shirt
 
 		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
@@ -737,10 +747,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			//MONKESTATION EDITS FOR COLOURABLE SOCKS
 			var/mutable_appearance/socks_overlay
 			if(socks)
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
+				var/socks_icon = species_human.get_underwear_icon(socks, LOADOUT_ITEM_SOCKS)
+				if(socks_icon == socks.icon && species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
 					socks_overlay = mutable_appearance(wear_female_version(socks.icon_state, socks.icon, socks.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
-					socks_overlay = mutable_appearance(socks.icon, socks.icon_state, layer = -BODY_LAYER)
+					socks_overlay = mutable_appearance(socks_icon, socks.icon_state, layer = -BODY_LAYER)
 				if(!socks.use_static)
 					socks_overlay.color = species_human.socks_color
 				standing += socks_overlay
@@ -1101,8 +1112,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
 
+/// Returns what replaces the mask, tank and medipen of a survival box handed to us, see survival_box_overrides. Override to fit them to the box.
+/datum/species/proc/get_survival_box_overrides(obj/item/storage/box/survival/box)
+	return survival_box_overrides
+
 /// Equips species-relevant gear after putting on an outfit.
 /datum/species/proc/post_equip_species_outfit(mob/living/carbon/human/equipping, visuals_only = FALSE)
+	return
+
+/// Swaps species-relevant gear for what the player picked in their preferences, like the vox mask and tank. Called once a job's outfit and loadout are on.
+/datum/species/proc/apply_gear_preferences(mob/living/carbon/human/equipping, datum/preferences/used_pref, visuals_only = FALSE)
 	return
 
 /**
@@ -1155,6 +1174,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	target.set_facial_hairstyle("Shaved", update = FALSE)
 	target.set_hairstyle("Bald", update = FALSE)
+	target.shave_hairlike_features(EXTERNAL_RESTYLE_HAIR | EXTERNAL_RESTYLE_FACIAL_HAIR)
 	target.update_body_parts()
 
 //////////////////

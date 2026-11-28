@@ -765,3 +765,25 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "oni tongue"
 	liked_foodtypes = GORE | MEAT | SEAFOOD
 	disliked_foodtypes = VEGETABLES | GROSS
+
+/obj/item/organ/internal/tongue/vox
+	name = "vox tongue"
+	desc = "You almost swear you can hear it shrieking."
+	icon = 'icons/obj/species/vox/organs.dmi'
+	icon_state = "tongue-vox"
+	decay_factor = 0
+	taste_sensitivity = 50 // There's not much need for taste when you're a scavenger.
+	modifies_speech = TRUE
+	languages_native = list(/datum/language/vox)
+	liked_foodtypes = MEAT | FRIED
+	disliked_foodtypes = GROSS
+	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues", "skrees")
+	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue", "skree")
+
+/obj/item/organ/internal/tongue/vox/handle_speech(datum/source, list/speech_args)
+	. = ..()
+	if(owner && prob(20))
+		playsound(owner, 'sound/voice/vox_species/shriek1.ogg', 25, TRUE, 1)
+
+/obj/item/organ/internal/tongue/vox/get_scream_sound()
+	return 'sound/voice/vox_species/shriek1.ogg'

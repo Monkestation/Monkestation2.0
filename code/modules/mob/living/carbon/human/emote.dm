@@ -170,6 +170,26 @@ monkestation edit end */
 		return ..()
 	return FALSE
 
+/datum/emote/living/carbon/human/quill
+	key = "quill"
+	key_third_person = "quills"
+	message = "rustles their quills."
+	message_param = "rustles their quills at %t."
+	emote_type = EMOTE_AUDIBLE
+	// Credit to sound-ideas (freesfx.co.uk) for the sound.
+	sound = 'sound/voice/vox_species/voxrustle.ogg'
+
+/// Needs quills or facial quills to rustle: styled, and not lost to baldness or a shave
+/datum/emote/living/carbon/human/quill/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+	var/mob/living/carbon/carbon_user = user
+	if(!istype(carbon_user))
+		return FALSE
+	var/obj/item/organ/external/vox_quills/quills = carbon_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_QUILLS)
+	var/obj/item/organ/external/vox_quills/facial_quills = carbon_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_VOX_FACIAL_QUILLS)
+	if(!quills?.has_quills() && !facial_quills?.has_quills())
+		return FALSE
+	return ..()
+
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"

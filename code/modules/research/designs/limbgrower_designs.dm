@@ -8,7 +8,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/arm/left
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN) // Monkestation Edit:
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN, SPECIES_VOX) // Monkestation Edit:
 
 /datum/design/rightarm
 	name = "Right Arm"
@@ -16,7 +16,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/arm/right
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN) // Monkestation Edit:
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN, SPECIES_VOX) // Monkestation Edit:
 
 /datum/design/leftleg
 	name = "Left Leg"
@@ -24,7 +24,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/leg/left
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN) // Monkestation Edit:
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN, SPECIES_VOX) // Monkestation Edit:
 
 /datum/design/rightleg
 	name = "Right Leg"
@@ -32,7 +32,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/leg/right
-	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN) // Monkestation Edit:
+	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, SPECIES_SHADEKIN, SPECIES_VOX) // Monkestation Edit:
 
 //Non-limb limb designs
 
@@ -108,6 +108,46 @@
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/external/tail/lizard/fake
 	category = list(SPECIES_LIZARD)
+
+/datum/design/vox_tail
+	name = "Vox Tail"
+	id = "voxtail"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
+	build_path = /obj/item/organ/external/tail/vox/fake
+	category = list(SPECIES_VOX)
+
+/datum/design/vox_tongue
+	name = "Vox Tongue"
+	id = "voxtongue"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/tongue/vox
+	category = list(SPECIES_VOX)
+
+/datum/design/vox_eyes
+	name = "Vox Eyes"
+	id = "voxeyes"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/eyes/vox
+	category = list(SPECIES_VOX)
+
+/datum/design/vox_liver
+	name = "Vox Liver"
+	id = "voxliver"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/liver/vox
+	category = list(SPECIES_VOX)
+
+/datum/design/vox_lungs
+	name = "Vox Lungs"
+	id = "voxlungs"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
+	build_path = /obj/item/organ/internal/lungs/vox
+	category = list(SPECIES_VOX)
 
 /datum/design/lizard_tongue
 	name = "Forked Tongue"
@@ -288,6 +328,16 @@
 	desc = "Contains designs for lizard organs for the limbgrower - Lizard tongue, and tail"
 	id = "limbdesign_lizard"
 	build_path = /obj/item/disk/design_disk/limbs/lizard
+
+/obj/item/disk/design_disk/limbs/vox
+	name = "Vox Organ Design Disk"
+	limb_designs = list(/datum/design/vox_tail, /datum/design/vox_tongue, /datum/design/vox_eyes, /datum/design/vox_liver, /datum/design/vox_lungs)
+
+/datum/design/limb_disk/vox
+	name = "Vox Organ Design Disk"
+	desc = "Contains designs for vox organs for the limbgrower - Vox tail, tongue, eyes, liver, and lungs."
+	id = "limbdesign_vox"
+	build_path = /obj/item/disk/design_disk/limbs/vox
 
 /obj/item/disk/design_disk/limbs/plasmaman
 	name = "Plasmaman Organ Design Disk"
