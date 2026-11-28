@@ -936,13 +936,7 @@
 
 	var/area/turf_area = gravity_turf.loc
 
-	if(gravity_turf.force_no_gravity)
-		return FALSE
-	if(turf_area.has_gravity)
-		return turf_area.has_gravity
-	if(turf_area.area_flags & NO_GRAVITY)
-		return FALSE
-	return SSmapping.gravity_by_z_level[gravity_turf.z]
+	return (!gravity_turf.force_no_gravity && !(turf_area.area_flags & NO_GRAVITY)) && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.default_gravity)
 
 
 /**

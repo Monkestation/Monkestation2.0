@@ -33,7 +33,7 @@
 
 	base_lighting_alpha = 255
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	area_flags = BLOCK_SUICIDE
 

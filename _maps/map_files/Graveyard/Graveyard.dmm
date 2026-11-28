@@ -1608,7 +1608,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/starboard/aft)
+/area/station/solars/starboard/aft/planet)
 "apN" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
@@ -10118,7 +10118,7 @@
 "dEU" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/starboard/aft)
+/area/station/solars/starboard/aft/planet)
 "dEX" = (
 /obj/structure/table,
 /obj/item/hatchet,
@@ -11226,7 +11226,7 @@
 	name = "Fore-Starboard Solar Array"
 	},
 /turf/open/floor/iron/solarpanel,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/planet)
 "ebv" = (
 /obj/structure/bed/maint,
 /obj/effect/spawner/random/contraband/prison,
@@ -12420,7 +12420,7 @@
 "eBM" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/planet)
 "eBO" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 1
@@ -12704,7 +12704,7 @@
 /area/station/hallway/primary/upper)
 "eJJ" = (
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/planet)
 "eJR" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -15473,7 +15473,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel,
-/area/station/solars/starboard/aft)
+/area/station/solars/starboard/aft/planet)
 "fOM" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -17334,7 +17334,7 @@
 	name = "Fore-Port Solar Array"
 	},
 /turf/open/floor/iron/solarpanel,
-/area/station/solars/port/fore)
+/area/station/solars/port/fore/planet)
 "gAe" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -22893,7 +22893,7 @@
 	},
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/iron/solarpanel,
-/area/station/solars/port/fore)
+/area/station/solars/port/fore/planet)
 "iKa" = (
 /obj/machinery/light/warm/directional/south,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -23840,7 +23840,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/starboard/aft)
+/area/station/solars/starboard/aft/planet)
 "jcF" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25411,7 +25411,7 @@
 "jHA" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/port/fore)
+/area/station/solars/port/fore/planet)
 "jHL" = (
 /obj/structure/sink/kitchen/directional/west,
 /turf/open/floor/iron/cafeteria,
@@ -33051,7 +33051,7 @@
 "mGc" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
-/area/station/solars/starboard/aft)
+/area/station/solars/starboard/aft/planet)
 "mGj" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/effect/spawner/structure/window/reinforced,
@@ -40170,7 +40170,7 @@
 /area/graveyard/bunker/public)
 "pyh" = (
 /turf/open/floor/plating,
-/area/station/solars/starboard/aft)
+/area/station/solars/starboard/aft/planet)
 "pyi" = (
 /obj/structure/cable,
 /obj/machinery/light/directional/south,
@@ -42280,7 +42280,7 @@
 /area/station/security/detectives_office)
 "qsz" = (
 /turf/open/floor/plating,
-/area/station/solars/port/fore)
+/area/station/solars/port/fore/planet)
 "qsC" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/north{
@@ -45019,7 +45019,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/planet)
 "rxq" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/air_input{
 	dir = 4
@@ -45357,7 +45357,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/port/fore)
+/area/station/solars/port/fore/planet)
 "rDO" = (
 /obj/machinery/door/airlock/security{
 	name = "Armory"
@@ -45374,7 +45374,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/planet)
 "rEM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -45698,7 +45698,7 @@
 "rLa" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
-/area/station/solars/port/fore)
+/area/station/solars/port/fore/planet)
 "rLk" = (
 /obj/machinery/duct,
 /turf/open/floor/plating,
@@ -45918,7 +45918,7 @@
 "rPm" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/planet)
 "rPr" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 1
@@ -59173,7 +59173,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/port/fore)
+/area/station/solars/port/fore/planet)
 "xat" = (
 /obj/machinery/door/airlock/command/hop{
 	id_tag = "HoPdoor";
