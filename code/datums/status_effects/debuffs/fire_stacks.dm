@@ -31,8 +31,7 @@
 
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
-	var/turf/source_turf = get_turf(owner)
-	if(istype(source_turf, enemy_turf))
+	if(on_enemy_turf())
 		qdel(src)
 		return
 
@@ -88,10 +87,16 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
-/datum/status_effect/fire_handler/proc/check_enemy()
+/datum/status_effect/fire_handler/proc/on_enemy_turf()
 	var/turf/source_turf = get_turf(owner)
+	if(!istype(source_turf, enemy_turf))
+		return FALSE
+	if(islava(source_turf)) // catwalks and flying keep you off the lava
+		return !source_turf.can_cross_safely(owner)
+	return TRUE
 
-	if(istype(source_turf, enemy_turf))
+/datum/status_effect/fire_handler/proc/check_enemy()
+	if(on_enemy_turf())
 		qdel(src)
 		return FALSE
 
