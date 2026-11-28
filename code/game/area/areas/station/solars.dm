@@ -107,3 +107,13 @@
 /area/station/maintenance/solars/starboard/fore
 	name = "Starboard Bow Solar Maintenance"
 	icon_state = "SolarcontrolFS"
+
+// Solars on planetary maps keep the planet's gravity
+/area/station/solars/port/fore/planet
+	area_flags = /area/station/solars::area_flags & ~NO_GRAVITY
+
+/area/station/solars/starboard/fore/planet
+	area_flags = /area/station/solars::area_flags & ~NO_GRAVITY
+
+/area/station/solars/starboard/aft/planet
+	area_flags = /area/station/solars::area_flags & ~NO_GRAVITY
