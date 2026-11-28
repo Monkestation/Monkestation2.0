@@ -250,9 +250,8 @@
 	. = ..()
 
 	generate_items_inside(list(
-		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1,
-		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1,
-		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom = 1, //REPLACE WITH IGNIFIST/20mm WHEN THE PR IS DONE
+		/obj/item/clothing/suit/space/hardsuit/sec/prototype = 1,
+		/obj/item/minigunpack = 1,
 	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko_but_evil

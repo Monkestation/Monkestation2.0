@@ -1,7 +1,3 @@
-/// How much damage you take from an emp when wearing a hardsuit
-#define HARDSUIT_EMP_BURN 2 // a very orange number
-#define THERMAL_REGULATOR_COST (0.006 * STANDARD_CELL_CHARGE) // this runs out fast if 18 like spacesuits
-
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
@@ -30,6 +26,11 @@
 	var/obj/item/jetpack_module/jetpack_upgrade = null
 	/// Jetpack that is installed in our hardsuit
 	var/obj/item/tank/jetpack/attached_jetpack = null
+	/// How much damage you take from an emp when wearing a hardsuit
+	var/hardsuit_emp_burn =  2 // a very orange number
+	/// If the suit knocks down the user when emped. 0 is none, measured in seconds.
+	var/hardsuit_emp_knockdown = 0
+	thermal_regulator_cost =  (0.006 * STANDARD_CELL_CHARGE) // this runs out fast if 18 like spacesuits
 
 /obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
 	. = ..()
@@ -146,11 +147,13 @@
 	var/mob/living/carbon/human/user = get(loc, /mob/living)
 	if(!istype(user))
 		return
-	user.apply_damage(HARDSUIT_EMP_BURN, BURN, spread_damage=TRUE)
-	to_chat(user, span_warning("You feel \the [src] heat up from the EMP burning you slightly."))
+	user.apply_damage(hardsuit_emp_burn, BURN, spread_damage=TRUE)
+	to_chat(user, span_warning("You feel \the [src] heat up from the EMP burning you."))
 	// Chance to scream
-	if(user.stat < UNCONSCIOUS && prob(10))
+	if(user.stat < UNCONSCIOUS && prob(30))
 		user.emote("scream")
+	if(hardsuit_emp_knockdown)
+		user.Knockdown(hardsuit_emp_knockdown)
 
 //////////////// JETPACK /////////////////////
 /obj/item/tank/jetpack/suit

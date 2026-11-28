@@ -36,6 +36,9 @@
 	hitscan_light_intensity = 1
 	hitscan_light_outer_range = 0.25
 
+/obj/projectile/beam/laser/hitscan/weak
+	damage = 15
+
 /obj/projectile/beam/laser/lasrifle
 	damage = 25
 	range = 30
