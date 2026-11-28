@@ -90,12 +90,12 @@
 	//limb is out and about, it can't really be considered an implant
 	bodypart_flags &= ~BODYPART_IMPLANTED
 	add_mob_blood(owner)
+	for(var/datum/wound/wound as anything in wounds)
+		wound.remove_wound(TRUE)
+
 	owner.remove_bodypart(src)
 	if(speed_modifier)
 		owner.update_bodypart_speed_modifier()
-
-	for(var/datum/wound/wound as anything in wounds)
-		wound.remove_wound(TRUE)
 
 	for(var/datum/scar/scar as anything in scars)
 		scar.victim = null
