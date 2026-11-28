@@ -54,7 +54,11 @@
 		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
 			playsound(user, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
-			user.visible_message(span_warning("With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!"), span_notice("We assimilate the [weapon_name_simple] back into our body."), "<span class='italics>You hear organic matter ripping and tearing!</span>")
+			user.visible_message(
+				span_warning("With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!"),
+				span_notice("We assimilate the [weapon_name_simple] back into our body."),
+				span_italics("You hear organic matter ripping and tearing!")
+			)
 		user.update_held_items()
 		return TRUE
 
@@ -73,7 +77,11 @@
 	else
 		limb_regen = user.regenerate_limb(BODY_ZONE_L_ARM, 1)
 	if(limb_regen)
-		user.visible_message(span_warning("[user]'s missing arm reforms, making a loud, grotesque sound!"), span_userdanger("Your arm regrows, making a loud, crunchy sound and giving you great pain!"), span_hear("You hear organic matter ripping and tearing!"))
+		user.visible_message(
+			span_warning("[user]'s missing arm reforms, making a loud, grotesque sound!"),
+			span_userdanger("Your arm regrows, making a loud, crunchy sound and giving you great pain!"),
+			span_hear("You hear organic matter ripping and tearing!")
+		)
 		user.emote("scream")
 	var/obj/item/W = new weapon_type(user, silent)
 	user.put_in_hands(W)
@@ -126,7 +134,11 @@
 		return 1
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
-		H.visible_message(span_warning("[H] casts off [H.p_their()] [suit_name_simple]!"), span_warning("We cast off our [suit_name_simple]."), span_hear("You hear the organic matter ripping and tearing!"))
+		H.visible_message(
+			span_warning("[H] casts off [H.p_their()] [suit_name_simple]!"),
+			span_warning("We cast off our [suit_name_simple]."),
+			span_hear("You hear the organic matter ripping and tearing!")
+		)
 		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_worn_oversuit()
@@ -204,7 +216,11 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc) && !silent)
-		loc.visible_message(span_warning("A grotesque blade forms around [loc.name]\'s arm!"), span_warning("Our arm twists and mutates, transforming it into a deadly blade."), span_hear("You hear organic matter ripping and tearing!"))
+		loc.visible_message(
+			span_warning("A grotesque blade forms around [loc.name]\'s arm!"),
+			span_warning("Our arm twists and mutates, transforming it into a deadly blade."),
+			span_hear("You hear organic matter ripping and tearing!")
+		)
 	if(synthetic)
 		can_drop = TRUE
 	AddComponent(/datum/component/butchering, \
@@ -225,7 +241,10 @@
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/opening = target
 
-		if((!opening.requiresID() || opening.allowed(user)) && opening.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
+		// This is to prevent stupid shit like hitting a door with an arm blade,
+		// the door opening because you have access and still getting a "the airlocks motors resist our efforts to force it" message,
+		// power requirement is so this doesn't stop unpowered doors from being pried open if you have access
+		if((!opening.requiresID() || opening.allowed(user)) && opening.hasPower())
 			return
 		if(opening.locked)
 			opening.balloon_alert(user, "bolted!")
@@ -255,9 +274,9 @@
 	name = "Tentacle"
 	desc = "We ready a tentacle to grab items or victims with. Costs 10 chemicals."
 	helptext = "We can use it once to retrieve a distant item. If used on living creatures, the effect depends on our combat mode: \
-	In our neutral stance, we will simply drag them closer; if we try to shove, we will grab whatever they're holding in their active hand instead of them; \
-	in our combat stance, we will put the victim in our hold after catching them, and we will pull them in and stab them if we're also holding a sharp weapon. \
-	Cannot be used while in lesser form."
+		In our neutral stance, we will simply drag them closer; if we try to shove, we will grab whatever they're holding in their active hand instead of them; \
+		in our combat stance, we will put the victim in our hold after catching them, and we will pull them in and stab them if we're also holding a sharp weapon. \
+		Cannot be used while in lesser form."
 	button_icon_state = "tentacle"
 	chemical_cost = 10
 	dna_cost = 2
@@ -298,7 +317,11 @@
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		if(!silent)
-			loc.visible_message(span_warning("[loc.name]\'s arm starts stretching inhumanly!"), span_warning("Our arm twists and mutates, transforming it into a tentacle."), span_hear("You hear organic matter ripping and tearing!"))
+			loc.visible_message(
+				span_warning("[loc.name]\'s arm starts stretching inhumanly!"),
+				span_warning("Our arm twists and mutates, transforming it into a tentacle."),
+				span_hear("You hear organic matter ripping and tearing!")
+			)
 		else
 			to_chat(loc, span_notice("You prepare to extend a tentacle."))
 
@@ -468,7 +491,8 @@
 /datum/action/changeling/weapon/shield
 	name = "Organic Shield"
 	desc = "We reform one of our arms into a hard shield. Costs 20 chemicals."
-	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
+	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. \
+		The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
 	button_icon_state = "organic_shield"
 	chemical_cost = 20
 	dna_cost = 1
@@ -506,18 +530,25 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
-		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
+		loc.visible_message(
+			span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"),
+			span_warning("We inflate our hand into a strong shield."),
+			span_hear("You hear organic matter ripping and tearing!")
+		)
 
 /obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
-			H.visible_message(span_warning("With a sickening crunch, [H] reforms [H.p_their()] shield into an arm!"), span_notice("We assimilate our shield into our body"), "<span class='italics>You hear organic matter ripping and tearing!</span>")
+			H.visible_message(
+				span_warning("With a sickening crunch, [H] reforms [H.p_their()] shield into an arm!"),
+				span_notice("We assimilate our shield into our body"),
+				span_italics("You hear organic matter ripping and tearing!")
+			)
 		qdel(src)
-		return 0
-	else
-		remaining_uses--
-		return ..()
+		return FALSE
+	remaining_uses--
+	return ..()
 
 /***************************************\
 |*****************ARMOR*****************|
@@ -525,7 +556,8 @@
 /datum/action/changeling/suit/armor
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage, as well as pepperspray and flashbangs. Costs 20 chemicals."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor provides decent protection against brute force and energy weapons. Cannot be used in lesser form. Slows chemical generation when active."
+	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor provides decent protection against brute force and energy weapons. \
+		Cannot be used in lesser form. Slows chemical generation when active."
 	button_icon_state = "chitinous_armor"
 	chemical_cost = 20
 	dna_cost = 2
@@ -567,7 +599,11 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
-		loc.visible_message(span_warning("[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!"), span_warning("We harden our flesh, creating a suit of armor!"), span_hear("You hear organic matter ripping and tearing!"))
+		loc.visible_message(
+			span_warning("[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!"),
+			span_warning("We harden our flesh, creating a suit of armor!"),
+			span_hear("You hear organic matter ripping and tearing!")
+		)
 
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
@@ -599,3 +635,84 @@
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/***************************************\
+|***************FLESH MAUL**************|
+\***************************************/
+/datum/action/changeling/weapon/flesh_maul
+	name = "Flesh Maul"
+	desc = "We reform one of our arms into a dense mass of flesh and bone. Costs 20 chemicals."
+	helptext = "We may reabsorb the mass in the same way it was formed. It is too heavy to be used in our lesser form."
+	button_icon_state = "flesh_maul"
+	chemical_cost = 20
+	dna_cost = 3
+	req_human = TRUE
+	weapon_type = /obj/item/melee/flesh_maul
+	weapon_name_simple = "maul"
+
+/obj/item/melee/flesh_maul
+	name = "flesh maul"
+	desc = "A horrifying mass of pulsing flesh and glistening bone. More than capable of crushing anyone unfortunate enough to be hit by it."
+	icon = 'icons/obj/weapons/changeling_items.dmi'
+	icon_state = "flesh_maul"
+	inhand_icon_state = "flesh_maul"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
+	w_class = WEIGHT_CLASS_HUGE
+	force = 30					//SHATTER BONE
+	tool_behaviour = TOOL_MINING
+	attack_speed = CLICK_CD_LARGE_WEAPON
+	throwforce = 0 				//Just to be on the safe side
+	throw_range = 0
+	throw_speed = 0
+	armour_penetration = -20	//Armor will help stop some of the damage
+	hitsound = SFX_SWING_HIT
+	attack_verb_continuous = list("smashes", "slams", "crushes", "whacks")
+	attack_verb_simple = list("smashed", "slammed", "crushed", "whacked")
+	sharpness = NONE
+	wound_bonus = 40			//But your bones will be sad :(
+	bare_wound_bonus = 20
+	resistance_flags = FLAMMABLE
+
+/obj/item/melee/flesh_maul/Initialize(mapload,silent,synthetic)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+	if(ismob(loc) && !silent)
+		loc.visible_message(
+			span_warning("[loc.name]\'s arm snaps and shifts into a grisly maul!"),
+			span_warning("Our arm twists and mutates, transforming into a powerful maul."),
+			span_italics("You hear organic matter ripping and tearing!")
+		)
+
+/obj/item/melee/flesh_maul/afterattack(atom/target, mob/user, click_parameters)
+	user.add_movespeed_modifier(/datum/movespeed_modifier/flesh_maul)						//Slows the target because big whack
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/flesh_maul), 1.6 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	to_chat(user, span_danger("You are staggered from the blow!"))
+
+	if(iscyborg(target))
+		var/mob/living/silicon/robot/borgie = target
+		borgie.Paralyze(1 SECONDS)						//One second stun on borgs because they get their circuits rattled or something
+
+	if(isstructure(target) || ismachinery(target))
+		var/obj/structure/structure_or_machinery = target			//Works for machinery because they have the same variable that does the same thing
+		var/structure_damage = structure_or_machinery.max_integrity
+		var/make_sound = TRUE
+		if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille))
+			structure_damage *= 3.5				// Because of melee armor
+			make_sound = FALSE
+		if(ismachinery(target) || istype(target, /obj/structure/door_assembly))
+			structure_damage *= 0.75
+		if(istype(target, /obj/machinery/door/airlock))
+			structure_damage = 96				//Should make it better than armblades for airlock smashing. No bonus vs plasteel-reinforced airlocks, though.
+		if(istype(target, /obj/structure/table))	//Hate tables
+			var/obj/structure/table/table_target = target
+			table_target.deconstruct(FALSE)
+			return
+		if(!isnull(target))
+			structure_or_machinery.take_damage(structure_damage, BRUTE, MELEE, FALSE)
+		if(make_sound)
+			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+
+/datum/movespeed_modifier/flesh_maul
+	multiplicative_slowdown = 1
